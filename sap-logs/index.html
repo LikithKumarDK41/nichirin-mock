@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<!-- SPA Layout Redirect Wrapper -->
+<script>
+  if (!document.getElementById('app-root')) {
+    const p = window.location.pathname;
+    const rel = '../';
+    window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
+  }
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SAP Synchronization Logs | Nichirin Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#43474e",
+                        "inverse-on-surface": "#f2f0f3",
+                        "tertiary-container": "#391303",
+                        "background": "#faf9fc",
+                        "on-tertiary-fixed": "#351002",
+                        "on-primary-fixed-variant": "#2f486a",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#faf9fc",
+                        "surface-container-low": "#f4f3f6",
+                        "on-error": "#ffffff",
+                        "tertiary": "#110200",
+                        "outline": "#74777f",
+                        "tertiary-fixed-dim": "#fdb69a",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#faf9fc",
+                        "on-surface": "#1a1c1e",
+                        "secondary-container": "#7af2f2",
+                        "on-secondary-fixed": "#002020",
+                        "secondary-fixed": "#7df5f5",
+                        "primary-container": "#001f3f",
+                        "on-primary-container": "#6f88ad",
+                        "on-tertiary-container": "#b5785f",
+                        "on-error-container": "#93000a",
+                        "on-background": "#1a1c1e",
+                        "on-primary-fixed": "#001c3a",
+                        "tertiary-fixed": "#ffdbce",
+                        "surface-container-high": "#e9e7eb",
+                        "inverse-surface": "#2f3033",
+                        "on-tertiary-fixed-variant": "#6b3a25",
+                        "inverse-primary": "#afc8f0",
+                        "surface-dim": "#dbd9dd",
+                        "on-secondary-container": "#006e6e",
+                        "surface-container-highest": "#e3e2e5",
+                        "outline-variant": "#c4c6cf",
+                        "secondary": "#006a6a",
+                        "on-primary": "#ffffff",
+                        "primary": "#000613",
+                        "on-secondary-fixed-variant": "#004f4f",
+                        "surface-tint": "#476083",
+                        "surface-variant": "#e3e2e5",
+                        "primary-fixed": "#d4e3ff",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#afc8f0",
+                        "surface-container": "#efedf0",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#5dd9d8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-gap-md": "16px",
+                        "sidebar-width": "260px",
+                        "header-height": "64px",
+                        "stack-gap-sm": "8px",
+                        "grid-gutter": "20px",
+                        "container-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "data-tabular": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "label-bold": ["11px", {"lineHeight": "16px", "fontWeight": "700"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "data-tabular": ["13px", {"lineHeight": "16px", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .modal-backdrop { background-color: rgba(0, 6, 19, 0.4); backdrop-filter: blur(2px); }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- Sidebar (Shared Component) -->
+<aside class="fixed left-0 top-0 h-full w-[260px] bg-primary dark:bg-primary-container flex flex-col py-4 border-r border-outline-variant z-50"><div class="px-6 mb-8 flex items-center gap-3"><div class="flex items-center gap-3"><img alt="Nichirin Logo" class="h-8 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOFm_nOLwHd_FuZ_8uDNchpBRGnJdLTq0E8cdyUMrYmDqQdFeonFuAF3g7FoYHsH4tsdtPupKfFGkEVK0pSa5VZ6E6GKnGTGqkSQXpyPtniu1jr4v2vs79-5miJElLOCcLj4hu3D8Igzwe4kqg2nTM9hxloIPg8_Pi3eyedh2806TSejmSkHuvVqAeybKjDp1dPDyI5M83jop8GXcUsL7wwWJ0XKI4lyvS0ulDYxFH0hdkfERGxsLNxtavGqOmhID1S-k"/><div><h1 class="font-headline-md text-headline-md font-bold text-on-primary">Nichirin Admin</h1><p class="font-body-sm text-body-sm text-on-primary-container opacity-80">Monozukuri System</p></div></div></div><nav class="flex-1 space-y-1 px-3"><div class="space-y-1"><div class="px-4 py-2 text-[11px] font-bold text-white uppercase tracking-wider opacity-70">Monitoring</div><a class="flex items-center gap-3 px-4 py-3 text-white opacity-80 hover:opacity-100 transition-colors duration-200 rounded" href="#"><span class="material-symbols-outlined">dashboard</span><span class="font-body-md text-body-md">Overview</span></a></div><div class="mt-4 space-y-1"><div class="px-4 py-2 text-[11px] font-bold text-white uppercase tracking-wider opacity-70">Master Configuration</div><a class="flex items-center gap-3 px-4 py-3 text-white opacity-80 hover:opacity-100 transition-colors duration-200 rounded" href="#"><span class="material-symbols-outlined">settings_applications</span><span class="font-body-md text-body-md">System Settings</span></a><a class="flex items-center gap-3 px-4 py-3 text-white opacity-80 hover:opacity-100 transition-colors duration-200 rounded" href="#"><span class="material-symbols-outlined">rule</span><span class="font-body-md text-body-md">Field Mapping</span></a></div><div class="mt-4 space-y-1"><div class="px-4 py-2 text-[11px] font-bold text-white uppercase tracking-wider opacity-70">Traceability &amp; Reports</div><a class="flex items-center gap-3 px-4 py-3 text-white opacity-80 hover:opacity-100 transition-colors duration-200 rounded" href="#"><span class="material-symbols-outlined">analytics</span><span class="font-body-md text-body-md">Traceability &amp; Reports</span></a></div><div class="mt-4 space-y-1"><div class="px-4 py-2 text-[11px] font-bold text-white uppercase tracking-wider opacity-70">Administration</div><a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container font-bold transition-all rounded" href="#"><span class="material-symbols-outlined">sync_alt</span><span class="font-body-md text-body-md">SAP Synchronization Logs</span></a><a class="flex items-center gap-3 px-4 py-3 text-white opacity-80 hover:opacity-100 transition-colors duration-200 rounded" href="#"><span class="material-symbols-outlined">admin_panel_settings</span><span class="font-body-md text-body-md">Administration</span></a></div></nav><div class="px-6 py-4 mt-auto"><div class="text-white text-[11px] font-bold uppercase tracking-wider mb-2 opacity-70">System Status: Active</div><div class="space-y-1"><a class="flex items-center gap-3 px-2 py-2 text-white opacity-80 hover:opacity-100 transition-colors" href="#"><span class="material-symbols-outlined">help</span><span class="font-body-md text-body-md">Support</span></a><a class="flex items-center gap-3 px-2 py-2 text-white opacity-80 hover:opacity-100 transition-colors" href="#"><span class="material-symbols-outlined">logout</span><span class="font-body-md text-body-md">Sign Out</span></a></div></div></aside>
+<!-- Top Navigation (Shared Component) -->
+<header class="fixed top-0 right-0 h-[64px] w-[calc(100%-260px)] ml-[260px] px-container-padding bg-surface dark:bg-surface-dim flex justify-between items-center border-b border-outline-variant z-40">
+<div class="flex items-center gap-4">
+<span class="font-headline-sm text-headline-sm font-black text-primary">Control Card Digitization</span>
+<div class="h-4 w-px bg-outline-variant mx-2"></div>
+<nav class="flex items-center gap-2">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Plant</span>
+<span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Line A</span>
+<span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span>
+<span class="font-body-sm text-body-sm text-primary font-bold border-b-2 border-primary pb-1">SAP Logs</span>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary text-on-primary px-4 py-1.5 rounded font-bold text-body-sm active:scale-95 duration-100">Production</button>
+<div class="flex items-center gap-3">
+<button class="text-on-surface-variant hover:text-secondary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="flex items-center gap-2 cursor-pointer hover:text-secondary transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="Close up headshot of a professional factory manager wearing a safety vest and glasses, clean corporate aesthetic, high-key studio lighting with soft shadows, against a minimalist tech background in cool tones of blue and gray." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAofEnWP6n630lja91UJPjNSgLA-KDxpb2fYANqqq5IFjQcISOxNSg0RtGPkayFZzhv1jp9JOf3I9eZ5pL5gYWvRhOi7qQTwkuccbwutr0LPWY2vOg4W_6tSmpRR553rqoxt2Ql7OELg3QnKAaKTQ--JSvGe38M7lhLXDJ7OhEb4fMG3k8zFK5MOX9DU0Da1flI89XiQ3-WwoK-VpLhmBAzZ3RIrAnCthiUvTl90jIexSYmI9IAha3Q-Q"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[260px] pt-[64px] min-h-screen p-container-padding bg-background flex flex-col gap-6">
+  <!-- Header Section -->
+  <section class="flex justify-between items-end">
+    <div>
+      <h2 class="font-headline-lg text-headline-lg text-primary mb-1">SAP Synchronization Logs</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant">Real-time ERP bridge status for manufacturing orders and production completion.</p>
+    </div>
+    <div class="flex gap-2">
+      <button class="flex items-center gap-2 px-4 py-2 border border-primary text-primary hover:bg-red-50/50 font-label-bold text-label-bold rounded-lg transition-colors text-sm font-semibold shadow-sm bg-white">
+        <span class="material-symbols-outlined text-[18px]">download</span> Export Logs
+      </button>
+      <button class="flex items-center gap-2 px-4 py-2 bg-primary text-white font-label-bold text-label-bold rounded-lg hover:bg-primary/95 transition-colors shadow-sm text-sm font-semibold">
+        <span class="material-symbols-outlined text-[18px]">sync</span> Force Full Sync
+      </button>
+    </div>
+  </section>
+
+  <!-- Summary Cards (Bento Style) -->
+  <section class="grid grid-cols-1 md:grid-cols-4 gap-stack-gap-md">
+    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex flex-col justify-between shadow-sm">
+      <div>
+        <span class="text-on-surface-variant font-label-bold uppercase tracking-tight">Last Successful Sync</span>
+        <div class="font-headline-lg text-headline-lg text-primary mt-1 font-bold">08:14 <span class="text-body-sm font-normal text-on-surface-variant">AM</span></div>
+      </div>
+      <div class="mt-4 flex items-center gap-2 text-secondary font-semibold text-sm">
+        <span class="material-symbols-outlined text-[18px]">check_circle</span>
+        <span class="font-body-sm text-body-sm">All systems nominal</span>
+      </div>
+    </div>
+    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex flex-col justify-between shadow-sm">
+      <div>
+        <span class="text-on-surface-variant font-label-bold uppercase tracking-tight">Pending Transactions</span>
+        <div class="font-headline-lg text-headline-lg text-primary mt-1 font-bold">14</div>
+      </div>
+      <div class="mt-4 flex items-center gap-2 text-on-tertiary-container font-semibold text-sm">
+        <span class="material-symbols-outlined text-[18px]">hourglass_empty</span>
+        <span class="font-body-sm text-body-sm">Awaiting ERP Ack</span>
+      </div>
+    </div>
+    <div class="bg-rose-50/50 border border-rose-200/80 rounded-xl p-5 flex flex-col justify-between shadow-sm text-rose-700">
+      <div>
+        <span class="font-label-bold uppercase tracking-tight text-rose-700">Failed Retries</span>
+        <div class="font-headline-lg text-headline-lg text-rose-800 mt-1 font-bold">03</div>
+      </div>
+      <div class="mt-4 flex items-center gap-2 font-semibold text-sm text-rose-700">
+        <span class="material-symbols-outlined text-[18px]">warning</span>
+        <span class="font-body-sm text-body-sm">Immediate action required</span>
+      </div>
+    </div>
+    <div class="bg-primary text-white border border-primary p-5 rounded-xl flex flex-col justify-between overflow-hidden relative shadow-sm">
+      <div class="relative z-10">
+        <span class="opacity-70 font-label-bold uppercase tracking-tight">Total Today</span>
+        <div class="font-headline-lg text-headline-lg mt-1 font-bold">1,284</div>
+      </div>
+      <div class="mt-4 relative z-10 flex items-center gap-2 font-semibold text-sm">
+        <span class="material-symbols-outlined text-[18px]">trending_up</span>
+        <span class="font-body-sm text-body-sm">+12% vs Yesterday</span>
+      </div>
+      <!-- Subtle background design element -->
+      <div class="absolute -right-4 -bottom-4 opacity-10">
+        <span class="material-symbols-outlined text-[100px]">database</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tabs Navigation -->
+  <nav class="flex border-b border-outline-variant/30 overflow-x-auto scrollbar-hide">
+    <button class="px-6 py-3 border-b-2 border-primary text-primary font-bold whitespace-nowrap text-sm">Overview</button>
+    <button class="px-6 py-3 text-on-surface-variant hover:text-primary transition-colors whitespace-nowrap text-sm font-semibold">Sync Transactions</button>
+    <button class="px-6 py-3 text-on-surface-variant hover:text-primary transition-colors whitespace-nowrap text-sm font-semibold">Field Mapping</button>
+    <button class="px-6 py-3 text-on-surface-variant hover:text-primary transition-colors whitespace-nowrap text-sm font-semibold">Failed Retries</button>
+  </nav>
+
+  <!-- Main Table Section -->
+  <div class="bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm flex flex-col">
+    <div class="p-4 bg-white border-b border-outline-variant/30 flex justify-between items-center flex-wrap gap-4">
+      <div class="flex gap-4">
+        <div class="relative font-body-sm">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
+          <input class="pl-9 pr-3 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-primary focus:border-primary focus:ring-1 focus:ring-primary w-64 h-9" placeholder="Search Transaction ID..." type="text"/>
+        </div>
+        <div class="relative">
+          <select class="pl-3 pr-8 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-primary focus:border-primary focus:ring-1 focus:ring-primary w-40 h-9 appearance-none bg-none font-semibold">
+            <option>Status: All</option>
+            <option>Success</option>
+            <option>Failed</option>
+          </select>
+          <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+        </div>
+      </div>
+      <div class="text-sm text-on-surface-variant font-medium">Showing 1-10 of 1,284 entries</div>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse whitespace-nowrap">
+        <thead>
+          <tr class="bg-white border-b border-outline-variant/30">
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Transaction ID</th>
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Direction</th>
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Entity Type</th>
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Status</th>
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Last Attempt</th>
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant/30 font-data-tabular text-data-tabular">
+          <tr class="hover:bg-slate-50/50 transition-colors">
+            <td class="px-6 py-4 font-bold text-primary font-data-tabular">#TXN-90821</td>
+            <td class="px-6 py-4">
+              <span class="flex items-center gap-2 text-on-surface">
+                <span class="material-symbols-outlined text-[18px] text-on-surface-variant">arrow_forward</span> OUTBOUND
+              </span>
+            </td>
+            <td class="px-6 py-4 text-on-surface-variant">Completion Report</td>
+            <td class="px-6 py-4">
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">SUCCESS</span>
+            </td>
+            <td class="px-6 py-4 text-on-surface-variant">2023-11-24 08:14:22</td>
+            <td class="px-6 py-4 text-right">
+              <button class="text-on-surface-variant hover:text-primary font-bold hover:underline transition-colors text-sm">View Payload</button>
+            </td>
+          </tr>
+          <tr class="hover:bg-rose-50/20 transition-colors">
+            <td class="px-6 py-4 font-bold text-primary font-data-tabular">#TXN-90818</td>
+            <td class="px-6 py-4">
+              <span class="flex items-center gap-2 text-on-surface">
+                <span class="material-symbols-outlined text-[18px] text-on-surface-variant">arrow_back</span> INBOUND
+              </span>
+            </td>
+            <td class="px-6 py-4 text-on-surface-variant">Work Order Sync</td>
+            <td class="px-6 py-4">
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200">FAILED</span>
+            </td>
+            <td class="px-6 py-4 text-on-surface-variant">2023-11-24 08:10:05</td>
+            <td class="px-6 py-4 text-right flex items-center justify-end gap-3">
+              <button class="text-on-surface-variant hover:text-primary font-bold hover:underline transition-colors text-sm">View Payload</button>
+              <button class="bg-primary text-white h-7 px-3 rounded-lg font-semibold hover:bg-primary/95 transition-all text-xs shadow-sm" onclick="openRetryModal()">Retry</button>
+            </td>
+          </tr>
+          <tr class="hover:bg-slate-50/50 transition-colors">
+            <td class="px-6 py-4 font-bold text-primary font-data-tabular">#TXN-90815</td>
+            <td class="px-6 py-4">
+              <span class="flex items-center gap-2 text-on-surface">
+                <span class="material-symbols-outlined text-[18px] text-on-surface-variant">arrow_forward</span> OUTBOUND
+              </span>
+            </td>
+            <td class="px-6 py-4 text-on-surface-variant">Production Completion</td>
+            <td class="px-6 py-4">
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">SUCCESS</span>
+            </td>
+            <td class="px-6 py-4 text-on-surface-variant">2023-11-24 07:55:41</td>
+            <td class="px-6 py-4 text-right">
+              <button class="text-on-surface-variant hover:text-primary font-bold hover:underline transition-colors text-sm">View Payload</button>
+            </td>
+          </tr>
+          <tr class="hover:bg-slate-50/50 transition-colors">
+            <td class="px-6 py-4 font-bold text-primary font-data-tabular">#TXN-90810</td>
+            <td class="px-6 py-4">
+              <span class="flex items-center gap-2 text-on-surface">
+                <span class="material-symbols-outlined text-[18px] text-on-surface-variant">arrow_back</span> INBOUND
+              </span>
+            </td>
+            <td class="px-6 py-4 text-on-surface-variant">Work Order Sync</td>
+            <td class="px-6 py-4">
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">SUCCESS</span>
+            </td>
+            <td class="px-6 py-4 text-on-surface-variant">2023-11-24 07:30:12</td>
+            <td class="px-6 py-4 text-right">
+              <button class="text-on-surface-variant hover:text-primary font-bold hover:underline transition-colors text-sm">View Payload</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Pagination -->
+    <div class="px-6 py-4 border-t border-outline-variant/30 flex justify-between items-center bg-white">
+      <button class="flex items-center gap-2 px-3 py-1.5 border border-outline-variant/30 text-on-surface-variant rounded-lg hover:bg-slate-50 transition-colors disabled:opacity-50 h-8" disabled="">
+        <span class="material-symbols-outlined text-[18px]">chevron_left</span> Previous
+      </button>
+      <div class="flex gap-1">
+        <button class="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-lg font-bold shadow-sm text-sm">1</button>
+        <button class="w-8 h-8 flex items-center justify-center border border-outline-variant/30 text-slate-700 hover:bg-slate-100 rounded-lg transition-colors font-semibold text-sm">2</button>
+        <button class="w-8 h-8 flex items-center justify-center border border-outline-variant/30 text-slate-700 hover:bg-slate-100 rounded-lg transition-colors font-semibold text-sm">3</button>
+        <span class="px-2 self-center text-slate-400">...</span>
+        <button class="w-8 h-8 flex items-center justify-center border border-outline-variant/30 text-slate-700 hover:bg-slate-100 rounded-lg transition-colors font-semibold text-sm">129</button>
+      </div>
+      <button class="flex items-center gap-2 px-3 py-1.5 border border-outline-variant/30 text-slate-700 hover:text-primary rounded-lg hover:bg-slate-50 transition-colors h-8">
+        Next <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+      </button>
+    </div>
+  </div>
+</main>
+
+<!-- Retry Modal Overlay -->
+<div class="fixed inset-0 z-[60] hidden flex items-center justify-center p-4" id="retryModal">
+  <div class="modal-backdrop absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onclick="closeRetryModal()"></div>
+  <div class="bg-white w-full max-w-md relative z-10 shadow-2xl rounded-xl border border-outline-variant/30 overflow-hidden flex flex-col">
+    <div class="p-6 border-b border-outline-variant/30 flex justify-between items-center bg-slate-50">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-error">sync_problem</span>
+        <h3 class="font-headline-sm text-headline-sm text-primary">Retry Synchronization</h3>
+      </div>
+      <button class="text-on-surface-variant hover:text-primary transition-colors" onclick="closeRetryModal()">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div class="p-6 space-y-4">
+      <div class="p-3.5 bg-rose-50 border border-rose-200/50 rounded-lg text-rose-700">
+        <p class="text-sm font-bold">Transaction: #TXN-90818</p>
+        <p class="text-xs text-rose-600 mt-1">Error: SAP Endpoint timed out (504 Gateway Timeout). Manual intervention required for re-submission.</p>
+      </div>
+      <div class="space-y-2">
+        <label class="font-label-bold text-on-surface-variant uppercase tracking-tight text-[11px]">Retry Reason *</label>
+        <div class="relative">
+          <select class="w-full border border-outline-variant/30 rounded-lg pl-3 pr-8 py-2 text-sm focus:ring-1 focus:ring-primary focus:outline-none bg-white font-semibold appearance-none bg-none">
+            <option>Network Timeout Re-attempt</option>
+            <option>Data Correction in Source</option>
+            <option>Manual Override</option>
+            <option>Other</option>
+          </select>
+          <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+        </div>
+      </div>
+      <div class="space-y-2">
+        <label class="font-label-bold text-on-surface-variant uppercase tracking-tight text-[11px]">Audit Note</label>
+        <textarea class="w-full border border-outline-variant/30 rounded-lg p-3 text-sm focus:ring-1 focus:ring-primary focus:outline-none bg-white resize-none font-medium" placeholder="Provide details for the audit trail..." rows="4"></textarea>
+        <p class="text-[10px] text-on-surface-variant/70 italic">Note: This action will be logged in the system administrator's audit file.</p>
+      </div>
+    </div>
+    <div class="p-6 bg-slate-50 border-t border-outline-variant/30 flex justify-end gap-3">
+      <button class="px-5 py-2 border border-outline-variant/30 text-slate-700 hover:text-primary rounded-lg hover:bg-slate-100 transition-colors font-semibold text-sm" onclick="closeRetryModal()">Cancel</button>
+      <button class="px-5 py-2 bg-primary text-white font-semibold rounded-lg hover:bg-primary/95 transition-colors shadow-sm text-sm">Confirm Retry</button>
+    </div>
+  </div>
+</div>
+<script>
+        function openRetryModal() {
+            const modal = document.getElementById('retryModal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeRetryModal() {
+            const modal = document.getElementById('retryModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close on ESC
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeRetryModal();
+        });
+    </script>
+
+
+</body></html>

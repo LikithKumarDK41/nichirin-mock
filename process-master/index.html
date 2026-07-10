@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- SPA Layout Redirect Wrapper -->
+<script>
+  if (!document.getElementById('app-root')) {
+    const p = window.location.pathname;
+    const rel = '../';
+    window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
+  }
+</script>
+  <meta charset="UTF-8">
+  <title>Process Master - Nichirin Control Card Digitization</title>
+</head>
+<body class="bg-surface-container-low">
+  
+
+  <main class="flex-grow pt-[88px] px-container-padding pb-container-padding bg-surface-container-low min-h-screen">
+    <div class="flex justify-between items-end mb-5">
+      <div>
+        <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Process Master</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant">Configure and manage manufacturing processes and sequential flows.</p>
+      </div>
+    </div>
+
+    <!-- Main Content Card -->
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 shadow-sm min-h-[400px] flex flex-col items-center justify-center text-center">
+      <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+        <span class="material-symbols-outlined text-[36px] text-primary">settings_suggest</span>
+      </div>
+      <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Process Master Console</h3>
+      <p class="font-body-md text-body-md text-on-surface-variant max-w-md mb-6">This section is currently under active master configuration. The data sync links and layout definitions are active in the sidebar navigation.</p>
+      <button class="bg-primary text-on-primary px-6 py-2.5 rounded-lg font-headline-sm text-headline-sm hover:opacity-90 transition-opacity">
+        Add New Process
+      </button>
+    </div>
+  </main>
+</body>
+</html>

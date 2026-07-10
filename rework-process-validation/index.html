@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rework Process Validation - Nichirin MES Control Card</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-primary": "#afc8f0",
+                      "surface-bright": "#faf9fc",
+                      "surface-dim": "#dbd9dd",
+                      "background": "#faf9fc",
+                      "secondary": "#006a6a",
+                      "primary-container": "#001f3f",
+                      "on-surface": "#1a1c1e",
+                      "on-primary-container": "#6f88ad",
+                      "on-secondary-container": "#006e6e",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-low": "#f4f3f6",
+                      "inverse-on-surface": "#f2f0f3",
+                      "on-tertiary-container": "#b5785f",
+                      "on-background": "#1a1c1e",
+                      "on-secondary-fixed": "#002020",
+                      "on-secondary": "#ffffff",
+                      "on-primary-fixed": "#001c3a",
+                      "on-primary-fixed-variant": "#2f486a",
+                      "outline-variant": "#c4c6cf",
+                      "secondary-container": "#7af2f2",
+                      "on-primary": "#ffffff",
+                      "secondary-fixed": "#7df5f5",
+                      "secondary-fixed-dim": "#5dd9d8",
+                      "on-error": "#ffffff",
+                      "surface-container": "#efedf0",
+                      "tertiary": "#110200",
+                      "on-tertiary-fixed-variant": "#6b3a25",
+                      "inverse-surface": "#2f3033",
+                      "tertiary-fixed": "#ffdbce",
+                      "surface-tint": "#476083",
+                      "tertiary-fixed-dim": "#fdb69a",
+                      "surface": "#faf9fc",
+                      "surface-container-highest": "#e3e2e5",
+                      "primary-fixed-dim": "#afc8f0",
+                      "on-tertiary-fixed": "#351002",
+                      "on-tertiary": "#ffffff",
+                      "on-surface-variant": "#43474e",
+                      "on-error-container": "#93000a",
+                      "error": "#ba1a1a",
+                      "tertiary-container": "#391303",
+                      "surface-container-high": "#e9e7eb",
+                      "surface-variant": "#e3e2e5",
+                      "error-container": "#ffdad6",
+                      "primary": "#000613",
+                      "outline": "#74777f",
+                      "on-secondary-fixed-variant": "#004f4f",
+                      "primary-fixed": "#d4e3ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "stack-gap-sm": "8px",
+                      "stack-gap-md": "16px",
+                      "container-padding": "24px",
+                      "grid-gutter": "20px",
+                      "sidebar-width": "260px",
+                      "header-height": "64px"
+              },
+              "fontFamily": {
+                      "label-bold": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "headline-sm": ["Inter"],
+                      "data-tabular": ["Inter"],
+                      "body-md": ["Inter"],
+                      "body-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "label-bold": ["11px", {"lineHeight": "16px", "fontWeight": "700"}],
+                      "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-sm": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                      "data-tabular": ["13px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .canvas-bg {
+            background-color: #faf9fc;
+            background-image: 
+                linear-gradient(to right, #e3e2e5 1px, transparent 1px),
+                linear-gradient(to bottom, #e3e2e5 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .rework-path {
+            stroke-dasharray: 4;
+            animation: dash 20s linear infinite;
+        }
+
+        @keyframes dash {
+            to {
+                stroke-dashoffset: -1000;
+            }
+        }
+        
+        .stage-card {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased overflow-hidden h-screen flex">
+<!-- SideNavBar -->
+<nav class="bg-primary fixed left-0 top-0 h-full w-sidebar-width flex flex-col py-4 z-50">
+<div class="px-container-padding mb-8">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-DEFAULT bg-secondary-fixed flex items-center justify-center text-primary font-bold">N</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-on-primary">Nichirin</h1>
+<p class="font-body-sm text-body-sm text-on-primary opacity-80">MES Control Card</p>
+</div>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-1 px-3">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary opacity-80 hover:bg-on-primary-fixed-variant/10 hover:text-white transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">monitor_heart</span>
+<span class="font-body-md text-body-md">Monitoring</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-secondary-fixed bg-on-primary-fixed-variant/20 font-bold border-r-4 border-secondary-fixed transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings_applications</span>
+<span class="font-body-md text-body-md">Master Configuration</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary opacity-80 hover:bg-on-primary-fixed-variant/10 hover:text-white transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">analytics</span>
+<span class="font-body-md text-body-md">Traceability &amp; Reports</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary opacity-80 hover:bg-on-primary-fixed-variant/10 hover:text-white transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">admin_panel_settings</span>
+<span class="font-body-md text-body-md">Administration</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col ml-[260px] w-[calc(100%-260px)] h-screen overflow-hidden relative">
+<!-- TopAppBar -->
+<header class="bg-surface-container-lowest border-b border-outline-variant h-header-height flex justify-between items-center px-container-padding z-40 shrink-0">
+<div class="flex items-center gap-2">
+<h2 class="font-headline-sm text-headline-sm font-semibold text-primary">Control Card Digitization System</h2>
+<span class="text-outline mx-2">|</span>
+<nav class="flex items-center gap-2 font-body-sm text-body-sm">
+<span class="text-on-surface-variant font-normal">Plant</span>
+<span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span>
+<span class="text-on-surface-variant font-normal">Line A</span>
+<span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span>
+<span class="text-primary font-bold">Control Card #402</span>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 mr-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-bold text-label-bold">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+                        Draft
+                    </span>
+</div>
+<button class="w-10 h-10 flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high rounded-full transition-all cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high rounded-full transition-all cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center border border-outline-variant overflow-hidden cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="Close-up professional headshot of an industrial plant supervisor in uniform, sharp focus, well lit, neutral background, reflecting an authoritative and precise demeanor." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuVtge28_PW6SFZ3ezTTcBfMNezpy050zaF0FqknOMd5r2Y36u7JUYqjn5Jo3YSipYHLIbXasjS3qxk09kM88PfW78P4iFUhgNFMZ5o1Z_HycoKtCILGX6UIvVU7a4wS1VHGn5HX0rusox3Iflyj6K-T21YMQgYskc_u8SfREzXxQvU9XMHhfaJ6QUbtapxuBG3KvdCL78OdcTUV_fBaqU95O_ughcqCjCU9C8uNq9HzAk6my1ghXDlQ"/>
+</div>
+</div>
+</header>
+<!-- Main Workspace: Split Canvas and Right Panel -->
+<main class="flex-1 flex overflow-hidden">
+<!-- Center Canvas (Process Flow) -->
+<div class="flex-1 canvas-bg relative overflow-auto flex flex-col">
+<!-- Toolbar overlay inside canvas -->
+<div class="absolute top-4 left-4 bg-surface-container-lowest border border-outline-variant rounded-lg p-2 flex gap-2 z-10 stage-card">
+<button class="p-2 rounded hover:bg-surface-container text-on-surface-variant transition-colors" title="Zoom In">
+<span class="material-symbols-outlined">zoom_in</span>
+</button>
+<button class="p-2 rounded hover:bg-surface-container text-on-surface-variant transition-colors" title="Zoom Out">
+<span class="material-symbols-outlined">zoom_out</span>
+</button>
+<div class="w-px bg-outline-variant mx-1"></div>
+<button class="p-2 rounded hover:bg-surface-container text-on-surface-variant transition-colors" title="Pan Tool">
+<span class="material-symbols-outlined">pan_tool</span>
+</button>
+</div>
+<div class="flex-1 relative min-h-[600px] min-w-[800px] p-12">
+<!-- SVG Connections Layer -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 0;">
+<!-- Normal Process Flow -->
+<path d="M 200 150 L 350 150" fill="none" marker-end="url(#arrow-normal)" stroke="#c4c6cf" stroke-width="2"></path>
+<path d="M 550 150 L 700 150" fill="none" marker-end="url(#arrow-normal)" stroke="#c4c6cf" stroke-width="2"></path>
+<!-- Rework Path (Red, Dashed) -->
+<path class="rework-path" d="M 800 190 Q 800 300 600 300 T 200 190" fill="none" marker-end="url(#arrow-error)" stroke="#ba1a1a" stroke-width="2"></path>
+<defs>
+<marker id="arrow-normal" markerheight="6" markerwidth="6" orient="auto" refx="9" refy="5" viewbox="0 0 10 10">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#c4c6cf"></path>
+</marker>
+<marker id="arrow-error" markerheight="6" markerwidth="6" orient="auto" refx="9" refy="5" viewbox="0 0 10 10">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#ba1a1a"></path>
+</marker>
+</defs>
+</svg>
+<!-- Process Nodes -->
+<div class="relative z-10 flex gap-[150px] items-start pt-20">
+<!-- Node 1 -->
+<div class="w-[200px] bg-surface-container-lowest border border-outline-variant rounded-lg p-4 stage-card relative group cursor-pointer hover:border-primary transition-colors">
+<div class="flex justify-between items-start mb-3">
+<div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="font-data-tabular text-data-tabular">01</span>
+</div>
+<span class="material-symbols-outlined text-outline">more_horiz</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">Cutting</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Standard Setup</p>
+</div>
+<!-- Node 2 (Rework Target) -->
+<div class="w-[200px] bg-surface-container-lowest border-2 border-primary rounded-lg p-4 stage-card relative group cursor-pointer">
+<!-- Indicator Badge for Target -->
+<div class="absolute -top-3 -right-3 bg-primary text-on-primary px-2 py-1 rounded text-[10px] font-bold flex items-center gap-1 shadow-md">
+<span class="material-symbols-outlined text-[14px]">target</span> Rework Target
+                            </div>
+<div class="flex justify-between items-start mb-3">
+<div class="w-8 h-8 rounded bg-primary-fixed flex items-center justify-center text-on-primary-fixed">
+<span class="font-data-tabular text-data-tabular">02</span>
+</div>
+<span class="material-symbols-outlined text-outline">more_horiz</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">Crimping First</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Machine A-12</p>
+</div>
+<!-- Node 3 (QC - Rework Origin) -->
+<div class="w-[200px] bg-error-container border border-error rounded-lg p-4 stage-card relative group cursor-pointer">
+<div class="flex justify-between items-start mb-3">
+<div class="w-8 h-8 rounded bg-error text-on-error flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">rule</span>
+</div>
+<span class="material-symbols-outlined text-error">more_horiz</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-error-container mb-1">QC Check</h3>
+<p class="font-body-sm text-body-sm text-on-error-container opacity-80">Pressure Test</p>
+<!-- Origin Indicator -->
+<div class="mt-4 pt-3 border-t border-error/20 flex items-center gap-2">
+<span class="material-symbols-outlined text-error text-[16px]">reply</span>
+<span class="font-label-bold text-label-bold text-error">Rework Trigger</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Validation Bottom Panel -->
+<div class="h-48 bg-surface-container-lowest border-t border-outline-variant shrink-0 flex flex-col">
+<div class="px-4 py-2 border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">rule_folder</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Validation Rules</span>
+</div>
+<span class="px-2 py-1 bg-error-container text-on-error-container font-label-bold text-label-bold rounded">1 Error</span>
+</div>
+<div class="flex-1 overflow-y-auto p-4 flex flex-col gap-2">
+<!-- Error Item -->
+<div class="flex items-start gap-3 p-3 rounded bg-error-container/30 border border-error/20">
+<span class="material-symbols-outlined text-error mt-0.5">error</span>
+<div>
+<h4 class="font-body-md text-body-md font-semibold text-on-surface">Rework Path Missing</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">A rework path returning from 'QC Check' to 'Crimping First' must be completely configured before publishing.</p>
+</div>
+<button class="ml-auto text-primary font-body-sm text-body-sm font-semibold hover:underline mt-1">Fix</button>
+</div>
+<!-- Success Item -->
+<div class="flex items-start gap-3 p-3 rounded border border-outline-variant">
+<span class="material-symbols-outlined text-secondary mt-0.5">check_circle</span>
+<div>
+<h4 class="font-body-md text-body-md text-on-surface">Linear Flow Complete</h4>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Panel (Rework Logic & Path Validation) -->
+<aside class="w-[360px] bg-surface-container-lowest border-l border-outline-variant shrink-0 flex flex-col h-full overflow-hidden">
+<!-- Panel Header -->
+<div class="p-container-padding border-b border-outline-variant">
+<h3 class="font-headline-md text-headline-md text-primary mb-1">Rework Logic &amp; Path Validation</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Configure logic for returning products to previous stages upon QC failure.</p>
+</div>
+<!-- Panel Content (Scrollable) -->
+<div class="flex-1 overflow-y-auto p-container-padding flex flex-col gap-6">
+<!-- Section: Rework Target Stage -->
+<div class="flex flex-col gap-4">
+<h4 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+<span class="w-6 h-6 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed text-body-sm font-bold">1</span>
+                            Rework Target Stage
+                        </h4>
+<div class="flex flex-col gap-2">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase">Select Target Stage</label>
+<div class="relative">
+<select class="w-full bg-surface-bright border border-outline-variant rounded px-3 py-2 font-body-md text-body-md text-on-surface appearance-none focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary">
+<option>01 - Cutting</option>
+<option selected="">02 - Crimping First</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-outline pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="p-3 bg-surface-container-low rounded border border-outline-variant text-body-sm text-on-surface-variant">
+<span class="font-semibold text-on-surface">Path:</span> QC Check → Crimping First
+                        </div>
+</div>
+<div class="w-full h-px bg-outline-variant"></div>
+<!-- Section: Stage Reset Rules -->
+<div class="flex flex-col gap-4">
+<h4 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+<span class="w-6 h-6 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed text-body-sm font-bold">2</span>
+                            Stage Reset Rules
+                        </h4>
+<label class="flex items-start gap-3 cursor-pointer">
+<input checked="" class="mt-1 w-4 h-4 text-secondary border-outline-variant rounded focus:ring-secondary" type="checkbox"/>
+<div>
+<span class="font-body-md text-body-md text-on-surface block font-medium">Require NG Reason Entry</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant block mt-0.5">Operator must select a defect code before triggering rework.</span>
+</div>
+</label>
+<label class="flex items-start gap-3 cursor-pointer">
+<input checked="" class="mt-1 w-4 h-4 text-secondary border-outline-variant rounded focus:ring-secondary" type="checkbox"/>
+<div>
+<span class="font-body-md text-body-md text-on-surface block font-medium">Clear Intermediate Stage Data</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant block mt-0.5">Data from stages between Target and Origin will be archived and reset for the rework pass.</span>
+</div>
+</label>
+</div>
+<div class="w-full h-px bg-outline-variant"></div>
+<!-- Section: Unlock Rule -->
+<div class="flex flex-col gap-4">
+<h4 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+<span class="w-6 h-6 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed text-body-sm font-bold">3</span>
+                            Unlock Rule
+                        </h4>
+<div class="p-4 border border-outline-variant rounded bg-surface-bright flex flex-col gap-3">
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md font-medium text-on-surface">Authorization Required</span>
+<div class="w-8 h-4 bg-secondary rounded-full relative cursor-pointer">
+<div class="w-3 h-3 bg-white rounded-full absolute right-0.5 top-0.5"></div>
+</div>
+</div>
+<div class="flex flex-col gap-2 mt-2">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase">Required Role</label>
+<div class="relative">
+<select class="w-full bg-surface border border-outline-variant rounded px-3 py-2 font-body-md text-body-md text-on-surface appearance-none focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary">
+<option>Line Supervisor</option>
+<option selected="">Quality Manager</option>
+<option>Plant Manager</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-outline pointer-events-none">expand_more</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 italic">Quality Manager acceptance is mandatory to initiate this rework path.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Panel Footer Actions -->
+<div class="p-container-padding border-t border-outline-variant bg-surface-container-lowest flex gap-3">
+<button class="flex-1 px-4 py-2 border border-primary text-primary font-body-md text-body-md font-semibold rounded hover:bg-surface-container transition-colors">
+                        Cancel
+                    </button>
+<button class="flex-1 px-4 py-2 bg-primary text-on-primary font-body-md text-body-md font-semibold rounded hover:bg-primary-fixed-variant transition-colors shadow-sm">
+                        Apply Logic
+                    </button>
+</div>
+</aside>
+</main>
+</div>
+</body></html>

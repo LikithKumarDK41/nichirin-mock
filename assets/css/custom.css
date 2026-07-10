@@ -1,0 +1,344 @@
+:root {
+  /* Official Nichirin Corporate Red & Slate light palette - proper depth scale */
+  --color-background: #f8fafc; /* slate-50 (darker background) */
+  --color-surface: #ffffff; /* white card surface */
+  --color-surface-bright: #ffffff;
+  --color-surface-dim: #f1f5f9; /* slate-100 */
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f8fafc;
+  --color-surface-container: #f1f5f9;
+  --color-surface-container-high: #e2e8f0;
+  --color-surface-container-highest: #cbd5e1;
+  
+  --color-primary: #c8102e; /* Official Nichirin Corporate Red */
+  --color-on-primary: #ffffff;
+  --color-primary-container: #fde8eb; /* Soft Red-pink container background */
+  --color-on-primary-container: #4a000b; /* Dark Maroon text */
+  --color-primary-fixed: #fde8eb;
+  --color-primary-fixed-dim: #ffb3be;
+  --color-on-primary-fixed: #4a000b;
+  --color-on-primary-fixed-variant: #4a000b;
+
+  --color-secondary: #475569; /* Slate-600 */
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #f1f5f9; /* Slate-100 container */
+  --color-on-secondary-container: #0f172a;
+  --color-secondary-fixed: #f1f5f9;
+  --color-secondary-fixed-dim: #cbd5e1;
+  --color-on-secondary-fixed: #0f172a;
+  --color-on-secondary-fixed-variant: #0f172a;
+
+  --color-tertiary: #10b981; /* emerald-500 (Quality / Success) */
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #d1fae5;
+  --color-on-tertiary-container: #064e3b;
+  --color-tertiary-fixed: #d1fae5;
+  --color-tertiary-fixed-dim: #6ee7b7;
+  --color-on-tertiary-fixed: #064e3b;
+  --color-on-tertiary-fixed-variant: #065f46;
+
+  --color-error: #f43f5e; /* rose-500 */
+  --color-on-error: #ffffff;
+  --color-error-container: #ffe4e6;
+  --color-on-error-container: #9f1239;
+
+  --color-on-background: #0f172a; /* slate-900 */
+  --color-on-surface: #0f172a;
+  --color-on-surface-variant: #475569; /* slate-600 */
+  --color-outline: #64748b; /* slate-500 */
+  --color-outline-variant: #cbd5e1; /* slate-300 */
+  --color-inverse-surface: #1e293b;
+  --color-inverse-on-surface: #f8fafc;
+  --color-inverse-primary: #ff4d66;
+  --color-surface-variant: #f1f5f9;
+  --color-surface-tint: #c8102e;
+}
+
+.dark {
+  /* Premium Dark Slate theme with high-contrast corporate red accents */
+  --color-background: #0b0f19; /* Slate-950 (deep charcoal black) */
+  --color-surface: #111827; /* Slate-900 (panel/card surface) */
+  --color-surface-bright: #1f2937; /* Slate-800 */
+  --color-surface-dim: #070a13;
+  --color-surface-container-lowest: #111827; /* Slate-900 cards */
+  --color-surface-container-low: #0b0f19; /* Slate-950 inner layers */
+  --color-surface-container: #0b0f19; /* Slate-950 (dark inset input fields) */
+  --color-surface-container-high: #1f2937; /* Slate-800 (hover actions) */
+  --color-surface-container-highest: #374151; /* Slate-700 (borders and dividers) */
+
+  --color-primary: #ef4444; /* Red-500 (highly visible corporate brand red) */
+  --color-on-primary: #ffffff; /* Clean white text on red buttons */
+  --color-primary-container: #7f1d1d; /* Deep red-maroon container */
+  --color-on-primary-container: #fee2e2;
+  --color-primary-fixed: #7f1d1d;
+  --color-primary-fixed-dim: #991b1b;
+  --color-on-primary-fixed: #fee2e2;
+  --color-on-primary-fixed-variant: #fee2e2;
+
+  --color-secondary: #94a3b8; /* Slate-400 */
+  --color-on-secondary: #111827;
+  --color-secondary-container: #1e293b; /* Slate-800 */
+  --color-on-secondary-container: #cbd5e1;
+  --color-secondary-fixed: #1e293b;
+  --color-secondary-fixed-dim: #334155;
+  --color-on-secondary-fixed: #cbd5e1;
+  --color-on-secondary-fixed-variant: #cbd5e1;
+
+  --color-tertiary: #34d399; /* emerald-400 */
+  --color-on-tertiary: #064e3b;
+  --color-tertiary-container: #064e3b;
+  --color-on-tertiary-container: #d1fae5;
+  --color-tertiary-fixed: #064e3b;
+  --color-tertiary-fixed-dim: #059669;
+  --color-on-tertiary-fixed: #d1fae5;
+  --color-on-tertiary-fixed-variant: #d1fae5;
+
+  --color-error: #fb7185; /* rose-400 */
+  --color-on-error: #4c0519;
+  --color-error-container: #4c0519;
+  --color-on-error-container: #ffe4e6;
+
+  --color-on-background: #f8fafc; /* Slate-50 (clean off-white) */
+  --color-on-surface: #f8fafc; /* Crisp white text on dark cards */
+  --color-on-surface-variant: #94a3b8; /* Slate-400 (secondary text & placeholder) */
+  --color-outline: #4b5563; /* Slate-600 */
+  --color-outline-variant: #374151; /* Slate-700 (thin lines) */
+  --color-inverse-surface: #f8fafc;
+  --color-inverse-on-surface: #0f172a;
+  --color-inverse-primary: #c8102e;
+  --color-surface-variant: #1e293b;
+  --color-surface-tint: #ef4444;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Modern subtle mesh grid pattern */
+.industrial-pattern {
+  background-image: radial-gradient(circle at 1px 1px, var(--color-outline-variant) 1px, transparent 0);
+  background-size: 32px 32px;
+}
+
+.dark .industrial-pattern {
+  background-image: radial-gradient(circle at 1px 1px, #1e293b 1px, transparent 0);
+}
+
+.focus-ring:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.15);
+}
+
+.sidebar-active {
+  background-color: var(--color-primary) !important;
+  color: var(--color-on-primary) !important;
+  font-weight: 600 !important;
+}
+
+.sidebar-active span {
+  color: var(--color-on-primary) !important;
+}
+
+/* Thin modern scrollbars */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-outline-variant);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--color-outline);
+}
+
+/* Subtle background utility helpers */
+.bg-error-subtle {
+  background-color: rgba(244, 63, 94, 0.08) !important;
+}
+.dark .bg-error-subtle {
+  background-color: rgba(251, 113, 133, 0.1) !important;
+}
+
+.bg-secondary-subtle {
+  background-color: rgba(71, 85, 105, 0.08) !important;
+}
+.dark .bg-secondary-subtle {
+  background-color: rgba(148, 163, 184, 0.12) !important;
+}
+
+.bg-primary-subtle {
+  background-color: rgba(200, 16, 46, 0.06) !important;
+}
+.dark .bg-primary-subtle {
+  background-color: rgba(255, 77, 102, 0.1) !important;
+}
+
+/* Smooth layout animations */
+aside {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+}
+
+header, main {
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease;
+}
+
+/* Custom Input & Placeholder legibility overrides for Dark Mode */
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: var(--color-on-surface-variant) !important;
+  opacity: 0.55 !important;
+}
+
+.dark input,
+.dark select,
+.dark textarea {
+  color: var(--color-on-surface) !important;
+}
+
+/* Layout FOUC protection & smooth SPA transitions */
+#app-layout {
+  opacity: 0;
+}
+
+/* Collapsed sidebar desktop styling */
+aside.sidebar-collapsed {
+  width: 72px !important;
+}
+
+aside.sidebar-collapsed .h-\[64px\] {
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+
+aside.sidebar-collapsed .h-\[64px\] div {
+  width: 40px !important;
+  height: 40px !important;
+  padding: 4px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+}
+
+aside.sidebar-collapsed .h-\[64px\] div img {
+  height: 28px !important;
+  width: auto !important;
+  max-width: none !important;
+}
+
+aside.sidebar-collapsed nav {
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+  padding-top: 12px !important;
+}
+
+aside.sidebar-collapsed .nav-item,
+aside.sidebar-collapsed button {
+  justify-content: center !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  gap: 0 !important;
+}
+
+aside.sidebar-collapsed .nav-item span:not(.material-symbols-outlined),
+aside.sidebar-collapsed button span:not(.material-symbols-outlined) {
+  display: none !important;
+}
+
+aside.sidebar-collapsed button span:last-child {
+  display: none !important;
+}
+
+aside.sidebar-collapsed .pl-8 {
+  display: none !important;
+}
+
+aside.sidebar-collapsed .grid-cols-2 {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+aside.sidebar-collapsed .grid-cols-2 a {
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  justify-content: center !important;
+}
+
+aside.sidebar-collapsed .h-\[64px\] a {
+  width: 40px !important;
+  height: 40px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  overflow: hidden !important;
+  margin: 0 auto !important;
+}
+
+aside.sidebar-collapsed .h-\[64px\] a img {
+  height: 24px !important;
+  width: auto !important;
+  max-width: none !important;
+}
+
+aside.sidebar-collapsed .px-3.mt-auto {
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+  padding-bottom: 16px !important;
+}
+
+aside.sidebar-collapsed .px-3.mt-auto a {
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  justify-content: center !important;
+  flex: none !important;
+  border-color: rgba(226, 232, 240, 0.5) !important;
+}
+
+aside.sidebar-collapsed .px-3.mt-auto a span:not(.material-symbols-outlined) {
+  display: none !important;
+}
+
+aside.sidebar-collapsed nav p {
+  display: none !important;
+}
+
+main {
+  padding-top: 88px !important;
+}
+
+#app-layout[data-no-padding="true"] main {
+  padding-top: 64px !important;
+}
+
+main.main-collapsed {
+  margin-left: 72px !important;
+}
+
+header.header-collapsed {
+  width: calc(100% - 72px) !important;
+}
+
+

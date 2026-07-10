@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-background dark" lang="en"><head>
+<!-- SPA Layout Redirect Wrapper -->
+<script>
+  if (!document.getElementById('app-root')) {
+    const p = window.location.pathname;
+    const rel = '../';
+    window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
+  }
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Control Point Master - Nichirin Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-container": "#001f3f",
+                        "surface-variant": "#e3e2e5",
+                        "outline-variant": "#c4c6cf",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#006e6e",
+                        "secondary": "#006a6a",
+                        "primary-fixed": "#d4e3ff",
+                        "surface-container-high": "#e9e7eb",
+                        "on-tertiary-fixed": "#351002",
+                        "on-surface": "#1a1c1e",
+                        "on-tertiary-container": "#b5785f",
+                        "tertiary": "#110200",
+                        "on-primary-fixed-variant": "#2f486a",
+                        "secondary-container": "#7af2f2",
+                        "secondary-fixed": "#7df5f5",
+                        "tertiary-fixed": "#ffdbce",
+                        "background": "#faf9fc",
+                        "surface-tint": "#476083",
+                        "error-container": "#ffdad6",
+                        "inverse-primary": "#afc8f0",
+                        "surface": "#faf9fc",
+                        "on-surface-variant": "#43474e",
+                        "primary-fixed-dim": "#afc8f0",
+                        "tertiary-fixed-dim": "#fdb69a",
+                        "tertiary-container": "#391303",
+                        "inverse-on-surface": "#f2f0f3",
+                        "surface-container-highest": "#e3e2e5",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#002020",
+                        "on-primary-container": "#6f88ad",
+                        "on-tertiary-fixed-variant": "#6b3a25",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#dbd9dd",
+                        "surface-bright": "#faf9fc",
+                        "primary": "#000613",
+                        "error": "#ba1a1a",
+                        "surface-container-low": "#f4f3f6",
+                        "surface-container": "#efedf0",
+                        "on-primary-fixed": "#001c3a",
+                        "outline": "#74777f",
+                        "inverse-surface": "#2f3033",
+                        "secondary-fixed-dim": "#5dd9d8",
+                        "on-background": "#1a1c1e",
+                        "on-secondary-fixed-variant": "#004f4f",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    spacing: {
+                        "sidebar-width": "260px",
+                        "container-padding": "24px",
+                        "grid-gutter": "20px",
+                        "stack-gap-sm": "8px",
+                        "stack-gap-md": "16px",
+                        "header-height": "64px"
+                    },
+                    fontFamily: {
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "data-tabular": ["Inter"],
+                        "body-sm": ["Inter"]
+                    },
+                    fontSize: {
+                        "headline-md": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+                        "headline-lg": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600" }],
+                        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "label-bold": ["11px", { lineHeight: "16px", fontWeight: "700" }],
+                        "headline-sm": ["16px", { lineHeight: "24px", fontWeight: "600" }],
+                        "data-tabular": ["13px", { lineHeight: "16px", fontWeight: "500" }],
+                        "body-sm": ["12px", { lineHeight: "18px", fontWeight: "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Custom Scrollbar for Drawer */
+        .drawer-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .drawer-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .drawer-scroll::-webkit-scrollbar-thumb {
+            background-color: #c4c6cf;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background h-full font-sans antialiased overflow-hidden">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full w-[260px] bg-primary dark:bg-primary-container border-r border-outline-variant flex flex-col py-4 z-50">
+<!-- Brand / Header -->
+<div class="px-container-padding mb-8">
+<div class="flex items-center gap-3 mb-2">
+<img alt="Nichirin Logo" class="w-8 h-8 rounded" data-alt="A minimal, industrial logo for a manufacturing system. The logo features a stylized gear or abstract technical shape in bright white against a deep navy blue background. The aesthetic is extremely clean, sharp, and corporate, emphasizing precision and reliability. The lighting is flat to maintain vector-like clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9iVUE4LrNMEsyLbsgfQ-jp0roj762mdwED2yj7aw7u_tUnHQ81xbe8t82F0fgJb7pA_UmF5TUT9b3CMKwwmzFNriLG1hrkiUQVmZU-2ZVrt-E2eOgN7KAcAJEDtemftJYoshsftWB1ToWrctqKtmClS_KkgchPhck88sfpy8S-1165BIiK6YaeRWqrEjUN8PdecYrlj_kOmOUyta1e7y92CVU4_Oj9XK6iiw1O-x-PePDIs9QKUFeAzOmmaDq4urvGkk"/>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-on-primary">Nichirin Admin</h1>
+<p class="font-body-sm text-body-sm text-on-primary-fixed-variant">Monozukuri System</p>
+</div>
+</div>
+<div class="mt-4 inline-flex items-center gap-2 px-2 py-1 rounded bg-secondary-container text-on-secondary-container font-label-bold text-label-bold">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                System Status: Active
+            </div>
+</div>
+<!-- Navigation Links -->
+<ul class="flex-1 flex flex-col gap-1 px-2"><li class="px-4 py-2 mt-2"><span class="text-[11px] font-bold text-white/60 uppercase tracking-widest">Monitoring</span></li><li class=""><a class="flex items-center gap-3 px-4 py-3 rounded text-white/80 hover:bg-white/10 hover:text-white transition-colors duration-200 font-body-md text-body-md" href="#"><span class="material-symbols-outlined">dashboard</span> Dashboard</a></li><li class="px-4 py-2 mt-4"><span class="text-[11px] font-bold text-white/60 uppercase tracking-widest">Master Configuration</span></li><li class=""><a class="flex items-center gap-3 px-4 py-3 rounded bg-[#4FD1D9] text-primary font-bold transition-all font-body-md text-body-md" href="#"><span class="material-symbols-outlined">settings_applications</span> Control Point Master</a></li><li class=""><a class="flex items-center gap-3 px-4 py-3 rounded text-white/80 hover:bg-white/10 hover:text-white transition-colors duration-200 font-body-md text-body-md" href="#"><span class="material-symbols-outlined">inventory_2</span> Product Master</a></li><li class=""><a class="flex items-center gap-3 px-4 py-3 rounded text-white/80 hover:bg-white/10 hover:text-white transition-colors duration-200 font-body-md text-body-md" href="#"><span class="material-symbols-outlined">account_tree</span> Process Flow</a></li><li class="px-4 py-2 mt-4"><span class="text-[11px] font-bold text-white/60 uppercase tracking-widest">Traceability &amp; Reports</span></li><li class=""><a class="flex items-center gap-3 px-4 py-3 rounded text-white/80 hover:bg-white/10 hover:text-white transition-colors duration-200 font-body-md text-body-md" href="#"><span class="material-symbols-outlined">analytics</span> Traceability</a></li><li class="px-4 py-2 mt-4"><span class="text-[11px] font-bold text-white/60 uppercase tracking-widest">Administration</span></li><li class=""><a class="flex items-center gap-3 px-4 py-3 rounded text-white/80 hover:bg-white/10 hover:text-white transition-colors duration-200 font-body-md text-body-md" href="#"><span class="material-symbols-outlined">manage_accounts</span> User Management</a></li></ul>
+<!-- Footer Links -->
+<div class="px-2 mt-auto">
+<ul class="flex flex-col gap-1 border-t border-outline-variant pt-4"><li class=""><a class="flex items-center gap-3 px-4 py-3 rounded text-white/80 hover:bg-white/10 hover:text-white transition-colors duration-200 font-body-md text-body-md" href="#"><span class="material-symbols-outlined">help</span> Support</a></li><li class=""><a class="flex items-center gap-3 px-4 py-3 rounded text-white/80 hover:bg-white/10 hover:text-white transition-colors duration-200 font-body-md text-body-md" href="#"><span class="material-symbols-outlined">logout</span> Sign Out</a></li></ul>
+</div>
+</nav>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 h-[64px] z-40 bg-surface dark:bg-surface-dim border-b border-outline-variant flex justify-between items-center w-[calc(100%-260px)] ml-[260px] px-container-padding">
+<!-- Breadcrumbs & Product Name -->
+<div class="flex flex-col">
+<h2 class="font-headline-sm text-headline-sm font-black text-primary">Control Card Digitization</h2>
+<nav aria-label="Breadcrumb" class="flex items-center text-on-surface-variant font-body-sm text-body-sm mt-0.5">
+<ol class="flex items-center space-x-1">
+<li class="">
+<a class="hover:text-secondary transition-colors font-medium" href="#">Master Configuration</a>
+</li>
+<li>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+</li>
+<li class="">
+<a aria-current="page" class="text-primary font-bold border-b-2 border-primary pb-0.5" href="#">Control Point Master</a>
+</li>
+</ol>
+</nav>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-4">
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-container border border-outline-variant rounded focus:border-secondary focus:ring-1 focus:ring-secondary text-body-md font-body-md w-64" placeholder="Search CPs..." type="text"/>
+</div>
+<button class="bg-primary text-on-primary px-4 py-1.5 rounded font-body-md text-body-md font-medium hover:bg-primary-container transition-colors Click: scale-95 duration-100 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                New CP
+            </button>
+<div class="flex items-center gap-2 border-l border-outline-variant pl-4 ml-2">
+<button class="text-primary dark:text-primary-fixed hover:text-secondary transition-colors p-1 rounded-full hover:bg-surface-container-highest">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center gap-2 hover:bg-surface-container-highest p-1 rounded transition-colors">
+<img alt="User Profile" class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="A professional headshot of an industrial plant supervisor. The subject is wearing a clean white hard hat and safety glasses, with a sharp, focused expression. The background is slightly blurred showing technical blueprints. Lighting is bright, high-key, and professional, reinforcing an atmosphere of precision and authority." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAx0ygZ0lBkmHu-vDud4bAC2wW7gWxgYYSV0bHgVFAZ6w0VYf-ho1BqlpZo0i4ydnJ8zIfz-OjZmifjTWHkjmgycDygFLgrTMBDh-BbJxoz5N6wYUzpsgxYwLIaOHmlaLz_vYot6vrh6ZSDkYjt0MmGfL27x5-t9xYTqRmPh0zp2D6eu-rp2X2-Dh-taHREcum4CxSmmJrBuAVtS113BKevtkY2JRXtuCzu3kCj7BvNlz_HvFTTHnkxfA"/>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-[260px] mt-[64px] h-[calc(100vh-64px)] overflow-hidden bg-surface-container-low p-container-padding flex flex-col gap-5 relative">
+  <!-- Page Title Header -->
+  <div class="flex-shrink-0">
+    <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Control Point Master</h2>
+    <p class="font-body-md text-body-md text-on-surface-variant">Configure plant-wide quality control standards, metrics, tolerances, and data recording rules.</p>
+  </div>
+
+  <!-- Content Section (Table + Drawer) -->
+  <div class="flex-1 flex gap-5 min-h-0 relative">
+    <!-- Table Section Card -->
+    <div class="flex-1 bg-white rounded-xl border border-outline-variant/30 flex flex-col h-full overflow-hidden shadow-sm">
+      <!-- Table Toolbar -->
+      <div class="p-4 border-b border-outline-variant/30 flex justify-between items-center bg-slate-50">
+        <div class="flex items-center gap-4">
+          <div class="relative">
+            <select class="pl-3 pr-8 py-1.5 bg-white border border-outline-variant/30 rounded-lg text-sm focus:ring-primary focus:border-primary appearance-none bg-none">
+              <option>All Processes</option>
+              <option>Extrusion</option>
+              <option>Molding</option>
+              <option>Assembly</option>
+            </select>
+            <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant text-[18px]">arrow_drop_down</span>
+          </div>
+          <div class="relative">
+            <select class="pl-3 pr-8 py-1.5 bg-white border border-outline-variant/30 rounded-lg text-sm focus:ring-primary focus:border-primary appearance-none bg-none">
+              <option>All Input Types</option>
+              <option>Numeric</option>
+              <option>OK/NG</option>
+            </select>
+            <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant text-[18px]">arrow_drop_down</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="w-9 h-9 flex items-center justify-center text-on-surface-variant bg-white border border-outline-variant/30 rounded-lg hover:bg-slate-100 transition-colors shadow-sm">
+            <span class="material-symbols-outlined text-[20px]">filter_list</span>
+          </button>
+          <button class="w-9 h-9 flex items-center justify-center text-on-surface-variant bg-white border border-outline-variant/30 rounded-lg hover:bg-slate-100 transition-colors shadow-sm">
+            <span class="material-symbols-outlined text-[20px]">download</span>
+          </button>
+        </div>
+      </div>
+      <!-- Table -->
+      <div class="flex-grow overflow-auto bg-white">
+        <table class="w-full text-left border-collapse">
+          <thead class="sticky top-0 bg-slate-50 z-10 shadow-[0_1px_0_0_rgba(196,196,207,0.3)]">
+            <tr class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider whitespace-nowrap">
+              <th class="px-4 py-3 font-medium">CP Code</th>
+              <th class="px-4 py-3 font-medium">Name</th>
+              <th class="px-4 py-3 font-medium">Process</th>
+              <th class="px-4 py-3 font-medium">Type</th>
+              <th class="px-4 py-3 font-medium">Standard</th>
+              <th class="px-4 py-3 font-medium">Tol. (±)</th>
+              <th class="px-4 py-3 font-medium">QC Req</th>
+              <th class="px-4 py-3 font-medium text-center">Status</th>
+            </tr>
+          </thead>
+          <tbody class="font-data-tabular text-data-tabular text-on-surface divide-y divide-outline-variant/30 whitespace-nowrap">
+            <!-- Row 1 (Selected) -->
+            <tr class="hover:bg-slate-50 transition-colors cursor-pointer bg-red-50/40 border-l-2 border-l-primary">
+              <td class="px-4 py-2 font-medium">CP-EXT-001</td>
+              <td class="px-4 py-2 font-medium">Outer Dia. Measure</td>
+              <td class="px-4 py-2 text-on-surface-variant">Extrusion</td>
+              <td class="px-4 py-2"><span class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded text-xs"><span class="material-symbols-outlined text-[14px]">pin</span> Numeric</span></td>
+              <td class="px-4 py-2">15.50 mm</td>
+              <td class="px-4 py-2 text-on-surface-variant">0.15</td>
+              <td class="px-4 py-2"><span class="material-symbols-outlined text-[18px] text-primary">check_circle</span></td>
+              <td class="px-4 py-2 text-center">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">OK/Active</span>
+              </td>
+            </tr>
+            <!-- Row 2 -->
+            <tr class="hover:bg-slate-50 transition-colors cursor-pointer border-l-2 border-l-transparent">
+              <td class="px-4 py-2 font-medium">CP-EXT-002</td>
+              <td class="px-4 py-2">Visual Inspection</td>
+              <td class="px-4 py-2 text-on-surface-variant">Extrusion</td>
+              <td class="px-4 py-2"><span class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded text-xs"><span class="material-symbols-outlined text-[14px]">fact_check</span> OK/NG</span></td>
+              <td class="px-4 py-2">No Defects</td>
+              <td class="px-4 py-2 text-on-surface-variant">-</td>
+              <td class="px-4 py-2"><span class="material-symbols-outlined text-[18px] text-primary">check_circle</span></td>
+              <td class="px-4 py-2 text-center">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">OK/Active</span>
+              </td>
+            </tr>
+            <!-- Row 3 -->
+            <tr class="hover:bg-slate-50 transition-colors cursor-pointer border-l-2 border-l-transparent">
+              <td class="px-4 py-2 font-medium">CP-MOL-015</td>
+              <td class="px-4 py-2">Mold Temp</td>
+              <td class="px-4 py-2 text-on-surface-variant">Molding</td>
+              <td class="px-4 py-2"><span class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded text-xs"><span class="material-symbols-outlined text-[14px]">thermometer</span> Numeric</span></td>
+              <td class="px-4 py-2">180 °C</td>
+              <td class="px-4 py-2 text-on-surface-variant">5.0</td>
+              <td class="px-4 py-2"><span class="material-symbols-outlined text-[18px] text-outline-variant">cancel</span></td>
+              <td class="px-4 py-2 text-center">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">OK/Active</span>
+              </td>
+            </tr>
+            <!-- Row 4 -->
+            <tr class="hover:bg-slate-50 transition-colors cursor-pointer border-l-2 border-l-transparent text-on-surface-variant">
+              <td class="px-4 py-2 font-medium">CP-ASM-101</td>
+              <td class="px-4 py-2">Barcode Scan</td>
+              <td class="px-4 py-2 text-on-surface-variant">Assembly</td>
+              <td class="px-4 py-2"><span class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded text-xs"><span class="material-symbols-outlined text-[14px]">barcode_scanner</span> Scan</span></td>
+              <td class="px-4 py-2">Match BOM</td>
+              <td class="px-4 py-2 text-on-surface-variant">-</td>
+              <td class="px-4 py-2"><span class="material-symbols-outlined text-[18px] text-primary">check_circle</span></td>
+              <td class="px-4 py-2 text-center">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-slate-50 text-slate-700 border border-slate-200">Pending/Draft</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Pagination -->
+      <div class="p-4 border-t border-outline-variant/30 bg-slate-50 flex justify-between items-center font-body-sm text-body-sm text-on-surface-variant">
+        <div>Showing 1 to 4 of 42 entries</div>
+        <div class="flex items-center gap-1">
+          <button class="p-1.5 rounded-lg border border-outline-variant/30 hover:bg-slate-100 disabled:opacity-50"><span class="material-symbols-outlined text-[18px]">chevron_left</span></button>
+          <button class="p-1 px-3 rounded-lg bg-primary text-white border border-primary font-medium">1</button>
+          <button class="p-1 px-3 rounded-lg border border-outline-variant/30 hover:bg-slate-100">2</button>
+          <button class="p-1 px-3 rounded-lg border border-outline-variant/30 hover:bg-slate-100">3</button>
+          <button class="p-1.5 rounded-lg border border-outline-variant/30 hover:bg-slate-100"><span class="material-symbols-outlined text-[18px]">chevron_right</span></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Side Drawer (Details Panel) -->
+    <aside class="w-[340px] bg-white border border-outline-variant/30 shadow-sm rounded-xl flex flex-col h-full overflow-hidden shrink-0">
+      <!-- Drawer Header -->
+      <div class="p-4 border-b border-outline-variant/30 flex justify-between items-start bg-slate-50">
+        <div>
+          <div class="font-label-bold text-label-bold text-primary tracking-widest uppercase mb-1">CP Details</div>
+          <h3 class="font-headline-sm text-headline-sm font-bold text-primary">Outer Dia. Measure</h3>
+          <div class="font-data-tabular text-data-tabular text-on-surface-variant mt-1">CP-EXT-001</div>
+        </div>
+        <button class="text-on-surface-variant hover:text-error transition-colors">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <!-- Drawer Content (Scrollable) -->
+      <div class="flex-1 overflow-y-auto drawer-scroll p-5 flex flex-col gap-6 custom-scrollbar">
+        <!-- Definition -->
+        <section>
+          <h4 class="font-label-bold text-label-bold text-primary uppercase border-b border-outline-variant/30 pb-1.5 mb-3 font-bold">Definition</h4>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block font-label-bold text-label-bold text-on-surface-variant mb-1">Process</label>
+              <div class="font-body-md text-body-md bg-slate-50 px-3 py-1.5 border border-outline-variant/30 rounded-lg">Extrusion</div>
+            </div>
+            <div>
+              <label class="block font-label-bold text-label-bold text-on-surface-variant mb-1">Stage Type</label>
+              <div class="font-body-md text-body-md bg-slate-50 px-3 py-1.5 border border-outline-variant/30 rounded-lg">In-Process</div>
+            </div>
+            <div class="col-span-2">
+              <label class="block font-label-bold text-label-bold text-on-surface-variant mb-1">Input Type</label>
+              <div class="font-body-md text-body-md bg-slate-50 px-3 py-1.5 border border-outline-variant/30 rounded-lg flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">pin</span> Numeric</div>
+            </div>
+            <div class="col-span-2">
+              <label class="block font-label-bold text-label-bold text-on-surface-variant mb-1">Mandatory</label>
+              <div class="font-body-md text-body-md px-3 py-1.5 border border-outline-variant/30 rounded-lg flex items-center gap-2 bg-slate-50"><span class="material-symbols-outlined text-[18px] text-primary">check_box</span> Yes</div>
+            </div>
+          </div>
+        </section>
+        <!-- Criteria -->
+        <section>
+          <h4 class="font-label-bold text-label-bold text-primary uppercase border-b border-outline-variant/30 pb-1.5 mb-3 font-bold">Criteria</h4>
+          <div class="space-y-3">
+            <div class="flex gap-2">
+              <div class="flex-1">
+                <label class="block font-label-bold text-label-bold text-on-surface-variant mb-1">Standard Val</label>
+                <input class="w-full bg-white px-3 py-1.5 border border-outline-variant/30 rounded-lg font-data-tabular text-data-tabular focus:ring-primary focus:border-primary" type="text" value="15.50"/>
+              </div>
+              <div class="w-16">
+                <label class="block font-label-bold text-label-bold text-on-surface-variant mb-1">UoM</label>
+                <input class="w-full bg-slate-50 px-3 py-1.5 border border-outline-variant/30 rounded-lg font-data-tabular text-data-tabular text-center" disabled="" type="text" value="mm"/>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block font-label-bold text-label-bold text-on-surface-variant mb-1">+ Tolerance</label>
+                <input class="w-full bg-white px-3 py-1.5 border border-outline-variant/30 rounded-lg font-data-tabular text-data-tabular focus:ring-primary focus:border-primary" type="text" value="0.15"/>
+              </div>
+              <div>
+                <label class="block font-label-bold text-label-bold text-on-surface-variant mb-1">- Tolerance</label>
+                <input class="w-full bg-white px-3 py-1.5 border border-outline-variant/30 rounded-lg font-data-tabular text-data-tabular focus:ring-primary focus:border-primary" type="text" value="0.15"/>
+              </div>
+            </div>
+            <div>
+              <label class="block font-label-bold text-label-bold text-on-surface-variant mb-1">Method / Tool</label>
+              <input class="w-full bg-white px-3 py-1.5 border border-outline-variant/30 rounded-lg font-body-md text-body-md focus:ring-primary focus:border-primary" type="text" value="Digital Caliper (C-04)"/>
+            </div>
+          </div>
+        </section>
+        <!-- Recording Frequency -->
+        <section class="bg-slate-50 p-4 rounded-xl border border-outline-variant/30">
+          <div class="flex items-center gap-2 border-b border-outline-variant/30 pb-2 mb-3">
+            <span class="material-symbols-outlined text-primary">schedule</span>
+            <h4 class="font-label-bold text-label-bold text-primary uppercase font-bold">Recording Settings</h4>
+          </div>
+          <div class="space-y-3">
+            <div>
+              <label class="block font-label-bold text-label-bold text-on-surface-variant mb-1">Sample Size</label>
+              <div class="flex items-center gap-2">
+                <input class="w-20 bg-white px-3 py-1.5 border border-outline-variant/30 rounded-lg font-data-tabular text-data-tabular focus:ring-primary focus:border-primary text-right" type="number" value="3"/>
+                <span class="font-body-sm text-body-sm text-on-surface-variant">pcs / check</span>
+              </div>
+            </div>
+            <div>
+              <label class="block font-label-bold text-label-bold text-on-surface-variant mb-1">Frequency</label>
+              <select class="w-full pl-3 pr-8 py-1.5 bg-white border border-outline-variant/30 rounded-lg font-body-md text-body-md focus:ring-primary focus:border-primary appearance-none">
+                <option>Hourly</option>
+                <option selected="">Every 2 Hours</option>
+                <option>Start of Shift Only</option>
+                <option>Per Coil/Batch</option>
+              </select>
+            </div>
+            <div class="flex items-center justify-between pt-2">
+              <span class="font-label-bold text-label-bold text-on-surface-variant">QC Sign-off Req.</span>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input checked="" class="sr-only peer" type="checkbox" value=""/>
+                <div class="w-9 h-5 bg-slate-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+        </section>
+      </div>
+      <!-- Drawer Footer / Actions -->
+      <div class="p-4 border-t border-outline-variant/30 bg-slate-50 flex justify-end gap-2 shrink-0">
+        <button class="px-4 py-1.5 border border-primary text-primary font-body-md text-body-md rounded-lg font-medium hover:bg-slate-100 transition-colors">
+          Discard
+        </button>
+        <button class="px-4 py-1.5 bg-primary text-on-primary border border-primary font-body-md text-body-md rounded-lg font-medium hover:bg-primary/95 transition-colors">
+          Save Changes
+        </button>
+      </div>
+    </aside>
+  </div>
+</main>
+
+
+</body></html>

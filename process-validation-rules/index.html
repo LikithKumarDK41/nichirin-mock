@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Process Validation &amp; Rules - Control Card Digitization System</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-container": "#7af2f2",
+                    "outline": "#74777f",
+                    "on-surface-variant": "#43474e",
+                    "surface-container-low": "#f4f3f6",
+                    "on-tertiary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#e9e7eb",
+                    "on-surface": "#1a1c1e",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#001f3f",
+                    "inverse-on-surface": "#f2f0f3",
+                    "on-secondary-fixed-variant": "#004f4f",
+                    "surface-container": "#efedf0",
+                    "on-tertiary-fixed": "#351002",
+                    "tertiary-fixed": "#ffdbce",
+                    "on-tertiary-fixed-variant": "#6b3a25",
+                    "inverse-surface": "#2f3033",
+                    "on-primary-container": "#6f88ad",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#fdb69a",
+                    "on-primary-fixed": "#001c3a",
+                    "surface-container-highest": "#e3e2e5",
+                    "surface-dim": "#dbd9dd",
+                    "tertiary": "#110200",
+                    "on-secondary-container": "#006e6e",
+                    "on-error-container": "#93000a",
+                    "on-background": "#1a1c1e",
+                    "surface": "#faf9fc",
+                    "secondary": "#006a6a",
+                    "secondary-fixed-dim": "#5dd9d8",
+                    "error-container": "#ffdad6",
+                    "primary-fixed": "#d4e3ff",
+                    "primary-fixed-dim": "#afc8f0",
+                    "primary": "#000613",
+                    "surface-bright": "#faf9fc",
+                    "on-tertiary-container": "#b5785f",
+                    "outline-variant": "#c4c6cf",
+                    "error": "#ba1a1a",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-fixed": "#002020",
+                    "on-primary-fixed-variant": "#2f486a",
+                    "inverse-primary": "#afc8f0",
+                    "surface-variant": "#e3e2e5",
+                    "surface-tint": "#476083",
+                    "tertiary-container": "#391303",
+                    "secondary-fixed": "#7df5f5",
+                    "background": "#faf9fc"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "container-padding": "24px",
+                    "stack-gap-sm": "8px",
+                    "stack-gap-md": "16px",
+                    "sidebar-width": "260px",
+                    "header-height": "64px",
+                    "grid-gutter": "20px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-bold": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "data-tabular": ["Inter"],
+                    "body-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-bold": ["11px", {"lineHeight": "16px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-sm": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "data-tabular": ["13px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md text-body-md antialiased overflow-hidden">
+<!-- SideNavBar -->
+<nav class="bg-primary dark:bg-primary fixed left-0 top-0 h-full w-sidebar-width flex flex-col py-4 z-50">
+<div class="px-6 mb-8 flex flex-col gap-2"><div class="flex items-center gap-3 mb-2"><img alt="Nichirin Logo" class="h-8 w-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAP3AxAL-oJbw6rTinLLEPWBJIPBdQoEwGIGoN-hrcaQcy4uXPMA0h1U-9H6ct7d0yDgkWM_6567P5_dD5e6g3578Bxd96o5nB_nmWgJLUwwJ07smgy-xbuXv9SY7WPxgSLJucPamuITeBhnbCaMSUwPPHwnRleAVkM7hlV_uQsw18pkS6q72O32CV_P82ugNttCwWcKG-a9xhA364m6YVhesY-zQCXyPO2_D_HoZsTqoslOTZDY8TtxakXm4Vbxnz0A4"/></div><span class="text-on-primary opacity-80 text-[10px] font-label-bold tracking-wider uppercase">MES Control Card</span></div>
+<ul class="flex-1 flex flex-col w-full"><li class=""><div class="px-6 py-2 text-on-primary/50 text-[10px] font-label-bold uppercase tracking-wider">Monitoring</div><ul class="flex flex-col"><li class="bg-surface-container-lowest"><a class="flex items-center gap-4 px-6 py-2.5 text-primary font-bold" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="text-body-sm">Dashboard</span></a></li><li class=""><a class="flex items-center gap-4 px-6 py-2.5 text-on-primary hover:bg-on-primary-fixed-variant/10 transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">monitoring</span><span class="text-body-sm">Work Order Monitoring</span></a></li><li class=""><a class="flex items-center gap-4 px-6 py-2.5 text-on-primary hover:bg-on-primary-fixed-variant/10 transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">event_note</span><span class="text-body-sm">Supervisor Planning</span></a></li><li class=""><a class="flex items-center gap-4 px-6 py-2.5 text-on-primary hover:bg-on-primary-fixed-variant/10 transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">fact_check</span><span class="text-body-sm">QC Pending Approvals</span></a></li><li class=""><a class="flex items-center gap-4 px-6 py-2.5 text-on-primary hover:bg-on-primary-fixed-variant/10 transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">build_circle</span><span class="text-body-sm">Breakdown / Rework</span></a></li></ul></li><li class="mt-4"><div class="px-6 py-2 text-on-primary/50 text-[10px] font-label-bold uppercase tracking-wider">Master Configuration</div><ul class="flex flex-col"><li class=""><a class="flex items-center gap-4 px-6 py-2.5 text-on-primary hover:bg-on-primary-fixed-variant/10 transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">description</span><span class="text-body-sm">Control Card Templates</span></a></li><li class=""><a class="flex items-center gap-4 px-6 py-2.5 text-on-primary hover:bg-on-primary-fixed-variant/10 transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">account_tree</span><span class="text-body-sm">Workflow Configuration</span></a></li></ul></li><li class="mt-4"><div class="px-6 py-2 text-on-primary/50 text-[10px] font-label-bold uppercase tracking-wider">Traceability &amp; Reports</div><ul class="flex flex-col"><li class=""><a class="flex items-center gap-4 px-6 py-2.5 text-on-primary hover:bg-on-primary-fixed-variant/10 transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">manage_search</span><span class="text-body-sm">Traceability Search</span></a></li><li class=""><a class="flex items-center gap-4 px-6 py-2.5 text-on-primary hover:bg-on-primary-fixed-variant/10 transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">assessment</span><span class="text-body-sm">Audit Reports</span></a></li></ul></li><li class="mt-4"><div class="px-6 py-2 text-on-primary/50 text-[10px] font-label-bold uppercase tracking-wider">Administration</div><ul class="flex flex-col"><li class=""><a class="flex items-center gap-4 px-6 py-2.5 text-on-primary hover:bg-on-primary-fixed-variant/10 transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">manage_accounts</span><span class="text-body-sm">User &amp; Role Management</span></a></li><li class=""><a class="flex items-center gap-4 px-6 py-2.5 text-on-primary hover:bg-on-primary-fixed-variant/10 transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">sync</span><span class="text-body-sm">SAP Synchronization Logs</span></a></li><li class=""><a class="flex items-center gap-4 px-6 py-2.5 text-on-primary hover:bg-on-primary-fixed-variant/10 transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">map</span><span class="text-body-sm">SAP Field Mapping</span></a></li></ul></li></ul>
+<div class="mt-auto px-6 pt-4 border-t border-on-primary/10">
+<div class="flex items-center gap-3 text-on-primary/80">
+<span class="material-symbols-outlined text-sm">support_agent</span>
+<span class="text-sm">IT Support Center</span>
+</div>
+</div>
+</nav>
+<!-- TopAppBar -->
+<header class="bg-surface-container-lowest dark:bg-surface-dim fixed top-0 right-0 h-header-height z-40 border-b border-outline-variant dark:border-outline flex justify-between items-center px-container-padding w-[calc(100%-260px)] ml-[260px]">
+<div class="flex items-center gap-6">
+<div class="font-headline-sm text-headline-sm font-semibold text-primary dark:text-primary-fixed-dim mr-4 border-r border-outline-variant pr-6">
+                Control Card Digitization System
+            </div>
+<nav aria-label="Breadcrumb" class="hidden lg:flex items-center gap-2">
+<ol class="flex items-center space-x-2 text-on-surface-variant font-normal font-body-sm text-body-sm">
+<li class=""><a class="hover:text-primary transition-colors" href="#">Plant</a></li>
+<li><span class="material-symbols-outlined text-[16px]">chevron_right</span></li>
+<li class=""><a class="hover:text-primary transition-colors" href="#">Line A</a></li>
+<li><span class="material-symbols-outlined text-[16px]">chevron_right</span></li>
+<li class=""><span class="text-primary font-bold">Control Card #402</span></li>
+</ol>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<input class="hidden md:block w-64 bg-surface-container-low border border-outline-variant rounded-full py-1.5 pl-10 pr-4 text-sm focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors text-on-surface-variant" placeholder="Search Master..." type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-outline-variant group-focus-within:text-secondary pointer-events-none">search</span>
+</div>
+<button aria-label="Notifications" class="p-2 text-primary dark:text-inverse-primary hover:bg-surface-container-high dark:hover:bg-inverse-surface rounded-full transition-all cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button aria-label="Help" class="p-2 text-primary dark:text-inverse-primary hover:bg-surface-container-high dark:hover:bg-inverse-surface rounded-full transition-all cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold ml-2 cursor-pointer border border-outline-variant" title="User Profile">
+                OP
+            </div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-[260px] mt-[64px] h-[calc(100vh-64px)] flex overflow-hidden bg-surface-container-low">
+<!-- Left Column: Process Steps List -->
+<aside class="w-72 bg-surface-container-lowest border-r border-outline-variant flex flex-col flex-shrink-0 h-full overflow-y-auto">
+<div class="p-4 border-b border-outline-variant bg-surface-container-lowest sticky top-0 z-10 flex justify-between items-center">
+<h2 class="font-headline-sm text-headline-sm text-primary">Process Flow</h2>
+<button class="text-secondary hover:bg-secondary-container/20 p-1 rounded transition-colors" title="Add Step">
+<span class="material-symbols-outlined text-lg">add</span>
+</button>
+</div>
+<ul class="flex-1 py-2">
+<!-- Step 1 -->
+<li class="">
+<button class="w-full text-left px-4 py-3 flex flex-col gap-1 hover:bg-surface-container-high transition-colors group">
+<div class="flex items-center justify-between">
+<span class="font-label-bold text-label-bold text-outline uppercase tracking-wide">Step 01</span>
+<span class="material-symbols-outlined text-xs text-outline group-hover:text-primary">drag_indicator</span>
+</div>
+<div class="font-body-md text-body-md text-on-surface font-medium truncate">Material Preparation</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded-sm text-[10px] font-medium bg-surface-container-highest text-on-surface-variant">Setup</span>
+</div>
+</button>
+</li>
+<!-- Step 2 (Active) -->
+<li class="">
+<button class="w-full text-left px-4 py-3 flex flex-col gap-1 bg-primary-container/5 border-l-4 border-primary transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-bold text-label-bold text-primary uppercase tracking-wide">Step 02</span>
+<span class="material-symbols-outlined text-xs text-primary">drag_indicator</span>
+</div>
+<div class="font-body-md text-body-md text-primary font-bold truncate">Extrusion Molding</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded-sm text-[10px] font-medium bg-error-container text-on-error-container">Critical</span>
+<span class="material-symbols-outlined text-[14px] text-secondary">verified</span>
+</div>
+</button>
+</li>
+<!-- Step 3 -->
+<li class="">
+<button class="w-full text-left px-4 py-3 flex flex-col gap-1 hover:bg-surface-container-high transition-colors group border-l-4 border-transparent">
+<div class="flex items-center justify-between">
+<span class="font-label-bold text-label-bold text-outline uppercase tracking-wide">Step 03</span>
+<span class="material-symbols-outlined text-xs text-outline group-hover:text-primary">drag_indicator</span>
+</div>
+<div class="font-body-md text-body-md text-on-surface font-medium truncate">Cooling Bath</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded-sm text-[10px] font-medium bg-surface-container-highest text-on-surface-variant">Process</span>
+</div>
+</button>
+</li>
+<!-- Step 4 -->
+<li class="">
+<button class="w-full text-left px-4 py-3 flex flex-col gap-1 hover:bg-surface-container-high transition-colors group border-l-4 border-transparent">
+<div class="flex items-center justify-between">
+<span class="font-label-bold text-label-bold text-outline uppercase tracking-wide">Step 04</span>
+<span class="material-symbols-outlined text-xs text-outline group-hover:text-primary">drag_indicator</span>
+</div>
+<div class="font-body-md text-body-md text-on-surface font-medium truncate">Quality Inspection</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded-sm text-[10px] font-medium bg-secondary-container text-on-secondary-container">QC Point</span>
+</div>
+</button>
+</li>
+</ul>
+</aside>
+<!-- Center Column: Workflow Canvas Mini -->
+<section class="flex-1 flex flex-col overflow-hidden relative">
+<div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(#001f3f 1px, transparent 1px); background-size: 20px 20px;"></div>
+<div class="p-6 h-full overflow-y-auto flex flex-col z-10 relative">
+<!-- Step Header Header -->
+<div class="mb-8">
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Extrusion Molding Context</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Define physical machine parameters and sequencing logic for the primary extrusion phase on Line A.</p>
+</div>
+<!-- Bento Grid Layout for Center Context -->
+<div class="grid grid-cols-2 gap-4 auto-rows-min">
+<!-- Meta Info Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded p-4 col-span-2 shadow-sm">
+<div class="flex items-center gap-2 mb-4 border-b border-outline-variant pb-2">
+<span class="material-symbols-outlined text-outline">info</span>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Machine Mapping</h4>
+</div>
+<div class="grid grid-cols-3 gap-x-4 gap-y-3 font-data-tabular text-data-tabular">
+<div class="flex flex-col">
+<span class="text-outline text-xs uppercase tracking-wider mb-1">Equipment ID</span>
+<span class="text-on-surface">EXT-LNA-002</span>
+</div>
+<div class="flex flex-col">
+<span class="text-outline text-xs uppercase tracking-wider mb-1">Standard Cycle Time</span>
+<span class="text-on-surface">45s / unit</span>
+</div>
+<div class="flex flex-col">
+<span class="text-outline text-xs uppercase tracking-wider mb-1">Operator Role</span>
+<span class="text-on-surface">Senior Technician (L2)</span>
+</div>
+</div>
+</div>
+<!-- Flow Visualizer -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded p-4 col-span-2 shadow-sm min-h-[200px] flex flex-col items-center justify-center relative">
+<div class="absolute top-4 left-4 font-label-bold text-label-bold text-outline uppercase tracking-wider">Sequence Context</div>
+<div class="flex items-center justify-center gap-4 mt-6 w-full max-w-lg">
+<div class="flex flex-col items-center gap-2 opacity-50">
+<div class="w-12 h-12 rounded bg-surface-variant border border-outline-variant flex items-center justify-center text-outline">
+<span class="material-symbols-outlined">inventory_2</span>
+</div>
+<span class="text-xs font-data-tabular">Step 01</span>
+</div>
+<div class="h-0.5 w-16 bg-outline-variant relative">
+<div class="absolute right-0 top-1/2 -translate-y-1/2 w-0 h-0 border-y-4 border-y-transparent border-l-4 border-l-outline-variant"></div>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-16 h-16 rounded bg-primary-container text-on-primary-container border-2 border-primary shadow-sm flex items-center justify-center ring-4 ring-primary-fixed">
+<span class="material-symbols-outlined text-2xl">precision_manufacturing</span>
+</div>
+<span class="text-xs font-data-tabular text-primary font-bold">Step 02</span>
+</div>
+<div class="h-0.5 w-16 bg-outline-variant relative">
+<div class="absolute right-0 top-1/2 -translate-y-1/2 w-0 h-0 border-y-4 border-y-transparent border-l-4 border-l-outline-variant"></div>
+</div>
+<div class="flex flex-col items-center gap-2 opacity-50">
+<div class="w-12 h-12 rounded bg-surface-variant border border-outline-variant flex items-center justify-center text-outline">
+<span class="material-symbols-outlined">water_drop</span>
+</div>
+<span class="text-xs font-data-tabular">Step 03</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Column: Process Validation & Dependency Rules Panel -->
+<aside class="w-[420px] bg-surface-container-lowest border-l border-outline-variant flex flex-col flex-shrink-0 h-full shadow-[-4px_0_12px_-4px_rgba(0,0,0,0.05)] z-20">
+<!-- Panel Header -->
+<div class="p-4 border-b border-outline-variant bg-surface-container-lowest flex items-center justify-between sticky top-0 z-10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">rule</span>
+<h2 class="font-headline-sm text-headline-sm text-primary">Process Validation Rules</h2>
+</div>
+<button class="px-3 py-1.5 bg-primary text-on-primary rounded font-body-sm text-body-sm hover:bg-primary/90 transition-colors shadow-sm">
+                    Save Rules
+                </button>
+</div>
+<!-- Scrollable Rules Area -->
+<div class="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
+<!-- Section: Start Validation -->
+<div class="border border-outline-variant rounded overflow-hidden">
+<button class="w-full bg-surface p-3 flex justify-between items-center hover:bg-surface-container-high transition-colors border-b border-outline-variant">
+<span class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[20px]">play_circle</span>
+                            Start Conditions
+                        </span>
+<span class="material-symbols-outlined text-outline transition-transform duration-200 rotate-180">expand_more</span>
+</button>
+<div class="p-4 bg-surface-container-lowest flex flex-col gap-3">
+<div class="flex flex-col gap-1">
+<label class="font-label-bold text-label-bold text-outline uppercase">Pre-requisite Check</label>
+<div class="flex items-center gap-2">
+<input checked="" class="w-4 h-4 text-secondary border-outline-variant rounded focus:ring-secondary" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface">Require Machine Calibration Log (Last 24h)</span>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<input checked="" class="w-4 h-4 text-secondary border-outline-variant rounded focus:ring-secondary" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface">Verify Operator Certification Level</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section: Entry Validation -->
+<div class="border border-outline-variant rounded overflow-hidden">
+<button class="w-full bg-surface p-3 flex justify-between items-center hover:bg-surface-container-high transition-colors border-b border-outline-variant">
+<span class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[20px]">input</span>
+                            Input Validation
+                        </span>
+<span class="material-symbols-outlined text-outline transition-transform duration-200 rotate-180">expand_more</span>
+</button>
+<div class="p-4 bg-surface-container-lowest flex flex-col gap-4">
+<!-- Rule 1 -->
+<div class="bg-surface-container-low p-3 rounded border border-outline-variant border-l-2 border-l-primary relative">
+<button class="absolute top-2 right-2 text-outline hover:text-error transition-colors"><span class="material-symbols-outlined text-sm">close</span></button>
+<label class="font-label-bold text-label-bold text-primary uppercase block mb-2">Parameter: Temperature</label>
+<div class="grid grid-cols-2 gap-2">
+<div>
+<span class="text-[10px] text-outline uppercase block mb-0.5">Min (LCL)</span>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded px-2 py-1 text-sm font-data-tabular focus:border-secondary focus:ring-1 focus:ring-secondary outline-none" type="number" value="185"/>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 text-outline text-xs">°C</span>
+</div>
+</div>
+<div>
+<span class="text-[10px] text-outline uppercase block mb-0.5">Max (UCL)</span>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded px-2 py-1 text-sm font-data-tabular focus:border-secondary focus:ring-1 focus:ring-secondary outline-none" type="number" value="195"/>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 text-outline text-xs">°C</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Rule 2 -->
+<div class="bg-surface-container-low p-3 rounded border border-outline-variant border-l-2 border-l-secondary relative">
+<button class="absolute top-2 right-2 text-outline hover:text-error transition-colors"><span class="material-symbols-outlined text-sm">close</span></button>
+<label class="font-label-bold text-label-bold text-secondary uppercase block mb-2">Parameter: Pressure</label>
+<div class="grid grid-cols-2 gap-2">
+<div>
+<span class="text-[10px] text-outline uppercase block mb-0.5">Min (LCL)</span>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded px-2 py-1 text-sm font-data-tabular focus:border-secondary focus:ring-1 focus:ring-secondary outline-none" type="number" value="4.5"/>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 text-outline text-xs">MPa</span>
+</div>
+</div>
+<div>
+<span class="text-[10px] text-outline uppercase block mb-0.5">Max (UCL)</span>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded px-2 py-1 text-sm font-data-tabular focus:border-secondary focus:ring-1 focus:ring-secondary outline-none" type="number" value="5.2"/>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 text-outline text-xs">MPa</span>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full py-2 border border-dashed border-outline-variant text-secondary text-sm rounded hover:bg-secondary-container/10 transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-sm">add</span> Add Input Rule
+                        </button>
+</div>
+</div>
+<!-- Section: Dependency Validation -->
+<div class="border border-outline-variant rounded overflow-hidden">
+<button class="w-full bg-surface p-3 flex justify-between items-center hover:bg-surface-container-high transition-colors">
+<span class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[20px]">account_tree</span>
+                            Dependency Rules
+                        </span>
+<span class="material-symbols-outlined text-outline transition-transform duration-200">expand_more</span>
+</button>
+<!-- Collapsed content hidden by default in this example to show state variety, though typical implementation would use JS. We'll show it open for the prompt reqs -->
+<div class="p-4 bg-surface-container-lowest flex flex-col gap-3 border-t border-outline-variant">
+<div class="bg-surface p-3 rounded border border-outline-variant text-sm">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-error text-sm">warning</span>
+<span class="font-medium text-on-surface">Hard Blocker</span>
+</div>
+<p class="text-on-surface-variant text-xs">Cannot proceed to "Cooling Bath" (Step 03) if Pressure drops below 4.0 MPa for more than 5 seconds.</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</main>
+</body></html>

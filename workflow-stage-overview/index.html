@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Workflow Stage Overview - MES Control Card</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "inverse-surface": "#2f3033",
+                        "surface-variant": "#e3e2e5",
+                        "on-primary-fixed-variant": "#2f486a",
+                        "surface-tint": "#476083",
+                        "primary-fixed-dim": "#afc8f0",
+                        "on-secondary-fixed": "#002020",
+                        "on-primary-container": "#6f88ad",
+                        "on-surface-variant": "#43474e",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-high": "#e9e7eb",
+                        "on-tertiary-fixed": "#351002",
+                        "background": "#faf9fc",
+                        "tertiary-container": "#391303",
+                        "on-tertiary-fixed-variant": "#6b3a25",
+                        "secondary-fixed": "#7df5f5",
+                        "surface-container": "#efedf0",
+                        "on-surface": "#1a1c1e",
+                        "on-tertiary-container": "#b5785f",
+                        "secondary-fixed-dim": "#5dd9d8",
+                        "on-primary": "#ffffff",
+                        "secondary": "#006a6a",
+                        "surface-bright": "#faf9fc",
+                        "on-primary-fixed": "#001c3a",
+                        "secondary-container": "#7af2f2",
+                        "outline": "#74777f",
+                        "error": "#ba1a1a",
+                        "surface": "#faf9fc",
+                        "on-secondary-container": "#006e6e",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#e3e2e5",
+                        "on-background": "#1a1c1e",
+                        "primary-fixed": "#d4e3ff",
+                        "surface-dim": "#dbd9dd",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#c4c6cf",
+                        "primary": "#000613",
+                        "primary-container": "#001f3f",
+                        "tertiary-fixed-dim": "#fdb69a",
+                        "on-secondary-fixed-variant": "#004f4f",
+                        "tertiary-fixed": "#ffdbce",
+                        "tertiary": "#110200",
+                        "surface-container-low": "#f4f3f6",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#afc8f0",
+                        "inverse-on-surface": "#f2f0f3"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    spacing: {
+                        "stack-gap-md": "16px",
+                        "header-height": "64px",
+                        "container-padding": "24px",
+                        "stack-gap-sm": "8px",
+                        "sidebar-width": "260px",
+                        "grid-gutter": "20px"
+                    },
+                    fontFamily: {
+                        "data-tabular": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-sm": ["Inter"]
+                    },
+                    fontSize: {
+                        "data-tabular": ["13px", { lineHeight: "16px", fontWeight: "500" }],
+                        "headline-lg": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600" }],
+                        "headline-sm": ["16px", { lineHeight: "24px", fontWeight: "600" }],
+                        "label-bold": ["11px", { lineHeight: "16px", fontWeight: "700" }],
+                        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "headline-md": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+                        "body-sm": ["12px", { lineHeight: "18px", fontWeight: "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface flex h-screen overflow-hidden antialiased">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full w-sidebar-width bg-primary dark:bg-primary flex flex-col py-4 z-50">
+<div class="px-6 mb-8 flex flex-col">
+<span class="font-headline-md text-headline-md font-bold text-on-primary">Nichirin</span>
+<span class="font-body-sm text-body-sm text-on-primary opacity-80 mt-1">MES Control Card</span>
+</div>
+<div class="flex-1 overflow-y-auto">
+<ul class="space-y-2">
+<li>
+<a class="flex items-center px-6 py-3 text-on-primary dark:text-on-primary opacity-80 hover:bg-on-primary-fixed-variant/10 hover:text-white transition-colors duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3">monitor_heart</span>
+<span class="font-body-md text-body-md">Monitoring</span>
+</a>
+</li>
+<li>
+<a class="flex items-center px-6 py-3 text-secondary-fixed dark:text-secondary-fixed-dim bg-on-primary-fixed-variant/20 font-bold border-r-4 border-secondary-fixed transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3">settings_applications</span>
+<span class="font-body-md text-body-md">Master Configuration</span>
+</a>
+</li>
+<li>
+<a class="flex items-center px-6 py-3 text-on-primary dark:text-on-primary opacity-80 hover:bg-on-primary-fixed-variant/10 hover:text-white transition-colors duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3">analytics</span>
+<span class="font-body-md text-body-md">Traceability &amp; Reports</span>
+</a>
+</li>
+<li>
+<a class="flex items-center px-6 py-3 text-on-primary dark:text-on-primary opacity-80 hover:bg-on-primary-fixed-variant/10 hover:text-white transition-colors duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3">admin_panel_settings</span>
+<span class="font-body-md text-body-md">Administration</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 h-header-height z-40 bg-surface-container-lowest dark:bg-surface-dim border-b border-outline-variant dark:border-outline flex justify-between items-center px-container-padding w-[calc(100%-260px)] ml-[260px]">
+<div class="flex items-center space-x-4">
+<div class="hidden md:flex items-center space-x-2 font-body-sm text-body-sm">
+<a class="text-on-surface-variant font-normal hover:bg-surface-container-high dark:hover:bg-inverse-surface rounded-full transition-all px-2 py-1 cursor-pointer active:scale-95" href="#">Plant</a>
+<span class="text-outline-variant">/</span>
+<a class="text-on-surface-variant font-normal hover:bg-surface-container-high dark:hover:bg-inverse-surface rounded-full transition-all px-2 py-1 cursor-pointer active:scale-95" href="#">Line A</a>
+<span class="text-outline-variant">/</span>
+<span class="text-primary font-bold px-2 py-1">Control Card #402</span>
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<div class="font-headline-sm text-headline-sm font-semibold text-primary dark:text-primary-fixed-dim mr-4">
+                Control Card Digitization System
+            </div>
+<button class="text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-inverse-surface rounded-full p-2 transition-all cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-inverse-surface rounded-full p-2 transition-all cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary overflow-hidden border border-outline-variant">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A small, professional headshot photo of an industrial engineer in a modern manufacturing setting, highly detailed, well-lit, corporate aesthetic, representing a user profile image." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDm0vHSaUXfkzvAp9UdpWJXpFEdXKyFc5WgYlU9lA32kiDZLC7rkZ6KR64_7KdOpaxVXM4O7YMBSUJLNmnCz6HrFXyGxe_0aSA2ohkolcbUprm9ioaLcWkPW9Yd5cxNQpXXUrjaD8GRkcXc-dX8wbe1K0Y6MUY_5T1CM8F8fELOQpgFJ1KtCV-wxtkphrx4aTi9F_x0ql9W8Wh4oDwMIFZACw2jhLsrGoozQteTJI3CwGDTLQjxli48cQ"/>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-[260px] mt-[64px] w-[calc(100%-260px)] h-[calc(100vh-64px)] flex bg-surface">
+<!-- Inner Sidebar: Stage Components -->
+<div class="w-80 bg-surface-container-lowest border-r border-outline-variant flex flex-col h-full shrink-0">
+<div class="p-4 border-b border-outline-variant">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Stage Components</h2>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-2">
+<!-- Picking (Active) -->
+<div class="flex items-center justify-between p-3 bg-surface-container border-l-4 border-error rounded cursor-pointer">
+<div class="flex items-center space-x-3">
+<span class="material-symbols-outlined text-primary">inventory_2</span>
+<span class="font-body-md text-body-md font-semibold text-primary">Picking</span>
+</div>
+<span class="px-2 py-0.5 bg-secondary text-on-secondary rounded text-label-bold font-label-bold">OK</span>
+</div>
+<!-- Offline Prep -->
+<div class="flex items-center justify-between p-3 border border-transparent hover:bg-surface-container-low rounded cursor-pointer transition-colors">
+<div class="flex items-center space-x-3">
+<span class="material-symbols-outlined text-on-surface-variant">build</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Offline Prep</span>
+</div>
+<span class="px-2 py-0.5 bg-secondary text-on-secondary rounded text-label-bold font-label-bold">OK</span>
+</div>
+<!-- Online Assembly -->
+<div class="flex items-center justify-between p-3 border border-transparent hover:bg-surface-container-low rounded cursor-pointer transition-colors">
+<div class="flex items-center space-x-3">
+<span class="material-symbols-outlined text-on-surface-variant">precision_manufacturing</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Online Assembly</span>
+</div>
+<span class="px-2 py-0.5 bg-surface-variant text-on-surface-variant rounded text-label-bold font-label-bold">PENDING</span>
+</div>
+<!-- Quality Control -->
+<div class="flex items-center justify-between p-3 border border-transparent hover:bg-surface-container-low rounded cursor-pointer transition-colors">
+<div class="flex items-center space-x-3">
+<span class="material-symbols-outlined text-on-surface-variant">fact_check</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Quality Control</span>
+</div>
+<span class="px-2 py-0.5 bg-surface-variant text-on-surface-variant rounded text-label-bold font-label-bold">PENDING</span>
+</div>
+<!-- Rework -->
+<div class="flex items-center justify-between p-3 border border-transparent hover:bg-surface-container-low rounded cursor-pointer transition-colors">
+<div class="flex items-center space-x-3">
+<span class="material-symbols-outlined text-on-surface-variant">recycling</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Rework</span>
+</div>
+<span class="px-2 py-0.5 bg-surface-variant text-on-surface-variant rounded text-label-bold font-label-bold">PENDING</span>
+</div>
+</div>
+</div>
+<!-- Center Canvas: Internal Steps -->
+<div class="flex-1 overflow-y-auto p-8 bg-background relative">
+<div class="max-w-4xl mx-auto">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary mb-1">Picking Workflow</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Sequential steps required for material retrieval and verification.</p>
+</div>
+<button class="bg-primary text-on-primary px-4 py-2 font-body-md text-body-md rounded hover:bg-primary-container transition-colors shadow-sm">
+                        Edit Flow
+                    </button>
+</div>
+<!-- Flow Container -->
+<div class="relative space-y-6">
+<!-- Vertical connecting line -->
+<div class="absolute left-8 top-8 bottom-8 w-[2px] bg-outline-variant -z-10"></div>
+<!-- Step 1 -->
+<div class="flex items-start group">
+<div class="w-16 h-16 rounded-full bg-surface-container-lowest border-2 border-outline-variant flex items-center justify-center shrink-0 z-10 shadow-sm group-hover:border-primary transition-colors">
+<span class="font-headline-sm text-headline-sm text-primary">01</span>
+</div>
+<div class="ml-6 flex-1 bg-surface-container-lowest border border-outline-variant rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-3">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">Scan Work Order</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Initiate picking process by scanning the printed work order barcode.</p>
+</div>
+<div class="flex space-x-2 text-on-surface-variant">
+<span class="material-symbols-outlined" title="Barcode Scan Required">barcode_scanner</span>
+</div>
+</div>
+<div class="border-t border-outline-variant pt-3 mt-3 grid grid-cols-2 gap-4 font-data-tabular text-data-tabular text-on-surface-variant">
+<div><span class="font-semibold">Target:</span> WO Barcode</div>
+<div><span class="font-semibold">Validation:</span> System Match</div>
+</div>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="flex items-start group">
+<div class="w-16 h-16 rounded-full bg-surface-container-lowest border-2 border-outline-variant flex items-center justify-center shrink-0 z-10 shadow-sm group-hover:border-primary transition-colors">
+<span class="font-headline-sm text-headline-sm text-primary">02</span>
+</div>
+<div class="ml-6 flex-1 bg-surface-container-lowest border border-outline-variant rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-3">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">Retrieve Material 'A'</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Locate and pick primary rubber compound from designated zone.</p>
+</div>
+<div class="flex space-x-2 text-on-surface-variant">
+<span class="material-symbols-outlined" title="Manual Action">pan_tool</span>
+</div>
+</div>
+<div class="border-t border-outline-variant pt-3 mt-3 grid grid-cols-2 gap-4 font-data-tabular text-data-tabular text-on-surface-variant">
+<div><span class="font-semibold">Location:</span> Zone B, Rack 4</div>
+<div><span class="font-semibold">Quantity:</span> 150 kg</div>
+</div>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="flex items-start group">
+<div class="w-16 h-16 rounded-full bg-surface-container-lowest border-2 border-outline-variant flex items-center justify-center shrink-0 z-10 shadow-sm group-hover:border-error transition-colors">
+<span class="font-headline-sm text-headline-sm text-error">03</span>
+</div>
+<div class="ml-6 flex-1 bg-surface-container-lowest border-l-4 border-error rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+<!-- Subtle indicator of critical step -->
+<div class="absolute top-0 right-0 p-2 bg-error-container text-error rounded-bl-lg">
+<span class="material-symbols-outlined text-sm">priority_high</span>
+</div>
+<div class="flex justify-between items-start mb-3">
+<div class="pr-8">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">Verify Batch Number</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Critical verification to ensure material lot matches required specs.</p>
+</div>
+<div class="flex space-x-2 text-on-surface-variant">
+<span class="material-symbols-outlined" title="Photo Verification">photo_camera</span>
+<span class="material-symbols-outlined" title="Quality Control">rule</span>
+</div>
+</div>
+<div class="border-t border-outline-variant pt-3 mt-3 grid grid-cols-2 gap-4 font-data-tabular text-data-tabular text-on-surface-variant">
+<div><span class="font-semibold text-error">Action:</span> Capture Lot Label</div>
+<div><span class="font-semibold">Tolerance:</span> Strict Match</div>
+</div>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="flex items-start group">
+<div class="w-16 h-16 rounded-full bg-surface-container-lowest border-2 border-outline-variant flex items-center justify-center shrink-0 z-10 shadow-sm group-hover:border-primary transition-colors">
+<span class="font-headline-sm text-headline-sm text-primary">04</span>
+</div>
+<div class="ml-6 flex-1 bg-surface-container-lowest border border-outline-variant rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-3">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">Material Confirmation</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Final sign-off before staging materials for Offline Prep.</p>
+</div>
+<div class="flex space-x-2 text-on-surface-variant">
+<span class="material-symbols-outlined" title="Signature Required">draw</span>
+</div>
+</div>
+<div class="border-t border-outline-variant pt-3 mt-3 grid grid-cols-2 gap-4 font-data-tabular text-data-tabular text-on-surface-variant">
+<div><span class="font-semibold">Role:</span> Picker / Lead</div>
+<div><span class="font-semibold">Next Stage:</span> Offline Prep</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

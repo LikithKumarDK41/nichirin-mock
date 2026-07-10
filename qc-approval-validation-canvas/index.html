@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QC Approval Validation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#afc8f0",
+                        "surface-bright": "#faf9fc",
+                        "surface-dim": "#dbd9dd",
+                        "background": "#faf9fc",
+                        "secondary": "#006a6a",
+                        "primary-container": "#001f3f",
+                        "on-surface": "#1a1c1e",
+                        "on-primary-container": "#6f88ad",
+                        "on-secondary-container": "#006e6e",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f4f3f6",
+                        "inverse-on-surface": "#f2f0f3",
+                        "on-tertiary-container": "#b5785f",
+                        "on-background": "#1a1c1e",
+                        "on-secondary-fixed": "#002020",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#001c3a",
+                        "on-primary-fixed-variant": "#2f486a",
+                        "outline-variant": "#c4c6cf",
+                        "secondary-container": "#7af2f2",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed": "#7df5f5",
+                        "secondary-fixed-dim": "#5dd9d8",
+                        "on-error": "#ffffff",
+                        "surface-container": "#efedf0",
+                        "tertiary": "#110200",
+                        "on-tertiary-fixed-variant": "#6b3a25",
+                        "inverse-surface": "#2f3033",
+                        "tertiary-fixed": "#ffdbce",
+                        "surface-tint": "#476083",
+                        "tertiary-fixed-dim": "#fdb69a",
+                        "surface": "#faf9fc",
+                        "surface-container-highest": "#e3e2e5",
+                        "primary-fixed-dim": "#afc8f0",
+                        "on-tertiary-fixed": "#351002",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#43474e",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#391303",
+                        "surface-container-high": "#e9e7eb",
+                        "surface-variant": "#e3e2e5",
+                        "error-container": "#ffdad6",
+                        "primary": "#000613",
+                        "outline": "#74777f",
+                        "on-secondary-fixed-variant": "#004f4f",
+                        "primary-fixed": "#d4e3ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-gap-sm": "8px",
+                        "stack-gap-md": "16px",
+                        "container-padding": "24px",
+                        "grid-gutter": "20px",
+                        "sidebar-width": "260px",
+                        "header-height": "64px"
+                    },
+                    "fontFamily": {
+                        "label-bold": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "data-tabular": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-bold": ["11px", { "lineHeight": "16px", "fontWeight": "700" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "data-tabular": ["13px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        };
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface h-screen overflow-hidden flex font-body-md">
+<!-- SideNavBar (Shared Component) -->
+<nav class="bg-primary fixed left-0 top-0 h-full w-sidebar-width flex flex-col py-4 z-50">
+<div class="px-container-padding mb-8 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-surface-container-lowest flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-contain" data-alt="Nichirin company logo, a bold, simple geometric mark in navy blue against a white background, suggesting industrial precision and reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2ux9R4sHBdOvd7z3AFtsDQrCfiFWwRWX0KKeDkqVawy1u0DdKAIUTpOkNMs6Df0SIb2sbGuA26QRwCIy-9r2J7q-o-SLY7Sv-eY2tuQQafmTsAaMVbqVtAHcKhr8xTX0RVdupreZ1wLYaCPWNT5Zi3C6M_W19jeFi072-dsFuEHsR5l1lZB25QSrk81ycWpzgJJ3WMhZRNBFnANr2xXk64qK4PuvxJEYf9zva7lAllNxWKdaa7Bd0fQ"/>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-on-primary">Nichirin</h1>
+<p class="font-body-sm text-body-sm text-secondary-fixed-dim">MES Control Card</p>
+</div>
+</div>
+<ul class="flex-1 flex flex-col gap-1 px-3">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-primary opacity-80 hover:bg-on-primary-fixed-variant/10 hover:text-white transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="monitor_heart">monitor_heart</span>
+<span class="font-body-md text-body-md">Monitoring</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-secondary-fixed bg-on-primary-fixed-variant/20 font-bold border-r-4 border-secondary-fixed transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="settings_applications">settings_applications</span>
+<span class="font-body-md text-body-md">Master Configuration</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-primary opacity-80 hover:bg-on-primary-fixed-variant/10 hover:text-white transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-body-md text-body-md">Traceability &amp; Reports</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-primary opacity-80 hover:bg-on-primary-fixed-variant/10 hover:text-white transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span class="font-body-md text-body-md">Administration</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 ml-[260px] flex flex-col h-full bg-surface-container-low">
+<!-- TopAppBar (Shared Component) -->
+<header class="bg-surface-container-lowest border-b border-outline-variant h-header-height z-40 flex justify-between items-center px-container-padding shrink-0 w-full">
+<div class="flex items-center gap-2 font-body-sm text-body-sm text-on-surface-variant">
+<span class="text-primary font-bold">Control Card Digitization System</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span>Plant</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span>Line A</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-primary font-bold">Control Card #402</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all cursor-pointer active:scale-95">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all cursor-pointer active:scale-95">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest border border-outline-variant overflow-hidden cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="User profile photo showing an industrial engineer in standard PPE, professional and focused, against a neutral light grey background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpSkOG-K6gZE4Pe-rUoZzlJhSZp8nFzoSh7G08WE_GF00yTQwcchFLk6wIoiDcq_3WNsDzSSJg9H93y-52QCC9k5MPUZuZbtMDC1tYqPPm-uA9IEQRLZmPVd6cQ107KMLlaezQ-3yxxBYvX5CCBVez7lTVtIdaoBZiz1VxisC5UvAwfQbLolv4pxhJI78oIgLfIUjgxoB_oV7d7lcJAB93urlc3c7x6ojTFZXZ3_HkpR7glgd8jtuyFQ"/>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 overflow-y-auto p-container-padding flex gap-grid-gutter">
+<!-- Left Column: Steps -->
+<div class="w-1/4 flex flex-col gap-stack-md">
+<div class="bg-surface-container-lowest border border-outline-variant p-4">
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-4">QC Approval Validation</h2>
+<div class="flex items-center gap-2 mb-6">
+<span class="px-2 py-1 bg-secondary text-on-primary font-label-bold text-label-bold rounded">Active</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Step 4 of 6</span>
+</div>
+<div class="space-y-2 relative before:absolute before:inset-y-0 before:left-4 before:w-[1px] before:bg-outline-variant">
+<div class="flex items-start gap-3 relative z-10 opacity-60">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest border border-outline-variant flex items-center justify-center shrink-0 mt-1">
+<span class="material-symbols-outlined text-[18px] text-secondary">check</span>
+</div>
+<div class="pt-1">
+<p class="font-body-md text-body-md font-bold text-on-surface">Material Check</p>
+</div>
+</div>
+<div class="flex items-start gap-3 relative z-10 opacity-60">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest border border-outline-variant flex items-center justify-center shrink-0 mt-1">
+<span class="material-symbols-outlined text-[18px] text-secondary">check</span>
+</div>
+<div class="pt-1">
+<p class="font-body-md text-body-md font-bold text-on-surface">Setup Parameters</p>
+</div>
+</div>
+<div class="flex items-start gap-3 relative z-10 bg-surface-container p-2 rounded-lg -ml-2">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0 mt-1 shadow-sm">
+<span class="font-label-bold text-label-bold">3</span>
+</div>
+<div class="pt-1 flex-1">
+<p class="font-body-md text-body-md font-bold text-primary">Offline QC Approval</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Requires supervisor sign-off before proceeding.</p>
+</div>
+</div>
+<div class="flex items-start gap-3 relative z-10 opacity-60">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest border border-outline-variant flex items-center justify-center shrink-0 mt-1">
+<span class="font-label-bold text-label-bold text-on-surface-variant">4</span>
+</div>
+<div class="pt-1">
+<p class="font-body-md text-body-md font-bold text-on-surface">Final QC</p>
+</div>
+</div>
+</div>
+</div>
+</div><div class="flex-1 flex flex-col gap-stack-md">
+<div class="bg-surface-container-lowest border border-outline-variant p-4 flex-1 flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-6">Process Flow Visualization</h3>
+<div class="flex-1 flex flex-col items-center justify-center gap-8 relative">
+<div class="flex flex-col items-center gap-2 relative z-10">
+<div class="w-12 h-12 rounded-full bg-secondary text-on-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined">check</span>
+</div>
+<span class="font-label-bold text-label-bold text-secondary uppercase">Completed</span>
+<p class="font-body-sm text-body-sm font-bold">Material Check</p>
+</div>
+<div class="w-[2px] h-8 bg-secondary"></div>
+<div class="flex flex-col items-center gap-2 relative z-10">
+<div class="w-12 h-12 rounded-full bg-secondary text-on-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined">check</span>
+</div>
+<span class="font-label-bold text-label-bold text-secondary uppercase">Completed</span>
+<p class="font-body-sm text-body-sm font-bold">Setup Parameters</p>
+</div>
+<div class="w-[2px] h-8 bg-secondary"></div>
+<div class="flex flex-col items-center gap-2 relative z-10">
+<div class="w-16 h-16 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-lg ring-4 ring-primary-fixed">
+<span class="material-symbols-outlined text-[32px]">pending_actions</span>
+</div>
+<span class="px-2 py-0.5 bg-primary text-on-primary font-label-bold text-[10px] rounded uppercase">Active Stage</span>
+<p class="font-body-md text-body-md font-bold text-primary">Offline QC Approval</p>
+</div>
+<div class="w-[2px] h-8 bg-outline-variant border-dashed border-l-2"></div>
+<div class="flex flex-col items-center gap-2 relative z-10 opacity-40">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">hourglass_empty</span>
+</div>
+<p class="font-body-sm text-body-sm font-bold">Final QC</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Validation & Rules -->
+<div class="flex flex-col gap-stack-md w-1/2">
+<div class="bg-surface-container-lowest border border-outline-variant">
+<div class="p-4 border-b border-outline-variant bg-surface-bright flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">QC Validation &amp; Decision Rules</h3>
+<button class="text-secondary font-label-bold text-label-bold hover:underline flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+                            Edit Rules
+                        </button>
+</div>
+<div class="p-4 space-y-6">
+<!-- Checklist -->
+<div>
+<h4 class="font-body-sm text-body-sm text-on-surface-variant font-bold mb-3 uppercase tracking-wide">Completion Validation</h4>
+<div class="space-y-3">
+<label class="flex items-center gap-3 p-3 border border-outline-variant rounded bg-surface-bright cursor-pointer hover:bg-surface-container transition-colors">
+<input checked="" class="w-4 h-4 text-secondary rounded border-outline-variant focus:ring-secondary focus:ring-offset-0" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">First-off approval completed</span>
+</label>
+<label class="flex items-center gap-3 p-3 border border-outline-variant rounded bg-surface-bright cursor-pointer hover:bg-surface-container transition-colors">
+<input class="w-4 h-4 text-secondary rounded border-outline-variant focus:ring-secondary focus:ring-offset-0" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Required photo/evidence attached</span>
+</label>
+<label class="flex items-center gap-3 p-3 border border-outline-variant rounded bg-surface-bright cursor-pointer hover:bg-surface-container transition-colors">
+<input class="w-4 h-4 text-secondary rounded border-outline-variant focus:ring-secondary focus:ring-offset-0" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">OK + NG equals Total Taken</span>
+</label>
+</div>
+</div>
+<!-- Control Points Table -->
+<div>
+<h4 class="font-body-sm text-body-sm text-on-surface-variant font-bold mb-3 uppercase tracking-wide">Control Points</h4>
+<div class="border border-outline-variant rounded overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low border-b border-outline-variant font-data-tabular text-data-tabular text-on-surface-variant">
+<tr>
+<th class="p-3 font-medium">Parameter</th>
+<th class="p-3 font-medium">Type</th>
+<th class="p-3 font-medium">Target / Spec</th>
+<th class="p-3 font-medium w-24">Status</th>
+</tr>
+</thead>
+<tbody class="font-data-tabular text-data-tabular bg-surface-container-lowest divide-y divide-outline-variant">
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="p-3 text-on-surface font-medium">Appearance</td>
+<td class="p-3 text-on-surface-variant">Visual</td>
+<td class="p-3 text-on-surface-variant">No Scratches / Dents</td>
+<td class="p-3">
+<span class="inline-flex items-center justify-center px-2 py-1 bg-secondary text-on-primary text-[10px] font-bold rounded w-full">OK</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="p-3 text-on-surface font-medium">Final Dimensions</td>
+<td class="p-3 text-on-surface-variant">Measurement</td>
+<td class="p-3 text-on-surface-variant">150.0 ± 0.5 mm</td>
+<td class="p-3">
+<span class="inline-flex items-center justify-center px-2 py-1 bg-surface-container text-on-surface-variant text-[10px] font-bold rounded w-full">PENDING</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Failure Rule -->
+<div class="bg-error-container/20 border border-error/30 p-4 rounded-lg flex gap-3 items-start">
+<span class="material-symbols-outlined text-error" data-weight="fill">warning</span>
+<div>
+<h4 class="font-body-md text-body-md font-bold text-error">Failure Rule Configured</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">If any Control Point status is marked as <strong class="text-on-surface">NG</strong>, the batch must immediately trigger: <strong class="text-error">Move to Rework / Reject</strong> workflow.</p>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-outline-variant bg-surface-bright flex justify-end gap-3">
+<button class="px-4 py-2 border border-primary text-primary font-body-sm text-body-sm font-bold rounded hover:bg-surface-container-low transition-colors">Save Draft</button>
+<button class="px-4 py-2 bg-primary text-on-primary font-body-sm text-body-sm font-bold rounded hover:bg-on-primary-fixed-variant transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+                            Confirm &amp; Advance
+                        </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

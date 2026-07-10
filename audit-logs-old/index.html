@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Audit Logs | Nichirin Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#43474e",
+                        "inverse-on-surface": "#f2f0f3",
+                        "tertiary-container": "#391303",
+                        "background": "#faf9fc",
+                        "on-tertiary-fixed": "#351002",
+                        "on-primary-fixed-variant": "#2f486a",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#faf9fc",
+                        "surface-container-low": "#f4f3f6",
+                        "on-error": "#ffffff",
+                        "tertiary": "#110200",
+                        "outline": "#74777f",
+                        "tertiary-fixed-dim": "#fdb69a",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#faf9fc",
+                        "on-surface": "#1a1c1e",
+                        "secondary-container": "#7af2f2",
+                        "on-secondary-fixed": "#002020",
+                        "secondary-fixed": "#7df5f5",
+                        "primary-container": "#001f3f",
+                        "on-primary-container": "#6f88ad",
+                        "on-tertiary-container": "#b5785f",
+                        "on-error-container": "#93000a",
+                        "on-background": "#1a1c1e",
+                        "on-primary-fixed": "#001c3a",
+                        "tertiary-fixed": "#ffdbce",
+                        "surface-container-high": "#e9e7eb",
+                        "inverse-surface": "#2f3033",
+                        "on-tertiary-fixed-variant": "#6b3a25",
+                        "inverse-primary": "#afc8f0",
+                        "surface-dim": "#dbd9dd",
+                        "on-secondary-container": "#006e6e",
+                        "surface-container-highest": "#e3e2e5",
+                        "outline-variant": "#c4c6cf",
+                        "secondary": "#006a6a",
+                        "on-primary": "#ffffff",
+                        "primary": "#000613",
+                        "on-secondary-fixed-variant": "#004f4f",
+                        "surface-tint": "#476083",
+                        "surface-variant": "#e3e2e5",
+                        "primary-fixed": "#d4e3ff",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#afc8f0",
+                        "surface-container": "#efedf0",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#5dd9d8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-gap-md": "16px",
+                        "sidebar-width": "260px",
+                        "header-height": "64px",
+                        "stack-gap-sm": "8px",
+                        "grid-gutter": "20px",
+                        "container-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "data-tabular": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "label-bold": ["11px", {"lineHeight": "16px", "fontWeight": "700"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "data-tabular": ["13px", {"lineHeight": "16px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #faf9fc;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c4c6cf;
+            border-radius: 10px;
+        }
+        .detail-drawer {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%);
+        }
+        .detail-drawer.open {
+            transform: translateX(0);
+        }
+        .status-ok { background-color: #006a6a; color: white; }
+        .status-ng { background-color: #ba1a1a; color: white; }
+    </style>
+</head>
+<body class="overflow-hidden">
+<!-- Side Navigation Shell -->
+<aside class="fixed left-0 top-0 h-full w-[260px] bg-primary dark:bg-primary-container border-r border-outline-variant flex flex-col py-4 z-50">
+<div class="px-6 mb-8">
+<h1 class="font-headline-md text-headline-md font-bold text-on-primary">Nichirin Admin</h1>
+<p class="font-body-sm text-body-sm text-on-primary-container opacity-80">Monozukuri System</p>
+</div>
+<nav class="flex-1 space-y-1 px-3">
+<a class="flex items-center gap-3 px-4 py-3 rounded text-on-primary-fixed-variant hover:bg-primary-fixed-dim transition-colors duration-200 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+<span>Monitoring</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-on-primary-fixed-variant hover:bg-primary-fixed-dim transition-colors duration-200 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">settings_applications</span>
+<span>Configuration</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded bg-secondary-container text-on-secondary-container font-bold font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span>Traceability &amp; Reports</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-on-primary-fixed-variant hover:bg-primary-fixed-dim transition-colors duration-200 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span>Administration</span>
+</a>
+</nav>
+<div class="mt-auto px-3 border-t border-on-primary-fixed-variant/20 pt-4">
+<div class="px-4 py-2 mb-4 text-xs font-bold text-on-secondary-container bg-secondary-container/20 rounded-full text-center">
+                System Status: Active
+            </div>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-on-primary-fixed-variant hover:bg-primary-fixed-dim transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">help</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-on-primary-fixed-variant hover:bg-primary-fixed-dim transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Top Navigation Shell -->
+<header class="fixed top-0 right-0 h-[64px] w-[calc(100%-260px)] ml-[260px] bg-surface dark:bg-surface-dim border-b border-outline-variant flex justify-between items-center px-container-padding z-40">
+<div class="flex items-center gap-4">
+<span class="font-headline-sm text-headline-sm font-black text-primary uppercase tracking-tight">Control Card Digitization</span>
+<div class="h-4 w-[1px] bg-outline-variant mx-2"></div>
+<nav class="flex items-center gap-2 font-body-sm text-body-sm">
+<span class="text-on-surface-variant">Plant</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface-variant">Line A</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-bold border-b-2 border-primary pb-0.5">Audit Logs</span>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-1 bg-surface-container rounded-lg px-3 py-1.5 border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-sm w-48" placeholder="Global system search..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative text-on-surface-variant hover:text-secondary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute -top-1 -right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-xs">JD</div>
+<span class="material-symbols-outlined text-on-surface-variant">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-[260px] mt-[64px] p-container-padding h-[calc(100vh-64px)] overflow-y-auto custom-scrollbar bg-background">
+<!-- Filter Header -->
+<div class="flex flex-col gap-6 mb-8">
+<div class="flex justify-between items-end">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">System Audit Logs</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Comprehensive history of all administrative and transactional activities.</p>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded bg-surface font-body-sm text-body-sm hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                        Export CSV
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded font-body-sm text-body-sm hover:opacity-90 transition-all">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+                        Refresh Logs
+                    </button>
+</div>
+</div>
+<!-- Advanced Search Bar -->
+<div class="bg-surface-container-low p-4 rounded border border-outline-variant grid grid-cols-12 gap-4 items-center">
+<div class="col-span-3">
+<label class="block font-label-bold text-label-bold text-on-surface-variant mb-1 uppercase">Date Range</label>
+<div class="relative">
+<input class="w-full text-body-sm border-outline-variant rounded focus:border-secondary transition-colors pl-10" type="text" value="Oct 24, 2023 - Oct 31, 2023"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">calendar_today</span>
+</div>
+</div>
+<div class="col-span-2">
+<label class="block font-label-bold text-label-bold text-on-surface-variant mb-1 uppercase">User Role</label>
+<select class="w-full text-body-sm border-outline-variant rounded focus:border-secondary transition-colors">
+<option>All Roles</option>
+<option>Plant Manager</option>
+<option>Quality Engineer</option>
+<option>System Admin</option>
+</select>
+</div>
+<div class="col-span-2">
+<label class="block font-label-bold text-label-bold text-on-surface-variant mb-1 uppercase">Action Type</label>
+<select class="w-full text-body-sm border-outline-variant rounded focus:border-secondary transition-colors">
+<option>All Actions</option>
+<option>Login</option>
+<option>Edit</option>
+<option>Override</option>
+<option>SAP Retry</option>
+</select>
+</div>
+<div class="col-span-3">
+<label class="block font-label-bold text-label-bold text-on-surface-variant mb-1 uppercase">Search Keyword</label>
+<input class="w-full text-body-sm border-outline-variant rounded focus:border-secondary transition-colors" placeholder="Entity ID, Device ID..." type="text"/>
+</div>
+<div class="col-span-2 flex items-end h-full">
+<button class="w-full py-2 bg-secondary text-white rounded font-body-sm text-body-sm font-bold shadow-sm hover:opacity-90 transition-all">
+                        Apply Filters
+                    </button>
+</div>
+</div>
+</div>
+<!-- Audit Table Container -->
+<div class="bg-surface border border-outline-variant rounded-lg overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-high border-b border-outline-variant">
+<tr>
+<th class="px-4 py-3 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider">Timestamp</th>
+<th class="px-4 py-3 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider">User</th>
+<th class="px-4 py-3 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider">Role</th>
+<th class="px-4 py-3 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider">Action</th>
+<th class="px-4 py-3 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider">Entity Type</th>
+<th class="px-4 py-3 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider">Result</th>
+<th class="px-4 py-3 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider">Device ID</th>
+<th class="px-4 py-3 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider text-right">Details</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-on-surface/[0.02] transition-colors cursor-pointer group" onclick="toggleDrawer(true)">
+<td class="px-4 py-4 font-data-tabular text-data-tabular text-on-surface">2023-10-31 14:22:05</td>
+<td class="px-4 py-4 font-body-md text-body-md text-on-surface">Tanaka Kenji</td>
+<td class="px-4 py-4">
+<span class="text-[10px] font-bold px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant border border-outline-variant uppercase">Quality Eng</span>
+</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">edit_document</span>
+<span class="font-body-md text-body-md text-on-surface">Edit</span>
+</div>
+</td>
+<td class="px-4 py-4 font-body-sm text-body-sm text-on-surface-variant italic">Control Card #402</td>
+<td class="px-4 py-4">
+<span class="text-[10px] font-bold px-2 py-0.5 rounded status-ok uppercase">OK</span>
+</td>
+<td class="px-4 py-4 font-data-tabular text-data-tabular text-on-surface-variant">NIC-LINEA-TERM-04</td>
+<td class="px-4 py-4 text-right">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">visibility</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-on-surface/[0.02] transition-colors cursor-pointer group" onclick="toggleDrawer(true)">
+<td class="px-4 py-4 font-data-tabular text-data-tabular text-on-surface">2023-10-31 13:45:12</td>
+<td class="px-4 py-4 font-body-md text-body-md text-on-surface">System Admin</td>
+<td class="px-4 py-4">
+<span class="text-[10px] font-bold px-2 py-0.5 rounded bg-primary-container text-on-primary-container border border-primary uppercase">Sys Admin</span>
+</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-error">sync_problem</span>
+<span class="font-body-md text-body-md text-on-surface">SAP Retry</span>
+</div>
+</td>
+<td class="px-4 py-4 font-body-sm text-body-sm text-on-surface-variant italic">Material Sync #882</td>
+<td class="px-4 py-4">
+<span class="text-[10px] font-bold px-2 py-0.5 rounded status-ng uppercase">NG</span>
+</td>
+<td class="px-4 py-4 font-data-tabular text-data-tabular text-on-surface-variant">NIC-SRV-CORE-01</td>
+<td class="px-4 py-4 text-right">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">visibility</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-on-surface/[0.02] transition-colors cursor-pointer group" onclick="toggleDrawer(true)">
+<td class="px-4 py-4 font-data-tabular text-data-tabular text-on-surface">2023-10-31 11:10:59</td>
+<td class="px-4 py-4 font-body-md text-body-md text-on-surface">Sato Hiroshi</td>
+<td class="px-4 py-4">
+<span class="text-[10px] font-bold px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant border border-outline-variant uppercase">Supervisor</span>
+</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-on-tertiary-container">priority_high</span>
+<span class="font-body-md text-body-md text-on-surface">Override</span>
+</div>
+</td>
+<td class="px-4 py-4 font-body-sm text-body-sm text-on-surface-variant italic">Tolerance Check</td>
+<td class="px-4 py-4">
+<span class="text-[10px] font-bold px-2 py-0.5 rounded status-ok uppercase">OK</span>
+</td>
+<td class="px-4 py-4 font-data-tabular text-data-tabular text-on-surface-variant">NIC-HANDHELD-12</td>
+<td class="px-4 py-4 text-right">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">visibility</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-on-surface/[0.02] transition-colors cursor-pointer group" onclick="toggleDrawer(true)">
+<td class="px-4 py-4 font-data-tabular text-data-tabular text-on-surface">2023-10-31 08:30:22</td>
+<td class="px-4 py-4 font-body-md text-body-md text-on-surface">Watanabe Emi</td>
+<td class="px-4 py-4">
+<span class="text-[10px] font-bold px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant border border-outline-variant uppercase">Operator</span>
+</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-on-primary-container">login</span>
+<span class="font-body-md text-body-md text-on-surface">Login</span>
+</div>
+</td>
+<td class="px-4 py-4 font-body-sm text-body-sm text-on-surface-variant italic">Session Start</td>
+<td class="px-4 py-4">
+<span class="text-[10px] font-bold px-2 py-0.5 rounded status-ok uppercase">OK</span>
+</td>
+<td class="px-4 py-4 font-data-tabular text-data-tabular text-on-surface-variant">NIC-LINEA-TERM-02</td>
+<td class="px-4 py-4 text-right">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">visibility</span>
+</td>
+</tr>
+<!-- Row 5 (Repeated for density) -->
+<tr class="hover:bg-on-surface/[0.02] transition-colors cursor-pointer group" onclick="toggleDrawer(true)">
+<td class="px-4 py-4 font-data-tabular text-data-tabular text-on-surface">2023-10-30 22:15:44</td>
+<td class="px-4 py-4 font-body-md text-body-md text-on-surface">Tanaka Kenji</td>
+<td class="px-4 py-4">
+<span class="text-[10px] font-bold px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant border border-outline-variant uppercase">Quality Eng</span>
+</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">edit_document</span>
+<span class="font-body-md text-body-md text-on-surface">Edit</span>
+</div>
+</td>
+<td class="px-4 py-4 font-body-sm text-body-sm text-on-surface-variant italic">Control Card #398</td>
+<td class="px-4 py-4">
+<span class="text-[10px] font-bold px-2 py-0.5 rounded status-ok uppercase">OK</span>
+</td>
+<td class="px-4 py-4 font-data-tabular text-data-tabular text-on-surface-variant">NIC-WORKST-B-09</td>
+<td class="px-4 py-4 text-right">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">visibility</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Pagination -->
+<div class="px-4 py-3 bg-surface-container-low border-t border-outline-variant flex items-center justify-between">
+<p class="font-body-sm text-body-sm text-on-surface-variant">Showing 1 to 5 of 1,248 entries</p>
+<div class="flex gap-1">
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant bg-surface hover:bg-surface-container transition-colors disabled:opacity-50">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-primary bg-primary text-on-primary font-bold text-xs">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant bg-surface text-on-surface text-xs hover:bg-surface-container">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant bg-surface text-on-surface text-xs hover:bg-surface-container">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant bg-surface hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Detail Drawer Shell -->
+<div class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-[60] hidden" id="drawerOverlay" onclick="toggleDrawer(false)"></div>
+<div class="detail-drawer fixed right-0 top-0 h-full w-[600px] bg-surface z-[70] shadow-2xl flex flex-col border-l border-outline-variant" id="detailDrawer">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container-lowest">
+<div>
+<h3 class="font-headline-md text-headline-md text-primary">Audit Detail</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Log ID: AD-1029384756-TR</p>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container transition-colors" onclick="toggleDrawer(false)">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto p-6 custom-scrollbar">
+<!-- Metadata Grid -->
+<div class="grid grid-cols-2 gap-y-4 gap-x-8 mb-8">
+<div>
+<label class="block font-label-bold text-label-bold text-on-surface-variant uppercase">User Identity</label>
+<div class="flex items-center gap-2 mt-1">
+<div class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center text-[10px] font-bold">TK</div>
+<p class="font-body-md text-body-md text-on-surface">Tanaka Kenji (Quality Eng)</p>
+</div>
+</div>
+<div>
+<label class="block font-label-bold text-label-bold text-on-surface-variant uppercase">Execution Time</label>
+<p class="font-data-tabular text-data-tabular text-on-surface mt-1">2023-10-31 14:22:05.122 JST</p>
+</div>
+<div>
+<label class="block font-label-bold text-label-bold text-on-surface-variant uppercase">Source IP / Device</label>
+<p class="font-body-sm text-body-sm text-on-surface mt-1">192.168.1.104 (NIC-LINEA-TERM-04)</p>
+</div>
+<div>
+<label class="block font-label-bold text-label-bold text-on-surface-variant uppercase">Action Outcome</label>
+<p class="font-body-sm text-body-sm text-on-secondary-container mt-1 font-bold">SUCCESS (200 OK)</p>
+</div>
+</div>
+<!-- JSON Diff Section -->
+<div class="space-y-6">
+<div>
+<div class="flex items-center justify-between mb-2">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+                            Before State (JSON)
+                        </label>
+<button class="text-[10px] uppercase font-bold text-secondary hover:underline">Copy JSON</button>
+</div>
+<div class="bg-surface-container-highest p-4 rounded border border-outline-variant overflow-x-auto">
+<pre class="font-data-tabular text-[12px] text-on-surface leading-tight">{
+  "entity_id": "CC-402",
+  "parameters": {
+    "pressure_threshold": 45.5,
+    "temperature_limit": 120.0,
+    "status": "active",
+    "updated_at": "2023-10-25T09:00:00Z"
+  },
+  "lock_status": false,
+  "version": 12
+}</pre>
+</div>
+</div>
+<div class="flex justify-center -my-3 relative z-10">
+<div class="bg-primary text-white p-1 rounded-full shadow-md">
+<span class="material-symbols-outlined text-[20px]">keyboard_double_arrow_down</span>
+</div>
+</div>
+<div>
+<div class="flex items-center justify-between mb-2">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                            After State (JSON)
+                        </label>
+<button class="text-[10px] uppercase font-bold text-secondary hover:underline">Copy JSON</button>
+</div>
+<div class="bg-surface-container-highest p-4 rounded border border-outline-variant overflow-x-auto relative overflow-hidden">
+<!-- Diff indicators -->
+<div class="absolute left-0 top-0 h-full w-1 bg-secondary opacity-50"></div>
+<pre class="font-data-tabular text-[12px] text-on-surface leading-tight">{
+  "entity_id": "CC-402",
+  "parameters": {
+    <span class="bg-secondary/10 font-bold">"pressure_threshold": 48.2,</span>
+    "temperature_limit": 120.0,
+    "status": "active",
+    <span class="bg-secondary/10 font-bold">"updated_at": "2023-10-31T14:22:05Z"</span>
+  },
+  "lock_status": false,
+  <span class="bg-secondary/10 font-bold">"version": 13</span>
+}</pre>
+</div>
+</div>
+</div>
+<!-- Footer note -->
+<div class="mt-8 p-4 bg-surface-container-low rounded border border-dashed border-outline-variant">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">info</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">This change was authorized via Shift Override Token #X-8821. No manual signature required per Policy QC-202.</p>
+</div>
+</div>
+</div>
+<div class="p-6 border-t border-outline-variant bg-surface-container-low flex gap-3">
+<button class="flex-1 py-2 bg-primary text-on-primary rounded font-bold text-body-sm hover:opacity-90 transition-all">Verify Chain of Custody</button>
+<button class="px-6 py-2 border border-outline-variant bg-surface rounded font-bold text-body-sm hover:bg-surface-container transition-colors">Print Log</button>
+</div>
+</div>
+<script>
+        function toggleDrawer(isOpen) {
+            const drawer = document.getElementById('detailDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            if (isOpen) {
+                drawer.classList.add('open');
+                overlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            } else {
+                drawer.classList.remove('open');
+                overlay.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Add visual micro-interaction for table rows
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('mousedown', () => {
+                row.classList.add('scale-[0.995]', 'duration-100');
+            });
+            row.addEventListener('mouseup', () => {
+                row.classList.remove('scale-[0.995]');
+            });
+        });
+
+        // Search highlight simulation
+        const searchInput = document.querySelector('input[placeholder="Global system search..."]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('border-primary', 'ring-2', 'ring-primary/10');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('border-primary', 'ring-2', 'ring-primary/10');
+        });
+    </script>
+</body></html>

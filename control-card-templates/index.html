@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<!-- SPA Layout Redirect Wrapper -->
+<script>
+  if (!document.getElementById('app-root')) {
+    const p = window.location.pathname;
+    const rel = '../';
+    window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
+  }
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Control Card Template Management | Nichirin Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Industrial-style glass effect for specific panels */
+        .industrial-glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid #E5E7EB;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#43474e",
+                        "inverse-on-surface": "#f2f0f3",
+                        "tertiary-container": "#391303",
+                        "background": "#faf9fc",
+                        "on-tertiary-fixed": "#351002",
+                        "on-primary-fixed-variant": "#2f486a",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#faf9fc",
+                        "surface-container-low": "#f4f3f6",
+                        "on-error": "#ffffff",
+                        "tertiary": "#110200",
+                        "outline": "#74777f",
+                        "tertiary-fixed-dim": "#fdb69a",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#faf9fc",
+                        "on-surface": "#1a1c1e",
+                        "secondary-container": "#7af2f2",
+                        "on-secondary-fixed": "#002020",
+                        "secondary-fixed": "#7df5f5",
+                        "primary-container": "#001f3f",
+                        "on-primary-container": "#6f88ad",
+                        "on-tertiary-container": "#b5785f",
+                        "on-error-container": "#93000a",
+                        "on-background": "#1a1c1e",
+                        "on-primary-fixed": "#001c3a",
+                        "tertiary-fixed": "#ffdbce",
+                        "surface-container-high": "#e9e7eb",
+                        "inverse-surface": "#2f3033",
+                        "on-tertiary-fixed-variant": "#6b3a25",
+                        "inverse-primary": "#afc8f0",
+                        "surface-dim": "#dbd9dd",
+                        "on-secondary-container": "#006e6e",
+                        "surface-container-highest": "#e3e2e5",
+                        "outline-variant": "#c4c6cf",
+                        "secondary": "#006a6a",
+                        "on-primary": "#ffffff",
+                        "primary": "#000613",
+                        "on-secondary-fixed-variant": "#004f4f",
+                        "surface-tint": "#476083",
+                        "surface-variant": "#e3e2e5",
+                        "primary-fixed": "#d4e3ff",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#afc8f0",
+                        "surface-container": "#efedf0",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#5dd9d8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-gap-md": "16px",
+                        "sidebar-width": "260px",
+                        "header-height": "64px",
+                        "stack-gap-sm": "8px",
+                        "grid-gutter": "20px",
+                        "container-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "data-tabular": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "label-bold": ["11px", { "lineHeight": "16px", "fontWeight": "700" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "data-tabular": ["13px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden h-screen flex">
+<!-- SideNavBar Anchor -->
+<aside class="fixed left-0 top-0 h-full w-[260px] bg-primary dark:bg-primary-container flex flex-col py-4 border-r border-outline-variant z-50">
+<div class="px-6 mb-8 flex flex-col gap-1">
+<span class="font-headline-md text-headline-md font-bold text-on-primary">Nichirin Admin</span>
+<span class="font-body-sm text-body-sm text-on-primary-fixed-variant opacity-80 uppercase tracking-widest">Monozukuri System</span>
+</div>
+<nav class="flex-1 flex flex-col gap-1 px-3">
+<!-- Monitoring -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-primary-fixed-variant hover:bg-on-primary-fixed-variant hover:text-on-primary transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+<span class="font-body-md text-body-md">Monitoring</span>
+</a>
+<!-- Configuration - ACTIVE -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded bg-secondary-container text-on-secondary-container font-bold opacity-90 transition-all" href="#">
+<span class="material-symbols-outlined">settings_applications</span>
+<span class="font-body-md text-body-md">Configuration</span>
+</a>
+<!-- Traceability & Reports -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-primary-fixed-variant hover:bg-on-primary-fixed-variant hover:text-on-primary transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-body-md text-body-md">Traceability &amp; Reports</span>
+</a>
+<!-- Administration -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-primary-fixed-variant hover:bg-on-primary-fixed-variant hover:text-on-primary transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="font-body-md text-body-md">Administration</span>
+</a>
+</nav>
+<div class="mt-auto px-6 mb-4">
+<div class="bg-primary-fixed-dim/10 rounded-lg p-3 border border-outline/20">
+<p class="text-on-primary text-[10px] uppercase font-bold opacity-60">System Status</p>
+<p class="text-secondary-fixed text-xs font-bold flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#7af2f2]"></span>
+                    System Status: Active
+                </p>
+</div>
+</div>
+<div class="px-3 flex flex-col gap-1 border-t border-outline/10 pt-4">
+<a class="flex items-center gap-3 px-3 py-2 text-on-primary-fixed-variant hover:text-on-primary transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-body-md text-body-md">Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-primary-fixed-variant hover:text-on-primary transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body-md text-body-md">Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-[260px] flex flex-col h-full overflow-hidden">
+<!-- TopNavBar Anchor -->
+<header class="h-[64px] bg-surface dark:bg-surface-dim border-b border-outline-variant flex justify-between items-center px-container-padding z-40">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+<span>Plant</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span>Line A</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-bold border-b-2 border-primary pb-0.5">Control Card #402</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative flex items-center bg-surface-container rounded-lg px-3 py-1.5 border border-outline-variant focus-within:border-secondary transition-all">
+<span class="material-symbols-outlined text-on-surface-variant mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-64 p-0 placeholder:text-on-surface-variant/50" placeholder="Search templates..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-secondary transition-colors">notifications</button>
+<div class="h-8 w-px bg-outline-variant"></div>
+<div class="flex items-center gap-3 cursor-pointer group">
+<div class="text-right">
+<p class="text-xs font-bold text-primary">T. Yamamoto</p>
+<p class="text-[10px] text-on-surface-variant">Production Mgr.</p>
+</div>
+<div class="w-9 h-9 rounded bg-primary flex items-center justify-center text-on-primary font-bold overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a middle-aged Japanese manufacturing plant manager in a clean white industrial uniform. He is standing against a soft-focus background of a modern automotive production line with sterile white and deep navy accents. The lighting is crisp and professional, conveying authority and precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTS1TTk4dkxkoT1QUJI8JX7Ya6k8XgIa5OzVvpExGwyg67ZYQ93eCBwJx275m6bTlV8hz-vjHDu_4t3HJikZOjseMeTMwo-0rN-6vOGaVc49-cIqjeEjNC0OkJefVuJepPwiyUTdBlciQfhz5heXbclRijEfQ5kw9-JYLNQ4_w4DsmFuPjUO0rGP6a1xvGND3DXoQLsMol5DLFuySyHwKzavIk3YN8ukSuQQhj6qSsqiv769eUohSXmQ"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Canvas Area -->
+<div class="flex-1 overflow-y-auto p-container-padding scrollbar-hide">
+<div class="max-w-[1440px] mx-auto flex flex-col gap-stack-gap-md">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-5">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-1">Control Card Template Management</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Design, validate, and publish digitized Monozukuri control protocols.</p>
+</div>
+<button class="bg-primary text-white px-5 py-2.5 flex items-center gap-2 font-bold rounded-lg shadow-sm hover:bg-primary/95 active:scale-95 transition-all">
+<span class="material-symbols-outlined">add</span>
+                        NEW TEMPLATE
+                    </button>
+</div>
+<!-- Template Wizard Preview (Bento Grid Style) -->
+<div class="grid grid-cols-12 gap-5 mb-4">
+<div class="col-span-8 bg-white border border-outline-variant/30 p-6 relative overflow-hidden rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-8">
+<h2 class="font-headline-sm text-headline-sm text-primary flex items-center gap-2 font-semibold">
+<span class="material-symbols-outlined text-secondary">auto_awesome_motion</span>
+                                Active Template Wizard: CC-V2-BRAKE-HOSE
+                            </h2>
+<span class="text-[10px] font-bold text-secondary bg-secondary-container px-2.5 py-1 rounded-lg uppercase tracking-wider">Current Session</span>
+</div>
+<div class="flex items-center justify-between relative mb-12 px-4">
+<!-- Step 1: Basic Info (Completed) -->
+<div class="relative flex flex-col items-center">
+  <div class="w-10 h-10 rounded-full bg-secondary text-white flex items-center justify-center shadow-sm border-4 border-white z-10">
+    <span class="material-symbols-outlined text-[16px] font-bold">check</span>
+  </div>
+  <div class="absolute top-12 whitespace-nowrap text-center">
+    <span class="font-label-bold text-label-bold text-secondary">BASIC INFO</span>
+  </div>
+</div>
+
+<!-- Line 1: Completed -->
+<div class="flex-grow h-[3px] bg-secondary -mx-1 z-0"></div>
+
+<!-- Step 2: BOM (Completed) -->
+<div class="relative flex flex-col items-center">
+  <div class="w-10 h-10 rounded-full bg-secondary text-white flex items-center justify-center shadow-sm border-4 border-white z-10">
+    <span class="material-symbols-outlined text-[16px] font-bold">check</span>
+  </div>
+  <div class="absolute top-12 whitespace-nowrap text-center">
+    <span class="font-label-bold text-label-bold text-secondary">BOM</span>
+  </div>
+</div>
+
+<!-- Line 2: Completed -->
+<div class="flex-grow h-[3px] bg-secondary -mx-1 z-0"></div>
+
+<!-- Step 3: Workflow (Completed) -->
+<div class="relative flex flex-col items-center">
+  <div class="w-10 h-10 rounded-full bg-secondary text-white flex items-center justify-center shadow-sm border-4 border-white z-10">
+    <span class="material-symbols-outlined text-[16px] font-bold">check</span>
+  </div>
+  <div class="absolute top-12 whitespace-nowrap text-center">
+    <span class="font-label-bold text-label-bold text-secondary">WORKFLOW</span>
+  </div>
+</div>
+
+<!-- Line 3: Completed -->
+<div class="flex-grow h-[3px] bg-secondary -mx-1 z-0"></div>
+
+<!-- Step 4: Control Point (Active) -->
+<div class="relative flex flex-col items-center">
+  <div class="w-10 h-10 rounded-full bg-primary text-white border-4 border-white flex items-center justify-center ring-4 ring-primary/20 font-bold shadow-md z-10">
+    <span>4</span>
+  </div>
+  <div class="absolute top-12 whitespace-nowrap text-center">
+    <span class="font-label-bold text-label-bold text-primary font-bold">CONTROL POINTS</span>
+  </div>
+</div>
+
+<!-- Line 4: Not Started -->
+<div class="flex-grow h-[3px] bg-slate-200 -mx-1 z-0"></div>
+
+<!-- Step 5: QC Rules (Pending) -->
+<div class="relative flex flex-col items-center">
+  <div class="w-10 h-10 rounded-full bg-slate-50 border border-slate-200 text-slate-400 flex items-center justify-center font-bold border-4 border-white z-10">
+    <span>5</span>
+  </div>
+  <div class="absolute top-12 whitespace-nowrap text-center">
+    <span class="font-label-bold text-label-bold text-slate-400">QC RULES</span>
+  </div>
+</div>
+</div>
+<!-- Mini Content Preview -->
+<div class="grid grid-cols-2 gap-6 bg-slate-50 p-4 border border-outline-variant/30 rounded-xl shadow-sm overflow-hidden">
+<div class="space-y-3">
+<div class="flex justify-between border-b border-outline-variant/30 pb-2">
+<span class="text-xs text-on-surface font-semibold">Point #401: Internal Diameter</span>
+<span class="material-symbols-outlined text-secondary text-sm cursor-pointer hover:text-primary">edit</span>
+</div>
+<div class="flex justify-between border-b border-outline-variant/30 pb-2">
+<span class="text-xs text-on-surface font-semibold">Point #402: Wall Thickness</span>
+<span class="material-symbols-outlined text-secondary text-sm cursor-pointer hover:text-primary">edit</span>
+</div>
+<button class="w-full py-2 border-2 border-dashed border-outline-variant/30 rounded-lg text-[11px] font-bold text-on-surface-variant hover:border-primary hover:text-primary hover:bg-white transition-all">
+                                    + ADD NEW CONTROL POINT
+                                </button>
+</div>
+<div class="bg-white p-4 border border-outline-variant/30 flex flex-col items-center justify-center text-center rounded-lg">
+<span class="material-symbols-outlined text-3xl text-outline mb-2">straighten</span>
+<p class="text-xs text-on-surface-variant font-medium">Select measurement tool and tolerance range for the current point.</p>
+</div>
+</div>
+</div>
+<!-- Validation Checklist -->
+<div class="col-span-4 bg-white border border-outline-variant/30 flex flex-col rounded-xl shadow-sm overflow-hidden">
+<div class="p-4 border-b border-outline-variant/30 bg-slate-50 flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-primary font-semibold">Validation Checklist</h3>
+<span class="text-[10px] font-bold text-error bg-error-container/50 px-2 py-0.5 rounded-lg border border-error/20">2 ERRORS</span>
+</div>
+<div class="flex-1 p-4 flex flex-col gap-3">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-emerald-500 text-xl">check_circle</span>
+<div>
+<p class="text-xs font-bold text-on-surface">Template Metadata</p>
+<p class="text-[10px] text-on-surface-variant">Version 4.2 headers assigned.</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-emerald-500 text-xl">check_circle</span>
+<div>
+<p class="text-xs font-bold text-on-surface">BOM Links</p>
+<p class="text-[10px] text-on-surface-variant">All 12 sub-components mapped.</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 bg-error-container/20 border border-error/20 rounded-lg">
+<span class="material-symbols-outlined text-error text-xl">warning</span>
+<div>
+<p class="text-xs font-bold text-error">Missing Control Point Warning</p>
+<p class="text-[10px] text-on-error-container">Workflow stage "Vulc-02" has no associated control points defined.</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 bg-error-container/20 border border-error/20 rounded-lg">
+<span class="material-symbols-outlined text-error text-xl">warning</span>
+<div>
+<p class="text-xs font-bold text-error">Invalid QC Rule</p>
+<p class="text-[10px] text-on-error-container">Rule "Temp-Auto-Reject" exceeds plant safety limits.</p>
+</div>
+</div>
+</div>
+<button class="m-4 py-3 bg-slate-200 text-slate-400 font-bold text-xs rounded-lg cursor-not-allowed opacity-75" disabled="">
+                            PUBLISH TEMPLATE
+                        </button>
+</div>
+</div>
+<!-- Template Table -->
+<div class="bg-white border border-outline-variant/30 rounded-xl shadow-sm overflow-hidden mt-6">
+<div class="p-5 flex items-center justify-between border-b border-outline-variant/30 bg-slate-50">
+<div class="flex items-center gap-4">
+<h2 class="font-headline-sm text-headline-sm text-primary font-semibold">Template Repository</h2>
+<div class="flex border border-outline-variant/30 rounded-lg overflow-hidden bg-white">
+<button class="px-3 py-1 text-[11px] font-bold bg-primary text-white">ALL</button>
+<button class="px-3 py-1 text-[11px] font-bold text-on-surface-variant hover:bg-slate-50">ACTIVE</button>
+<button class="px-3 py-1 text-[11px] font-bold text-on-surface-variant hover:bg-slate-50">DRAFT</button>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xs text-on-surface-variant">Rows per page:</span>
+<select class="bg-transparent border-none text-xs font-bold text-primary focus:ring-0">
+<option>10</option>
+<option>25</option>
+<option>50</option>
+</select>
+</div>
+</div>
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 border-b border-outline-variant/30">
+<th class="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider">Template Code</th>
+<th class="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider">Product</th>
+<th class="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider">Version</th>
+<th class="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider">Status</th>
+<th class="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50/50 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">description</span>
+<span class="font-data-tabular text-data-tabular text-primary">CC-BH-7829-X</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-xs font-bold text-primary">Brake Hose Assembly</span>
+<span class="text-[10px] text-on-surface-variant">Hydraulic-Press Line</span>
+</div>
+</td>
+<td class="px-6 py-4 font-data-tabular text-data-tabular text-on-surface-variant">v4.2.1</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200/50 text-[10px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                        Active
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right space-x-1">
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors hover:bg-slate-100 rounded-lg" title="Edit">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors hover:bg-slate-100 rounded-lg" title="Clone">
+<span class="material-symbols-outlined text-[20px]">content_copy</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-error transition-colors hover:bg-red-50 rounded-lg" title="Deactivate">
+<span class="material-symbols-outlined text-[20px]">block</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50/50 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">description</span>
+<span class="font-data-tabular text-data-tabular text-primary">CC-BH-9912-D</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-xs font-bold text-primary">Clutch Hose 12mm</span>
+<span class="text-[10px] text-on-surface-variant">Extrusion Line 04</span>
+</div>
+</td>
+<td class="px-6 py-4 font-data-tabular text-data-tabular text-on-surface-variant">v0.9.4</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-50 text-slate-600 border border-slate-200/50 text-[10px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                                        Draft
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right space-x-1">
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors hover:bg-slate-100 rounded-lg" title="Edit">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 text-secondary hover:text-primary transition-colors hover:bg-slate-100 rounded-lg" title="Activate">
+<span class="material-symbols-outlined text-[20px]">play_circle</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50/50 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">description</span>
+<span class="font-data-tabular text-data-tabular text-primary">CC-FUEL-001-A</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-xs font-bold text-primary">Fuel Line Segment</span>
+<span class="text-[10px] text-on-surface-variant">Forming Line 02</span>
+</div>
+</td>
+<td class="px-6 py-4 font-data-tabular text-data-tabular text-on-surface-variant">v1.0.0</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-rose-50 text-rose-600 border border-rose-200/50 text-[10px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                                        Inactive
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right space-x-1">
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors hover:bg-slate-100 rounded-lg" title="Edit">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors hover:bg-slate-100 rounded-lg" title="Clone">
+<span class="material-symbols-outlined text-[20px]">content_copy</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="p-4 bg-slate-50 border-t border-outline-variant/30 flex justify-between items-center">
+<span class="text-[11px] text-on-surface-variant">Showing 1 to 3 of 15 templates</span>
+<div class="flex gap-1">
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant/30 rounded-lg hover:bg-slate-100 transition-all bg-white shadow-sm">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center border border-primary bg-primary text-white rounded-lg font-bold text-xs shadow-sm">1</button>
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant/30 rounded-lg hover:bg-slate-100 transition-all text-xs font-bold bg-white shadow-sm">2</button>
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant/30 rounded-lg hover:bg-slate-100 transition-all bg-white shadow-sm">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Feedback Area (Micro-interactions) -->
+<div class="fixed bottom-6 right-6 z-[60] flex flex-col gap-2" id="toast-container"></div>
+<script>
+        // Micro-interactions for buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.classList.add('scale-95');
+                setTimeout(() => button.classList.remove('scale-95'), 100);
+            });
+        });
+
+        // Simple toast notification system
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const icon = type === 'success' ? 'check_circle' : 'error';
+            const color = type === 'success' ? 'text-secondary' : 'text-error';
+            
+            toast.className = 'industrial-glass px-5 py-3 rounded shadow-lg flex items-center gap-3 animate-slide-in-right';
+            toast.style.cssText = 'animation: slideIn 0.3s ease-out forwards;';
+            toast.innerHTML = `
+                <span class="material-symbols-outlined ${color}">${icon}</span>
+                <span class="text-xs font-bold text-primary uppercase tracking-wider">${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.3s ease-in forwards';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Add keyframe animations dynamically
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Example trigger for copy/clone
+        document.querySelectorAll('[title="Clone"]').forEach(btn => {
+            btn.addEventListener('click', () => showToast('Template Cloned Successfully'));
+        });
+    </script>
+
+
+</body></html>

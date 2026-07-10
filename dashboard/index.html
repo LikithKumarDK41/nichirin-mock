@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<!-- SPA Layout Redirect Wrapper -->
+<script>
+  if (!document.getElementById('app-root')) {
+    const p = window.location.pathname;
+    const rel = '../';
+    window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
+  }
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MES Nichirin - Dashboard Overview</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#1a1c1e",
+                        "on-background": "#1a1c1e",
+                        "error-container": "#ffdad6",
+                        "surface": "#faf9fc",
+                        "outline": "#74777f",
+                        "surface-container-highest": "#e3e2e5",
+                        "surface-container-low": "#f4f3f6",
+                        "tertiary-fixed-dim": "#fdb69a",
+                        "on-secondary-fixed": "#002020",
+                        "outline-variant": "#c4c6cf",
+                        "surface-variant": "#e3e2e5",
+                        "secondary-container": "#7af2f2",
+                        "on-secondary-fixed-variant": "#004f4f",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#391303",
+                        "secondary-fixed": "#7df5f5",
+                        "secondary": "#006a6a",
+                        "on-tertiary-fixed-variant": "#6b3a25",
+                        "error": "#ba1a1a",
+                        "surface-bright": "#faf9fc",
+                        "inverse-primary": "#afc8f0",
+                        "primary": "#000613",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#afc8f0",
+                        "background": "#faf9fc",
+                        "surface-container-high": "#e9e7eb",
+                        "on-primary-fixed": "#001c3a",
+                        "on-tertiary-container": "#b5785f",
+                        "on-surface-variant": "#43474e",
+                        "primary-fixed": "#d4e3ff",
+                        "surface-container": "#efedf0",
+                        "tertiary-fixed": "#ffdbce",
+                        "surface-dim": "#dbd9dd",
+                        "tertiary": "#110200",
+                        "on-primary-container": "#6f88ad",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#f2f0f3",
+                        "primary-container": "#001f3f",
+                        "on-tertiary-fixed": "#351002",
+                        "on-primary-fixed-variant": "#2f486a",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#5dd9d8",
+                        "surface-tint": "#476083",
+                        "on-secondary-container": "#006e6e",
+                        "inverse-surface": "#2f3033"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #faf9fc; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        .active-nav-item { background-color: #7af2f2 !important; color: #000613 !important; }
+        .nav-group-label { color: #8ba2b9; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 1.5rem 1rem 0.5rem 1rem; }
+    </style>
+</head>
+<body class="text-on-background">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-[280px] bg-primary flex flex-col h-full border-r border-outline-variant shadow-xl z-20 overflow-y-auto sidebar-scroll">
+<!-- Logo Section -->
+<div class="p-6 flex items-center gap-3">
+<div class="size-10 bg-secondary flex items-center justify-center rounded-lg">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">factory</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-white text-lg font-bold leading-none">NICHIRIN</h1>
+<p class="text-secondary-fixed-dim text-[10px] font-medium tracking-widest uppercase">MES Pro Edition</p>
+</div>
+</div>
+<nav class="flex-1 px-3 pb-8">
+<!-- 1. Monitoring -->
+<div class="nav-group-label">Monitoring</div>
+<div class="space-y-1">
+<a class="active-nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">assignment_turned_in</span>
+                    Work Order Monitoring
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">engineering</span>
+                    Supervisor Planning
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">verified</span>
+                    QC Pending Approvals
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">build_circle</span>
+                    Breakdown / Rework
+                </a>
+</div>
+<!-- 2. Master Configuration -->
+<div class="nav-group-label">Master Configuration</div>
+<div class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">style</span>
+                    Control Card Templates
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+                    Workflow Configuration
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">settings_suggest</span>
+                    Process Master
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+                    BOM / Picking Master
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">gps_fixed</span>
+                    Control Point Master
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">rule_folder</span>
+                    Standard / Tolerance Master
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">science</span>
+                    Method Master
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">checklist</span>
+                    QC Rule Configuration
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">qr_code_2</span>
+                    QR Label Management
+                </a>
+</div>
+<!-- 3. Traceability & Reports -->
+<div class="nav-group-label">Traceability &amp; Reports</div>
+<div class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+                    Traceability Search
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+                    Production Reports
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">fact_check</span>
+                    QC Reports
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">report_problem</span>
+                    Breakdown Reports
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">sync_problem</span>
+                    SAP Sync Reports
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+                    Audit Reports
+                </a>
+</div>
+<!-- 4. Administration -->
+<div class="nav-group-label">Administration</div>
+<div class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">manage_accounts</span>
+                    User &amp; Role Management
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">router</span>
+                    Device Management
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">upload_file</span>
+                    CSV Import
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+                    SAP Synchronization Logs
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">swap_horiz</span>
+                    SAP Field Mapping
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">notifications_active</span>
+                    Notification / Alarm Config
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+                    System Settings
+                </a>
+</div>
+</nav>
+<div class="p-4 border-t border-white/10">
+<div class="flex items-center gap-3 px-3 py-2">
+<div class="size-8 rounded-full bg-surface-container-highest overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a senior manufacturing engineer in a clean factory environment, soft overhead lighting, modern professional photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0fTX_cJNoKLgLYyjm2ZK_ASiD4m-LcejPUg7hmI2yPMu7xptvdlyNDVFKwky5j-P5QPUF-jUKNSPKt0HOg-Yyzp7CgQ33bxVvMWB8mibmmFy-YiGIjZbEZS72Fz0Y7AydzwBJw5lUAeDifeEuhr_89oybZ3KDM8qHmouPwGUKXBEeLSvwDmn8C5kPcOj7yxD0i7Zhbhf4EdUD1h58rtNqvdzNalZXiRRF0XBBJLrY8DI3K2qXPyelIQ"/>
+</div>
+<div class="flex flex-col">
+<span class="text-white text-xs font-semibold">T. Nakagawa</span>
+<span class="text-white/50 text-[10px]">Site Admin</span>
+</div>
+<button class="ml-auto text-white/50 hover:text-white">
+<span class="material-symbols-outlined text-sm">logout</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-full overflow-hidden bg-surface">
+<!-- Top Bar -->
+<header class="h-[64px] border-b border-outline-variant flex items-center justify-between px-6 bg-white shrink-0">
+<div class="flex items-center gap-4">
+<h2 class="text-on-surface text-xl font-bold tracking-tight">Dashboard Overview</h2>
+<div class="h-4 w-px bg-outline-variant"></div>
+<p class="text-outline text-sm font-medium">Real-time factory floor monitoring and KPIs</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-lg">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-container-low border border-outline-variant rounded-lg text-sm w-64 focus:ring-2 focus:ring-secondary focus:border-transparent transition-all" placeholder="Search work orders, devices..." type="text"/>
+</div>
+<button class="p-2 text-outline hover:bg-surface-container-high rounded-full relative transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-error rounded-full ring-2 ring-white"></span>
+</button>
+<button class="p-2 text-outline hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<!-- Content Scroll Area -->
+<div class="flex-1 overflow-y-auto p-6 space-y-6">
+  <!-- Header Section -->
+  <div class="flex justify-between items-end mb-5">
+    <div>
+      <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Dashboard Overview</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant">Real-time factory floor monitoring, active work order status distribution, and KPIs.</p>
+    </div>
+  </div>
+<!-- 10 KPI Cards Section -->
+<div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+<!-- Row 1 -->
+<div class="bg-white p-4 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-2">
+<span class="text-outline text-xs font-bold uppercase tracking-wider">Waiting</span>
+<span class="material-symbols-outlined text-outline text-lg">timer</span>
+</div>
+<div class="text-2xl font-black text-on-surface">12</div>
+<div class="mt-2 h-1 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-outline w-1/4"></div>
+</div>
+</div>
+<div class="bg-white p-4 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-2">
+<span class="text-secondary text-xs font-bold uppercase tracking-wider">Running</span>
+<span class="material-symbols-outlined text-secondary text-lg">sync</span>
+</div>
+<div class="text-2xl font-black text-on-surface">45</div>
+<div class="mt-2 h-1 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-3/4"></div>
+</div>
+</div>
+<div class="bg-white p-4 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-2">
+<span class="text-primary text-xs font-bold uppercase tracking-wider">Completed</span>
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+</div>
+<div class="text-2xl font-black text-on-surface">128</div>
+<div class="mt-2 h-1 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary w-full"></div>
+</div>
+</div>
+<div class="bg-white p-4 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-2">
+<span class="text-tertiary-fixed-dim text-xs font-bold uppercase tracking-wider">QC Pending</span>
+<span class="material-symbols-outlined text-on-tertiary-container text-lg">clinical_notes</span>
+</div>
+<div class="text-2xl font-black text-on-surface">8</div>
+<div class="mt-2 h-1 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-fixed-dim w-1/3"></div>
+</div>
+</div>
+<div class="bg-white p-4 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-2">
+<span class="text-error text-xs font-bold uppercase tracking-wider">NG Count</span>
+<span class="material-symbols-outlined text-error text-lg">cancel</span>
+</div>
+<div class="text-2xl font-black text-on-surface">4</div>
+<div class="mt-2 h-1 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-error w-1/5"></div>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="bg-white p-4 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-2">
+<span class="text-outline text-xs font-bold uppercase tracking-wider">Rework Count</span>
+<span class="material-symbols-outlined text-outline text-lg">refresh</span>
+</div>
+<div class="text-2xl font-black text-on-surface">2</div>
+</div>
+<div class="bg-white p-4 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-2">
+<span class="text-error text-xs font-bold uppercase tracking-wider">Breakdown</span>
+<span class="material-symbols-outlined text-error text-lg">minor_crash</span>
+</div>
+<div class="text-2xl font-black text-on-surface">1</div>
+</div>
+<div class="bg-white p-4 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-2">
+<span class="text-on-tertiary-fixed-variant text-xs font-bold uppercase tracking-wider">SAP Sync Failed</span>
+<span class="material-symbols-outlined text-on-tertiary-fixed-variant text-lg">cloud_off</span>
+</div>
+<div class="text-2xl font-black text-on-surface">0</div>
+</div>
+<div class="bg-white p-4 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-2">
+<span class="text-outline text-xs font-bold uppercase tracking-wider">Template Pending</span>
+<span class="material-symbols-outlined text-outline text-lg">pending_actions</span>
+</div>
+<div class="text-2xl font-black text-on-surface">3</div>
+</div>
+<div class="bg-white p-4 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-2">
+<span class="text-error text-xs font-bold uppercase tracking-wider">Device Offline</span>
+<span class="material-symbols-outlined text-error text-lg">sensors_off</span>
+</div>
+<div class="text-2xl font-black text-on-surface">1</div>
+</div>
+</div>
+<!-- Main Charts Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Work Order Status Distribution (Bar Chart) -->
+<div class="bg-white p-6 rounded-2xl border border-outline-variant shadow-sm">
+<h3 class="text-on-surface text-base font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">donut_large</span>
+                        Work Order Status Distribution
+                    </h3>
+<div class="h-64 flex items-end justify-between gap-4 px-4 pb-8 relative">
+<div class="flex-1 bg-surface-container-high rounded-t-lg relative group" style="height: 25%;">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-bold text-outline">12</div>
+<div class="absolute bottom-[-32px] left-1/2 -translate-x-1/2 text-[10px] font-bold text-outline uppercase whitespace-nowrap">Waiting</div>
+</div>
+<div class="flex-1 bg-secondary rounded-t-lg relative group" style="height: 75%;">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-bold text-secondary">45</div>
+<div class="absolute bottom-[-32px] left-1/2 -translate-x-1/2 text-[10px] font-bold text-outline uppercase whitespace-nowrap">Running</div>
+</div>
+<div class="flex-1 bg-primary rounded-t-lg relative group" style="height: 100%;">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-bold text-primary">128</div>
+<div class="absolute bottom-[-32px] left-1/2 -translate-x-1/2 text-[10px] font-bold text-outline uppercase whitespace-nowrap">Done</div>
+</div>
+<div class="flex-1 bg-tertiary-fixed-dim rounded-t-lg relative group" style="height: 15%;">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-bold text-on-tertiary-container">8</div>
+<div class="absolute bottom-[-32px] left-1/2 -translate-x-1/2 text-[10px] font-bold text-outline uppercase whitespace-nowrap">QC</div>
+</div>
+</div>
+</div>
+<!-- Line-wise Production (Horizontal Bar) -->
+<div class="bg-white p-6 rounded-2xl border border-outline-variant shadow-sm">
+<h3 class="text-on-surface text-base font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">analytics</span>
+                        Line-wise Production (Units)
+                    </h3>
+<div class="space-y-6">
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-bold text-outline">
+<span>LINE 1 - HIGH PRESSURE HOSE</span>
+<span>340 Units</span>
+</div>
+<div class="h-3 w-full bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 85%;"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-bold text-outline">
+<span>LINE 2 - BRAKE PIPING</span>
+<span>210 Units</span>
+</div>
+<div class="h-3 w-full bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 55%;"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-bold text-outline">
+<span>LINE 3 - FUEL LINE</span>
+<span>420 Units</span>
+</div>
+<div class="h-3 w-full bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 95%;"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-bold text-outline">
+<span>LINE 4 - COOLING SYSTEM</span>
+<span>180 Units</span>
+</div>
+<div class="h-3 w-full bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 45%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- QC Pending Aging (Area Chart Style) -->
+<div class="bg-white p-6 rounded-2xl border border-outline-variant shadow-sm">
+<h3 class="text-on-surface text-base font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">schedule</span>
+                        QC Pending Aging (Avg Hours)
+                    </h3>
+<div class="relative h-48 w-full">
+<animated-svg class="w-full h-full" src="{{DATA:ANIMATION:ANIMATION_1}}"></animated-svg>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="text-center">
+<span class="text-4xl font-black text-on-surface">4.2h</span>
+<p class="text-[10px] text-outline font-bold uppercase tracking-widest">Avg Response Time</p>
+</div>
+</div>
+</div>
+<div class="flex justify-between mt-4 px-2">
+<div class="text-center">
+<span class="block text-xs font-bold text-on-surface">2.1h</span>
+<span class="text-[9px] text-outline font-bold uppercase">Mon</span>
+</div>
+<div class="text-center">
+<span class="block text-xs font-bold text-on-surface">3.4h</span>
+<span class="text-[9px] text-outline font-bold uppercase">Tue</span>
+</div>
+<div class="text-center">
+<span class="block text-xs font-bold text-on-surface">5.8h</span>
+<span class="text-[9px] text-outline font-bold uppercase">Wed</span>
+</div>
+<div class="text-center">
+<span class="block text-xs font-bold text-on-surface">4.2h</span>
+<span class="text-[9px] text-outline font-bold uppercase">Thu</span>
+</div>
+<div class="text-center">
+<span class="block text-xs font-bold text-on-surface">3.9h</span>
+<span class="text-[9px] text-outline font-bold uppercase">Fri</span>
+</div>
+</div>
+</div>
+<!-- NG Trend (Line Chart Style) -->
+<div class="bg-white p-6 rounded-2xl border border-outline-variant shadow-sm">
+<h3 class="text-on-surface text-base font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-error">trending_down</span>
+                        NG Trend (Daily % Defect)
+                    </h3>
+<div class="flex items-center gap-4 mb-6">
+<div class="bg-error-container text-on-error-container px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">arrow_downward</span>
+                            2% Improvement
+                        </div>
+<span class="text-outline text-xs font-medium">vs Last 7 Days</span>
+</div>
+<div class="h-40 w-full relative">
+<div class="absolute inset-0 flex items-end gap-1">
+<div class="flex-1 bg-surface-container-high hover:bg-error/20 transition-colors cursor-pointer rounded-t" style="height: 40%"></div>
+<div class="flex-1 bg-surface-container-high hover:bg-error/20 transition-colors cursor-pointer rounded-t" style="height: 35%"></div>
+<div class="flex-1 bg-surface-container-high hover:bg-error/20 transition-colors cursor-pointer rounded-t" style="height: 55%"></div>
+<div class="flex-1 bg-surface-container-high hover:bg-error/20 transition-colors cursor-pointer rounded-t" style="height: 25%"></div>
+<div class="flex-1 bg-surface-container-high hover:bg-error/20 transition-colors cursor-pointer rounded-t" style="height: 30%"></div>
+<div class="flex-1 bg-error rounded-t" style="height: 15%"></div>
+<div class="flex-1 bg-secondary rounded-t" style="height: 12%"></div>
+</div>
+</div>
+<div class="flex justify-between mt-4">
+<span class="text-[9px] text-outline font-bold uppercase">Mon</span>
+<span class="text-[9px] text-outline font-bold uppercase">Tue</span>
+<span class="text-[9px] text-outline font-bold uppercase">Wed</span>
+<span class="text-[9px] text-outline font-bold uppercase">Thu</span>
+<span class="text-[9px] text-outline font-bold uppercase">Fri</span>
+<span class="text-[9px] text-outline font-bold uppercase">Sat</span>
+<span class="text-[9px] text-secondary font-bold uppercase">Sun</span>
+</div>
+</div>
+</div>
+<!-- Recent Activity Table Placeholder -->
+<div class="bg-white rounded-2xl border border-outline-variant shadow-sm overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center">
+<h3 class="text-on-surface text-base font-bold">Recent Manufacturing Events</h3>
+<button class="text-secondary text-sm font-bold hover:underline">View All Logs</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low text-[11px] font-bold text-outline uppercase tracking-wider">
+<tr>
+<th class="px-6 py-3">Timestamp</th>
+<th class="px-6 py-3">Machine / Line</th>
+<th class="px-6 py-3">Event Type</th>
+<th class="px-6 py-3">Status</th>
+<th class="px-6 py-3 text-right">Action</th>
+</tr>
+</thead>
+<tbody class="text-sm divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-mono text-xs">10:42:15 AM</td>
+<td class="px-6 py-4 font-medium text-on-surface">LINE 3 - UNIT 04</td>
+<td class="px-6 py-4">Work Order Started #WO-9921</td>
+<td class="px-6 py-4">
+<span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[10px] font-bold uppercase">In Progress</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-outline hover:text-primary"><span class="material-symbols-outlined text-lg">visibility</span></button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-mono text-xs">10:35:02 AM</td>
+<td class="px-6 py-4 font-medium text-on-surface">LINE 1 - UNIT 12</td>
+<td class="px-6 py-4">QC Check Failed (Tolerance)</td>
+<td class="px-6 py-4">
+<span class="bg-error-container text-on-error-container px-2 py-0.5 rounded-full text-[10px] font-bold uppercase">NG Detected</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-outline hover:text-primary"><span class="material-symbols-outlined text-lg">visibility</span></button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-mono text-xs">10:12:44 AM</td>
+<td class="px-6 py-4 font-medium text-on-surface">SAP CONNECTOR</td>
+<td class="px-6 py-4">Production Data Sync Successful</td>
+<td class="px-6 py-4">
+<span class="bg-surface-container-highest text-outline px-2 py-0.5 rounded-full text-[10px] font-bold uppercase">Synced</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-outline hover:text-primary"><span class="material-symbols-outlined text-lg">visibility</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>
+    // Micro-interactions and subtle effects
+    document.querySelectorAll('.bg-white').forEach(card => {
+        if (card.querySelector('table')) return; // Exclude data tables from hover scaling
+        card.addEventListener('mouseenter', () => {
+            card.classList.add('scale-[1.005]');
+        });
+        card.addEventListener('mouseleave', () => {
+            card.classList.remove('scale-[1.005]');
+        });
+    });
+</script>
+
+
+</body></html>

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<!-- SPA Layout Redirect Wrapper -->
+<script>
+  if (!document.getElementById('app-root')) {
+    const p = window.location.pathname;
+    const rel = '../';
+    window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
+  }
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QC Rule Configuration | Nichirin Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#43474e",
+                        "inverse-on-surface": "#f2f0f3",
+                        "tertiary-container": "#391303",
+                        "background": "#faf9fc",
+                        "on-tertiary-fixed": "#351002",
+                        "on-primary-fixed-variant": "#2f486a",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#faf9fc",
+                        "surface-container-low": "#f4f3f6",
+                        "on-error": "#ffffff",
+                        "tertiary": "#110200",
+                        "outline": "#74777f",
+                        "tertiary-fixed-dim": "#fdb69a",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#faf9fc",
+                        "on-surface": "#1a1c1e",
+                        "secondary-container": "#7af2f2",
+                        "on-secondary-fixed": "#002020",
+                        "secondary-fixed": "#7df5f5",
+                        "primary-container": "#001f3f",
+                        "on-primary-container": "#6f88ad",
+                        "on-tertiary-container": "#b5785f",
+                        "on-error-container": "#93000a",
+                        "on-background": "#1a1c1e",
+                        "on-primary-fixed": "#001c3a",
+                        "tertiary-fixed": "#ffdbce",
+                        "surface-container-high": "#e9e7eb",
+                        "inverse-surface": "#2f3033",
+                        "on-tertiary-fixed-variant": "#6b3a25",
+                        "inverse-primary": "#afc8f0",
+                        "surface-dim": "#dbd9dd",
+                        "on-secondary-container": "#006e6e",
+                        "surface-container-highest": "#e3e2e5",
+                        "outline-variant": "#c4c6cf",
+                        "secondary": "#006a6a",
+                        "on-primary": "#ffffff",
+                        "primary": "#000613",
+                        "on-secondary-fixed-variant": "#004f4f",
+                        "surface-tint": "#476083",
+                        "surface-variant": "#e3e2e5",
+                        "primary-fixed": "#d4e3ff",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#afc8f0",
+                        "surface-container": "#efedf0",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#5dd9d8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-gap-md": "16px",
+                        "sidebar-width": "260px",
+                        "header-height": "64px",
+                        "stack-gap-sm": "8px",
+                        "grid-gutter": "20px",
+                        "container-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "data-tabular": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "label-bold": ["11px", {"lineHeight": "16px", "fontWeight": "700"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "data-tabular": ["13px", {"lineHeight": "16px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: #faf9fc; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #c4c6cf; border-radius: 2px; }
+        .glass-panel { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(8px); }
+        .industrial-border { border: 1px solid #e3e2e5; }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- Sidebar Navigation -->
+<aside class="fixed left-0 top-0 h-full w-[260px] bg-primary dark:bg-primary-container flex flex-col py-4 border-r border-outline-variant z-50">
+<div class="px-6 mb-8"><div class="flex items-center gap-3 mb-2"><img alt="Nichirin Logo" class="h-8 w-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAY3rq-U9K2GfQNCyubICEvbr9odUj-VUXw3DXyZ0XaKL-EHLeghZOOxQWcQEMsYNmfUVj6O3-faTVfb3jYye6Wlf5DtcuidxN6pI4_TnOx4FPsIKl_3M37U_Slh7Fz8vjYg7MLzJhC9YW1x_UZ0WPnJlHEWn54010lVjcRPU4ZdfItEv_Dvlts-WgdH6h4QEAcRF8FYGdtzG8a00PZnbDYtRBawWfG_YA0JmTVNLKR8rW2iPKS8unNt2Wlt00QAoqbyoc"/></div><p class="font-body-sm text-white/60">Monozukuri System</p></div>
+<nav class="flex-1 px-3 space-y-1"><div class="space-y-6"><div><p class="px-4 text-[10px] font-bold text-white/40 uppercase tracking-widest mb-2">Operations</p><div class="space-y-1"><a class="flex items-center gap-3 px-4 py-2.5 rounded text-white/80 hover:bg-white/10 hover:text-white transition-colors duration-200 font-body-md" href="#"><span class="material-symbols-outlined">dashboard</span> Dashboard</a><a class="flex items-center gap-3 px-4 py-2.5 rounded text-white/80 hover:bg-white/10 hover:text-white transition-colors duration-200 font-body-md" href="#"><span class="material-symbols-outlined">precision_manufacturing</span> Monitoring</a></div></div><div><p class="px-4 text-[10px] font-bold text-white/40 uppercase tracking-widest mb-2">Master Configuration</p><div class="space-y-1"><a class="flex items-center gap-3 px-4 py-2.5 rounded bg-[#4FD1D9] text-primary font-bold font-body-md" href="#"><span class="material-symbols-outlined">settings_applications</span> QC Rule Configuration</a><a class="flex items-center gap-3 px-4 py-2.5 rounded text-white/80 hover:bg-white/10 hover:text-white transition-colors duration-200 font-body-md" href="#"><span class="material-symbols-outlined">factory</span> Line Setup</a></div></div><div><p class="px-4 text-[10px] font-bold text-white/40 uppercase tracking-widest mb-2">Data &amp; Analysis</p><div class="space-y-1"><a class="flex items-center gap-3 px-4 py-2.5 rounded text-white/80 hover:bg-white/10 hover:text-white transition-colors duration-200 font-body-md" href="#"><span class="material-symbols-outlined">analytics</span> Traceability &amp; Reports</a></div></div><div><p class="px-4 text-[10px] font-bold text-white/40 uppercase tracking-widest mb-2">System</p><div class="space-y-1"><a class="flex items-center gap-3 px-4 py-2.5 rounded text-white/80 hover:bg-white/10 hover:text-white transition-colors duration-200 font-body-md" href="#"><span class="material-symbols-outlined">admin_panel_settings</span> Administration</a></div></div></div></nav>
+<div class="mt-auto px-3 border-t border-white/10 pt-4 space-y-1"><div class="px-4 py-2 mb-2"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-500/20 text-green-400"><span class="w-2 h-2 mr-1.5 rounded-full bg-green-500"></span> System Status: Active</span></div><a class="flex items-center gap-3 px-4 py-2.5 rounded text-white/80 hover:bg-white/10 hover:text-white transition-colors duration-200 font-body-md text-body-md" href="#"><span class="material-symbols-outlined">help</span> Support</a><a class="flex items-center gap-3 px-4 py-2.5 rounded text-white/80 hover:bg-white/10 hover:text-white transition-colors duration-200 font-body-md text-body-md" href="#"><span class="material-symbols-outlined">logout</span> Sign Out</a></div>
+</aside>
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 right-0 h-[64px] w-[calc(100%-260px)] ml-[260px] px-container-padding bg-surface dark:bg-surface-dim border-b border-outline-variant flex justify-between items-center z-40">
+<div class="flex items-center gap-4">
+<span class="font-headline-sm text-headline-sm font-black text-primary">Control Card Digitization</span>
+<div class="h-4 w-px bg-outline-variant"></div>
+<nav class="flex items-center gap-2 font-body-sm text-body-sm">
+<span class="text-on-surface-variant">Plant</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface-variant">Line A</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-bold border-b-2 border-primary pb-1">QC Rule Configuration</span>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<button class="bg-primary text-on-primary px-4 py-1.5 rounded font-label-bold flex items-center gap-2 active:scale-95 transition-all">
+                Production <span class="material-symbols-outlined text-[18px]">bolt</span>
+</button>
+<div class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined hover:text-secondary cursor-pointer transition-colors">notifications</span>
+<div class="flex items-center gap-2 cursor-pointer hover:text-secondary transition-colors">
+<img class="w-8 h-8 rounded-full industrial-border" data-alt="Close up profile shot of a professional manufacturing plant manager wearing a blue uniform against a blurred industrial background of machinery and precision tools. High quality corporate portrait photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeoP_EkM3DDwG3gY7Ae4N-2MPVhxJLtRSKzhdJnzaliyv91IeBGFrASdUEt02urdZMiA0gsG_e3CIrcyWcjzgJSU770tFv052fHTr47hKHc7ca9vlc3QbenUV9mAg_yrAwc0zC0FwJG-2sVUZvlX0XJvdlYy5VEo-s7t12pA7MU7mnCqRNesOzPTfv_SW86XBTrm5fzp2fsvsfqwm0WXeUx2zLq0g6dtIK46jYcwrE2at8hbXpyjbo1Q"/>
+<span class="material-symbols-outlined">account_circle</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[260px] mt-[64px] p-container-padding grid grid-cols-12 gap-grid-gutter">
+  <!-- Page Header -->
+  <div class="col-span-12 flex justify-between items-end mb-1">
+    <div>
+      <h2 class="font-headline-lg text-headline-lg text-primary mb-1">QC Rule Configuration</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant">Design automated pass/fail validation logic, tolerances, and inspection scripts for quality gates.</p>
+    </div>
+    <div class="flex gap-2">
+      <button class="px-4 py-2 border border-primary text-primary hover:bg-red-50/50 font-label-bold text-label-bold rounded-lg transition-colors flex items-center gap-2 text-sm font-semibold shadow-sm bg-white">
+        <span class="material-symbols-outlined text-[18px]">history</span>
+        Change Log
+      </button>
+      <button class="px-4 py-2 bg-primary text-white font-label-bold text-label-bold rounded-lg hover:bg-primary/95 transition-colors flex items-center gap-2 text-sm font-semibold shadow-sm">
+        <span class="material-symbols-outlined text-[18px]">save</span>
+        Save Changes
+      </button>
+    </div>
+  </div>
+
+  <!-- Left Column: Rule Configuration (8 Columns) -->
+  <div class="col-span-8 space-y-stack-gap-md">
+    <!-- Section: Rule Basic Info -->
+    <section class="bg-white border border-outline-variant/30 p-6 rounded-xl shadow-sm">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="font-headline-sm text-headline-sm text-primary flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary">info</span> Rule Basic Info
+        </h2>
+        <span class="text-xs font-semibold px-2.5 py-0.5 bg-slate-100 border border-slate-200/50 rounded-lg text-on-surface-variant">ID: QC-2024-089</span>
+      </div>
+      <div class="grid grid-cols-2 gap-stack-gap-md">
+        <div class="space-y-2">
+          <label class="font-label-bold text-on-surface-variant block uppercase tracking-wider">Rule Name</label>
+          <input class="w-full border border-outline-variant/30 focus:ring-primary focus:border-primary rounded-lg px-3 py-2 font-body-md bg-white outline-none" type="text" value="Crimp Height Validation - Brake Hose A2"/>
+        </div>
+        <div class="space-y-2">
+          <label class="font-label-bold text-on-surface-variant block uppercase tracking-wider">Process Stage</label>
+          <div class="relative">
+            <select class="w-full border border-outline-variant/30 focus:ring-primary focus:border-primary rounded-lg px-3 py-2 font-body-md bg-white outline-none appearance-none bg-none">
+              <option>Final Assembly - Crimping</option>
+              <option>Sub-Assembly</option>
+              <option>Material Preparation</option>
+            </select>
+            <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant text-[20px]">arrow_drop_down</span>
+          </div>
+        </div>
+        <div class="col-span-2 space-y-2">
+          <label class="font-label-bold text-on-surface-variant block uppercase tracking-wider">Applicable Products (SKUs)</label>
+          <div class="flex flex-wrap gap-2 p-3 border border-outline-variant/30 rounded-lg bg-slate-50">
+            <span class="bg-red-50 text-primary border border-red-200/50 px-2.5 py-1 rounded-lg text-xs font-bold flex items-center gap-1.5">BH-992-A <span class="material-symbols-outlined text-[14px] cursor-pointer hover:text-red-700">close</span></span>
+            <span class="bg-red-50 text-primary border border-red-200/50 px-2.5 py-1 rounded-lg text-xs font-bold flex items-center gap-1.5">BH-104-B <span class="material-symbols-outlined text-[14px] cursor-pointer hover:text-red-700">close</span></span>
+            <button class="text-outline text-body-sm flex items-center gap-1 hover:text-primary font-semibold"><span class="material-symbols-outlined text-[16px]">add_circle</span> Add SKU</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Section: Tolerance Validation & PASS/NG -->
+    <section class="grid grid-cols-2 gap-stack-gap-md">
+      <!-- Tolerance -->
+      <div class="bg-white border border-outline-variant/30 p-6 rounded-xl shadow-sm">
+        <h2 class="font-headline-sm text-headline-sm text-primary mb-6 flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary">straighten</span> Tolerance Validation
+        </h2>
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <input checked="" class="text-primary focus:ring-primary border-outline-variant/30 bg-white" id="numeric" name="val_type" type="radio"/>
+            <label class="font-body-md text-on-surface font-semibold" for="numeric">Numeric Value Input</label>
+          </div>
+          <div class="pl-7 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-body-sm text-on-surface-variant">Nominal (mm)</span>
+              <input class="w-24 border border-outline-variant/30 rounded-lg px-2.5 py-1.5 text-sm font-data-tabular text-right focus:ring-primary focus:border-primary bg-white outline-none" type="number" value="12.50"/>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="font-body-sm text-on-surface-variant">Upper Tolerance (+)</span>
+              <input class="w-24 border border-outline-variant/30 rounded-lg px-2.5 py-1.5 text-sm font-data-tabular text-right text-error focus:ring-primary focus:border-primary bg-white outline-none" type="number" value="0.05"/>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="font-body-sm text-on-surface-variant">Lower Tolerance (-)</span>
+              <input class="w-24 border border-outline-variant/30 rounded-lg px-2.5 py-1.5 text-sm font-data-tabular text-right text-error focus:ring-primary focus:border-primary bg-white outline-none" type="number" value="0.05"/>
+            </div>
+          </div>
+          <hr class="border-outline-variant/30"/>
+          <div class="flex items-center gap-3 opacity-50">
+            <input class="text-primary focus:ring-primary border-outline-variant/30 bg-white" id="visual" name="val_type" type="radio"/>
+            <label class="font-body-md text-on-surface" for="visual">Visual Inspection Only</label>
+          </div>
+        </div>
+      </div>
+      <!-- PASS/NG Rule -->
+      <div class="bg-white border border-outline-variant/30 p-6 rounded-xl shadow-sm">
+        <h2 class="font-headline-sm text-headline-sm text-primary mb-6 flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary">rule</span> PASS / NG Rule
+        </h2>
+        <div class="space-y-4">
+          <div class="p-3 bg-slate-50 rounded-lg border border-outline-variant/30">
+            <p class="font-body-sm text-on-surface-variant mb-2">Automated Decision Logic:</p>
+            <p class="font-data-tabular text-body-md font-bold">IF [Input] &lt; 12.45 OR [Input] &gt; 12.55 THEN <span class="text-white bg-red-600 px-1.5 py-0.5 rounded font-bold">NG</span></p>
+          </div>
+          <div class="space-y-2 pt-2">
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input checked="" class="rounded border-outline-variant/30 text-primary focus:ring-primary" type="checkbox"/>
+              <span class="font-body-md text-on-surface">Require Re-Measurement on NG</span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input class="rounded border-outline-variant/30 text-primary focus:ring-primary" type="checkbox"/>
+              <span class="font-body-md text-on-surface">Stop Line Automatically on 3x NG</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Section: Evidence & Approval -->
+    <section class="grid grid-cols-2 gap-stack-gap-md">
+      <!-- Evidence -->
+      <div class="bg-white border border-outline-variant/30 p-6 rounded-xl shadow-sm">
+        <h2 class="font-headline-sm text-headline-sm text-primary mb-6 flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary">photo_camera</span> Evidence Requirement
+        </h2>
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-body-md font-semibold">Photo Evidence</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input checked="" class="sr-only peer" type="checkbox"/>
+            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+          </label>
+        </div>
+        <div class="p-4 border border-dashed border-outline-variant/30 rounded-lg flex flex-col items-center justify-center text-on-surface-variant bg-slate-50">
+          <span class="material-symbols-outlined text-[32px] mb-2">image_search</span>
+          <p class="font-body-sm text-center">Reference Image for Operator<br/><span class="text-primary cursor-pointer hover:underline font-bold">Upload Template</span></p>
+        </div>
+      </div>
+      <!-- Approval -->
+      <div class="bg-white border border-outline-variant/30 p-6 rounded-xl shadow-sm">
+        <h2 class="font-headline-sm text-headline-sm text-primary mb-6 flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary">verified_user</span> Approval Authority
+        </h2>
+        <div class="space-y-4">
+          <div>
+            <label class="font-label-bold text-on-surface-variant block uppercase tracking-wider mb-2">Required Role for Edit</label>
+            <div class="relative">
+              <select class="w-full border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md bg-white focus:ring-primary focus:border-primary appearance-none bg-none outline-none">
+                <option>Quality Manager</option>
+                <option>Plant Supervisor</option>
+                <option>System Admin</option>
+              </select>
+              <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant text-[20px]">arrow_drop_down</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 p-3 bg-red-50/50 border border-red-200/50 rounded-lg text-red-700">
+            <span class="material-symbols-outlined text-primary">history_edu</span>
+            <div class="font-body-sm text-primary">
+              <p class="font-bold">Digital Signature Required</p>
+              <p class="text-on-surface-variant">All changes will be logged for IATF auditing.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- Right Column: QC Preview & Rule List (4 Columns) -->
+  <div class="col-span-4 space-y-stack-gap-md">
+    <!-- Section: QC Preview -->
+    <section class="bg-primary-container p-6 rounded-xl shadow-lg border border-outline-variant/30 text-on-primary-container">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="font-headline-sm text-headline-sm flex items-center gap-2">
+          <span class="material-symbols-outlined">visibility</span> Operator UI Preview
+        </h2>
+        <span class="bg-secondary-container text-on-secondary-container text-[10px] px-2 py-0.5 rounded font-bold uppercase">Live Preview</span>
+      </div>
+      <div class="bg-white rounded-lg p-6 text-on-surface space-y-6 shadow-xl border border-outline-variant/10">
+        <div class="flex justify-between items-start">
+          <div>
+            <p class="font-label-bold text-on-surface-variant">STEP 04: QUALITY CHECK</p>
+            <h3 class="font-headline-sm text-primary">Crimp Height Validation</h3>
+          </div>
+          <span class="bg-teal-500 text-white font-data-tabular px-2 py-1 rounded text-xs font-bold">12.50 ±0.05</span>
+        </div>
+        <div class="space-y-2">
+          <label class="font-body-sm font-semibold">Enter Measured Value (mm)</label>
+          <div class="flex items-center gap-2">
+            <input class="flex-1 border border-outline-variant/30 rounded-lg py-3 px-4 text-2xl font-data-tabular focus:ring-primary focus:border-primary outline-none" placeholder="00.00" type="text"/>
+            <button class="bg-primary text-white h-full px-4 rounded-lg font-bold">OK</button>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <p class="font-body-sm font-semibold">Evidence Photo Required</p>
+          <div class="aspect-video bg-slate-50 rounded-lg border-2 border-dashed border-outline-variant/30 flex flex-col items-center justify-center text-on-surface-variant">
+            <span class="material-symbols-outlined text-[40px]">add_a_photo</span>
+            <span class="font-body-sm mt-2">Capture Photo</span>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 py-3 border border-outline-variant/30 rounded-lg font-bold text-on-surface-variant hover:bg-slate-50 transition-colors">Skip Step</button>
+          <button class="flex-1 py-3 bg-primary text-white rounded-lg font-bold opacity-50 cursor-not-allowed">Submit Result</button>
+        </div>
+      </div>
+      <p class="mt-4 text-center font-body-sm opacity-60">Preview reflects current configuration settings.</p>
+    </section>
+    <!-- Section: Existing Rules List -->
+    <section class="bg-white border border-outline-variant/30 rounded-xl shadow-sm overflow-hidden flex flex-col max-h-[500px]">
+      <div class="p-4 border-b border-outline-variant/30 bg-slate-50 flex justify-between items-center">
+        <h2 class="font-headline-sm text-headline-sm text-primary">Active Rules</h2>
+        <span class="material-symbols-outlined text-on-surface-variant cursor-pointer">search</span>
+      </div>
+      <div class="flex-1 overflow-y-auto custom-scrollbar">
+        <table class="w-full text-left">
+          <thead class="bg-slate-50 sticky top-0 border-b border-outline-variant/30">
+            <tr class="font-label-bold text-on-surface-variant text-[10px] uppercase whitespace-nowrap">
+              <th class="p-3">Rule / Process</th>
+              <th class="p-3 text-right">Status</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-outline-variant/20 font-data-tabular">
+            <tr class="hover:bg-slate-50/50 cursor-pointer">
+              <td class="p-3">
+                <p class="text-body-sm font-bold text-primary">Air Leak Test #02</p>
+                <p class="text-[11px] text-on-surface-variant">Process: Main Line A</p>
+              </td>
+              <td class="p-3 text-right">
+                <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Active</span>
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50/50 cursor-pointer bg-red-50/40 border-l-2 border-l-primary">
+              <td class="p-3">
+                <p class="text-body-sm font-bold text-primary">Crimp Height BH-A2</p>
+                <p class="text-[11px] text-on-surface-variant">Process: Crimping</p>
+              </td>
+              <td class="p-3 text-right">
+                <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">In Progress</span>
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50/50 cursor-pointer">
+              <td class="p-3">
+                <p class="text-body-sm font-bold text-primary">Surface Defect V1</p>
+                <p class="text-[11px] text-on-surface-variant">Process: Final Insp.</p>
+              </td>
+              <td class="p-3 text-right">
+                <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Active</span>
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50/50 cursor-pointer">
+              <td class="p-3">
+                <p class="text-body-sm font-bold text-primary">Weight Verifier B</p>
+                <p class="text-[11px] text-on-surface-variant">Process: Packaging</p>
+              </td>
+              <td class="p-3 text-right">
+                <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200">Inactive</span>
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50/50 cursor-pointer">
+              <td class="p-3">
+                <p class="text-body-sm font-bold text-primary">Fitting Angle QC</p>
+                <p class="text-[11px] text-on-surface-variant">Process: Assembly</p>
+              </td>
+              <td class="p-3 text-right">
+                <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Active</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="p-3 bg-slate-50 border-t border-outline-variant/30">
+        <button class="w-full py-2 bg-white border border-outline-variant/30 rounded-lg font-label-bold text-primary hover:bg-slate-50 transition-all font-semibold shadow-sm text-sm">CREATE NEW RULE</button>
+      </div>
+    </section>
+  </div>
+</main>
+<!-- Global Action Bar (Footer) -->
+<div class="fixed bottom-0 right-0 w-[calc(100%-260px)] h-16 bg-white border-t border-outline-variant flex items-center justify-between px-container-padding z-40">
+<div class="flex items-center gap-4">
+<span class="text-body-sm text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">update</span> Last updated: 14:02 PM by J. Sato
+            </span>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-6 py-2 border border-outline text-on-surface-variant rounded font-label-bold hover:bg-surface transition-colors">DISCARD CHANGES</button>
+<button class="px-10 py-2 bg-primary text-on-primary rounded font-label-bold shadow-lg active:scale-95 transition-all">PUBLISH RULE</button>
+</div>
+</div>
+<!-- Background Decoration -->
+<div class="fixed inset-0 pointer-events-none -z-10 opacity-30">
+<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+<div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-3xl"></div>
+</div>
+<script>
+        // Micro-interactions for form inputs
+        document.querySelectorAll('input[type="number"]').forEach(input => {
+            input.addEventListener('change', function() {
+                // Flash effect on change
+                this.classList.add('bg-secondary/10');
+                setTimeout(() => this.classList.remove('bg-secondary/10'), 300);
+            });
+        });
+
+        // Simple toggle for the "Live Preview" status
+        const photoToggle = document.querySelector('input[type="checkbox"]');
+        const previewPhotoArea = document.querySelector('.aspect-video');
+        
+        if(photoToggle && previewPhotoArea) {
+            photoToggle.addEventListener('change', function() {
+                if(this.checked) {
+                    previewPhotoArea.style.opacity = '1';
+                    previewPhotoArea.style.display = 'flex';
+                } else {
+                    previewPhotoArea.style.opacity = '0.3';
+                }
+            });
+        }
+    </script>
+
+
+</body></html>

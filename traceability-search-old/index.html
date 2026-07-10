@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Traceability &amp; Reports | Nichirin Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#43474e",
+                        "inverse-on-surface": "#f2f0f3",
+                        "tertiary-container": "#391303",
+                        "background": "#faf9fc",
+                        "on-tertiary-fixed": "#351002",
+                        "on-primary-fixed-variant": "#2f486a",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#faf9fc",
+                        "surface-container-low": "#f4f3f6",
+                        "on-error": "#ffffff",
+                        "tertiary": "#110200",
+                        "outline": "#74777f",
+                        "tertiary-fixed-dim": "#fdb69a",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#faf9fc",
+                        "on-surface": "#1a1c1e",
+                        "secondary-container": "#7af2f2",
+                        "on-secondary-fixed": "#002020",
+                        "secondary-fixed": "#7df5f5",
+                        "primary-container": "#001f3f",
+                        "on-primary-container": "#6f88ad",
+                        "on-tertiary-container": "#b5785f",
+                        "on-error-container": "#93000a",
+                        "on-background": "#1a1c1e",
+                        "on-primary-fixed": "#001c3a",
+                        "tertiary-fixed": "#ffdbce",
+                        "surface-container-high": "#e9e7eb",
+                        "inverse-surface": "#2f3033",
+                        "on-tertiary-fixed-variant": "#6b3a25",
+                        "inverse-primary": "#afc8f0",
+                        "surface-dim": "#dbd9dd",
+                        "on-secondary-container": "#006e6e",
+                        "surface-container-highest": "#e3e2e5",
+                        "outline-variant": "#c4c6cf",
+                        "secondary": "#006a6a",
+                        "on-primary": "#ffffff",
+                        "primary": "#000613",
+                        "on-secondary-fixed-variant": "#004f4f",
+                        "surface-tint": "#476083",
+                        "surface-variant": "#e3e2e5",
+                        "primary-fixed": "#d4e3ff",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#afc8f0",
+                        "surface-container": "#efedf0",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#5dd9d8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-gap-md": "16px",
+                        "sidebar-width": "260px",
+                        "header-height": "64px",
+                        "stack-gap-sm": "8px",
+                        "grid-gutter": "20px",
+                        "container-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "data-tabular": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "label-bold": ["11px", {"lineHeight": "16px", "fontWeight": "700"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "data-tabular": ["13px", {"lineHeight": "16px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .timeline-line {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #E5E7EB;
+            z-index: 0;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #001f3f; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background text-on-background">
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-full w-[260px] bg-primary dark:bg-primary-container border-r border-outline-variant flex flex-col py-4 z-50">
+<div class="px-6 mb-8">
+<h1 class="font-headline-md text-headline-md font-bold text-on-primary">Nichirin Admin</h1>
+<p class="font-body-sm text-body-sm text-on-primary-fixed-variant opacity-80">Monozukuri System</p>
+</div>
+<nav class="flex-1 space-y-1 px-3">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-primary-fixed-variant hover:bg-primary-fixed-dim hover:text-on-primary transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+<span class="font-body-md text-body-md">Monitoring</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-primary-fixed-variant hover:bg-primary-fixed-dim hover:text-on-primary transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">settings_applications</span>
+<span class="font-body-md text-body-md">Configuration</span>
+</a>
+<!-- Active Tab: Traceability -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded bg-secondary-container text-on-secondary-container font-bold transition-all opacity-90" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-body-md text-body-md">Traceability &amp; Reports</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-primary-fixed-variant hover:bg-primary-fixed-dim hover:text-on-primary transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="font-body-md text-body-md">Administration</span>
+</a>
+</nav>
+<div class="px-3 mt-auto border-t border-on-primary-fixed-variant/20 pt-4">
+<div class="mb-4 px-3 py-2 bg-on-primary/10 rounded flex items-center justify-between">
+<span class="text-[10px] uppercase font-bold tracking-wider text-on-primary/60">Status</span>
+<span class="flex items-center gap-1.5 text-xs font-medium text-secondary-container">
+<span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span>
+                    System Active
+                </span>
+</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-primary-fixed-variant hover:bg-on-primary-fixed-variant hover:text-on-primary transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-body-md text-body-md">Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-primary-fixed-variant hover:bg-on-primary-fixed-variant hover:text-on-primary transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body-md text-body-md">Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 right-0 h-[64px] w-[calc(100%-260px)] ml-[260px] px-container-padding bg-surface dark:bg-surface-dim border-b border-outline-variant flex justify-between items-center z-40">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+<span>Plant</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span>Line A</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-bold border-b-2 border-primary pb-1">Traceability Search</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="px-3 py-1 bg-secondary text-on-secondary text-[11px] font-bold uppercase rounded-sm">Production</div>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<button class="hover:text-secondary transition-colors duration-100 active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="flex items-center gap-2 border-l border-outline-variant pl-4">
+<div class="text-right">
+<p class="text-xs font-bold text-primary">S. Tanaka</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Quality Lead</p>
+</div>
+<img class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="A professional headshot of a middle-aged Japanese factory supervisor in a clean, white industrial uniform. The background is a blurred, high-tech manufacturing facility with soft industrial lighting. The aesthetic is corporate, precise, and authoritative, matching the industrial excellence theme of the design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfvxXOQ5PwcdI3yoAJMxyJ5LlvdgAmB9VXaRKbzNN8DKExwjNQYo7SIXJQNvBnddWHk8_0r3yGqMFGjfx6gaH8CPNKbkXFQho4bKwrIGeV-LdR2vWZYRItcsOaaqGVquUYJ0Ov8CPQBFs00olFcEzT1qvvGOWJrn1X_296p37560LxyetdjEu3wF59RWVirFCF-cpJhiCGmWOXCg_j5DRPEBBs7gDsvhL7wwcZRYcIwXX_xeiCWranjQ"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[260px] pt-[64px] min-h-screen p-container-padding space-y-6">
+<!-- Search & Filters Section -->
+<section class="bg-surface border border-outline-variant p-6 rounded-lg">
+<div class="flex items-center justify-between mb-6">
+<h2 class="font-headline-sm text-headline-sm text-primary uppercase tracking-tight flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">search</span>
+                    Traceability Filter
+                </h2>
+<button class="bg-primary text-on-primary px-6 py-2 rounded text-body-md font-bold hover:opacity-90 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">filter_alt</span>
+                    Execute Search
+                </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-5 gap-grid-gutter">
+<div class="space-y-1.5">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase">Work Order</label>
+<div class="relative">
+<input class="w-full bg-background border border-outline-variant rounded px-3 py-2 text-body-md focus:border-secondary focus:ring-0 outline-none transition-all" placeholder="WO-2023-0891" type="text"/>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase">QR Code / Serial</label>
+<div class="relative">
+<input class="w-full bg-background border border-outline-variant rounded px-3 py-2 text-body-md focus:border-secondary focus:ring-0 outline-none transition-all" placeholder="Scan or type..." type="text"/>
+<span class="material-symbols-outlined absolute right-2 top-2 text-on-surface-variant/50 text-[18px]">qr_code_scanner</span>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase">Batch Number</label>
+<input class="w-full bg-background border border-outline-variant rounded px-3 py-2 text-body-md focus:border-secondary focus:ring-0 outline-none transition-all" placeholder="B-882-90" type="text"/>
+</div>
+<div class="space-y-1.5">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase">Date Range</label>
+<div class="relative">
+<input class="w-full bg-background border border-outline-variant rounded px-3 py-2 text-body-md focus:border-secondary focus:ring-0 outline-none transition-all" type="text" value="2023.10.20 - 2023.10.27"/>
+<span class="material-symbols-outlined absolute right-2 top-2 text-on-surface-variant/50 text-[18px]">calendar_today</span>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase">Manufacturing Line</label>
+<select class="w-full bg-background border border-outline-variant rounded px-3 py-2 text-body-md focus:border-secondary focus:ring-0 outline-none appearance-none">
+<option>Line A - Assembly</option>
+<option>Line B - Casting</option>
+<option>Line C - Finishing</option>
+</select>
+</div>
+</div>
+</section>
+<!-- Result Overview Grid -->
+<div class="grid grid-cols-12 gap-grid-gutter">
+<!-- Left Column: Summary Cards -->
+<div class="col-span-4 space-y-grid-gutter">
+<!-- WO Summary Card -->
+<div class="bg-surface border border-outline-variant rounded-lg overflow-hidden">
+<div class="bg-surface-container-high px-4 py-2 border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-primary uppercase">WO Summary</h3>
+<span class="material-symbols-outlined text-on-surface-variant">info</span>
+</div>
+<div class="p-4 space-y-4">
+<div class="flex justify-between items-center border-b border-outline-variant/30 pb-2">
+<span class="text-on-surface-variant text-body-sm">Part Number</span>
+<span class="text-primary font-bold font-data-tabular text-data-tabular">NH-9920-X1</span>
+</div>
+<div class="flex justify-between items-center border-b border-outline-variant/30 pb-2">
+<span class="text-on-surface-variant text-body-sm">Target Qty</span>
+<span class="text-primary font-bold font-data-tabular text-data-tabular">2,500 units</span>
+</div>
+<div class="flex justify-between items-center border-b border-outline-variant/30 pb-2">
+<span class="text-on-surface-variant text-body-sm">Actual Built</span>
+<span class="text-primary font-bold font-data-tabular text-data-tabular">2,492 units</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant text-body-sm">Start Time</span>
+<span class="text-primary font-bold font-data-tabular text-data-tabular">2023.10.25 08:00</span>
+</div>
+</div>
+</div>
+<!-- QC Results Card -->
+<div class="bg-surface border border-outline-variant rounded-lg overflow-hidden">
+<div class="bg-surface-container-high px-4 py-2 border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-primary uppercase">QC Metrics</h3>
+<span class="bg-secondary/10 text-secondary text-[10px] px-2 py-0.5 font-bold rounded">LIVE</span>
+</div>
+<div class="p-4 grid grid-cols-2 gap-4">
+<div class="bg-background border border-outline-variant p-3 text-center rounded">
+<p class="text-[10px] text-on-surface-variant font-bold uppercase mb-1">Pass (OK)</p>
+<p class="text-2xl font-black text-secondary font-data-tabular">98.4%</p>
+</div>
+<div class="bg-background border border-outline-variant p-3 text-center rounded">
+<p class="text-[10px] text-on-surface-variant font-bold uppercase mb-1">Fail (NG)</p>
+<p class="text-2xl font-black text-error font-data-tabular">1.6%</p>
+</div>
+</div>
+<div class="px-4 pb-4">
+<div class="w-full bg-outline-variant h-2 rounded-full overflow-hidden flex">
+<div class="bg-secondary h-full" style="width: 98.4%"></div>
+<div class="bg-error h-full" style="width: 1.6%"></div>
+</div>
+</div>
+</div>
+<!-- SAP Sync Status -->
+<div class="bg-surface border border-outline-variant rounded-lg p-4">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined">sync</span>
+</div>
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant uppercase">Enterprise Integration</p>
+<p class="font-headline-sm text-headline-sm text-primary">SAP ERP Sync Status</p>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-2 bg-secondary/5 rounded border border-secondary/20">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">check_circle</span>
+<span class="text-body-sm font-medium">BOM Alignment</span>
+</div>
+<span class="text-[10px] font-data-tabular font-bold text-secondary">SYNCHRONIZED</span>
+</div>
+<div class="flex items-center justify-between p-2 bg-secondary/5 rounded border border-secondary/20">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">check_circle</span>
+<span class="text-body-sm font-medium">Inventory Release</span>
+</div>
+<span class="text-[10px] font-data-tabular font-bold text-secondary">COMPLETE</span>
+</div>
+</div>
+</div>
+<!-- Rework History Log -->
+<div class="bg-surface border border-outline-variant rounded-lg overflow-hidden">
+<div class="bg-surface-container-high px-4 py-2 border-b border-outline-variant">
+<h3 class="font-headline-sm text-headline-sm text-primary uppercase">Rework Log</h3>
+</div>
+<div class="p-0">
+<table class="w-full text-left">
+<thead class="bg-background">
+<tr>
+<th class="px-4 py-2 text-[10px] font-bold text-on-surface-variant uppercase border-b border-outline-variant">Part ID</th>
+<th class="px-4 py-2 text-[10px] font-bold text-on-surface-variant uppercase border-b border-outline-variant">Issue</th>
+<th class="px-4 py-2 text-[10px] font-bold text-on-surface-variant uppercase border-b border-outline-variant text-right">Result</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-background transition-colors">
+<td class="px-4 py-2 font-data-tabular text-data-tabular">SN-4021</td>
+<td class="px-4 py-2 text-body-sm">Surface Dent</td>
+<td class="px-4 py-2 text-right"><span class="text-[10px] font-bold bg-secondary text-on-secondary px-1.5 py-0.5 rounded">OK</span></td>
+</tr>
+<tr class="hover:bg-background transition-colors">
+<td class="px-4 py-2 font-data-tabular text-data-tabular">SN-4055</td>
+<td class="px-4 py-2 text-body-sm">Leak Test Fail</td>
+<td class="px-4 py-2 text-right"><span class="text-[10px] font-bold bg-error text-on-error px-1.5 py-0.5 rounded">SCRAP</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Right Column: QR Scan Timeline (Focus) -->
+<div class="col-span-8 bg-surface border border-outline-variant rounded-lg flex flex-col min-h-[600px]">
+<div class="p-6 border-b border-outline-variant flex items-center justify-between">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary uppercase tracking-tighter">QR Scan Timeline</h2>
+<p class="text-on-surface-variant text-body-sm">Complete end-to-end event trail for Work Order #2023-0891</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 hover:bg-background rounded border border-outline-variant transition-all">
+<span class="material-symbols-outlined">download</span>
+</button>
+<button class="p-2 hover:bg-background rounded border border-outline-variant transition-all">
+<span class="material-symbols-outlined">print</span>
+</button>
+</div>
+</div>
+<div class="flex-1 p-8 overflow-y-auto custom-scrollbar relative">
+<div class="timeline-line"></div>
+<div class="space-y-8 relative z-10">
+<!-- Event 1: Intake -->
+<div class="flex gap-6">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary border-4 border-surface flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[20px]">input</span>
+</div>
+<div class="flex-1 bg-background border border-outline-variant rounded p-4 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h4 class="font-bold text-primary font-headline-sm">Material Intake &amp; Validation</h4>
+<p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wide">Warehouse Staging</p>
+</div>
+<span class="text-data-tabular font-bold text-on-surface-variant bg-surface-container px-2 py-1 rounded">10:15:22 AM</span>
+</div>
+<div class="grid grid-cols-3 gap-4 mt-4 text-body-sm border-t border-outline-variant/50 pt-3">
+<div>
+<p class="text-[10px] text-on-surface-variant font-bold">BATCH ID</p>
+<p class="font-data-tabular">M-99182-BT</p>
+</div>
+<div>
+<p class="text-[10px] text-on-surface-variant font-bold">OPERATOR</p>
+<p>K. Nakamoto</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] text-on-surface-variant font-bold">STATUS</p>
+<span class="text-secondary font-bold">VERIFIED</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Event 2: Stage Execution -->
+<div class="flex gap-6">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-secondary-container border-4 border-surface flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">precision_manufacturing</span>
+</div>
+<div class="flex-1 bg-background border border-outline-variant rounded p-4 shadow-sm border-l-4 border-l-secondary">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h4 class="font-bold text-primary font-headline-sm">Process Execution: Stage #04</h4>
+<p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wide">Auto-Crimp &amp; Weld</p>
+</div>
+<span class="text-data-tabular font-bold text-on-surface-variant bg-surface-container px-2 py-1 rounded">10:42:05 AM</span>
+</div>
+<p class="text-body-sm text-on-surface-variant mb-4">Machine M-02 parameters validated. Force curve within nominal range (4.2kN - 4.5kN).</p>
+<div class="flex items-center gap-2">
+<div class="bg-surface border border-outline-variant px-3 py-1.5 rounded flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px] text-secondary">trending_up</span>
+<span class="text-[11px] font-data-tabular">Pressure: 220 bar</span>
+</div>
+<div class="bg-surface border border-outline-variant px-3 py-1.5 rounded flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px] text-secondary">thermostat</span>
+<span class="text-[11px] font-data-tabular">Temp: 182°C</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Event 3: QC Check (NG Example) -->
+<div class="flex gap-6">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-error border-4 border-surface flex items-center justify-center text-on-error">
+<span class="material-symbols-outlined text-[20px]">report</span>
+</div>
+<div class="flex-1 bg-background border border-outline-variant rounded p-4 shadow-sm border-l-4 border-l-error">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h4 class="font-bold text-primary font-headline-sm">Visual Inspection Failed</h4>
+<p class="text-[11px] font-bold text-error uppercase tracking-wide">Quality Gate QG-A</p>
+</div>
+<span class="text-data-tabular font-bold text-on-surface-variant bg-surface-container px-2 py-1 rounded">11:05:12 AM</span>
+</div>
+<div class="flex items-start gap-4 mt-2">
+<div class="w-24 h-16 bg-surface-dim rounded overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover grayscale" data-alt="A high-resolution macro photograph of a manufacturing defect on a metallic automotive part. The image shows a small surface crack highlighted by a red digital overlay square, indicating an automated inspection finding. The lighting is harsh and directional to emphasize surface texture, reflecting the clinical and precise nature of industrial quality control." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRxRg5mZYFmcYKm0VhZR-WNKJrR1AcLlfjfViYEQiP2ZX-NnYLyW-XKrd4MSahOABUfc6SScjp2xz3qlounZ2AwSHbg0j1kFxFXh2lAD9ImjOP-Ep1gOJTVr2MJ-HOw8TfalJgrxXoX8gZ2OJ2uV2wnJ9Yvrg9JagQi2c89iTeRic93_aKuSwR30IB_msZXVadZbd9TxHrN2ixLNLvf-6qm_GBA54GSbcNdbYEsxpT4CLeyc_xWkcTMA"/>
+</div>
+<div class="flex-1">
+<p class="text-body-sm font-medium text-error">Anomalous surface fracture detected at coordinates X:122, Y:092.</p>
+<p class="text-[11px] text-on-surface-variant mt-1">Inspection System: Vision-X 2.0</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Event 4: Rework & Resolution -->
+<div class="flex gap-6">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-secondary border-4 border-surface flex items-center justify-center text-on-secondary">
+<span class="material-symbols-outlined text-[20px]">build</span>
+</div>
+<div class="flex-1 bg-background border border-outline-variant rounded p-4 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h4 class="font-bold text-primary font-headline-sm">Manual Rework Authorized</h4>
+<p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wide">Repair Station RS-01</p>
+</div>
+<span class="text-data-tabular font-bold text-on-surface-variant bg-surface-container px-2 py-1 rounded">11:15:00 AM</span>
+</div>
+<div class="flex items-center gap-3 mt-3">
+<img class="w-6 h-6 rounded-full" data-alt="A small circular avatar of a technician wearing a blue Nichirin work shirt and safety glasses. The technician is focused and professional. The background is a clean, organized electronics repair station. The overall visual style is bright, clean, and representative of Japanese industrial discipline." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEEeBkHW73LrrKH12mxnqDvbiBpNTfiLIISmSpOBxZCIK9MGjKgP686oEPADCWAWR6UX5JpR_ftOEd8XyPqfQEf3G7Ojm96DqLk_W7ll4N4qpMS-dbigBZvRGxTAIHB6Ket4LdZlQTQZDu1PEaFc6r4RN9lIxUGtgLIRTGsylILZJs36GzVJfC4lI1Hz3rVxOuNhesBeL4v-O0eUm2bmrrHs-YFejpXCHxuyvj6zmAuTBtHxKzBYSz1g"/>
+<span class="text-body-sm font-bold">R. Yamamoto</span>
+<span class="text-on-surface-variant text-body-sm">| Correction Applied: Surface Buffing</span>
+</div>
+</div>
+</div>
+<!-- Event 5: Final Acceptance -->
+<div class="flex gap-6">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-secondary-container border-4 border-surface flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<div class="flex-1 bg-background border border-outline-variant rounded p-4 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h4 class="font-bold text-primary font-headline-sm">Final Acceptance Scan</h4>
+<p class="text-[11px] font-bold text-secondary uppercase tracking-wide">Packaging &amp; Shipping</p>
+</div>
+<span class="text-data-tabular font-bold text-on-surface-variant bg-surface-container px-2 py-1 rounded">11:45:30 AM</span>
+</div>
+<div class="flex items-center gap-2 mt-2">
+<span class="bg-secondary/10 text-secondary px-3 py-1 rounded-full text-[10px] font-bold">UNIT PASSED</span>
+<span class="bg-primary/5 text-primary px-3 py-1 rounded-full text-[10px] font-bold">BOX-ID: 4421</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer for the timeline section -->
+<div class="p-4 bg-surface-container-low border-t border-outline-variant text-center">
+<button class="text-primary font-bold text-body-sm hover:underline flex items-center justify-center gap-1 mx-auto">
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+                        Load Earlier Traceability Data
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button (Suppressed on Details/Search as per mandate, but included here for "Actionable Traceability" if needed in future) -->
+<!-- Determined as suppressed for this context -->
+<script>
+        // Micro-interactions for the timeline items
+        document.querySelectorAll('.timeline-item-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.classList.add('translate-x-1');
+            });
+            card.addEventListener('mouseleave', () => {
+                card.classList.remove('translate-x-1');
+            });
+        });
+
+        // Simple tab/state switcher logic (conceptual)
+        console.log("Traceability Engine Initialized - Monitoring WO-2023-0891");
+    </script>
+</body></html>

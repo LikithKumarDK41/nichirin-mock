@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<!-- SPA Layout Redirect Wrapper -->
+<script>
+  if (!document.getElementById('app-root')) {
+    const p = window.location.pathname;
+    const rel = '../';
+    window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
+  }
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nichirin Admin - Workflow Configuration</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#43474e",
+                        "inverse-on-surface": "#f2f0f3",
+                        "tertiary-container": "#391303",
+                        "background": "#faf9fc",
+                        "on-tertiary-fixed": "#351002",
+                        "on-primary-fixed-variant": "#2f486a",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#faf9fc",
+                        "surface-container-low": "#f4f3f6",
+                        "on-error": "#ffffff",
+                        "tertiary": "#110200",
+                        "outline": "#74777f",
+                        "tertiary-fixed-dim": "#fdb69a",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#faf9fc",
+                        "on-surface": "#1a1c1e",
+                        "secondary-container": "#7af2f2",
+                        "on-secondary-fixed": "#002020",
+                        "secondary-fixed": "#7df5f5",
+                        "primary-container": "#001f3f",
+                        "on-primary-container": "#6f88ad",
+                        "on-tertiary-container": "#b5785f",
+                        "on-error-container": "#93000a",
+                        "on-background": "#1a1c1e",
+                        "on-primary-fixed": "#001c3a",
+                        "tertiary-fixed": "#ffdbce",
+                        "surface-container-high": "#e9e7eb",
+                        "inverse-surface": "#2f3033",
+                        "on-tertiary-fixed-variant": "#6b3a25",
+                        "inverse-primary": "#afc8f0",
+                        "surface-dim": "#dbd9dd",
+                        "on-secondary-container": "#006e6e",
+                        "surface-container-highest": "#e3e2e5",
+                        "outline-variant": "#c4c6cf",
+                        "secondary": "#006a6a",
+                        "on-primary": "#ffffff",
+                        "primary": "#000613",
+                        "on-secondary-fixed-variant": "#004f4f",
+                        "surface-tint": "#476083",
+                        "surface-variant": "#e3e2e5",
+                        "primary-fixed": "#d4e3ff",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#afc8f0",
+                        "surface-container": "#efedf0",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#5dd9d8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-gap-md": "16px",
+                        "sidebar-width": "260px",
+                        "header-height": "64px",
+                        "stack-gap-sm": "8px",
+                        "grid-gutter": "20px",
+                        "container-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "data-tabular": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "label-bold": ["11px", {"lineHeight": "16px", "fontWeight": "700"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "data-tabular": ["13px", {"lineHeight": "16px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .workflow-canvas {
+            background-image: radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+        }
+        .node-active {
+            outline: 2px solid var(--color-primary, #c8102e);
+            outline-offset: 2px;
+        }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #c4c6cf; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-[260px] py-4 bg-primary dark:bg-primary-container border-r border-outline-variant flex flex-col z-50">
+<div class="px-6 mb-8"><div class="flex items-center gap-3 mb-2"><div class="w-8 h-8 bg-secondary-container rounded flex items-center justify-center text-on-secondary-container"><span class="material-symbols-outlined">hub</span></div><h1 class="font-headline-md text-headline-md font-bold text-on-primary">Nichirin</h1></div><p class="font-body-sm text-body-sm text-on-primary-fixed-variant opacity-80">Monozukuri System</p></div>
+<nav class="flex-1 px-3 space-y-1"><div class="space-y-1"><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-on-primary-fixed-variant hover:bg-on-primary-fixed-variant hover:text-on-primary group" href="#"><span class="material-symbols-outlined">precision_manufacturing</span><span class="font-body-md text-body-md">Monitoring</span></a></div><div class="mt-4"><p class="px-3 mb-2 font-label-bold text-label-bold uppercase text-on-primary-fixed-variant opacity-60">Master Configuration</p><div class="space-y-1"><a class="flex items-center gap-3 px-3 py-2.5 transition-all bg-secondary-container text-on-secondary-container font-bold group" href="#"><span class="material-symbols-outlined">settings_applications</span><span class="font-body-md text-body-md">Workflow Configuration</span></a><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-on-primary-fixed-variant hover:bg-on-primary-fixed-variant hover:text-on-primary group" href="#"><span class="material-symbols-outlined">account_tree</span><span class="font-body-md text-body-md">Line Layout</span></a></div></div><div class="mt-4"><div class="space-y-1"><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-on-primary-fixed-variant hover:bg-on-primary-fixed-variant hover:text-on-primary group" href="#"><span class="material-symbols-outlined">analytics</span><span class="font-body-md text-body-md">Traceability &amp; Reports</span></a><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-on-primary-fixed-variant hover:bg-on-primary-fixed-variant hover:text-on-primary group" href="#"><span class="material-symbols-outlined">admin_panel_settings</span><span class="font-body-md text-body-md">Administration</span></a></div></div></nav>
+<div class="px-6 mb-4">
+<div class="bg-primary-fixed-dim/20 rounded-lg p-3 text-on-primary">
+<p class="font-label-bold text-label-bold uppercase opacity-60">System Status</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span>
+<span class="font-body-sm text-body-sm">Active</span>
+</div>
+</div>
+</div>
+<footer class="px-3 border-t border-on-primary/10 pt-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-primary-fixed-variant hover:text-on-primary transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-body-md text-body-md">Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-primary-fixed-variant hover:text-on-primary transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body-md text-body-md">Sign Out</span>
+</a>
+</footer>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 h-[64px] w-[calc(100%-260px)] ml-[260px] px-container-padding bg-surface dark:bg-surface-dim border-b border-outline-variant flex justify-between items-center z-40">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 font-body-sm text-body-sm text-on-surface-variant">
+<span class="">Plant</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="">Line A</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-primary font-bold border-b-2 border-primary pb-1">Workflow Config</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="bg-primary text-on-primary px-4 py-1.5 rounded-lg font-headline-sm text-headline-sm hover:opacity-90 active:scale-95 transition-all">
+                Save Changes
+            </button>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<span class="material-symbols-outlined cursor-pointer hover:text-secondary transition-colors">notifications</span>
+<div class="flex items-center gap-2 cursor-pointer hover:text-secondary transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-body-sm text-body-sm font-medium">H. Tanaka</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-[260px] mt-[64px] h-[calc(100vh-64px)] flex flex-col bg-surface-container-lowest">
+<div class="flex flex-grow overflow-hidden gap-6 h-full min-h-0">
+<!-- Left Panel: Stage Types -->
+<aside class="w-[280px] bg-white border border-outline-variant/30 rounded-xl shadow-sm flex flex-col p-5 h-full overflow-hidden shrink-0">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-4 font-bold border-b border-outline-variant/30 pb-2">Stage Components</h3>
+<div class="space-y-3 flex-1 overflow-y-auto custom-scrollbar pr-1 mb-4">
+<div class="p-3 border border-outline-variant/30 rounded-lg cursor-move hover:bg-slate-50 transition-colors flex items-center gap-3 group">
+<div class="w-10 h-10 rounded bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">hail</span>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm">Picking</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Component retrieval</p>
+</div>
+</div>
+<div class="p-3 border border-outline-variant/30 rounded-lg cursor-move hover:bg-slate-50 transition-colors flex items-center gap-3 group">
+<div class="w-10 h-10 rounded bg-surface-container-high flex items-center justify-center text-on-surface">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm">Offline</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Pre-assembly prep</p>
+</div>
+</div>
+<div class="p-3 border border-outline-variant/30 rounded-lg cursor-move hover:bg-slate-50 transition-colors flex items-center gap-3 group">
+<div class="w-10 h-10 rounded bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined">conveyor_belt</span>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm">Online</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Main production line</p>
+</div>
+</div>
+<div class="p-3 border border-outline-variant/30 rounded-lg cursor-move hover:bg-slate-50 transition-colors flex items-center gap-3 group">
+<div class="w-10 h-10 rounded bg-secondary flex items-center justify-center text-on-secondary">
+<span class="material-symbols-outlined">rule</span>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm">QC</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Quality Control gate</p>
+</div>
+</div>
+<div class="p-3 border border-outline-variant/30 rounded-lg cursor-move hover:bg-slate-50 transition-colors flex items-center gap-3 group">
+<div class="w-10 h-10 rounded bg-error flex items-center justify-center text-on-error">
+<span class="material-symbols-outlined">build</span>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm">Rework</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Fixing non-conformance</p>
+</div>
+</div>
+</div>
+<div class="mt-auto pt-4 border-t border-outline-variant/30 shrink-0">
+<div class="bg-slate-50 p-4 rounded-xl border border-outline-variant/30">
+<p class="font-label-bold text-label-bold text-on-surface-variant uppercase mb-2">Help</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Drag stages onto the canvas to build the sequential workflow for Line A.</p>
+</div>
+</div>
+</aside>
+
+<!-- Center Canvas: Dependency Graph -->
+<section class="flex-grow relative overflow-hidden bg-white border border-outline-variant/30 rounded-xl shadow-sm workflow-canvas p-8 h-full">
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-5">
+<span class="material-symbols-outlined text-[300px]">hub</span>
+</div>
+<!-- Stage Nodes -->
+<div class="relative w-full h-full">
+<!-- SVG for Connectors -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none">
+<defs>
+<marker id="arrowhead" markerheight="7" markerwidth="10" orient="auto" refx="9" refy="3.5">
+<polygon fill="#74777f" points="0 0, 10 3.5, 0 7"></polygon>
+</marker>
+</defs>
+<path d="M 120 100 L 280 100" marker-end="url(#arrowhead)" stroke="#74777f" stroke-width="2"></path>
+<path d="M 460 100 L 620 100" marker-end="url(#arrowhead)" stroke="#74777f" stroke-width="2"></path>
+<path d="M 460 100 Q 540 180 370 240" marker-end="url(#arrowhead)" stroke="#ba1a1a" stroke-dasharray="4" stroke-width="2"></path>
+</svg>
+<!-- Node 1 -->
+<div class="absolute top-10 left-10 w-48 bg-white border border-outline-variant/30 rounded-lg shadow-sm p-3 hover:shadow-md transition-shadow cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-secondary-container text-on-secondary-container">Picking</span>
+<span class="material-symbols-outlined text-[18px] text-outline">drag_indicator</span>
+</div>
+<p class="font-headline-sm text-headline-sm font-semibold">ST01: Part Fetch</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Seq: 010</p>
+<div class="mt-2 flex gap-1">
+<div class="h-1.5 flex-1 bg-secondary-container rounded-full"></div>
+<div class="h-1.5 flex-1 bg-surface-container-high rounded-full"></div>
+</div>
+</div>
+<!-- Node 2 -->
+<div class="absolute top-10 left-64 w-48 bg-white border border-outline-variant/30 rounded-lg shadow-sm p-3 node-active cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-primary-container text-on-primary-container">Online</span>
+<span class="material-symbols-outlined text-[18px] text-outline">drag_indicator</span>
+</div>
+<p class="font-headline-sm text-headline-sm font-semibold">ST02: Welding A</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Seq: 020</p>
+<div class="mt-2 flex gap-1">
+<div class="h-1.5 flex-1 bg-secondary rounded-full"></div>
+<div class="h-1.5 flex-1 bg-secondary rounded-full"></div>
+</div>
+</div>
+<!-- Node 3 -->
+<div class="absolute top-10 left-[30rem] w-48 bg-white border border-outline-variant/30 rounded-lg shadow-sm p-3 hover:shadow-md transition-shadow cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-secondary text-on-secondary">QC</span>
+<span class="material-symbols-outlined text-[18px] text-outline">drag_indicator</span>
+</div>
+<p class="font-headline-sm text-headline-sm font-semibold">ST03: Leak Test</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Seq: 030</p>
+<div class="mt-2 flex gap-1">
+<div class="h-1.5 flex-1 bg-secondary rounded-full"></div>
+<div class="h-1.5 flex-1 bg-secondary rounded-full"></div>
+</div>
+</div>
+<!-- Node 4 (Error Node) -->
+<div class="absolute top-56 left-[18rem] w-48 bg-white border-2 border-error rounded-lg shadow-sm p-3 hover:shadow-md transition-shadow cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-error text-on-error">Rework</span>
+<span class="material-symbols-outlined text-[18px] text-error">warning</span>
+</div>
+<p class="font-headline-sm text-headline-sm text-error font-semibold">ST04: Repair Unit</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Seq: 040</p>
+<div class="mt-2 flex gap-1">
+<div class="h-1.5 w-1/3 bg-error rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Floating Toolbar -->
+<div class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm border border-outline-variant/30 rounded-full shadow-lg px-4 py-2 flex items-center gap-4">
+<button class="p-2 hover:bg-slate-100 rounded-full transition-colors" title="Zoom In">
+<span class="material-symbols-outlined">zoom_in</span>
+</button>
+<button class="p-2 hover:bg-slate-100 rounded-full transition-colors" title="Zoom Out">
+<span class="material-symbols-outlined">zoom_out</span>
+</button>
+<div class="h-6 w-px bg-outline-variant/30"></div>
+<button class="p-2 hover:bg-slate-100 rounded-full transition-colors" title="Fit to Screen">
+<span class="material-symbols-outlined">fullscreen</span>
+</button>
+<button class="p-2 hover:bg-slate-100 rounded-full transition-colors" title="Auto Layout">
+<span class="material-symbols-outlined">auto_fix_high</span>
+</button>
+</div>
+</section>
+
+<!-- Right Panel: Properties -->
+<aside class="w-[320px] bg-white border border-outline-variant/30 rounded-xl shadow-sm flex flex-col h-full overflow-hidden shrink-0">
+<div class="p-4 border-b border-outline-variant/30 bg-slate-50 shrink-0">
+  <h3 class="font-headline-sm text-headline-sm text-primary font-bold">Stage Properties</h3>
+</div>
+<div class="flex-1 overflow-y-auto p-5 space-y-6 custom-scrollbar">
+<div>
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase block mb-1.5">Stage Name</label>
+<input class="w-full border-outline-variant/30 focus:ring-primary focus:border-primary rounded-lg text-sm text-body-md" type="text" value="ST02: Welding A"/>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="font-headline-sm text-headline-sm font-semibold">Mandatory Stage</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Cannot be skipped on line</p>
+</div>
+<div class="relative inline-flex h-6 w-11 items-center rounded-full bg-primary cursor-pointer">
+<span class="translate-x-6 inline-block h-4 w-4 transform rounded-full bg-white transition"></span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase block mb-1.5">Sequence</label>
+<input class="w-full border-outline-variant/30 focus:ring-primary focus:border-primary rounded-lg text-sm text-data-tabular" type="number" value="20"/>
+</div>
+<div>
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase block mb-1.5">Cycle Time (s)</label>
+<input class="w-full border-outline-variant/30 focus:ring-primary focus:border-primary rounded-lg text-sm text-data-tabular" type="number" value="45"/>
+</div>
+</div>
+<div>
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase block mb-1.5">Depends On</label>
+<select class="w-full border-outline-variant/30 focus:ring-primary focus:border-primary rounded-lg text-sm text-body-md">
+<option>ST01: Part Fetch</option>
+<option>None</option>
+</select>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="font-headline-sm text-headline-sm font-semibold">Requires QC</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Automated trigger after step</p>
+</div>
+<div class="relative inline-flex h-6 w-11 items-center rounded-full bg-slate-200 cursor-pointer">
+<span class="translate-x-1 inline-block h-4 w-4 transform rounded-full bg-white transition"></span>
+</div>
+</div>
+<div class="pt-4 border-t border-outline-variant/30">
+<button class="w-full py-2 border border-error text-error font-headline-sm text-headline-sm rounded-lg hover:bg-rose-50 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">delete</span>
+                            Remove Stage
+                        </button>
+</div>
+</div>
+</aside>
+</div>
+
+<!-- Bottom Panel: Validation Results -->
+<footer class="h-[120px] bg-slate-50 border border-outline-variant/30 rounded-xl p-4 flex gap-6 shrink-0 shadow-sm mt-6">
+<div class="w-[260px] flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-error-container flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[32px]">report_problem</span>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm text-error font-bold">Invalid Configuration</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">3 issues found</p>
+</div>
+</div>
+<div class="flex-1 flex gap-4 overflow-x-auto">
+<div class="min-w-[300px] bg-white border border-error rounded-lg p-3 flex items-start gap-3">
+<span class="material-symbols-outlined text-error">error_outline</span>
+<div>
+<p class="font-label-bold text-label-bold text-error">CRITICAL ERROR</p>
+<p class="font-body-sm text-body-sm text-on-surface">Circular Dependency Detected: ST03 depends on ST04, which depends on ST03.</p>
+</div>
+</div>
+<div class="min-w-[300px] bg-white border border-outline-variant/30 rounded-lg p-3 flex items-start gap-3">
+<span class="material-symbols-outlined text-amber-500">info</span>
+<div>
+<p class="font-label-bold text-label-bold text-amber-600">WARNING</p>
+<p class="font-body-sm text-body-sm text-on-surface">ST01 has no inbound connection. It will be treated as the starting node.</p>
+</div>
+</div>
+<div class="min-w-[300px] bg-white border border-outline-variant/30 rounded-lg p-3 flex items-start gap-3 opacity-50">
+<span class="material-symbols-outlined text-on-surface-variant">verified</span>
+<div>
+<p class="font-label-bold text-label-bold text-on-surface-variant">OPTIMIZATION</p>
+<p class="font-body-sm text-body-sm text-on-surface">Cycle times are within defined tolerances for Line A.</p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="bg-primary text-white hover:bg-primary/95 px-4 py-2 rounded-lg font-headline-sm text-headline-sm flex items-center gap-2 transition-colors shadow-sm">
+<span class="material-symbols-outlined">auto_fix_normal</span>
+                    Auto-resolve
+                </button>
+</div>
+</footer>
+</main>
+<script>
+        // Simple micro-interaction for node selection
+        document.querySelectorAll('.workflow-canvas [class*="absolute"]').forEach(node => {
+            node.addEventListener('click', () => {
+                document.querySelectorAll('.node-active').forEach(n => n.classList.remove('node-active'));
+                node.classList.add('node-active');
+            });
+        });
+
+        // Draggable stages mockup (visual only)
+        document.querySelectorAll('aside div[cursor-move]').forEach(item => {
+            item.addEventListener('mousedown', (e) => {
+                item.style.opacity = '0.5';
+                const onUp = () => {
+                    item.style.opacity = '1';
+                    window.removeEventListener('mouseup', onUp);
+                };
+                window.addEventListener('mouseup', onUp);
+            });
+        });
+    </script>
+
+
+</body></html>
