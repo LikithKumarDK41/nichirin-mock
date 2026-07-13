@@ -745,6 +745,7 @@
   </div>
 
   <script>
+    (function() {
       let rolesList = [];
       let currentRolePage = 1;
       const rolePageSize = 5;
@@ -1299,8 +1300,22 @@
           }
       });
 
+      // Bind all dynamic action callbacks to window scope for inline HTML onclick resolution
+      window.openAddRoleDrawer = openAddRoleDrawer;
+      window.openEditRoleDrawer = openEditRoleDrawer;
+      window.deleteRole = deleteRole;
+      window.saveRole = saveRole;
+      window.toggleAddRoleModal = toggleAddRoleModal;
+      window.toggleViewRoleModal = toggleViewRoleModal;
+      window.closeDeleteConfirmModal = closeDeleteConfirmModal;
+      window.openViewRoleDrawer = openViewRoleDrawer;
+      window.changeRolePage = changeRolePage;
+      window.handleRoleSearch = handleRoleSearch;
+      window.handleRoleTypeFilterChange = handleRoleTypeFilterChange;
+
       // Execute on dynamic page load
       fetchRoles();
+    })();
   </script>
 </div>
 </main>

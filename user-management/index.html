@@ -377,6 +377,7 @@
   </div>
 
   <script>
+    (function() {
       let usersList = [];
       let currentPage = 1;
       const pageSize = 5;
@@ -839,9 +840,21 @@
           });
       }
 
+      // Bind all dynamic action callbacks to window scope for inline HTML onclick resolution
+      window.openAddUserDrawer = openAddUserDrawer;
+      window.openEditUserDrawer = openEditUserDrawer;
+      window.saveUser = saveUser;
+      window.toggleAddUserModal = toggleAddUserModal;
+      window.toggleViewUserModal = toggleViewUserModal;
+      window.openViewUserModal = openViewUserModal;
+      window.changePage = changePage;
+      window.handleSearch = handleSearch;
+      window.setUserViewMode = setUserViewMode;
+
       // Initial Fetch
       populateRolesDropdown();
       fetchUsers();
+    })();
   </script>
 </div>
 </main>

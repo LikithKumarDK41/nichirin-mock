@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en" style=""><head>
+<html lang="en"><head>
 <!-- SPA Layout Redirect Wrapper -->
 <script>
   if (!document.getElementById('app-root')) {
@@ -13,331 +13,522 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Supervisor Planning - Nichirin Admin</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary-container": "#001f3f",
-                        "surface-variant": "#e3e2e5",
-                        "outline-variant": "#c4c6cf",
-                        "on-tertiary": "#ffffff",
-                        "surface-container-lowest": "#ffffff",
-                        "on-secondary-container": "#006e6e",
-                        "secondary": "#006a6a",
-                        "primary-fixed": "#d4e3ff",
-                        "surface-container-high": "#e9e7eb",
-                        "on-tertiary-fixed": "#351002",
-                        "on-surface": "#1a1c1e",
-                        "on-tertiary-container": "#b5785f",
-                        "tertiary": "#110200",
-                        "on-primary-fixed-variant": "#2f486a",
-                        "secondary-container": "#7af2f2",
-                        "secondary-fixed": "#7df5f5",
-                        "tertiary-fixed": "#ffdbce",
-                        "background": "#faf9fc",
-                        "surface-tint": "#476083",
-                        "error-container": "#ffdad6",
-                        "inverse-primary": "#afc8f0",
-                        "surface": "#faf9fc",
-                        "on-surface-variant": "#43474e",
-                        "primary-fixed-dim": "#afc8f0",
-                        "tertiary-fixed-dim": "#fdb69a",
-                        "tertiary-container": "#391303",
-                        "inverse-on-surface": "#f2f0f3",
-                        "surface-container-highest": "#e3e2e5",
-                        "on-primary": "#ffffff",
-                        "on-secondary-fixed": "#002020",
-                        "on-primary-container": "#6f88ad",
-                        "on-tertiary-fixed-variant": "#6b3a25",
-                        "on-secondary": "#ffffff",
-                        "surface-dim": "#dbd9dd",
-                        "surface-bright": "#faf9fc",
-                        "primary": "#000613",
-                        "error": "#ba1a1a",
-                        "surface-container-low": "#f4f3f6",
-                        "surface-container": "#efedf0",
-                        "on-primary-fixed": "#001c3a",
-                        "outline": "#74777f",
-                        "inverse-surface": "#2f3033",
-                        "secondary-fixed-dim": "#5dd9d8",
-                        "on-background": "#1a1c1e",
-                        "on-secondary-fixed-variant": "#004f4f",
-                        "on-error": "#ffffff",
-                        "on-error-container": "#93000a"
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                    },
-                    spacing: {
-                        "sidebar-width": "260px",
-                        "container-padding": "24px",
-                        "grid-gutter": "20px",
-                        "stack-gap-sm": "8px",
-                        "stack-gap-md": "16px",
-                        "header-height": "64px"
-                    },
-                    fontFamily: {
-                        "headline-md": ["Inter"],
-                        "headline-lg": ["Inter"],
-                        "body-md": ["Inter"],
-                        "body-lg": ["Inter"],
-                        "label-bold": ["Inter"],
-                        "headline-sm": ["Inter"],
-                        "data-tabular": ["Inter"],
-                        "body-sm": ["Inter"]
-                    },
-                    fontSize: {
-                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
-                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
-                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
-                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
-                        "label-bold": ["11px", { "lineHeight": "16px", "fontWeight": "700" }],
-                        "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
-                        "data-tabular": ["13px", { "lineHeight": "16px", "fontWeight": "500" }],
-                        "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }]
-                    }
-                }
-            }
-        }
-    </script>
 <style>
-        body { background-color: theme('colors.background'); color: theme('colors.on-background'); font-family: 'Inter', sans-serif; }
+        body { font-family: 'Inter', sans-serif; background-color: #faf9fc; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
     </style>
 </head>
-<body class="flex flex-col md:flex-row min-h-screen bg-background">
-<!-- SideNavBar -->
-<nav class="bg-primary dark:bg-primary-container text-on-primary dark:text-on-primary-container font-headline-sm text-headline-sm fixed left-0 top-0 h-full w-[260px] border-r border-outline-variant flex flex-col h-screen w-[260px] py-4 hidden md:flex z-50">
-<div class="px-container-padding mb-8"><div class="flex items-center gap-3 mb-2"><img alt="Nichirin Logo" class="h-8 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDos5LgCbR3i9HqjOMKL_b3AekJPsw8g8yEP8xAGml43pVGzENk2QnVdXKr7V6C59nnwNM3hmGxk00HfL22B3GgYyCYqKwh-dY0sZBMPj__f2vP7PudYu4-vULKpBZDxOTzyzXC0Wac__yMsY-db9H4_8GFvZ4Z7C7pS9cS2sfmMBymA4aUTw0u2ZorovLqtaPjiwPfGAu9wyRoJOZ7PH2A8_iWZOIWxOe9OEZKHiboQhEyNIto6dxIeA-TYciEoshh5Io"/></div><p class="font-body-sm text-body-sm text-on-primary-fixed-variant opacity-70">Monozukuri System v2.4</p></div>
-<div class="px-container-padding mb-6">
-<div class="bg-secondary-container text-on-secondary-container rounded p-3 flex items-center justify-center font-label-bold text-label-bold uppercase tracking-wider">
-                System Status: Active
-            </div>
-</div>
-<ul class="flex-1 px-4 space-y-1"><li class="mb-4"><div class="px-4 py-2 text-label-bold text-on-primary uppercase tracking-widest opacity-50 mb-1">Operations</div><a class="flex items-center gap-3 px-4 py-3 rounded text-on-primary hover:bg-on-primary-fixed-variant transition-all" href="#"><span class="material-symbols-outlined">dashboard</span><span class="font-body-md text-body-md">Dashboard</span></a></li><li class="mb-4"><a class="flex items-center gap-3 px-4 py-3 rounded text-on-primary hover:bg-on-primary-fixed-variant transition-all" href="#"><span class="material-symbols-outlined">monitoring</span><span class="font-body-md text-body-md">Monitoring</span></a><div class="ml-9 mt-1 space-y-1"><a class="block px-4 py-2 rounded bg-secondary-container text-primary font-bold text-body-sm" href="#">Supervisor Planning</a><a class="block px-4 py-2 rounded text-on-primary hover:text-secondary text-body-sm" href="#">Line Status</a></div></li><li class="mb-4"><div class="px-4 py-2 text-label-bold text-on-primary uppercase tracking-widest opacity-50 mt-4 mb-1">Management</div><a class="flex items-center gap-3 px-4 py-3 rounded text-on-primary hover:bg-on-primary-fixed-variant transition-colors" href="#"><span class="material-symbols-outlined">settings_suggest</span><span class="font-body-md text-body-md">Master Configuration</span></a></li><li class="mb-4"><a class="flex items-center gap-3 px-4 py-3 rounded text-on-primary hover:bg-on-primary-fixed-variant transition-colors" href="#"><span class="material-symbols-outlined">analytics</span><span class="font-body-md text-body-md">Traceability &amp; Reports</span></a></li><li class="mb-4"><a class="flex items-center gap-3 px-4 py-3 rounded text-on-primary hover:bg-on-primary-fixed-variant transition-colors" href="#"><span class="material-symbols-outlined">admin_panel_settings</span><span class="font-body-md text-body-md">Administration</span></a></li></ul>
-<div class="px-4 mt-auto border-t border-outline-variant/30 pt-4">
-<ul class="space-y-1"><li class=""><a class="flex items-center gap-3 px-4 py-3 rounded text-on-primary hover:bg-on-primary-fixed-variant transition-colors duration-200" href="#"><span class="material-symbols-outlined">help</span><span class="font-body-md text-body-md">Support</span></a></li><li class=""><a class="flex items-center gap-3 px-4 py-3 rounded text-on-primary hover:bg-on-primary-fixed-variant transition-colors duration-200" href="#"><span class="material-symbols-outlined">logout</span><span class="font-body-md text-body-md">Sign Out</span></a></li></ul>
-</div>
-</nav>
-<!-- TopNavBar -->
-<header class="bg-surface dark:bg-surface-dim text-primary dark:text-primary-fixed font-body-sm text-body-sm fixed top-0 right-0 h-[64px] z-40 border-b border-outline-variant flex justify-between items-center h-[64px] w-full md:w-[calc(100%-260px)] md:ml-[260px] px-container-padding transition-transform">
+<body class="flex min-h-screen overflow-x-hidden">
+<!-- SideNavBar (Fallback) -->
+<aside class="fixed left-0 top-0 h-full w-[260px] bg-primary text-on-primary flex flex-col py-4 border-r border-outline-variant z-50">
+</aside>
+<!-- Main Content Area -->
+<main class="flex-grow ml-[260px] pt-[64px] min-h-screen">
+<!-- TopNavBar (Fallback) -->
+<header class="fixed top-0 right-0 h-[64px] w-full md:w-[calc(100%-260px)] bg-surface flex justify-between items-center px-container-padding border-b border-outline-variant z-40">
 <div class="flex items-center gap-4">
-<span class="font-headline-sm text-headline-sm font-black text-primary hidden sm:block">Control Card Digitization</span>
-<nav class="flex items-center space-x-2 text-on-surface-variant font-medium">
-<span class="material-symbols-outlined text-[16px]">chevron_right</span>
-<a class="hover:text-secondary transition-colors" href="#">Monitoring</a>
-<span class="material-symbols-outlined text-[16px]">chevron_right</span>
-<a class="text-primary font-bold border-b-2 border-primary pb-1" href="#">Supervisor Planning</a>
+<nav class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+<span class="">Plant</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="../work-orders/index.html">Monitoring</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-bold border-b-2 border-primary pb-1">Supervisor Planning</span>
 </nav>
-</div>
-<div class="flex items-center gap-4">
-<button class="bg-primary text-on-primary px-4 py-2 rounded text-body-md font-body-md font-semibold hover:opacity-90 transition-opacity">Production</button>
-<button class="text-on-surface-variant hover:text-secondary transition-colors"><span class="material-symbols-outlined">notifications</span></button>
-<button class="text-on-surface-variant hover:text-secondary transition-colors"><img alt="User Profile" class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="A small circular user avatar profile picture, professional corporate style, neutral lighting, simple background, suited for an industrial web interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuALQ4oDiYL_6GSGkJTu3WxcyAsTExlwQYx17kef4O-TRhVRPPsTSSvaAtiTvTcCbgm8WFbA2cswcwsQCK_bjRMRj9wkoeUQYxgn_1OPqKe4pMizYV0C93rBA0xqYSAUP-zux5irBldAin2dyHzKMs809WGF2oNDBtzxR6A-F-PnYQOR33624H4ZqVlYTG5IJWfFOjDXZnGmucdvVWO9oZ0cG2RepgB0hUWR7buMKs0_xEaahmuVi5R_Hg"/></button>
 </div>
 </header>
-<!-- Main Canvas -->
-<main class="flex-1 w-full md:ml-[260px] pt-[88px] px-container-padding pb-container-padding bg-surface-container-low min-h-screen">
-<div class="flex justify-between items-end mb-5 border-b border-outline-variant pb-4">
-<div>
-<h2 class="font-headline-lg text-headline-lg text-on-surface">Plan: Control Card #402</h2>
-<p class="font-body-md text-body-md text-on-surface-variant mt-1">Configure line allocation and validate dependencies before releasing to production tablet.</p>
+<!-- Page Canvas -->
+<div class="p-container-padding grid grid-cols-12 gap-6 bg-background animate-fade-in">
+  <div class="col-span-12 flex justify-between items-start mb-5 flex-wrap gap-4 select-none">
+    <div>
+      <h2 class="font-headline-lg text-headline-lg text-primary">Supervisor Planning</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant mt-2">Configure line allocation and validate dependencies before releasing to production tablet.</p>
+    </div>
+    <div class="relative min-w-[260px]">
+      <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Work Order ID</label>
+      <div class="relative">
+        <button id="planning-wo-dropdown-trigger" class="w-full bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-9 px-3 font-semibold flex items-center justify-between cursor-pointer" onclick="togglePlanningDropdown()">
+          <span id="planning-wo-selected-text">WO-2026-9043</span>
+          <span class="material-symbols-outlined text-[20px] text-slate-500">expand_more</span>
+        </button>
+        <div id="planning-wo-dropdown-container" class="absolute right-0 left-0 mt-1 bg-white border border-outline-variant/30 rounded-lg shadow-lg z-[100] hidden p-2 flex flex-col gap-2">
+          <div class="relative">
+            <input type="text" id="planning-wo-dropdown-search" class="w-full bg-slate-50 border border-outline-variant/30 rounded-lg text-xs text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-8 pr-3 font-semibold" placeholder="Search WO ID..." oninput="filterPlanningDropdown(this.value)" autocomplete="off" />
+            <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[16px] text-slate-400">search</span>
+          </div>
+          <div id="planning-wo-dropdown-list" class="max-h-48 overflow-y-auto custom-scrollbar flex flex-col">
+            <!-- Dropdown items populated dynamically -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bento grid content -->
+  <div class="col-span-12 grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <!-- Left Column: Work Order Summary -->
+    <div class="lg:col-span-3">
+      <div class="bg-white border border-outline-variant/30 rounded-xl flex flex-col h-full shadow-sm overflow-hidden">
+        <div class="p-4 border-b border-outline-variant/30 bg-slate-50">
+          <h3 class="font-headline-sm text-headline-sm text-primary flex items-center gap-2">
+            <span class="material-symbols-outlined text-[20px] text-primary">receipt_long</span>
+            Work Order Summary
+          </h3>
+        </div>
+        <div class="p-4 flex-1 space-y-4 text-sm">
+          <div>
+            <span class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Order ID</span>
+            <span class="font-body-md text-body-md text-slate-800 font-bold" id="wo-summary-id">--</span>
+          </div>
+          <div>
+            <span class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Product Details</span>
+            <span class="font-body-md text-body-md text-slate-900 font-bold block leading-tight" id="wo-summary-name">--</span>
+            <span class="font-data-tabular text-data-tabular text-slate-500 font-bold mt-1 block" id="wo-summary-part">--</span>
+          </div>
+          <div>
+            <span class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Target Quantity</span>
+            <span class="font-data-tabular text-data-tabular text-slate-800 font-bold" id="wo-summary-qty">--</span>
+          </div>
+          <div>
+            <span class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Customer / Plant Location</span>
+            <span class="font-body-md text-body-md text-slate-700 font-semibold block">Faridabad Plant (Line 1 Assembly)</span>
+          </div>
+          <div class="pt-4 border-t border-outline-variant/30">
+            <span class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-2">Attached Documents</span>
+            <ul class="space-y-2">
+              <li>
+                <a class="flex items-center gap-2 text-primary hover:underline font-body-sm text-body-sm font-semibold" href="#">
+                  <span class="material-symbols-outlined text-[16px]">picture_as_pdf</span>
+                  Drawing_Rev3.pdf
+                </a>
+              </li>
+              <li>
+                <a class="flex items-center gap-2 text-primary hover:underline font-body-sm text-body-sm font-semibold" href="#">
+                  <span class="material-symbols-outlined text-[16px]">description</span>
+                  Quality_Spec_v1.2.doc
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center Column: Planning Form -->
+    <div class="lg:col-span-6">
+      <div class="bg-white border border-outline-variant/30 rounded-xl h-full shadow-sm overflow-hidden flex flex-col">
+        <div class="p-4 border-b border-outline-variant/30 bg-slate-50">
+          <h3 class="font-headline-sm text-headline-sm text-primary flex items-center gap-2">
+            <span class="material-symbols-outlined text-[20px] text-primary">edit_document</span>
+            Planning Form
+          </h3>
+        </div>
+        <div class="p-6 space-y-6 flex-1 text-sm">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Production Line <span class="text-error">*</span></label>
+              <select id="planning-line-select" class="w-full border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold" onchange="validatePlanningForm(); saveActiveWO();">
+                <option disabled="" value="">Select Line...</option>
+                <option value="Line 1 (Faridabad Brake Hose Assembly)">Line 1 (Hose)</option>
+                <option value="Line 2 (Faridabad Brake Tube Assembly)">Line 2 (Tube)</option>
+                <option value="Line 3 (Specialty Jigs Assembly)">Line 3 (Jigs)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Priority</label>
+              <select id="planning-priority-select" class="w-full border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold" onchange="saveActiveWO();">
+                <option value="Normal">Normal</option>
+                <option value="High">High Priority</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Shift Allocation <span class="text-error">*</span></label>
+              <select id="planning-shift-select" class="w-full border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold" onchange="validatePlanningForm(); saveActiveWO();">
+                <option disabled="" value="">Select Shift...</option>
+                <option value="Shift A">Shift A (06:00 - 14:00)</option>
+                <option value="Shift B">Shift B (14:00 - 22:00)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Target Start Time</label>
+              <input id="planning-start-time" class="w-full border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold" type="datetime-local" value="2026-07-13T06:00" onchange="saveActiveWO();"/>
+            </div>
+          </div>
+          <div>
+            <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Operator Allocation</label>
+            <div class="flex gap-2">
+              <select id="planning-operator-select" class="flex-1 border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold">
+                <!-- populated dynamically with Indian operators -->
+              </select>
+              <button class="bg-primary text-white px-4 py-2 rounded-lg font-semibold text-sm hover:opacity-95 transition-colors cursor-pointer shadow-sm" onclick="assignOperator()">Assign</button>
+            </div>
+            <div class="mt-3 flex flex-wrap gap-2" id="planning-operator-badges">
+              <!-- Badge populated dynamically -->
+            </div>
+          </div>
+          <div>
+            <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Execution Sequence</label>
+            <input class="w-full border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold" placeholder="Order in queue (e.g., 1)" type="number"/>
+            <p class="text-[11px] text-slate-400 mt-1 font-semibold block mb-4">Leave blank to append to end of selected shift's queue.</p>
+          </div>
+          <div class="pt-4 border-t border-outline-variant/30 flex justify-end">
+            <button class="bg-primary text-white px-6 py-2 rounded-lg text-sm font-semibold hover:opacity-95 transition-all shadow-sm cursor-pointer" onclick="saveActiveWO()">Save Plan</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Validation Checklist -->
+    <div class="lg:col-span-3">
+      <div class="bg-white border border-outline-variant/30 rounded-xl h-full flex flex-col shadow-sm overflow-hidden">
+        <div class="p-4 border-b border-outline-variant/30 bg-slate-50 flex justify-between items-center">
+          <h3 class="font-headline-sm text-headline-sm text-primary flex items-center gap-2">
+            <span class="material-symbols-outlined text-[20px] text-primary">fact_check</span>
+            Validation
+          </h3>
+          <span class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded-lg font-data-tabular text-data-tabular font-bold" id="validation-score-badge">0/7 OK</span>
+        </div>
+        <div class="p-4 flex-grow">
+          <ul class="space-y-4" id="validation-list-items">
+            <!-- populates dynamically with custom checkmarks -->
+          </ul>
+        </div>
+        <div class="p-4 border-t border-outline-variant/30 bg-slate-50" id="validation-warning-box">
+          <div class="bg-error-container/30 text-error px-3 py-2 rounded-lg font-body-sm text-body-sm border border-error-container flex items-center gap-2 font-semibold">
+            <span class="material-symbols-outlined text-[16px]">warning</span>
+            Resolve pending validations to release.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="flex gap-3">
-<button class="border border-primary text-primary px-6 py-2.5 rounded-lg font-headline-sm text-headline-sm hover:bg-surface-container-high transition-colors">Hold</button>
-<button class="bg-primary text-on-primary px-6 py-2.5 rounded-lg font-headline-sm text-headline-sm hover:opacity-90 transition-opacity flex items-center gap-2 shadow-sm">
-<span class="material-symbols-outlined text-[20px]">send_to_mobile</span>
-                    Release to Tablet
-                </button>
-</div>
-</div>
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-grid-gutter">
-<!-- Left Column: Work Order Summary -->
-<div class="lg:col-span-3">
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl flex flex-col h-full shadow-sm overflow-hidden">
-<div class="p-4 border-b border-outline-variant bg-surface-container-low">
-<h3 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
-<span class="material-symbols-outlined text-[20px] text-primary">receipt_long</span>
-                            Work Order Summary
-                        </h3>
-</div>
-<div class="p-4 flex-1 space-y-4">
-<div>
-<span class="block font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider mb-1">Order ID</span>
-<span class="font-body-md text-body-md text-on-surface font-semibold">WO-2023-8842-A</span>
-</div>
-<div>
-<span class="block font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider mb-1">Product Part No.</span>
-<span class="font-data-tabular text-data-tabular text-on-surface">NICH-HSE-992-HV</span>
-</div>
-<div>
-<span class="block font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider mb-1">Target Quantity</span>
-<span class="font-data-tabular text-data-tabular text-on-surface">5,000 units</span>
-</div>
-<div>
-<span class="block font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider mb-1">Customer</span>
-<span class="font-body-md text-body-md text-on-surface">Automotive Tier 1 - JP</span>
-</div>
-<div class="pt-4 border-t border-outline-variant">
-<span class="block font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider mb-2">Attached Documents</span>
-<ul class="space-y-2">
-<li class="">
-<a class="flex items-center gap-2 text-secondary hover:underline font-body-sm text-body-sm" href="#">
-<span class="material-symbols-outlined text-[16px]">picture_as_pdf</span>
-                                        Drawing_Rev3.pdf
-                                    </a>
-</li>
-<li class="">
-<a class="flex items-center gap-2 text-secondary hover:underline font-body-sm text-body-sm" href="#">
-<span class="material-symbols-outlined text-[16px]">description</span>
-                                        Quality_Spec_v1.2.doc
-                                    </a>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<!-- Center Column: Planning Form -->
-<div class="lg:col-span-6">
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl h-full shadow-sm overflow-hidden">
-<div class="p-4 border-b border-outline-variant bg-surface-container-low">
-<h3 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
-<span class="material-symbols-outlined text-[20px] text-primary">edit_document</span>
-                            Planning Form
-                        </h3>
-</div>
-<div class="p-6 space-y-6">
-<div class="grid grid-cols-2 gap-4">
-<div>
-<label class="block font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider mb-1">Production Line <span class="text-error">*</span></label>
-<select class="w-full border border-outline-variant rounded-lg px-3 py-2 font-body-md text-body-md text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none bg-surface-container-lowest">
-<option disabled="" selected="" value="">Select Line...</option>
-<option value="line_a">Line A - Extrusion</option>
-<option value="line_b">Line B - Assembly</option>
-<option value="line_c">Line C - Testing</option>
-</select>
-</div>
-<div>
-<label class="block font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider mb-1">Priority</label>
-<select class="w-full border border-outline-variant rounded-lg px-3 py-2 font-body-md text-body-md text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none bg-surface-container-lowest">
-<option selected="" value="normal">Normal</option>
-<option value="high">High</option>
-<option value="urgent">Urgent</option>
-</select>
-</div>
-</div>
-<div class="grid grid-cols-2 gap-4">
-<div>
-<label class="block font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider mb-1">Shift Allocation <span class="text-error">*</span></label>
-<select class="w-full border border-outline-variant rounded-lg px-3 py-2 font-body-md text-body-md text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none bg-surface-container-lowest">
-<option disabled="" selected="" value="">Select Shift...</option>
-<option value="shift_1">Shift 1 (06:00 - 14:00)</option>
-<option value="shift_2">Shift 2 (14:00 - 22:00)</option>
-<option value="shift_3">Shift 3 (22:00 - 06:00)</option>
-</select>
-</div>
-<div>
-<label class="block font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider mb-1">Target Start Time</label>
-<input class="w-full border border-outline-variant rounded-lg px-3 py-2 font-body-md text-body-md text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none bg-surface-container-lowest" type="datetime-local"/>
-</div>
-</div>
-<div>
-<label class="block font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider mb-1">Operator Allocation</label>
-<div class="flex gap-2">
-<input class="flex-1 border border-outline-variant rounded-lg px-3 py-2 font-body-md text-body-md text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none bg-surface-container-lowest" placeholder="Search Operator ID or Name..." type="text"/>
-<button class="bg-surface-container-high border border-outline-variant text-on-surface px-4 py-2 rounded-lg font-body-md text-body-md hover:bg-surface-dim transition-colors">Assign</button>
-</div>
-<div class="mt-3 flex flex-wrap gap-2">
-<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-body-sm text-body-sm flex items-center gap-1 border border-secondary-fixed">
-                                    Yamamoto, K. (OP-102)
-                                    <span class="material-symbols-outlined text-[14px] cursor-pointer hover:text-error">close</span>
-</span>
-</div>
-</div>
-<div>
-<label class="block font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider mb-1">Execution Sequence</label>
-<input class="w-full border border-outline-variant rounded-lg px-3 py-2 font-body-md text-body-md text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none bg-surface-container-lowest" placeholder="Order in queue (e.g., 1)" type="number"/>
-<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Leave blank to append to end of selected shift's queue.</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Right Column: Validation Checklist -->
-<div class="lg:col-span-3">
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl h-full flex flex-col shadow-sm overflow-hidden">
-<div class="p-4 border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
-<h3 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
-<span class="material-symbols-outlined text-[20px] text-primary">fact_check</span>
-                            Validation
-                        </h3>
-<span class="bg-surface-container-highest text-on-surface-variant px-2 py-0.5 rounded-lg font-data-tabular text-data-tabular">5/7 OK</span>
-</div>
-<div class="p-4 flex-1">
-<ul class="space-y-3">
-<li class="flex items-start gap-3">
-<span class="material-symbols-outlined text-[20px] text-secondary mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-<div>
-<span class="block font-body-md text-body-md text-on-surface font-semibold">Template mapped</span>
-<span class="block font-body-sm text-body-sm text-on-surface-variant">Card #402 structure confirmed.</span>
-</div>
-</li>
-<li class="flex items-start gap-3">
-<span class="material-symbols-outlined text-[20px] text-secondary mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-<div>
-<span class="block font-body-md text-body-md text-on-surface font-semibold">BOM available</span>
-<span class="block font-body-sm text-body-sm text-on-surface-variant">Materials verified in ERP.</span>
-</div>
-</li>
-<li class="flex items-start gap-3 border-l-2 border-outline-variant pl-2 ml-[9px]">
-<span class="material-symbols-outlined text-[20px] text-outline mt-0.5">radio_button_unchecked</span>
-<div>
-<span class="block font-body-md text-body-md text-on-surface-variant">Line selected</span>
-</div>
-</li>
-<li class="flex items-start gap-3 border-l-2 border-outline-variant pl-2 ml-[9px]">
-<span class="material-symbols-outlined text-[20px] text-outline mt-0.5">radio_button_unchecked</span>
-<div>
-<span class="block font-body-md text-body-md text-on-surface-variant">Shift selected</span>
-</div>
-</li>
-<li class="flex items-start gap-3">
-<span class="material-symbols-outlined text-[20px] text-secondary mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-<div>
-<span class="block font-body-md text-body-md text-on-surface font-semibold">Operator assigned</span>
-</div>
-</li>
-<li class="flex items-start gap-3">
-<span class="material-symbols-outlined text-[20px] text-secondary mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-<div>
-<span class="block font-body-md text-body-md text-on-surface font-semibold">Stages configured</span>
-</div>
-</li>
-<li class="flex items-start gap-3">
-<span class="material-symbols-outlined text-[20px] text-secondary mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-<div>
-<span class="block font-body-md text-body-md text-on-surface font-semibold">Control points</span>
-</div>
-</li>
-</ul>
-</div>
-<div class="p-4 border-t border-outline-variant bg-surface-container-low">
-<div class="bg-error-container/30 text-error px-3 py-2 rounded-lg font-body-sm text-body-sm border border-error-container flex items-center gap-2">
-<span class="material-symbols-outlined text-[16px]">warning</span>
-                             Resolve pending validations to release.
-                        </div>
-</div>
-</div>
-</div>
+
+<script>
+(function() {
+    let workOrdersList = [];
+    let activeWO = null;
+
+    // Load work orders database from localStorage
+    function loadWorkOrders() {
+        const localData = localStorage.getItem('workOrdersList');
+        if (localData) {
+            try {
+                workOrdersList = JSON.parse(localData);
+            } catch(e) {}
+        }
+    }
+
+    function togglePlanningDropdown() {
+        const container = document.getElementById('planning-wo-dropdown-container');
+        if (container) {
+            container.classList.toggle('hidden');
+            if (!container.classList.contains('hidden')) {
+                const searchInput = document.getElementById('planning-wo-dropdown-search');
+                if (searchInput) {
+                    searchInput.value = '';
+                    searchInput.focus();
+                }
+                renderPlanningDropdown('');
+            }
+        }
+    }
+
+    // Close dropdown on click outside
+    document.addEventListener('click', function(event) {
+        const container = document.getElementById('planning-wo-dropdown-container');
+        const trigger = document.getElementById('planning-wo-dropdown-trigger');
+        if (container && trigger && !container.classList.contains('hidden')) {
+            if (!trigger.contains(event.target) && !container.contains(event.target)) {
+                container.classList.add('hidden');
+            }
+        }
+    });
+
+    function filterPlanningDropdown(val) {
+        renderPlanningDropdown(val);
+    }
+
+    function renderPlanningDropdown(filterText) {
+        const list = document.getElementById('planning-wo-dropdown-list');
+        if (!list) return;
+        list.innerHTML = '';
+
+        const q = filterText.toLowerCase().trim();
+        const filtered = workOrdersList.filter(w => {
+            return w.woNumber.toLowerCase().includes(q) || 
+                   w.productName.toLowerCase().includes(q) ||
+                   w.partNumber.toLowerCase().includes(q);
+        });
+
+        if (filtered.length === 0) {
+            const emptyItem = document.createElement('div');
+            emptyItem.className = 'px-3 py-2 text-xs text-slate-400 font-semibold';
+            emptyItem.textContent = 'No work orders found';
+            list.appendChild(emptyItem);
+            return;
+        }
+
+        filtered.forEach(w => {
+            const item = document.createElement('div');
+            item.className = 'px-3 py-2 text-xs text-slate-700 hover:bg-slate-50 font-semibold cursor-pointer border-b border-slate-100 last:border-0 transition-colors';
+            item.innerHTML = `
+                <div class="font-bold text-slate-800">${w.woNumber}</div>
+                <div class="text-[10px] text-slate-500 truncate">${w.productName}</div>
+            `;
+            item.onclick = () => {
+                selectPlanningWO(w.woNumber);
+                const container = document.getElementById('planning-wo-dropdown-container');
+                if (container) container.classList.add('hidden');
+            };
+            list.appendChild(item);
+        });
+    }
+
+    // Set active work order and render its details
+    function selectPlanningWO(woNumber) {
+        activeWO = workOrdersList.find(w => w.woNumber === woNumber) || workOrdersList[0];
+        if (!activeWO) return;
+
+        // Update Summary details
+        const selectedText = document.getElementById('planning-wo-selected-text');
+        if (selectedText) {
+            selectedText.textContent = activeWO.woNumber;
+        }
+        document.getElementById('wo-summary-id').textContent = activeWO.woNumber;
+        document.getElementById('wo-summary-name').textContent = activeWO.productName;
+        document.getElementById('wo-summary-part').textContent = activeWO.partNumber;
+        document.getElementById('wo-summary-qty').textContent = `${activeWO.targetQty.toLocaleString()} units`;
+
+        // Update Form fields
+        document.getElementById('planning-line-select').value = activeWO.line.includes('Line 1') ? 'Line 1 (Faridabad Brake Hose Assembly)' :
+                                                                 activeWO.line.includes('Line 2') ? 'Line 2 (Faridabad Brake Tube Assembly)' :
+                                                                 activeWO.line.includes('Line 3') ? 'Line 3 (Specialty Jigs Assembly)' : '';
+        document.getElementById('planning-priority-select').value = activeWO.priority === 'High' ? 'High' : 'Normal';
+        document.getElementById('planning-shift-select').value = activeWO.shift || 'Shift A';
+
+        // Update Operator Badges
+        renderOperatorBadges();
+
+        // Validate and update checklist
+        validatePlanningForm();
+    }
+
+    function getOperatorsArray() {
+        if (!activeWO || !activeWO.operator || activeWO.operator === 'Unassigned') return [];
+        return activeWO.operator.split(',').map(s => s.trim()).filter(Boolean);
+    }
+
+    function renderOperatorBadges() {
+        const badgesContainer = document.getElementById('planning-operator-badges');
+        if (!badgesContainer) return;
+        badgesContainer.innerHTML = '';
+
+        const ops = getOperatorsArray();
+        if (ops.length === 0) {
+            badgesContainer.innerHTML = '<span class="text-xs text-slate-400 font-semibold italic">No operators assigned</span>';
+            return;
+        }
+
+        ops.forEach(op => {
+            const badge = document.createElement('span');
+            badge.className = 'bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-body-sm text-body-sm flex items-center gap-1 border border-secondary-fixed font-semibold select-none';
+            badge.innerHTML = `
+                ${op}
+                <span class="material-symbols-outlined text-[14px] cursor-pointer hover:text-error ml-1" onclick="removeOperator('${op}')">close</span>
+            `;
+            badgesContainer.appendChild(badge);
+        });
+    }
+
+    function populateOperatorsDropdown() {
+        const select = document.getElementById('planning-operator-select');
+        if (!select) return;
+        select.innerHTML = '';
+        
+        // List of realistic Indian operators matching users.json
+        const operators = [
+            "Amit Sharma",
+            "Sandeep Singh",
+            "Ramesh Kumar",
+            "Vijay Yadav",
+            "Rahul Sen",
+            "Sunita Sharma",
+            "Arjun Kapoor",
+            "Deepak Gupta"
+        ];
+        
+        operators.forEach(op => {
+            const opt = document.createElement('option');
+            opt.value = op;
+            opt.textContent = op;
+            select.appendChild(opt);
+        });
+    }
+
+    function assignOperator() {
+        const select = document.getElementById('planning-operator-select');
+        if (!select || !activeWO) return;
+        const newOp = select.value;
+        let ops = getOperatorsArray();
+        if (!ops.includes(newOp)) {
+            ops.push(newOp);
+        }
+        activeWO.operator = ops.join(', ');
+        renderOperatorBadges();
+        validatePlanningForm();
+        saveActiveWO();
+    }
+
+    function removeOperator(opName) {
+        if (!activeWO) return;
+        let ops = getOperatorsArray();
+        ops = ops.filter(o => o !== opName);
+        activeWO.operator = ops.length > 0 ? ops.join(', ') : 'Unassigned';
+        renderOperatorBadges();
+        validatePlanningForm();
+        saveActiveWO();
+    }
+
+    function validatePlanningForm() {
+        if (!activeWO) return;
+
+        const lineVal = document.getElementById('planning-line-select').value;
+        const shiftVal = document.getElementById('planning-shift-select').value;
+        const hasOperator = activeWO.operator && activeWO.operator !== 'Unassigned';
+
+        const checks = {
+            template: { ok: true, label: "Template mapped", desc: `Card #${activeWO.woNumber} structure confirmed.` },
+            bom: { ok: true, label: "BOM available", desc: "Materials verified in SAP ERP." },
+            line: { ok: !!lineVal, label: "Line selected", desc: lineVal ? `Assigned: ${lineVal.split(' (')[0]}` : "Line selection pending." },
+            shift: { ok: !!shiftVal, label: "Shift selected", desc: shiftVal ? `Assigned: ${shiftVal}` : "Shift selection pending." },
+            operator: { ok: hasOperator, label: "Operator assigned", desc: hasOperator ? `Assigned: ${activeWO.operator}` : "No operator assigned." },
+            stages: { ok: true, label: "Stages configured", desc: `${activeWO.steps.length} checklist stages verified.` },
+            control: { ok: true, label: "Control points mapping", desc: "Quality inspection points bound." }
+        };
+
+        let okCount = 0;
+        const listContainer = document.getElementById('validation-list-items');
+        if (listContainer) {
+            listContainer.innerHTML = '';
+            Object.keys(checks).forEach(k => {
+                const c = checks[k];
+                if (c.ok) okCount++;
+
+                const li = document.createElement('li');
+                li.className = 'flex items-start gap-3 select-none';
+                if (!c.ok) {
+                    li.className += ' border-l-2 border-slate-200 pl-2 ml-[9px]';
+                }
+
+                const icon = c.ok ? 'check_circle' : 'radio_button_unchecked';
+                const iconColor = c.ok ? 'text-emerald-600' : 'text-slate-400';
+                const titleClass = c.ok ? 'text-slate-800 font-bold text-sm' : 'text-slate-500 font-bold text-sm';
+                const descHtml = c.desc ? `<span class="block font-body-sm text-body-sm text-slate-400 font-semibold mt-0.5">${c.desc}</span>` : '';
+
+                li.innerHTML = `
+                    <span class="material-symbols-outlined text-[20px] ${iconColor} mt-0.5" ${c.ok ? 'style="font-variation-settings: \'FILL\' 1;"' : ''}>${icon}</span>
+                    <div>
+                        <span class="block font-body-md text-body-md ${titleClass}">${c.label}</span>
+                        ${descHtml}
+                    </div>
+                `;
+                listContainer.appendChild(li);
+            });
+        }
+
+        // Update score badge
+        const scoreBadge = document.getElementById('validation-score-badge');
+        if (scoreBadge) {
+            scoreBadge.textContent = `${okCount}/7 OK`;
+        }
+
+        // Enable / Disable button and show warning
+        const releaseBtn = document.getElementById('planningReleaseBtn');
+        const warningBox = document.getElementById('validation-warning-box');
+
+        if (okCount === 7) {
+            if (releaseBtn) releaseBtn.disabled = false;
+            if (warningBox) {
+                warningBox.innerHTML = `
+                    <div class="bg-emerald-50 text-emerald-700 px-3 py-2 rounded-lg font-body-sm text-body-sm border border-emerald-200 flex items-center gap-2 font-semibold">
+                        <span class="material-symbols-outlined text-[16px]">check_circle</span> Ready to dispatch.
+                    </div>
+                `;
+            }
+        } else {
+            if (releaseBtn) releaseBtn.disabled = true;
+            if (warningBox) {
+                warningBox.innerHTML = `
+                    <div class="bg-error-container/30 text-error px-3 py-2 rounded-lg font-body-sm text-body-sm border border-error-container flex items-center gap-2 font-semibold">
+                        <span class="material-symbols-outlined text-[16px]">warning</span> Resolve pending validations to release.
+                    </div>
+                `;
+            }
+        }
+    }
+
+    function showPlanningToast(msg) {
+        const toast = document.getElementById('planningToast');
+        const msgEl = document.getElementById('planningToastMessage');
+        if (toast && msgEl) {
+            msgEl.textContent = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    }
+
+    function saveActiveWO() {
+        if (!activeWO) return;
+        
+        // Read form values and update activeWO
+        const lineVal = document.getElementById('planning-line-select').value;
+        const priorityVal = document.getElementById('planning-priority-select').value;
+        const shiftVal = document.getElementById('planning-shift-select').value;
+
+        activeWO.line = lineVal;
+        activeWO.priority = priorityVal;
+        activeWO.shift = shiftVal;
+
+        // Save back to list and localStorage
+        const idx = workOrdersList.findIndex(w => w.woNumber === activeWO.woNumber);
+        if (idx > -1) {
+            workOrdersList[idx] = activeWO;
+            localStorage.setItem('workOrdersList', JSON.stringify(workOrdersList));
+        }
+
+        showPlanningToast(`Plan for ${activeWO.woNumber} saved successfully.`);
+    }
+
+    // Bind window functions
+    window.selectPlanningWO = selectPlanningWO;
+    window.assignOperator = assignOperator;
+    window.removeOperator = removeOperator;
+    window.saveActiveWO = saveActiveWO;
+    window.validatePlanningForm = validatePlanningForm;
+    window.togglePlanningDropdown = togglePlanningDropdown;
+    window.filterPlanningDropdown = filterPlanningDropdown;
+
+    // Run on startup
+    loadWorkOrders();
+    populateOperatorsDropdown();
+    // Default select first waiting or first in list
+    const firstWaiting = workOrdersList.find(w => w.status === 'Waiting' || w.status === 'Held') || workOrdersList[0];
+    if (firstWaiting) {
+        selectPlanningWO(firstWaiting.woNumber);
+    }
+})();
+</script>
+<div id="planningToast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 z-50 font-semibold text-sm">
+  <span class="material-symbols-outlined text-emerald-400">check_circle</span>
+  <span id="planningToastMessage">Plan saved successfully.</span>
 </div>
 </main>
-
-
 </body></html>
