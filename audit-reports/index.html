@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
 <!-- SPA Layout Redirect Wrapper -->
 <script>
@@ -9,31 +9,470 @@
     window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
   }
 </script>
-  <meta charset="UTF-8">
-  <title>Audit Reports - Nichirin Control Card Digitization</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Audit Reports - Control Card Digitization</title>
+
+<!-- Tailwind CSS Engine -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Extended Theme Configuration -->
+<script src="../assets/js/tailwind-config.js"></script>
+<!-- Shared Stylesheets -->
+<link href="../assets/css/custom.css" rel="stylesheet"/>
+
+<!-- Google Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+  }
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+</style>
 </head>
-<body class="bg-surface-container-low">
-  
-
-  <main class="flex-grow pt-[88px] px-container-padding pb-container-padding bg-surface-container-low min-h-screen">
-    <div class="flex justify-between items-end mb-5">
-      <div>
-        <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Audit Reports</h2>
-        <p class="font-body-md text-body-md text-on-surface-variant">Audit and review control card modification logs, operator overrides, and supervisor authorizations.</p>
-      </div>
+<body class="bg-surface text-on-surface h-screen overflow-hidden flex font-body-md">
+<!-- Main Content Area -->
+<div class="flex-grow pt-1 px-6 pb-6 flex flex-col gap-6">
+  <!-- Header Section -->
+  <div class="flex justify-between items-end mb-5">
+    <div>
+      <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Audit Reports</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant">Audit and review control card modification logs, operator overrides, and supervisor authorizations.</p>
     </div>
-
-    <!-- Main Content Card -->
-    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 shadow-sm min-h-[400px] flex flex-col items-center justify-center text-center">
-      <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-        <span class="material-symbols-outlined text-[36px] text-primary">menu_book</span>
-      </div>
-      <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Audit Reports Console</h3>
-      <p class="font-body-md text-body-md text-on-surface-variant max-w-md mb-6">This section is currently under active master configuration. The data sync links and layout definitions are active in the sidebar navigation.</p>
-      <button class="bg-primary text-on-primary px-6 py-2.5 rounded-lg font-headline-sm text-headline-sm hover:opacity-90 transition-opacity">
-        Search Audit Trail
+    <div class="flex gap-2">
+      <button onclick="exportAuditTrail()" class="px-4 py-2 border border-primary text-primary hover:bg-red-50/50 font-label-bold text-label-bold rounded-lg transition-colors flex items-center gap-2 text-sm font-semibold shadow-sm bg-white cursor-pointer">
+        <span class="material-symbols-outlined text-[18px]">download</span>
+        Export Audit CSV
+      </button>
+      <button onclick="refreshAuditLogs()" class="px-4 py-2 bg-primary text-white font-label-bold text-label-bold rounded-lg hover:bg-primary/95 transition-colors flex items-center gap-2 text-sm font-semibold shadow-sm cursor-pointer">
+        <span class="material-symbols-outlined text-[18px]">refresh</span>
+        Refresh Logs
       </button>
     </div>
-  </main>
+  </div>
+
+  <!-- Filters Row -->
+  <div class="bg-white border border-outline-variant/30 rounded-xl shadow-sm p-4 flex flex-wrap gap-4 items-center justify-between">
+    <div class="flex flex-wrap gap-4 items-center">
+      <div class="flex flex-col">
+        <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Search Audit Trail</label>
+        <div class="relative">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
+          <input id="audit-search" oninput="filterAuditLogs()" class="pl-9 pr-3 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-[240px] h-9" placeholder="Search target, operator, description..." type="text"/>
+        </div>
+      </div>
+      <div class="flex flex-col">
+        <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Category</label>
+        <div class="relative">
+          <select id="audit-filter-category" onchange="filterAuditLogs()" class="pl-3 pr-8 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-[200px] h-9 appearance-none bg-none font-semibold">
+            <option value="All">All Categories</option>
+            <option value="Configuration Change">Configuration Change</option>
+            <option value="Operator Override">Operator Override</option>
+            <option value="Supervisor Release">Supervisor Release</option>
+            <option value="User Management">User Management</option>
+            <option value="System">System</option>
+          </select>
+          <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+        </div>
+      </div>
+      <div class="flex flex-col">
+        <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Device / Source IP</label>
+        <div class="relative">
+          <select id="audit-filter-device" onchange="filterAuditLogs()" class="pl-3 pr-8 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-[180px] h-9 appearance-none bg-none font-semibold">
+            <option value="All">All Sources</option>
+            <option value="Admin PC">Admin PC</option>
+            <option value="Tablet">Tablets</option>
+            <option value="MES Server">MES Server</option>
+          </select>
+          <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+        </div>
+      </div>
+    </div>
+    <div class="font-body-sm text-body-sm text-on-surface-variant font-semibold" id="audit-match-count">
+      Showing -- records
+    </div>
+  </div>
+
+  <!-- Audit Trail Console Table Card -->
+  <div class="bg-white border border-outline-variant/30 rounded-xl flex-grow overflow-hidden flex flex-col shadow-sm">
+    <div class="overflow-y-auto custom-scrollbar flex-grow">
+      <table class="w-full text-left border-collapse whitespace-nowrap">
+        <thead class="sticky top-0 bg-slate-50 border-b border-outline-variant/30 font-data-tabular text-data-tabular text-on-surface-variant z-10">
+          <tr>
+            <th class="p-3 font-semibold uppercase text-[11px] tracking-wider w-12 text-center">#</th>
+            <th class="p-3 font-semibold uppercase text-[11px] tracking-wider w-40">Timestamp</th>
+            <th class="p-3 font-semibold uppercase text-[11px] tracking-wider w-44">User / Initiator</th>
+            <th class="p-3 font-semibold uppercase text-[11px] tracking-wider w-44 text-center">Category</th>
+            <th class="p-3 font-semibold uppercase text-[11px] tracking-wider">Event Description</th>
+            <th class="p-3 font-semibold uppercase text-[11px] tracking-wider w-48">Audit Target</th>
+            <th class="p-3 font-semibold uppercase text-[11px] tracking-wider w-36">Device Source</th>
+            <th class="p-3 font-semibold uppercase text-[11px] tracking-wider w-20 text-right">Details</th>
+          </tr>
+        </thead>
+        <tbody id="audit-reports-tbody" class="divide-y divide-outline-variant/20 font-data-tabular text-data-tabular">
+          <!-- Populated dynamically -->
+        </tbody>
+      </table>
+    </div>
+    <!-- Pagination -->
+    <div class="p-4 flex items-center justify-between border-t border-outline-variant/30 bg-slate-50">
+      <span id="audit-pagination-text" class="font-body-sm text-body-sm text-on-surface-variant">Showing -- to -- of -- logs</span>
+      <div class="flex gap-1">
+        <button class="p-1 border border-outline-variant/30 rounded bg-white text-on-surface-variant hover:bg-slate-50 disabled:opacity-50" disabled>
+          <span class="material-symbols-outlined text-[18px]">chevron_left</span>
+        </button>
+        <button class="w-7 h-7 rounded bg-primary text-white text-xs font-semibold flex items-center justify-center">1</button>
+        <button class="p-1 border border-outline-variant/30 rounded bg-white text-on-surface-variant hover:bg-slate-50 disabled:opacity-50" disabled>
+          <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Log Details Overlay Modal -->
+<div id="audit-detail-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-[100] hidden">
+  <div class="bg-white border border-outline-variant/30 rounded-xl shadow-xl w-full max-w-lg p-6 animate-in fade-in zoom-in-95 duration-200">
+    <div class="flex justify-between items-start border-b border-outline-variant/20 pb-3 mb-4">
+      <div>
+        <h3 class="font-headline-sm text-headline-sm text-primary font-semibold">Audit Event Log Detail</h3>
+        <p id="detail-log-id" class="text-[10px] text-slate-500 font-mono mt-0.5">SIGNATURE: --</p>
+      </div>
+      <button onclick="closeAuditModal()" class="p-1 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-600 transition-colors">
+        <span class="material-symbols-outlined text-[20px]">close</span>
+      </button>
+    </div>
+    <div class="space-y-4 text-xs text-slate-700">
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5">Timestamp</span>
+          <span id="detail-time" class="font-medium text-slate-800">--</span>
+        </div>
+        <div>
+          <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5">Initiator User</span>
+          <span id="detail-user" class="font-medium text-slate-800">--</span>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5">Event Category</span>
+          <span id="detail-category" class="font-medium text-slate-800">--</span>
+        </div>
+        <div>
+          <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5">Audit Target</span>
+          <span id="detail-target" class="font-medium text-slate-800 font-semibold">--</span>
+        </div>
+      </div>
+      <div>
+        <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5">Full Log Message</span>
+        <div id="detail-description" class="p-3 bg-slate-50 rounded-lg border border-slate-100 font-medium text-slate-800 leading-relaxed">
+          --
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5">Device Source IP</span>
+          <span id="detail-ip" class="font-mono text-slate-800">--</span>
+        </div>
+        <div>
+          <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5">Authorization Code</span>
+          <span id="detail-auth" class="font-mono text-slate-800 font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">--</span>
+        </div>
+      </div>
+      <div id="detail-diff-box" class="hidden">
+        <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5">Parameter Payload Changes</span>
+        <div class="grid grid-cols-2 gap-2 p-3 bg-slate-50 border border-slate-100 rounded-lg font-mono text-[10px]">
+          <div>
+            <span class="text-rose-600 font-bold block mb-1">BEFORE VALUE</span>
+            <pre id="detail-before" class="whitespace-pre-wrap">--</pre>
+          </div>
+          <div>
+            <span class="text-emerald-600 font-bold block mb-1">AFTER VALUE</span>
+            <pre id="detail-after" class="whitespace-pre-wrap">--</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-6 pt-3 border-t border-outline-variant/20 flex justify-end">
+      <button onclick="closeAuditModal()" class="px-4 py-2 bg-primary text-white font-body-sm text-body-sm font-semibold rounded-lg hover:bg-primary/95 shadow-sm transition-colors cursor-pointer">
+        Acknowledge Entry
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+      let auditLogs = [];
+
+      const initialAuditLogs = [
+          {
+              id: "AUD-88390-2A",
+              timestamp: "2026-07-13 16:30:15",
+              user: "Vikram Malhotra (SITE ADMIN)",
+              category: "Configuration Change",
+              description: "Modified Crimp Pressure spec from 6.0-7.0 MPa to 6.2-6.8 MPa on Control Card Template BPD-F584A",
+              target: "Template: BPD-F584A",
+              ip: "192.168.1.10 (Admin PC)",
+              auth: "ADMIN-AUTH-77",
+              before: "crimp_pressure: 6.0 - 7.0 MPa\ntarget_ok_range: standard",
+              after: "crimp_pressure: 6.2 - 6.8 MPa\ntarget_ok_range: tight-spec"
+          },
+          {
+              id: "AUD-22940-9F",
+              timestamp: "2026-07-13 15:10:45",
+              user: "Amit Sharma (SUPERVISOR)",
+              category: "Operator Override",
+              description: "Authorized uncertified operator Sanjay Singh for Hose Cutting 1 & 2 process step on WO-2026-9042",
+              target: "WO-2026-9042",
+              ip: "192.168.2.14 (Tablet #2)",
+              auth: "SUPV-OVER-91",
+              before: "operator_cert_level: L2 (Required)\noperator_assigned_cert: None",
+              after: "operator_cert_level: L2 (Bypassed)\nauth_by: Amit Sharma"
+          },
+          {
+              id: "AUD-11930-8D",
+              timestamp: "2026-07-13 14:02:18",
+              user: "Amit Sharma (SUPERVISOR)",
+              category: "Supervisor Release",
+              description: "Released quality control card hold on WO-2026-9041 after physical inspection clearance",
+              target: "WO-2026-9041",
+              ip: "192.168.2.14 (Tablet #2)",
+              auth: "SUPV-RELS-03",
+              before: "card_status: HOLD (QC Limit Exceeded)\nconsecutive_ng_count: 3",
+              after: "card_status: RUNNING (Released)\nconsecutive_ng_count: 0"
+          },
+          {
+              id: "AUD-66290-4C",
+              timestamp: "2026-07-13 11:24:50",
+              user: "Vikram Malhotra (SITE ADMIN)",
+              category: "User Management",
+              description: "Created new operator profile: Rohit Verma (Skill Cert: L2 - Semi-Skilled)",
+              target: "User: Rohit Verma",
+              ip: "192.168.1.10 (Admin PC)",
+              auth: "USER-MGMT-08",
+              before: "user_status: Null\nrole_certs: []",
+              after: "user_status: Active\nrole_certs: ['SKILL-CUT-01', 'SKILL-SHRNK-03']"
+          },
+          {
+              id: "AUD-55243-7A",
+              timestamp: "2026-07-13 09:15:30",
+              user: "Sandeep Singh (LINE LEADER)",
+              category: "Operator Override",
+              description: "Bypassed mandatory photo attachment validation for protector sleeve shrink check due to camera hardware fault",
+              target: "WO-2026-9043",
+              ip: "192.168.2.15 (Tablet #3)",
+              auth: "LDR-OVER-12",
+              before: "sleeve_photo: REQUIRED\nphoto_data: Null",
+              after: "sleeve_photo: BYPASSED\nremarks: Camera hardware failure override"
+          },
+          {
+              id: "AUD-77281-9B",
+              timestamp: "2026-07-12 17:40:02",
+              user: "Vikram Malhotra (SITE ADMIN)",
+              category: "Configuration Change",
+              description: "Updated Certified Skill checklists and training limits for CNC Pipe Bending certification",
+              target: "Skill Registry",
+              ip: "192.168.1.10 (Admin PC)",
+              auth: "SKILL-MOD-44",
+              before: "min_cert_level: L1 - Trainee",
+              after: "min_cert_level: L2 - Semi-Skilled"
+          },
+          {
+              id: "AUD-33928-1E",
+              timestamp: "2026-07-12 14:55:12",
+              user: "Amit Sharma (SUPERVISOR)",
+              category: "Supervisor Release",
+              description: "Placed WO-2026-9042 on Hold due to tool wear indication on Fitting Crimper crimp jaw #3",
+              target: "WO-2026-9042",
+              ip: "192.168.2.14 (Tablet #2)",
+              auth: "SUPV-HOLD-22",
+              before: "card_status: RUNNING\ntool_wear_index: 87%",
+              after: "card_status: HOLD\nmaintenance_ticket: MNT-99810"
+          },
+          {
+              id: "AUD-99120-00",
+              timestamp: "2026-07-12 08:30:00",
+              user: "System Auto-Sync",
+              category: "System",
+              description: "Successfully synchronized 5 Work Orders and BOM targets from SAP ECC Gateway ERP",
+              target: "SAP Sync Gateway",
+              ip: "10.45.12.201 (MES Server)",
+              auth: "SYS-AUTO-00",
+              before: "sap_sync_status: idle\nlast_sync_timestamp: 2026-07-11 08:30:00",
+              after: "sap_sync_status: completed\nsync_workorders_downloaded: 5"
+          }
+      ];
+
+      function initAuditTrail() {
+          const localData = localStorage.getItem('auditLogs');
+          if (localData) {
+              try {
+                  auditLogs = JSON.parse(localData);
+              } catch(e) {}
+          }
+          if (!auditLogs || auditLogs.length === 0) {
+              auditLogs = initialAuditLogs;
+              localStorage.setItem('auditLogs', JSON.stringify(auditLogs));
+          }
+
+          filterAuditLogs();
+      }
+
+      function filterAuditLogs() {
+          const q = document.getElementById('audit-search').value.toLowerCase().trim();
+          const categoryVal = document.getElementById('audit-filter-category').value;
+          const deviceVal = document.getElementById('audit-filter-device').value;
+
+          const filtered = auditLogs.filter(log => {
+              // Search text
+              if (q) {
+                  const match = log.user.toLowerCase().includes(q) ||
+                                log.target.toLowerCase().includes(q) ||
+                                log.description.toLowerCase().includes(q) ||
+                                log.id.toLowerCase().includes(q);
+                  if (!match) return false;
+              }
+
+              // Category filter
+              if (categoryVal !== 'All' && log.category !== categoryVal) {
+                  return false;
+              }
+
+              // Device / Source filter
+              if (deviceVal !== 'All') {
+                  const ipLower = log.ip.toLowerCase();
+                  if (deviceVal === 'Admin PC' && !ipLower.includes('admin pc')) return false;
+                  if (deviceVal === 'Tablet' && !ipLower.includes('tablet')) return false;
+                  if (deviceVal === 'MES Server' && !ipLower.includes('mes server')) return false;
+              }
+
+              return true;
+          });
+
+          renderAuditLogsTable(filtered);
+      }
+
+      function renderAuditLogsTable(list) {
+          const tbody = document.getElementById('audit-reports-tbody');
+          if (!tbody) return;
+          tbody.innerHTML = '';
+
+          // Match count
+          document.getElementById('audit-match-count').textContent = `Showing ${list.length} records`;
+
+          if (list.length === 0) {
+              tbody.innerHTML = `
+                  <tr>
+                      <td colspan="8" class="p-6 text-center text-slate-400 font-semibold">No audit logs match your search filters</td>
+                  </tr>
+              `;
+              document.getElementById('audit-pagination-text').textContent = 'Showing 0 to 0 of 0 logs';
+              return;
+          }
+
+          list.forEach((log, index) => {
+              const row = document.createElement('tr');
+              row.className = 'hover:bg-slate-50/50 transition-colors cursor-pointer';
+              row.onclick = (e) => {
+                  // Don't open if clicked button
+                  if (e.target.closest('button') || e.target.closest('a')) return;
+                  openAuditModal(log);
+              };
+
+              // Category badge colors
+              let badgeClass = 'bg-slate-50 text-slate-700 border-slate-200';
+              if (log.category === 'Configuration Change') badgeClass = 'bg-blue-50 text-blue-700 border-blue-200';
+              else if (log.category === 'Operator Override') badgeClass = 'bg-amber-50 text-amber-700 border-amber-200';
+              else if (log.category === 'Supervisor Release') badgeClass = 'bg-emerald-50 text-emerald-700 border-emerald-200';
+              else if (log.category === 'User Management') badgeClass = 'bg-purple-50 text-purple-700 border-purple-200';
+
+              row.innerHTML = `
+                  <td class="p-3 text-center text-on-surface-variant font-medium">${index + 1}</td>
+                  <td class="p-3 text-on-surface-variant font-semibold">${log.timestamp}</td>
+                  <td class="p-3 text-slate-900 font-bold">${log.user}</td>
+                  <td class="p-3 text-center">
+                    <span class="inline-flex items-center px-2 py-0.5 border rounded text-[10px] font-bold ${badgeClass}">${log.category}</span>
+                  </td>
+                  <td class="p-3 text-slate-700 font-medium truncate max-w-[280px]" title="${log.description}">${log.description}</td>
+                  <td class="p-3 text-slate-800 font-semibold">${log.target}</td>
+                  <td class="p-3 text-slate-500 font-semibold">${log.ip}</td>
+                  <td class="p-3 text-right">
+                    <button onclick="event.stopPropagation(); openAuditModalByObj('${log.id}')" class="p-1 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-primary transition-colors cursor-pointer" title="Inspect Payload">
+                      <span class="material-symbols-outlined text-[18px]">search_insights</span>
+                    </button>
+                  </td>
+              `;
+              tbody.appendChild(row);
+          });
+
+          document.getElementById('audit-pagination-text').textContent = `Showing 1 to ${list.length} of ${list.length} logs`;
+      }
+
+      function openAuditModal(log) {
+          document.getElementById('detail-log-id').textContent = `SIGNATURE: ${log.id}`;
+          document.getElementById('detail-time').textContent = log.timestamp;
+          document.getElementById('detail-user').textContent = log.user;
+          document.getElementById('detail-category').textContent = log.category;
+          document.getElementById('detail-target').textContent = log.target;
+          document.getElementById('detail-description').textContent = log.description;
+          document.getElementById('detail-ip').textContent = log.ip;
+          document.getElementById('detail-auth').textContent = log.auth || 'N/A';
+
+          const diffBox = document.getElementById('detail-diff-box');
+          if (log.before && log.after) {
+              document.getElementById('detail-before').textContent = log.before;
+              document.getElementById('detail-after').textContent = log.after;
+              diffBox.classList.remove('hidden');
+          } else {
+              diffBox.classList.add('hidden');
+          }
+
+          document.getElementById('audit-detail-modal').classList.remove('hidden');
+      }
+
+      function openAuditModalByObj(id) {
+          const log = auditLogs.find(l => l.id === id);
+          if (log) openAuditModal(log);
+      }
+
+      function closeAuditModal() {
+          document.getElementById('audit-detail-modal').classList.add('hidden');
+      }
+
+      function refreshAuditLogs() {
+          // Fake refresh with a nice visual spinner/loading or just fresh read
+          initAuditTrail();
+      }
+
+      function exportAuditTrail() {
+          alert("Audit Trail CSV report generated and downloaded successfully (8 audit lines exported).");
+      }
+
+      // Bind functions to window
+      window.filterAuditLogs = filterAuditLogs;
+      window.openAuditModalByObj = openAuditModalByObj;
+      window.closeAuditModal = closeAuditModal;
+      window.refreshAuditLogs = refreshAuditLogs;
+      window.exportAuditTrail = exportAuditTrail;
+
+      initAuditTrail();
+  })();
+</script>
 </body>
 </html>
