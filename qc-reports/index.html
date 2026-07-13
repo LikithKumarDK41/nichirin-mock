@@ -337,13 +337,13 @@
           <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Date Range</label>
           <div class="relative">
             <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">calendar_month</span>
-            <input id="filter-qc-date" class="pl-9 pr-3 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-primary focus:border-primary focus:ring-1 focus:ring-primary w-[220px] h-9" type="text" value="2026.07.10 - 2026.07.13"/>
+            <input id="filter-qc-date" class="pl-9 pr-3 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-[220px] h-9 font-semibold" type="text" value="2026.07.10 - 2026.07.13"/>
           </div>
         </div>
         <div class="flex flex-col">
           <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Production Line</label>
           <div class="relative">
-            <select id="filter-qc-line" onchange="filterQCReportsTable()" class="pl-3 pr-8 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-primary focus:border-primary focus:ring-1 focus:ring-primary w-[200px] h-9 appearance-none bg-none font-semibold">
+            <select id="filter-qc-line" onchange="filterQCReportsTable()" class="pl-3 pr-8 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-[200px] h-9 appearance-none bg-none font-semibold">
               <option value="All">All Lines</option>
               <option value="Line 1 (Faridabad Brake Hose Assembly)">Line 1 (Hose)</option>
               <option value="Line 2 (Faridabad Brake Tube Assembly)">Line 2 (Tube)</option>
@@ -354,12 +354,12 @@
         </div>
         <div class="flex flex-col">
           <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Product Code</label>
-          <input id="filter-qc-code" oninput="filterQCReportsTable()" class="px-3 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-primary focus:border-primary focus:ring-1 focus:ring-primary w-[160px] h-9" placeholder="Search code..." type="text"/>
+          <input id="filter-qc-code" oninput="filterQCReportsTable()" class="px-3 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-[160px] h-9 font-semibold" placeholder="Search code..." type="text"/>
         </div>
         <div class="flex flex-col">
           <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">QC Status</label>
           <div class="relative">
-            <select id="filter-qc-status" onchange="filterQCReportsTable()" class="pl-3 pr-8 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-primary focus:border-primary focus:ring-1 focus:ring-primary w-[140px] h-9 appearance-none bg-none font-semibold">
+            <select id="filter-qc-status" onchange="filterQCReportsTable()" class="pl-3 pr-8 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-[140px] h-9 appearance-none bg-none font-semibold">
               <option value="All">All Status</option>
               <option value="OK">OK</option>
               <option value="NG">NG</option>
