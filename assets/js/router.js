@@ -119,10 +119,6 @@
           <div class="space-y-1 pt-2">
             <p class="text-[11px] font-bold text-slate-500 uppercase tracking-widest px-4 pt-5 pb-2 select-none">Master Configuration</p>
             
-            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}workflow-configuration/index.html" data-route="workflow-configuration">
-              <span class="material-symbols-outlined text-[20px]">schema</span>
-              <span>Workflow Configuration</span>
-            </a>
 
             <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}user-management/index.html" data-route="user-management">
               <span class="material-symbols-outlined text-[20px]">person</span>
