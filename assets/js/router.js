@@ -9,7 +9,7 @@
     'standard-tolerance-master', 'method-master', 'qc-rules', 'qr-label-management',
     'traceability-search', 'production-reports', 'qc-reports', 'breakdown-reports',
     'sap-sync-reports', 'audit-reports', 'user-management', 'role-management', 
-    'skill-management', 'machine-management', 'device-management',
+    'skill-management', 'machine-management', 'device-management', 'shift-management',
     'csv-import', 'sap-logs', 'sap-field-mapping', 'notification-configuration',
     'system-settings', 'login-old', 'admin-prototype'
   ];
@@ -139,6 +139,12 @@
               <span class="material-symbols-outlined text-[20px]">factory</span>
               <span>Machine Management</span>
             </a>
+
+            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}shift-management/index.html" data-route="shift-management">
+              <span class="material-symbols-outlined text-[20px]">schedule</span>
+              <span>Shift Management</span>
+            </a>
+
             <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}system-settings/index.html" data-route="system-settings">
               <span class="material-symbols-outlined text-[20px]">settings</span>
               <span>System Settings</span>
