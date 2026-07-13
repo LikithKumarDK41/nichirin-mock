@@ -83,7 +83,7 @@
           <div class="space-y-3.5 text-xs">
             <div class="flex justify-between border-b border-outline-variant/20 pb-2">
               <span class="text-on-surface-variant">Active Site Location:</span>
-              <span class="font-semibold text-on-surface text-right">Japan - Nagoya Plant B</span>
+              <span id="card-site-location" class="font-semibold text-on-surface text-right">Japan - Nagoya Plant B</span>
             </div>
             <div class="flex justify-between border-b border-outline-variant/20 pb-2">
               <span class="text-on-surface-variant">Workstation / Terminal:</span>
@@ -338,6 +338,7 @@
 
         const cardName = document.getElementById('card-profile-name');
         const cardEmpid = document.getElementById('card-employee-id');
+        const cardSite = document.getElementById('card-site-location');
 
         const avatarIcon = document.getElementById('avatar-icon');
         const avatarPreview = document.getElementById('avatar-preview');
@@ -356,6 +357,9 @@
 
         cardName.textContent = profileData.name;
         cardEmpid.textContent = profileData.employeeId;
+        if (cardSite) {
+          cardSite.textContent = profileData.site;
+        }
 
         if (profileData.avatar) {
           avatarIcon.classList.add('hidden');
@@ -403,6 +407,9 @@
           localStorage.setItem('profileLang', newLang);
 
           cardName.textContent = newName;
+          if (cardSite) {
+            cardSite.textContent = newSite;
+          }
 
           // Update global header name if available
           const headerName = document.getElementById('header-profile-name');

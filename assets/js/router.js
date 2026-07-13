@@ -225,6 +225,33 @@
     if (profileNameEl) {
       profileNameEl.textContent = localStorage.getItem('profileName') || 'T. Nakagawa';
     }
+
+    const headerProfileBtn = document.getElementById('header-profile-btn');
+    if (headerProfileBtn) {
+      const avatarData = localStorage.getItem('profileAvatar');
+      let existingIcon = headerProfileBtn.querySelector('.material-symbols-outlined, img');
+      if (avatarData) {
+        if (existingIcon) {
+          if (existingIcon.tagName === 'IMG') {
+            existingIcon.src = avatarData;
+          } else {
+            existingIcon.remove();
+            const img = document.createElement('img');
+            img.src = avatarData;
+            img.className = 'w-8 h-8 rounded-full object-cover border border-outline-variant/30 select-none';
+            headerProfileBtn.appendChild(img);
+          }
+        }
+      } else {
+        if (existingIcon && existingIcon.tagName === 'IMG') {
+          existingIcon.remove();
+          const span = document.createElement('span');
+          span.className = 'material-symbols-outlined text-primary dark:text-red-500 text-[32px] select-none';
+          span.textContent = 'account_circle';
+          headerProfileBtn.appendChild(span);
+        }
+      }
+    }
   }
 
   // Render the structural layout wrapper
@@ -772,7 +799,7 @@
         document.head.appendChild(s);
       });
 
-      // Render static header title "Control Card Digitization System" next to hamburger button
+      // Render static header title next to hamburger button from system settings
       const mainHeaderLeft = document.querySelector('header > div:first-child');
       if (mainHeaderLeft) {
         const menuBtn = mainHeaderLeft.querySelector('.sidebar-toggle-btn');
@@ -782,7 +809,16 @@
         }
         const defaultTitle = document.createElement('span');
         defaultTitle.className = 'text-lg sm:text-xl font-black text-primary select-none tracking-tight leading-none';
-        defaultTitle.textContent = 'Control Card Digitization System';
+        
+        let sysName = 'Control Card Digitization System';
+        try {
+          const config = JSON.parse(localStorage.getItem('system_config'));
+          if (config && config.sysName) {
+            sysName = config.sysName;
+          }
+        } catch(e) {}
+        
+        defaultTitle.textContent = sysName;
         mainHeaderLeft.appendChild(defaultTitle);
       }
 

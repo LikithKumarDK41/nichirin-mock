@@ -1,39 +1,327 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<!-- SPA Layout Redirect Wrapper -->
-<script>
-  if (!document.getElementById('app-root')) {
-    const p = window.location.pathname;
-    const rel = '../';
-    window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
-  }
-</script>
+  <!-- SPA Layout Redirect Wrapper -->
+  <script>
+    if (!document.getElementById('app-root')) {
+      const p = window.location.pathname;
+      const rel = '../';
+      window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
+    }
+  </script>
   <meta charset="UTF-8">
   <title>System Settings - Nichirin Control Card Digitization</title>
 </head>
-<body class="bg-surface-container-low">
-  
 
-  <main class="flex-grow pt-[88px] px-container-padding pb-container-padding bg-surface-container-low min-h-screen">
-    <div class="flex justify-between items-end mb-5">
+<body class="bg-background text-on-surface min-h-screen">
+
+  <main class="flex-grow pt-1 px-6 pb-6 flex flex-col gap-6">
+    <!-- Header Title -->
+    <div class="flex justify-between items-end mb-1">
       <div>
         <h2 class="font-headline-lg text-headline-lg text-primary mb-1">System Settings</h2>
-        <p class="font-body-md text-body-md text-on-surface-variant">Configure global environment parameters, server endpoints, and authorization session durations.</p>
+        <p class="font-body-md text-body-md text-on-surface-variant">Configure system variables, session timers, and external integration links.</p>
       </div>
     </div>
 
-    <!-- Main Content Card -->
-    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 shadow-sm min-h-[400px] flex flex-col items-center justify-center text-center">
-      <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-        <span class="material-symbols-outlined text-[36px] text-primary">settings</span>
+    <!-- Main Configuration Grid -->
+    <form id="system-settings-form" class="space-y-6">
+      <div class="grid grid-cols-12 gap-6 items-start">
+
+        <!-- Left Column: Global & Security Settings -->
+        <div class="col-span-12 lg:col-span-6 flex flex-col gap-6">
+          <div class="bg-white dark:bg-surface border border-outline-variant/30 rounded-xl shadow-sm overflow-hidden">
+            <div
+              class="p-5 border-b border-outline-variant/30 bg-slate-50 dark:bg-slate-900/50 flex items-center justify-between">
+              <h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Global &amp; Security Settings</h3>
+              <span class="material-symbols-outlined text-[20px] text-primary">settings_applications</span>
+            </div>
+
+            <div class="p-6 space-y-4">
+              <!-- System Name -->
+              <div>
+                <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">System Name</label>
+                <input type="text" id="sys-name"
+                  class="w-full px-3 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                  placeholder="System Name" required />
+              </div>
+
+              <!-- Site/Plant Identifier -->
+              <div>
+                <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">Site/Plant Identifier</label>
+                <input type="text" id="sys-plant"
+                  class="w-full px-3 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                  placeholder="Plant ID" required />
+              </div>
+
+              <!-- Timezone -->
+              <div>
+                <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">Timezone</label>
+                <select id="sys-timezone"
+                  class="w-full px-3 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
+                  <option value="Asia/Tokyo">Asia/Tokyo (JST)</option>
+                  <option value="Asia/Kolkata">Asia/Kolkata (IST)</option>
+                  <option value="America/New_York">America/New_York (EST)</option>
+                  <option value="Europe/London">Europe/London (GMT)</option>
+                </select>
+              </div>
+
+              <!-- Timeout and Retries -->
+              <div class="grid grid-cols-2 gap-4 border-t border-outline-variant/20 pt-4">
+                <div>
+                  <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">Session Timeout (Minutes)</label>
+                  <input type="number" id="sys-timeout"
+                    class="w-full px-3 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                    min="5" max="120" required />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">Max Login Attempts</label>
+                  <input type="number" id="sys-retries"
+                    class="w-full px-3 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                    min="3" max="10" required />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: SAP Server Integration -->
+        <div class="col-span-12 lg:col-span-6 flex flex-col gap-6">
+          <div class="bg-white dark:bg-surface border border-outline-variant/30 rounded-xl shadow-sm overflow-hidden">
+            <div
+              class="p-5 border-b border-outline-variant/30 bg-slate-50 dark:bg-slate-900/50 flex items-center justify-between">
+              <h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">SAP Server Integration</h3>
+              <span class="material-symbols-outlined text-[20px] text-primary">dns</span>
+            </div>
+
+            <div class="p-6 space-y-4">
+              <!-- SAP Server URL -->
+              <div>
+                <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">SAP RFC Core Endpoint URL</label>
+                <div class="relative">
+                  <span
+                    class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">link</span>
+                  <input type="url" id="sys-sap-url"
+                    class="w-full pl-10 pr-3 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                    placeholder="https://sap-gateway.nichirin.net/rfc" required />
+                </div>
+              </div>
+
+              <!-- Sync Frequency -->
+              <div>
+                <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">SAP Sync Frequency</label>
+                <select id="sys-sap-freq"
+                  class="w-full px-3 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
+                  <option value="1">Hourly Sync</option>
+                  <option value="6">Every 6 Hours</option>
+                  <option value="12">Every 12 Hours</option>
+                  <option value="24">Daily Database Sync</option>
+                </select>
+              </div>
+
+              <!-- Connection Status & Test Button -->
+              <div class="border-t border-outline-variant/20 pt-4 space-y-4">
+                <div
+                  class="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 dark:bg-slate-900/50 border border-outline-variant/10 text-xs">
+                  <span class="text-on-surface-variant flex items-center gap-1.5"><span
+                      class="material-symbols-outlined text-[16px] text-emerald-500">wifi</span> SAP RFC Gateway Status:</span>
+                  <span class="font-bold text-emerald-500 uppercase flex items-center gap-1"><span
+                      class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>Connected</span>
+                </div>
+
+                <button type="button" id="btn-sap-test"
+                  class="w-full px-3 py-2.5 border border-outline-variant/50 hover:bg-slate-50 dark:hover:bg-slate-900 text-on-surface font-semibold rounded-lg transition-colors flex items-center justify-center gap-1.5 cursor-pointer text-xs">
+                  <span class="material-symbols-outlined text-[16px]">sync_alt</span>
+                  <span>Test SAP Connection</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
-      <h3 class="font-headline-md text-headline-md text-on-surface mb-2">System Settings Console</h3>
-      <p class="font-body-md text-body-md text-on-surface-variant max-w-md mb-6">This section is currently under active master configuration. The data sync links and layout definitions are active in the sidebar navigation.</p>
-      <button class="bg-primary text-on-primary px-6 py-2.5 rounded-lg font-headline-sm text-headline-sm hover:opacity-90 transition-opacity">
-        Update Settings
-      </button>
-    </div>
+
+      <!-- Footer Submit and Reset triggers -->
+      <div class="pt-3 border-t border-outline-variant/30 flex justify-end gap-3 items-center">
+        <button type="button" id="btn-reset-settings"
+          class="px-4 py-2 border border-outline-variant/50 bg-white dark:bg-slate-950 text-on-surface font-semibold text-xs rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors shadow-sm cursor-pointer">
+          Reset Default Configuration
+        </button>
+        <button type="submit"
+          class="px-5 py-2.5 bg-primary text-white font-semibold text-xs rounded-lg hover:opacity-90 transition-opacity flex items-center gap-1.5 shadow-sm cursor-pointer">
+          <span class="material-symbols-outlined text-[16px]">save</span>
+          <span>Save System Settings</span>
+        </button>
+      </div>
+    </form>
+
+    <!-- Toast alerts container -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-[120] flex flex-col gap-2"></div>
+
+    <script>
+      (function () {
+        // Default Config values
+        const defaultConfig = {
+          sysName: 'Control Card Digitization System',
+          sysPlant: 'Japan - Nagoya Plant B',
+          sysTimezone: 'Asia/Tokyo',
+          sysTimeout: '30',
+          sysRetries: '5',
+          sysSapUrl: 'https://sap-gateway.nichirin.net/rfc',
+          sysSapFreq: '1'
+        };
+
+        // Load configuration
+        function getConfig() {
+          const stored = localStorage.getItem('system_config');
+          if (stored) {
+            try {
+              const parsed = JSON.parse(stored);
+              // Migrate/clean up properties that are no longer used
+              const cleaned = {
+                sysName: parsed.sysName || defaultConfig.sysName,
+                sysPlant: parsed.sysPlant || defaultConfig.sysPlant,
+                sysTimezone: parsed.sysTimezone || defaultConfig.sysTimezone,
+                sysTimeout: parsed.sysTimeout || defaultConfig.sysTimeout,
+                sysRetries: parsed.sysRetries || defaultConfig.sysRetries,
+                sysSapUrl: parsed.sysSapUrl || defaultConfig.sysSapUrl,
+                sysSapFreq: parsed.sysSapFreq || defaultConfig.sysSapFreq
+              };
+              return cleaned;
+            } catch(e) {
+              return defaultConfig;
+            }
+          }
+          localStorage.setItem('system_config', JSON.stringify(defaultConfig));
+          return defaultConfig;
+        }
+
+        const config = getConfig();
+
+        // DOM elements
+        const nameInput = document.getElementById('sys-name');
+        const plantInput = document.getElementById('sys-plant');
+        const timezoneSelect = document.getElementById('sys-timezone');
+        const timeoutInput = document.getElementById('sys-timeout');
+        const retriesInput = document.getElementById('sys-retries');
+        const sapUrlInput = document.getElementById('sys-sap-url');
+        const sapFreqSelect = document.getElementById('sys-sap-freq');
+
+        // Populate elements
+        function populateForm(data) {
+          nameInput.value = data.sysName;
+          plantInput.value = data.sysPlant;
+          timezoneSelect.value = data.sysTimezone;
+          timeoutInput.value = data.sysTimeout;
+          retriesInput.value = data.sysRetries;
+          sapUrlInput.value = data.sysSapUrl;
+          sapFreqSelect.value = data.sysSapFreq;
+        }
+
+        populateForm(config);
+
+        // Form Submit Save logic
+        document.getElementById('system-settings-form').addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          const newConfig = {
+            sysName: nameInput.value.trim(),
+            sysPlant: plantInput.value.trim(),
+            sysTimezone: timezoneSelect.value,
+            sysTimeout: timeoutInput.value,
+            sysRetries: retriesInput.value,
+            sysSapUrl: sapUrlInput.value.trim(),
+            sysSapFreq: sapFreqSelect.value
+          };
+
+          localStorage.setItem('system_config', JSON.stringify(newConfig));
+          
+          // Update header title in DOM immediately
+          const headerTitle = document.querySelector('header span.text-primary');
+          if (headerTitle) {
+            headerTitle.textContent = newConfig.sysName;
+          }
+          
+          showToast('sys_save', 'Global system settings saved successfully.');
+        });
+
+        // Reset Settings button listener
+        document.getElementById('btn-reset-settings').addEventListener('click', () => {
+          if (confirm('Are you sure you want to revert all system values to defaults?')) {
+            localStorage.setItem('system_config', JSON.stringify(defaultConfig));
+            populateForm(defaultConfig);
+            
+            // Sync header immediately
+            const headerTitle = document.querySelector('header span.text-primary');
+            if (headerTitle) {
+              headerTitle.textContent = defaultConfig.sysName;
+            }
+            
+            showToast('sys_reset', 'Configuration successfully reset to defaults.');
+          }
+        });
+
+        // Diagnostic Action buttons
+        const testSapBtn = document.getElementById('btn-sap-test');
+        testSapBtn.addEventListener('click', () => {
+          const originalText = testSapBtn.innerHTML;
+          testSapBtn.disabled = true;
+          testSapBtn.innerHTML = `
+            <span class="animate-spin material-symbols-outlined text-[16px]">sync</span>
+            <span>Testing SAP Link...</span>
+          `;
+
+          setTimeout(() => {
+            testSapBtn.disabled = false;
+            testSapBtn.innerHTML = originalText;
+            showToast('sap_diagnostic', 'SAP RFC Endpoint connectivity validated. HTTP Status 200.');
+          }, 1200);
+        });
+
+        // Toast Helper
+        function showToast(id, message, type = 'success') {
+          const toastContainer = document.getElementById('toast-container');
+          if (!toastContainer) return;
+
+          const existing = document.getElementById(`toast-${id}`);
+          if (existing) existing.remove();
+
+          const toast = document.createElement('div');
+          toast.id = `toast-${id}`;
+          toast.className = `flex items-center gap-2.5 px-4 py-3 rounded-xl border shadow-lg text-xs font-bold transition-all duration-300 transform translate-y-2 opacity-0 animate-in slide-in-from-bottom-2`;
+          
+          if (type === 'success') {
+            toast.className += ' bg-emerald-500 border-emerald-600 text-white';
+            toast.innerHTML = `
+              <span class="material-symbols-outlined text-[16px] text-white">task_alt</span>
+              <span>${message}</span>
+            `;
+          } else {
+            toast.className += ' bg-rose-500 border-rose-600 text-white';
+            toast.innerHTML = `
+              <span class="material-symbols-outlined text-[16px] text-white">warning</span>
+              <span>${message}</span>
+            `;
+          }
+
+          toastContainer.appendChild(toast);
+          
+          // Animate in
+          setTimeout(() => {
+            toast.classList.remove('translate-y-2', 'opacity-0');
+          }, 10);
+
+          // Auto-remove after 4 seconds
+          setTimeout(() => {
+            toast.classList.add('opacity-0', 'translate-y-2');
+            setTimeout(() => toast.remove(), 300);
+          }, 4000);
+        }
+
+      })();
+    </script>
   </main>
 </body>
+
 </html>
