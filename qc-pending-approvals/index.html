@@ -26,10 +26,28 @@
 <!-- Main Content Area -->
 <div class="flex-grow pt-1 px-6 pb-6 flex flex-col gap-6">
   <!-- Header Section -->
-  <div class="flex justify-between items-end mb-5">
+  <div class="col-span-12 flex justify-between items-start mb-5 flex-wrap gap-4 select-none">
     <div>
       <h2 class="font-headline-lg text-headline-lg text-primary mb-1">QC Pending Approvals</h2>
       <p class="font-body-md text-body-md text-on-surface-variant">Review and validate active quality control points before production sign-off.</p>
+    </div>
+    <div class="relative min-w-[260px] z-50">
+      <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Select Work Order ID</label>
+      <div class="relative">
+        <button id="qc-wo-dropdown-trigger" class="w-full bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-9 px-3 font-semibold flex items-center justify-between cursor-pointer" onclick="toggleQCDropdown()">
+          <span id="qc-wo-selected-text">Select Work Order...</span>
+          <span class="material-symbols-outlined text-[20px] text-slate-500">expand_more</span>
+        </button>
+        <div id="qc-wo-dropdown-container" class="absolute right-0 left-0 mt-1 bg-white border border-outline-variant/30 rounded-lg shadow-lg z-[100] hidden p-2 flex flex-col gap-2">
+          <div class="relative">
+            <input type="text" id="qc-wo-dropdown-search" class="w-full bg-slate-50 border border-outline-variant/30 rounded-lg text-xs text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-8 pr-3 font-semibold" placeholder="Search WO ID..." oninput="filterQCDropdown(this.value)" autocomplete="off" />
+            <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[16px] text-slate-400">search</span>
+          </div>
+          <div id="qc-wo-dropdown-list" class="max-h-48 overflow-y-auto custom-scrollbar flex flex-col">
+            <!-- Populate dynamically -->
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -82,6 +100,39 @@
           </div>
         </div>
       </div>
+
+      <!-- Work Order Details Context Card -->
+      <div class="bg-white border border-outline-variant/30 p-6 rounded-xl shadow-sm text-sm space-y-4">
+        <h3 class="font-headline-sm text-headline-sm text-primary flex items-center gap-2 border-b border-slate-100 pb-2 font-semibold">
+          <span class="material-symbols-outlined text-primary text-[20px]">info</span>
+          Order Information
+        </h3>
+        <div>
+          <span class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-0.5">Product Details</span>
+          <span id="qc-wo-name" class="font-body-md text-body-md text-slate-900 font-bold block leading-tight">--</span>
+          <span id="qc-wo-part" class="font-data-tabular text-data-tabular text-slate-500 font-semibold mt-1 block">--</span>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <span class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-0.5">Line</span>
+            <span id="qc-wo-line" class="font-body-sm text-body-sm text-slate-700 font-semibold block truncate">--</span>
+          </div>
+          <div>
+            <span class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-0.5">Shift</span>
+            <span id="qc-wo-shift" class="font-body-sm text-body-sm text-slate-700 font-semibold block">--</span>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <span class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-0.5">Target Qty</span>
+            <span id="qc-wo-target" class="font-data-tabular text-data-tabular text-slate-800 font-bold block">--</span>
+          </div>
+          <div>
+            <span class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-0.5">Operator</span>
+            <span id="qc-wo-operator" class="font-body-sm text-body-sm text-slate-700 font-semibold block">--</span>
+          </div>
+        </div>
+      </div>
     </div>
     
     <!-- Right Column: Validation & Rules -->
@@ -127,23 +178,8 @@
                     <th class="p-3 font-medium w-32 text-center">Status</th>
                   </tr>
                 </thead>
-                <tbody class="font-data-tabular text-data-tabular divide-y divide-outline-variant/20">
-                  <tr class="hover:bg-slate-50/50 transition-colors">
-                    <td class="p-3 text-on-surface font-medium">Appearance</td>
-                    <td class="p-3 text-on-surface-variant">Visual</td>
-                    <td class="p-3 text-on-surface-variant">No Scratches / Dents</td>
-                    <td class="p-3 text-center">
-                      <span class="inline-flex items-center justify-center px-3 py-1 bg-emerald-500 text-white text-[10px] font-bold rounded-lg w-24">OK</span>
-                    </td>
-                  </tr>
-                  <tr class="hover:bg-slate-50/50 transition-colors">
-                    <td class="p-3 text-on-surface font-medium">Final Dimensions</td>
-                    <td class="p-3 text-on-surface-variant">Measurement</td>
-                    <td class="p-3 text-on-surface-variant">150.0 ± 0.5 mm</td>
-                    <td class="p-3 text-center">
-                      <span class="inline-flex items-center justify-center px-3 py-1 bg-amber-500 text-white text-[10px] font-bold rounded-lg w-24">PENDING</span>
-                    </td>
-                  </tr>
+                <tbody id="qc-control-points-tbody" class="font-data-tabular text-data-tabular divide-y divide-outline-variant/20">
+                  <!-- Populated dynamically -->
                 </tbody>
               </table>
             </div>
@@ -161,7 +197,7 @@
         
         <div class="p-5 border-t border-outline-variant/30 bg-slate-50 flex justify-end gap-3">
           <button class="px-4 py-2 border border-slate-300 text-slate-700 bg-white font-body-sm text-body-sm font-bold rounded-lg hover:bg-slate-50 transition-colors shadow-sm">Save Draft</button>
-          <button class="px-4 py-2 bg-primary text-white font-body-sm text-body-sm font-bold rounded-lg hover:bg-primary/95 transition-colors flex items-center gap-2 shadow-sm">
+          <button id="qc-confirm-btn" onclick="approveQCValidation()" class="px-4 py-2 bg-primary text-white font-body-sm text-body-sm font-bold rounded-lg hover:bg-primary/95 transition-colors flex items-center gap-2 shadow-sm cursor-pointer">
             <span class="material-symbols-outlined text-[18px]">verified</span>
             <span>Confirm &amp; Advance</span>
           </button>
@@ -170,5 +206,244 @@
     </div>
   </div>
 </div>
+
+<div id="qcToast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 z-[100] font-semibold text-sm">
+  <span class="material-symbols-outlined text-emerald-400">check_circle</span>
+  <span id="qcToastMessage">Validation approved successfully.</span>
+</div>
+
+<script>
+    (function() {
+        let workOrdersList = [];
+        let activeWO = null;
+
+        async function initQCApprovals() {
+            // Load work orders database
+            const localData = localStorage.getItem('workOrdersList');
+            if (localData) {
+                try {
+                    workOrdersList = JSON.parse(localData);
+                } catch(e) {}
+            }
+            
+            if (!workOrdersList || workOrdersList.length === 0) {
+                try {
+                    const res = await fetch('../work-orders/workorders.json');
+                    workOrdersList = await res.json();
+                    localStorage.setItem('workOrdersList', JSON.stringify(workOrdersList));
+                } catch(e) {
+                    console.error("Failed to load work orders registry", e);
+                }
+            }
+
+            renderQCDropdown('');
+
+            // Select the first active work order or first overall
+            const firstActive = workOrdersList.find(w => w.status === 'Running') || workOrdersList[0];
+            if (firstActive) {
+                selectQCWorkOrder(firstActive.woNumber);
+            }
+        }
+
+        function toggleQCDropdown() {
+            const container = document.getElementById('qc-wo-dropdown-container');
+            if (container) {
+                container.classList.toggle('hidden');
+                if (!container.classList.contains('hidden')) {
+                    const searchInput = document.getElementById('qc-wo-dropdown-search');
+                    if (searchInput) {
+                        searchInput.value = '';
+                        searchInput.focus();
+                    }
+                    renderQCDropdown('');
+                }
+            }
+        }
+
+        // Close dropdown on click outside
+        document.addEventListener('click', function(event) {
+            const container = document.getElementById('qc-wo-dropdown-container');
+            const trigger = document.getElementById('qc-wo-dropdown-trigger');
+            if (container && trigger && !container.classList.contains('hidden')) {
+                if (!trigger.contains(event.target) && !container.contains(event.target)) {
+                    container.classList.add('hidden');
+                }
+            }
+        });
+
+        function filterQCDropdown(val) {
+            renderQCDropdown(val);
+        }
+
+        function renderQCDropdown(filterText) {
+            const list = document.getElementById('qc-wo-dropdown-list');
+            if (!list) return;
+            list.innerHTML = '';
+
+            const q = filterText.toLowerCase().trim();
+            const filtered = workOrdersList.filter(w => {
+                return w.woNumber.toLowerCase().includes(q) || 
+                       w.productName.toLowerCase().includes(q);
+            });
+
+            if (filtered.length === 0) {
+                const emptyItem = document.createElement('div');
+                emptyItem.className = 'px-3 py-2 text-xs text-slate-400 font-semibold';
+                emptyItem.textContent = 'No work orders found';
+                list.appendChild(emptyItem);
+                return;
+            }
+
+            filtered.forEach(w => {
+                const item = document.createElement('div');
+                item.className = 'px-3 py-2.5 text-xs text-slate-700 hover:bg-slate-50 font-semibold cursor-pointer border-b border-slate-100 last:border-0 transition-colors';
+                item.innerHTML = `
+                    <div class="font-bold text-slate-800">${w.woNumber}</div>
+                    <div class="text-[10px] text-slate-500 truncate">${w.productName}</div>
+                `;
+                item.onclick = () => {
+                    selectQCWorkOrder(w.woNumber);
+                    const container = document.getElementById('qc-wo-dropdown-container');
+                    if (container) container.classList.add('hidden');
+                };
+                list.appendChild(item);
+            });
+        }
+
+        function selectQCWorkOrder(woNumber) {
+            activeWO = workOrdersList.find(w => w.woNumber === woNumber) || workOrdersList[0];
+            if (!activeWO) return;
+
+            // Update trigger text
+            document.getElementById('qc-wo-selected-text').textContent = activeWO.woNumber;
+
+            // Update context details card
+            document.getElementById('qc-wo-name').textContent = activeWO.productName;
+            document.getElementById('qc-wo-part').textContent = activeWO.partNumber;
+            document.getElementById('qc-wo-line').textContent = activeWO.line;
+            document.getElementById('qc-wo-shift').textContent = activeWO.shift || 'N/A';
+            document.getElementById('qc-wo-target').textContent = `${activeWO.targetQty.toLocaleString()} units`;
+            document.getElementById('qc-wo-operator').textContent = activeWO.operator || 'Unassigned';
+
+            // Extract and build Control Points from steps
+            const controlPoints = [];
+            
+            // Standard preset visual check
+            controlPoints.push({
+                param: 'Appearance (Visual Audit)',
+                type: 'Visual',
+                spec: 'No Scratches / Dents / Scuffs',
+                status: 'OK'
+            });
+
+            if (activeWO.steps) {
+                activeWO.steps.forEach(step => {
+                    if (step.parameter && step.limits) {
+                        let type = 'Visual';
+                        const nameLower = step.name.toLowerCase();
+                        if (nameLower.includes('cut')) type = 'Length';
+                        else if (nameLower.includes('bend')) type = 'Angle';
+                        else if (nameLower.includes('crimp')) type = 'Crimp';
+                        else if (nameLower.includes('oven') || nameLower.includes('curing')) type = 'Thermal';
+                        else if (nameLower.includes('torque') || nameLower.includes('torquing')) type = 'Torque';
+                        else if (nameLower.includes('leak') || nameLower.includes('test') || nameLower.includes('pressure')) type = 'Hydraulic';
+                        else if (nameLower.includes('inspection')) type = 'Final Spec';
+
+                        let status = 'PENDING';
+                        if (step.status === 'completed') status = 'OK';
+                        else if (step.status === 'active' || step.status === 'running') status = 'IN PROGRESS';
+
+                        controlPoints.push({
+                            param: step.parameter,
+                            type: type,
+                            spec: step.limits,
+                            status: status
+                        });
+                    }
+                });
+            }
+
+            // Render control points table
+            const tbody = document.getElementById('qc-control-points-tbody');
+            if (tbody) {
+                tbody.innerHTML = '';
+                controlPoints.forEach(cp => {
+                    const row = document.createElement('tr');
+                    row.className = 'hover:bg-slate-50/50 transition-colors';
+                    const badgeClass = cp.status === 'OK' ? 'bg-emerald-500 text-white' :
+                                       cp.status === 'IN PROGRESS' ? 'bg-amber-500 text-white animate-pulse' : 'bg-slate-400 text-white';
+                    row.innerHTML = `
+                        <td class="p-3 text-on-surface font-medium">${cp.param}</td>
+                        <td class="p-3 text-on-surface-variant">${cp.type}</td>
+                        <td class="p-3 text-on-surface-variant font-semibold">${cp.spec}</td>
+                        <td class="p-3 text-center">
+                          <span class="inline-flex items-center justify-center px-3 py-1 ${badgeClass} text-[10px] font-bold rounded-lg w-24">${cp.status}</span>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+        }
+
+        function showQCToast(msg) {
+            const toast = document.getElementById('qcToast');
+            const msgEl = document.getElementById('qcToastMessage');
+            if (toast && msgEl) {
+                msgEl.textContent = msg;
+                toast.classList.remove('translate-y-20', 'opacity-0');
+                toast.classList.add('translate-y-0', 'opacity-100');
+                setTimeout(() => {
+                    toast.classList.remove('translate-y-0', 'opacity-100');
+                    toast.classList.add('translate-y-20', 'opacity-0');
+                }, 3000);
+            }
+        }
+
+        function approveQCValidation() {
+            if (!activeWO) return;
+            
+            // Find the active or pending step and advance it
+            const activeStep = activeWO.steps.find(s => s.status === 'active' || s.status === 'running') ||
+                               activeWO.steps.find(s => s.status === 'pending');
+            
+            if (activeStep) {
+                activeStep.status = 'completed';
+                activeStep.time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                // Mark the next step as active if there is one
+                const currentIdx = activeWO.steps.indexOf(activeStep);
+                if (currentIdx > -1 && currentIdx + 1 < activeWO.steps.length) {
+                    activeWO.steps[currentIdx + 1].status = 'active';
+                    activeWO.steps[currentIdx + 1].time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                }
+
+                // If this was the last step, mark the entire work order as completed!
+                if (currentIdx === activeWO.steps.length - 1) {
+                    activeWO.status = 'Completed';
+                }
+
+                // Save back to localStorage
+                const idx = workOrdersList.findIndex(w => w.woNumber === activeWO.woNumber);
+                if (idx > -1) {
+                    workOrdersList[idx] = activeWO;
+                    localStorage.setItem('workOrdersList', JSON.stringify(workOrdersList));
+                }
+
+                showQCToast(`Validation approved for ${activeWO.woNumber}. Advanced process stage!`);
+                selectQCWorkOrder(activeWO.woNumber);
+            } else {
+                showQCToast(`All quality stages are already completed for ${activeWO.woNumber}.`);
+            }
+        }
+
+        // Export functions to window
+        window.toggleQCDropdown = toggleQCDropdown;
+        window.filterQCDropdown = filterQCDropdown;
+        window.selectQCWorkOrder = selectQCWorkOrder;
+        window.approveQCValidation = approveQCValidation;
+
+        initQCApprovals();
+    })();
+</script>
 </body>
 </html>
