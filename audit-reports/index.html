@@ -66,50 +66,50 @@
     </div>
   </div>
 
-  <!-- Filters Row -->
-  <div class="bg-white border border-outline-variant/30 rounded-xl shadow-sm p-4 flex flex-wrap gap-4 items-center justify-between">
-    <div class="flex flex-wrap gap-4 items-center">
-      <div class="flex flex-col">
-        <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Search Audit Trail</label>
-        <div class="relative">
-          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
-          <input id="audit-search" oninput="filterAuditLogs()" class="pl-9 pr-3 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-[240px] h-9" placeholder="Search target, operator, description..." type="text"/>
-        </div>
-      </div>
-      <div class="flex flex-col">
-        <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Category</label>
-        <div class="relative">
-          <select id="audit-filter-category" onchange="filterAuditLogs()" class="pl-3 pr-8 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-[200px] h-9 appearance-none bg-none font-semibold">
-            <option value="All">All Categories</option>
-            <option value="Configuration Change">Configuration Change</option>
-            <option value="Operator Override">Operator Override</option>
-            <option value="Supervisor Release">Supervisor Release</option>
-            <option value="User Management">User Management</option>
-            <option value="System">System</option>
-          </select>
-          <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-on-surface-variant">arrow_drop_down</span>
-        </div>
-      </div>
-      <div class="flex flex-col">
-        <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Device / Source IP</label>
-        <div class="relative">
-          <select id="audit-filter-device" onchange="filterAuditLogs()" class="pl-3 pr-8 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-[180px] h-9 appearance-none bg-none font-semibold">
-            <option value="All">All Sources</option>
-            <option value="Admin PC">Admin PC</option>
-            <option value="Tablet">Tablets</option>
-            <option value="MES Server">MES Server</option>
-          </select>
-          <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-on-surface-variant">arrow_drop_down</span>
-        </div>
-      </div>
-    </div>
-    <div class="font-body-sm text-body-sm text-on-surface-variant font-semibold" id="audit-match-count">
-      Showing -- records
-    </div>
-  </div>
-
   <!-- Audit Trail Console Table Card -->
   <div class="bg-white border border-outline-variant/30 rounded-xl flex-grow overflow-hidden flex flex-col shadow-sm">
+    <!-- Filters Header -->
+    <div class="p-4 border-b border-outline-variant/30 bg-slate-50/50 flex flex-wrap gap-4 items-center justify-between">
+      <div class="flex flex-wrap gap-4 items-center">
+        <div class="flex flex-col">
+          <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Search Audit Trail</label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
+            <input id="audit-search" oninput="filterAuditLogs()" class="pl-9 pr-3 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-[240px] h-9" placeholder="Search target, operator, description..." type="text"/>
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Category</label>
+          <div class="relative">
+            <select id="audit-filter-category" onchange="filterAuditLogs()" class="pl-3 pr-8 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-[200px] h-9 appearance-none bg-none font-semibold">
+              <option value="All">All Categories</option>
+              <option value="Configuration Change">Configuration Change</option>
+              <option value="Operator Override">Operator Override</option>
+              <option value="Supervisor Release">Supervisor Release</option>
+              <option value="User Management">User Management</option>
+              <option value="System">System</option>
+            </select>
+            <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Device / Source IP</label>
+          <div class="relative">
+            <select id="audit-filter-device" onchange="filterAuditLogs()" class="pl-3 pr-8 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-[180px] h-9 appearance-none bg-none font-semibold">
+              <option value="All">All Sources</option>
+              <option value="Admin PC">Admin PC</option>
+              <option value="Tablet">Tablets</option>
+              <option value="MES Server">MES Server</option>
+            </select>
+            <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+          </div>
+        </div>
+      </div>
+      <div class="font-body-sm text-body-sm text-on-surface-variant font-semibold self-end pb-1.5" id="audit-match-count">
+        Showing -- records
+      </div>
+    </div>
+
     <div class="overflow-y-auto custom-scrollbar flex-grow">
       <table class="w-full text-left border-collapse whitespace-nowrap">
         <thead class="sticky top-0 bg-slate-50 border-b border-outline-variant/30 font-data-tabular text-data-tabular text-on-surface-variant z-10">
