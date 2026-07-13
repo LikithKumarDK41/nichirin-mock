@@ -1,0 +1,201 @@
+[
+  {
+    "roleCode": "ADMIN",
+    "roleName": "Admin",
+    "description": "System administrator. Full access to user security settings, workflow structures, quality standards, and system integrations.",
+    "assignedCount": 1,
+    "permissions": {
+      "dashboard": ["view", "operate"],
+      "work_orders": ["view", "operate"],
+      "supervisor_planning": ["view", "operate"],
+      "qc_pending_approvals": ["view", "operate"],
+      "traceability_search": ["view", "operate"],
+      "qc_reports": ["view", "operate"],
+      "audit_reports": ["view", "operate"],
+      "workflow_configuration": ["view", "operate"],
+      "user_management": ["view", "operate"],
+      "role_management": ["view", "operate"],
+      "skill_management": ["view", "operate"],
+      "machine_management": ["view", "operate"],
+      "device_management": ["view", "operate"]
+    },
+    "features": [
+      "release_sap_orders",
+      "hold_production_run",
+      "barcode_scan_lots",
+      "verify_step_actions",
+      "approve_qc_checks",
+      "override_qc_tolerances",
+      "export_csv_reports",
+      "purge_historical_logs",
+      "design_flowchart_canvas",
+      "publish_template_versions",
+      "reset_passwords",
+      "create_security_roles",
+      "calibrate_machine_tooling",
+      "bind_plc_connections",
+      "certify_operator_training"
+    ]
+  },
+  {
+    "roleCode": "SUPERVISOR",
+    "roleName": "Supervisor",
+    "description": "Line supervisor. Manages shift plans, releases work orders, monitors traceability, and certifies operator skills.",
+    "assignedCount": 2,
+    "permissions": {
+      "dashboard": ["view"],
+      "work_orders": ["view", "operate"],
+      "supervisor_planning": ["view", "operate"],
+      "qc_pending_approvals": ["view"],
+      "traceability_search": ["view", "operate"],
+      "qc_reports": ["view", "operate"],
+      "audit_reports": ["view"],
+      "workflow_configuration": ["view"],
+      "user_management": ["view"],
+      "role_management": ["view"],
+      "skill_management": ["view", "operate"],
+      "machine_management": ["view"],
+      "device_management": ["view"]
+    },
+    "features": [
+      "release_sap_orders",
+      "hold_production_run",
+      "barcode_scan_lots",
+      "verify_step_actions",
+      "export_csv_reports",
+      "certify_operator_training"
+    ]
+  },
+  {
+    "roleCode": "QC_MANAGER",
+    "roleName": "QC Manager",
+    "description": "Quality Manager. Defines inspection levels, overrides out-of-tolerance alerts, and generates monthly audit logs.",
+    "assignedCount": 1,
+    "permissions": {
+      "dashboard": ["view"],
+      "work_orders": ["view"],
+      "supervisor_planning": ["view"],
+      "qc_pending_approvals": ["view", "operate"],
+      "traceability_search": ["view", "operate"],
+      "qc_reports": ["view", "operate"],
+      "audit_reports": ["view", "operate"],
+      "workflow_configuration": ["view", "operate"],
+      "user_management": ["view"],
+      "role_management": ["view"],
+      "skill_management": ["view"],
+      "machine_management": ["view"],
+      "device_management": ["view"]
+    },
+    "features": [
+      "approve_qc_checks",
+      "override_qc_tolerances",
+      "export_csv_reports",
+      "design_flowchart_canvas",
+      "publish_template_versions"
+    ]
+  },
+  {
+    "roleCode": "PRODUCTION_LEAD",
+    "roleName": "Production Lead",
+    "description": "Line lead. Responsible for tablet assignments, scheduling adjustments, and tracking equipment configurations.",
+    "assignedCount": 2,
+    "permissions": {
+      "dashboard": ["view"],
+      "work_orders": ["view", "operate"],
+      "supervisor_planning": ["view", "operate"],
+      "qc_pending_approvals": ["view"],
+      "traceability_search": ["view"],
+      "qc_reports": ["view"],
+      "audit_reports": ["view"],
+      "workflow_configuration": ["view"],
+      "user_management": ["view"],
+      "role_management": ["view"],
+      "skill_management": ["view"],
+      "machine_management": ["view", "operate"],
+      "device_management": ["view", "operate"]
+    },
+    "features": [
+      "release_sap_orders",
+      "hold_production_run",
+      "barcode_scan_lots",
+      "verify_step_actions",
+      "calibrate_machine_tooling",
+      "bind_plc_connections"
+    ]
+  },
+  {
+    "roleCode": "QC_INSPECTOR",
+    "roleName": "QC Inspector",
+    "description": "Floor quality inspector. Approves inspection checks on production lines and logs torque/measurements deviations.",
+    "assignedCount": 3,
+    "permissions": {
+      "dashboard": ["view"],
+      "work_orders": ["view"],
+      "supervisor_planning": ["view"],
+      "qc_pending_approvals": ["view", "operate"],
+      "traceability_search": ["view"],
+      "qc_reports": ["view"],
+      "audit_reports": ["view"],
+      "workflow_configuration": ["view"],
+      "user_management": [],
+      "role_management": [],
+      "skill_management": [],
+      "machine_management": ["view"],
+      "device_management": []
+    },
+    "features": [
+      "approve_qc_checks"
+    ]
+  },
+  {
+    "roleCode": "LINE_INSPECTOR",
+    "roleName": "Line Inspector",
+    "description": "Senior technician. Audits active processes and executes torque calibrator checks.",
+    "assignedCount": 1,
+    "permissions": {
+      "dashboard": ["view"],
+      "work_orders": ["view"],
+      "supervisor_planning": ["view", "operate"],
+      "qc_pending_approvals": ["view", "operate"],
+      "traceability_search": ["view"],
+      "qc_reports": [],
+      "audit_reports": [],
+      "workflow_configuration": [],
+      "user_management": [],
+      "role_management": [],
+      "skill_management": [],
+      "machine_management": ["view"],
+      "device_management": []
+    },
+    "features": [
+      "barcode_scan_lots",
+      "verify_step_actions",
+      "approve_qc_checks"
+    ]
+  },
+  {
+    "roleCode": "OPERATOR",
+    "roleName": "Operator",
+    "description": "Tablet floor technician. Executes barcode scanning, step verification, and reports line outcomes.",
+    "assignedCount": 4,
+    "permissions": {
+      "dashboard": ["view"],
+      "work_orders": ["view"],
+      "supervisor_planning": ["view", "operate"],
+      "qc_pending_approvals": [],
+      "traceability_search": [],
+      "qc_reports": [],
+      "audit_reports": [],
+      "workflow_configuration": [],
+      "user_management": [],
+      "role_management": [],
+      "skill_management": [],
+      "machine_management": [],
+      "device_management": []
+    },
+    "features": [
+      "barcode_scan_lots",
+      "verify_step_actions"
+    ]
+  }
+]

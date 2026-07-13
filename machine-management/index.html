@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<!-- SPA Layout Redirect Wrapper -->
+<script>
+  if (!document.getElementById('app-root')) {
+    const p = window.location.pathname;
+    const rel = '../';
+    window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
+  }
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Machine Management - Nichirin Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Extended Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#43474e",
+                        "inverse-on-surface": "#f2f0f3",
+                        "background": "#faf9fc",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#faf9fc",
+                        "surface-container-low": "#f4f3f6",
+                        "on-error": "#ffffff",
+                        "tertiary": "#110200",
+                        "outline": "#74777f",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#faf9fc",
+                        "on-surface": "#1a1c1e",
+                        "secondary-container": "#7af2f2",
+                        "primary-container": "#001f3f",
+                        "on-primary-container": "#6f88ad",
+                        "on-error-container": "#93000a",
+                        "on-background": "#1a1c1e",
+                        "on-primary-fixed": "#001c3a",
+                        "surface-container-high": "#e9e7eb",
+                        "inverse-surface": "#2f3033",
+                        "inverse-primary": "#afc8f0",
+                        "surface-dim": "#dbd9dd",
+                        "on-secondary-container": "#006e6e",
+                        "surface-container-highest": "#e3e2e5",
+                        "outline-variant": "#c4c6cf",
+                        "secondary": "#006a6a",
+                        "on-primary": "#ffffff",
+                        "primary": "#000613",
+                        "surface-tint": "#476083",
+                        "surface-variant": "#e3e2e5",
+                        "error": "#ba1a1a",
+                        "surface-container": "#efedf0",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-gap-md": "16px",
+                        "sidebar-width": "260px",
+                        "header-height": "64px",
+                        "stack-gap-sm": "8px",
+                        "grid-gutter": "20px",
+                        "container-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "data-tabular": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "label-bold": ["11px", {"lineHeight": "16px", "fontWeight": "700"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "data-tabular": ["13px", {"lineHeight": "16px", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #faf9fc; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #c4c6cf; border-radius: 10px; }
+    </style>
+</head>
+<body class="flex min-h-screen overflow-x-hidden">
+<!-- SideNavBar (Fallback) -->
+<aside class="fixed left-0 top-0 h-full w-[260px] bg-primary text-on-primary flex flex-col py-4 border-r border-outline-variant z-50">
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-[260px] pt-[64px] min-h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 h-[64px] w-[calc(100%-260px)] bg-surface flex justify-between items-center px-container-padding border-b border-outline-variant z-40">
+<div class="flex items-center gap-4">
+<nav class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+  <span class="">Plant</span>
+  <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+  <span class="">Line A</span>
+  <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+  <span class="text-primary font-bold border-b-2 border-primary pb-1">Machine Management</span>
+</nav>
+</div>
+</header>
+<!-- Page Canvas -->
+<div class="p-container-padding grid grid-cols-12 gap-6 bg-background">
+  <!-- Header -->
+  <div class="col-span-12 flex justify-between items-end mb-6">
+    <div>
+      <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Equipment &amp; Machinery Registry</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant">Monitor active hardware parameters, link PLC connection states, and plan preventive maintenance intervals.</p>
+    </div>
+    <button class="flex items-center gap-2 bg-primary text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm" onclick="openAddMachineDrawer()">
+      <span class="material-symbols-outlined text-[18px]">precision_manufacturing</span>
+      Add New Machine
+    </button>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-6 mb-2">
+    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm">
+      <div>
+        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Active Machinery</p>
+        <p class="text-3xl font-bold text-primary">12</p>
+      </div>
+      <span class="material-symbols-outlined text-[32px] text-emerald-600">settings_input_component</span>
+    </div>
+    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm">
+      <div>
+        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Standby / Idle</p>
+        <p class="text-3xl font-bold text-slate-800">2</p>
+      </div>
+      <span class="material-symbols-outlined text-[32px] text-amber-500">motion_photos_paused</span>
+    </div>
+    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm">
+      <div>
+        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Under Maintenance</p>
+        <p class="text-3xl font-bold text-primary">1</p>
+      </div>
+      <span class="material-symbols-outlined text-[32px] text-red-500">handyman</span>
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <section class="col-span-12 bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm flex flex-col">
+    <div class="px-6 py-4 border-b border-outline-variant/30 flex justify-between items-center bg-slate-50">
+      <h3 class="font-headline-md text-headline-md text-primary">Machinery Asset List</h3>
+      <div class="relative w-64">
+        <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
+        <input id="machineSearch" class="w-full bg-white border border-outline-variant/30 rounded-lg pl-8 pr-3 py-1.5 text-sm focus:outline-none focus:border-primary transition-colors h-8" placeholder="Search machine name or ID..." type="text" onkeyup="filterMachineTable()"/>
+      </div>
+    </div>
+    
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse whitespace-nowrap" id="machinesTable">
+        <thead>
+          <tr class="bg-white border-b border-outline-variant/30">
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Machine ID</th>
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Equipment Name</th>
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Assigned Line</th>
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">PLC Network IP</th>
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Last Service</th>
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Next Service</th>
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Status</th>
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-right">Action</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant/30">
+          <tr class="hover:bg-slate-50/50 transition-colors">
+            <td class="px-6 py-4 font-bold text-primary font-data-tabular">CRIMP-01</td>
+            <td class="px-6 py-4 font-semibold text-on-surface">Automatic Hose Crimp Press</td>
+            <td class="px-6 py-4 text-on-surface-variant">Line A-1</td>
+            <td class="px-6 py-4 font-data-tabular text-on-surface-variant">192.168.12.45</td>
+            <td class="px-6 py-4 font-data-tabular text-on-surface-variant">2026-05-10</td>
+            <td class="px-6 py-4 font-data-tabular text-on-surface-variant">2026-08-10</td>
+            <td class="px-6 py-4">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/50">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>Active
+              </span>
+            </td>
+            <td class="px-6 py-4 text-right">
+              <button class="w-8 h-8 rounded-lg border border-outline-variant/30 bg-white flex items-center justify-center text-primary hover:bg-slate-50 transition-colors" onclick="openEditMachineDrawer('CRIMP-01')"><span class="material-symbols-outlined text-[16px]">edit</span></button>
+            </td>
+          </tr>
+          <tr class="hover:bg-slate-50/50 transition-colors">
+            <td class="px-6 py-4 font-bold text-primary font-data-tabular">LEAK-04</td>
+            <td class="px-6 py-4 font-semibold text-on-surface">Air Leak Testing Rig</td>
+            <td class="px-6 py-4 text-on-surface-variant">Line B-4</td>
+            <td class="px-6 py-4 font-data-tabular text-on-surface-variant">192.168.12.51</td>
+            <td class="px-6 py-4 font-data-tabular text-on-surface-variant">2026-06-18</td>
+            <td class="px-6 py-4 font-data-tabular text-on-surface-variant">2026-09-18</td>
+            <td class="px-6 py-4">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/50">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>Active
+              </span>
+            </td>
+            <td class="px-6 py-4 text-right">
+              <button class="w-8 h-8 rounded-lg border border-outline-variant/30 bg-white flex items-center justify-center text-primary hover:bg-slate-50 transition-colors" onclick="openEditMachineDrawer('LEAK-04')"><span class="material-symbols-outlined text-[16px]">edit</span></button>
+            </td>
+          </tr>
+          <tr class="hover:bg-slate-50/50 transition-colors">
+            <td class="px-6 py-4 font-bold text-primary font-data-tabular">MARK-02</td>
+            <td class="px-6 py-4 font-semibold text-on-surface">Laser Marking Station</td>
+            <td class="px-6 py-4 text-on-surface-variant">Line A-1</td>
+            <td class="px-6 py-4 font-data-tabular text-on-surface-variant">192.168.12.30</td>
+            <td class="px-6 py-4 font-data-tabular text-on-surface-variant">2026-04-20</td>
+            <td class="px-6 py-4 font-data-tabular text-on-surface-variant">2026-07-20</td>
+            <td class="px-6 py-4">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold bg-red-50 text-red-700 border border-red-200/50">
+                <span class="w-1.5 h-1.5 rounded-full bg-red-500 mr-1.5"></span>Offline
+              </span>
+            </td>
+            <td class="px-6 py-4 text-right">
+              <button class="w-8 h-8 rounded-lg border border-outline-variant/30 bg-white flex items-center justify-center text-primary hover:bg-slate-50 transition-colors" onclick="openEditMachineDrawer('MARK-02')"><span class="material-symbols-outlined text-[16px]">edit</span></button>
+            </td>
+          </tr>
+          <tr class="hover:bg-slate-50/50 transition-colors">
+            <td class="px-6 py-4 font-bold text-primary font-data-tabular">HEAT-09</td>
+            <td class="px-6 py-4 font-semibold text-on-surface">Rubber Vulcanizing Oven</td>
+            <td class="px-6 py-4 text-on-surface-variant">Line C-9</td>
+            <td class="px-6 py-4 font-data-tabular text-on-surface-variant">192.168.15.11</td>
+            <td class="px-6 py-4 font-data-tabular text-on-surface-variant">2026-03-01</td>
+            <td class="px-6 py-4 font-data-tabular text-on-surface-variant">2026-09-01</td>
+            <td class="px-6 py-4">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200/50">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5"></span>Standby
+              </span>
+            </td>
+            <td class="px-6 py-4 text-right">
+              <button class="w-8 h-8 rounded-lg border border-outline-variant/30 bg-white flex items-center justify-center text-primary hover:bg-slate-50 transition-colors" onclick="openEditMachineDrawer('HEAT-09')"><span class="material-symbols-outlined text-[16px]">edit</span></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Backdrop -->
+  <div id="drawerBackdrop" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[90] transition-opacity duration-300 opacity-0" onclick="toggleDrawer(false)"></div>
+  <!-- Drawer -->
+  <div id="machineDrawer" class="fixed top-0 right-0 h-full w-full max-w-[480px] bg-white z-[100] shadow-2xl border-l border-outline-variant/30 transform translate-x-full transition-transform duration-300 ease-out flex flex-col">
+    <div class="bg-slate-50 px-6 py-5 border-b border-outline-variant/30 flex justify-between items-center">
+      <h3 class="font-headline-md text-headline-md text-primary" id="drawerTitle">Add Hardware Asset</h3>
+      <button class="text-on-surface-variant hover:text-primary transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100" onclick="toggleDrawer(false)">
+        <span class="material-symbols-outlined text-[20px]">close</span>
+      </button>
+    </div>
+    <form class="p-6 flex-1 overflow-y-auto" onsubmit="saveMachine(event)">
+      <div class="grid grid-cols-2 gap-4 pb-24">
+        <div class="col-span-1 space-y-1.5">
+          <label class="block text-xs font-bold uppercase text-slate-500">Machine ID</label>
+          <input id="machineId" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary text-sm h-10 px-3 font-semibold bg-white" placeholder="e.g. CRIMP-01" type="text" required />
+        </div>
+        <div class="col-span-1 space-y-1.5">
+          <label class="block text-xs font-bold uppercase text-slate-500">Equipment Name</label>
+          <input id="machineName" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary text-sm h-10 px-3 font-semibold bg-white" placeholder="e.g. Hose Crimping Machine" type="text" required />
+        </div>
+        <div class="col-span-1 space-y-1.5">
+          <label class="block text-xs font-bold uppercase text-slate-500">Assigned Line</label>
+          <select id="machineLine" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary text-sm h-10 px-3 font-semibold bg-white">
+            <option value="Line A-1">Line A-1</option>
+            <option value="Line B-4">Line B-4</option>
+            <option value="Line C-9">Line C-9</option>
+          </select>
+        </div>
+        <div class="col-span-1 space-y-1.5">
+          <label class="block text-xs font-bold uppercase text-slate-500">PLC IP Address</label>
+          <input id="machineIp" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary text-sm h-10 px-3 font-semibold bg-white" placeholder="192.168.x.x" type="text" required />
+        </div>
+        <div class="col-span-1 space-y-1.5">
+          <label class="block text-xs font-bold uppercase text-slate-500">Last Service Date</label>
+          <input id="machineLast" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary text-sm h-10 px-3 font-semibold bg-white" type="date" required />
+        </div>
+        <div class="col-span-1 space-y-1.5">
+          <label class="block text-xs font-bold uppercase text-slate-500">Next Service Date</label>
+          <input id="machineNext" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary text-sm h-10 px-3 font-semibold bg-white" type="date" required />
+        </div>
+        <div class="col-span-2 space-y-1.5">
+          <label class="block text-xs font-bold uppercase text-slate-500">Operating Status</label>
+          <select id="machineStatus" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary text-sm h-10 px-3 font-semibold bg-white">
+            <option value="Active">Active / Running</option>
+            <option value="Standby">Standby / Idle</option>
+            <option value="Offline">Offline / Under Repair</option>
+          </select>
+        </div>
+      </div>
+      <div class="absolute bottom-0 left-0 right-0 bg-slate-50 p-4 border-t border-outline-variant/30 flex justify-end gap-3 z-10">
+        <button class="px-4 h-10 rounded-lg font-semibold text-sm text-slate-600 hover:bg-slate-100" onclick="toggleDrawer(false)" type="button">Cancel</button>
+        <button class="px-6 h-10 rounded-lg bg-primary text-white font-semibold text-sm shadow-sm hover:bg-primary/95" type="submit" id="submitBtnText">Register Machine</button>
+      </div>
+    </form>
+  </div>
+  
+  <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 ease-out z-[100] border border-slate-800 text-sm">
+    <span class="material-symbols-outlined text-emerald-400">check_circle</span>
+    <span id="toastMessage">Access levels successfully saved!</span>
+  </div>
+</div>
+
+<script>
+  const MACHINE_DATA = {
+    'CRIMP-01': { name: 'Automatic Hose Crimp Press', line: 'Line A-1', ip: '192.168.12.45', last: '2026-05-10', next: '2026-08-10', status: 'Active' },
+    'LEAK-04': { name: 'Air Leak Testing Rig', line: 'Line B-4', ip: '192.168.12.51', last: '2026-06-18', next: '2026-09-18', status: 'Active' },
+    'MARK-02': { name: 'Laser Marking Station', line: 'Line A-1', ip: '192.168.12.30', last: '2026-04-20', next: '2026-07-20', status: 'Offline' },
+    'HEAT-09': { name: 'Rubber Vulcanizing Oven', line: 'Line C-9', ip: '192.168.15.11', last: '2026-03-01', next: '2026-09-01', status: 'Standby' }
+  };
+
+  function toggleDrawer(isOpen) {
+    const backdrop = document.getElementById('drawerBackdrop');
+    const drawer = document.getElementById('machineDrawer');
+    if (isOpen) {
+      backdrop.classList.remove('hidden');
+      setTimeout(() => {
+        backdrop.classList.add('opacity-100');
+        drawer.classList.remove('translate-x-full');
+      }, 50);
+    } else {
+      backdrop.classList.remove('opacity-100');
+      drawer.classList.add('translate-x-full');
+      setTimeout(() => {
+        backdrop.classList.add('hidden');
+      }, 300);
+    }
+  }
+
+  function openAddMachineDrawer() {
+    document.getElementById('drawerTitle').textContent = 'Add Hardware Asset';
+    document.getElementById('submitBtnText').textContent = 'Register Machine';
+    
+    document.getElementById('machineId').value = '';
+    document.getElementById('machineId').readOnly = false;
+    document.getElementById('machineName').value = '';
+    document.getElementById('machineLine').selectedIndex = 0;
+    document.getElementById('machineIp').value = '';
+    document.getElementById('machineLast').value = '';
+    document.getElementById('machineNext').value = '';
+    document.getElementById('machineStatus').selectedIndex = 0;
+    
+    toggleDrawer(true);
+  }
+
+  function openEditMachineDrawer(id) {
+    const data = MACHINE_DATA[id];
+    if (!data) return;
+
+    document.getElementById('drawerTitle').textContent = 'Edit Hardware Asset';
+    document.getElementById('submitBtnText').textContent = 'Save Changes';
+    
+    const idInput = document.getElementById('machineId');
+    idInput.value = id;
+    idInput.readOnly = true;
+    
+    document.getElementById('machineName').value = data.name;
+    document.getElementById('machineLine').value = data.line;
+    document.getElementById('machineIp').value = data.ip;
+    document.getElementById('machineLast').value = data.last;
+    document.getElementById('machineNext').value = data.next;
+    document.getElementById('machineStatus').value = data.status;
+    
+    toggleDrawer(true);
+  }
+
+  function saveMachine(e) {
+    e.preventDefault();
+    toggleDrawer(false);
+    showToast('Equipment asset parameters synchronized with hardware controller.');
+  }
+
+  function showToast(message) {
+    const toast = document.getElementById('toast');
+    const msg = document.getElementById('toastMessage');
+    msg.textContent = message;
+    toast.classList.remove('translate-y-20', 'opacity-0');
+    toast.classList.add('translate-y-0', 'opacity-100');
+    
+    setTimeout(() => {
+      toast.classList.remove('translate-y-0', 'opacity-100');
+      toast.classList.add('translate-y-20', 'opacity-0');
+    }, 3000);
+  }
+
+  function filterMachineTable() {
+    const q = document.getElementById('machineSearch').value.toLowerCase();
+    const rows = document.querySelectorAll('#machinesTable tbody tr');
+    rows.forEach(row => {
+      const id = row.cells[0].textContent.toLowerCase();
+      const name = row.cells[1].textContent.toLowerCase();
+      const line = row.cells[2].textContent.toLowerCase();
+      if (id.includes(q) || name.includes(q) || line.includes(q)) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  }
+</script>
+</main>
+</body></html>

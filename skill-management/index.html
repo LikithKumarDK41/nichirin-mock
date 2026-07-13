@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<!-- SPA Layout Redirect Wrapper -->
+<script>
+  if (!document.getElementById('app-root')) {
+    const p = window.location.pathname;
+    const rel = '../';
+    window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
+  }
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Skill Management - Nichirin Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Extended Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#43474e",
+                        "inverse-on-surface": "#f2f0f3",
+                        "background": "#faf9fc",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#faf9fc",
+                        "surface-container-low": "#f4f3f6",
+                        "on-error": "#ffffff",
+                        "tertiary": "#110200",
+                        "outline": "#74777f",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#faf9fc",
+                        "on-surface": "#1a1c1e",
+                        "secondary-container": "#7af2f2",
+                        "primary-container": "#001f3f",
+                        "on-primary-container": "#6f88ad",
+                        "on-error-container": "#93000a",
+                        "on-background": "#1a1c1e",
+                        "on-primary-fixed": "#001c3a",
+                        "surface-container-high": "#e9e7eb",
+                        "inverse-surface": "#2f3033",
+                        "inverse-primary": "#afc8f0",
+                        "surface-dim": "#dbd9dd",
+                        "on-secondary-container": "#006e6e",
+                        "surface-container-highest": "#e3e2e5",
+                        "outline-variant": "#c4c6cf",
+                        "secondary": "#006a6a",
+                        "on-primary": "#ffffff",
+                        "primary": "#000613",
+                        "surface-tint": "#476083",
+                        "surface-variant": "#e3e2e5",
+                        "error": "#ba1a1a",
+                        "surface-container": "#efedf0",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-gap-md": "16px",
+                        "sidebar-width": "260px",
+                        "header-height": "64px",
+                        "stack-gap-sm": "8px",
+                        "grid-gutter": "20px",
+                        "container-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "data-tabular": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "label-bold": ["11px", {"lineHeight": "16px", "fontWeight": "700"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "data-tabular": ["13px", {"lineHeight": "16px", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #faf9fc; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #c4c6cf; border-radius: 10px; }
+    </style>
+</head>
+<body class="flex min-h-screen overflow-x-hidden">
+<!-- SideNavBar (Fallback) -->
+<aside class="fixed left-0 top-0 h-full w-[260px] bg-primary text-on-primary flex flex-col py-4 border-r border-outline-variant z-50">
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-[260px] pt-[64px] min-h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 h-[64px] w-[calc(100%-260px)] bg-surface flex justify-between items-center px-container-padding border-b border-outline-variant z-40">
+<div class="flex items-center gap-4">
+<nav class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+  <span class="">Plant</span>
+  <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+  <span class="">Line A</span>
+  <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+  <span class="text-primary font-bold border-b-2 border-primary pb-1">Skill Management</span>
+</nav>
+</div>
+</header>
+<!-- Page Canvas -->
+<div class="p-container-padding grid grid-cols-12 gap-6 bg-background">
+  <!-- Header -->
+  <div class="col-span-12 flex justify-between items-end mb-6">
+    <div>
+      <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Operator Skills &amp; Certifications</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant">Track qualifications, operational levels, and compliance certification records for plant personnel.</p>
+    </div>
+    <button class="flex items-center gap-2 bg-primary text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm" onclick="openAddSkillDrawer()">
+      <span class="material-symbols-outlined text-[18px]">workspace_premium</span>
+      Record Certification
+    </button>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-6 mb-2">
+    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm">
+      <div>
+        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Certified Operators</p>
+        <p class="text-3xl font-bold text-primary">8</p>
+      </div>
+      <span class="material-symbols-outlined text-[32px] text-emerald-600">verified</span>
+    </div>
+    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm">
+      <div>
+        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Pending Evaluation</p>
+        <p class="text-3xl font-bold text-slate-800">2</p>
+      </div>
+      <span class="material-symbols-outlined text-[32px] text-amber-500">pending_actions</span>
+    </div>
+    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm">
+      <div>
+        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Retraining Required</p>
+        <p class="text-3xl font-bold text-primary">1</p>
+      </div>
+      <span class="material-symbols-outlined text-[32px] text-red-500">release_alert</span>
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <section class="col-span-12 bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm flex flex-col">
+    <div class="px-6 py-4 border-b border-outline-variant/30 flex justify-between items-center bg-slate-50">
+      <h3 class="font-headline-md text-headline-md text-primary">Qualifications Registry</h3>
+      <div class="relative w-64">
+        <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
+        <input id="skillSearch" class="w-full bg-white border border-outline-variant/30 rounded-lg pl-8 pr-3 py-1.5 text-sm focus:outline-none focus:border-primary transition-colors h-8" placeholder="Search operator or skill..." type="text" onkeyup="filterSkillTable()"/>
+      </div>
+    </div>
+    
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse whitespace-nowrap" id="skillsTable">
+        <thead>
+          <tr class="bg-white border-b border-outline-variant/30">
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Employee Code</th>
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Name</th>
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Primary Skill</th>
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Skill Level</th>
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Certified Modules</th>
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Cert. Date</th>
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Expiry Date</th>
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Status</th>
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-right">Action</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant/30">
+          <tr class="hover:bg-slate-50/50 transition-colors">
+            <td class="px-6 py-4 font-bold text-primary font-data-tabular">EMP-1029</td>
+            <td class="px-6 py-4 font-semibold text-on-surface">Ito Naomi</td>
+            <td class="px-6 py-4 text-on-surface-variant">Crimp Operator</td>
+            <td class="px-6 py-4">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">L3 EXPERT</span>
+            </td>
+            <td class="px-6 py-4 text-on-surface-variant text-xs">Crimp Press, Hose Fitting, Vernier Caliper</td>
+            <td class="px-6 py-4 font-data-tabular">2026-01-12</td>
+            <td class="px-6 py-4 font-data-tabular">2027-01-12</td>
+            <td class="px-6 py-4">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/50">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>Certified
+              </span>
+            </td>
+            <td class="px-6 py-4 text-right">
+              <button class="w-8 h-8 rounded-lg border border-outline-variant/30 bg-white flex items-center justify-center text-primary hover:bg-slate-50 transition-colors" onclick="openEditSkillDrawer('EMP-1029')"><span class="material-symbols-outlined text-[16px]">edit</span></button>
+            </td>
+          </tr>
+          <tr class="hover:bg-slate-50/50 transition-colors">
+            <td class="px-6 py-4 font-bold text-primary font-data-tabular">EMP-9042</td>
+            <td class="px-6 py-4 font-semibold text-on-surface">Yamada Miku</td>
+            <td class="px-6 py-4 text-on-surface-variant">Assembly Specialist</td>
+            <td class="px-6 py-4">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold bg-purple-50 text-purple-700 border border-purple-200">L4 TRAINER</span>
+            </td>
+            <td class="px-6 py-4 text-on-surface-variant text-xs">Full line assembly, QC validation, Offline prep</td>
+            <td class="px-6 py-4 font-data-tabular">2025-06-18</td>
+            <td class="px-6 py-4 font-data-tabular">2026-06-18</td>
+            <td class="px-6 py-4">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200/50">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5"></span>Retraining
+              </span>
+            </td>
+            <td class="px-6 py-4 text-right">
+              <button class="w-8 h-8 rounded-lg border border-outline-variant/30 bg-white flex items-center justify-center text-primary hover:bg-slate-50 transition-colors" onclick="openEditSkillDrawer('EMP-9042')"><span class="material-symbols-outlined text-[16px]">edit</span></button>
+            </td>
+          </tr>
+          <tr class="hover:bg-slate-50/50 transition-colors">
+            <td class="px-6 py-4 font-bold text-primary font-data-tabular">EMP-7712</td>
+            <td class="px-6 py-4 font-semibold text-on-surface">Suzuki Ken</td>
+            <td class="px-6 py-4 text-on-surface-variant">Leak Tester</td>
+            <td class="px-6 py-4">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200">L2 STANDARD</span>
+            </td>
+            <td class="px-6 py-4 text-on-surface-variant text-xs">Pneumatic testing, Digital pressure setup</td>
+            <td class="px-6 py-4 font-data-tabular">2025-11-20</td>
+            <td class="px-6 py-4 font-data-tabular">2026-11-20</td>
+            <td class="px-6 py-4">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/50">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>Certified
+              </span>
+            </td>
+            <td class="px-6 py-4 text-right">
+              <button class="w-8 h-8 rounded-lg border border-outline-variant/30 bg-white flex items-center justify-center text-primary hover:bg-slate-50 transition-colors" onclick="openEditSkillDrawer('EMP-7712')"><span class="material-symbols-outlined text-[16px]">edit</span></button>
+            </td>
+          </tr>
+          <tr class="hover:bg-slate-50/50 transition-colors">
+            <td class="px-6 py-4 font-bold text-primary font-data-tabular">EMP-3401</td>
+            <td class="px-6 py-4 font-semibold text-on-surface">Tanaka Ren</td>
+            <td class="px-6 py-4 text-on-surface-variant">Laser Marker</td>
+            <td class="px-6 py-4">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">L1 APPRENTICE</span>
+            </td>
+            <td class="px-6 py-4 text-on-surface-variant text-xs">Laser Marking, barcode validation</td>
+            <td class="px-6 py-4 font-data-tabular">2026-03-01</td>
+            <td class="px-6 py-4 font-data-tabular">2026-09-01</td>
+            <td class="px-6 py-4">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200/50">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-500 mr-1.5"></span>Pending
+              </span>
+            </td>
+            <td class="px-6 py-4 text-right">
+              <button class="w-8 h-8 rounded-lg border border-outline-variant/30 bg-white flex items-center justify-center text-primary hover:bg-slate-50 transition-colors" onclick="openEditSkillDrawer('EMP-3401')"><span class="material-symbols-outlined text-[16px]">edit</span></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Backdrop -->
+  <div id="drawerBackdrop" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[90] transition-opacity duration-300 opacity-0" onclick="toggleDrawer(false)"></div>
+  <!-- Drawer -->
+  <div id="skillDrawer" class="fixed top-0 right-0 h-full w-full max-w-[480px] bg-white z-[100] shadow-2xl border-l border-outline-variant/30 transform translate-x-full transition-transform duration-300 ease-out flex flex-col">
+    <div class="bg-slate-50 px-6 py-5 border-b border-outline-variant/30 flex justify-between items-center">
+      <h3 class="font-headline-md text-headline-md text-primary" id="drawerTitle">Record Qualification</h3>
+      <button class="text-on-surface-variant hover:text-primary transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100" onclick="toggleDrawer(false)">
+        <span class="material-symbols-outlined text-[20px]">close</span>
+      </button>
+    </div>
+    <form class="p-6 flex-1 overflow-y-auto" onsubmit="saveSkill(event)">
+      <div class="grid grid-cols-2 gap-4 pb-24">
+        <div class="col-span-1 space-y-1.5">
+          <label class="block text-xs font-bold uppercase text-slate-500">Employee Code</label>
+          <input id="skillEmpCode" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary text-sm h-10 px-3 font-semibold bg-white" placeholder="e.g. EMP-0000" type="text" required />
+        </div>
+        <div class="col-span-1 space-y-1.5">
+          <label class="block text-xs font-bold uppercase text-slate-500">Full Name</label>
+          <input id="skillName" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary text-sm h-10 px-3 font-semibold bg-white" placeholder="First Last" type="text" required />
+        </div>
+        <div class="col-span-2 space-y-1.5">
+          <label class="block text-xs font-bold uppercase text-slate-500">Primary Skill / Operation</label>
+          <input id="skillPrimary" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary text-sm h-10 px-3 font-semibold bg-white" placeholder="e.g. Hose Crimping" type="text" required />
+        </div>
+        <div class="col-span-2 space-y-1.5">
+          <label class="block text-xs font-bold uppercase text-slate-500">Skill Level</label>
+          <select id="skillLevel" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary text-sm h-10 px-3 font-semibold bg-white">
+            <option value="L1 APPRENTICE">L1 Apprentice</option>
+            <option value="L2 STANDARD">L2 Standard</option>
+            <option value="L3 EXPERT">L3 Expert</option>
+            <option value="L4 TRAINER">L4 Trainer</option>
+          </select>
+        </div>
+        <div class="col-span-2 space-y-1.5">
+          <label class="block text-xs font-bold uppercase text-slate-500">Certified Modules (Comma separated)</label>
+          <input id="skillModules" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary text-sm h-10 px-3 font-semibold bg-white" placeholder="e.g. Marking, Pressure check" type="text" required />
+        </div>
+        <div class="col-span-1 space-y-1.5">
+          <label class="block text-xs font-bold uppercase text-slate-500">Cert. Date</label>
+          <input id="skillCertDate" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary text-sm h-10 px-3 font-semibold bg-white" type="date" required />
+        </div>
+        <div class="col-span-1 space-y-1.5">
+          <label class="block text-xs font-bold uppercase text-slate-500">Expiry Date</label>
+          <input id="skillExpiryDate" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary text-sm h-10 px-3 font-semibold bg-white" type="date" required />
+        </div>
+        <div class="col-span-2 space-y-1.5">
+          <label class="block text-xs font-bold uppercase text-slate-500">Status</label>
+          <select id="skillStatus" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary text-sm h-10 px-3 font-semibold bg-white">
+            <option value="Certified">Certified</option>
+            <option value="Retraining">Retraining</option>
+            <option value="Pending">Pending Validation</option>
+          </select>
+        </div>
+      </div>
+      <div class="absolute bottom-0 left-0 right-0 bg-slate-50 p-4 border-t border-outline-variant/30 flex justify-end gap-3 z-10">
+        <button class="px-4 h-10 rounded-lg font-semibold text-sm text-slate-600 hover:bg-slate-100" onclick="toggleDrawer(false)" type="button">Cancel</button>
+        <button class="px-6 h-10 rounded-lg bg-primary text-white font-semibold text-sm shadow-sm hover:bg-primary/95" type="submit" id="submitBtnText">Register Skill</button>
+      </div>
+    </form>
+  </div>
+  
+  <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 ease-out z-[100] border border-slate-800 text-sm">
+    <span class="material-symbols-outlined text-emerald-400">check_circle</span>
+    <span id="toastMessage">Access levels successfully saved!</span>
+  </div>
+</div>
+
+<script>
+  const SKILL_DATA = {
+    'EMP-1029': { name: 'Ito Naomi', skill: 'Crimp Operator', level: 'L3 EXPERT', modules: 'Crimp Press, Hose Fitting, Vernier Caliper', certDate: '2026-01-12', expDate: '2027-01-12', status: 'Certified' },
+    'EMP-9042': { name: 'Yamada Miku', skill: 'Assembly Specialist', level: 'L4 TRAINER', modules: 'Full line assembly, QC validation, Offline prep', certDate: '2025-06-18', expDate: '2026-06-18', status: 'Retraining' },
+    'EMP-7712': { name: 'Suzuki Ken', skill: 'Leak Tester', level: 'L2 STANDARD', modules: 'Pneumatic testing, Digital pressure setup', certDate: '2025-11-20', expDate: '2026-11-20', status: 'Certified' },
+    'EMP-3401': { name: 'Tanaka Ren', skill: 'Laser Marker', level: 'L1 APPRENTICE', modules: 'Laser Marking, barcode validation', certDate: '2026-03-01', expDate: '2026-09-01', status: 'Pending' }
+  };
+
+  function toggleDrawer(isOpen) {
+    const backdrop = document.getElementById('drawerBackdrop');
+    const drawer = document.getElementById('skillDrawer');
+    if (isOpen) {
+      backdrop.classList.remove('hidden');
+      setTimeout(() => {
+        backdrop.classList.add('opacity-100');
+        drawer.classList.remove('translate-x-full');
+      }, 50);
+    } else {
+      backdrop.classList.remove('opacity-100');
+      drawer.classList.add('translate-x-full');
+      setTimeout(() => {
+        backdrop.classList.add('hidden');
+      }, 300);
+    }
+  }
+
+  function openAddSkillDrawer() {
+    document.getElementById('drawerTitle').textContent = 'Record Operator Certification';
+    document.getElementById('submitBtnText').textContent = 'Register Skill';
+    
+    document.getElementById('skillEmpCode').value = '';
+    document.getElementById('skillEmpCode').readOnly = false;
+    document.getElementById('skillName').value = '';
+    document.getElementById('skillPrimary').value = '';
+    document.getElementById('skillLevel').selectedIndex = 0;
+    document.getElementById('skillModules').value = '';
+    document.getElementById('skillCertDate').value = '';
+    document.getElementById('skillExpiryDate').value = '';
+    document.getElementById('skillStatus').selectedIndex = 0;
+    
+    toggleDrawer(true);
+  }
+
+  function openEditSkillDrawer(empCode) {
+    const data = SKILL_DATA[empCode];
+    if (!data) return;
+
+    document.getElementById('drawerTitle').textContent = 'Update Operator Certification';
+    document.getElementById('submitBtnText').textContent = 'Save Changes';
+    
+    const codeInput = document.getElementById('skillEmpCode');
+    codeInput.value = empCode;
+    codeInput.readOnly = true;
+    
+    document.getElementById('skillName').value = data.name;
+    document.getElementById('skillPrimary').value = data.skill;
+    document.getElementById('skillLevel').value = data.level;
+    document.getElementById('skillModules').value = data.modules;
+    document.getElementById('skillCertDate').value = data.certDate;
+    document.getElementById('skillExpiryDate').value = data.expDate;
+    document.getElementById('skillStatus').value = data.status;
+    
+    toggleDrawer(true);
+  }
+
+  function saveSkill(e) {
+    e.preventDefault();
+    toggleDrawer(false);
+    showToast('Qualifications successfully synchronized with HR registry database.');
+  }
+
+  function showToast(message) {
+    const toast = document.getElementById('toast');
+    const msg = document.getElementById('toastMessage');
+    msg.textContent = message;
+    toast.classList.remove('translate-y-20', 'opacity-0');
+    toast.classList.add('translate-y-0', 'opacity-100');
+    
+    setTimeout(() => {
+      toast.classList.remove('translate-y-0', 'opacity-100');
+      toast.classList.add('translate-y-20', 'opacity-0');
+    }, 3000);
+  }
+
+  function filterSkillTable() {
+    const q = document.getElementById('skillSearch').value.toLowerCase();
+    const rows = document.querySelectorAll('#skillsTable tbody tr');
+    rows.forEach(row => {
+      const code = row.cells[0].textContent.toLowerCase();
+      const name = row.cells[1].textContent.toLowerCase();
+      const skill = row.cells[2].textContent.toLowerCase();
+      if (code.includes(q) || name.includes(q) || skill.includes(q)) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  }
+</script>
+</main>
+</body></html>

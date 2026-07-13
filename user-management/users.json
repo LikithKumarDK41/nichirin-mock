@@ -1,0 +1,137 @@
+[
+  {
+    "empCode": "EMP-8821",
+    "name": "Sato Hiroshi",
+    "email": "sato.hiroshi@nichirin.com",
+    "phone": "+81 90-8821-4321",
+    "role": "ADMIN",
+    "line": "Global",
+    "status": "Active"
+  },
+  {
+    "empCode": "EMP-9042",
+    "name": "Yamada Miku",
+    "email": "yamada.miku@nichirin.com",
+    "phone": "+81 90-9042-5678",
+    "role": "SUPERVISOR",
+    "line": "Line B-4",
+    "status": "Active"
+  },
+  {
+    "empCode": "EMP-7712",
+    "name": "Suzuki Ken",
+    "email": "suzuki.ken@nichirin.com",
+    "phone": "+81 90-7712-1122",
+    "role": "QC",
+    "line": "Line A-1",
+    "status": "Suspended"
+  },
+  {
+    "empCode": "EMP-1029",
+    "name": "Ito Naomi",
+    "email": "ito.naomi@nichirin.com",
+    "phone": "+81 90-1029-9900",
+    "role": "OPERATOR",
+    "line": "Line C-9",
+    "status": "Active"
+  },
+  {
+    "empCode": "EMP-4521",
+    "name": "Takahashi Ryouta",
+    "email": "takahashi.r@nichirin.com",
+    "phone": "+81 90-4521-7890",
+    "role": "OPERATOR",
+    "line": "Line A-1",
+    "status": "Active"
+  },
+  {
+    "empCode": "EMP-5590",
+    "name": "Watanabe Yuto",
+    "email": "watanabe.y@nichirin.com",
+    "phone": "+81 90-5590-1234",
+    "role": "SUPERVISOR",
+    "line": "Line C-9",
+    "status": "Active"
+  },
+  {
+    "empCode": "EMP-6623",
+    "name": "Kobayashi Aoi",
+    "email": "kobayashi.a@nichirin.com",
+    "phone": "+81 90-6623-5678",
+    "role": "QC",
+    "line": "Line B-4",
+    "status": "Active"
+  },
+  {
+    "empCode": "EMP-3312",
+    "name": "Nakamura Mei",
+    "email": "nakamura.m@nichirin.com",
+    "phone": "+81 90-3312-9012",
+    "role": "OPERATOR",
+    "line": "Line A-2",
+    "status": "Inactive"
+  },
+  {
+    "empCode": "EMP-1204",
+    "name": "Saito Daiki",
+    "email": "saito.d@nichirin.com",
+    "phone": "+81 90-1204-3456",
+    "role": "OPERATOR",
+    "line": "Line B-1",
+    "status": "Active"
+  },
+  {
+    "empCode": "EMP-9088",
+    "name": "Kato Sakura",
+    "email": "kato.s@nichirin.com",
+    "phone": "+81 90-9088-7890",
+    "role": "QC",
+    "line": "Global",
+    "status": "Active"
+  },
+  {
+    "empCode": "EMP-7788",
+    "name": "Yoshida Ren",
+    "email": "yoshida.r@nichirin.com",
+    "phone": "+81 90-7788-1234",
+    "role": "SUPERVISOR",
+    "line": "Line A-1",
+    "status": "Active"
+  },
+  {
+    "empCode": "EMP-8800",
+    "name": "Yamamoto Haru",
+    "email": "yamamoto.h@nichirin.com",
+    "phone": "+81 90-8800-5678",
+    "role": "OPERATOR",
+    "line": "Line B-4",
+    "status": "Active"
+  },
+  {
+    "empCode": "EMP-2211",
+    "name": "Aoki Hinata",
+    "email": "aoki.h@nichirin.com",
+    "phone": "+81 90-2211-9012",
+    "role": "OPERATOR",
+    "line": "Line C-9",
+    "status": "Active"
+  },
+  {
+    "empCode": "EMP-1144",
+    "name": "Inoue Kaito",
+    "email": "inoue.k@nichirin.com",
+    "phone": "+81 90-1144-3456",
+    "role": "QC",
+    "line": "Line A-2",
+    "status": "Active"
+  },
+  {
+    "empCode": "EMP-3401",
+    "name": "Tanaka Ren",
+    "email": "tanaka.r@nichirin.com",
+    "phone": "+81 90-3401-5678",
+    "role": "OPERATOR",
+    "line": "Line A-1",
+    "status": "Active"
+  }
+]

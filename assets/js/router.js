@@ -8,7 +8,8 @@
     'process-master', 'bom-picking-master', 'control-point-master',
     'standard-tolerance-master', 'method-master', 'qc-rules', 'qr-label-management',
     'traceability-search', 'production-reports', 'qc-reports', 'breakdown-reports',
-    'sap-sync-reports', 'audit-reports', 'user-roles', 'device-management',
+    'sap-sync-reports', 'audit-reports', 'user-management', 'role-management', 
+    'skill-management', 'machine-management', 'device-management',
     'csv-import', 'sap-logs', 'sap-field-mapping', 'notification-configuration',
     'system-settings', 'login-old', 'admin-prototype'
   ];
@@ -38,7 +39,7 @@
     }
     const logoLink = document.querySelector('aside a');
     if (logoLink) {
-      logoLink.setAttribute('href', relPrefix + 'dashboard/index.html');
+      logoLink.setAttribute('href', relPrefix + 'work-orders/index.html');
     }
 
     // Update all nav items href paths based on new relative prefix
@@ -65,7 +66,7 @@
     const SIDEBAR_HTML = `
       <aside class="fixed top-0 left-0 h-full w-[260px] bg-white text-on-surface border-r border-outline-variant/30 flex flex-col z-50 -translate-x-full lg:translate-x-0 transition-transform duration-300 select-none">
         <div class="h-[64px] px-6 border-b border-outline-variant/30 bg-white flex items-center justify-center relative select-none flex-shrink-0">
-          <a class="flex items-center justify-center gap-2" href="${relPrefix}dashboard/index.html">
+          <a class="flex items-center justify-center gap-2" href="${relPrefix}work-orders/index.html">
             <img src="${relPrefix}assets/logo.png" class="h-10 w-auto object-contain select-none" alt="NICHIRIN Logo" />
           </a>
           <button class="sidebar-close-btn absolute right-4 top-1/2 -translate-y-1/2 lg:hidden text-on-surface-variant hover:text-primary" aria-label="Close Sidebar">
@@ -74,18 +75,13 @@
         </div>
         
         <nav class="flex-grow overflow-y-auto custom-scrollbar space-y-1 px-3 mb-4">
-          <!-- MONITORING SECTION -->
+          <!-- OPERATIONS SECTION -->
           <div class="space-y-1">
-            <p class="text-[11px] font-bold text-slate-500 uppercase tracking-widest px-4 pt-4 pb-2 select-none">Monitoring</p>
-            
-            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}dashboard/index.html" data-route="dashboard">
-              <span class="material-symbols-outlined text-[20px]">dashboard</span>
-              <span>Dashboard</span>
-            </a>
+            <p class="text-[11px] font-bold text-slate-500 uppercase tracking-widest px-4 pt-4 pb-2 select-none">Operations</p>
             
             <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}work-orders/index.html" data-route="work-orders">
               <span class="material-symbols-outlined text-[20px]">precision_manufacturing</span>
-              <span>Work Order Monitoring</span>
+              <span>Work Order</span>
             </a>
             
             <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}supervisor-planning/index.html" data-route="supervisor-planning">
@@ -96,31 +92,6 @@
             <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}qc-pending-approvals/index.html" data-route="qc-pending-approvals">
               <span class="material-symbols-outlined text-[20px]">fact_check</span>
               <span>QC Pending Approvals</span>
-            </a>
-            
-            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}breakdown-rework/index.html" data-route="breakdown-rework">
-              <span class="material-symbols-outlined text-[20px]">build_circle</span>
-              <span>Breakdown / Rework</span>
-            </a>
-          </div>
-  
-          <!-- MASTER CONFIGURATION SECTION -->
-          <div class="space-y-1 pt-2">
-            <p class="text-[11px] font-bold text-slate-500 uppercase tracking-widest px-4 pt-5 pb-2 select-none">Master Configuration</p>
-            
-            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}workflow-configuration/index.html" data-route="workflow-configuration">
-              <span class="material-symbols-outlined text-[20px]">schema</span>
-              <span>Workflow Configuration</span>
-            </a>
-  
-            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}qc-rules/index.html" data-route="qc-rules">
-              <span class="material-symbols-outlined text-[20px]">checklist</span>
-              <span>QC Rule Configuration</span>
-            </a>
-  
-            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}qr-label-management/index.html" data-route="qr-label-management">
-              <span class="material-symbols-outlined text-[20px]">qr_code_2</span>
-              <span>QR Label Management</span>
             </a>
           </div>
   
@@ -138,56 +109,45 @@
               <span>QC Reports</span>
             </a>
   
-            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}breakdown-reports/index.html" data-route="breakdown-reports">
-              <span class="material-symbols-outlined text-[20px]">warning</span>
-              <span>Breakdown Reports</span>
-            </a>
-  
-            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}sap-sync-reports/index.html" data-route="sap-sync-reports">
-              <span class="material-symbols-outlined text-[20px]">sync</span>
-              <span>SAP Sync Reports</span>
-            </a>
-  
             <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}audit-reports/index.html" data-route="audit-reports">
               <span class="material-symbols-outlined text-[20px]">menu_book</span>
               <span>Audit Reports</span>
             </a>
           </div>
   
-          <!-- ADMINISTRATION SECTION -->
+          <!-- MASTER CONFIGURATION SECTION -->
           <div class="space-y-1 pt-2">
-            <p class="text-[11px] font-bold text-slate-500 uppercase tracking-widest px-4 pt-5 pb-2 select-none">Administration</p>
+            <p class="text-[11px] font-bold text-slate-500 uppercase tracking-widest px-4 pt-5 pb-2 select-none">Master Configuration</p>
             
-            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}user-roles/index.html" data-route="user-roles">
-              <span class="material-symbols-outlined text-[20px]">manage_accounts</span>
-              <span>User &amp; Role Management</span>
+            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}workflow-configuration/index.html" data-route="workflow-configuration">
+              <span class="material-symbols-outlined text-[20px]">schema</span>
+              <span>Workflow Configuration</span>
+            </a>
+
+            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}user-management/index.html" data-route="user-management">
+              <span class="material-symbols-outlined text-[20px]">person</span>
+              <span>User Management</span>
+            </a>
+            
+            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}role-management/index.html" data-route="role-management">
+              <span class="material-symbols-outlined text-[20px]">security</span>
+              <span>Role Management</span>
+            </a>
+
+            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}skill-management/index.html" data-route="skill-management">
+              <span class="material-symbols-outlined text-[20px]">badge</span>
+              <span>Skill Management</span>
+            </a>
+
+            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}machine-management/index.html" data-route="machine-management">
+              <span class="material-symbols-outlined text-[20px]">factory</span>
+              <span>Machine Management</span>
             </a>
             
             <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}device-management/index.html" data-route="device-management">
               <span class="material-symbols-outlined text-[20px]">router</span>
               <span>Device Management</span>
             </a>
-            
-            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}csv-import/index.html" data-route="csv-import">
-              <span class="material-symbols-outlined text-[20px]">upload_file</span>
-              <span>CSV Import</span>
-            </a>
-            
-            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}sap-logs/index.html" data-route="sap-logs">
-              <span class="material-symbols-outlined text-[20px]">receipt_long</span>
-              <span>SAP Synchronization Logs</span>
-            </a>
-            
-            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}sap-field-mapping/index.html" data-route="sap-field-mapping">
-              <span class="material-symbols-outlined text-[20px]">swap_horiz</span>
-              <span>SAP Field Mapping</span>
-            </a>
-            
-            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}notification-configuration/index.html" data-route="notification-configuration">
-              <span class="material-symbols-outlined text-[20px]">notifications_active</span>
-              <span>Notification / Alarm Config</span>
-            </a>
-            
             <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}system-settings/index.html" data-route="system-settings">
               <span class="material-symbols-outlined text-[20px]">settings</span>
               <span>System Settings</span>
@@ -214,10 +174,10 @@
           <button class="sidebar-toggle-btn flex items-center justify-center w-10 h-10 text-on-surface-variant hover:text-primary rounded-xl transition-colors" aria-label="Toggle Sidebar">
             <span class="material-symbols-outlined">menu</span>
           </button>
-          <span class="text-lg sm:text-xl font-black text-primary select-none tracking-tight leading-none">Control Card Digitization</span>
+          <span class="text-lg sm:text-xl font-black text-primary select-none tracking-tight leading-none">Control Card Digitization System</span>
         </div>
         
-        <div class="flex items-center gap-4 flex-wrap sm:flex-nowrap">
+        <div class="flex items-center gap-4 flex-wrap sm:flex-nowrap" id="main-header-right">
           <button class="relative text-on-surface-variant hover:text-primary transition-colors p-2 rounded">
             <span class="material-symbols-outlined">notifications</span>
             <span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
@@ -310,10 +270,37 @@
 
   // Highlights active menu items in sidebar template
   function updateActiveNavItem(route) {
+    // Map sub-routes to parent sidebar routes
+    const routeMapping = {
+      'work-order-detail': 'work-orders',
+      'offline-prep-validation': 'work-orders',
+      'offline-prep-validation-canvas': 'work-orders',
+      'online-assembly-validation': 'work-orders',
+      'online-assembly-validation-canvas': 'work-orders',
+      'qc-approval-validation': 'work-orders',
+      'qc-approval-validation-canvas': 'work-orders',
+      'rework-process-validation': 'work-orders',
+      'advanced-process-validation': 'work-orders',
+      'workflow-canvas-overview': 'workflow-configuration',
+      'workflow-stage-overview': 'workflow-configuration',
+      'advanced-workflow-configuration': 'workflow-configuration',
+      'stage-step-configuration': 'workflow-configuration',
+      'step-configuration-offline-prep': 'workflow-configuration',
+      'step-configuration-picking': 'workflow-configuration',
+      'control-card-templates': 'workflow-configuration',
+      'process-master': 'workflow-configuration',
+      'bom-picking-master': 'workflow-configuration',
+      'control-point-master': 'workflow-configuration',
+      'standard-tolerance-master': 'workflow-configuration',
+      'method-master': 'workflow-configuration'
+    };
+
+    const activeRoute = routeMapping[route] || route;
+
     const items = document.querySelectorAll('.nav-item');
     items.forEach(item => {
       const dataRoute = item.getAttribute('data-route');
-      if (dataRoute && route === dataRoute) {
+      if (dataRoute && activeRoute === dataRoute) {
         item.classList.add('sidebar-active');
       } else {
         item.classList.remove('sidebar-active');
@@ -344,8 +331,8 @@
     }
 
     if (isUserLoggedIn && (route === 'login-old' || (path.endsWith('index.html') && !SUBFOLDERS.some(f => path.includes('/' + f + '/'))))) {
-      // Redirect authenticated root users directly to dashboard
-      window.history.replaceState(null, '', relPrefix + 'dashboard/index.html');
+      // Redirect authenticated root users directly to work-orders
+      window.history.replaceState(null, '', relPrefix + 'work-orders/index.html');
       loadRoute();
       return;
     }
@@ -388,7 +375,7 @@
           <div class="bg-white p-8 rounded border border-outline-variant text-center max-w-sm">
             <h1 class="text-xl font-bold text-error mb-2">Service Offline</h1>
             <p class="text-on-surface-variant text-sm mb-4">Could not load login interface details.</p>
-            <button onclick="localStorage.setItem('loggedIn', 'true'); window.location.href='./dashboard/index.html';" class="px-4 py-2 bg-primary text-on-primary font-bold">Bypass Authorization</button>
+            <button onclick="localStorage.setItem('loggedIn', 'true'); window.location.href='./work-orders/index.html';" class="px-4 py-2 bg-primary text-on-primary font-bold">Bypass Authorization</button>
           </div>
         `;
       }
@@ -448,10 +435,57 @@
         document.head.appendChild(s);
       });
 
-      // Remove duplicate header of the sub-page
+      // Render static header title "Control Card Digitization System" next to hamburger button
+      const mainHeaderLeft = document.querySelector('header > div:first-child');
+      if (mainHeaderLeft) {
+        const menuBtn = mainHeaderLeft.querySelector('.sidebar-toggle-btn');
+        mainHeaderLeft.innerHTML = '';
+        if (menuBtn) {
+          mainHeaderLeft.appendChild(menuBtn);
+        }
+        const defaultTitle = document.createElement('span');
+        defaultTitle.className = 'text-lg sm:text-xl font-black text-primary select-none tracking-tight leading-none';
+        defaultTitle.textContent = 'Control Card Digitization System';
+        mainHeaderLeft.appendChild(defaultTitle);
+      }
+
+      // Merge custom header contents (badges) into the shell layout header dynamically
       const subHeader = doc.querySelector('header');
       if (subHeader) {
+        // Merge right-side badge content (e.g. status badges like "Production")
+        const rightContent = subHeader.lastElementChild;
+        const mainHeaderRight = document.getElementById('main-header-right') || document.querySelector('header > div:last-child');
+        if (rightContent && mainHeaderRight) {
+          // Remove any previously injected custom badges to prevent accumulation
+          const existingBadge = mainHeaderRight.querySelector('.custom-header-badge');
+          if (existingBadge) {
+            existingBadge.remove();
+          }
+
+          // Scan subheader right elements for status badges (such as "Production" badge)
+          let badge = null;
+          Array.from(rightContent.children).forEach(child => {
+            const text = child.textContent.trim().toLowerCase();
+            if (text === 'production' && !child.querySelector('img') && !child.querySelector('[data-icon="notifications"]')) {
+              badge = child.cloneNode(true);
+            }
+          });
+
+          if (badge) {
+            badge.classList.add('custom-header-badge');
+            // Insert badge before notifications button
+            mainHeaderRight.insertBefore(badge, mainHeaderRight.firstElementChild);
+          }
+        }
         subHeader.remove();
+      } else {
+        const mainHeaderRight = document.getElementById('main-header-right') || document.querySelector('header > div:last-child');
+        if (mainHeaderRight) {
+          const existingBadge = mainHeaderRight.querySelector('.custom-header-badge');
+          if (existingBadge) {
+            existingBadge.remove();
+          }
+        }
       }
 
       // Extract and inject page core body content
@@ -513,8 +547,8 @@
           <p class="font-body-md text-on-surface-variant mb-6 leading-relaxed">
             The page <strong>"${route}"</strong> is loaded as a placeholder or lacks dynamic HTML content mockup. 
           </p>
-          <a href="${relPrefix}dashboard/index.html" class="px-6 py-2.5 bg-primary text-on-primary hover:opacity-90 transition-all font-label-bold text-label-bold rounded-xl shadow-sm cursor-pointer">
-            RETURN TO DASHBOARD
+          <a href="${relPrefix}work-orders/index.html" class="px-6 py-2.5 bg-primary text-on-primary hover:opacity-90 transition-all font-label-bold text-label-bold rounded-xl shadow-sm cursor-pointer">
+            RETURN TO WORK ORDERS
           </a>
         </div>
       `;
@@ -584,7 +618,7 @@
           localStorage.setItem('loggedIn', 'true');
           btn.innerHTML = orig;
           btn.disabled = false;
-          window.history.pushState(null, '', relPrefix + 'dashboard/index.html');
+          window.history.pushState(null, '', relPrefix + 'work-orders/index.html');
           loadRoute();
         }, 800);
       }
@@ -610,7 +644,7 @@
               localStorage.setItem('loggedIn', 'true');
               submitBtn.innerHTML = orig;
               submitBtn.disabled = false;
-              window.history.pushState(null, '', relPrefix + 'dashboard/index.html');
+              window.history.pushState(null, '', relPrefix + 'work-orders/index.html');
               loadRoute();
             }, 800);
           }
