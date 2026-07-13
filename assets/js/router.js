@@ -11,7 +11,7 @@
     'sap-sync-reports', 'audit-reports', 'user-management', 'role-management', 
     'skill-management', 'machine-management', 'device-management',
     'csv-import', 'sap-logs', 'sap-field-mapping', 'notification-configuration',
-    'system-settings', 'login-old', 'admin-prototype'
+    'system-settings', 'login-old', 'admin-prototype', 'profile'
   ];
 
   // Helper to determine relative path depth prefix ('./' or '../')
@@ -55,6 +55,202 @@
     const logoutBtn = document.querySelector('#logout-btn');
     if (logoutBtn) {
       logoutBtn.setAttribute('href', relPrefix + 'login-old/index.html');
+    }
+  }
+
+  // Notification and Profile state management helpers
+  function getNotifications() {
+    const stored = localStorage.getItem('system_notifications');
+    if (stored) return JSON.parse(stored);
+    
+    const defaultNotifications = [
+      {
+        id: 1,
+        title: 'Work Order Pending Approval',
+        message: 'Work Order #4802 requires site manager sign-off.',
+        time: '5 mins ago',
+        read: false,
+        icon: 'fact_check',
+        color: 'bg-primary-container text-on-primary-container',
+        link: 'qc-pending-approvals'
+      },
+      {
+        id: 2,
+        title: 'Quality Deviation Alert',
+        message: 'Line A reported tolerance drift on Outer Hose Diameter.',
+        time: '1 hour ago',
+        read: false,
+        icon: 'warning',
+        color: 'bg-error-container text-on-error-container',
+        link: 'traceability-search'
+      },
+      {
+        id: 3,
+        title: 'System Update Successful',
+        message: 'SAP database master sync completed successfully.',
+        time: '3 hours ago',
+        read: true,
+        icon: 'sync',
+        color: 'bg-secondary-container text-on-secondary-container',
+        link: 'sap-sync-reports'
+      },
+      {
+        id: 4,
+        title: 'New Template Approved',
+        message: 'Control Card Template [T-Hose-V2] has been verified by Lead QC.',
+        time: '1 day ago',
+        read: true,
+        icon: 'task_alt',
+        color: 'bg-tertiary-container text-on-tertiary-container',
+        link: 'workflow-configuration'
+      }
+    ];
+    localStorage.setItem('system_notifications', JSON.stringify(defaultNotifications));
+    return defaultNotifications;
+  }
+  
+  function saveNotifications(list) {
+    localStorage.setItem('system_notifications', JSON.stringify(list));
+  }
+
+  let selectedNotificationIds = [];
+
+  function renderNotifications(relPrefix) {
+    const listContainer = document.getElementById('notification-list');
+    const headerActions = document.getElementById('notification-header-actions');
+    const badge = document.getElementById('header-notification-badge');
+    if (!listContainer || !headerActions) return;
+    
+    const list = getNotifications();
+    const unreadCount = list.filter(n => !n.read).length;
+    
+    if (unreadCount > 0) {
+      if (badge) badge.classList.remove('hidden');
+    } else {
+      if (badge) badge.classList.add('hidden');
+    }
+    
+    if (list.length === 0) {
+      selectedNotificationIds = [];
+      headerActions.innerHTML = `
+        <span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Notifications</span>
+      `;
+      listContainer.innerHTML = `
+        <div class="p-6 text-center text-on-surface-variant">
+          <span class="material-symbols-outlined text-[32px] opacity-40 mb-1">notifications_off</span>
+          <p class="text-xs font-semibold">No notifications found.</p>
+        </div>
+      `;
+      return;
+    }
+
+    // Filter out selection IDs that no longer exist in list
+    selectedNotificationIds = selectedNotificationIds.filter(id => list.some(n => n.id === id));
+
+    const allSelected = list.length > 0 && list.every(n => selectedNotificationIds.includes(n.id));
+    const someSelected = list.some(n => selectedNotificationIds.includes(n.id)) && !allSelected;
+
+    // Render header actions
+    if (selectedNotificationIds.length === 0) {
+      headerActions.innerHTML = `
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="select-all-notifications" class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary/20 cursor-pointer">
+          <span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Notifications</span>
+        </div>
+        <button id="mark-all-read-btn" class="text-xs font-semibold text-primary hover:underline">Mark all as read</button>
+      `;
+    } else {
+      headerActions.innerHTML = `
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="select-all-notifications" class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary/20 cursor-pointer" ${allSelected ? 'checked' : ''}>
+          <span class="text-xs font-semibold text-primary font-bold">Selected: ${selectedNotificationIds.length}</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="bulk-mark-read" class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-1" title="Mark as read">
+            <span class="material-symbols-outlined text-[18px]">drafts</span>
+          </button>
+          <button id="bulk-mark-unread" class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-1" title="Mark as unread">
+            <span class="material-symbols-outlined text-[18px]">mail</span>
+          </button>
+          <button id="bulk-delete" class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-1" title="Delete">
+            <span class="material-symbols-outlined text-[18px]">delete</span>
+          </button>
+        </div>
+      `;
+    }
+
+    // Set indeterminate status
+    const selectAllCheckbox = document.getElementById('select-all-notifications');
+    if (selectAllCheckbox) {
+      selectAllCheckbox.indeterminate = someSelected;
+    }
+
+    // Render list
+    listContainer.innerHTML = list.map(n => {
+      const isSelected = selectedNotificationIds.includes(n.id);
+      return `
+        <div data-id="${n.id}" class="notification-item p-3.5 flex gap-3 hover:bg-surface-container-high/50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group ${!n.read ? 'bg-primary-subtle' : ''} ${isSelected ? 'bg-slate-50 dark:bg-slate-900/50' : ''}">
+          <!-- Checkbox for item selection -->
+          <div class="flex items-center flex-shrink-0 toggle-select-container">
+            <input type="checkbox" class="item-select-checkbox w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary/20 cursor-pointer" data-id="${n.id}" ${isSelected ? 'checked' : ''}>
+          </div>
+          <!-- Category icon -->
+          <div class="w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center ${n.color || 'bg-surface-container text-on-surface'}">
+            <span class="material-symbols-outlined text-[18px]">${n.icon}</span>
+          </div>
+          <!-- Content text -->
+          <div class="flex-grow min-w-0">
+            <div class="flex justify-between items-start gap-2">
+              <span class="text-xs font-bold text-on-surface truncate ${!n.read ? 'text-primary' : ''}">${n.title}</span>
+              <span class="text-[10px] text-on-surface-variant flex-shrink-0">${n.time}</span>
+            </div>
+            <p class="text-xs text-on-surface-variant mt-1 leading-relaxed truncate">${n.message}</p>
+          </div>
+          <!-- Hover actions on right -->
+          <div class="flex items-center gap-1.5 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+            <button class="toggle-read-btn text-on-surface-variant hover:text-primary transition-colors p-1" title="${n.read ? 'Mark as unread' : 'Mark as read'}">
+              <span class="material-symbols-outlined text-[16px]">${n.read ? 'mail' : 'drafts'}</span>
+            </button>
+            <button class="delete-notification-btn text-on-surface-variant hover:text-primary transition-colors p-1" title="Delete">
+              <span class="material-symbols-outlined text-[16px]">delete</span>
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function syncProfileHeader() {
+    const profileNameEl = document.getElementById('header-profile-name');
+    if (profileNameEl) {
+      profileNameEl.textContent = localStorage.getItem('profileName') || 'T. Nakagawa';
+    }
+
+    const headerProfileBtn = document.getElementById('header-profile-btn');
+    if (headerProfileBtn) {
+      const avatarData = localStorage.getItem('profileAvatar');
+      let existingIcon = headerProfileBtn.querySelector('.material-symbols-outlined, img');
+      if (avatarData) {
+        if (existingIcon) {
+          if (existingIcon.tagName === 'IMG') {
+            existingIcon.src = avatarData;
+          } else {
+            existingIcon.remove();
+            const img = document.createElement('img');
+            img.src = avatarData;
+            img.className = 'w-8 h-8 rounded-full object-cover border border-outline-variant/30 select-none';
+            headerProfileBtn.appendChild(img);
+          }
+        }
+      } else {
+        if (existingIcon && existingIcon.tagName === 'IMG') {
+          existingIcon.remove();
+          const span = document.createElement('span');
+          span.className = 'material-symbols-outlined text-primary dark:text-red-500 text-[32px] select-none';
+          span.textContent = 'account_circle';
+          headerProfileBtn.appendChild(span);
+        }
+      }
     }
   }
 
@@ -169,14 +365,34 @@
         </div>
         
         <div class="flex items-center gap-4 flex-wrap sm:flex-nowrap" id="main-header-right">
-          <button class="relative text-on-surface-variant hover:text-primary transition-colors p-2 rounded">
-            <span class="material-symbols-outlined">notifications</span>
-            <span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
-          </button>
+          <!-- Notification Bell and Dropdown Container -->
+          <div class="relative">
+            <button id="header-notification-btn" class="relative text-on-surface-variant hover:text-primary transition-colors p-2 rounded focus:outline-none" aria-label="Notifications">
+              <span class="material-symbols-outlined">notifications</span>
+              <span id="header-notification-badge" class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full animate-pulse hidden"></span>
+            </button>
+            
+            <!-- Notification Dropdown Panel -->
+            <div id="notification-dropdown" class="hidden absolute right-0 mt-2 w-[340px] sm:w-[380px] bg-white dark:bg-surface border border-outline-variant/50 rounded-xl shadow-xl z-50 overflow-hidden text-left select-none">
+              <div class="px-4 py-3 border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-low dark:bg-surface-container-low min-h-[48px]" id="notification-header-actions">
+                <!-- Loaded dynamically -->
+              </div>
+              <div class="max-h-[300px] overflow-y-auto custom-scrollbar divide-y divide-outline-variant/20" id="notification-list">
+                <!-- Loaded dynamically -->
+              </div>
+              <div class="px-4 py-2.5 border-t border-outline-variant/30 text-center bg-surface-container-lowest">
+                <a href="${relPrefix}notification-configuration/index.html" class="text-xs font-semibold text-primary hover:underline flex items-center justify-center gap-1 nav-item" data-route="notification-configuration">
+                  <span class="material-symbols-outlined text-[16px]">settings</span>
+                  <span>Notification Configuration</span>
+                </a>
+              </div>
+            </div>
+          </div>
           
-          <div class="flex items-center gap-2 ml-2 pl-4 border-l border-outline-variant/30">
+          <!-- Clickable Profile Trigger -->
+          <div id="header-profile-btn" class="flex items-center gap-2 ml-2 pl-4 border-l border-outline-variant/30 cursor-pointer hover:opacity-80 transition-opacity">
             <div class="text-right hidden sm:block">
-              <p class="font-label-bold text-label-bold leading-none text-primary dark:text-red-500">Vikram Malhotra</p>
+              <p id="header-profile-name" class="font-label-bold text-label-bold leading-none text-primary dark:text-red-500">T. Nakagawa</p>
               <p class="text-[10px] text-on-surface-variant uppercase mt-0.5 font-bold">Site Admin</p>
             </div>
             <span class="material-symbols-outlined text-primary dark:text-red-500 text-[32px] select-none">account_circle</span>
@@ -257,6 +473,153 @@
         loadRoute();
       });
     }
+
+    // Bind notifications dropdown toggle
+    const notificationBtn = root.querySelector('#header-notification-btn');
+    const notificationDropdown = root.querySelector('#notification-dropdown');
+    if (notificationBtn && notificationDropdown) {
+      notificationBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        notificationDropdown.classList.toggle('hidden');
+        renderNotifications(getRelativePrefix());
+      });
+    }
+
+    // Bind document click to close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      const dropdown = document.getElementById('notification-dropdown');
+      const btn = document.getElementById('header-notification-btn');
+      if (e.target.isConnected === false) return;
+      if (dropdown && btn && !dropdown.contains(e.target) && !btn.contains(e.target)) {
+        dropdown.classList.add('hidden');
+      }
+    });
+
+    // Event delegation for notification actions inside notificationDropdown
+    if (notificationDropdown) {
+      notificationDropdown.addEventListener('click', (e) => {
+
+        // 1. Select-All Checkbox click
+        const selectAllCheckbox = e.target.closest('#select-all-notifications');
+        if (selectAllCheckbox) {
+          const list = getNotifications();
+          const allSelected = list.length > 0 && list.every(n => selectedNotificationIds.includes(n.id));
+          if (allSelected) {
+            selectedNotificationIds = [];
+          } else {
+            selectedNotificationIds = list.map(n => n.id);
+          }
+          renderNotifications(getRelativePrefix());
+          return;
+        }
+
+        // 2. Mark All as Read button click (when no selections)
+        const markAllReadBtn = e.target.closest('#mark-all-read-btn');
+        if (markAllReadBtn) {
+          const list = getNotifications();
+          list.forEach(n => n.read = true);
+          saveNotifications(list);
+          renderNotifications(getRelativePrefix());
+          return;
+        }
+
+        // 3. Bulk Actions
+        const bulkMarkRead = e.target.closest('#bulk-mark-read');
+        if (bulkMarkRead) {
+          const list = getNotifications();
+          list.forEach(n => {
+            if (selectedNotificationIds.includes(n.id)) n.read = true;
+          });
+          selectedNotificationIds = [];
+          saveNotifications(list);
+          renderNotifications(getRelativePrefix());
+          return;
+        }
+
+        const bulkMarkUnread = e.target.closest('#bulk-mark-unread');
+        if (bulkMarkUnread) {
+          const list = getNotifications();
+          list.forEach(n => {
+            if (selectedNotificationIds.includes(n.id)) n.read = false;
+          });
+          selectedNotificationIds = [];
+          saveNotifications(list);
+          renderNotifications(getRelativePrefix());
+          return;
+        }
+
+        const bulkDelete = e.target.closest('#bulk-delete');
+        if (bulkDelete) {
+          let list = getNotifications();
+          list = list.filter(n => !selectedNotificationIds.includes(n.id));
+          selectedNotificationIds = [];
+          saveNotifications(list);
+          renderNotifications(getRelativePrefix());
+          return;
+        }
+
+        // 4. Individual item actions
+        const item = e.target.closest('.notification-item');
+        if (!item) return;
+
+        const id = parseInt(item.getAttribute('data-id'));
+        const list = getNotifications();
+        const nIndex = list.findIndex(n => n.id === id);
+        if (nIndex === -1) return;
+
+        // A. Clicking select checkbox or its container
+        const itemSelect = e.target.closest('.toggle-select-container');
+        if (itemSelect || e.target.classList.contains('item-select-checkbox')) {
+          const isSelected = selectedNotificationIds.includes(id);
+          if (isSelected) {
+            selectedNotificationIds = selectedNotificationIds.filter(selectedId => selectedId !== id);
+          } else {
+            selectedNotificationIds.push(id);
+          }
+          renderNotifications(getRelativePrefix());
+          return;
+        }
+
+        // B. Clicking inline Mark Read/Unread envelope
+        const toggleReadBtn = e.target.closest('.toggle-read-btn');
+        if (toggleReadBtn) {
+          list[nIndex].read = !list[nIndex].read;
+          saveNotifications(list);
+          renderNotifications(getRelativePrefix());
+          return;
+        }
+
+        // C. Clicking inline Delete trash icon
+        const deleteNotificationBtn = e.target.closest('.delete-notification-btn');
+        if (deleteNotificationBtn) {
+          const updatedList = list.filter(n => n.id !== id);
+          saveNotifications(updatedList);
+          renderNotifications(getRelativePrefix());
+          return;
+        }
+
+        // D. Clicking notification item itself to navigate
+        const n = list[nIndex];
+        n.read = true;
+        saveNotifications(list);
+        renderNotifications(getRelativePrefix());
+        notificationDropdown.classList.add('hidden');
+        if (n.link) {
+          window.history.pushState(null, '', getRelativePrefix() + n.link + '/index.html');
+          loadRoute();
+        }
+      });
+    }
+
+    // Bind profile click trigger to navigate to profile page
+    const profileBtn = root.querySelector('#header-profile-btn');
+    if (profileBtn) {
+      profileBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.history.pushState(null, '', getRelativePrefix() + 'profile/index.html');
+        loadRoute();
+      });
+    }
   }
 
   // Highlights active menu items in sidebar template
@@ -288,7 +651,7 @@
 
     const activeRoute = routeMapping[route] || route;
 
-    const items = document.querySelectorAll('.nav-item');
+    const items = document.querySelectorAll('aside .nav-item');
     items.forEach(item => {
       const dataRoute = item.getAttribute('data-route');
       if (dataRoute && activeRoute === dataRoute) {
@@ -309,6 +672,12 @@
 
   // Load a route's content dynamically
   async function loadRoute() {
+    // Hide notifications dropdown on navigation transitions
+    const notificationDropdown = document.getElementById('notification-dropdown');
+    if (notificationDropdown) {
+      notificationDropdown.classList.add('hidden');
+    }
+
     const isUserLoggedIn = localStorage.getItem('loggedIn') === 'true';
     const path = window.location.pathname;
     const relPrefix = getRelativePrefix();
@@ -430,7 +799,7 @@
         document.head.appendChild(s);
       });
 
-      // Render static header title "Control Card Digitization System" next to hamburger button
+      // Render static header title next to hamburger button from system settings
       const mainHeaderLeft = document.querySelector('header > div:first-child');
       if (mainHeaderLeft) {
         const menuBtn = mainHeaderLeft.querySelector('.sidebar-toggle-btn');
@@ -440,7 +809,16 @@
         }
         const defaultTitle = document.createElement('span');
         defaultTitle.className = 'text-lg sm:text-xl font-black text-primary select-none tracking-tight leading-none';
-        defaultTitle.textContent = 'Control Card Digitization System';
+        
+        let sysName = 'Control Card Digitization System';
+        try {
+          const config = JSON.parse(localStorage.getItem('system_config'));
+          if (config && config.sysName) {
+            sysName = config.sysName;
+          }
+        } catch(e) {}
+        
+        defaultTitle.textContent = sysName;
         mainHeaderLeft.appendChild(defaultTitle);
       }
 
@@ -508,6 +886,19 @@
       }
 
       content.innerHTML = targetHtml;
+
+      // Sync header profile and notifications
+      syncProfileHeader();
+      const list = getNotifications();
+      const unreadCount = list.filter(n => !n.read).length;
+      const badge = document.getElementById('header-notification-badge');
+      if (badge) {
+        if (unreadCount > 0) {
+          badge.classList.remove('hidden');
+        } else {
+          badge.classList.add('hidden');
+        }
+      }
 
       // Extract and execute page-specific JavaScript code (like charts or modals initialization)
       const scripts = doc.querySelectorAll('script');
