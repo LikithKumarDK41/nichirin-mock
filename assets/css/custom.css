@@ -341,4 +341,11 @@ header.header-collapsed {
   width: calc(100% - 72px) !important;
 }
 
-
+/* Global Checkbox Brand Color Override */
+input[type="checkbox"] {
+  accent-color: var(--color-primary, #c8102e) !important;
+  color: var(--color-primary, #c8102e) !important;
+}
+input[type="checkbox"]:focus {
+  --tw-ring-color: var(--color-primary, #c8102e) !important;
+}
