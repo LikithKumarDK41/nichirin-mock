@@ -3,11 +3,9 @@
 <head>
 <!-- SPA Layout Redirect Wrapper -->
 <script>
-  if (!document.getElementById('app-root')) {
-    const p = window.location.pathname;
-    const rel = '../';
-    window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
-  }
+  // Redirect to unified Machine & Device Management screen
+  const rel = '../';
+  window.location.replace(rel + 'machine-management/index.html');
 </script>
   <meta charset="UTF-8">
   <title>Device Management - Nichirin Control Card Digitization</title>

@@ -143,11 +143,6 @@
               <span class="material-symbols-outlined text-[20px]">factory</span>
               <span>Machine Management</span>
             </a>
-            
-            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}device-management/index.html" data-route="device-management">
-              <span class="material-symbols-outlined text-[20px]">router</span>
-              <span>Device Management</span>
-            </a>
             <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}system-settings/index.html" data-route="system-settings">
               <span class="material-symbols-outlined text-[20px]">settings</span>
               <span>System Settings</span>
@@ -185,7 +180,7 @@
           
           <div class="flex items-center gap-2 ml-2 pl-4 border-l border-outline-variant/30">
             <div class="text-right hidden sm:block">
-              <p class="font-label-bold text-label-bold leading-none text-primary dark:text-red-500">T. Nakagawa</p>
+              <p class="font-label-bold text-label-bold leading-none text-primary dark:text-red-500">Vikram Malhotra</p>
               <p class="text-[10px] text-on-surface-variant uppercase mt-0.5 font-bold">Site Admin</p>
             </div>
             <span class="material-symbols-outlined text-primary dark:text-red-500 text-[32px] select-none">account_circle</span>
@@ -321,7 +316,11 @@
     const isUserLoggedIn = localStorage.getItem('loggedIn') === 'true';
     const path = window.location.pathname;
     const relPrefix = getRelativePrefix();
-    const route = getCurrentRoute();
+    let route = getCurrentRoute();
+    if (route === 'device-management') {
+      window.history.replaceState(null, '', relPrefix + 'machine-management/index.html');
+      route = 'machine-management';
+    }
 
     // Force login if not authenticated
     if (!isUserLoggedIn && route !== 'login-old') {

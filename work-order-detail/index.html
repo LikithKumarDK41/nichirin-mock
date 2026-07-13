@@ -15,578 +15,600 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Tailwind Configuration -->
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                "on-tertiary": "#ffffff",
-                "on-surface-variant": "#43474e",
-                "inverse-on-surface": "#f2f0f3",
-                "tertiary-container": "#391303",
-                "background": "#faf9fc",
-                "on-tertiary-fixed": "#351002",
-                "on-primary-fixed-variant": "#2f486a",
-                "on-secondary": "#ffffff",
-                "surface-bright": "#faf9fc",
-                "surface-container-low": "#f4f3f6",
-                "on-error": "#ffffff",
-                "tertiary": "#110200",
-                "outline": "#74777f",
-                "tertiary-fixed-dim": "#fdb69a",
-                "surface-container-lowest": "#ffffff",
-                "surface": "#faf9fc",
-                "on-surface": "#1a1c1e",
-                "secondary-container": "#7af2f2",
-                "on-secondary-fixed": "#002020",
-                "secondary-fixed": "#7df5f5",
-                "primary-container": "#001f3f",
-                "on-primary-container": "#6f88ad",
-                "on-tertiary-container": "#b5785f",
-                "on-error-container": "#93000a",
-                "on-background": "#1a1c1e",
-                "on-primary-fixed": "#001c3a",
-                "tertiary-fixed": "#ffdbce",
-                "surface-container-high": "#e9e7eb",
-                "inverse-surface": "#2f3033",
-                "on-tertiary-fixed-variant": "#6b3a25",
-                "inverse-primary": "#afc8f0",
-                "surface-dim": "#dbd9dd",
-                "on-secondary-container": "#006e6e",
-                "surface-container-highest": "#e3e2e5",
-                "outline-variant": "#c4c6cf",
-                "secondary": "#006a6a",
-                "on-primary": "#ffffff",
-                "primary": "#000613",
-                "on-secondary-fixed-variant": "#004f4f",
-                "surface-tint": "#476083",
-                "surface-variant": "#e3e2e5",
-                "primary-fixed": "#d4e3ff",
-                "error": "#ba1a1a",
-                "primary-fixed-dim": "#afc8f0",
-                "surface-container": "#efedf0",
-                "error-container": "#ffdad6",
-                "secondary-fixed-dim": "#5dd9d8"
-            },
-            "borderRadius": {
-                "DEFAULT": "0.125rem",
-                "lg": "0.25rem",
-                "xl": "0.5rem",
-                "full": "0.75rem"
-            },
-            "spacing": {
-                "stack-gap-md": "16px",
-                "sidebar-width": "260px",
-                "header-height": "64px",
-                "stack-gap-sm": "8px",
-                "grid-gutter": "20px",
-                "container-padding": "24px"
-            },
-            "fontFamily": {
-                "headline-sm": ["Inter"],
-                "label-bold": ["Inter"],
-                "headline-md": ["Inter"],
-                "body-md": ["Inter"],
-                "body-lg": ["Inter"],
-                "headline-lg": ["Inter"],
-                "body-sm": ["Inter"],
-                "data-tabular": ["Inter"]
-            },
-            "fontSize": {
-                "headline-sm": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
-                "label-bold": ["11px", {"lineHeight": "16px", "fontWeight": "700"}],
-                "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-                "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
-                "data-tabular": ["13px", {"lineHeight": "16px", "fontWeight": "500"}]
-            }
-          }
-        }
-      }
-    </script>
 <style>
-      body {
-        background-color: #faf9fc;
-        font-family: 'Inter', sans-serif;
-      }
-      .material-symbols-outlined {
-        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-      }
-      .no-scrollbar::-webkit-scrollbar { display: none; }
-      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-      /* Custom theme color overrides to match the crimson brand color */
-      .bg-primary {
-          background-color: #b7000c !important;
-      }
-      .text-primary {
-          color: #b7000c !important;
-      }
-      .border-primary {
-          border-color: #b7000c !important;
-      }
-      .bg-secondary {
-          background-color: #b7000c !important;
-      }
-      .text-secondary {
-          color: #b7000c !important;
-      }
-      .border-secondary {
-          border-color: #b7000c !important;
-      }
-      .bg-secondary-container {
-          background-color: rgba(183, 0, 12, 0.1) !important;
-      }
-      .text-on-secondary-container {
-          color: #b7000c !important;
-      }
-      .text-on-secondary {
-          color: #ffffff !important;
-      }
-      
-      /* Stepper custom overrides */
-      .bg-surface-container-high {
-          background-color: #F1F3F5 !important;
-      }
-      .border-outline-variant {
-          border-color: #D1D5DB !important;
-      }
-      .text-outline {
-          color: #9CA3AF !important;
-      }
-      .text-error {
-          color: #E60012 !important;
-      }
-      .text-status-success {
-          color: #28A745 !important;
-      }
-      .bg-status-success\/10 {
-          background-color: rgba(40, 167, 69, 0.1) !important;
-      }
-      
-      /* Audit trail details */
-      .text-on-surface-variant {
-          color: #5B5D72 !important;
-      }
-      .text-primary-container {
-          color: #b7000c !important;
-      }
-      .bg-primary-container {
-          background-color: #b7000c !important;
-      }
+        body { font-family: 'Inter', sans-serif; background-color: #faf9fc; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #c4c6cf; border-radius: 10px; }
+        
+        /* Force scrollbar hiding on specific elements */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none !important;
+            scrollbar-width: none !important;
+        }
     </style>
 </head>
-<body class="flex bg-background">
-<!-- SideNavBar (Shared Component) -->
-<aside class="fixed left-0 top-0 h-full w-[260px] bg-primary dark:bg-primary-container border-r border-outline-variant flex flex-col py-4 z-50">
-<div class="px-6 mb-8"><img alt="Nichirin Logo" class="h-12 w-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeBHt0tZtNbA5g2XRRFaXA3EbF-zTnNcRtvzZiN8SV9t9XkAzAtH5HvJ8nj4DpcyXP6bCtrRfDS_9_-Lj1wLkEIvRGLCwdk7rGIKMfOPHPMXFuLEukWSGB71hNvOAoqf9AfMszu3CmAKw8Jgy-l-Az0wYQMCcFwkAIQrI0ZyYpZFIV_fcqrhZOUUJiVDG4oaWZeET4n8u0XZYVhTI9T6SYiGNeiyoj1apvekw5EJBuy0IaoJ0svRCaML-M9S8UlyANzyc"/></div>
-<nav class="flex-1 px-3 space-y-1"><div class="space-y-6"><div><p class="px-3 mb-2 text-[10px] font-bold text-white/50 uppercase tracking-wider">Operations</p><div class="space-y-1"><a class="flex items-center gap-3 px-3 py-2.5 rounded text-white/80 hover:bg-white/10 transition-colors duration-200 font-body-md text-body-md" href="#"><span class="material-symbols-outlined">precision_manufacturing</span><span class="">Monitoring</span></a><a class="flex items-center gap-3 px-3 py-2.5 rounded bg-secondary-container text-primary font-bold font-body-md text-body-md" href="#"><span class="material-symbols-outlined">settings_applications</span><span class="">Configuration</span></a><a class="flex items-center gap-3 px-3 py-2.5 rounded text-white/80 hover:bg-white/10 transition-colors duration-200 font-body-md text-body-md" href="#"><span class="material-symbols-outlined">analytics</span><span class="">Traceability &amp; Reports</span></a></div></div><div><p class="px-3 mb-2 text-[10px] font-bold text-white/50 uppercase tracking-wider">Management</p><div class="space-y-1"><a class="flex items-center gap-3 px-3 py-2.5 rounded text-white/80 hover:bg-white/10 transition-colors duration-200 font-body-md text-body-md" href="#"><span class="material-symbols-outlined">admin_panel_settings</span><span class="">Administration</span></a><a class="flex items-center gap-3 px-3 py-2.5 rounded text-white/80 hover:bg-white/10 transition-colors duration-200 font-body-md text-body-md" href="#"><span class="material-symbols-outlined">group</span><span class="">User Management</span></a></div></div></div></nav>
-<div class="mt-auto px-6 mb-4">
-<div class="py-2 px-3 bg-primary-fixed-dim/10 rounded border border-primary-fixed-dim/20 text-on-primary-fixed-variant text-[11px] font-bold">
-                System Status: Active
-            </div>
-</div>
-<div class="px-3 border-t border-outline-variant pt-4 space-y-1"><a class="flex items-center gap-3 px-3 py-2 rounded text-white/80 hover:bg-white/10 transition-colors duration-200 font-body-md text-body-md" href="#"><span class="material-symbols-outlined">help</span><span class="">Support</span></a><a class="flex items-center gap-3 px-3 py-2 rounded text-white/80 hover:bg-white/10 transition-colors duration-200 font-body-md text-body-md" href="#"><span class="material-symbols-outlined">logout</span><span class="">Sign Out</span></a></div>
+<body class="flex min-h-screen overflow-x-hidden">
+<!-- SideNavBar (Fallback) -->
+<aside class="fixed left-0 top-0 h-full w-[260px] bg-primary text-on-primary flex flex-col py-4 border-r border-outline-variant z-50">
 </aside>
-<!-- TopNavBar (Shared Component) -->
-<header class="fixed top-0 right-0 h-[64px] w-[calc(100%-260px)] ml-[260px] px-container-padding bg-surface dark:bg-surface-dim border-b border-outline-variant flex justify-between items-center z-40">
+<!-- Main Content Area -->
+<main class="flex-1 ml-[260px] pt-[64px] min-h-screen">
+<!-- TopNavBar (Fallback) -->
+<header class="fixed top-0 right-0 h-[64px] w-[calc(100%-260px)] bg-surface flex justify-between items-center px-container-padding border-b border-outline-variant z-40">
 <div class="flex items-center gap-4">
-<div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+<nav class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
 <span class="">Plant</span>
 <span class="material-symbols-outlined text-[14px]">chevron_right</span>
 <span class="">Line A</span>
 <span class="material-symbols-outlined text-[14px]">chevron_right</span>
-<span class="text-primary font-bold border-b-2 border-primary pb-0.5" id="wo-header-breadcrumb">Control Card #402</span>
-</div>
-</div>
-<div class="flex items-center gap-6">
-<div class="flex items-center gap-2 px-3 py-1 bg-secondary-container/20 rounded-full border border-secondary-container text-on-secondary-container">
-<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
-<span class="font-label-bold text-label-bold uppercase">Production</span>
-</div>
-<div class="flex items-center gap-4">
-<button class="text-on-surface-variant hover:text-secondary transition-colors relative">
-<span class="material-symbols-outlined">notifications</span>
-<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full"></span>
-</button>
-<div class="flex items-center gap-3 border-l border-outline-variant pl-4">
-<div class="text-right">
-<p class="font-label-bold text-label-bold text-on-surface">K. Tanaka</p>
-<p class="text-[10px] text-on-surface-variant">Shift Lead</p>
-</div>
-<img class="w-8 h-8 rounded-full border border-outline" data-alt="A professional headshot of a Japanese factory supervisor in a clean industrial uniform, with a blurred high-tech manufacturing facility in the background. The lighting is soft and professional, emphasizing a modern industrial aesthetic with high contrast and clean lines." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_zjqTOkkQENsLRrFHawgkNyFXKzp1yJneU25QVLwPl-2H-wHdkJivsm9IFiv8rsXucBPtNfO7tDy_e_jql_uHlL-_8qvefVlTJypq4MYNqTEvjog6x-46XUwxhSBd2ZHG4ODswNQN2oq0aX7pwMxGRNi8v0xJVTQLWaNJCyRFiILB0yu_ltJEw1bPJLQgzrVMo3uMFSapakqFrZDAuvVAIncPC-yl7ldbBTbbeGoUM6oDw0uV3wYuLA"/>
-</div>
-</div>
+<span class="text-primary font-bold border-b-2 border-primary pb-1" id="wo-header-breadcrumb">Control Card --</span>
+</nav>
 </div>
 </header>
-<!-- Main Content Canvas -->
-<main class="mt-[64px] ml-[260px] w-[calc(100%-260px)] min-h-[calc(100vh-64px)] p-container-padding">
-<!-- WO Header Detail Card -->
-    <div class="bg-white border border-outline-variant rounded-xl p-8 mb-6">
-        <!-- Top row: WO Info and Stats -->
-        <div class="flex flex-col lg:flex-row lg:items-start justify-between gap-6 pb-6 border-b border-slate-100">
-            <!-- Left part: ID, status, description -->
-            <div class="space-y-2">
-                <div class="flex items-center gap-3">
-                    <h2 class="text-[28px] font-extrabold text-primary leading-tight" id="wo-detail-id">WO #22550872</h2>
-                    <span class="px-2 py-0.5 font-label-bold text-label-bold rounded" id="wo-detail-status">IN PROGRESS</span>
-                </div>
-                <p class="font-body-md text-body-md text-on-surface-variant text-[14px] font-medium" id="wo-detail-desc">High-Pressure Hydraulic Hose Assembly (Type-B)</p>
-            </div>
-            
-            <!-- Right part: Columns for line, shift, target, actual -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 lg:gap-12">
-                <div>
-                    <p class="text-[10px] font-bold text-outline uppercase tracking-wider">Line</p>
-                    <p class="font-bold text-primary text-[14px] mt-1" id="wo-detail-line">Line A (Brake Hose)</p>
-                </div>
-                <div>
-                    <p class="text-[10px] font-bold text-outline uppercase tracking-wider">Shift</p>
-                    <p class="font-bold text-primary text-[14px] mt-1" id="wo-detail-shift">Shift 1</p>
-                </div>
-                <div>
-                    <p class="text-[10px] font-bold text-outline uppercase tracking-wider">Target</p>
-                    <p class="font-bold text-primary text-[14px] mt-1" id="wo-detail-target">800 units</p>
-                </div>
-                <div>
-                    <p class="text-[10px] font-bold text-outline uppercase tracking-wider">Actual</p>
-                    <p class="font-bold text-slate-800 text-[14px] mt-1" id="wo-detail-actual">420 units</p>
-                </div>
-            </div>
-        </div>
+<!-- Page Canvas -->
+<div class="p-container-padding grid grid-cols-12 gap-6 bg-background">
+  <!-- Breadcrumb and Actions -->
+  <div class="col-span-12 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2">
+    <div class="flex items-center gap-2 text-xs font-semibold text-slate-500">
+      <a href="../work-orders/index.html" class="flex items-center gap-1.5 text-primary">
+        <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+        <span class="hover:underline">Work Orders</span>
+      </a>
+      <span class="material-symbols-outlined text-[12px] text-slate-400">chevron_right</span>
+      <span class="text-slate-600 font-bold" id="wo-header-breadcrumb-main">Control Card #--</span>
+    </div>
+    <div id="wo-header-actions" class="flex gap-2">
+      <!-- Pause / Resume button -->
+    </div>
+  </div>
 
-        <!-- Bottom row: Stepper -->
-        <div class="pt-8 overflow-x-auto no-scrollbar">
-            <div class="min-w-[800px] flex items-start justify-between px-4" id="wo-detail-stepper-container">
-                <!-- Injected dynamically in script -->
-            </div>
+  <!-- WO Header Detail Card -->
+  <div class="col-span-12 bg-white border border-outline-variant/30 rounded-xl p-6 shadow-sm">
+    <div class="flex flex-col lg:flex-row lg:items-start justify-between gap-6 pb-6 border-b border-slate-100">
+      <!-- ID & Product details -->
+      <div class="space-y-2">
+        <div class="flex items-center gap-3">
+          <h2 class="text-2xl font-black text-primary tracking-tight leading-none" id="wo-detail-id">WO #--</h2>
+          <span class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider" id="wo-detail-status">--</span>
         </div>
+        <p class="font-bold text-slate-800 text-sm" id="wo-detail-name">--</p>
+        <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold bg-slate-50 text-slate-500 border border-slate-200" id="wo-detail-part">--</span>
+      </div>
+
+      <!-- Info columns -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 lg:gap-10">
+        <div>
+          <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Allocated Line</span>
+          <p class="font-bold text-slate-800 text-xs" id="wo-detail-line">--</p>
+        </div>
+        <div>
+          <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Shift</span>
+          <p class="font-bold text-slate-800 text-xs" id="wo-detail-shift">--</p>
+        </div>
+        <div>
+          <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Target Qty</span>
+          <p class="font-bold text-slate-800 text-xs" id="wo-detail-target">--</p>
+        </div>
+        <div>
+          <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Done Qty</span>
+          <p class="font-bold text-primary text-xs" id="wo-detail-done">--</p>
+        </div>
+      </div>
     </div>
 
-    <!-- Bento Grid Section -->
-    <div class="grid grid-cols-12 gap-6">
-        <!-- Left Side: Specs and BOM Table -->
-        <div class="col-span-12 lg:col-span-8 flex flex-col gap-6">
-            <!-- Manufacturing Specification Card -->
-            <div class="bg-white border border-outline-variant rounded-xl p-6">
-                <h3 class="text-[16px] font-bold text-primary mb-4 uppercase tracking-wider">Manufacturing Specification</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" id="mfg-spec-container">
-                    <!-- Injected dynamically -->
-                </div>
-            </div>
+    <!-- Scrollable Stepper Progress -->
+    <div class="relative pt-6 px-1">
+      <!-- Left Scroll Arrow -->
+      <button class="absolute left-0 top-[40px] z-20 w-8 h-8 rounded-full bg-white border border-slate-200 shadow-md text-slate-600 hover:text-primary hover:bg-slate-50 transition-all flex items-center justify-center cursor-pointer" onclick="scrollStepper(-200)">
+        <span class="material-symbols-outlined text-[18px]">chevron_left</span>
+      </button>
 
-            <!-- Bill of Materials (BOM) Card -->
-            <div class="bg-white border border-outline-variant rounded-xl p-6 flex-1">
-                <h3 class="text-[16px] font-bold text-primary mb-4 uppercase tracking-wider">Bill of Materials (BOM)</h3>
-                <div class="overflow-x-auto border border-outline-variant rounded">
-                    <table class="w-full text-left border-collapse whitespace-nowrap">
-                        <thead class="bg-slate-50 border-b border-outline-variant">
-                            <tr class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider text-[11px] h-10">
-                                <th class="px-4 py-2 border-r border-outline-variant/30">Material Code</th>
-                                <th class="px-4 py-2 border-r border-outline-variant/30">Description</th>
-                                <th class="px-4 py-2 border-r border-outline-variant/30 text-right">Required Qty</th>
-                                <th class="px-4 py-2 border-r border-outline-variant/30">Lot Number</th>
-                                <th class="px-4 py-2 text-center w-32">Verification</th>
-                            </tr>
-                        </thead>
-                        <tbody id="bom-table-body" class="font-mono text-[12px] divide-y divide-outline-variant/50">
-                            <!-- Injected dynamically -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+      <!-- Scrollable container wrapper -->
+      <div class="overflow-x-auto no-scrollbar mx-10" id="wo-stepper-scroll-container">
+        <div class="min-w-[1250px] flex items-start justify-between py-4 relative" id="wo-detail-stepper">
+          <!-- Steps injected dynamically -->
         </div>
+      </div>
 
-        <!-- Right Side: Operations Team & Digitized Audit Card -->
-        <div class="col-span-12 lg:col-span-4 flex flex-col gap-6">
-            <!-- Operations Team Card -->
-            <div class="bg-white border border-outline-variant rounded-xl p-6">
-                <h3 class="text-[16px] font-bold text-primary mb-4 uppercase tracking-wider">Operations Team</h3>
-                <div class="space-y-3" id="operations-team-container">
-                    <!-- Injected dynamically -->
-                </div>
-            </div>
-
-            <!-- Digitized Audit Card -->
-            <div class="bg-primary text-white rounded-xl p-6 flex flex-col justify-between min-h-[220px] shadow-sm relative overflow-hidden group">
-                <!-- Decorative background elements -->
-                <div class="absolute -right-10 -bottom-10 w-40 h-40 rounded-full bg-white/5 group-hover:scale-110 transition-transform duration-500"></div>
-                <div>
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="material-symbols-outlined text-[24px]">verified_user</span>
-                        <h3 class="text-[16px] font-bold uppercase tracking-wider">Digitized Audit Card</h3>
-                    </div>
-                    <p class="text-[12px] text-white/80 leading-relaxed font-body-sm">
-                        This work order operates on a digitized control card (Monozukuri Kanban). Every scan, operator signature, and QC stamp is cryptographically linked to the transaction ledger.
-                    </p>
-                </div>
-                <div class="bg-white/10 p-3 rounded-lg border border-white/15 text-[11px] mt-6 flex justify-between items-center">
-                    <span class="font-mono opacity-80">Card hash:</span>
-                    <span class="font-mono font-bold" id="card-hash-value">SHA256: 8e91...f3a2</span>
-                </div>
-            </div>
-        </div>
+      <!-- Right Scroll Arrow -->
+      <button class="absolute right-0 top-[40px] z-20 w-8 h-8 rounded-full bg-white border border-slate-200 shadow-md text-slate-600 hover:text-primary hover:bg-slate-50 transition-all flex items-center justify-center cursor-pointer" onclick="scrollStepper(200)">
+        <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+      </button>
     </div>
-</main>
-    <script>
-        // Dynamic Work Order Data loading based on URL Parameter 'wo'
-        (function() {
-            const woData = {
-                '22550872': {
-                    id: '22550872',
-                    status: 'IN PROGRESS',
-                    statusClass: 'bg-[#b7000c]/10 text-[#b7000c] border border-[#b7000c]/25',
-                    desc: 'High-Pressure Hydraulic Hose Assembly (Type-B)',
-                    line: 'Line 1 (Hose Assembly)',
-                    shift: 'Shift A',
-                    target: '1,200 units',
-                    actual: '450 units',
-                    hash: 'SHA256: 4e902b8a...7c9a',
-                    steps: [
-                        { name: 'Picking', time: '06:12 AM', status: 'completed' },
-                        { name: 'Offline Process', time: '07:30 AM', status: 'completed' },
-                        { name: 'Control Point', time: 'IN PROGRESS', status: 'active' },
-                        { name: 'QC Validation', time: 'Pending', status: 'pending' }
-                    ],
-                    specs: [
-                        { label: 'CRIMP HEIGHT', val: '9.00 mm', tol: '± 0.05 MM' },
-                        { label: 'CRIMP PRESSURE', val: '150.20 Bar', tol: '± 5.0 BAR' },
-                        { label: 'INSERTION DEPTH', val: '12.50 mm', tol: 'MIN: 12.0 MM' }
-                    ],
-                    bom: [
-                        { code: 'MH-9921', desc: 'EPDM Rubber Hose (Inner)', req: '112.8 meters', lot: 'LOT-231102A', verification: 'VERIFIED' },
-                        { code: 'MC-1048', desc: 'Metal Fitting Collar 12mm', req: '1200 units', lot: 'LOT-231015C', verification: 'VERIFIED' },
-                        { code: 'MC-1049', desc: 'End Fitting Collar B', req: '1200 units', lot: 'LOT-231016D', verification: 'VERIFIED' }
-                    ],
-                    team: [
-                        { initials: 'KS', name: 'Kunal Sharma', role: 'PRODUCT MANAGER', bg: 'bg-rose-100 text-rose-700' },
-                        { initials: 'RK', name: 'Ramesh Kumar', role: 'ACTIVE OPERATOR', bg: 'bg-blue-100 text-blue-700' }
-                    ]
-                },
-                '22550873': {
-                    id: '22550873',
-                    status: 'WAITING',
-                    statusClass: 'bg-slate-100 text-slate-600 border border-slate-200',
-                    desc: 'High-Pressure Hydraulic Hose Assembly (Type-B)',
-                    line: 'Line 2 (Brake Tube)',
-                    shift: 'Shift A',
-                    target: '500 units',
-                    actual: '0 units',
-                    hash: 'SHA256: 7f81b302...c03a',
-                    steps: [
-                        { name: 'Picking', time: '06:12 AM', status: 'completed' },
-                        { name: 'Offline Process', time: 'Pending', status: 'pending' },
-                        { name: 'Control Point', time: 'Pending', status: 'pending' },
-                        { name: 'QC Validation', time: 'Pending', status: 'pending' }
-                    ],
-                    specs: [
-                        { label: 'CRIMP HEIGHT', val: '12.50 mm', tol: '± 0.05 MM' },
-                        { label: 'CRIMP PRESSURE', val: '180.20 Bar', tol: '± 5.0 BAR' },
-                        { label: 'INSERTION DEPTH', val: '45.00 mm', tol: 'MIN: 44.5 MM' }
-                    ],
-                    bom: [
-                        { code: 'MH-9921', desc: 'EPDM Rubber Hose (Inner)', req: '47.0 meters', lot: 'LOT-231102A', verification: 'VERIFIED' },
-                        { code: 'MC-1048', desc: 'Metal Fitting Collar 12mm', req: '500 units', lot: 'LOT-231015C', verification: 'VERIFIED' }
-                    ],
-                    team: [
-                        { initials: 'KS', name: 'Kunal Sharma', role: 'PRODUCT MANAGER', bg: 'bg-rose-100 text-rose-700' },
-                        { initials: 'RK', name: 'Ramesh Kumar', role: 'ACTIVE OPERATOR', bg: 'bg-blue-100 text-blue-700' }
-                    ]
-                },
-                '22550870': {
-                    id: '22550870',
-                    status: 'COMPLETED',
-                    statusClass: 'bg-emerald-100 text-emerald-700 border border-emerald-200',
-                    desc: 'High-Pressure Hydraulic Hose Assembly (Type-A)',
-                    line: 'Line A (Brake Hose)',
-                    shift: 'Shift C',
-                    target: '1,200 units',
-                    actual: '1,195 units',
-                    hash: 'SHA256: 8e91f3a2...f3a2',
-                    steps: [
-                        { name: 'Picking', time: '06:12 AM', status: 'completed' },
-                        { name: 'Offline Process', time: '07:30 AM', status: 'completed' },
-                        { name: 'Control Point', time: '09:45 AM', status: 'completed' },
-                        { name: 'QC Validation', time: '11:15 AM', status: 'completed' }
-                    ],
-                    specs: [
-                        { label: 'CRIMP HEIGHT', val: '9.00 mm', tol: '± 0.05 MM' },
-                        { label: 'CRIMP PRESSURE', val: '150.20 Bar', tol: '± 5.0 BAR' },
-                        { label: 'INSERTION DEPTH', val: '12.50 mm', tol: 'MIN: 12.0 MM' }
-                    ],
-                    bom: [
-                        { code: 'MH-9921', desc: 'EPDM Rubber Hose (Inner)', req: '112.8 meters', lot: 'LOT-231102A', verification: 'VERIFIED' },
-                        { code: 'MC-1048', desc: 'Metal Fitting Collar 12mm', req: '1200 units', lot: 'LOT-231015C', verification: 'VERIFIED' },
-                        { code: 'MC-1049', desc: 'End Fitting Collar B', req: '1200 units', lot: 'LOT-231016D', verification: 'VERIFIED' }
-                    ],
-                    team: [
-                        { initials: 'KS', name: 'Kunal Sharma', role: 'PRODUCT MANAGER', bg: 'bg-rose-100 text-rose-700' },
-                        { initials: 'RK', name: 'Ramesh Kumar', role: 'ACTIVE OPERATOR', bg: 'bg-blue-100 text-blue-700' }
-                    ]
-                }
-            };
+  </div>
 
-            const params = new URLSearchParams(window.location.search);
-            const woId = params.get('wo') || '22550872'; // default
-            const data = woData[woId];
+  <!-- Bento Layout Grid -->
+  <!-- Left Side: Interactive Process Inspector & General Work Instructions -->
+  <div class="col-span-12 lg:col-span-8 space-y-6">
+    
+    <!-- Interactive Steps Inspector Panel -->
+    <div class="bg-white border border-outline-variant/30 rounded-xl shadow-sm overflow-hidden flex flex-col">
+      <div class="px-6 py-4 border-b border-outline-variant/30 bg-slate-50 flex justify-between items-center">
+        <h3 class="font-headline-md text-headline-sm text-primary">Manufacturing Process Routing (Interactive)</h3>
+        <span class="text-xs font-semibold text-slate-400">Click any step to inspect targets and work instructions</span>
+      </div>
+      
+      <!-- Flex container splitting steps list and details inspector -->
+      <div class="grid grid-cols-1 md:grid-cols-12 divide-y md:divide-y-0 md:divide-x divide-outline-variant/20 min-h-[360px]">
+        <!-- Steps List (Left Side - 5 Cols) -->
+        <div class="md:col-span-5 overflow-y-auto max-h-[420px] divide-y divide-slate-100" id="wo-inspector-list">
+          <!-- Populated dynamically -->
+        </div>
 
-            if (data) {
-                // Update breadcrumb
-                const breadcrumb = document.getElementById('wo-header-breadcrumb');
-                if (breadcrumb) {
-                    breadcrumb.textContent = `Control Card #${data.id}`;
+        <!-- Selected Step Details (Right Side - 7 Cols) -->
+        <div class="md:col-span-7 p-6 bg-slate-50/50 flex flex-col justify-between" id="wo-inspector-details">
+          <!-- Details updated dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Bill of Materials (BOM) -->
+    <div class="bg-white border border-outline-variant/30 rounded-xl p-6 shadow-sm flex flex-col">
+      <h3 class="font-headline-md text-headline-sm text-primary mb-4">Bill of Materials (BOM) Track</h3>
+      <div class="overflow-x-auto border border-outline-variant/20 rounded-lg">
+        <table class="w-full text-left border-collapse whitespace-nowrap">
+          <thead>
+            <tr class="bg-slate-50 border-b border-outline-variant/30">
+              <th class="px-4 py-2.5 font-bold text-on-surface-variant uppercase text-[10px] tracking-wider">Material Code</th>
+              <th class="px-4 py-2.5 font-bold text-on-surface-variant uppercase text-[10px] tracking-wider">Description</th>
+              <th class="px-4 py-2.5 font-bold text-on-surface-variant uppercase text-[10px] tracking-wider text-right">Required Qty</th>
+              <th class="px-4 py-2.5 font-bold text-on-surface-variant uppercase text-[10px] tracking-wider">Lot Number</th>
+              <th class="px-4 py-2.5 font-bold text-on-surface-variant uppercase text-[10px] tracking-wider">Scan Timestamp</th>
+              <th class="px-4 py-2.5 font-bold text-on-surface-variant uppercase text-[10px] tracking-wider text-center">Verification</th>
+            </tr>
+          </thead>
+          <tbody id="wo-bom-body" class="divide-y divide-outline-variant/30 font-data-tabular text-xs">
+            <!-- BOM dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Side: Operations Team, Quality Targets & General instructions -->
+  <div class="col-span-12 lg:col-span-4 space-y-6">
+    <!-- Operations Team -->
+    <div class="bg-white border border-outline-variant/30 rounded-xl p-6 shadow-sm">
+      <h3 class="font-headline-md text-headline-sm text-primary mb-4">Operations Team</h3>
+      <div class="space-y-4" id="wo-team-container">
+        <!-- Team dynamic -->
+      </div>
+    </div>
+
+    <!-- General Instructions Panel -->
+    <div class="bg-white border border-outline-variant/30 rounded-xl p-6 shadow-sm">
+      <h3 class="font-headline-md text-headline-sm text-primary mb-3">General Work Instructions</h3>
+      <ul class="space-y-2.5 list-disc list-inside text-xs text-slate-600 font-medium leading-relaxed" id="wo-general-instructions">
+        <!-- Instructions dynamically populated -->
+      </ul>
+    </div>
+
+    <!-- Monozukuri Digitized Card Info -->
+    <div class="bg-primary text-white rounded-xl p-6 flex flex-col justify-between min-h-[220px] shadow-sm relative overflow-hidden group">
+      <!-- Decorative circles -->
+      <div class="absolute -right-10 -bottom-10 w-40 h-40 rounded-full bg-white/5 group-hover:scale-110 transition-transform duration-500"></div>
+      <div>
+        <div class="flex items-center gap-2 mb-4">
+          <span class="material-symbols-outlined text-[24px]">verified_user</span>
+          <h3 class="text-[16px] font-bold uppercase tracking-wider">Monozukuri Digitized Card</h3>
+        </div>
+        <p class="text-[12px] text-white/80 leading-relaxed font-body-sm">
+          This work order operates under active digital control card tracking. Every scan, test pressure rating, and QA release tag is signed cryptographically on the local plant database.
+        </p>
+      </div>
+      <div class="bg-white/10 p-3 rounded-lg border border-white/15 text-[11px] mt-6 flex justify-between items-center select-all">
+        <span class="font-mono opacity-80">Card Hash:</span>
+        <span class="font-mono font-bold" id="wo-card-hash">--</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    (function() {
+        let workOrdersList = [];
+        let activeWO = null;
+        let selectedStepIdx = 0;
+
+        async function fetchWODetail() {
+            try {
+                // Try reading from localStorage first
+                const localData = localStorage.getItem('workOrdersList');
+                let loaded = false;
+                if (localData) {
+                    try {
+                        const parsed = JSON.parse(localData);
+                        if (parsed && parsed.length >= 9 && parsed[0].woNumber) {
+                            workOrdersList = parsed;
+                            loaded = true;
+                        }
+                    } catch(e) {}
                 }
-                // Update detail header cards
-                document.getElementById('wo-detail-id').textContent = `WO #${data.id}`;
+                if (!loaded) {
+                    const res = await fetch('../work-orders/workorders.json');
+                    if (!res.ok) throw new Error('Could not fetch workorders database');
+                    workOrdersList = await res.json();
+                    localStorage.setItem('workOrdersList', JSON.stringify(workOrdersList));
+                }
+
+                // Get URL parameter
+                const params = new URLSearchParams(window.location.search);
+                const targetNo = params.get('wo') || 'WO-2026-9041';
                 
-                const status = document.getElementById('wo-detail-status');
-                status.textContent = data.status;
-                status.className = `px-2.5 py-0.5 font-label-bold text-label-bold rounded text-xs tracking-wider uppercase ${data.statusClass}`;
-
-                document.getElementById('wo-detail-desc').textContent = data.desc;
-                document.getElementById('wo-detail-line').textContent = data.line;
-                document.getElementById('wo-detail-shift').textContent = data.shift;
-                document.getElementById('wo-detail-target').textContent = data.target;
-                document.getElementById('wo-detail-actual').textContent = data.actual;
-                document.getElementById('card-hash-value').textContent = data.hash;
-
-                // Render Stepper Steps & Connection Lines
-                const stepperContainer = document.getElementById('wo-detail-stepper-container');
-                if (stepperContainer) {
-                    stepperContainer.innerHTML = '';
-                    data.steps.forEach((step, idx) => {
-                        // Create step block
-                        const stepDiv = document.createElement('div');
-                        stepDiv.className = 'flex flex-col items-center gap-2';
-                        
-                        let iconHtml = '';
-                        if (step.status === 'completed') {
-                            iconHtml = `
-                                <div class="w-12 h-12 rounded-xl bg-[#2e4765] text-white flex items-center justify-center shadow-sm">
-                                    <span class="material-symbols-outlined text-[22px] font-bold">check</span>
-                                </div>
-                            `;
-                        } else if (step.status === 'active') {
-                            // Map custom step-specific active icons
-                            let activeIcon = 'track_changes';
-                            if (step.name === 'Picking') activeIcon = 'inventory_2';
-                            else if (step.name === 'Offline Process') activeIcon = 'precision_manufacturing';
-                            else if (step.name === 'Control Point') activeIcon = 'power_settings_new';
-                            else if (step.name === 'QC Validation') activeIcon = 'fact_check';
-
-                            iconHtml = `
-                                <div class="w-12 h-12 rounded-xl bg-white border-4 border-[#2e4765] text-[#2e4765] flex items-center justify-center shadow-sm relative animate-pulse">
-                                    <span class="material-symbols-outlined text-[22px] font-bold">${activeIcon}</span>
-                                </div>
-                            `;
-                        } else {
-                            iconHtml = `
-                                <div class="w-12 h-12 rounded-xl bg-slate-100 text-slate-400 border border-slate-200 flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-[20px]">more_horiz</span>
-                                </div>
-                            `;
-                        }
-                        
-                        // Select proper color theme based on step status
-                        let nameColor = 'text-slate-800';
-                        let timeColor = 'text-slate-400';
-                        if (step.status === 'pending') {
-                            nameColor = 'text-slate-400';
-                            timeColor = 'text-slate-300';
-                        } else if (step.status === 'active') {
-                            nameColor = 'text-slate-800 font-bold';
-                            timeColor = 'text-[#2e4765] font-semibold uppercase tracking-wider text-[9px]';
-                        }
-
-                        stepDiv.innerHTML = `
-                            ${iconHtml}
-                            <div class="text-center mt-1">
-                                <p class="font-label-bold text-label-bold text-[12px] ${nameColor}">${step.name}</p>
-                                <p class="text-[10px] ${timeColor}">${step.time}</p>
-                            </div>
-                        `;
-                        stepperContainer.appendChild(stepDiv);
-                        
-                        // Append connector line if not last (vertically centered with circles using mt-6)
-                        if (idx < data.steps.length - 1) {
-                            const line = document.createElement('div');
-                            const nextStep = data.steps[idx + 1];
-                            if (step.status === 'completed' && nextStep.status !== 'pending') {
-                                line.className = 'flex-1 h-1 bg-[#2e4765] mx-4 rounded-full mt-6';
-                            } else {
-                                line.className = 'flex-1 h-0.5 bg-slate-200 mx-4 border-dashed border-t mt-6';
-                            }
-                            stepperContainer.appendChild(line);
-                        }
-                    });
+                activeWO = workOrdersList.find(w => w.woNumber.toUpperCase() === targetNo.toUpperCase());
+                if (!activeWO) {
+                    activeWO = workOrdersList[0];
                 }
 
-                // Render Specs stats cards
-                const specsContainer = document.getElementById('mfg-spec-container');
-                if (specsContainer) {
-                    specsContainer.innerHTML = '';
-                    data.specs.forEach(spec => {
-                        const card = document.createElement('div');
-                        card.className = 'bg-slate-50 border border-slate-100 rounded-xl p-4 flex flex-col justify-between min-h-[100px] hover:shadow-sm transition-all duration-200';
-                        card.innerHTML = `
-                            <div>
-                                <p class="text-[9px] font-extrabold text-slate-500 uppercase tracking-widest leading-none">${spec.label}</p>
-                                <p class="text-[20px] font-black text-[#b7000c] mt-2 tracking-tight">${spec.val}</p>
-                            </div>
-                            <p class="text-[10px] font-bold text-slate-400 mt-2">${spec.tol}</p>
-                        `;
-                        specsContainer.appendChild(card);
-                    });
-                }
+                // Find active or first step to highlight in inspector
+                const activeIdx = activeWO.steps.findIndex(s => s.status === 'active');
+                selectedStepIdx = activeIdx > -1 ? activeIdx : 0;
 
-                // Render Operations Team cards
-                const teamContainer = document.getElementById('operations-team-container');
-                if (teamContainer) {
-                    teamContainer.innerHTML = '';
-                    data.team.forEach(member => {
-                        const item = document.createElement('div');
-                        item.className = 'border border-slate-100 rounded-xl p-3 flex items-center gap-3 bg-white hover:bg-slate-50 transition-colors';
-                        item.innerHTML = `
-                            <div class="w-10 h-10 rounded-xl ${member.bg} flex items-center justify-center font-extrabold text-[14px] shrink-0 tracking-wider shadow-sm font-mono">
-                                ${member.initials}
-                            </div>
-                            <div>
-                                <p class="font-bold text-slate-800 text-[14px] leading-tight">${member.name}</p>
-                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">${member.role}</p>
-                            </div>
-                        `;
-                        teamContainer.appendChild(item);
-                    });
-                }
-
-                // Render BOM Pick List table rows
-                const bomTbody = document.getElementById('bom-table-body');
-                if (bomTbody) {
-                    bomTbody.innerHTML = '';
-                    data.bom.forEach(row => {
-                        const tr = document.createElement('tr');
-                        tr.className = 'hover:bg-slate-50/50 transition-colors h-12';
-                        tr.innerHTML = `
-                            <td class="px-4 py-2 border-r border-outline-variant/30 text-[#b7000c] font-extrabold font-mono tracking-tight text-[13px]">${row.code}</td>
-                            <td class="px-4 py-2 border-r border-outline-variant/30 text-slate-700 font-semibold">${row.desc}</td>
-                            <td class="px-4 py-2 border-r border-outline-variant/30 text-right font-bold text-slate-800">${row.req}</td>
-                            <td class="px-4 py-2 border-r border-outline-variant/30 text-slate-500 font-mono">${row.lot}</td>
-                            <td class="px-4 py-2 text-center">
-                                <span class="inline-flex items-center gap-1 text-emerald-600 font-bold text-[11px] uppercase tracking-wider">
-                                    <span class="material-symbols-outlined text-[16px] font-bold">check_circle</span>
-                                    ${row.verification}
-                                </span>
-                            </td>
-                        `;
-                        bomTbody.appendChild(tr);
-                    });
-                }
+                renderDetails();
+            } catch(e) {
+                console.error(e);
             }
-        })();
-    </script>
+        }
+
+        function renderDetails() {
+            if (!activeWO) return;
+
+            // Breadcrumbs and Headers
+            const breadcrumbEl = document.getElementById('wo-header-breadcrumb');
+            if (breadcrumbEl) {
+                breadcrumbEl.textContent = `Control Card #${activeWO.woNumber}`;
+            }
+            const breadcrumbMainEl = document.getElementById('wo-header-breadcrumb-main');
+            if (breadcrumbMainEl) {
+                breadcrumbMainEl.textContent = `Control Card #${activeWO.woNumber}`;
+            }
+            document.getElementById('wo-detail-id').textContent = `WO #${activeWO.woNumber}`;
+            document.getElementById('wo-detail-name').textContent = activeWO.productName;
+            document.getElementById('wo-detail-part').textContent = activeWO.partNumber;
+
+            // Info panels
+            document.getElementById('wo-detail-line').textContent = activeWO.line.split('(')[0];
+            document.getElementById('wo-detail-shift').textContent = activeWO.shift;
+            document.getElementById('wo-detail-target').textContent = `${activeWO.targetQty} units`;
+            document.getElementById('wo-detail-done').textContent = `${activeWO.doneQty} units`;
+
+            // Status tag
+            const statusEl = document.getElementById('wo-detail-status');
+            statusEl.textContent = activeWO.status;
+            let statusClass = 'bg-slate-100 text-slate-600 border border-slate-200';
+            if (activeWO.status === 'Running') statusClass = 'bg-[#c8102e]/10 text-[#c8102e] border border-[#c8102e]/25';
+            else if (activeWO.status === 'Completed') statusClass = 'bg-emerald-100 text-emerald-700 border border-emerald-200';
+            else if (activeWO.status === 'Held') statusClass = 'bg-rose-100 text-rose-700 border border-rose-200';
+            statusEl.className = `px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider ${statusClass}`;
+
+            // Hash
+            document.getElementById('wo-card-hash').textContent = activeWO.cardHash.substring(0, 18) + '...';
+
+            // Actions buttons
+            const actionContainer = document.getElementById('wo-header-actions');
+            actionContainer.innerHTML = '';
+            if (activeWO.status === 'Running') {
+                actionContainer.innerHTML = `
+                    <button class="flex items-center gap-2 bg-slate-900 text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-slate-800 transition-all cursor-pointer" onclick="toggleActiveWOState()">
+                        <span class="material-symbols-outlined text-[18px]">pause_circle</span>
+                        Pause Operations
+                    </button>
+                `;
+            } else if (activeWO.status === 'Held' || activeWO.status === 'Waiting') {
+                actionContainer.innerHTML = `
+                    <button class="flex items-center gap-2 bg-[#c8102e] text-white h-9 px-4 rounded-lg text-sm font-semibold hover:opacity-90 transition-all cursor-pointer" onclick="toggleActiveWOState()">
+                        <span class="material-symbols-outlined text-[18px]">play_circle</span>
+                        Resume Operations
+                    </button>
+                `;
+            }
+
+            renderStepper();
+            renderSpecs();
+            renderBOM();
+            renderTeam();
+            renderGeneralInstructions();
+            renderInspector();
+        }
+
+        function renderStepper() {
+            const stepper = document.getElementById('wo-detail-stepper');
+            if (!stepper) return;
+            stepper.innerHTML = '';
+
+            const steps = activeWO.steps;
+            steps.forEach((step, idx) => {
+                const stepWrapper = document.createElement('div');
+                stepWrapper.className = 'flex-1 relative cursor-pointer';
+                stepWrapper.onclick = () => selectInspectorStep(idx);
+
+                // Connecting line - shifted to top-5 (20px) to match h-10 center
+                let lineEl = '';
+                if (idx < steps.length - 1) {
+                    const nextStep = steps[idx + 1];
+                    let lineStyle = 'bg-slate-200';
+                    if (step.status === 'completed' && (nextStep.status === 'completed' || nextStep.status === 'active')) {
+                        lineStyle = 'bg-primary';
+                    }
+                    lineEl = `<div class="absolute left-1/2 top-5 w-full h-[3px] ${lineStyle}" style="z-index: 1;"></div>`;
+                }
+
+                // Node marker styling
+                let nodeStyle = 'border-slate-300 bg-white text-slate-400';
+                let icon = 'check';
+                if (step.status === 'completed') {
+                    nodeStyle = 'border-primary bg-primary text-white';
+                } else if (step.status === 'active') {
+                    nodeStyle = 'border-primary bg-white text-primary ring-2 ring-primary/20 animate-pulse';
+                    icon = 'autorenew';
+                } else {
+                    icon = 'radio_button_unchecked';
+                }
+
+                // Highlight currently selected step in inspector
+                if (idx === selectedStepIdx) {
+                    nodeStyle += ' ring-4 ring-primary/30';
+                }
+
+                stepWrapper.innerHTML = `
+                    ${lineEl}
+                    <div class="flex flex-col items-center text-center px-1 w-full relative" style="z-index: 10;">
+                        <!-- Outer white background mask (w-10 h-10) to hide the line completely -->
+                        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0">
+                            <!-- Inner circle node (w-8 h-8) -->
+                            <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center font-bold text-xs select-none shrink-0 ${nodeStyle}">
+                                <span class="material-symbols-outlined text-[16px]">${icon}</span>
+                            </div>
+                        </div>
+                        <p class="text-[11px] font-bold text-slate-800 mt-2 truncate w-[110px]" title="${step.name}">${step.name}</p>
+                        <span class="text-[9px] text-slate-400 font-semibold mt-0.5 font-data-tabular">${step.time}</span>
+                    </div>
+                `;
+                stepper.appendChild(stepWrapper);
+            });
+        }
+
+        function renderInspector() {
+            const listContainer = document.getElementById('wo-inspector-list');
+            const detailsContainer = document.getElementById('wo-inspector-details');
+            if (!listContainer || !detailsContainer) return;
+
+            listContainer.innerHTML = '';
+            
+            // Populate left sidebar steps list
+            activeWO.steps.forEach((step, idx) => {
+                const item = document.createElement('div');
+                item.className = `p-4 flex items-center justify-between cursor-pointer transition-colors ${idx === selectedStepIdx ? 'bg-rose-50/50 border-l-4 border-primary' : 'hover:bg-slate-50'}`;
+                item.onclick = () => selectInspectorStep(idx);
+
+                let badge = '';
+                if (step.status === 'completed') {
+                    badge = `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700">COMPLETED</span>`;
+                } else if (step.status === 'active') {
+                    badge = `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700 animate-pulse">ACTIVE</span>`;
+                } else {
+                    badge = `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-400">PENDING</span>`;
+                }
+
+                item.innerHTML = `
+                    <div class="flex flex-col">
+                        <span class="text-xs font-bold text-slate-800">${step.name}</span>
+                        <span class="text-[10px] text-slate-400 font-medium font-data-tabular mt-0.5">${step.time}</span>
+                    </div>
+                    ${badge}
+                `;
+                listContainer.appendChild(item);
+            });
+
+            // Populate right inspector details card
+            const step = activeWO.steps[selectedStepIdx];
+            let statusBadge = '';
+            if (step.status === 'completed') {
+                statusBadge = `<span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">Completed</span>`;
+            } else if (step.status === 'active') {
+                statusBadge = `<span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200 animate-pulse">Active</span>`;
+            } else {
+                statusBadge = `<span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-400 border border-slate-200">Pending</span>`;
+            }
+
+            detailsContainer.innerHTML = `
+                <div class="space-y-4">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Process Step ${selectedStepIdx + 1} of ${activeWO.steps.length}</span>
+                            <h4 class="font-headline-sm text-headline-sm text-primary">${step.name}</h4>
+                        </div>
+                        ${statusBadge}
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 pt-2 border-t border-slate-100">
+                        <div>
+                            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Allocated Equipment</span>
+                            <p class="text-xs font-bold text-slate-800">${step.machine}</p>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Assigned Operator</span>
+                            <p class="text-xs font-bold text-slate-800">${step.operator || 'Unassigned'}</p>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Control Parameter</span>
+                            <p class="text-xs font-bold text-slate-800">${step.parameter}</p>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Tolerance Limits</span>
+                            <p class="text-xs font-bold text-primary font-data-tabular">${step.limits}</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-slate-100">
+                        <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Step Work Instruction</span>
+                        <p class="text-xs text-slate-700 leading-relaxed bg-white p-3 rounded-lg border border-slate-100">${step.instruction}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectInspectorStep(idx) {
+            selectedStepIdx = idx;
+            renderStepper();
+            renderInspector();
+        }
+
+        function renderSpecs() {
+            const container = document.getElementById('wo-specs-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const specs = activeWO.specs || [];
+            if (specs.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-3 text-center text-slate-400 font-medium py-6">
+                        No targets specified for this stage.
+                    </div>
+                `;
+                return;
+            }
+
+            specs.forEach(s => {
+                const specCard = document.createElement('div');
+                specCard.className = 'bg-slate-50 border border-slate-100 rounded-xl p-4 flex flex-col justify-center';
+                specCard.innerHTML = `
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">${s.label}</span>
+                    <p class="text-xl font-black text-primary">${s.val}</p>
+                    <span class="text-[11px] text-slate-500 font-semibold mt-1">Tolerance: ${s.tol}</span>
+                `;
+                container.appendChild(specCard);
+            });
+        }
+
+        function renderBOM() {
+            const tbody = document.getElementById('wo-bom-body');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            const bom = activeWO.bom || [];
+            if (bom.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="px-4 py-8 text-center text-slate-400 font-medium">
+                            No bill of materials listed for this order.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            bom.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50/50 transition-colors';
+
+                const statusBadge = item.verification === 'VERIFIED'
+                    ? `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/50"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>VERIFIED</span>`
+                    : `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200/50"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5"></span>PENDING</span>`;
+
+                tr.innerHTML = `
+                    <td class="px-4 py-3 border-r border-outline-variant/20 font-bold text-slate-800">${item.code}</td>
+                    <td class="px-4 py-3 border-r border-outline-variant/20 font-semibold text-slate-700">${item.desc}</td>
+                    <td class="px-4 py-3 border-r border-outline-variant/20 text-right font-semibold text-slate-800">${item.req}</td>
+                    <td class="px-4 py-3 border-r border-outline-variant/20 font-semibold text-slate-700 font-data-tabular">${item.lot}</td>
+                    <td class="px-4 py-3 border-r border-outline-variant/20 text-slate-500 font-data-tabular">${item.timestamp}</td>
+                    <td class="px-4 py-3 text-center">${statusBadge}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderTeam() {
+            const container = document.getElementById('wo-team-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const operator = activeWO.operator || 'Unassigned';
+            const inspector = activeWO.inspector || 'Unassigned';
+
+            // Display Operator card
+            const opCard = document.createElement('div');
+            opCard.className = 'flex items-center gap-3 bg-slate-50 p-3 rounded-lg border border-slate-100';
+            const opInitials = operator !== 'Unassigned' ? operator.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : 'OP';
+            opCard.innerHTML = `
+                <div class="w-10 h-10 rounded-full bg-[#c8102e]/5 text-[#c8102e] flex items-center justify-center font-bold text-sm border border-[#c8102e]/10 shrink-0 select-none">${opInitials}</div>
+                <div>
+                    <h4 class="font-bold text-slate-900 text-sm">${operator}</h4>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">ACTIVE OPERATOR</p>
+                </div>
+            `;
+
+            // Display Inspector card
+            const insCard = document.createElement('div');
+            insCard.className = 'flex items-center gap-3 bg-slate-50 p-3 rounded-lg border border-slate-100';
+            const insInitials = inspector !== 'Unassigned' ? inspector.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : 'QA';
+            insCard.innerHTML = `
+                <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-sm border border-slate-300 shrink-0 select-none">${insInitials}</div>
+                <div>
+                    <h4 class="font-bold text-slate-900 text-sm">${inspector}</h4>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">QA INSPECTOR</p>
+                </div>
+            `;
+
+            container.appendChild(opCard);
+            container.appendChild(insCard);
+        }
+
+        function renderGeneralInstructions() {
+            const container = document.getElementById('wo-general-instructions');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const instructions = activeWO.generalInstructions || [];
+            if (instructions.length === 0) {
+                container.innerHTML = `<li class="text-slate-400">No general notes logged.</li>`;
+                return;
+            }
+
+            instructions.forEach(ins => {
+                const li = document.createElement('li');
+                li.textContent = ins;
+                container.appendChild(li);
+            });
+        }
+
+        function toggleActiveWOState() {
+            const targetNo = activeWO.woNumber;
+            const idx = workOrdersList.findIndex(w => w.woNumber.toUpperCase() === targetNo.toUpperCase());
+            if (idx > -1) {
+                const current = workOrdersList[idx].status;
+                if (current === 'Running') {
+                    workOrdersList[idx].status = 'Held';
+                } else if (current === 'Held' || current === 'Waiting') {
+                    workOrdersList[idx].status = 'Running';
+                }
+                localStorage.setItem('workOrdersList', JSON.stringify(workOrdersList));
+                activeWO = workOrdersList[idx];
+                renderDetails();
+            }
+        }
+
+        function scrollStepper(amount) {
+            const container = document.getElementById('wo-stepper-scroll-container');
+            if (container) {
+                container.scrollBy({ left: amount, behavior: 'smooth' });
+            }
+        }
+
+        // Window scope bindings
+        window.toggleActiveWOState = toggleActiveWOState;
+        window.selectInspectorStep = selectInspectorStep;
+        window.scrollStepper = scrollStepper;
+
+        fetchWODetail();
+    })();
+</script>
+</main>
 </body></html>

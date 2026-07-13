@@ -1,0 +1,112 @@
+[
+  {
+    "machineCode": "MC-CUT-01",
+    "machineName": "Rubber Hose Cutting Station",
+    "type": "Machine",
+    "plcBinding": "192.168.1.101",
+    "controlPoints": "Length scale 234±2mm and 94±2mm, cutter blade wear sensor.",
+    "status": "Calibrated",
+    "lastCalibrated": "2026-06-15",
+    "nextCalibration": "2026-12-15",
+    "lineAllocated": "Line A"
+  },
+  {
+    "machineCode": "MC-PROT-02",
+    "machineName": "Automated NBR Sleeve Cutter",
+    "type": "Machine",
+    "plcBinding": "192.168.1.102",
+    "controlPoints": "Sleeve length scale 190±3mm, digital batch counter.",
+    "status": "Calibrated",
+    "lastCalibrated": "2026-05-10",
+    "nextCalibration": "2026-11-10",
+    "lineAllocated": "Line A"
+  },
+  {
+    "machineCode": "OV-SHRNK-01",
+    "machineName": "HMI Curing Heat Oven",
+    "type": "Machine",
+    "plcBinding": "192.168.1.103",
+    "controlPoints": "Oven temperature 155°C±10°C, door interlocking timer 5:30 min.",
+    "status": "Calibration Due",
+    "lastCalibrated": "2026-01-20",
+    "nextCalibration": "2026-07-20",
+    "lineAllocated": "Line B"
+  },
+  {
+    "machineCode": "JG-BEND-02",
+    "machineName": "Pipe Bending Fixture (FA0554)",
+    "type": "Jig",
+    "plcBinding": "192.168.1.104",
+    "controlPoints": "Bending Jig BNF-IYM-02, Angle inspection AIJ-35 scale.",
+    "status": "Calibrated",
+    "lastCalibrated": "2026-04-05",
+    "nextCalibration": "2026-10-05",
+    "lineAllocated": "Line A"
+  },
+  {
+    "machineCode": "JG-EF02-01",
+    "machineName": "Double Fitting Bending Block",
+    "type": "Jig",
+    "plcBinding": "192.168.1.105",
+    "controlPoints": "EF02 Block, Bending Height -274, L-R Setting -L80, Pin inspection.",
+    "status": "Calibrated",
+    "lastCalibrated": "2026-03-12",
+    "nextCalibration": "2026-09-12",
+    "lineAllocated": "Line A"
+  },
+  {
+    "machineCode": "MC-CRIMP-03",
+    "machineName": "Hydraulic Hose Crimper",
+    "type": "Machine",
+    "plcBinding": "192.168.1.106",
+    "controlPoints": "CJ-22 Crimping Jig, Crimp diameter 9.00±0.05mm, Pressure 6-7 Mpa.",
+    "status": "Calibrated",
+    "lastCalibrated": "2026-06-01",
+    "nextCalibration": "2026-12-01",
+    "lineAllocated": "Line A"
+  },
+  {
+    "machineCode": "JG-BOND-12",
+    "machineName": "Sleeve Adhesive Bonding Jig",
+    "type": "Jig",
+    "plcBinding": "192.168.1.107",
+    "controlPoints": "Jigs BJ-IYM-22-1A and BJ-IYM-22-1B, adhesive flow sensors.",
+    "status": "Under Maintenance",
+    "lastCalibrated": "2026-07-02",
+    "nextCalibration": "2027-01-02",
+    "lineAllocated": "Line B"
+  },
+  {
+    "machineCode": "TL-TORQ-08",
+    "machineName": "Digital Torque Wrench Unit",
+    "type": "Measurement Tool",
+    "plcBinding": "192.168.1.108",
+    "controlPoints": "TOJ-IYM-22-A and TOJ-IYM-22-B, Torque limits 12-17Nm.",
+    "status": "Calibrated",
+    "lastCalibrated": "2026-06-25",
+    "nextCalibration": "2026-12-25",
+    "lineAllocated": "Line A"
+  },
+  {
+    "machineCode": "MC-LEAK-01",
+    "machineName": "High Pressure Leak Tester",
+    "type": "Machine",
+    "plcBinding": "192.168.1.109",
+    "controlPoints": "Pressure set 15.2+1.0/-0 MPa, cycle timer 36 sec, decay sensor.",
+    "status": "Calibrated",
+    "lastCalibrated": "2026-04-18",
+    "nextCalibration": "2026-10-18",
+    "lineAllocated": "Line A"
+  },
+  {
+    "machineCode": "JG-INSP-22",
+    "machineName": "Final Assembly Inspection Jig",
+    "type": "Jig",
+    "plcBinding": "192.168.1.110",
+    "controlPoints": "Jig FI-IYM-22, contour match limits, barcode camera scanner.",
+    "status": "Calibrated",
+    "lastCalibrated": "2026-06-10",
+    "nextCalibration": "2026-12-10",
+    "lineAllocated": "Line A"
+  }
+]
