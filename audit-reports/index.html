@@ -140,81 +140,81 @@
       </div>
     </div>
   </div>
-</div>
 
-<!-- Log Details Drawer Panel (Slides from Right Side) -->
-<div id="audit-detail-modal" class="fixed inset-0 z-[100] hidden flex justify-end">
-  <!-- Backdrop -->
-  <div id="audit-detail-backdrop" onclick="closeAuditModal()" class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300 opacity-0"></div>
-  
-  <!-- Drawer Panel -->
-  <div id="audit-detail-drawer" class="relative h-full w-[460px] max-w-full bg-white border-l border-outline-variant/30 shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out translate-x-full">
-    <div class="flex justify-between items-start border-b border-outline-variant/20 p-6 flex-shrink-0">
-      <div>
-        <h3 class="font-headline-sm text-headline-sm text-primary font-semibold">Audit Event Log Detail</h3>
-        <p id="detail-log-id" class="text-[10px] text-slate-500 font-mono mt-0.5">SIGNATURE: --</p>
-      </div>
-      <button onclick="closeAuditModal()" class="p-1 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-600 transition-colors">
-        <span class="material-symbols-outlined text-[20px]">close</span>
-      </button>
-    </div>
+  <!-- Log Details Drawer Panel (Slides from Right Side) -->
+  <div id="audit-detail-modal" class="fixed inset-0 z-[100] hidden flex justify-end">
+    <!-- Backdrop -->
+    <div id="audit-detail-backdrop" onclick="closeAuditModal()" class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300 opacity-0"></div>
     
-    <div class="flex-grow p-6 overflow-y-auto space-y-5 custom-scrollbar text-xs text-slate-700">
-      <div class="grid grid-cols-2 gap-4">
+    <!-- Drawer Panel -->
+    <div id="audit-detail-drawer" class="relative h-full w-[460px] max-w-full bg-white border-l border-outline-variant/30 shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out translate-x-full">
+      <div class="flex justify-between items-start border-b border-outline-variant/20 p-6 flex-shrink-0">
         <div>
-          <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Timestamp</span>
-          <span id="detail-time" class="font-medium text-slate-800">--</span>
+          <h3 class="font-headline-sm text-headline-sm text-primary font-semibold">Audit Event Log Detail</h3>
+          <p id="detail-log-id" class="text-[10px] text-slate-500 font-mono mt-0.5">SIGNATURE: --</p>
         </div>
-        <div>
-          <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Initiator User</span>
-          <span id="detail-user" class="font-medium text-slate-800">--</span>
-        </div>
+        <button onclick="closeAuditModal()" class="p-1 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-600 transition-colors">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
       </div>
-      <div class="grid grid-cols-2 gap-4">
-        <div>
-          <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Event Category</span>
-          <span id="detail-category" class="font-medium text-slate-800">--</span>
-        </div>
-        <div>
-          <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Audit Target</span>
-          <span id="detail-target" class="font-medium text-slate-800 font-semibold text-slate-900">--</span>
-        </div>
-      </div>
-      <div>
-        <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Full Log Message</span>
-        <div id="detail-description" class="p-3 bg-slate-50 rounded-lg border border-slate-100 font-medium text-slate-800 leading-relaxed text-xs">
-          --
-        </div>
-      </div>
-      <div class="grid grid-cols-2 gap-4">
-        <div>
-          <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Device Source IP</span>
-          <span id="detail-ip" class="font-mono text-slate-800">--</span>
-        </div>
-        <div>
-          <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Authorization Code</span>
-          <span id="detail-auth" class="font-mono text-slate-850 font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">--</span>
-        </div>
-      </div>
-      <div id="detail-diff-box" class="hidden space-y-2">
-        <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Parameter Payload Changes</span>
-        <div class="grid grid-cols-2 gap-2 p-3 bg-slate-50 border border-slate-100 rounded-lg font-mono text-[10px]">
+      
+      <div class="flex-grow p-6 overflow-y-auto space-y-5 custom-scrollbar text-xs text-slate-700">
+        <div class="grid grid-cols-2 gap-4">
           <div>
-            <span class="text-rose-600 font-bold block mb-1">BEFORE VALUE</span>
-            <pre id="detail-before" class="whitespace-pre-wrap leading-tight text-slate-600 font-medium">--</pre>
+            <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Timestamp</span>
+            <span id="detail-time" class="font-medium text-slate-800">--</span>
           </div>
           <div>
-            <span class="text-emerald-600 font-bold block mb-1">AFTER VALUE</span>
-            <pre id="detail-after" class="whitespace-pre-wrap leading-tight text-slate-800 font-bold font-mono">--</pre>
+            <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Initiator User</span>
+            <span id="detail-user" class="font-medium text-slate-800">--</span>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Event Category</span>
+            <span id="detail-category" class="font-medium text-slate-800">--</span>
+          </div>
+          <div>
+            <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Audit Target</span>
+            <span id="detail-target" class="font-medium text-slate-800 font-semibold text-slate-900">--</span>
+          </div>
+        </div>
+        <div>
+          <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Full Log Message</span>
+          <div id="detail-description" class="p-3 bg-slate-50 rounded-lg border border-slate-100 font-medium text-slate-800 leading-relaxed text-xs">
+            --
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Device Source IP</span>
+            <span id="detail-ip" class="font-mono text-slate-800">--</span>
+          </div>
+          <div>
+            <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Authorization Code</span>
+            <span id="detail-auth" class="font-mono text-slate-850 font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">--</span>
+          </div>
+        </div>
+        <div id="detail-diff-box" class="hidden space-y-2">
+          <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Parameter Payload Changes</span>
+          <div class="grid grid-cols-2 gap-2 p-3 bg-slate-50 border border-slate-100 rounded-lg font-mono text-[10px]">
+            <div>
+              <span class="text-rose-600 font-bold block mb-1">BEFORE VALUE</span>
+              <pre id="detail-before" class="whitespace-pre-wrap leading-tight text-slate-600 font-medium">--</pre>
+            </div>
+            <div>
+              <span class="text-emerald-600 font-bold block mb-1">AFTER VALUE</span>
+              <pre id="detail-after" class="whitespace-pre-wrap leading-tight text-slate-800 font-bold font-mono">--</pre>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    
-    <div class="p-6 border-t border-outline-variant/20 flex justify-end bg-slate-50 flex-shrink-0">
-      <button onclick="closeAuditModal()" class="px-5 py-2 bg-primary text-white font-body-sm text-body-sm font-semibold rounded-lg hover:bg-primary/95 shadow-sm transition-colors cursor-pointer">
-        Acknowledge Entry
-      </button>
+      
+      <div class="p-6 border-t border-outline-variant/20 flex justify-end bg-slate-50 flex-shrink-0">
+        <button onclick="closeAuditModal()" class="px-5 py-2 bg-primary text-white font-body-sm text-body-sm font-semibold rounded-lg hover:bg-primary/95 shadow-sm transition-colors cursor-pointer">
+          Acknowledge Entry
+        </button>
+      </div>
     </div>
   </div>
 </div>

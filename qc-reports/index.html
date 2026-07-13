@@ -411,132 +411,131 @@
       </div>
     </div>
   </div>
-</main>
-</div>
 
-<!-- QC Details Drawer Panel (Slides from Right Side) -->
-<div id="qc-detail-modal" class="fixed inset-0 z-[100] hidden flex justify-end">
-  <!-- Backdrop -->
-  <div id="qc-detail-backdrop" onclick="closeQCModal()" class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300 opacity-0"></div>
-  
-  <!-- Drawer Panel -->
-  <div id="qc-detail-drawer" class="relative h-full w-[480px] max-w-full bg-white border-l border-outline-variant/30 shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out translate-x-full">
-    <div class="flex justify-between items-start border-b border-outline-variant/20 p-6 flex-shrink-0">
-      <div>
-        <h3 class="font-headline-sm text-headline-sm text-primary font-semibold">QC Inspection Detail</h3>
-        <p id="qc-detail-wo" class="text-[10px] text-slate-500 font-mono mt-0.5">WORK ORDER: --</p>
-      </div>
-      <button onclick="closeQCModal()" class="p-1 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-600 transition-colors">
-        <span class="material-symbols-outlined text-[20px]">close</span>
-      </button>
-    </div>
+  <!-- QC Details Drawer Panel (Slides from Right Side) -->
+  <div id="qc-detail-modal" class="fixed inset-0 z-[100] hidden flex justify-end">
+    <!-- Backdrop -->
+    <div id="qc-detail-backdrop" onclick="closeQCModal()" class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300 opacity-0"></div>
     
-    <div class="flex-grow p-6 overflow-y-auto space-y-6 custom-scrollbar text-xs text-slate-700">
-      <!-- Section: Work Order Info -->
-      <div class="bg-slate-50 p-4 border border-outline-variant/20 rounded-xl space-y-3">
-        <div class="grid grid-cols-2 gap-4">
-          <div>
-            <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Part Number</span>
-            <span id="qc-detail-part" class="font-bold text-slate-800 text-sm">--</span>
-          </div>
-          <div>
-            <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Product Name</span>
-            <span id="qc-detail-prodname" class="font-medium text-slate-700">--</span>
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-4 pt-1">
-          <div>
-            <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Production Line</span>
-            <span id="qc-detail-line" class="font-semibold text-slate-700">--</span>
-          </div>
-          <div>
-            <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Lot Code</span>
-            <span id="qc-detail-lot" class="font-mono text-primary font-bold">--</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Section: Inspection Yield -->
-      <div>
-        <h4 class="font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-2 text-[10px]">Inspection Stats & Yield</h4>
-        <div class="grid grid-cols-3 gap-2">
-          <div class="bg-slate-50 p-3 rounded-lg border border-slate-100 text-center">
-            <span class="block text-[10px] text-slate-400 font-semibold uppercase">Inspected</span>
-            <span id="qc-detail-inspected" class="text-base font-bold text-slate-800">--</span>
-          </div>
-          <div class="bg-emerald-50/50 p-3 rounded-lg border border-emerald-100 text-center">
-            <span class="block text-[10px] text-emerald-600 font-semibold uppercase">OK Qty</span>
-            <span id="qc-detail-ok" class="text-base font-bold text-emerald-700">--</span>
-          </div>
-          <div id="qc-detail-ng-box" class="p-3 rounded-lg border text-center">
-            <span class="block text-[10px] font-semibold uppercase" id="qc-detail-ng-label">NG Qty</span>
-            <span id="qc-detail-ng" class="text-base font-bold">--</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Section: Quality Check Parameters checklist -->
-      <div>
-        <h4 class="font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-2 text-[10px]">Critical Dimension Parameters</h4>
-        <div class="divide-y divide-slate-100 border border-slate-100 rounded-lg overflow-hidden">
-          <div class="flex justify-between items-center p-3 bg-slate-50/50">
-            <div>
-              <span class="font-semibold text-slate-800 block text-xs">Crimp Diameter Check</span>
-              <span class="text-[10px] text-slate-400">Spec: 6.2 - 6.8 mm</span>
-            </div>
-            <div class="text-right">
-              <span id="qc-param-crimp" class="font-semibold text-slate-700 block text-xs">--</span>
-              <span class="inline-flex items-center px-1.5 py-0.2 bg-emerald-50 text-emerald-700 text-[9px] rounded font-bold uppercase">Pass</span>
-            </div>
-          </div>
-          <div class="flex justify-between items-center p-3 bg-slate-50/50">
-            <div>
-              <span class="font-semibold text-slate-800 block text-xs">Hose Length Verification</span>
-              <span class="text-[10px] text-slate-400">Spec: 234 &plusmn; 2 mm</span>
-            </div>
-            <div class="text-right">
-              <span id="qc-param-length" class="font-semibold text-slate-700 block text-xs">--</span>
-              <span class="inline-flex items-center px-1.5 py-0.2 bg-emerald-50 text-emerald-700 text-[9px] rounded font-bold uppercase">Pass</span>
-            </div>
-          </div>
-          <div class="flex justify-between items-center p-3 bg-slate-50/50">
-            <div>
-              <span class="font-semibold text-slate-800 block text-xs">High Pressure Leak Audit</span>
-              <span class="text-[10px] text-slate-400">Spec: 30 MPa (No Leaks)</span>
-            </div>
-            <div class="text-right">
-              <span id="qc-param-leak" class="font-semibold text-slate-700 block text-xs">--</span>
-              <span class="inline-flex items-center px-1.5 py-0.2 bg-emerald-50 text-emerald-700 text-[9px] rounded font-bold uppercase">Pass</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Section: Meta info -->
-      <div class="grid grid-cols-2 gap-4 border-t border-slate-100 pt-4">
+    <!-- Drawer Panel -->
+    <div id="qc-detail-drawer" class="relative h-full w-[480px] max-w-full bg-white border-l border-outline-variant/30 shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out translate-x-full">
+      <div class="flex justify-between items-start border-b border-outline-variant/20 p-6 flex-shrink-0">
         <div>
-          <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Inspector Sign-off</span>
-          <span id="qc-detail-inspector" class="font-medium text-slate-800">--</span>
+          <h3 class="font-headline-sm text-headline-sm text-primary font-semibold">QC Inspection Detail</h3>
+          <p id="qc-detail-wo" class="text-[10px] text-slate-500 font-mono mt-0.5">WORK ORDER: --</p>
         </div>
+        <button onclick="closeQCModal()" class="p-1 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-600 transition-colors">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+      
+      <div class="flex-grow p-6 overflow-y-auto space-y-6 custom-scrollbar text-xs text-slate-700">
+        <!-- Section: Work Order Info -->
+        <div class="bg-slate-50 p-4 border border-outline-variant/20 rounded-xl space-y-3">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Part Number</span>
+              <span id="qc-detail-part" class="font-bold text-slate-800 text-sm">--</span>
+            </div>
+            <div>
+              <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Product Name</span>
+              <span id="qc-detail-prodname" class="font-medium text-slate-700">--</span>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4 pt-1">
+            <div>
+              <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Production Line</span>
+              <span id="qc-detail-line" class="font-semibold text-slate-700">--</span>
+            </div>
+            <div>
+              <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Lot Code</span>
+              <span id="qc-detail-lot" class="font-mono text-primary font-bold">--</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section: Inspection Yield -->
         <div>
-          <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Inspection Time</span>
-          <span id="qc-detail-time" class="font-medium text-slate-800">--</span>
+          <h4 class="font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-2 text-[10px]">Inspection Stats & Yield</h4>
+          <div class="grid grid-cols-3 gap-2">
+            <div class="bg-slate-50 p-3 rounded-lg border border-slate-100 text-center">
+              <span class="block text-[10px] text-slate-400 font-semibold uppercase">Inspected</span>
+              <span id="qc-detail-inspected" class="text-base font-bold text-slate-800">--</span>
+            </div>
+            <div class="bg-emerald-50/50 p-3 rounded-lg border border-emerald-100 text-center">
+              <span class="block text-[10px] text-emerald-600 font-semibold uppercase">OK Qty</span>
+              <span id="qc-detail-ok" class="text-base font-bold text-emerald-700">--</span>
+            </div>
+            <div id="qc-detail-ng-box" class="p-3 rounded-lg border text-center">
+              <span class="block text-[10px] font-semibold uppercase" id="qc-detail-ng-label">NG Qty</span>
+              <span id="qc-detail-ng" class="text-base font-bold">--</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section: Quality Check Parameters checklist -->
+        <div>
+          <h4 class="font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-2 text-[10px]">Critical Dimension Parameters</h4>
+          <div class="divide-y divide-slate-100 border border-slate-100 rounded-lg overflow-hidden">
+            <div class="flex justify-between items-center p-3 bg-slate-50/50">
+              <div>
+                <span class="font-semibold text-slate-800 block text-xs">Crimp Diameter Check</span>
+                <span class="text-[10px] text-slate-400">Spec: 6.2 - 6.8 mm</span>
+              </div>
+              <div class="text-right">
+                <span id="qc-param-crimp" class="font-semibold text-slate-700 block text-xs">--</span>
+                <span class="inline-flex items-center px-1.5 py-0.2 bg-emerald-50 text-emerald-700 text-[9px] rounded font-bold uppercase">Pass</span>
+              </div>
+            </div>
+            <div class="flex justify-between items-center p-3 bg-slate-50/50">
+              <div>
+                <span class="font-semibold text-slate-800 block text-xs">Hose Length Verification</span>
+                <span class="text-[10px] text-slate-400">Spec: 234 &plusmn; 2 mm</span>
+              </div>
+              <div class="text-right">
+                <span id="qc-param-length" class="font-semibold text-slate-700 block text-xs">--</span>
+                <span class="inline-flex items-center px-1.5 py-0.2 bg-emerald-50 text-emerald-700 text-[9px] rounded font-bold uppercase">Pass</span>
+              </div>
+            </div>
+            <div class="flex justify-between items-center p-3 bg-slate-50/50">
+              <div>
+                <span class="font-semibold text-slate-800 block text-xs">High Pressure Leak Audit</span>
+                <span class="text-[10px] text-slate-400">Spec: 30 MPa (No Leaks)</span>
+              </div>
+              <div class="text-right">
+                <span id="qc-param-leak" class="font-semibold text-slate-700 block text-xs">--</span>
+                <span class="inline-flex items-center px-1.5 py-0.2 bg-emerald-50 text-emerald-700 text-[9px] rounded font-bold uppercase">Pass</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section: Meta info -->
+        <div class="grid grid-cols-2 gap-4 border-t border-slate-100 pt-4">
+          <div>
+            <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Inspector Sign-off</span>
+            <span id="qc-detail-inspector" class="font-medium text-slate-800">--</span>
+          </div>
+          <div>
+            <span class="block font-label-bold text-label-bold text-slate-400 uppercase tracking-wider mb-0.5 text-[10px]">Inspection Time</span>
+            <span id="qc-detail-time" class="font-medium text-slate-800">--</span>
+          </div>
         </div>
       </div>
-    </div>
-    
-    <div class="p-6 border-t border-outline-variant/20 flex gap-2 bg-slate-50 flex-shrink-0">
-      <a id="qc-detail-trace-link" href="#" class="px-4 py-2 border border-primary text-primary hover:bg-red-50/50 font-body-sm text-body-sm font-semibold rounded-lg flex items-center justify-center gap-1.5 transition-colors cursor-pointer flex-1">
-        <span class="material-symbols-outlined text-[16px]">manage_search</span>
-        Traceability Card
-      </a>
-      <button onclick="closeQCModal()" class="px-5 py-2 bg-primary text-white font-body-sm text-body-sm font-semibold rounded-lg hover:bg-primary/95 shadow-sm transition-colors cursor-pointer flex-1">
-        Close Details
-      </button>
+      
+      <div class="p-6 border-t border-outline-variant/20 flex gap-2 bg-slate-50 flex-shrink-0">
+        <a id="qc-detail-trace-link" href="#" class="px-4 py-2 border border-primary text-primary hover:bg-red-50/50 font-body-sm text-body-sm font-semibold rounded-lg flex items-center justify-center gap-1.5 transition-colors cursor-pointer flex-1">
+          <span class="material-symbols-outlined text-[16px]">manage_search</span>
+          Traceability Card
+        </a>
+        <button onclick="closeQCModal()" class="px-5 py-2 bg-primary text-white font-body-sm text-body-sm font-semibold rounded-lg hover:bg-primary/95 shadow-sm transition-colors cursor-pointer flex-1">
+          Close Details
+        </button>
+      </div>
     </div>
   </div>
+</main>
 </div>
-
 <script>
     (function() {
         let workOrdersList = [];
