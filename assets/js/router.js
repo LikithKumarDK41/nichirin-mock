@@ -309,6 +309,7 @@
 
   // Load a route's content dynamically
   async function loadRoute() {
+    let loaderTimeout = null;
     const isUserLoggedIn = localStorage.getItem('loggedIn') === 'true';
     const path = window.location.pathname;
     const relPrefix = getRelativePrefix();
@@ -383,13 +384,17 @@
     } else {
       updateLayoutRelativePaths(relPrefix);
     }
+    // Update active nav highlights immediately to prevent label/highlight flicker before load completes
+    updateActiveNavItem(route);
 
-    // Show loading spinner overlay inside viewport
+    // Show loading spinner overlay inside viewport only on slow connections (>180ms)
     const loader = document.getElementById('content-loader');
     const content = document.getElementById('app-content');
     if (loader) {
-      loader.classList.remove('pointer-events-none');
-      loader.classList.add('opacity-100');
+      loaderTimeout = setTimeout(() => {
+        loader.classList.remove('pointer-events-none');
+        loader.classList.add('opacity-100');
+      }, 180);
     }
 
     try {
@@ -548,12 +553,13 @@
         </div>
       `;
     } finally {
-      setTimeout(() => {
-        if (loader) {
-          loader.classList.add('pointer-events-none');
-          loader.classList.remove('opacity-100');
-        }
-      }, 300);
+      if (loaderTimeout) {
+        clearTimeout(loaderTimeout);
+      }
+      if (loader) {
+        loader.classList.add('pointer-events-none');
+        loader.classList.remove('opacity-100');
+      }
     }
   }
 
