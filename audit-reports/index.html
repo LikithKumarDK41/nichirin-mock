@@ -105,9 +105,6 @@
           </div>
         </div>
       </div>
-      <div class="font-body-sm text-body-sm text-on-surface-variant font-semibold self-end pb-1.5" id="audit-match-count">
-        Showing -- records
-      </div>
     </div>
 
     <div class="overflow-y-auto custom-scrollbar flex-grow">
@@ -372,9 +369,6 @@
           const tbody = document.getElementById('audit-reports-tbody');
           if (!tbody) return;
           tbody.innerHTML = '';
-
-          // Match count
-          document.getElementById('audit-match-count').textContent = `Showing ${list.length} records`;
 
           if (list.length === 0) {
               tbody.innerHTML = `
