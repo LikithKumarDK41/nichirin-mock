@@ -53,19 +53,23 @@
 <!-- Page Canvas -->
 <div class="p-container-padding grid grid-cols-12 gap-6 bg-background">
   <!-- Work Order Header -->
-  <div class="col-span-12 flex justify-between items-end mb-6">
-    <div>
+  <div class="col-span-12 flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+    <div class="max-w-3xl">
       <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Work Order Monitoring</h2>
       <p class="font-body-md text-body-md text-on-surface-variant">Real-time status of active production orders and control cards across all lines.</p>
     </div>
-    <div class="flex gap-3">
-      <button class="flex items-center gap-2 border border-outline-variant/50 bg-white text-slate-700 h-9 px-4 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-all shadow-sm cursor-pointer" onclick="exportWorkOrders()">
-        <span class="material-symbols-outlined text-[18px]">download</span>
-        Export
+    <div class="flex gap-3 select-none shrink-0 flex-nowrap">
+      <button class="flex items-center gap-2 border border-outline-variant/50 bg-white text-slate-700 h-9 px-4 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-all shadow-sm cursor-pointer whitespace-nowrap" onclick="openWorkflowConfigModal()">
+        <span class="material-symbols-outlined text-[18px]">schema</span>
+        Workflow Configuration
       </button>
-      <button class="flex items-center gap-2 bg-primary text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm cursor-pointer" onclick="syncWithSAP()" id="sapSyncBtn">
+      <button class="flex items-center gap-2 bg-primary text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm cursor-pointer whitespace-nowrap" onclick="syncWithSAP()" id="sapSyncBtn">
         <span class="material-symbols-outlined text-[18px]" id="sapSyncIcon">sync</span>
         Sync with SAP
+      </button>
+      <button class="flex items-center gap-2 border border-outline-variant/50 bg-white text-slate-700 h-9 px-4 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-all shadow-sm cursor-pointer whitespace-nowrap" onclick="exportWorkOrders()">
+        <span class="material-symbols-outlined text-[18px]">download</span>
+        Export Report
       </button>
     </div>
   </div>
@@ -254,6 +258,203 @@
         <button class="px-6 h-10 rounded-lg bg-primary text-white font-semibold text-sm shadow-sm hover:opacity-95 transition-all cursor-pointer" type="submit">Release Order</button>
       </div>
     </form>
+  </div>
+
+  <!-- Centered Popup Modal with Backdrop (Full-Screen, Square Corners, No Margins) -->
+  <div id="workflowConfigModal" class="hidden fixed inset-0 z-[150] bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-0 select-none">
+    
+    <!-- Modal Card Container (Full Screen Dialog Workspace, No Radius) -->
+    <div class="bg-white w-full h-full flex flex-col relative text-slate-800 rounded-none overflow-hidden font-body-md">
+      
+      <!-- Top Header Bar -->
+      <div class="h-16 border-b border-slate-200 px-6 flex items-center justify-between bg-slate-50 flex-shrink-0 select-none">
+        <!-- Header Title -->
+        <div class="flex items-center gap-2.5">
+          <span class="material-symbols-outlined text-primary text-[22px]">schema</span>
+          <h1 class="text-sm font-black text-slate-900 tracking-wide uppercase">Workflow Configuration</h1>
+        </div>
+        
+        <!-- Actions & Closing -->
+        <div class="flex items-center gap-3">
+          <button class="px-4 py-1.5 bg-primary text-white font-bold text-xs rounded hover:opacity-95 transition-opacity flex items-center gap-1.5 cursor-pointer" onclick="saveWorkflowConfig()">
+            <span class="material-symbols-outlined text-[16px]">save</span>
+            Save Workflow
+          </button>
+          <button class="px-3 py-1.5 text-slate-700 font-bold text-xs border border-slate-300 rounded hover:bg-slate-100 transition-colors flex items-center gap-1.5 cursor-pointer" onclick="closeWorkflowConfigModal()">
+            <span class="material-symbols-outlined text-[16px]">close</span>
+            Close
+          </button>
+        </div>
+      </div>
+
+      <!-- 3-Column Workspace -->
+      <div class="flex-grow flex overflow-hidden">
+        
+        <!-- LEFT COLUMN: Stage Components -->
+        <div class="w-1/4 min-w-[280px] bg-slate-50 border-r border-slate-200 flex flex-col overflow-hidden shrink-0 select-none">
+          <div class="px-5 py-3 border-b border-slate-200 bg-slate-100 flex-shrink-0">
+            <h2 class="text-xs font-black text-slate-900 uppercase tracking-wider">Stage Components</h2>
+          </div>
+          <div id="stage-components-list" class="flex-grow overflow-y-auto p-4 space-y-2">
+            <!-- Dynamically populated stage cards -->
+          </div>
+        </div>
+
+        <!-- CENTER COLUMN: Steps Timeline -->
+        <div class="w-2/4 bg-white flex flex-col overflow-hidden relative border-r border-slate-200">
+          <!-- Dot grid backdrop -->
+          <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(#191c1e 1.2px, transparent 1.2px); background-size: 20px 20px;"></div>
+          
+          <div class="px-6 py-4 border-b border-slate-200 bg-slate-50 flex-shrink-0 z-10">
+            <h2 id="stage-workflow-title" class="text-sm font-black text-slate-900 flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-[18px]">account_tree</span>
+              Picking Workflow
+            </h2>
+            <p id="stage-workflow-subtitle" class="text-[10px] text-slate-500 font-semibold mt-1">
+              Sequential steps required for material retrieval, verification, and confirmation before Offline Prep.
+            </p>
+          </div>
+          
+          <div class="flex-grow overflow-y-auto p-6 z-10">
+            <div id="steps-timeline-container" class="relative pl-8 border-l-2 border-slate-200 space-y-6">
+              <!-- Dynamically populated timeline step cards -->
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Step Configuration Side Drawer -->
+        <div class="w-[450px] bg-slate-50 flex flex-col overflow-hidden shrink-0 select-none border-l border-slate-200">
+          <div class="px-5 py-3 border-b border-slate-200 bg-slate-100 flex justify-between items-center flex-shrink-0">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-[18px]">account_tree</span>
+              <h2 class="text-xs font-black text-slate-900 uppercase tracking-wider">Process Validation &amp; Dependency Rules</h2>
+            </div>
+            <span id="cfg-step-badge" class="bg-primary text-white text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider hidden font-mono-data">STEP 02</span>
+          </div>
+          
+          <!-- Empty Inspector State -->
+          <div id="cfg-empty-state" class="flex-grow flex flex-col items-center justify-center p-6 text-center text-slate-400">
+            <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mb-3">
+              <span class="material-symbols-outlined text-[24px] text-slate-400">tune</span>
+            </div>
+            <p class="text-xs font-bold text-slate-500">No Step Selected</p>
+            <p class="text-[10px] text-slate-400 mt-1 leading-normal max-w-[200px]">Click a workflow step card in the center timeline to configure its parameters.</p>
+          </div>
+
+          <!-- Configuration Content (Visible when step selected) -->
+          <div id="cfg-editor-content" class="flex-grow overflow-y-auto p-4 space-y-5 hidden">
+            
+            <!-- SECTION 1: Identification -->
+            <section class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm space-y-3">
+              <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-1.5">Identification</h4>
+              <div class="space-y-3">
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Process Name</label>
+                  <input type="text" id="cfg-step-name" class="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" oninput="updateSelectedStepField('name', this.value)">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Process Code</label>
+                    <input type="text" id="cfg-step-code" class="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" oninput="updateSelectedStepField('code', this.value)">
+                  </div>
+                  <div class="flex items-end pb-0.5">
+                    <label class="flex items-center gap-2 cursor-pointer w-full px-3 py-1.5 border border-slate-300 rounded-lg hover:bg-slate-50">
+                      <input type="checkbox" id="cfg-step-mandatory" class="w-3.5 h-3.5 rounded border-slate-350 text-primary focus:ring-0" onchange="updateSelectedStepField('mandatory', this.checked)">
+                      <span class="text-xs font-bold text-slate-700">Mandatory Step</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- SECTION 2: Dependencies -->
+            <section class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm space-y-3">
+              <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-1.5 flex justify-between items-center">
+                Dependencies
+                <span class="material-symbols-outlined text-[14px]">link</span>
+              </h4>
+              <div class="p-3 border border-slate-200 rounded-lg bg-slate-50/50">
+                <p class="text-[10px] text-slate-500 font-semibold mb-2.5">This process cannot start until the following are completed:</p>
+                <div id="cfg-step-dependencies-list" class="space-y-2">
+                  <!-- Dynamically populated dependencies -->
+                </div>
+                <button onclick="promptAddDependency()" class="mt-2.5 text-primary text-xs font-bold flex items-center hover:underline gap-0.5 cursor-pointer">
+                  <span class="material-symbols-outlined text-[16px]">add</span> Add Dependency
+                </button>
+              </div>
+            </section>
+
+            <!-- SECTION 3: Control Points (Parameters) -->
+            <section class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm space-y-3">
+              <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-1.5 flex justify-between items-center">
+                Control Points (Parameters)
+                <span class="material-symbols-outlined text-[14px]">tune</span>
+              </h4>
+              <div id="cfg-step-parameters-list" class="space-y-2.5">
+                <!-- Dynamically populated parameters -->
+              </div>
+              <button onclick="promptAddParameter()" class="w-full py-2 border-2 border-dashed border-slate-350 rounded-lg text-slate-500 text-xs font-bold flex items-center justify-center hover:bg-slate-100 hover:text-primary transition-colors cursor-pointer">
+                <span class="material-symbols-outlined text-[16px] mr-1">add_circle</span> Add Parameter
+              </button>
+            </section>
+
+            <!-- SECTION 4: Execution Validations -->
+            <section class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm space-y-4">
+              <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-1.5">Execution Validations</h4>
+              <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-2.5">
+                  <h5 class="text-[11px] font-bold flex items-center text-slate-800 gap-1">
+                    <span class="material-symbols-outlined text-primary text-[15px]">play_circle</span> Start Conditions
+                  </h5>
+                  <div class="space-y-2">
+                    <label class="flex items-start cursor-pointer">
+                      <input type="checkbox" id="cfg-step-operator-scan" class="w-3.5 h-3.5 rounded border-slate-350 text-primary focus:ring-0 mt-0.5 mr-2" onchange="updateStepCondition('start', 'operatorScan', this.checked)">
+                      <span class="text-[10px] font-semibold text-slate-700 leading-tight">Enforce Operator ID Scan</span>
+                    </label>
+                    <label class="flex items-start cursor-pointer">
+                      <input type="checkbox" id="cfg-step-machine-ready" class="w-3.5 h-3.5 rounded border-slate-350 text-primary focus:ring-0 mt-0.5 mr-2" onchange="updateStepCondition('start', 'machineReady', this.checked)">
+                      <span class="text-[10px] font-semibold text-slate-700 leading-tight">Verify Machine Ready State</span>
+                    </label>
+                    <label class="flex items-start cursor-pointer">
+                      <input type="checkbox" id="cfg-step-tool-calibration" class="w-3.5 h-3.5 rounded border-slate-350 text-primary focus:ring-0 mt-0.5 mr-2" onchange="updateStepCondition('start', 'toolCalibration', this.checked)">
+                      <span class="text-[10px] font-semibold text-slate-700 leading-tight">Require Tool Calibration Check</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="space-y-2.5">
+                  <h5 class="text-[11px] font-bold flex items-center text-slate-800 gap-1">
+                    <span class="material-symbols-outlined text-emerald-600 text-[15px]">check_circle</span> Completion Conditions
+                  </h5>
+                  <div class="space-y-2">
+                    <label class="flex items-start cursor-pointer">
+                      <input type="checkbox" id="cfg-step-all-params" class="w-3.5 h-3.5 rounded border-slate-350 text-primary focus:ring-0 mt-0.5 mr-2" onchange="updateStepCondition('completion', 'allParameters', this.checked)">
+                      <span class="text-[10px] font-semibold text-slate-700 leading-tight">Require all parameters recorded</span>
+                    </label>
+                    <label class="flex items-start cursor-pointer">
+                      <input type="checkbox" id="cfg-step-dual-qc" class="w-3.5 h-3.5 rounded border-slate-350 text-primary focus:ring-0 mt-0.5 mr-2" onchange="updateStepCondition('completion', 'dualQCSignoff', this.checked)">
+                      <span class="text-[10px] font-semibold text-slate-700 leading-tight">Enforce Dual QC Sign-off</span>
+                    </label>
+                    <label class="flex items-start cursor-pointer">
+                      <input type="checkbox" id="cfg-step-print-label" class="w-3.5 h-3.5 rounded border-slate-350 text-primary focus:ring-0 mt-0.5 mr-2" onchange="updateStepCondition('completion', 'autoPrintLabel', this.checked)">
+                      <span class="text-[10px] font-semibold text-slate-700 leading-tight">Auto-print Routing Label</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+
+            <!-- Remove Step button -->
+            <button type="button" onclick="deleteSelectedStep()" class="w-full py-2 border border-rose-200 text-rose-600 hover:bg-rose-50 font-bold text-xs rounded-lg transition-colors flex items-center justify-center gap-1.5 cursor-pointer">
+              <span class="material-symbols-outlined text-[16px]">delete</span>
+              Delete Step
+            </button>
+          </div>
+        </div>
+
+      </div>
+      
+    </div>
   </div>
 
   <div id="woToast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 ease-out z-[100] border border-slate-800 text-sm">
@@ -633,6 +834,1455 @@
         function exportWorkOrders() {
             showWOToast('Production dispatch catalog data exported successfully.');
         }
+        let workflowStages = [];
+        let workflowSteps = [];
+        let currentStageIndex = 0;
+        let currentStepId = null;
+
+        function getMethodRulesList(method) {
+            if (method === "QR/Barcode Scan (Strict)") {
+                return [
+                    "Block completion on mismatch",
+                    "Reject wrong material physically",
+                    "NG state requires reason code"
+                ];
+            } else if (method === "Manual Entry + Photo") {
+                return [
+                    "Manual verification logs timestamp",
+                    "Supervisor sign-off key required",
+                    "Photo evidence of serial is mandatory"
+                ];
+            } else if (method === "OCR Text Extraction") {
+                return [
+                    "AI match target bounds (+/- 5%)",
+                    "Save full crop of extracted text",
+                    "Trigger manual auditor fallback on fail"
+                ];
+            }
+            return ["Follow standard operation procedures."];
+        }
+
+        function renderStages() {
+            const listEl = document.getElementById('stage-components-list');
+            if (!listEl) return;
+            listEl.innerHTML = '';
+
+            workflowStages.forEach((stage, idx) => {
+                const isSelected = idx === currentStageIndex;
+                const card = document.createElement('div');
+                
+                if (isSelected) {
+                    card.className = 'border-l-4 border-primary bg-slate-100 rounded-r border-y border-r border-slate-200 p-3 cursor-pointer shadow-sm';
+                } else {
+                    card.className = 'border-l-4 border-transparent hover:border-slate-350 bg-white border border-slate-200 rounded p-3 cursor-pointer hover:bg-slate-50 transition-colors';
+                }
+                
+                card.onclick = () => selectStage(idx);
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-1">
+                      <span class="font-bold text-xs uppercase ${isSelected ? 'text-primary' : 'text-slate-800'}">${idx + 1}. ${stage.name}</span>
+                    </div>
+                    <p class="text-[10px] text-slate-500 font-semibold line-clamp-2 leading-relaxed">${stage.summary}</p>
+                `;
+                listEl.appendChild(card);
+            });
+
+            // Add Stage Button
+            const addBtn = document.createElement('button');
+            addBtn.className = 'w-full mt-4 py-2 border border-dashed border-slate-300 rounded text-slate-500 hover:bg-slate-50 hover:text-primary transition-colors flex items-center justify-center gap-1 font-bold text-xs cursor-pointer';
+            addBtn.onclick = addStage;
+            addBtn.innerHTML = '<span class="material-symbols-outlined text-[16px]">add</span> Add Stage';
+            listEl.appendChild(addBtn);
+        }
+
+        function selectStage(index) {
+            currentStageIndex = index;
+            currentStepId = null;
+            renderStages();
+            renderSteps();
+            updateInspectorConfig();
+            runWorkflowValidation();
+        }
+
+        function addStage() {
+            const name = prompt("Enter new Stage name:");
+            if (!name) return;
+            const id = 'stage-' + Date.now();
+            workflowStages.push({
+                id: id,
+                name: name.toUpperCase(),
+                summary: "Custom process stage execution flow."
+            });
+            selectStage(workflowStages.length - 1);
+            showWOToast("New stage added successfully.");
+        }
+
+        function renderSteps() {
+            const titleEl = document.getElementById('stage-workflow-title');
+            const subtitleEl = document.getElementById('stage-workflow-subtitle');
+            const containerEl = document.getElementById('steps-timeline-container');
+            
+            if (!containerEl) return;
+            containerEl.innerHTML = '';
+
+            const stage = workflowStages[currentStageIndex];
+            if (!stage) return;
+
+            titleEl.innerHTML = `<span class="material-symbols-outlined text-primary text-[18px]">account_tree</span> ${stage.name} Workflow`;
+            subtitleEl.textContent = stage.summary;
+
+            const stageSteps = workflowSteps.filter(s => s.stageId === stage.id);
+
+            stageSteps.forEach((step, idx) => {
+                const isSelected = step.id === currentStepId;
+                const isStep3 = step.id === 'step-3' || (step.name && step.name.toLowerCase().includes("verify batch"));
+                const hasWarning = isStep3;
+
+                const cardWrapper = document.createElement('div');
+                cardWrapper.className = 'relative';
+
+                // Timeline Dot
+                const dot = document.createElement('div');
+                if (isSelected) {
+                    dot.className = 'absolute -left-[43px] top-6 w-6 h-6 rounded-full border-2 border-primary bg-primary flex items-center justify-center shadow-[0_0_0_4px_rgba(183,0,12,0.2)] z-10';
+                    dot.innerHTML = '<div class="w-2 h-2 rounded-full bg-white"></div>';
+                } else {
+                    dot.className = 'absolute -left-[43px] top-6 w-6 h-6 rounded-full border-2 border-slate-200 bg-white flex items-center justify-center z-10';
+                    dot.innerHTML = `<div class="w-2 h-2 rounded-full ${idx < stageSteps.length - 1 || stage.id === 'stage-offline' ? 'bg-slate-500' : 'bg-slate-300'}"></div>`;
+                }
+                cardWrapper.appendChild(dot);
+
+                // Card content
+                const card = document.createElement('div');
+                card.onclick = () => selectStep(step.id);
+
+                let borderStyle = 'border border-slate-200 shadow-sm hover:border-primary/50';
+                let titleStyle = 'text-slate-800';
+                
+                if (isSelected) {
+                    borderStyle = 'border-2 border-primary shadow-md relative overflow-hidden';
+                    titleStyle = 'text-primary';
+                }
+
+                card.className = `bg-white ${borderStyle} rounded-xl cursor-pointer transition-colors`;
+                
+                // Construct Grid key-values
+                let gridHtml = '';
+                if (step.fields && Object.keys(step.fields).length > 0) {
+                    gridHtml = '<div class="grid grid-cols-2 gap-x-6 gap-y-1.5 text-[11px] mt-1.5">';
+                    Object.entries(step.fields).forEach(([key, val]) => {
+                        const isFailure = key.toLowerCase() === 'failure';
+                        const valStyle = isFailure ? 'text-primary font-bold' : 'text-slate-800';
+                        gridHtml += `
+                            <div class="flex items-center gap-1.5 border-b border-slate-100/50 pb-0.5">
+                                <span class="text-slate-400 font-medium shrink-0">${key}:</span>
+                                <span class="truncate ${valStyle} font-semibold">${val}</span>
+                            </div>`;
+                    });
+                    gridHtml += '</div>';
+                }
+
+                // Scan Barcode box if QR/Barcode is method
+                let scannerBoxHtml = '';
+                if (step.inputMethod === "QR/Barcode Scan (Strict)") {
+                    scannerBoxHtml = `
+                        <div class="bg-slate-50 border border-slate-200/60 rounded-xl p-3 flex items-center gap-4 mt-2">
+                          <div class="w-10 h-10 bg-white border border-slate-200 rounded-lg flex items-center justify-center text-slate-400 shrink-0">
+                            <span class="material-symbols-outlined text-[20px]">qr_code_scanner</span>
+                          </div>
+                          <div class="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[11px] text-slate-600 w-full">
+                            <div class="flex items-center gap-1.5 border-b border-slate-100/50 pb-0.5"><span class="text-slate-400 font-medium shrink-0">Target:</span><span class="text-slate-800 font-semibold truncate">Material Tag</span></div>
+                            <div class="flex items-center gap-1.5 border-b border-slate-100/50 pb-0.5"><span class="text-slate-400 font-medium shrink-0">Method:</span><span class="text-slate-800 font-semibold truncate">Barcode</span></div>
+                            <div class="flex items-center gap-1.5 border-b border-slate-100/50 pb-0.5"><span class="text-slate-400 font-medium shrink-0">Validation:</span><span class="text-slate-800 font-semibold truncate">Strict Match</span></div>
+                            <div class="flex items-center gap-1.5 border-b border-slate-100/50 pb-0.5"><span class="text-slate-400 font-medium shrink-0">Failure:</span><span class="text-primary font-bold truncate">Block</span></div>
+                          </div>
+                        </div>
+                    `;
+                }
+
+                // Dynamic tags logic
+                let tagsHtml = '';
+                const tags = [];
+                if (step.mandatory !== false) tags.push({ text: "Mandatory", style: "bg-slate-100 border-slate-200 text-slate-500" });
+                
+                if (step.code === "PRC-ONL-01") {
+                    tags.push({ text: "System Check", style: "bg-slate-100 border-slate-200 text-slate-500" });
+                    tags.push({ text: "Unlock", style: "bg-slate-100 border-slate-200 text-slate-500" });
+                }
+                
+                if (step.inputMethod === "QR/Barcode Scan (Strict)") {
+                    tags.push({ text: "QR", style: "bg-slate-100 border-slate-200 text-slate-500" });
+                }
+                if (step.parameters && step.parameters.length > 0) {
+                    tags.push({ text: "Control Points", style: "bg-blue-50 border-blue-200 text-blue-600" });
+                }
+                if (step.startConditions && step.startConditions.machineReady) {
+                    tags.push({ text: "Machine", style: "bg-purple-50 border-purple-200 text-purple-600" });
+                }
+                if (step.startConditions && step.startConditions.toolCalibration) {
+                    tags.push({ text: "Jig", style: "bg-slate-100 border-slate-200 text-slate-500" });
+                }
+                if (step.completionConditions && step.completionConditions.dualQCSignoff) {
+                    tags.push({ text: "QC REQUIRED", style: "bg-amber-50 border-amber-200 text-amber-600 font-bold" });
+                }
+                if (step.name && step.name.toLowerCase().includes("pressure")) {
+                    tags.push({ text: "Critical", style: "bg-rose-50 border-rose-200 text-rose-600 font-black" });
+                }
+                
+                // QC Special tags mapping matching mockup screen exactly
+                if (step.code === "PRC-QC-01") {
+                    tags.push({ text: "Supervisor Sign-off", style: "bg-amber-50 border-amber-200 text-amber-600 font-bold" });
+                }
+                if (step.code === "PRC-QC-02") {
+                    tags.push({ text: "Visual", style: "bg-slate-100 border-slate-200 text-slate-500" });
+                    tags.push({ text: "Dimensions", style: "bg-slate-100 border-slate-200 text-slate-500" });
+                }
+                if (step.code === "PRC-QC-03") {
+                    tags.push({ text: "Auto-Pass Rule", style: "bg-emerald-50 border-emerald-200 text-emerald-600 font-bold" });
+                    tags.push({ text: "Evidence Req", style: "bg-slate-100 border-slate-200 text-slate-500" });
+                }
+                if (step.code === "PRC-QC-05") {
+                    tags.push({ text: "Branching Logic", style: "bg-rose-50 border-rose-200 text-rose-600 font-black" });
+                }
+                
+                tags.push({ text: "First-Off", style: "bg-slate-100 border-slate-200 text-slate-500" });
+
+                tags.forEach(tag => {
+                    tagsHtml += `<span class="px-1.5 py-0.5 border rounded text-[9px] font-bold uppercase tracking-wider ${tag.style}">${tag.text}</span>`;
+                });
+
+                card.innerHTML = `
+                    ${isSelected ? '<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>' : ''}
+                    <div class="p-3.5 flex items-start gap-4">
+                      <div class="w-9 h-9 rounded bg-slate-150 border border-slate-200 flex items-center justify-center shrink-0 font-bold text-xs text-slate-600 font-mono">
+                        ${idx < 9 ? '0' + (idx + 1) : (idx + 1)}
+                      </div>
+                      <div class="flex-grow min-w-0">
+                        <div class="flex justify-between items-center pb-1">
+                          <h3 class="font-bold text-xs uppercase truncate ${titleStyle}">${step.name}</h3>
+                          ${hasWarning ? '<span class="material-symbols-outlined text-primary text-[15px]" title="Critical step rules enforced">warning</span>' : ''}
+                        </div>
+                        ${gridHtml ? `<div class="mt-1 pb-1">${gridHtml}</div>` : ''}
+                        ${scannerBoxHtml}
+                        <div class="flex flex-wrap gap-1 mt-2">
+                          ${tagsHtml}
+                        </div>
+                      </div>
+                    </div>
+                `;
+
+                cardWrapper.appendChild(card);
+                containerEl.appendChild(cardWrapper);
+            });
+
+            // If active stage is Offline Prep or Online Assembly, append Completion Validation system gate
+            if (stage.id === 'stage-offline' || stage.id === 'stage-online') {
+                const isOnline = stage.id === 'stage-online';
+                const gateTitle = isOnline ? 'Online Completion Validation' : 'Offline Completion Validation';
+                const gateSubtitle = isOnline ? 'System Gate • Mandatory • Unlock Packing' : 'System Gate • Unlocks Online Assembly';
+
+                const gateWrapper = document.createElement('div');
+                gateWrapper.className = 'relative pt-2';
+
+                const gateDot = document.createElement('div');
+                gateDot.className = 'absolute -left-[43px] top-7 w-6 h-6 rounded-full border-2 border-slate-300 bg-slate-100 flex items-center justify-center z-10';
+                gateDot.innerHTML = '<span class="material-symbols-outlined text-slate-600 text-[12px]">flag</span>';
+                gateWrapper.appendChild(gateDot);
+
+                const gateCard = document.createElement('div');
+                gateCard.className = 'bg-slate-50 border border-slate-200 rounded-xl p-4 flex items-center gap-4';
+                gateCard.innerHTML = `
+                    <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center shrink-0">
+                      <span class="material-symbols-outlined text-[20px] text-slate-600">flag</span>
+                    </div>
+                    <div class="flex-grow text-left">
+                      <h3 class="font-bold text-xs uppercase text-slate-800">${gateTitle}</h3>
+                      <p class="text-[10px] text-slate-500 font-semibold mt-1">${gateSubtitle}</p>
+                    </div>
+                `;
+                gateWrapper.appendChild(gateCard);
+                containerEl.appendChild(gateWrapper);
+            }
+
+            // Add Step Button
+            const addStepWrapper = document.createElement('div');
+            addStepWrapper.className = 'relative pt-2';
+            addStepWrapper.innerHTML = `
+                <button onclick="addStep()" class="absolute -left-[48px] w-8 h-8 rounded-full bg-white border border-dashed border-slate-400 text-slate-500 flex items-center justify-center hover:bg-slate-100 hover:text-primary transition-colors z-10 cursor-pointer">
+                  <span class="material-symbols-outlined text-[16px]">add</span>
+                </button>
+                <div class="pl-6 pt-1.5">
+                  <span class="text-xs text-slate-400 font-bold cursor-pointer hover:text-primary" onclick="addStep()">Add Step</span>
+                </div>
+            `;
+            containerEl.appendChild(addStepWrapper);
+        }
+
+        function selectStep(stepId) {
+            currentStepId = stepId;
+            renderSteps();
+            updateInspectorConfig();
+        }
+
+        function addStep() {
+            const name = prompt("Enter Step Name:");
+            if (!name) return;
+            const stage = workflowStages[currentStageIndex];
+            if (!stage) return;
+
+            const stageSteps = workflowSteps.filter(s => s.stageId === stage.id);
+            const num = stageSteps.length + 1;
+            const stepNumber = "STEP " + (num < 10 ? '0' + num : num);
+            const id = 'step-' + Date.now();
+
+            workflowSteps.push({
+                id: id,
+                stageId: stage.id,
+                stepNumber: stepNumber,
+                name: name,
+                code: "PRC-" + stage.name.substring(0, 3).toUpperCase() + "-" + (num < 10 ? '0' + num : num),
+                mandatory: true,
+                fields: {},
+                prerequisite: stageSteps.length > 0 ? stageSteps[stageSteps.length - 1].id : "",
+                dependencies: [],
+                parameters: [],
+                startConditions: {
+                    operatorScan: false,
+                    machineReady: false,
+                    toolCalibration: false
+                },
+                completionConditions: {
+                    allParameters: false,
+                    dualQCSignoff: false,
+                    autoPrintLabel: false
+                },
+                sapSync: true,
+                bomAvailable: true,
+                operatorVerified: false,
+                inputMethod: "Manual Entry + Photo",
+                rules: getMethodRulesList("Manual Entry + Photo")
+            });
+
+            selectStep(id);
+            showWOToast("New step added to flow.");
+        }
+
+        function updateInspectorConfig() {
+            const emptyEl = document.getElementById('cfg-empty-state');
+            const editorEl = document.getElementById('cfg-editor-content');
+            const badgeEl = document.getElementById('cfg-step-badge');
+
+            if (!emptyEl || !editorEl) return;
+
+            if (!currentStepId) {
+                emptyEl.classList.remove('hidden');
+                editorEl.classList.add('hidden');
+                badgeEl.classList.add('hidden');
+                return;
+            }
+
+            const step = workflowSteps.find(s => s.id === currentStepId);
+            if (!step) {
+                emptyEl.classList.remove('hidden');
+                editorEl.classList.add('hidden');
+                badgeEl.classList.add('hidden');
+                return;
+            }
+
+            emptyEl.classList.add('hidden');
+            editorEl.classList.remove('hidden');
+            badgeEl.classList.remove('hidden');
+            badgeEl.textContent = step.stepNumber;
+
+            // Identification Section fields
+            document.getElementById('cfg-step-name').value = step.name;
+            document.getElementById('cfg-step-code').value = step.code || "";
+            document.getElementById('cfg-step-mandatory').checked = step.mandatory !== false;
+
+            // Dependencies list render
+            const depListEl = document.getElementById('cfg-step-dependencies-list');
+            if (depListEl) {
+                depListEl.innerHTML = '';
+                const deps = step.dependencies || [];
+                if (deps.length === 0) {
+                    depListEl.innerHTML = '<p class="text-[10px] text-slate-400 font-semibold italic">No dependencies configured.</p>';
+                } else {
+                    deps.forEach((dep, idx) => {
+                        depListEl.innerHTML += `
+                            <div class="flex items-center justify-between p-2 bg-white border border-slate-200 rounded-lg shadow-sm">
+                              <div class="flex items-center min-w-0">
+                                <span class="material-symbols-outlined text-sm text-primary mr-1.5 shrink-0">link</span>
+                                <span class="text-xs font-semibold text-slate-700 truncate">${dep.name}</span>
+                              </div>
+                              <div class="flex items-center gap-2 shrink-0">
+                                <span class="text-[9px] font-mono bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200 text-slate-500">${dep.code}</span>
+                                <button onclick="deleteDependency(${idx})" class="text-rose-500 hover:text-rose-700 flex items-center justify-center cursor-pointer">
+                                  <span class="material-symbols-outlined text-[14px]">delete</span>
+                                </button>
+                              </div>
+                            </div>
+                        `;
+                    });
+                }
+            }
+
+            // Parameters list render
+            const paramListEl = document.getElementById('cfg-step-parameters-list');
+            if (paramListEl) {
+                paramListEl.innerHTML = '';
+                const params = step.parameters || [];
+                if (params.length === 0) {
+                    paramListEl.innerHTML = '<p class="text-[10px] text-slate-400 font-semibold italic">No parameters configured.</p>';
+                } else {
+                    params.forEach((param, idx) => {
+                        paramListEl.innerHTML += `
+                            <div class="relative p-3 bg-white border border-slate-200 border-l-4 border-l-primary rounded-lg shadow-sm flex flex-col gap-1.5">
+                              <div class="flex justify-between items-start">
+                                <span class="text-xs font-bold text-slate-800">${param.name}</span>
+                                <button onclick="deleteParameter(${idx})" class="text-rose-500 hover:text-rose-700 flex items-center justify-center cursor-pointer">
+                                  <span class="material-symbols-outlined text-[14px]">delete</span>
+                                </button>
+                              </div>
+                              <div class="grid grid-cols-2 gap-2 text-[10px]">
+                                <div>
+                                  <p class="text-slate-400 uppercase font-bold">Standard</p>
+                                  <p class="text-xs font-bold text-slate-700">${param.standard}</p>
+                                </div>
+                                <div>
+                                  <p class="text-slate-400 uppercase font-bold">Tolerance</p>
+                                  <p class="text-xs font-bold text-slate-700">${param.tolerance}</p>
+                                </div>
+                              </div>
+                            </div>
+                        `;
+                    });
+                }
+            }
+
+            // Start & Completion Checkboxes
+            const sc = step.startConditions || { operatorScan: false, machineReady: false, toolCalibration: false };
+            const cc = step.completionConditions || { allParameters: false, dualQCSignoff: false, autoPrintLabel: false };
+
+            document.getElementById('cfg-step-operator-scan').checked = !!sc.operatorScan;
+            document.getElementById('cfg-step-machine-ready').checked = !!sc.machineReady;
+            document.getElementById('cfg-step-tool-calibration').checked = !!sc.toolCalibration;
+
+            document.getElementById('cfg-step-all-params').checked = !!cc.allParameters;
+            document.getElementById('cfg-step-dual-qc').checked = !!cc.dualQCSignoff;
+            document.getElementById('cfg-step-print-label').checked = !!cc.autoPrintLabel;
+
+
+        }
+
+        function updateSelectedStepField(key, val) {
+            if (!currentStepId) return;
+            const step = workflowSteps.find(s => s.id === currentStepId);
+            if (step) {
+                step[key] = val;
+                
+                // If name changed, update the center title instantly
+                if (key === 'name') {
+                    renderSteps();
+                }
+
+                updateInspectorConfig();
+                saveWorkflowConfigState();
+                runWorkflowValidation();
+            }
+        }
+
+        function promptAddDependency() {
+            if (!currentStepId) return;
+            const step = workflowSteps.find(s => s.id === currentStepId);
+            if (!step) return;
+
+            const name = prompt("Enter Dependency Name (e.g. Material Picking):");
+            if (!name) return;
+            const code = prompt("Enter Dependency Code (e.g. PRC-MAT-01):");
+            if (!code) return;
+
+            if (!step.dependencies) step.dependencies = [];
+            step.dependencies.push({ name, code });
+            
+            saveWorkflowConfigState();
+            renderSteps();
+            updateInspectorConfig();
+            showWOToast("Dependency added successfully.");
+        }
+
+        function deleteDependency(idx) {
+            if (!currentStepId) return;
+            const step = workflowSteps.find(s => s.id === currentStepId);
+            if (!step || !step.dependencies) return;
+
+            step.dependencies.splice(idx, 1);
+            saveWorkflowConfigState();
+            renderSteps();
+            updateInspectorConfig();
+            showWOToast("Dependency removed.");
+        }
+
+        function promptAddParameter() {
+            if (!currentStepId) return;
+            const step = workflowSteps.find(s => s.id === currentStepId);
+            if (!step) return;
+
+            const name = prompt("Enter Parameter Name (e.g. Crimping Diameter):");
+            if (!name) return;
+            const standard = prompt("Enter Standard Value (e.g. 9.00 mm):");
+            if (!standard) return;
+            const tolerance = prompt("Enter Tolerance (e.g. ±0.05):");
+            if (!tolerance) return;
+
+            if (!step.parameters) step.parameters = [];
+            step.parameters.push({ name, standard, tolerance });
+            
+            saveWorkflowConfigState();
+            renderSteps();
+            updateInspectorConfig();
+            showWOToast("Parameter added successfully.");
+        }
+
+        function deleteParameter(idx) {
+            if (!currentStepId) return;
+            const step = workflowSteps.find(s => s.id === currentStepId);
+            if (!step || !step.parameters) return;
+
+            step.parameters.splice(idx, 1);
+            saveWorkflowConfigState();
+            renderSteps();
+            updateInspectorConfig();
+            showWOToast("Parameter removed.");
+        }
+
+        function updateStepCondition(type, key, checked) {
+            if (!currentStepId) return;
+            const step = workflowSteps.find(s => s.id === currentStepId);
+            if (!step) return;
+
+            if (type === 'start') {
+                if (!step.startConditions) step.startConditions = {};
+                step.startConditions[key] = checked;
+            } else if (type === 'completion') {
+                if (!step.completionConditions) step.completionConditions = {};
+                step.completionConditions[key] = checked;
+            }
+            saveWorkflowConfigState();
+            renderSteps();
+            updateInspectorConfig();
+        }
+
+        function deleteSelectedStep() {
+            if (!currentStepId) return;
+            // Clear prerequisite chains pointing to this step
+            workflowSteps.forEach(s => {
+                if (s.prerequisite === currentStepId) s.prerequisite = '';
+            });
+            workflowSteps = workflowSteps.filter(s => s.id !== currentStepId);
+            currentStepId = null;
+            renderSteps();
+            updateInspectorConfig();
+            saveWorkflowConfigState();
+            runWorkflowValidation();
+            showWOToast("Workflow step removed successfully.");
+        }
+
+        function saveWorkflowConfigState() {
+            localStorage.setItem('workflow_stages', JSON.stringify(workflowStages));
+            localStorage.setItem('workflow_steps', JSON.stringify(workflowSteps));
+        }
+
+        function saveWorkflowConfig() {
+            saveWorkflowConfigState();
+            showWOToast("Workflow sequential layout draft saved successfully!");
+            closeWorkflowConfigModal();
+        }
+
+        function loadWorkflowConfig() {
+            const storedStages = localStorage.getItem('workflow_stages');
+            const storedSteps = localStorage.getItem('workflow_steps');
+
+            if (storedStages && storedSteps) {
+                try {
+                    workflowStages = JSON.parse(storedStages);
+                    workflowSteps = JSON.parse(storedSteps);
+                    
+                    // Legacy check: Force-reset cache if step-off-1, stage-online, stage-qc or stage-rework steps are in old schema format
+                    const needsReset = workflowSteps.some(s => s.stageId === 'stage-offline' && !s.dependencies) ||
+                                       !workflowSteps.some(s => s.stageId === 'stage-online') ||
+                                       !workflowSteps.some(s => s.stageId === 'stage-qc') ||
+                                       !workflowSteps.some(s => s.stageId === 'stage-rework');
+                    if (needsReset) {
+                        workflowStages = [];
+                        workflowSteps = [];
+                    }
+                } catch(e) {
+                    workflowStages = [];
+                    workflowSteps = [];
+                }
+            }
+
+            if (!workflowStages || workflowStages.length === 0) {
+                workflowStages = [
+                    { id: "stage-picking", name: "PICKING", summary: "Material retrieval and verification process." },
+                    { id: "stage-offline", name: "OFFLINE PREP", summary: "Pre-assembly process execution." },
+                    { id: "stage-online", name: "ONLINE ASSEMBLY", summary: "Final assembly process execution on the main line." },
+                    { id: "stage-qc", name: "QUALITY CONTROL", summary: "QC validation and final approval step." },
+                    { id: "stage-rework", name: "REWORK", summary: "NG correction process handling." }
+                ];
+            }
+
+            if (!workflowSteps || workflowSteps.length === 0) {
+                workflowSteps = [
+                    // Picking default steps matching mockup exactly
+                    {
+                        id: "step-1",
+                        stageId: "stage-picking",
+                        stepNumber: "STEP 01",
+                        name: "Scan Work Order",
+                        code: "PRC-MAT-01",
+                        mandatory: true,
+                        fields: {
+                            "Action": "Initiate via Barcode",
+                            "Target": "WO Barcode",
+                            "Validation": "System Match",
+                            "Dependency": "Assigned & Waiting"
+                        },
+                        prerequisite: "",
+                        dependencies: [],
+                        parameters: [],
+                        startConditions: { operatorScan: true, machineReady: false, toolCalibration: false },
+                        completionConditions: { allParameters: true, dualQCSignoff: false, autoPrintLabel: false },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: false,
+                        inputMethod: "QR/Barcode Scan (Strict)",
+                        rules: getMethodRulesList("QR/Barcode Scan (Strict)")
+                    },
+                    {
+                        id: "step-2",
+                        stageId: "stage-picking",
+                        stepNumber: "STEP 02",
+                        name: "Retrieve Material",
+                        code: "PRC-MAT-02",
+                        mandatory: true,
+                        fields: {
+                            "Source": "SAP BOM",
+                            "Location": "Zone B, Rack 4",
+                            "Quantity": "150 kg"
+                        },
+                        prerequisite: "step-1",
+                        dependencies: [
+                            { name: "Scan Work Order", code: "PRC-MAT-01" }
+                        ],
+                        parameters: [],
+                        startConditions: { operatorScan: false, machineReady: false, toolCalibration: false },
+                        completionConditions: { allParameters: false, dualQCSignoff: false, autoPrintLabel: false },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: false,
+                        inputMethod: "Manual Entry + Photo",
+                        rules: getMethodRulesList("Manual Entry + Photo")
+                    },
+                    {
+                        id: "step-3",
+                        stageId: "stage-picking",
+                        stepNumber: "STEP 03",
+                        name: "Verify Batch Number",
+                        code: "PRC-MAT-03",
+                        mandatory: true,
+                        fields: {
+                            "Target": "Material Lot / Box Tag",
+                            "Method": "QR/Barcode",
+                            "Validation": "Strict Match",
+                            "Failure": "Block Completion"
+                        },
+                        prerequisite: "step-2",
+                        dependencies: [],
+                        parameters: [],
+                        startConditions: { operatorScan: true, machineReady: false, toolCalibration: false },
+                        completionConditions: { allParameters: true, dualQCSignoff: false, autoPrintLabel: false },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: false,
+                        inputMethod: "QR/Barcode Scan (Strict)",
+                        rules: getMethodRulesList("QR/Barcode Scan (Strict)")
+                    },
+                    {
+                        id: "step-4",
+                        stageId: "stage-picking",
+                        stepNumber: "STEP 04",
+                        name: "Material Confirmation",
+                        code: "PRC-MAT-04",
+                        mandatory: true,
+                        fields: {
+                            "Role": "Picker / Lead",
+                            "Dependency": "Step 03 Pass"
+                        },
+                        prerequisite: "step-3",
+                        dependencies: [
+                            { name: "Verify Batch Number", code: "PRC-MAT-03" }
+                        ],
+                        parameters: [],
+                        startConditions: { operatorScan: false, machineReady: false, toolCalibration: false },
+                        completionConditions: { allParameters: false, dualQCSignoff: true, autoPrintLabel: false },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: true,
+                        inputMethod: "Manual Entry + Photo",
+                        rules: getMethodRulesList("Manual Entry + Photo")
+                    },
+                    // Offline defaults matching mockup exactly
+                    {
+                        id: "step-off-1",
+                        stageId: "stage-offline",
+                        stepNumber: "STEP 01",
+                        name: "Hose Cutting 1",
+                        code: "PRC-OFF-01",
+                        mandatory: true,
+                        fields: {
+                            "Action": "Manual pre-cut",
+                            "Machine": "Hydraulic Cutter #2",
+                            "Tolerance": "+/- 2.0 mm"
+                        },
+                        prerequisite: "",
+                        dependencies: [],
+                        parameters: [
+                            { name: "Cut Length", standard: "240.0 mm", tolerance: "±1.0" }
+                        ],
+                        startConditions: {
+                            operatorScan: true,
+                            machineReady: false,
+                            toolCalibration: false
+                        },
+                        completionConditions: {
+                            allParameters: true,
+                            dualQCSignoff: false,
+                            autoPrintLabel: false
+                        },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: false,
+                        inputMethod: "Manual Entry + Photo",
+                        rules: getMethodRulesList("Manual Entry + Photo")
+                    },
+                    {
+                        id: "step-off-2",
+                        stageId: "stage-offline",
+                        stepNumber: "STEP 02",
+                        name: "Crimping First",
+                        code: "PRC-OFF-02",
+                        mandatory: true,
+                        fields: {
+                            "Action": "Press Fitting",
+                            "Target": "Sleeve A"
+                        },
+                        prerequisite: "step-off-1",
+                        dependencies: [
+                            { name: "Material Picking", code: "PRC-MAT-01" }
+                        ],
+                        parameters: [
+                            { name: "Crimping Diameter", standard: "9.00 mm", tolerance: "±0.05" },
+                            { name: "Insertion Mark", standard: "16.0 mm", tolerance: "+0 / -1.5" }
+                        ],
+                        startConditions: {
+                            operatorScan: true,
+                            machineReady: true,
+                            toolCalibration: false
+                        },
+                        completionConditions: {
+                            allParameters: true,
+                            dualQCSignoff: true,
+                            autoPrintLabel: false
+                        },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: false,
+                        inputMethod: "Manual Entry + Photo",
+                        rules: getMethodRulesList("Manual Entry + Photo")
+                    },
+                    {
+                        id: "step-off-3",
+                        stageId: "stage-offline",
+                        stepNumber: "STEP 03",
+                        name: "Second Crimping",
+                        code: "PRC-OFF-03",
+                        mandatory: true,
+                        fields: {
+                            "Action": "Press Fitting",
+                            "Target": "Sleeve B"
+                        },
+                        prerequisite: "step-off-2",
+                        dependencies: [
+                            { name: "Crimping First", code: "PRC-OFF-02" }
+                        ],
+                        parameters: [
+                            { name: "Crimping Force", standard: "45 kN", tolerance: "±5 kN" }
+                        ],
+                        startConditions: {
+                            operatorScan: true,
+                            machineReady: true,
+                            toolCalibration: true
+                        },
+                        completionConditions: {
+                            allParameters: true,
+                            dualQCSignoff: true,
+                            autoPrintLabel: true
+                        },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: false,
+                        inputMethod: "Manual Entry + Photo",
+                        rules: getMethodRulesList("Manual Entry + Photo")
+                    },
+                    // Online Assembly defaults matching mockup exactly
+                    {
+                        id: "step-onl-1",
+                        stageId: "stage-online",
+                        stepNumber: "STEP 01",
+                        name: "Online Unlock Confirmation",
+                        code: "PRC-ONL-01",
+                        mandatory: true,
+                        fields: {
+                            "Action": "System Check",
+                            "Method": "Offline Verification Pass",
+                            "Scope": "Unlocks Online Assembly"
+                        },
+                        prerequisite: "",
+                        dependencies: [],
+                        parameters: [],
+                        startConditions: {
+                            operatorScan: false,
+                            machineReady: false,
+                            toolCalibration: false
+                        },
+                        completionConditions: {
+                            allParameters: false,
+                            dualQCSignoff: false,
+                            autoPrintLabel: false
+                        },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: false,
+                        inputMethod: "Manual Entry + Photo",
+                        rules: getMethodRulesList("Manual Entry + Photo")
+                    },
+                    {
+                        id: "step-onl-2",
+                        stageId: "stage-online",
+                        stepNumber: "STEP 02",
+                        name: "Pipe Torquing 1",
+                        code: "PRC-ONL-02",
+                        mandatory: true,
+                        fields: {
+                            "Action": "Pressure Connection",
+                            "Station": "Torque Station A",
+                            "Operator": "Verified Role"
+                        },
+                        prerequisite: "step-onl-1",
+                        dependencies: [
+                            { name: "Online Unlock Confirmation", code: "PRC-ONL-01" }
+                        ],
+                        parameters: [
+                            { name: "Torque Value", standard: "15 Nm", tolerance: "12-17 Nm" }
+                        ],
+                        startConditions: {
+                            operatorScan: true,
+                            machineReady: true,
+                            toolCalibration: true
+                        },
+                        completionConditions: {
+                            allParameters: true,
+                            dualQCSignoff: false,
+                            autoPrintLabel: false
+                        },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: false,
+                        inputMethod: "Manual Entry + Photo",
+                        rules: getMethodRulesList("Manual Entry + Photo")
+                    },
+                    {
+                        id: "step-onl-3",
+                        stageId: "stage-online",
+                        stepNumber: "STEP 03",
+                        name: "Pipe Torquing 2",
+                        code: "PRC-ONL-03",
+                        mandatory: true,
+                        fields: {
+                            "Action": "Secondary Connection",
+                            "Station": "Torque Station A"
+                        },
+                        prerequisite: "step-onl-2",
+                        dependencies: [
+                            { name: "Pipe Torquing 1", code: "PRC-ONL-02" }
+                        ],
+                        parameters: [
+                            { name: "Torque Value", standard: "15 Nm", tolerance: "12-17 Nm" }
+                        ],
+                        startConditions: {
+                            operatorScan: true,
+                            machineReady: true,
+                            toolCalibration: true
+                        },
+                        completionConditions: {
+                            allParameters: true,
+                            dualQCSignoff: false,
+                            autoPrintLabel: false
+                        },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: false,
+                        inputMethod: "Manual Entry + Photo",
+                        rules: getMethodRulesList("Manual Entry + Photo")
+                    },
+                    {
+                        id: "step-onl-4",
+                        stageId: "stage-online",
+                        stepNumber: "STEP 04",
+                        name: "Pressure Test",
+                        code: "PRC-ONL-04",
+                        mandatory: true,
+                        fields: {
+                            "Action": "Pneumatic/Hydrostatic Test",
+                            "Critical": "Strict Limit Enforce",
+                            "QC Check": "Inspector Sign-Off"
+                        },
+                        prerequisite: "step-onl-3",
+                        dependencies: [
+                            { name: "Pipe Torquing 2", code: "PRC-ONL-03" }
+                        ],
+                        parameters: [
+                            { name: "Pressure Value", standard: "150 bar", tolerance: "±5 bar" }
+                        ],
+                        startConditions: {
+                            operatorScan: true,
+                            machineReady: true,
+                            toolCalibration: false
+                        },
+                        completionConditions: {
+                            allParameters: true,
+                            dualQCSignoff: true,
+                            autoPrintLabel: false
+                        },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: false,
+                        inputMethod: "Manual Entry + Photo",
+                        rules: getMethodRulesList("Manual Entry + Photo")
+                    },
+                    {
+                        id: "step-onl-5",
+                        stageId: "stage-online",
+                        stepNumber: "STEP 05",
+                        name: "Final Inspection",
+                        code: "PRC-ONL-05",
+                        mandatory: true,
+                        fields: {
+                            "Action": "Visual Cosmetics Check",
+                            "Standard": "No scratches / cracks"
+                        },
+                        prerequisite: "step-onl-4",
+                        dependencies: [],
+                        parameters: [
+                            { name: "Visual Check", standard: "Clear", tolerance: "No defects" }
+                        ],
+                        startConditions: {
+                            operatorScan: true,
+                            machineReady: false,
+                            toolCalibration: false
+                        },
+                        completionConditions: {
+                            allParameters: true,
+                            dualQCSignoff: true,
+                            autoPrintLabel: true
+                        },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: false,
+                        inputMethod: "Manual Entry + Photo",
+                        rules: getMethodRulesList("Manual Entry + Photo")
+                    },
+                    {
+                        id: "step-onl-6",
+                        stageId: "stage-online",
+                        stepNumber: "STEP 06",
+                        name: "Final QC / Approval",
+                        code: "PRC-ONL-06",
+                        mandatory: true,
+                        fields: {
+                            "Action": "Supervisor Clearance",
+                            "Dependency": "Step 05 Passed"
+                        },
+                        prerequisite: "step-onl-5",
+                        dependencies: [],
+                        parameters: [],
+                        startConditions: {
+                            operatorScan: false,
+                            machineReady: false,
+                            toolCalibration: false
+                        },
+                        completionConditions: {
+                            allParameters: false,
+                            dualQCSignoff: true,
+                            autoPrintLabel: false
+                        },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: false,
+                        inputMethod: "Manual Entry + Photo",
+                        rules: getMethodRulesList("Manual Entry + Photo")
+                    },
+                    // Quality Control defaults matching mockup exactly
+                    {
+                        id: "step-qc-1",
+                        stageId: "stage-qc",
+                        stepNumber: "STEP 01",
+                        name: "First-Off Approval Check",
+                        code: "PRC-QC-01",
+                        mandatory: true,
+                        fields: {
+                            "Action": "Approval Check",
+                            "Verifier": "Supervisor Scan",
+                            "Rule": "First Part Validation"
+                        },
+                        prerequisite: "",
+                        dependencies: [],
+                        parameters: [],
+                        startConditions: {
+                            operatorScan: false,
+                            machineReady: false,
+                            toolCalibration: false
+                        },
+                        completionConditions: {
+                            allParameters: false,
+                            dualQCSignoff: true,
+                            autoPrintLabel: false
+                        },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: false,
+                        inputMethod: "Manual Entry + Photo",
+                        rules: getMethodRulesList("Manual Entry + Photo")
+                    },
+                    {
+                        id: "step-qc-2",
+                        stageId: "stage-qc",
+                        stepNumber: "STEP 02",
+                        name: "Offline Process QC",
+                        code: "PRC-QC-02",
+                        mandatory: true,
+                        fields: {
+                            "Action": "Offline Prep QC",
+                            "Scope": "First-Off Complete"
+                        },
+                        prerequisite: "step-qc-1",
+                        dependencies: [],
+                        parameters: [
+                            { name: "Visual Check", standard: "Pass", tolerance: "No defects" },
+                            { name: "Dimensions", standard: "Standard", tolerance: "±0.1" }
+                        ],
+                        startConditions: {
+                            operatorScan: true,
+                            machineReady: false,
+                            toolCalibration: false
+                        },
+                        completionConditions: {
+                            allParameters: true,
+                            dualQCSignoff: false,
+                            autoPrintLabel: false
+                        },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: false,
+                        inputMethod: "Manual Entry + Photo",
+                        rules: getMethodRulesList("Manual Entry + Photo")
+                    },
+                    {
+                        id: "step-qc-3",
+                        stageId: "stage-qc",
+                        stepNumber: "STEP 03",
+                        name: "Pressure Test QC",
+                        code: "PRC-QC-03",
+                        mandatory: true,
+                        fields: {
+                            "Action": "Leakage Check",
+                            "Method": "Machine Integrated",
+                            "Tolerance": "+/- 0.5 PSI"
+                        },
+                        prerequisite: "step-qc-2",
+                        dependencies: [
+                            { name: "Pressure Test", code: "PRC-ONL-04" }
+                        ],
+                        parameters: [
+                            { name: "Static Pressure", standard: "120.0", tolerance: "0.5" },
+                            { name: "Hold Time (s)", standard: "60", tolerance: "2" }
+                        ],
+                        startConditions: {
+                            operatorScan: true,
+                            machineReady: true,
+                            toolCalibration: false
+                        },
+                        completionConditions: {
+                            allParameters: true,
+                            dualQCSignoff: false,
+                            autoPrintLabel: false
+                        },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: false,
+                        inputMethod: "Manual Entry + Photo",
+                        rules: getMethodRulesList("Manual Entry + Photo")
+                    },
+                    {
+                        id: "step-qc-4",
+                        stageId: "stage-qc",
+                        stepNumber: "STEP 04",
+                        name: "Final Inspection QC",
+                        code: "PRC-QC-04",
+                        mandatory: true,
+                        fields: {
+                            "Action": "Final Assembly Audit",
+                            "Method": "Visual & Functional"
+                        },
+                        prerequisite: "step-qc-3",
+                        dependencies: [],
+                        parameters: [],
+                        startConditions: {
+                            operatorScan: true,
+                            machineReady: false,
+                            toolCalibration: false
+                        },
+                        completionConditions: {
+                            allParameters: false,
+                            dualQCSignoff: false,
+                            autoPrintLabel: false
+                        },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: false,
+                        inputMethod: "Manual Entry + Photo",
+                        rules: getMethodRulesList("Manual Entry + Photo")
+                    },
+                    {
+                        id: "step-qc-5",
+                        stageId: "stage-qc",
+                        stepNumber: "STEP 05",
+                        name: "NG / Rework Decision",
+                        code: "PRC-QC-05",
+                        mandatory: true,
+                        fields: {
+                            "Action": "Quality Branching Logic",
+                            "Route": "Rework or Scrap"
+                        },
+                        prerequisite: "step-qc-4",
+                        dependencies: [],
+                        parameters: [],
+                        startConditions: {
+                            operatorScan: false,
+                            machineReady: false,
+                            toolCalibration: false
+                        },
+                        completionConditions: {
+                            allParameters: false,
+                            dualQCSignoff: true,
+                            autoPrintLabel: false
+                        },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: false,
+                        inputMethod: "Manual Entry + Photo",
+                        rules: getMethodRulesList("Manual Entry + Photo")
+                    },
+                    {
+                        id: "step-qc-6",
+                        stageId: "stage-qc",
+                        stepNumber: "STEP 06",
+                        name: "Rework QC Approval",
+                        code: "PRC-QC-06",
+                        mandatory: true,
+                        fields: {
+                            "Action": "Rework Validation",
+                            "Approval": "Supervisor Override"
+                        },
+                        prerequisite: "step-qc-5",
+                        dependencies: [],
+                        parameters: [],
+                        startConditions: {
+                            operatorScan: false,
+                            machineReady: false,
+                            toolCalibration: false
+                        },
+                        completionConditions: {
+                            allParameters: false,
+                            dualQCSignoff: true,
+                            autoPrintLabel: false
+                        },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: false,
+                        inputMethod: "Manual Entry + Photo",
+                        rules: getMethodRulesList("Manual Entry + Photo")
+                    },
+                    {
+                        id: "step-qc-7",
+                        stageId: "stage-qc",
+                        stepNumber: "STEP 07",
+                        name: "Final QC Approval",
+                        code: "PRC-QC-07",
+                        mandatory: true,
+                        fields: {
+                            "Action": "Final Clearance Release",
+                            "Status": "Control Card Closed"
+                        },
+                        prerequisite: "step-qc-6",
+                        dependencies: [],
+                        parameters: [],
+                        startConditions: {
+                            operatorScan: false,
+                            machineReady: false,
+                            toolCalibration: false
+                        },
+                        completionConditions: {
+                            allParameters: false,
+                            dualQCSignoff: true,
+                            autoPrintLabel: false
+                        },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: false,
+                        inputMethod: "Manual Entry + Photo",
+                        rules: getMethodRulesList("Manual Entry + Photo")
+                    },
+                    // Rework defaults matching standard flow requirements
+                    {
+                        id: "step-rew-1",
+                        stageId: "stage-rework",
+                        stepNumber: "STEP 01",
+                        name: "Dismantle & Defect Analysis",
+                        code: "PRC-REW-01",
+                        mandatory: true,
+                        fields: {
+                            "Action": "Fitting Dismantling",
+                            "Check": "Inspect Thread / Seat Damage"
+                        },
+                        prerequisite: "",
+                        dependencies: [],
+                        parameters: [],
+                        startConditions: {
+                            operatorScan: true,
+                            machineReady: false,
+                            toolCalibration: false
+                        },
+                        completionConditions: {
+                            allParameters: false,
+                            dualQCSignoff: false,
+                            autoPrintLabel: false
+                        },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: false,
+                        inputMethod: "Manual Entry + Photo",
+                        rules: getMethodRulesList("Manual Entry + Photo")
+                    },
+                    {
+                        id: "step-rew-2",
+                        stageId: "stage-rework",
+                        stepNumber: "STEP 02",
+                        name: "Re-crimp & Correction",
+                        code: "PRC-REW-02",
+                        mandatory: true,
+                        fields: {
+                            "Action": "Re-assembly Fitting",
+                            "Machine": "Rework Crimper #1"
+                        },
+                        prerequisite: "step-rew-1",
+                        dependencies: [
+                            { name: "Dismantle & Defect Analysis", code: "PRC-REW-01" }
+                        ],
+                        parameters: [
+                            { name: "Re-crimp Pressure", standard: "45 kN", tolerance: "±5 kN" }
+                        ],
+                        startConditions: {
+                            operatorScan: true,
+                            machineReady: true,
+                            toolCalibration: true
+                        },
+                        completionConditions: {
+                            allParameters: true,
+                            dualQCSignoff: false,
+                            autoPrintLabel: false
+                        },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: false,
+                        inputMethod: "Manual Entry + Photo",
+                        rules: getMethodRulesList("Manual Entry + Photo")
+                    },
+                    {
+                        id: "step-rew-3",
+                        stageId: "stage-rework",
+                        stepNumber: "STEP 03",
+                        name: "Rework Quality Verification",
+                        code: "PRC-REW-03",
+                        mandatory: true,
+                        fields: {
+                            "Action": "Pneumatic Bubble Check",
+                            "QC Release": "Supervisor Clearance"
+                        },
+                        prerequisite: "step-rew-2",
+                        dependencies: [],
+                        parameters: [
+                            { name: "Leakage Check", standard: "Pass", tolerance: "No defects" }
+                        ],
+                        startConditions: {
+                            operatorScan: true,
+                            machineReady: false,
+                            toolCalibration: false
+                        },
+                        completionConditions: {
+                            allParameters: true,
+                            dualQCSignoff: true,
+                            autoPrintLabel: true
+                        },
+                        sapSync: true,
+                        bomAvailable: true,
+                        operatorVerified: false,
+                        inputMethod: "Manual Entry + Photo",
+                        rules: getMethodRulesList("Manual Entry + Photo")
+                    }
+                ];
+            }
+
+            selectStage(0);
+        }
+
+        function runWorkflowValidation(showToast = false) {
+            let loopErrorFound = false;
+            let issuesCount = 0;
+
+            // 1. DFS Loop Detection on prerequisite step chains
+            const visited = {};
+            const stack = {};
+            function dfsDetect(stepId) {
+                visited[stepId] = true;
+                stack[stepId] = true;
+                const step = workflowSteps.find(s => s.id === stepId);
+                if (step && step.prerequisite) {
+                    const nextId = step.prerequisite;
+                    if (!visited[nextId]) {
+                        if (dfsDetect(nextId)) return true;
+                    } else if (stack[nextId]) {
+                        return true;
+                    }
+                }
+                stack[stepId] = false;
+                return false;
+            }
+
+            workflowSteps.forEach(step => {
+                if (!visited[step.id]) {
+                    if (dfsDetect(step.id)) {
+                        loopErrorFound = true;
+                    }
+                }
+            });
+
+            if (loopErrorFound) {
+                issuesCount++;
+            }
+
+            const hasPhotoOptional = workflowSteps.some(s => s.inputMethod === "Manual Entry + Photo" && !s.operatorVerified);
+            if (hasPhotoOptional) {
+                issuesCount++;
+            }
+
+            // Update UI elements if they exist
+            const listContainer = document.getElementById('diagnostic-badges-list');
+            const summaryBadge = document.getElementById('diagnostic-summary-badge');
+            if (listContainer && summaryBadge) {
+                listContainer.innerHTML = '';
+                if (loopErrorFound) {
+                    const card = document.createElement('div');
+                    card.className = 'flex items-center gap-1.5 bg-rose-50 border border-rose-200 px-2.5 py-1.5 rounded-lg whitespace-nowrap text-xs font-semibold text-rose-700';
+                    card.innerHTML = `
+                        <span class="material-symbols-outlined text-[15px] text-rose-600">cancel</span>
+                        <span>Circular loop prerequisite detected</span>
+                    `;
+                    listContainer.appendChild(card);
+                }
+
+                const hasWO = workflowSteps.some(s => s.name.toLowerCase().includes("work order") || s.name.toLowerCase().includes("wo"));
+                if (hasWO) {
+                    const card = document.createElement('div');
+                    card.className = 'flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-2.5 py-1.5 rounded-lg whitespace-nowrap text-xs font-semibold text-emerald-700';
+                    card.innerHTML = `
+                        <span class="material-symbols-outlined text-[15px] text-emerald-600">check_circle</span>
+                        <span>WO scan config active</span>
+                    `;
+                    listContainer.appendChild(card);
+                }
+
+                const pickingSteps = workflowSteps.filter(s => s.stageId === 'stage-picking');
+                if (pickingSteps.length > 0) {
+                    const card = document.createElement('div');
+                    card.className = 'flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-2.5 py-1.5 rounded-lg whitespace-nowrap text-xs font-semibold text-emerald-700';
+                    card.innerHTML = `
+                        <span class="material-symbols-outlined text-[15px] text-emerald-600">check_circle</span>
+                        <span>BOM picking rules verified</span>
+                    `;
+                    listContainer.appendChild(card);
+                }
+
+                if (hasPhotoOptional) {
+                    const card = document.createElement('div');
+                    card.className = 'flex items-center gap-1.5 bg-amber-50 border border-amber-300 px-2.5 py-1.5 rounded-lg whitespace-nowrap text-xs font-semibold text-amber-700';
+                    card.innerHTML = `
+                        <span class="material-symbols-outlined text-[15px] text-amber-600">warning</span>
+                        <span>Photo evidence validation warning</span>
+                    `;
+                    listContainer.appendChild(card);
+                }
+
+                if (loopErrorFound) {
+                    summaryBadge.className = 'text-[10px] font-black text-rose-600 uppercase flex items-center gap-1';
+                    summaryBadge.innerHTML = '<span class="material-symbols-outlined text-[14px]">cancel</span> Loop error block';
+                } else if (issuesCount > 0) {
+                    summaryBadge.className = 'text-[10px] font-black text-amber-600 uppercase flex items-center gap-1';
+                    summaryBadge.innerHTML = '<span class="material-symbols-outlined text-[14px]">warning</span> Warnings active';
+                } else {
+                    summaryBadge.className = 'text-[10px] font-black text-emerald-600 uppercase flex items-center gap-1';
+                    summaryBadge.innerHTML = '<span class="material-symbols-outlined text-[14px]">check_circle</span> All checks passed';
+                }
+            }
+
+            if (showToast) {
+                if (loopErrorFound) {
+                    showWOToast("Validation Failed: Circular prerequisite dependency loops detected!");
+                } else if (hasPhotoOptional) {
+                    showWOToast("Validation Warning: Some steps have missing supervisor credentials for photos.");
+                } else {
+                    showWOToast("Validation Passed: Sequential process flows are fully consistent and ready!");
+                }
+            }
+        }
+
+        function openWorkflowConfigModal() {
+            const modal = document.getElementById('workflowConfigModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                loadWorkflowConfig();
+                document.getElementById('cfg-empty-state').classList.remove('hidden');
+                document.getElementById('cfg-editor-content').classList.add('hidden');
+            }
+        }
+
+        function closeWorkflowConfigModal() {
+            const modal = document.getElementById('workflowConfigModal');
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        }
 
         // Window scope bindings for HTML onClick calls
         window.changeWOPage = changeWOPage;
@@ -644,6 +2294,21 @@
         window.toggleWOState = toggleWOState;
         window.syncWithSAP = syncWithSAP;
         window.exportWorkOrders = exportWorkOrders;
+        window.openWorkflowConfigModal = openWorkflowConfigModal;
+        window.closeWorkflowConfigModal = closeWorkflowConfigModal;
+        window.selectStage = selectStage;
+        window.addStage = addStage;
+        window.selectStep = selectStep;
+        window.addStep = addStep;
+        window.updateSelectedStepField = updateSelectedStepField;
+        window.deleteSelectedStep = deleteSelectedStep;
+        window.runWorkflowValidation = runWorkflowValidation;
+        window.saveWorkflowConfig = saveWorkflowConfig;
+        window.promptAddDependency = promptAddDependency;
+        window.deleteDependency = deleteDependency;
+        window.promptAddParameter = promptAddParameter;
+        window.deleteParameter = deleteParameter;
+        window.updateStepCondition = updateStepCondition;
 
         fetchWorkOrders();
     })();

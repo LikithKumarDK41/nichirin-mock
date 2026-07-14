@@ -1,0 +1,497 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+try {
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "primary-fixed": "#ffdad5",
+          "surface-variant": "#e0e3e5",
+          "tertiary-container": "#0070e0",
+          "status-info": "#0056B3",
+          "surface-bright": "#f8f9fb",
+          "status-success": "#28A745",
+          "on-surface-variant": "#5f3f3b",
+          "error": "#ba1a1a",
+          "surface": "#f8f9fb",
+          "surface-tint": "#c0000d",
+          "on-primary-fixed": "#410001",
+          "surface-container-high": "#e6e8ea",
+          "status-warning": "#FB8C00",
+          "on-primary-container": "#fff7f6",
+          "on-secondary-fixed-variant": "#444559",
+          "sidebar-bg": "#1A1C2E",
+          "on-secondary": "#ffffff",
+          "on-error-container": "#93000a",
+          "secondary-fixed-dim": "#c4c5dd",
+          "surface-container": "#eceef0",
+          "secondary-fixed": "#e0e0fa",
+          "tertiary-fixed": "#d7e3ff",
+          "inverse-on-surface": "#eff1f3",
+          "inverse-primary": "#ffb4aa",
+          "inverse-surface": "#2d3133",
+          "background": "#f8f9fb",
+          "surface-container-low": "#f2f4f6",
+          "primary-fixed-dim": "#ffb4aa",
+          "on-tertiary-fixed-variant": "#00458f",
+          "on-error": "#ffffff",
+          "secondary-container": "#e0e0fa",
+          "primary": "#b7000c",
+          "secondary": "#5b5d72",
+          "border-subtle": "#D1D5DB",
+          "on-background": "#191c1e",
+          "status-error": "#E60012",
+          "table-header": "#F1F3F5",
+          "on-primary": "#ffffff",
+          "on-tertiary-container": "#f9f8ff",
+          "outline-variant": "#e9bcb6",
+          "on-tertiary-fixed": "#001b3f",
+          "surface-container-lowest": "#ffffff",
+          "error-container": "#ffdad6",
+          "outline": "#946e69",
+          "tertiary-fixed-dim": "#abc7ff",
+          "on-secondary-container": "#616378",
+          "on-surface": "#191c1e",
+          "surface-container-highest": "#e0e3e5",
+          "on-secondary-fixed": "#181a2c",
+          "primary-container": "#e60012",
+          "on-primary-fixed-variant": "#930007",
+          "tertiary": "#0058b2",
+          "on-tertiary": "#ffffff",
+          "surface-dim": "#d8dadc"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.125rem",
+          "lg": "0.25rem",
+          "xl": "0.5rem",
+          "full": "0.75rem"
+        },
+        "spacing": {
+          "panel-padding": "16px",
+          "gutter": "16px",
+          "table-row-height": "40px",
+          "sidebar-width": "260px",
+          "unit": "4px",
+          "header-height": "64px",
+          "container-margin": "24px"
+        },
+        "fontFamily": {
+          "headline-md": ["Inter"],
+          "mono-data": ["Inter"],
+          "body-lg": ["Inter"],
+          "label-bold": ["Inter"],
+          "headline-sm": ["Inter"],
+          "display-lg": ["Inter"],
+          "body-md": ["Inter"],
+          "body-sm": ["Inter"],
+          "label-md": ["Inter"]
+        },
+        "fontSize": {
+          "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+          "mono-data": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+          "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+          "label-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+          "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+          "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+          "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+          "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+          "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "500"}]
+        }
+      }
+    }
+  }
+} catch(_e) {}
+}catch(_e){}</script></head><body class="bg-background text-on-surface font-body-md min-h-screen flex overflow-hidden">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-sidebar-width bg-sidebar-bg border-r border-outline-variant flex flex-col z-20">
+<div class="h-header-height flex items-center px-4 border-b border-white/10">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center mr-3">
+<span class="material-symbols-outlined text-white text-sm icon-fill" data-original-icon="precision_manufacturing">precision_manufacturing</span>
+</div>
+<div>
+<h1 class="font-headline-sm text-on-primary font-bold tracking-tight">NICHIRIN</h1>
+<p class="text-[10px] text-white/70 uppercase tracking-wider">MES Admin Portal</p>
+</div>
+</div>
+<nav class="flex-1 py-4 flex flex-col gap-1 overflow-y-auto">
+<a href="#" class="flex items-center text-secondary-fixed-dim/70 px-4 py-3 hover:bg-on-secondary-fixed-variant/5 hover:text-on-primary transition-colors duration-200 ease-in-out">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span class="font-label-md text-label-md">Monitoring</span>
+</a>
+<a href="#" class="flex items-center text-on-primary border-l-4 border-primary bg-on-secondary-fixed-variant/10 px-4 py-3">
+<span class="material-symbols-outlined mr-3 icon-fill">settings_applications</span>
+<span class="font-label-md text-label-md">Master Configuration</span>
+</a>
+<a href="#" class="flex items-center text-secondary-fixed-dim/70 px-4 py-3 hover:bg-on-secondary-fixed-variant/5 hover:text-on-primary transition-colors duration-200 ease-in-out">
+<span class="material-symbols-outlined mr-3">analytics</span>
+<span class="font-label-md text-label-md">Traceability &amp; Reports</span>
+</a>
+<a href="#" class="flex items-center text-secondary-fixed-dim/70 px-4 py-3 hover:bg-on-secondary-fixed-variant/5 hover:text-on-primary transition-colors duration-200 ease-in-out">
+<span class="material-symbols-outlined mr-3">admin_panel_settings</span>
+<span class="font-label-md text-label-md">Administration</span>
+</a>
+</nav>
+<div class="border-t border-white/10 py-2">
+<a href="#" class="flex items-center text-secondary-fixed-dim/70 px-4 py-3 hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined mr-3">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+<a href="#" class="flex items-center text-secondary-fixed-dim/70 px-4 py-3 hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined mr-3">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-sidebar-width flex-1 flex flex-col h-screen overflow-hidden bg-background">
+<!-- TopAppBar -->
+<header class="h-header-height bg-surface-container-lowest border-b border-border-subtle flex items-center justify-between px-gutter shrink-0">
+<div class="flex items-center">
+<nav class="flex text-sm text-secondary mr-4" aria-label="Breadcrumb">
+<ol class="inline-flex items-center space-x-1 md:space-x-2">
+<li class="inline-flex items-center"><a href="#" class="hover:text-primary">Plant</a></li>
+<li class=""><div class="flex items-center"><span class="material-symbols-outlined text-sm mx-1">chevron_right</span><a href="#" class="hover:text-primary">Line A</a></div></li>
+<li class=""><div class="flex items-center"><span class="material-symbols-outlined text-sm mx-1">chevron_right</span><a href="#" class="hover:text-primary">Control Card #402</a></div></li>
+<li class=""><div class="flex items-center"><span class="material-symbols-outlined text-sm mx-1">chevron_right</span><a href="#" class="hover:text-primary">Workflow Configuration</a></div></li>
+<li aria-current="page" class=""><div class="flex items-center"><span class="material-symbols-outlined text-sm mx-1">chevron_right</span><span class="text-on-surface font-medium">Online Assembly</span></div></li>
+</ol>
+</nav>
+</div>
+<div class="flex items-center space-x-4">
+<div class="flex space-x-2">
+<button class="px-3 py-1.5 bg-surface-container-lowest border border-border-subtle text-on-surface font-label-md text-label-md rounded flex items-center hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-sm mr-1">edit</span> Edit Flow
+                    </button>
+<button class="px-3 py-1.5 bg-surface-container-lowest border border-border-subtle text-on-surface font-label-md text-label-md rounded flex items-center hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-sm mr-1">save</span> Save Draft
+                    </button>
+<button class="px-3 py-1.5 bg-surface-container-lowest border border-border-subtle text-on-surface font-label-md text-label-md rounded flex items-center hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-sm mr-1">check_circle</span> Validate Workflow
+                    </button>
+<button class="px-3 py-1.5 bg-primary text-on-primary font-label-md text-label-md rounded flex items-center hover:bg-primary-fixed-variant transition-colors">
+<span class="material-symbols-outlined text-sm mr-1">preview</span> Preview Tablet Screen
+                    </button>
+</div>
+<div class="h-6 w-px bg-border-subtle"></div>
+<span class="material-symbols-outlined text-secondary cursor-pointer hover:text-primary">notifications</span>
+<img alt="Admin" class="w-8 h-8 rounded-full border border-border-subtle object-cover" data-alt="A small, professional headshot of an Asian male administrator in a corporate setting, white background, well-lit, minimal aesthetic, sharp focus, capturing a formal and precise corporate tone appropriate for a high-tech manufacturing portal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC83qaxUjcGHrOhHRDoOFGv2KYXR4G68WNSh56W6ZovdgLlET64d-foRiDtvJSCAkrq34FLD9SVDsqhv9AuxfaNg3V9k2xUhwNLBWmEFUh5UEnwSTZszA0oe0L2aNYI9AV_1GFLRGF6L72b-UYJGEuTfKkYKFe0l5fqUoGtwMoKG_noCAsnIxGzVIpQmKMi6Z5t_xcl1bVZm8UzEaWLLBGezjd0GvscEdwTL9Wf8hBB6G_9Xoghc0UPpw">
+</div>
+</header>
+<!-- System Note Banner -->
+<div class="bg-surface-container-low border-b border-border-subtle px-gutter py-2 flex items-start shrink-0">
+<span class="material-symbols-outlined text-status-info mr-2 text-lg mt-0.5">info</span>
+<p class="font-body-sm text-body-sm text-secondary">
+<span class="font-medium text-on-surface">Configuration Active:</span> Changes made here affect all subsequent control cards issued for Line A until a new configuration is published.
+            </p>
+</div>
+<!-- 3-Column Layout -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Left Column: Stage Components -->
+<div class="w-64 border-r border-border-subtle bg-surface-container-lowest flex flex-col shrink-0">
+<div class="p-4 border-b border-border-subtle">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Stage Components</h2>
+</div>
+<div class="flex-1 overflow-y-auto p-2">
+<div class="space-y-1">
+<button class="w-full text-left px-3 py-2 rounded text-sm text-secondary hover:bg-surface-container-low flex justify-between items-center">
+<span class="">Picking</span>
+</button>
+<button class="w-full text-left px-3 py-2 rounded text-sm text-secondary hover:bg-surface-container-low flex justify-between items-center">
+<span class="">Offline Prep</span>
+</button>
+<button class="w-full text-left px-3 py-2 rounded text-sm text-secondary hover:bg-surface-container-low">Offline Validation Gate</button>
+<button class="w-full text-left px-3 py-2 rounded text-sm text-on-surface bg-table-header border-l-4 border-primary font-medium flex justify-between items-center">
+<span class="">Online Assembly</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+</button>
+<button class="w-full text-left px-3 py-2 rounded text-sm text-secondary hover:bg-surface-container-low flex items-center">
+<span class="material-symbols-outlined text-xs mr-2">lock</span> Quality Control
+                        </button>
+<button class="w-full text-left px-3 py-2 rounded text-sm text-secondary hover:bg-surface-container-low">Rework</button>
+</div>
+</div>
+</div>
+<!-- Center Column: Online Assembly Workflow -->
+<div class="flex-1 flex flex-col border-r border-border-subtle bg-background overflow-hidden">
+<div class="p-4 border-b border-border-subtle bg-surface-container-lowest shrink-0">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Online Assembly Workflow</h2>
+<p class="font-body-sm text-body-sm text-secondary mt-1">Final assembly processes executed only after Offline Validation Gate passes.</p>
+</div>
+<div class="flex-1 overflow-y-auto p-6 relative">
+<!-- Workflow Timeline container -->
+<div class="max-w-2xl mx-auto space-y-4">
+<!-- Process 01 -->
+<div class="relative process-line">
+<div class="flex items-start bg-surface-container-lowest border border-border-subtle border-l-4 border-l-status-success rounded p-3 hover:border-secondary transition-colors z-10 relative">
+<div class="w-10 h-10 rounded bg-table-header border border-border-subtle flex items-center justify-center shrink-0 mr-4 font-label-bold text-label-bold text-status-success">01</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-label-md text-label-md text-on-surface font-semibold">Online Unlock Confirmation</h3>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+<div class="flex flex-wrap gap-1 mt-2">
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary uppercase font-label-bold">System Check</span>
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary uppercase font-label-bold">Mandatory</span>
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary uppercase font-label-bold">Unlock</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Process 02 (Active) -->
+<div class="relative process-line">
+<div class="flex items-start bg-surface-container-lowest border-2 border-primary rounded p-3 z-10 relative cursor-pointer">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l"></div>
+<div class="w-10 h-10 rounded bg-primary text-white flex items-center justify-center shrink-0 mr-4 font-label-bold text-label-bold">02</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-label-md text-label-md text-primary font-bold">Pipe Torquing 1</h3>
+<span class="material-symbols-outlined text-primary">edit</span>
+</div>
+<div class="flex flex-wrap gap-1 mt-2">
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary uppercase font-label-bold">Mandatory</span>
+<span class="px-1.5 py-0.5 bg-secondary-container border border-secondary-fixed rounded text-[10px] text-on-secondary-container uppercase font-label-bold">Machine</span>
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary uppercase font-label-bold">Jig</span>
+<span class="px-1.5 py-0.5 bg-tertiary-fixed border border-tertiary-fixed-dim rounded text-[10px] text-on-tertiary-fixed-variant uppercase font-label-bold">Control Points</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Process 03 -->
+<div class="relative process-line">
+<div class="flex items-start bg-surface-container-lowest border border-border-subtle border-l-4 border-l-border-subtle rounded p-3 hover:border-secondary transition-colors z-10 relative">
+<div class="w-10 h-10 rounded bg-table-header border border-border-subtle flex items-center justify-center shrink-0 mr-4 font-label-bold text-label-bold text-secondary">03</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-label-md text-label-md text-on-surface font-semibold">Pipe Torquing 2</h3>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+<div class="flex flex-wrap gap-1 mt-2">
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary uppercase font-label-bold">Mandatory</span>
+<span class="px-1.5 py-0.5 bg-secondary-container border border-secondary-fixed rounded text-[10px] text-on-secondary-container uppercase font-label-bold">Machine</span>
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary uppercase font-label-bold">Jig</span>
+<span class="px-1.5 py-0.5 bg-tertiary-fixed border border-tertiary-fixed-dim rounded text-[10px] text-on-tertiary-fixed-variant uppercase font-label-bold">Control Points</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Process 04 -->
+<div class="relative process-line">
+<div class="flex items-start bg-surface-container-lowest border-2 border-status-warning rounded p-3 hover:border-secondary transition-colors z-10 relative">
+<div class="w-10 h-10 rounded bg-table-header border border-border-subtle flex items-center justify-center shrink-0 mr-4 font-label-bold text-label-bold text-status-warning">04</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-label-md text-label-md text-on-surface font-semibold">Pressure Test</h3>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+<div class="flex flex-wrap gap-1 mt-2">
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary uppercase font-label-bold">Mandatory</span>
+<span class="px-1.5 py-0.5 bg-status-warning/10 border border-status-warning/30 rounded text-[10px] text-status-warning uppercase font-label-bold">QC REQUIRED</span>
+<span class="px-1.5 py-0.5 bg-secondary-container border border-secondary-fixed rounded text-[10px] text-on-secondary-container uppercase font-label-bold">Machine</span>
+<span class="px-1.5 py-0.5 bg-error-container border border-error-container rounded text-[10px] text-error uppercase font-label-bold">Critical</span>
+<span class="px-1.5 py-0.5 bg-tertiary-fixed border border-tertiary-fixed-dim rounded text-[10px] text-on-tertiary-fixed-variant uppercase font-label-bold">Control Points</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Process 05 -->
+<div class="relative process-line">
+<div class="flex items-start bg-surface-container-lowest border border-border-subtle border-l-4 border-l-border-subtle rounded p-3 hover:border-secondary transition-colors z-10 relative">
+<div class="w-10 h-10 rounded bg-table-header border border-border-subtle flex items-center justify-center shrink-0 mr-4 font-label-bold text-label-bold text-secondary">05</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-label-md text-label-md text-on-surface font-semibold">Final Inspection</h3>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+<div class="flex flex-wrap gap-1 mt-2">
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary uppercase font-label-bold">Mandatory</span>
+<span class="px-1.5 py-0.5 bg-status-warning/10 border border-status-warning/30 rounded text-[10px] text-status-warning uppercase font-label-bold">QC</span>
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary uppercase font-label-bold">First-Off</span>
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary uppercase font-label-bold">Approval</span>
+<span class="px-1.5 py-0.5 bg-tertiary-fixed border border-tertiary-fixed-dim rounded text-[10px] text-on-tertiary-fixed-variant uppercase font-label-bold">Control Points</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Process 06 -->
+<div class="relative process-line">
+<div class="flex items-start bg-surface-container-lowest border border-border-subtle border-l-4 border-l-border-subtle rounded p-3 hover:border-secondary transition-colors z-10 relative">
+<div class="w-10 h-10 rounded bg-table-header border border-border-subtle flex items-center justify-center shrink-0 mr-4 font-label-bold text-label-bold text-secondary">06</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-label-md text-label-md text-on-surface font-semibold">Final QC / Approval</h3>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+<div class="flex flex-wrap gap-1 mt-2">
+<span class="px-1.5 py-0.5 bg-status-warning/10 border border-status-warning/30 rounded text-[10px] text-status-warning uppercase font-label-bold">QC</span>
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary uppercase font-label-bold">Approval</span>
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary uppercase font-label-bold">Mandatory</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Process 07 -->
+<div class="relative process-line pt-4">
+<div class="flex items-start bg-table-header border-2 border-border-subtle rounded p-4 z-10 relative opacity-70">
+<div class="w-10 h-10 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mr-4">
+<span class="material-symbols-outlined text-sm">flag</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-label-md text-label-md text-on-surface font-bold">Online Completion Validation</h3>
+<span class="material-symbols-outlined text-on-surface-variant">lock</span>
+</div>
+<p class="text-[11px] text-secondary mt-1">System Gate • Mandatory • Unlock Packing</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Online Workflow Validation Result -->
+<div class="mt-6 border-t border-border-subtle pt-4 flex items-center space-x-4">
+<div class="flex items-center space-x-1 text-status-success">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="font-label-md text-label-md">All dependencies mapped</span>
+</div>
+<div class="flex items-center space-x-1 text-status-warning">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+<span class="font-label-md text-label-md">1 Warning: Pressure Test thresholds strict</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Process Validation-->
+<div class="w-[450px] flex flex-col bg-surface-container-lowest shrink-0 z-10 shadow-[-4px_0_15px_-3px_rgba(0,0,0,0.05)]">
+<div class="h-1.5 bg-primary w-full"></div>
+<div class="p-4 border-b border-border-subtle bg-surface-container-lowest shrink-0 flex justify-between items-center">
+<div class="flex items-center">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Process Validation &amp; Dependency Rules</h2>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-bold text-label-bold bg-surface-variant px-2 py-1 rounded border border-border-subtle text-on-surface-variant">Editing: Pipe Torquing 1</span>
+<button class="p-1 rounded hover:bg-surface-container-low text-secondary"><span class="material-symbols-outlined text-sm">close</span></button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-6">
+<!-- Process Information -->
+<details class="group bg-surface rounded border border-border-subtle" open="">
+<summary class="flex items-center justify-between p-4 cursor-pointer font-label-bold text-label-bold text-on-surface uppercase tracking-wider bg-table-header">
+<span>Process Information</span>
+<span class="material-symbols-outlined text-on-surface-variant group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="p-4 border-t border-border-subtle space-y-3">
+<div class="flex items-center space-x-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+<span class="font-body-sm text-body-sm">Basic process parameters are locked by Master Data.</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<div class="font-label-md text-label-md text-on-surface-variant">Process Code</div>
+<div class="font-body-md text-body-md font-medium">PT-01</div>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface-variant">Work Center</div>
+<div class="font-body-md text-body-md font-medium">Torque Station A</div>
+</div>
+</div>
+</div>
+</details>
+<!-- Layout for rules -->
+<div class="grid grid-cols-2 gap-6">
+<!-- Start Dependency -->
+<details class="group bg-surface rounded border border-border-subtle" open="">
+<summary class="flex items-center justify-between p-3 cursor-pointer font-label-bold text-label-bold text-on-surface uppercase tracking-wider bg-table-header">
+<span>Start Dependency</span>
+<span class="material-symbols-outlined text-on-surface-variant group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="p-4 border-t border-border-subtle space-y-2">
+<label class="flex items-center space-x-2 text-on-surface font-body-sm text-body-sm cursor-pointer">
+<input checked="" class="form-checkbox text-primary rounded border-border-subtle focus:ring-primary focus:ring-2" type="checkbox">
+<span>01. Online Unlock Confirmation Complete</span>
+</label>
+</div>
+</details>
+<!-- Entry Requirement -->
+<details class="group bg-surface rounded border border-border-subtle" open="">
+<summary class="flex items-center justify-between p-3 cursor-pointer font-label-bold text-label-bold text-on-surface uppercase tracking-wider bg-table-header">
+<span>Entry Requirement</span>
+<span class="material-symbols-outlined text-on-surface-variant group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="p-4 border-t border-border-subtle space-y-2">
+<label class="flex items-center space-x-2 text-on-surface font-body-sm text-body-sm cursor-pointer">
+<input checked="" class="form-checkbox text-primary rounded border-border-subtle focus:ring-primary focus:ring-2" type="checkbox">
+<span>Operator Logged In</span>
+</label>
+<label class="flex items-center space-x-2 text-on-surface font-body-sm text-body-sm cursor-pointer">
+<input checked="" class="form-checkbox text-primary rounded border-border-subtle focus:ring-primary focus:ring-2" type="checkbox">
+<span>Jig Validated via Barcode</span>
+</label>
+</div>
+</details>
+</div>
+<!-- Control Point Validation Table -->
+<details class="group bg-surface rounded border border-border-subtle" open="">
+<summary class="flex items-center justify-between p-4 cursor-pointer font-label-bold text-label-bold text-on-surface uppercase tracking-wider bg-table-header">
+<span>Control Point Validation</span>
+<span class="material-symbols-outlined text-on-surface-variant group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="p-4 border-t border-border-subtle">
+<div class="border border-border-subtle rounded overflow-hidden">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="bg-table-header text-on-surface-variant font-label-bold text-label-bold uppercase h-[40px]">
+<tr>
+<th class="px-4 border-b border-border-subtle w-10">Seq</th>
+<th class="px-4 border-b border-border-subtle">Parameter</th>
+<th class="px-4 border-b border-border-subtle">Machine Tag</th>
+<th class="px-4 border-b border-border-subtle text-right">Target Value</th>
+<th class="px-4 border-b border-border-subtle text-center">Enforce</th>
+</tr>
+</thead>
+<tbody>
+<tr class="h-[40px] hover:bg-surface-bright border-b border-border-subtle bg-surface-container-lowest">
+<td class="px-4 text-on-surface-variant">01</td>
+<td class="px-4 font-medium">Torque Value</td>
+<td class="px-4 font-mono-data text-mono-data text-secondary">PLC_TRQ_VAL_01</td>
+<td class="px-4 text-right">12-17 Nm</td>
+<td class="px-4 text-center">
+<input checked="" class="form-checkbox text-primary rounded border-border-subtle focus:ring-primary focus:ring-2" type="checkbox">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</details>
+<!-- Layout for rules 2 -->
+<div class="grid grid-cols-2 gap-6">
+<!-- Completion Validation -->
+<details class="group bg-surface rounded border border-border-subtle" open="">
+<summary class="flex items-center justify-between p-3 cursor-pointer font-label-bold text-label-bold text-on-surface uppercase tracking-wider bg-table-header">
+<span>Completion Validation</span>
+<span class="material-symbols-outlined text-on-surface-variant group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="p-4 border-t border-border-subtle space-y-2">
+<label class="flex items-center space-x-2 text-on-surface font-body-sm text-body-sm cursor-pointer">
+<input checked="" class="form-checkbox text-primary rounded border-border-subtle focus:ring-primary focus:ring-2" type="checkbox">
+<span>All Control Points Passed</span>
+</label>
+<label class="flex items-center space-x-2 text-on-surface font-body-sm text-body-sm cursor-pointer">
+<input class="form-checkbox text-primary rounded border-border-subtle focus:ring-primary focus:ring-2" type="checkbox">
+<span>Operator Sign-off Required</span>
+</label>
+</div>
+</details>
+<!-- Dependency Rule -->
+<details class="group bg-surface rounded border border-border-subtle" open="">
+<summary class="flex items-center justify-between p-3 cursor-pointer font-label-bold text-label-bold text-on-surface uppercase tracking-wider bg-table-header">
+<span>Dependency Rule</span>
+<span class="material-symbols-outlined text-on-surface-variant group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="p-4 border-t border-border-subtle text-body-sm font-body-sm text-on-surface">
+                                    Must complete before 03. Pipe Torquing 2 can start.
+                                </div>
+</details>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

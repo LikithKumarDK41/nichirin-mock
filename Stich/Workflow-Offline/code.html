@@ -1,0 +1,302 @@
+<!DOCTYPE html><html lang="en" style=""><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "status-success": "#28A745",
+                        "primary-fixed-dim": "#ffb4aa",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#fff7f6",
+                        "surface-container-low": "#f2f4f6",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#191c1e",
+                        "secondary": "#5b5d72",
+                        "border-subtle": "#D1D5DB",
+                        "surface-container-highest": "#e0e3e5",
+                        "background": "#f8f9fb",
+                        "inverse-on-surface": "#eff1f3",
+                        "outline-variant": "#e9bcb6",
+                        "tertiary-container": "#0070e0",
+                        "inverse-primary": "#ffb4aa",
+                        "secondary-fixed": "#e0e0fa",
+                        "on-tertiary-fixed": "#001b3f",
+                        "on-secondary-fixed": "#181a2c",
+                        "on-primary-fixed-variant": "#930007",
+                        "on-tertiary-container": "#f9f8ff",
+                        "status-error": "#E60012",
+                        "on-primary-fixed": "#410001",
+                        "sidebar-bg": "#1A1C2E",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#d7e3ff",
+                        "secondary-fixed-dim": "#c4c5dd",
+                        "tertiary": "#0058b2",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container-high": "#e6e8ea",
+                        "on-surface-variant": "#5f3f3b",
+                        "on-error": "#ffffff",
+                        "status-warning": "#FB8C00",
+                        "on-secondary-container": "#616378",
+                        "primary": "#b7000c",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#d8dadc",
+                        "on-secondary-fixed-variant": "#444559",
+                        "secondary-container": "#e0e0fa",
+                        "primary-fixed": "#ffdad5",
+                        "inverse-surface": "#2d3133",
+                        "on-tertiary-fixed-variant": "#00458f",
+                        "surface-tint": "#c0000d",
+                        "surface-container": "#eceef0",
+                        "surface-bright": "#f8f9fb",
+                        "surface": "#f8f9fb",
+                        "status-info": "#0056B3",
+                        "on-background": "#191c1e",
+                        "primary-container": "#e60012",
+                        "tertiary-fixed-dim": "#abc7ff",
+                        "table-header": "#F1F3F5",
+                        "outline": "#946e69",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "panel-padding": "16px",
+                        "unit": "4px",
+                        "container-margin": "24px",
+                        "table-row-height": "40px",
+                        "header-height": "64px",
+                        "gutter": "16px",
+                        "sidebar-width": "260px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "mono-data": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "display-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "label-bold": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "mono-data": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    }catch(_e){}</script><meta charset="utf-8"></head><body class="bg-background text-on-surface font-body-md min-h-screen flex overflow-hidden">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-sidebar-width bg-sidebar-bg border-r border-outline-variant flex flex-col z-20">
+<div class="h-header-height flex items-center px-4 border-b border-white/10">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center mr-3">
+<span class="material-symbols-outlined text-white text-sm icon-fill" data-original-icon="precision_manufacturing">precision_manufacturing</span>
+</div>
+<div>
+<h1 class="font-headline-sm text-on-primary font-bold tracking-tight">NICHIRIN</h1>
+<p class="text-[10px] text-white/70 uppercase tracking-wider">MES Admin Portal</p>
+</div>
+</div>
+<nav class="flex-1 py-4 flex flex-col gap-1 overflow-y-auto">
+<a href="#" class="flex items-center text-secondary-fixed-dim/70 px-4 py-3 hover:bg-on-secondary-fixed-variant/5 hover:text-on-primary transition-colors duration-200 ease-in-out">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span class="font-label-md text-label-md">Monitoring</span>
+</a>
+<a href="#" class="flex items-center text-on-primary border-l-4 border-primary bg-on-secondary-fixed-variant/10 px-4 py-3">
+<span class="material-symbols-outlined mr-3 icon-fill">settings_applications</span>
+<span class="font-label-md text-label-md">Master Configuration</span>
+</a>
+<a href="#" class="flex items-center text-secondary-fixed-dim/70 px-4 py-3 hover:bg-on-secondary-fixed-variant/5 hover:text-on-primary transition-colors duration-200 ease-in-out">
+<span class="material-symbols-outlined mr-3">analytics</span>
+<span class="font-label-md text-label-md">Traceability &amp; Reports</span>
+</a>
+<a href="#" class="flex items-center text-secondary-fixed-dim/70 px-4 py-3 hover:bg-on-secondary-fixed-variant/5 hover:text-on-primary transition-colors duration-200 ease-in-out">
+<span class="material-symbols-outlined mr-3">admin_panel_settings</span>
+<span class="font-label-md text-label-md">Administration</span>
+</a>
+</nav>
+<div class="border-t border-white/10 py-2">
+<a href="#" class="flex items-center text-secondary-fixed-dim/70 px-4 py-3 hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined mr-3">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+<a href="#" class="flex items-center text-secondary-fixed-dim/70 px-4 py-3 hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined mr-3">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-sidebar-width flex-1 flex flex-col h-screen overflow-hidden bg-background">
+<!-- TopAppBar -->
+<header class="h-header-height bg-surface-container-lowest border-b border-border-subtle flex items-center justify-between px-gutter shrink-0">
+<div class="flex items-center">
+<nav class="flex text-sm text-secondary mr-4" aria-label="Breadcrumb">
+<ol class="inline-flex items-center space-x-1 md:space-x-2">
+<li class="inline-flex items-center"><a href="#" class="hover:text-primary">Plant</a></li>
+<li class=""><div class="flex items-center"><span class="material-symbols-outlined text-sm mx-1">chevron_right</span><a href="#" class="hover:text-primary">Line A</a></div></li>
+<li class=""><div class="flex items-center"><span class="material-symbols-outlined text-sm mx-1">chevron_right</span><a href="#" class="hover:text-primary">Control Card #402</a></div></li>
+<li class=""><div class="flex items-center"><span class="material-symbols-outlined text-sm mx-1">chevron_right</span><a href="#" class="hover:text-primary">Workflow Configuration</a></div></li>
+<li aria-current="page" class=""><div class="flex items-center"><span class="material-symbols-outlined text-sm mx-1">chevron_right</span><span class="text-on-surface font-medium">Offline Workflow</span></div></li>
+</ol>
+</nav>
+</div>
+<div class="flex items-center space-x-4">
+<div class="flex space-x-2">
+<button class="px-3 py-1.5 bg-surface-container-lowest border border-border-subtle text-on-surface font-label-md text-label-md rounded flex items-center hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-sm mr-1">edit</span> Edit Flow
+                    </button>
+<button class="px-3 py-1.5 bg-surface-container-lowest border border-border-subtle text-on-surface font-label-md text-label-md rounded flex items-center hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-sm mr-1">save</span> Save Draft
+                    </button>
+<button class="px-3 py-1.5 bg-surface-container-lowest border border-border-subtle text-on-surface font-label-md text-label-md rounded flex items-center hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-sm mr-1">check_circle</span> Validate Workflow
+                    </button>
+<button class="px-3 py-1.5 bg-primary-container text-on-primary font-label-md text-label-md rounded flex items-center hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-sm mr-1">preview</span> Preview Tablet Screen
+                    </button>
+</div>
+<div class="h-6 w-px bg-border-subtle"></div>
+<span class="material-symbols-outlined text-secondary cursor-pointer hover:text-primary">notifications</span>
+<img alt="Admin" class="w-8 h-8 rounded-full border border-border-subtle object-cover" data-alt="A small, professional headshot of an Asian male administrator in a corporate setting, white background, well-lit, minimal aesthetic, sharp focus, capturing a formal and precise corporate tone appropriate for a high-tech manufacturing portal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn-QUgqp87FvtIhCiLeot3MDIIQEi8ZxSr-bUjDr-Zm_6MpY3fLHdVOpENWtaCYA7mfe2Ha-P4U3cBxXYlZPLlm2WmY7X4qE0uKroQM4CpYIZXnBnT6pJCap1KsxC33JyAf5VdwyWa64RnDnsi3Fjj3WSr4FYWJw5y16OgCVLl-OD9zGYea5bylUwntuU8cdglsUM_MXxTSG0KwRE2BzBMBjILthf5YhZAUFCn4KcrV6kqCh2g3UgcGg">
+</div>
+</header>
+<!-- System Note Banner -->
+<div class="bg-surface-container-low border-b border-border-subtle px-gutter py-2 flex items-start shrink-0">
+<span class="material-symbols-outlined text-status-info mr-2 text-lg mt-0.5">info</span>
+<p class="font-body-sm text-body-sm text-secondary">
+<span class="font-medium text-on-surface">System Note:</span> Offline processes are unlocked after Picking completion. Online / Final Assembly remains locked until all mandatory offline processes and required QC approvals are completed.
+            </p>
+</div>
+<!-- 3-Column Layout -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Left Column: Stage Components -->
+<div class="w-64 border-r border-border-subtle bg-surface-container-lowest flex flex-col shrink-0">
+<div class="p-4 border-b border-border-subtle">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Stage Components</h2>
+</div>
+<div class="flex-1 overflow-y-auto p-2">
+<div class="space-y-1">
+<button class="w-full text-left px-3 py-2 rounded text-sm text-secondary hover:bg-surface-container-low flex justify-between items-center">
+<span class="">Picking</span>
+
+</button>
+<button class="w-full text-left px-3 py-2 rounded text-sm text-on-surface bg-table-header border-l-4 border-primary font-medium flex justify-between items-center">
+<span class="">Offline Prep</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+</button>
+<button class="w-full text-left px-3 py-2 rounded text-sm text-secondary hover:bg-surface-container-low">Offline Validation Gate</button>
+<button class="w-full text-left px-3 py-2 rounded text-sm text-secondary hover:bg-surface-container-low flex items-center">
+<span class="material-symbols-outlined text-xs mr-2">lock</span> Online Assembly
+                        </button>
+<button class="w-full text-left px-3 py-2 rounded text-sm text-secondary hover:bg-surface-container-low flex items-center">
+<span class="material-symbols-outlined text-xs mr-2">lock</span> Quality Control
+                        </button>
+<button class="w-full text-left px-3 py-2 rounded text-sm text-secondary hover:bg-surface-container-low">Rework</button>
+</div>
+</div>
+</div>
+<!-- Center Column: Offline Workflow -->
+<div class="flex-1 flex flex-col border-r border-border-subtle bg-background overflow-hidden">
+<div class="p-4 border-b border-border-subtle bg-surface-container-lowest shrink-0">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Offline Workflow</h2>
+<p class="font-body-sm text-body-sm text-secondary mt-1">Mandatory and optional pre-assembly processes.</p>
+</div>
+<div class="flex-1 overflow-y-auto p-6 relative">
+<!-- Workflow Timeline container -->
+<div class="max-w-2xl mx-auto space-y-4">
+<!-- Process 01 -->
+<div class="relative process-line">
+<div class="flex items-start bg-surface-container-lowest border border-border-subtle rounded p-3 hover:border-secondary transition-colors z-10 relative">
+<div class="w-10 h-10 rounded bg-table-header border border-border-subtle flex items-center justify-center shrink-0 mr-4 font-label-bold text-label-bold text-secondary">01</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-label-md text-label-md text-on-surface font-semibold">Hose Cutting 1</h3>
+
+</div>
+<div class="flex flex-wrap gap-1 mt-2">
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary">Mandatory</span>
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary">QR</span>
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary">CP</span>
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary">First-Off</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Process 07 - Selected / Warning State -->
+<div class="relative process-line">
+<div class="flex items-start bg-surface-container-lowest border border-status-warning rounded p-3 shadow-[0_0_0_1px_#FB8C00] z-10 relative cursor-pointer">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-status-warning rounded-l"></div>
+<div class="w-10 h-10 rounded bg-primary-container text-white flex items-center justify-center shrink-0 mr-4 font-label-bold text-label-bold">07</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-label-md text-label-md text-on-surface font-semibold">Crimping First</h3>
+
+</div>
+<div class="flex flex-wrap gap-1 mt-2">
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary">Mandatory</span>
+
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary">First-Off</span>
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary">Machine</span>
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary">Jig</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Process 08 - Blocked -->
+<div class="relative process-line">
+<div class="flex items-start bg-surface-container-lowest border border-border-subtle rounded p-3 opacity-70 z-10 relative">
+<div class="w-10 h-10 rounded bg-table-header border border-border-subtle flex items-center justify-center shrink-0 mr-4 font-label-bold text-label-bold text-secondary">08</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-label-md text-label-md text-on-surface font-semibold">Second Crimping</h3>
+
+</div>
+<div class="flex flex-wrap gap-1 mt-2">
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary">Mandatory</span>
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary">QC</span>
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary">First-Off</span>
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary">Machine</span>
+<span class="px-1.5 py-0.5 bg-surface-container-low border border-border-subtle rounded text-[10px] text-secondary">Jig</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Process 11 - System Gate -->
+<div class="relative process-line pt-4">
+<div class="flex items-start bg-table-header border-2 border-border-subtle rounded p-4 z-10 relative">
+<div class="w-10 h-10 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mr-4">
+<span class="material-symbols-outlined text-sm">flag</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-label-md text-label-md text-on-surface font-bold">Offline Completion Validation</h3>
+
+</div>
+<p class="text-[11px] text-secondary mt-1">System Gate • Unlocks Online Assembly</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Process Validation-->
+<div class="w-[450px] flex flex-col bg-surface-container-lowest shrink-0 z-10 shadow-[-4px_0_15px_-3px_rgba(0,0,0,0.05)]"><div class="h-1.5 bg-primary w-full"></div><div class="p-4 border-b border-border-subtle bg-surface-container-lowest shrink-0 flex justify-between items-center"><div class="flex items-center"><span class="material-symbols-outlined text-primary mr-2">account_tree</span><h2 class="font-label-bold text-[12px] uppercase tracking-wider text-on-surface">Process Validation &amp; Dependency Rules</h2></div><div class="flex items-center gap-2"><span class="px-2 py-0.5 bg-primary-container text-on-primary text-[10px] font-bold rounded">ACTIVE NODE</span><button class="p-1 rounded hover:bg-surface-container-low text-secondary"><span class="material-symbols-outlined text-sm">close</span></button></div></div><div class="flex-1 overflow-y-auto p-4 space-y-6"><div class="grid grid-cols-1 gap-6"><section><h4 class="font-label-bold text-[10px] uppercase text-secondary tracking-wider mb-3 border-b border-border-subtle pb-1">Identification</h4><div class="space-y-4"><div class="grid grid-cols-1 gap-4"><div><label class="block text-[11px] font-bold text-on-surface mb-1">Process Name</label><input type="text" value="Crimping First" class="w-full px-3 py-2 bg-surface-container-lowest border border-border-subtle rounded text-sm"></div><div class="flex gap-4"><div class="flex-1"><label class="block text-[11px] font-bold text-on-surface mb-1">Process Code</label><input type="text" value="PRC-OFF-01" class="w-full px-3 py-2 bg-surface-container-low border border-border-subtle rounded text-sm text-secondary" disabled=""></div><div class="flex items-end pb-1"><label class="flex items-center px-3 py-2 border border-border-subtle rounded cursor-pointer hover:bg-surface-container-low"><input type="checkbox" checked="" class="form-checkbox h-4 w-4 text-primary rounded border-border-subtle mr-2"><span class="text-xs font-bold text-on-surface">Mandatory Step</span></label></div></div></div></div></section><section><h4 class="font-label-bold text-[10px] uppercase text-secondary tracking-wider mb-3 border-b border-border-subtle pb-1">Dependencies</h4><div class="p-3 border border-border-subtle rounded bg-surface-container-low/30"><p class="text-[11px] text-secondary mb-3">This process cannot start until the following are completed:</p><div class="flex items-center justify-between p-2 bg-surface-container-lowest border border-border-subtle rounded"><div class="flex items-center"><span class="material-symbols-outlined text-sm text-tertiary mr-2">link</span><span class="text-xs font-medium">Material Picking</span></div><span class="text-[10px] font-mono-data bg-surface-container-low px-1.5 py-0.5 rounded border border-border-subtle text-secondary">PRC-MAT-01</span></div><button class="mt-3 text-primary text-xs font-bold flex items-center hover:underline"><span class="material-symbols-outlined text-sm mr-1">add</span> Add Dependency</button></div></section><section><h4 class="font-label-bold text-[10px] uppercase text-secondary tracking-wider mb-3 border-b border-border-subtle pb-1">Control Points (Parameters)</h4><div class="space-y-3"><div class="relative p-3 bg-surface-container-lowest border border-border-subtle border-l-4 border-l-primary rounded shadow-sm"><div class="flex justify-between items-start mb-2"><span class="text-xs font-bold">Crimping Diameter</span><span class="material-symbols-outlined text-sm text-secondary cursor-pointer">edit</span></div><div class="grid grid-cols-2 gap-2"><div class="text-[10px]"><p class="text-secondary uppercase font-bold">Standard</p><p class="text-sm font-medium">9.00 mm</p></div><div class="text-[10px]"><p class="text-secondary uppercase font-bold">Tolerance</p><p class="text-sm font-medium">±0.05</p></div></div></div><div class="relative p-3 bg-surface-container-lowest border border-border-subtle border-l-4 border-l-primary rounded shadow-sm"><div class="flex justify-between items-start mb-2"><span class="text-xs font-bold">Insertion Mark</span><span class="material-symbols-outlined text-sm text-secondary cursor-pointer">edit</span></div><div class="grid grid-cols-2 gap-2"><div class="text-[10px]"><p class="text-secondary uppercase font-bold">Standard</p><p class="text-sm font-medium">16.0 mm</p></div><div class="text-[10px]"><p class="text-secondary uppercase font-bold">Tolerance</p><p class="text-sm font-medium">+0 / -1.5</p></div></div></div><button class="w-full py-2 border-2 border-dashed border-border-subtle rounded text-secondary text-xs font-medium flex items-center justify-center hover:bg-surface-container-low"><span class="material-symbols-outlined text-sm mr-1">add_circle</span> Add Parameter</button></div></section><section><h4 class="font-label-bold text-[10px] uppercase text-secondary tracking-wider mb-3 border-b border-border-subtle pb-1">Execution Validations</h4><div class="grid grid-cols-2 gap-6"><div class="space-y-3"><h5 class="text-[11px] font-bold flex items-center"><span class="material-symbols-outlined text-primary text-sm mr-1">play_circle</span> Start Conditions</h5><div class="space-y-2"><label class="flex items-start"><input type="checkbox" checked="" class="form-checkbox h-3.5 w-3.5 text-primary rounded border-border-subtle mt-0.5 mr-2"><span class="text-[11px] leading-tight">Enforce Operator ID Scan</span></label><label class="flex items-start"><input type="checkbox" checked="" class="form-checkbox h-3.5 w-3.5 text-primary rounded border-border-subtle mt-0.5 mr-2"><span class="text-[11px] leading-tight">Verify Machine Ready State</span></label><label class="flex items-start"><input type="checkbox" class="form-checkbox h-3.5 w-3.5 text-primary rounded border-border-subtle mt-0.5 mr-2"><span class="text-[11px] leading-tight">Require Tool Calibration Check</span></label></div></div><div class="space-y-3"><h5 class="text-[11px] font-bold flex items-center"><span class="material-symbols-outlined text-status-success text-sm mr-1">check_circle</span> Completion Conditions</h5><div class="space-y-2"><label class="flex items-start"><input type="checkbox" checked="" class="form-checkbox h-3.5 w-3.5 text-primary rounded border-border-subtle mt-0.5 mr-2"><span class="text-[11px] leading-tight">Require all parameters recorded</span></label><label class="flex items-start"><input type="checkbox" checked="" class="form-checkbox h-3.5 w-3.5 text-primary rounded border-border-subtle mt-0.5 mr-2"><span class="text-[11px] leading-tight">Enforce Dual QC Sign-off</span></label><label class="flex items-start"><input type="checkbox" class="form-checkbox h-3.5 w-3.5 text-primary rounded border-border-subtle mt-0.5 mr-2"><span class="text-[11px] leading-tight">Auto-print Routing Label</span></label></div></div></div></section></div></div></div>
+</div>
+</main>
+
+</body></html>
