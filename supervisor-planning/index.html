@@ -4,7 +4,7 @@
 <!-- SPA Layout Redirect Wrapper -->
 <script>
   if (!document.getElementById('app-root')) {
-    const p = window.location.pathname;
+    const p = window.location.pathname + window.location.search;
     const rel = '../';
     window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
   }
@@ -519,10 +519,19 @@
     // Run on startup
     loadWorkOrders();
     populateOperatorsDropdown();
-    // Default select first waiting or first in list
-    const firstWaiting = workOrdersList.find(w => w.status === 'Waiting' || w.status === 'Held') || workOrdersList[0];
-    if (firstWaiting) {
-        selectPlanningWO(firstWaiting.woNumber);
+    
+    // Check URL parameters for pre-selected WO
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlWo = urlParams.get('wo');
+    let initialWO = null;
+    if (urlWo) {
+        initialWO = workOrdersList.find(w => w.woNumber.toUpperCase() === urlWo.toUpperCase());
+    }
+    if (!initialWO) {
+        initialWO = workOrdersList.find(w => w.status === 'Waiting' || w.status === 'Held') || workOrdersList[0];
+    }
+    if (initialWO) {
+        selectPlanningWO(initialWO.woNumber);
     }
 })();
 </script>

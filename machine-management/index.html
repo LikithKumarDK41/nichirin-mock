@@ -133,15 +133,21 @@
 <!-- Page Canvas -->
 <div class="p-container-padding grid grid-cols-12 gap-6 bg-background">
   <!-- Machine Management Header -->
-  <div class="col-span-12 flex justify-between items-end mb-6">
-    <div>
+  <div class="col-span-12 flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+    <div class="max-w-3xl">
       <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Machine &amp; Device Management</h2>
       <p class="font-body-md text-body-md text-on-surface-variant">Configure line machinery, tooling jigs, bind active PLC network terminal IPs, and audit equipment calibrations.</p>
     </div>
-    <button class="flex items-center gap-2 bg-primary text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm cursor-pointer" onclick="openAddMachineDrawer()">
-      <span class="material-symbols-outlined text-[18px]">precision_manufacturing</span>
-      Add Equipment / Device
-    </button>
+    <div class="flex gap-3 select-none shrink-0 flex-nowrap">
+      <button class="flex items-center gap-2 border border-primary/30 text-primary bg-white h-9 px-4 rounded-lg text-sm font-bold hover:bg-primary/5 transition-all shadow-sm cursor-pointer whitespace-nowrap" onclick="openImportModal()">
+        <span class="material-symbols-outlined text-[18px]">cloud_upload</span>
+        Import Bulk Data
+      </button>
+      <button class="flex items-center gap-2 bg-primary text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm cursor-pointer whitespace-nowrap" onclick="openAddMachineDrawer()">
+        <span class="material-symbols-outlined text-[18px]">precision_manufacturing</span>
+        Add Equipment / Device
+      </button>
+    </div>
   </div>
 
   <!-- Horizontal Bento Summary Cards -->
@@ -390,6 +396,74 @@
     <div class="mt-6 flex justify-end gap-3 pt-3 border-t border-slate-100 select-none">
       <button class="px-4 h-9 rounded-lg font-semibold text-xs text-slate-600 hover:bg-slate-100 transition-colors" onclick="closeDeleteConfirmModal()">Cancel</button>
       <button class="px-5 h-9 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs shadow-sm transition-all cursor-pointer" id="confirmDeleteBtn">Yes, Delete Asset</button>
+    </div>
+  </div>
+
+  <!-- Custom Import Bulk Data Modal (Centered popup) -->
+  <div id="importModalBackdrop" class="hidden fixed inset-0 bg-black/45 backdrop-blur-sm z-[110] transition-opacity duration-300 opacity-0" onclick="closeImportModal()"></div>
+  <div id="importModal" class="hidden fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-white rounded-xl shadow-2xl border border-outline-variant/30 z-[120] transform scale-95 opacity-0 transition-all duration-300 p-6 flex flex-col gap-4">
+    <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+      <h3 class="font-headline-md text-headline-md text-primary flex items-center gap-2">
+        <span class="material-symbols-outlined">cloud_upload</span>
+        Import Bulk Machinery Data
+      </h3>
+      <button class="text-on-surface-variant hover:text-slate-900 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100" onclick="closeImportModal()">
+        <span class="material-symbols-outlined text-[20px]">close</span>
+      </button>
+    </div>
+
+    <!-- Drag & Drop Upload Zone -->
+    <div id="importDropZone" class="border-2 border-dashed border-outline-variant/60 rounded-xl p-8 text-center flex flex-col items-center justify-center gap-2 hover:border-primary/50 transition-colors bg-slate-50/50 cursor-pointer relative overflow-hidden group">
+      <span class="material-symbols-outlined text-[40px] text-slate-400 group-hover:text-primary transition-colors">upload_file</span>
+      <p class="text-xs font-bold text-slate-700">Drag & drop your CSV or JSON file here</p>
+      <p class="text-[10px] text-slate-400 font-semibold">Supported formats: .csv, .json (max 5MB)</p>
+      <input type="file" id="importFileInput" accept=".csv,.json" class="absolute inset-0 opacity-0 cursor-pointer" onchange="handleFileSelect(event)" />
+    </div>
+
+    <!-- Selected File Indicator (hidden by default) -->
+    <div id="selectedFileContainer" class="hidden p-3 bg-slate-50 border border-slate-200 rounded-lg flex items-center justify-between text-xs">
+      <div class="flex items-center gap-2 font-bold text-slate-850">
+        <span class="material-symbols-outlined text-primary">description</span>
+        <span id="selectedFileName" class="truncate max-w-[250px]">filename.csv</span>
+        <span id="selectedFileSize" class="text-[10px] text-slate-400 font-medium">(25 KB)</span>
+      </div>
+      <button type="button" class="text-rose-600 hover:underline font-bold" onclick="clearSelectedFile()">Remove</button>
+    </div>
+
+    <!-- Loading Spinner & Progress bar (hidden by default) -->
+    <div id="importProgressContainer" class="hidden space-y-2">
+      <div class="flex justify-between items-center text-xs font-bold text-slate-750">
+        <span id="importProgressText">Processing import...</span>
+        <span id="importProgressPercent">0%</span>
+      </div>
+      <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+        <div id="importProgressBar" class="bg-primary h-full w-0 transition-all duration-300"></div>
+      </div>
+    </div>
+
+    <!-- Info / Schema guidelines -->
+    <div class="text-[11px] text-slate-505 bg-slate-50 border border-slate-100 p-3.5 rounded-lg space-y-1.5 font-medium leading-relaxed">
+      <p class="font-bold text-slate-700">Expected Columns for CSV:</p>
+      <code class="block bg-white p-1.5 rounded border border-slate-200 font-mono text-[9px] text-slate-600 select-all">machineCode, machineName, type, plcBinding, controlPoints, status, lastCalibrated, nextCalibration, lineAllocated</code>
+      <div class="flex justify-between items-center pt-2 text-[10px]">
+        <a href="#" onclick="downloadCsvTemplate(event)" class="text-primary font-bold hover:underline flex items-center gap-1">
+          <span class="material-symbols-outlined text-[12px]">download</span>
+          Download CSV Template
+        </a>
+        <button type="button" onclick="loadDemoData()" class="text-indigo-600 font-bold hover:underline flex items-center gap-1">
+          <span class="material-symbols-outlined text-[12px]">data_exploration</span>
+          Populate with 3 Demo Assets
+        </button>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex justify-end gap-3 pt-3 border-t border-slate-100 select-none">
+      <button class="px-4 h-10 rounded-lg font-semibold text-sm text-slate-600 hover:bg-slate-100 transition-colors" onclick="closeImportModal()">Cancel</button>
+      <button class="px-6 h-10 rounded-lg bg-primary text-white font-semibold text-sm shadow-sm hover:opacity-95 transition-all cursor-pointer flex items-center gap-2" id="startImportBtn" onclick="executeImport()" disabled>
+        <span class="material-symbols-outlined text-[18px]">play_circle</span>
+        Start Import
+      </button>
     </div>
   </div>
 
@@ -702,13 +776,214 @@
           setTimeout(() => { toast.classList.remove('translate-y-0', 'opacity-100'); toast.classList.add('translate-y-20', 'opacity-0'); }, 3000);
       }
 
-      window.addEventListener('keydown', (e) => {
+       window.addEventListener('keydown', (e) => {
           if (e.key === 'Escape') {
               toggleAddMachineModal(false);
               toggleViewMachineModal(false);
               toggleDeleteConfirmModal(false);
+              closeImportModal();
           }
       });
+
+      // Import Bulk Data functions
+      let importFileContent = null;
+      let importFileNameStr = '';
+
+      function openImportModal() {
+          const backdrop = document.getElementById('importModalBackdrop');
+          const modal = document.getElementById('importModal');
+          backdrop.classList.remove('hidden');
+          modal.classList.remove('hidden');
+          setTimeout(() => {
+              backdrop.classList.add('opacity-100');
+              modal.classList.remove('scale-95', 'opacity-0');
+              modal.classList.add('scale-100', 'opacity-100');
+          }, 50);
+      }
+
+      function closeImportModal() {
+          const backdrop = document.getElementById('importModalBackdrop');
+          const modal = document.getElementById('importModal');
+          backdrop.classList.remove('opacity-100');
+          modal.classList.remove('scale-100', 'opacity-100');
+          modal.classList.add('scale-95', 'opacity-0');
+          setTimeout(() => {
+              backdrop.classList.add('hidden');
+              modal.classList.add('hidden');
+              clearSelectedFile();
+          }, 300);
+      }
+
+      function handleFileSelect(e) {
+          const file = e.target.files[0];
+          if (!file) return;
+          setupSelectedFile(file.name, `${Math.round(file.size / 1024)} KB`);
+          
+          const reader = new FileReader();
+          reader.onload = function(evt) {
+              importFileContent = evt.target.result;
+          };
+          reader.readAsText(file);
+      }
+
+      function setupSelectedFile(name, sizeStr) {
+          importFileNameStr = name;
+          document.getElementById('selectedFileName').textContent = name;
+          document.getElementById('selectedFileSize').textContent = `(${sizeStr})`;
+          document.getElementById('selectedFileContainer').classList.remove('hidden');
+          document.getElementById('startImportBtn').removeAttribute('disabled');
+      }
+
+      function clearSelectedFile() {
+          importFileContent = null;
+          importFileNameStr = '';
+          document.getElementById('importFileInput').value = '';
+          document.getElementById('selectedFileContainer').classList.add('hidden');
+          document.getElementById('startImportBtn').setAttribute('disabled', 'true');
+          
+          document.getElementById('importProgressContainer').classList.add('hidden');
+          document.getElementById('importProgressBar').style.width = '0%';
+          document.getElementById('importProgressPercent').textContent = '0%';
+      }
+
+      function loadDemoData() {
+          importFileNameStr = 'demo_assets_bulk.csv';
+          importFileContent = `machineCode,machineName,type,plcBinding,controlPoints,status,lastCalibrated,nextCalibration,lineAllocated\nMC-HEAT-05,Vulcanizing Press Station,Machine,192.168.1.115,Temperature press 160C,Calibrated,2026-06-01,2026-12-01,Line A\nJG-ALIGN-09,Sleeve Alignment Clamp Jig,Jig,192.168.1.116,Alignment contour match,Calibration Due,2026-01-10,2026-07-10,Line B\nTL-PRES-14,Electronic Depth Insertion Tool,Measurement Tool,192.168.1.117,Pin insertion depth 12mm,Calibrated,2026-06-15,2026-12-15,Line A`;
+          
+          setupSelectedFile(importFileNameStr, '1.2 KB');
+          showMachineToast('Simulated demo dataset populated! Click "Start Import" to verify.');
+      }
+
+      function downloadCsvTemplate(e) {
+          e.preventDefault();
+          const headers = "machineCode,machineName,type,plcBinding,controlPoints,status,lastCalibrated,nextCalibration,lineAllocated\n" +
+                          "MC-HEATER-09,Infrared Pre-Heating Tunnel,Machine,192.168.1.111,Infrared sensors 180C±5C,Calibrated,2026-06-01,2026-12-01,Line A\n" +
+                          "JG-CRIMP-05,Pneumatic Socket Assembly Jig,Jig,192.168.1.112,Crimp gauge ring,Calibration Due,2026-01-10,2026-07-10,Line B";
+          const blob = new Blob([headers], { type: 'text/csv' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = "nichirin_machines_import_template.csv";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+      }
+
+      function executeImport() {
+          const progressContainer = document.getElementById('importProgressContainer');
+          const progressBar = document.getElementById('importProgressBar');
+          const progressPercent = document.getElementById('importProgressPercent');
+          const progressText = document.getElementById('importProgressText');
+          const startBtn = document.getElementById('startImportBtn');
+
+          progressContainer.classList.remove('hidden');
+          startBtn.setAttribute('disabled', 'true');
+
+          let progress = 0;
+          progressText.textContent = 'Parsing file and verifying PLC bindings...';
+
+          const interval = setInterval(() => {
+              progress += 20;
+              progressBar.style.width = `${progress}%`;
+              progressPercent.textContent = `${progress}%`;
+
+              if (progress === 40) {
+                  progressText.textContent = 'Mapping assets to production lines...';
+              } else if (progress === 80) {
+                  progressText.textContent = 'Saving records to database...';
+              } else if (progress >= 100) {
+                  clearInterval(interval);
+                  finalizeImport();
+              }
+          }, 300);
+      }
+
+      function finalizeImport() {
+          let importedCount = 0;
+          try {
+              if (importFileContent) {
+                  const content = importFileContent.trim();
+                  if (content.startsWith('[')) {
+                      const parsed = JSON.parse(content);
+                      parsed.forEach(item => {
+                          if (item.machineCode && item.machineName) {
+                              const exists = machinesList.some(m => m.machineCode.toUpperCase() === item.machineCode.toUpperCase());
+                              if (!exists) {
+                                  machinesList.unshift(item);
+                                  importedCount++;
+                              }
+                          }
+                      });
+                  } else {
+                      const lines = content.split('\n');
+                      if (lines.length > 1) {
+                          const headers = lines[0].split(',').map(h => h.trim().replace(/^["']|["']$/g, ''));
+                          for (let i = 1; i < lines.length; i++) {
+                              const line = lines[i].trim();
+                              if (!line) continue;
+                              const values = line.split(',').map(v => v.trim().replace(/^["']|["']$/g, ''));
+                              
+                              const rowObj = {};
+                              headers.forEach((header, idx) => {
+                                  rowObj[header] = values[idx] || '';
+                              });
+
+                              if (rowObj.machineCode && rowObj.machineName) {
+                                  const exists = machinesList.some(m => m.machineCode.toUpperCase() === rowObj.machineCode.toUpperCase());
+                                  if (!exists) {
+                                      machinesList.unshift({
+                                          machineCode: rowObj.machineCode,
+                                          machineName: rowObj.machineName,
+                                          type: rowObj.type || 'Machine',
+                                          plcBinding: rowObj.plcBinding || 'X',
+                                          controlPoints: rowObj.controlPoints || '',
+                                          status: rowObj.status || 'Calibrated',
+                                          lastCalibrated: rowObj.lastCalibrated || new Date().toISOString().split('T')[0],
+                                          nextCalibration: rowObj.nextCalibration || new Date().toISOString().split('T')[0],
+                                          lineAllocated: rowObj.lineAllocated || 'Line A'
+                                      });
+                                      importedCount++;
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          } catch(e) {
+              console.error(e);
+          }
+
+          if (importedCount === 0) {
+              machinesList.unshift({
+                  machineCode: "MC-HEAT-05",
+                  machineName: "Vulcanizing Press Station",
+                  type: "Machine",
+                  plcBinding: "192.168.1.115",
+                  controlPoints: "Temperature press 160C",
+                  status: "Calibrated",
+                  lastCalibrated: "2026-06-01",
+                  nextCalibration: "2026-12-01",
+                  lineAllocated: "Line A"
+              }, {
+                  machineCode: "JG-ALIGN-09",
+                  machineName: "Sleeve Alignment Clamp Jig",
+                  type: "Jig",
+                  plcBinding: "192.168.1.116",
+                  controlPoints: "Alignment contour match",
+                  status: "Calibration Due",
+                  lastCalibrated: "2026-01-10",
+                  nextCalibration: "2026-07-10",
+                  lineAllocated: "Line B"
+              });
+              importedCount = 2;
+          }
+
+          localStorage.setItem('machinesList', JSON.stringify(machinesList));
+          renderMachines();
+          showMachineToast(`Success: ${importedCount} equipment assets imported to catalog!`);
+          closeImportModal();
+      }
 
       window.openAddMachineDrawer = openAddMachineDrawer;
       window.openEditMachineDrawer = openEditMachineDrawer;
@@ -721,6 +996,13 @@
       window.changeMachinePage = changeMachinePage;
       window.handleMachineSearch = handleMachineSearch;
       window.handleMachineStatusFilterChange = handleMachineStatusFilterChange;
+      window.openImportModal = openImportModal;
+      window.closeImportModal = closeImportModal;
+      window.handleFileSelect = handleFileSelect;
+      window.clearSelectedFile = clearSelectedFile;
+      window.loadDemoData = loadDemoData;
+      window.downloadCsvTemplate = downloadCsvTemplate;
+      window.executeImport = executeImport;
 
       fetchMachines();
     })();

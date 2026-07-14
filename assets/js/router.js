@@ -306,8 +306,8 @@
             </a>
   
             <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}audit-reports/index.html" data-route="audit-reports">
-              <span class="material-symbols-outlined text-[20px]">menu_book</span>
-              <span>Audit Reports</span>
+              <span class="material-symbols-outlined text-[20px]">analytics</span>
+              <span>Production Reports</span>
             </a>
           </div>
   
@@ -678,7 +678,6 @@
 
   // Load a route's content dynamically
   async function loadRoute() {
-    let loaderTimeout = null;
     // Hide notifications dropdown on navigation transitions
     const notificationDropdown = document.getElementById('notification-dropdown');
     if (notificationDropdown) {
@@ -762,18 +761,20 @@
     // Update active nav highlights immediately to prevent label/highlight flicker before load completes
     updateActiveNavItem(route);
 
-    // Show loading spinner overlay inside viewport only on slow connections (>180ms)
+    // Show loading spinner overlay inside viewport immediately
     const loader = document.getElementById('content-loader');
     const content = document.getElementById('app-content');
     if (loader) {
-      loaderTimeout = setTimeout(() => {
-        loader.classList.remove('pointer-events-none');
-        loader.classList.add('opacity-100');
-      }, 180);
+      loader.classList.remove('pointer-events-none');
+      loader.classList.add('opacity-100');
     }
 
     try {
-      const response = await fetch(window.location.href);
+      // Force a minimum loading time of 400ms so the user always sees the page transition loader clearly
+      const [response] = await Promise.all([
+        fetch(window.location.href),
+        new Promise(resolve => setTimeout(resolve, 400))
+      ]);
       if (!response.ok) throw new Error(`Could not access module: ${route}`);
       const html = await response.text();
       const parser = new DOMParser();
@@ -836,29 +837,12 @@
       // Merge custom header contents (badges) into the shell layout header dynamically
       const subHeader = doc.querySelector('header');
       if (subHeader) {
-        // Merge right-side badge content (e.g. status badges like "Production")
-        const rightContent = subHeader.lastElementChild;
         const mainHeaderRight = document.getElementById('main-header-right') || document.querySelector('header > div:last-child');
-        if (rightContent && mainHeaderRight) {
+        if (mainHeaderRight) {
           // Remove any previously injected custom badges to prevent accumulation
           const existingBadge = mainHeaderRight.querySelector('.custom-header-badge');
           if (existingBadge) {
             existingBadge.remove();
-          }
-
-          // Scan subheader right elements for status badges (such as "Production" badge)
-          let badge = null;
-          Array.from(rightContent.children).forEach(child => {
-            const text = child.textContent.trim().toLowerCase();
-            if (text === 'production' && !child.querySelector('img') && !child.querySelector('[data-icon="notifications"]')) {
-              badge = child.cloneNode(true);
-            }
-          });
-
-          if (badge) {
-            badge.classList.add('custom-header-badge');
-            // Insert badge before notifications button
-            mainHeaderRight.insertBefore(badge, mainHeaderRight.firstElementChild);
           }
         }
         subHeader.remove();
@@ -950,9 +934,6 @@
         </div>
       `;
     } finally {
-      if (loaderTimeout) {
-        clearTimeout(loaderTimeout);
-      }
       if (loader) {
         loader.classList.add('pointer-events-none');
         loader.classList.remove('opacity-100');

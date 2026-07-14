@@ -144,7 +144,7 @@
   </div>
 
   <!-- Horizontal Bento Summary Cards -->
-  <div class="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-6 mb-2">
+  <div class="col-span-12 grid grid-cols-1 md:grid-cols-4 gap-6 mb-2">
     <!-- Card 1: TOTAL PERSONNEL -->
     <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
       <div>
@@ -161,7 +161,15 @@
       </div>
       <span class="material-symbols-outlined text-[32px] text-slate-600" style="font-variation-settings: 'FILL' 0;">verified_user</span>
     </div>
-    <!-- Card 3: SUSPENDED ACCOUNTS -->
+    <!-- Card 3: INACTIVE USERS -->
+    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
+      <div>
+        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Inactive Users</p>
+        <p class="text-3xl font-bold text-slate-500" id="statInactive">--</p>
+      </div>
+      <span class="material-symbols-outlined text-[32px] text-slate-400">person_off</span>
+    </div>
+    <!-- Card 4: SUSPENDED ACCOUNTS -->
     <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
       <div>
         <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Suspended Accounts</p>
@@ -201,9 +209,9 @@
             <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Employee Code</th>
             <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Name</th>
             <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Role</th>
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Line</th>
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Skills</th>
             <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Status</th>
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-right">Action</th>
+            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-left">Action</th>
           </tr>
         </thead>
         <tbody id="userTableBody" class="divide-y divide-outline-variant/30">
@@ -253,13 +261,16 @@
       <!-- Info Details -->
       <div class="space-y-4 text-sm">
         <div class="grid grid-cols-2 gap-4">
-          <div class="space-y-1">
+          <div class="space-y-1 col-span-2">
             <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Employee Code</span>
             <span id="viewUserCode" class="font-bold text-slate-900 font-data-tabular">--</span>
           </div>
-          <div class="space-y-1">
-            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Assigned Line</span>
-            <span id="viewUserLine" class="font-medium text-slate-800">--</span>
+        </div>
+        
+        <div class="space-y-1 pt-2 border-t border-slate-100">
+          <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Certified Process Skills</span>
+          <div id="viewUserSkills" class="flex flex-wrap gap-1 mt-1.5">
+            <!-- Injected dynamically -->
           </div>
         </div>
         
@@ -300,15 +311,6 @@
     </div>
     <form class="p-6 flex-1 overflow-y-auto" onsubmit="saveUser(event)">
       <div class="grid grid-cols-2 gap-4 pb-24">
-        <!-- Profile Upload -->
-        <div class="col-span-2 space-y-1.5">
-          <label class="block text-xs font-bold uppercase text-slate-500">Profile Image</label>
-          <div class="border-2 border-dashed border-outline-variant/30 rounded-xl p-4 flex flex-col items-center justify-center gap-2 hover:bg-slate-50 transition-colors cursor-pointer bg-slate-50/50">
-            <span class="material-symbols-outlined text-[32px] text-slate-400">upload_file</span>
-            <p class="text-xs text-on-surface-variant font-semibold">Drag &amp; drop or click to upload</p>
-            <p class="text-[10px] text-slate-400">PNG, JPG up to 2MB</p>
-          </div>
-        </div>
         <!-- Employee Code -->
         <div class="col-span-1 space-y-1.5">
           <label class="block text-xs font-bold uppercase text-slate-500">Employee Code</label>
@@ -339,27 +341,28 @@
             <option value="OPERATOR">Operator</option>
           </select>
         </div>
-        <!-- Assigned Line -->
-        <div class="col-span-1 space-y-1.5">
-          <label class="block text-xs font-bold uppercase text-slate-500">Assigned Line</label>
-          <select id="drawerLine" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white">
-            <option value="Global">Global</option>
-            <option value="Line A-1">Line A-1</option>
-            <option value="Line A-2">Line A-2</option>
-            <option value="Line B-1">Line B-1</option>
-            <option value="Line B-4">Line B-4</option>
-            <option value="Line C-9">Line C-9</option>
-          </select>
-        </div>
-
         <!-- Account Status -->
-        <div class="col-span-2 space-y-1.5">
+        <div class="col-span-1 space-y-1.5">
           <label class="block text-xs font-bold uppercase text-slate-500">Account Access Status</label>
           <select id="drawerStatus" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white">
             <option value="Active">Active</option>
             <option value="Suspended">Suspended</option>
             <option value="Inactive">Inactive</option>
           </select>
+        </div>
+        <!-- Certified Skills Multi-Select -->
+        <div class="col-span-2 space-y-1.5 relative">
+          <label class="block text-xs font-bold uppercase text-slate-500">Certified Process Skills</label>
+          <button type="button" id="skillsDropdownBtn" onclick="toggleSkillsDropdown()" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white flex justify-between items-center text-left text-slate-700 cursor-pointer shadow-sm">
+            <span id="selectedSkillsText" class="text-slate-400 font-medium">Select process skills...</span>
+            <span class="material-symbols-outlined text-[18px]">arrow_drop_down</span>
+          </button>
+          <div id="skillsDropdownOptions" class="hidden absolute bottom-full mb-1 left-0 right-0 bg-white border border-outline-variant/30 rounded-lg shadow-lg max-h-48 overflow-y-auto z-20 p-2 space-y-1 custom-scrollbar">
+            <!-- Injected dynamically -->
+          </div>
+          <div id="selectedSkillsTags" class="flex flex-wrap gap-1 mt-1.5">
+            <!-- Injected dynamically -->
+          </div>
         </div>
       </div>
       
@@ -379,14 +382,142 @@
   <script>
     (function() {
       let usersList = [];
+      let skillsMasterList = [];
       let currentPage = 1;
       const pageSize = 5;
       let filterQuery = '';
       let currentViewMode = 'table';
+      let tempSelectedSkills = [];
+
+      // Fetch or read skill configurations
+      async function fetchSkillsMaster() {
+          try {
+              const localSkills = localStorage.getItem('skillsList');
+              let loadedFromLocal = false;
+
+              if (localSkills) {
+                  try {
+                      const parsed = JSON.parse(localSkills);
+                      if (parsed && parsed.length > 0 && parsed[0].skillCode) {
+                          skillsMasterList = parsed;
+                          loadedFromLocal = true;
+                      }
+                  } catch (e) {}
+              }
+
+              if (!loadedFromLocal) {
+                  const res = await fetch('../skill-management/skills.json');
+                  if (res.ok) {
+                      skillsMasterList = await res.json();
+                      localStorage.setItem('skillsList', JSON.stringify(skillsMasterList));
+                  }
+              }
+          } catch(e) {
+              console.error(e);
+          }
+
+          if (!skillsMasterList || skillsMasterList.length === 0) {
+              skillsMasterList = [
+                  { skillCode: "SKILL-CUT-01", skillName: "Rubber Hose Cutting" },
+                  { skillCode: "SKILL-PROT-02", skillName: "Protector Tube Processing" },
+                  { skillCode: "SKILL-SHRNK-03", skillName: "Pipe Shrinkable Tubing" },
+                  { skillCode: "SKILL-BEND-04", skillName: "CNC Pipe Bending" },
+                  { skillCode: "SKILL-FIT-05", skillName: "Double Fitting Bending" },
+                  { skillCode: "SKILL-CRMP-06", skillName: "Fitting Hose Crimping" },
+                  { skillCode: "SKILL-BOND-07", skillName: "Accessories Bonding" },
+                  { skillCode: "SKILL-TORQ-08", skillName: "Double Pipe Torquing" },
+                  { skillCode: "SKILL-TEST-09", skillName: "Pressure & Leakage Testing" },
+                  { skillCode: "SKILL-INSP-10", skillName: "Final Inspection & Packing" }
+              ];
+          }
+
+          populateSkillsDropdown();
+      }
+
+      function populateSkillsDropdown() {
+          const container = document.getElementById('skillsDropdownOptions');
+          if (!container) return;
+          container.innerHTML = '';
+          
+          skillsMasterList.forEach(s => {
+              const div = document.createElement('div');
+              div.className = 'flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer select-none';
+              div.onclick = (e) => {
+                  if (e.target.tagName === 'INPUT') return;
+                  const checkbox = div.querySelector('input');
+                  checkbox.checked = !checkbox.checked;
+                  updateSelectedSkills();
+              };
+
+              div.innerHTML = `
+                  <input type="checkbox" id="chk-${s.skillCode}" value="${s.skillCode}" onchange="updateSelectedSkills()" class="rounded text-primary focus:ring-primary border-outline-variant/35 w-4 h-4 cursor-pointer" />
+                  <label for="chk-${s.skillCode}" class="text-xs font-semibold text-slate-700 cursor-pointer flex-1">${s.skillName} (${s.skillCode})</label>
+              `;
+              container.appendChild(div);
+          });
+      }
+
+      function updateSelectedSkills() {
+          const checkboxes = document.querySelectorAll('#skillsDropdownOptions input[type="checkbox"]');
+          tempSelectedSkills = [];
+          checkboxes.forEach(chk => {
+              if (chk.checked) {
+                  tempSelectedSkills.push(chk.value);
+              }
+          });
+
+          const btnText = document.getElementById('selectedSkillsText');
+          if (tempSelectedSkills.length === 0) {
+              btnText.textContent = 'Select process skills...';
+              btnText.className = 'text-slate-400 font-medium text-sm';
+          } else {
+              btnText.textContent = `${tempSelectedSkills.length} skill(s) selected`;
+              btnText.className = 'text-slate-800 font-bold text-sm';
+          }
+
+          const tagsContainer = document.getElementById('selectedSkillsTags');
+          tagsContainer.innerHTML = '';
+          tempSelectedSkills.forEach(code => {
+              const skill = skillsMasterList.find(s => s.skillCode === code);
+              const name = skill ? skill.skillName : code;
+              const tag = document.createElement('span');
+              tag.className = 'inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200 select-none';
+              tag.innerHTML = `
+                  <span>${name}</span>
+                  <span class="material-symbols-outlined text-[12px] cursor-pointer text-slate-450 hover:text-slate-650" onclick="event.stopPropagation(); removeSkillTag('${code}')">close</span>
+              `;
+              tagsContainer.appendChild(tag);
+          });
+      }
+
+      function removeSkillTag(code) {
+          const chk = document.getElementById(`chk-${code}`);
+          if (chk) {
+              chk.checked = false;
+              updateSelectedSkills();
+          }
+      }
+
+      function toggleSkillsDropdown() {
+          const menu = document.getElementById('skillsDropdownOptions');
+          menu.classList.toggle('hidden');
+      }
+
+      // Hide dropdown on outside click
+      document.addEventListener('click', (e) => {
+          const dropdown = document.getElementById('skillsDropdownOptions');
+          const btn = document.getElementById('skillsDropdownBtn');
+          if (dropdown && btn && !dropdown.classList.contains('hidden')) {
+              if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+                  dropdown.classList.add('hidden');
+              }
+          }
+      });
 
       // Load personnel dataset from local json file
       async function fetchUsers() {
           try {
+              await fetchSkillsMaster();
               const res = await fetch('./users.json');
               if (!res.ok) throw new Error('Could not load users json.');
               usersList = await res.json();
@@ -400,22 +531,31 @@
       // Update calculations, render tables/grids and control pages
       function render() {
           // 1. Calculate Bento Card Stats
-          const totalCount = usersList.length;
+          const totalCount = usersList.filter(u => u.status !== 'Suspended').length;
           const activeCount = usersList.filter(u => u.status === 'Active').length;
+          const inactiveCount = usersList.filter(u => u.status === 'Inactive').length;
           const suspendedCount = usersList.filter(u => u.status === 'Suspended').length;
 
           document.getElementById('statTotal').textContent = totalCount;
           document.getElementById('statActive').textContent = activeCount;
+          document.getElementById('statInactive').textContent = inactiveCount;
           document.getElementById('statSuspended').textContent = suspendedCount;
 
-          // 2. Filter list based on search bar
+          // 2. Filter list based on search bar (hide Suspended users)
           const query = filterQuery.toLowerCase().trim();
           const filtered = usersList.filter(u => {
+              if (u.status === 'Suspended') return false;
+              
+              const skillMatch = u.skills && u.skills.some(code => {
+                  const skill = skillsMasterList.find(s => s.skillCode === code);
+                  return code.toLowerCase().includes(query) || (skill && skill.skillName.toLowerCase().includes(query));
+              });
+
               return u.empCode.toLowerCase().includes(query) ||
                      u.name.toLowerCase().includes(query) ||
                      u.role.toLowerCase().includes(query) ||
-                     u.line.toLowerCase().includes(query) ||
-                     u.email.toLowerCase().includes(query);
+                     (u.email && u.email.toLowerCase().includes(query)) ||
+                     skillMatch;
           });
 
           // 3. Slice and Paginate items
@@ -486,25 +626,40 @@
                   statusDotColor = 'bg-rose-500';
               }
 
+              // Render skills badges
+              let skillsHTML = '';
+              if (u.skills && u.skills.length > 0) {
+                  u.skills.slice(0, 2).forEach(code => {
+                      const skill = skillsMasterList.find(s => s.skillCode === code);
+                      const name = skill ? skill.skillName.split(' ')[0] : code;
+                      skillsHTML += `<span class="inline-flex items-center px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold mr-1">${name.trim()}</span>`;
+                  });
+                  if (u.skills.length > 2) {
+                      skillsHTML += `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-primary/5 text-primary border border-primary/10 text-[10px] font-extrabold">+${u.skills.length - 2}</span>`;
+                  }
+              } else {
+                  skillsHTML = `<span class="text-slate-400 italic text-[11px]">No Skills</span>`;
+              }
+
               tr.innerHTML = `
                   <td class="px-6 py-4 font-bold text-slate-900 font-data-tabular text-data-tabular">${u.empCode}</td>
                   <td class="px-6 py-4 font-semibold text-slate-900">${u.name}</td>
                   <td class="px-6 py-4">
                       <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold border ${roleBadgeClass}">${u.role}</span>
                   </td>
-                  <td class="px-6 py-4 font-medium text-on-surface-variant">${u.line}</td>
+                  <td class="px-6 py-4 font-medium text-on-surface-variant">${skillsHTML}</td>
                   <td class="px-6 py-4">
                       <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold border ${statusBadgeClass}">
                           <span class="w-1.5 h-1.5 rounded-full ${statusDotColor} mr-1.5"></span>
                           ${u.status}
                       </span>
                   </td>
-                  <td class="px-6 py-4 text-right">
-                      <div class="flex items-center justify-end gap-2">
-                          <button class="w-8 h-8 rounded-lg border border-outline-variant/30 bg-white flex items-center justify-center text-slate-500 hover:text-primary hover:bg-slate-50 transition-colors shadow-sm" onclick="openViewUserModal('${u.empCode}')" title="View details">
+                  <td class="px-6 py-4 text-left">
+                      <div class="flex items-center justify-start gap-2">
+                          <button class="w-8 h-8 rounded-lg border border-outline-variant/30 bg-white flex items-center justify-center text-slate-500 hover:text-primary hover:bg-slate-50 transition-colors shadow-sm cursor-pointer" onclick="openViewUserModal('${u.empCode}')" title="View details">
                               <span class="material-symbols-outlined text-[16px]">visibility</span>
                           </button>
-                          <button class="w-8 h-8 rounded-lg border border-outline-variant/30 bg-white flex items-center justify-center text-primary hover:bg-slate-50 transition-colors shadow-sm" onclick="openEditUserDrawer('${u.empCode}')" title="Edit user">
+                          <button class="w-8 h-8 rounded-lg border border-outline-variant/30 bg-white flex items-center justify-center text-primary hover:bg-slate-50 transition-colors shadow-sm cursor-pointer" onclick="openEditUserDrawer('${u.empCode}')" title="Edit user">
                               <span class="material-symbols-outlined text-[16px]">edit</span>
                           </button>
                       </div>
@@ -552,6 +707,18 @@
               // Initials for avatar
               const initials = u.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
 
+              // Skills badges in grid
+              let skillsHTMLGrid = '';
+              if (u.skills && u.skills.length > 0) {
+                  u.skills.forEach(code => {
+                      const skill = skillsMasterList.find(s => s.skillCode === code);
+                      const name = skill ? skill.skillName : code;
+                      skillsHTMLGrid += `<span class="inline-flex items-center px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold mr-1 mt-1">${name}</span>`;
+                  });
+              } else {
+                  skillsHTMLGrid = `<span class="text-slate-400 italic text-[11px] mt-1 block">No Certified Skills</span>`;
+              }
+
               card.innerHTML = `
                   <div class="flex justify-between items-start mb-3">
                       <div class="flex items-center gap-3">
@@ -563,21 +730,24 @@
                       </div>
                       <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[9px] font-bold border ${roleBadgeClass}">${u.role}</span>
                   </div>
-                  <div class="space-y-1.5 text-xs text-on-surface-variant mb-4">
+                  <div class="space-y-1.5 text-xs text-on-surface-variant mb-3">
                       <p class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px]">mail</span>${u.email}</p>
                       <p class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px]">phone</span>${u.phone}</p>
-                      <p class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px]">location_on</span>${u.line}</p>
+                      <div class="pt-1.5 border-t border-slate-100 mt-2">
+                        <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">Process Skills</span>
+                        <div class="flex flex-wrap gap-1">${skillsHTMLGrid}</div>
+                      </div>
                   </div>
-                  <div class="flex justify-between items-center pt-3 border-t border-outline-variant/30">
+                  <div class="flex justify-between items-center pt-3 border-t border-outline-variant/30 mt-2">
                       <span class="inline-flex items-center text-xs font-semibold ${statusTextClass}">
                           <span class="w-1.5 h-1.5 rounded-full ${statusDotColor} mr-1.5"></span>
                           ${u.status}
                       </span>
                       <div class="flex gap-2">
-                          <button class="w-8 h-8 rounded-lg border border-outline-variant/30 bg-white flex items-center justify-center text-slate-500 hover:text-primary hover:bg-slate-50 transition-colors shadow-sm" onclick="openViewUserModal('${u.empCode}')" title="View details">
+                          <button class="w-8 h-8 rounded-lg border border-outline-variant/30 bg-white flex items-center justify-center text-slate-500 hover:text-primary hover:bg-slate-50 transition-colors shadow-sm cursor-pointer" onclick="openViewUserModal('${u.empCode}')" title="View details">
                               <span class="material-symbols-outlined text-[16px]">visibility</span>
                           </button>
-                          <button class="w-8 h-8 rounded-lg border border-outline-variant/30 bg-white flex items-center justify-center text-primary hover:bg-slate-50 transition-colors shadow-sm" onclick="openEditUserDrawer('${u.empCode}')" title="Edit user">
+                          <button class="w-8 h-8 rounded-lg border border-outline-variant/30 bg-white flex items-center justify-center text-primary hover:bg-slate-50 transition-colors shadow-sm cursor-pointer" onclick="openEditUserDrawer('${u.empCode}')" title="Edit user">
                               <span class="material-symbols-outlined text-[16px]">edit</span>
                           </button>
                       </div>
@@ -591,11 +761,9 @@
           const wrapper = document.getElementById('pageNumbers');
           wrapper.innerHTML = '';
 
-          // Setup disabled state for pagination control buttons
           document.getElementById('prevPageBtn').disabled = currentPage === 1;
           document.getElementById('nextPageBtn').disabled = currentPage === totalPages;
 
-          // Render page tags
           for (let i = 1; i <= totalPages; i++) {
               const btn = document.createElement('button');
               btn.className = i === currentPage 
@@ -610,20 +778,17 @@
           }
       }
 
-      // Handle direct page transitions
       function changePage(dir) {
           currentPage += dir;
           render();
       }
 
-      // Handle live searches
       function handleSearch() {
           filterQuery = document.getElementById('searchInput').value;
           currentPage = 1;
           render();
       }
 
-      // View details drawer trigger (slide-over from right)
       function toggleViewUserModal(isOpen) {
           const backdrop = document.getElementById('viewUserModalBackdrop');
           const drawer = document.getElementById('viewUserModal');
@@ -646,16 +811,29 @@
           const user = usersList.find(u => u.empCode === empCode);
           if (!user) return;
 
-          // Fill user avatar details
           const initials = user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
           document.getElementById('viewUserAvatar').textContent = initials;
           document.getElementById('viewUserName').textContent = user.name;
           document.getElementById('viewUserCode').textContent = user.empCode;
           document.getElementById('viewUserEmail').textContent = user.email;
           document.getElementById('viewUserPhone').textContent = user.phone;
-          document.getElementById('viewUserLine').textContent = user.line;
           
-          // Role badge color style
+          // Skills badge container
+          const skillsContainer = document.getElementById('viewUserSkills');
+          skillsContainer.innerHTML = '';
+          if (user.skills && user.skills.length > 0) {
+              user.skills.forEach(code => {
+                  const skill = skillsMasterList.find(s => s.skillCode === code);
+                  const name = skill ? skill.skillName : code;
+                  const span = document.createElement('span');
+                  span.className = 'inline-flex items-center px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold';
+                  span.textContent = `${name} (${code})`;
+                  skillsContainer.appendChild(span);
+              });
+          } else {
+              skillsContainer.innerHTML = `<span class="text-slate-400 italic text-[11px]">No Certified Skills</span>`;
+          }
+          
           const roleEl = document.getElementById('viewUserRole');
           roleEl.textContent = user.role;
           roleEl.className = 'inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold mt-1.5 border';
@@ -664,10 +842,9 @@
           else if (user.role === 'QC') roleEl.classList.add('bg-purple-50', 'text-purple-700', 'border-purple-200');
           else if (user.role === 'OPERATOR') roleEl.classList.add('bg-amber-50', 'text-amber-700', 'border-amber-200');
 
-          // Status indicator pill style
           const statusEl = document.getElementById('viewUserStatus');
           statusEl.textContent = user.status;
-          statusEl.className = 'inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold border';
+          statusEl.className = 'inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold border';
           if (user.status === 'Active') {
               statusEl.className += ' bg-emerald-50 text-emerald-700 border-emerald-200/50';
           } else if (user.status === 'Suspended') {
@@ -679,7 +856,6 @@
           toggleViewUserModal(true);
       }
 
-      // View list toggle switch
       function setUserViewMode(mode) {
           currentViewMode = mode;
           const table = document.getElementById('tableViewContainer');
@@ -703,7 +879,6 @@
           }
       }
 
-      // Drawer animation control
       function toggleAddUserModal(isOpen) {
           const backdrop = document.getElementById('addUserModalBackdrop');
           const drawer = document.getElementById('addUserModal');
@@ -722,7 +897,6 @@
           }
       }
 
-      // Open dynamic drawer in edit mode, prefilled with credentials
       function openEditUserDrawer(empCode) {
           const user = usersList.find(u => u.empCode === empCode);
           if (!user) return;
@@ -739,13 +913,18 @@
           document.getElementById('drawerEmail').value = user.email;
           document.getElementById('drawerPhone').value = user.phone;
           document.getElementById('drawerRole').value = user.role;
-          document.getElementById('drawerLine').value = user.line;
           document.getElementById('drawerStatus').value = user.status;
+
+          // Check user's skills checkboxes
+          const checkboxes = document.querySelectorAll('#skillsDropdownOptions input[type="checkbox"]');
+          checkboxes.forEach(chk => {
+              chk.checked = user.skills && user.skills.includes(chk.value);
+          });
+          updateSelectedSkills();
           
           toggleAddUserModal(true);
       }
 
-      // Open dynamic drawer in fresh registration mode
       function openAddUserDrawer() {
           document.getElementById('drawerTitle').textContent = 'Register New Personnel';
           document.getElementById('submitBtnText').textContent = 'Register User';
@@ -759,13 +938,16 @@
           document.getElementById('drawerEmail').value = '';
           document.getElementById('drawerPhone').value = '';
           document.getElementById('drawerRole').selectedIndex = 0;
-          document.getElementById('drawerLine').selectedIndex = 0;
           document.getElementById('drawerStatus').selectedIndex = 0;
+
+          // Reset skills
+          const checkboxes = document.querySelectorAll('#skillsDropdownOptions input[type="checkbox"]');
+          checkboxes.forEach(chk => chk.checked = false);
+          updateSelectedSkills();
           
           toggleAddUserModal(true);
       }
 
-      // Save user callback (edit / register)
       function saveUser(e) {
           e.preventDefault();
           const empCode = document.getElementById('drawerEmpCode').value;
@@ -773,17 +955,14 @@
           const email = document.getElementById('drawerEmail').value;
           const phone = document.getElementById('drawerPhone').value;
           const role = document.getElementById('drawerRole').value;
-          const line = document.getElementById('drawerLine').value;
           const status = document.getElementById('drawerStatus').value;
 
           const existingIdx = usersList.findIndex(u => u.empCode === empCode);
           if (existingIdx > -1) {
-              // Edit Mode
-              usersList[existingIdx] = { empCode, name, email, phone, role, line, status };
+              usersList[existingIdx] = { empCode, name, email, phone, role, skills: tempSelectedSkills, status };
               showToast(`Changes for ${name} successfully synchronized.`);
           } else {
-              // Add Mode
-              usersList.unshift({ empCode, name, email, phone, role, line, status });
+              usersList.unshift({ empCode, name, email, phone, role, skills: tempSelectedSkills, status });
               showToast(`Personnel record for ${name} registered successfully.`);
           }
 
@@ -804,7 +983,6 @@
           }, 3000);
       }
 
-      // Modal key hooks
       window.addEventListener('keydown', (e) => {
           if (e.key === 'Escape') {
               toggleAddUserModal(false);
@@ -812,7 +990,6 @@
           }
       });
 
-      // Populate roles select dropdown dynamically from localStorage
       function populateRolesDropdown() {
           const select = document.getElementById('drawerRole');
           if (!select) return;
@@ -840,7 +1017,6 @@
           });
       }
 
-      // Bind all dynamic action callbacks to window scope for inline HTML onclick resolution
       window.openAddUserDrawer = openAddUserDrawer;
       window.openEditUserDrawer = openEditUserDrawer;
       window.saveUser = saveUser;
@@ -850,8 +1026,10 @@
       window.changePage = changePage;
       window.handleSearch = handleSearch;
       window.setUserViewMode = setUserViewMode;
+      window.toggleSkillsDropdown = toggleSkillsDropdown;
+      window.removeSkillTag = removeSkillTag;
+      window.updateSelectedSkills = updateSelectedSkills;
 
-      // Initial Fetch
       populateRolesDropdown();
       fetchUsers();
     })();

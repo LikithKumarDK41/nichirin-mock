@@ -125,18 +125,17 @@
   </div>
 
   <!-- Bento Layout Grid -->
-  <!-- Left Side: Interactive Process Inspector & General Work Instructions -->
-  <div class="col-span-12 lg:col-span-8 space-y-6">
-    
+  <!-- Row 1 Left: Interactive Steps Inspector Panel -->
+  <div class="col-span-12 lg:col-span-8">
     <!-- Interactive Steps Inspector Panel -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl shadow-sm overflow-hidden flex flex-col">
+    <div class="bg-white border border-outline-variant/30 rounded-xl shadow-sm overflow-hidden flex flex-col h-full">
       <div class="px-6 py-4 border-b border-outline-variant/30 bg-slate-50 flex justify-between items-center">
         <h3 class="font-headline-md text-headline-sm text-primary">Manufacturing Process Routing (Interactive)</h3>
         <span class="text-xs font-semibold text-slate-400">Click any step to inspect targets and work instructions</span>
       </div>
       
       <!-- Flex container splitting steps list and details inspector -->
-      <div class="grid grid-cols-1 md:grid-cols-12 divide-y md:divide-y-0 md:divide-x divide-outline-variant/20 min-h-[360px]">
+      <div class="grid grid-cols-1 md:grid-cols-12 divide-y md:divide-y-0 md:divide-x divide-outline-variant/20 min-h-[360px] flex-grow">
         <!-- Steps List (Left Side - 5 Cols) -->
         <div class="md:col-span-5 overflow-y-auto max-h-[420px] divide-y divide-slate-100" id="wo-inspector-list">
           <!-- Populated dynamically -->
@@ -148,9 +147,31 @@
         </div>
       </div>
     </div>
+  </div>
 
+  <!-- Row 1 Right: Operations Team & General Instructions -->
+  <div class="col-span-12 lg:col-span-4 flex flex-col gap-6">
+    <!-- Operations Team -->
+    <div class="bg-white border border-outline-variant/30 rounded-xl p-6 shadow-sm">
+      <h3 class="font-headline-md text-headline-sm text-primary mb-4">Operations Team</h3>
+      <div class="space-y-4" id="wo-team-container">
+        <!-- Team dynamic -->
+      </div>
+    </div>
+
+    <!-- General Instructions Panel -->
+    <div class="bg-white border border-outline-variant/30 rounded-xl p-6 shadow-sm flex-grow">
+      <h3 class="font-headline-md text-headline-sm text-primary mb-3">General Work Instructions</h3>
+      <ul class="space-y-2.5 list-disc list-inside text-xs text-slate-600 font-medium leading-relaxed" id="wo-general-instructions">
+        <!-- Instructions dynamically populated -->
+      </ul>
+    </div>
+  </div>
+
+  <!-- Row 2 Left: Bill of Materials (BOM) Track -->
+  <div class="col-span-12 lg:col-span-8">
     <!-- Bill of Materials (BOM) -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl p-6 shadow-sm flex flex-col">
+    <div class="bg-white border border-outline-variant/30 rounded-xl p-6 shadow-sm flex flex-col h-full">
       <h3 class="font-headline-md text-headline-sm text-primary mb-4">Bill of Materials (BOM) Track</h3>
       <div class="overflow-x-auto border border-outline-variant/20 rounded-lg">
         <table class="w-full text-left border-collapse whitespace-nowrap">
@@ -172,40 +193,24 @@
     </div>
   </div>
 
-  <!-- Right Side: Operations Team, Quality Targets & General instructions -->
-  <div class="col-span-12 lg:col-span-4 space-y-6">
-    <!-- Operations Team -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl p-6 shadow-sm">
-      <h3 class="font-headline-md text-headline-sm text-primary mb-4">Operations Team</h3>
-      <div class="space-y-4" id="wo-team-container">
-        <!-- Team dynamic -->
-      </div>
-    </div>
-
-    <!-- General Instructions Panel -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl p-6 shadow-sm">
-      <h3 class="font-headline-md text-headline-sm text-primary mb-3">General Work Instructions</h3>
-      <ul class="space-y-2.5 list-disc list-inside text-xs text-slate-600 font-medium leading-relaxed" id="wo-general-instructions">
-        <!-- Instructions dynamically populated -->
-      </ul>
-    </div>
-
-    <!-- Monozukuri Digitized Card Info -->
-    <div class="bg-primary text-white rounded-xl p-6 flex flex-col justify-between min-h-[220px] shadow-sm relative overflow-hidden group">
-      <!-- Decorative circles -->
-      <div class="absolute -right-10 -bottom-10 w-40 h-40 rounded-full bg-white/5 group-hover:scale-110 transition-transform duration-500"></div>
+  <!-- Row 2 Right: Supervisor Planning Navigation -->
+  <div class="col-span-12 lg:col-span-4">
+    <!-- Supervisor Planning Navigation -->
+    <div class="bg-white border border-outline-variant/30 rounded-xl p-6 shadow-sm flex flex-col justify-between min-h-[220px] h-full relative overflow-hidden group">
       <div>
-        <div class="flex items-center gap-2 mb-4">
-          <span class="material-symbols-outlined text-[24px]">verified_user</span>
-          <h3 class="text-[16px] font-bold uppercase tracking-wider">Monozukuri Digitized Card</h3>
+        <div class="flex items-center gap-2 mb-3">
+          <span class="material-symbols-outlined text-[24px] text-primary">edit_calendar</span>
+          <h3 class="font-headline-md text-headline-sm text-primary">Supervisor Planning</h3>
         </div>
-        <p class="text-[12px] text-white/80 leading-relaxed font-body-sm">
-          This work order operates under active digital control card tracking. Every scan, test pressure rating, and QA release tag is signed cryptographically on the local plant database.
+        <p class="text-xs text-slate-500 leading-relaxed font-medium">
+          Configure line allocation, shift schedules, operator assignments, and validate all dependencies before releasing this work order to production.
         </p>
       </div>
-      <div class="bg-white/10 p-3 rounded-lg border border-white/15 text-[11px] mt-6 flex justify-between items-center select-all">
-        <span class="font-mono opacity-80">Card Hash:</span>
-        <span class="font-mono font-bold" id="wo-card-hash">--</span>
+      <div class="mt-6">
+        <a id="wo-planning-nav-btn" href="../supervisor-planning/index.html" class="w-full flex items-center justify-center gap-2 bg-primary text-white hover:opacity-90 transition-all font-semibold text-sm h-10 rounded-lg cursor-pointer shadow-sm">
+          <span>Go to Supervisor Planning</span>
+          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </a>
       </div>
     </div>
   </div>
@@ -289,7 +294,16 @@
             statusEl.className = `px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider ${statusClass}`;
 
             // Hash
-            document.getElementById('wo-card-hash').textContent = activeWO.cardHash.substring(0, 18) + '...';
+            const cardHashEl = document.getElementById('wo-card-hash');
+            if (cardHashEl) {
+                cardHashEl.textContent = activeWO.cardHash.substring(0, 18) + '...';
+            }
+
+            // Planning Navigation Button
+            const planningNavBtn = document.getElementById('wo-planning-nav-btn');
+            if (planningNavBtn) {
+                planningNavBtn.setAttribute('href', `../supervisor-planning/index.html?wo=${activeWO.woNumber}`);
+            }
 
             // Actions buttons
             const actionContainer = document.getElementById('wo-header-actions');

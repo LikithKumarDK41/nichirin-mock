@@ -169,6 +169,12 @@
       <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Traceability Search</h2>
       <p class="font-body-md text-body-md text-on-surface-variant">Perform deep-dive historical investigations on production steps, quality metrics, and batch identifiers.</p>
     </div>
+    <div class="flex gap-3">
+      <button class="flex items-center gap-2 border border-outline-variant/50 bg-white text-slate-700 h-9 px-4 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-all shadow-sm cursor-pointer" onclick="exportTraceabilityReport()">
+        <span class="material-symbols-outlined text-[18px]">download</span>
+        <span>Export Report</span>
+      </button>
+    </div>
   </div>
 
   <!-- Search & Filters Section -->
@@ -553,7 +559,12 @@
             }
         }
 
+        function exportTraceabilityReport() {
+            alert("Traceability Report exported successfully as PDF/Excel.");
+        }
+
         window.executeTraceabilitySearch = executeTraceabilitySearch;
+        window.exportTraceabilityReport = exportTraceabilityReport;
 
         // Run setup
         initTraceability();

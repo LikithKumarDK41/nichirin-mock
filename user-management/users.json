@@ -5,7 +5,7 @@
     "email": "vikram.malhotra@nichirin.com",
     "phone": "+91 98100 88210",
     "role": "ADMIN",
-    "line": "Global",
+    "skills": ["SKILL-INSP-10"],
     "status": "Active"
   },
   {
@@ -14,7 +14,7 @@
     "email": "sanjay.verma@nichirin.com",
     "phone": "+91 98200 90420",
     "role": "SUPERVISOR",
-    "line": "Line 1",
+    "skills": ["SKILL-CRMP-06", "SKILL-TORQ-08"],
     "status": "Active"
   },
   {
@@ -23,16 +23,16 @@
     "email": "ramesh.kumar@nichirin.com",
     "phone": "+91 95400 77120",
     "role": "QC",
-    "line": "Line 1",
+    "skills": ["SKILL-TEST-09", "SKILL-INSP-10"],
     "status": "Active"
   },
   {
     "empCode": "EMP-1029",
     "name": "Amit Sharma",
     "email": "amit.sharma@nichirin.com",
-    "phone": "+91 99990 10290",
+    "phone": "+91 99900 10290",
     "role": "OPERATOR",
-    "line": "Line 1",
+    "skills": ["SKILL-CUT-01", "SKILL-PROT-02", "SKILL-SHRNK-03", "SKILL-BEND-04"],
     "status": "Active"
   },
   {
@@ -41,7 +41,7 @@
     "email": "sandeep.singh@nichirin.com",
     "phone": "+91 98760 45210",
     "role": "OPERATOR",
-    "line": "Line 2",
+    "skills": ["SKILL-FIT-05", "SKILL-CRMP-06", "SKILL-BOND-07"],
     "status": "Active"
   },
   {
@@ -50,7 +50,7 @@
     "email": "anil.kumar@nichirin.com",
     "phone": "+91 98300 55900",
     "role": "SUPERVISOR",
-    "line": "Line 2",
+    "skills": ["SKILL-BEND-04", "SKILL-FIT-05"],
     "status": "Active"
   },
   {
@@ -59,7 +59,7 @@
     "email": "neha.dixit@nichirin.com",
     "phone": "+91 98400 66230",
     "role": "QC",
-    "line": "Line 1",
+    "skills": ["SKILL-TEST-09", "SKILL-INSP-10"],
     "status": "Active"
   },
   {
@@ -68,7 +68,7 @@
     "email": "deepak.gupta@nichirin.com",
     "phone": "+91 98180 33120",
     "role": "OPERATOR",
-    "line": "Line 3",
+    "skills": ["SKILL-TORQ-08", "SKILL-TEST-09"],
     "status": "Active"
   },
   {
@@ -77,7 +77,7 @@
     "email": "sunita.sharma@nichirin.com",
     "phone": "+91 99100 12040",
     "role": "OPERATOR",
-    "line": "Line 1",
+    "skills": ["SKILL-CUT-01", "SKILL-PROT-02"],
     "status": "Active"
   },
   {
@@ -86,7 +86,7 @@
     "email": "rajesh.patel@nichirin.com",
     "phone": "+91 98990 90880",
     "role": "QC",
-    "line": "Global",
+    "skills": ["SKILL-INSP-10"],
     "status": "Active"
   },
   {
@@ -95,7 +95,7 @@
     "email": "meera.deshmukh@nichirin.com",
     "phone": "+91 98110 77880",
     "role": "SUPERVISOR",
-    "line": "Line 3",
+    "skills": ["SKILL-SHRNK-03", "SKILL-BOND-07"],
     "status": "Active"
   },
   {
@@ -104,8 +104,8 @@
     "email": "vijay.yadav@nichirin.com",
     "phone": "+91 98710 88000",
     "role": "OPERATOR",
-    "line": "Line 2",
-    "status": "Active"
+    "skills": ["SKILL-CUT-01"],
+    "status": "Inactive"
   },
   {
     "empCode": "EMP-2211",
@@ -113,8 +113,8 @@
     "email": "arjun.kapoor@nichirin.com",
     "phone": "+91 99900 22110",
     "role": "OPERATOR",
-    "line": "Line 3",
-    "status": "Active"
+    "skills": ["SKILL-FIT-05"],
+    "status": "Inactive"
   },
   {
     "empCode": "EMP-1144",
@@ -122,8 +122,8 @@
     "email": "karan.johar@nichirin.com",
     "phone": "+91 98120 11440",
     "role": "QC",
-    "line": "Line 2",
-    "status": "Active"
+    "skills": ["SKILL-TEST-09"],
+    "status": "Suspended"
   },
   {
     "empCode": "EMP-3401",
@@ -131,7 +131,7 @@
     "email": "rahul.sen@nichirin.com",
     "phone": "+91 95600 34010",
     "role": "OPERATOR",
-    "line": "Line 1",
-    "status": "Active"
+    "skills": ["SKILL-CRMP-06"],
+    "status": "Suspended"
   }
 ]

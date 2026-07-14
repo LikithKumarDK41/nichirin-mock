@@ -1,890 +1,1075 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en"><head>
-<!-- SPA Layout Redirect Wrapper -->
-<script>
-  if (!document.getElementById('app-root')) {
-    const p = window.location.pathname;
-    const rel = '../';
-    window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
-  }
-</script>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Role Management - Nichirin Admin</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Extended Theme Configuration -->
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "on-tertiary": "#ffffff",
-                        "on-surface-variant": "#43474e",
-                        "inverse-on-surface": "#f2f0f3",
-                        "background": "#faf9fc",
-                        "on-secondary": "#ffffff",
-                        "surface-bright": "#faf9fc",
-                        "surface-container-low": "#f4f3f6",
-                        "on-error": "#ffffff",
-                        "tertiary": "#110200",
-                        "outline": "#74777f",
-                        "surface-container-lowest": "#ffffff",
-                        "surface": "#faf9fc",
-                        "on-surface": "#1a1c1e",
-                        "secondary-container": "#7af2f2",
-                        "primary-container": "#001f3f",
-                        "on-primary-container": "#6f88ad",
-                        "on-error-container": "#93000a",
-                        "on-background": "#1a1c1e",
-                        "on-primary-fixed": "#001c3a",
-                        "surface-container-high": "#e9e7eb",
-                        "inverse-surface": "#2f3033",
-                        "inverse-primary": "#afc8f0",
-                        "surface-dim": "#dbd9dd",
-                        "on-secondary-container": "#006e6e",
-                        "surface-container-highest": "#e3e2e5",
-                        "outline-variant": "#c4c6cf",
-                        "secondary": "#006a6a",
-                        "on-primary": "#ffffff",
-                        "primary": "var(--color-primary, #c8102e)",
-                        "surface-tint": "#476083",
-                        "surface-variant": "#e3e2e5",
-                        "error": "#ba1a1a",
-                        "surface-container": "#efedf0",
-                        "error-container": "#ffdad6"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                    },
-                    "spacing": {
-                        "stack-gap-md": "16px",
-                        "sidebar-width": "260px",
-                        "header-height": "64px",
-                        "stack-gap-sm": "8px",
-                        "grid-gutter": "20px",
-                        "container-padding": "24px"
-                    },
-                    "fontFamily": {
-                        "headline-sm": ["Inter"],
-                        "label-bold": ["Inter"],
-                        "headline-md": ["Inter"],
-                        "body-md": ["Inter"],
-                        "body-lg": ["Inter"],
-                        "headline-lg": ["Inter"],
-                        "body-sm": ["Inter"],
-                        "data-tabular": ["Inter"]
-                    },
-                    "fontSize": {
-                        "headline-sm": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
-                        "label-bold": ["11px", {"lineHeight": "16px", "fontWeight": "700"}],
-                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                        "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
-                        "data-tabular": ["13px", {"lineHeight": "16px", "fontWeight": "500"}]
-                    }
-                }
-            }
+<html class="light" lang="en">
+
+<head>
+  <!-- SPA Layout Redirect Wrapper -->
+  <script>
+    if (!document.getElementById('app-root')) {
+      const p = window.location.pathname;
+      const rel = '../';
+      window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
+    }
+  </script>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Role Management - Nichirin Admin</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <!-- Extended Theme Configuration -->
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary": "#ffffff",
+            "on-surface-variant": "#43474e",
+            "inverse-on-surface": "#f2f0f3",
+            "background": "#faf9fc",
+            "on-secondary": "#ffffff",
+            "surface-bright": "#faf9fc",
+            "surface-container-low": "#f4f3f6",
+            "on-error": "#ffffff",
+            "tertiary": "#110200",
+            "outline": "#74777f",
+            "surface-container-lowest": "#ffffff",
+            "surface": "#faf9fc",
+            "on-surface": "#1a1c1e",
+            "secondary-container": "#7af2f2",
+            "primary-container": "#001f3f",
+            "on-primary-container": "#6f88ad",
+            "on-error-container": "#93000a",
+            "on-background": "#1a1c1e",
+            "on-primary-fixed": "#001c3a",
+            "surface-container-high": "#e9e7eb",
+            "inverse-surface": "#2f3033",
+            "inverse-primary": "#afc8f0",
+            "surface-dim": "#dbd9dd",
+            "on-secondary-container": "#006e6e",
+            "surface-container-highest": "#e3e2e5",
+            "outline-variant": "#c4c6cf",
+            "secondary": "#006a6a",
+            "on-primary": "#ffffff",
+            "primary": "var(--color-primary, #c8102e)",
+            "surface-tint": "#476083",
+            "surface-variant": "#e3e2e5",
+            "error": "#ba1a1a",
+            "surface-container": "#efedf0",
+            "error-container": "#ffdad6"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "stack-gap-md": "16px",
+            "sidebar-width": "260px",
+            "header-height": "64px",
+            "stack-gap-sm": "8px",
+            "grid-gutter": "20px",
+            "container-padding": "24px"
+          },
+          "fontFamily": {
+            "headline-sm": ["Inter"],
+            "label-bold": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-sm": ["Inter"],
+            "data-tabular": ["Inter"]
+          },
+          "fontSize": {
+            "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "label-bold": ["11px", { "lineHeight": "16px", "fontWeight": "700" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "data-tabular": ["13px", { "lineHeight": "16px", "fontWeight": "500" }]
+          }
         }
-    </script>
-<style>
-        body { font-family: 'Inter', sans-serif; background-color: #faf9fc; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #c4c6cf; border-radius: 10px; }
-        /* Strict checkbox theme coloring overriding Tailwind forms default blue */
-        input[type="checkbox"] {
-            color: #c8102e !important;
-        }
-        input[type="checkbox"]:focus {
-            --tw-ring-color: #c8102e !important;
-            border-color: #c8102e !important;
-        }
-    </style>
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #faf9fc;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #c4c6cf;
+      border-radius: 10px;
+    }
+
+    /* Strict checkbox theme coloring overriding Tailwind forms default blue */
+    input[type="checkbox"] {
+      color: #c8102e !important;
+    }
+
+    input[type="checkbox"]:focus {
+      --tw-ring-color: #c8102e !important;
+      border-color: #c8102e !important;
+    }
+  </style>
 </head>
+
 <body class="flex min-h-screen overflow-x-hidden">
-<!-- SideNavBar (Fallback) -->
-<aside class="fixed left-0 top-0 h-full w-[260px] bg-primary text-on-primary flex flex-col py-4 border-r border-outline-variant z-50">
-</aside>
-<!-- Main Content Area -->
-<main class="flex-1 ml-[260px] pt-[64px] min-h-screen">
-<!-- TopNavBar (Fallback) -->
-<header class="fixed top-0 right-0 h-[64px] w-[calc(100%-260px)] bg-surface flex justify-between items-center px-container-padding border-b border-outline-variant z-40">
-<div class="flex items-center gap-4">
-<nav class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
-<span class="">Plant</span>
-<span class="material-symbols-outlined text-[14px]">chevron_right</span>
-<span class="">Line A</span>
-<span class="material-symbols-outlined text-[14px]">chevron_right</span>
-<span class="text-primary font-bold border-b-2 border-primary pb-1">Role Management</span>
-</nav>
-</div>
-</header>
-<!-- Page Canvas -->
-<div class="p-container-padding grid grid-cols-12 gap-6 bg-background">
-  <!-- Role Management Header -->
-  <div class="col-span-12 flex justify-between items-end mb-6">
-    <div>
-      <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Role Management</h2>
-      <p class="font-body-md text-body-md text-on-surface-variant">Configure security authorization settings, define module access, and control permissions matrix.</p>
-    </div>
-    <button class="flex items-center gap-2 bg-primary text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm" onclick="openAddRoleDrawer()">
-      <span class="material-symbols-outlined text-[18px]">add_moderator</span>
-      Create Custom Role
-    </button>
-  </div>
-
-  <!-- Horizontal Bento Summary Cards -->
-  <div class="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-6 mb-2">
-    <!-- Card 1: TOTAL ROLES -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
-      <div>
-        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Total System Roles</p>
-        <p class="text-3xl font-bold text-primary" id="statTotalRoles">--</p>
+  <!-- SideNavBar (Fallback) -->
+  <aside
+    class="fixed left-0 top-0 h-full w-[260px] bg-primary text-on-primary flex flex-col py-4 border-r border-outline-variant z-50">
+  </aside>
+  <!-- Main Content Area -->
+  <main class="flex-1 ml-[260px] pt-[64px] min-h-screen">
+    <!-- TopNavBar (Fallback) -->
+    <header
+      class="fixed top-0 right-0 h-[64px] w-[calc(100%-260px)] bg-surface flex justify-between items-center px-container-padding border-b border-outline-variant z-40">
+      <div class="flex items-center gap-4">
+        <nav class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+          <span class="">Plant</span>
+          <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+          <span class="">Line A</span>
+          <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+          <span class="text-primary font-bold border-b-2 border-primary pb-1">Role Management</span>
+        </nav>
       </div>
-      <span class="material-symbols-outlined text-[32px] text-primary">security</span>
-    </div>
-    <!-- Card 2: CUSTOM ROLES -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
-      <div>
-        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Custom Roles</p>
-        <p class="text-3xl font-bold text-slate-800" id="statCustomRoles">--</p>
-      </div>
-      <span class="material-symbols-outlined text-[32px] text-slate-600" style="font-variation-settings: 'FILL' 0;">admin_panel_settings</span>
-    </div>
-    <!-- Card 3: ACCESS PRIVILEGES AVAILABLE -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
-      <div>
-        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Access Screens Mapped</p>
-        <p class="text-3xl font-bold text-primary">13</p>
-      </div>
-      <span class="material-symbols-outlined text-[32px] text-primary">fact_check</span>
-    </div>
-  </div>
-
-  <!-- Bento Layout: Roles List -->
-  <section class="col-span-12 bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm flex flex-col">
-    <div class="px-6 py-4 border-b border-outline-variant/30 flex justify-between items-center bg-slate-50 flex-wrap gap-4">
-      <h3 class="font-headline-md text-headline-md text-primary">Role Configurations</h3>
-      <div class="flex items-center gap-3">
-        <!-- Search Box -->
-        <div class="relative w-48">
-          <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
-          <input id="roleSearchInput" class="w-full bg-white border border-outline-variant/30 rounded-lg pl-8 pr-3 py-1 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-8" placeholder="Filter roles..." type="text" oninput="handleRoleSearch()"/>
-        </div>
-        <!-- Role Type Filter -->
-        <select id="roleTypeFilter" class="bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-3 pr-8 py-1 font-semibold min-w-[170px]" onchange="handleRoleTypeFilterChange()">
-          <option value="ALL">All Classifications</option>
-          <option value="SYSTEM">System Protected</option>
-          <option value="CUSTOM">Custom Roles</option>
-        </select>
-      </div>
-    </div>
-    
-    <!-- Table View Container -->
-    <div id="roleTableViewContainer" class="overflow-x-auto">
-      <table class="w-full text-left border-collapse whitespace-nowrap">
-        <thead>
-          <tr class="bg-white border-b border-outline-variant/30">
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Role Code</th>
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Role Name</th>
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Classification</th>
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Description</th>
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-center">Assigned Users</th>
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-right">Action</th>
-          </tr>
-        </thead>
-        <tbody id="roleTableBody" class="divide-y divide-outline-variant/30">
-          <!-- Dynamically populated -->
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Pagination Footer -->
-    <div class="px-6 py-4 border-t border-outline-variant/30 flex justify-between items-center bg-slate-50 text-xs font-semibold text-on-surface-variant flex-shrink-0 select-none">
-      <div id="rolePaginationInfo">Showing 0 to 0 of 0 entries</div>
-      <div class="flex items-center gap-2">
-        <button id="rolePrevPageBtn" class="px-3 py-1.5 border border-outline-variant/30 bg-white rounded-lg hover:bg-slate-50 transition-colors cursor-pointer" onclick="changeRolePage(-1)">Previous</button>
-        <div id="rolePageNumbers" class="flex gap-1.5">
-          <!-- Page numbers inserted dynamically -->
-        </div>
-        <button id="roleNextPageBtn" class="px-3 py-1.5 border border-outline-variant/30 bg-white rounded-lg hover:bg-slate-50 transition-colors cursor-pointer" onclick="changeRolePage(1)">Next</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Slide-over Drawer for View Details (from Right, max-width 620px) -->
-  <div id="viewRoleModalBackdrop" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[90] transition-opacity duration-300 opacity-0" onclick="toggleViewRoleModal(false)"></div>
-  <div id="viewRoleModal" class="fixed top-0 right-0 h-full w-full max-w-[620px] bg-white z-[100] shadow-2xl border-l border-outline-variant/30 transform translate-x-full transition-transform duration-300 ease-out flex flex-col overflow-hidden">
-    <div class="bg-slate-50 px-6 py-5 border-b border-outline-variant/30 flex justify-between items-center flex-shrink-0">
-      <h3 class="font-headline-md text-headline-md text-primary">Personnel Role Profile</h3>
-      <button class="text-on-surface-variant hover:text-slate-900 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100" onclick="toggleViewRoleModal(false)">
-        <span class="material-symbols-outlined text-[20px]">close</span>
-      </button>
-    </div>
-    
-    <div class="p-6 flex-1 overflow-y-auto space-y-6">
-      <!-- Header info with initials -->
-      <div class="flex items-center gap-4 pb-5 border-b border-outline-variant/20">
-        <div id="viewRoleAvatar" class="w-16 h-16 rounded-full bg-slate-100 text-slate-800 flex items-center justify-center font-bold text-2xl border border-slate-200">RO</div>
+    </header>
+    <!-- Page Canvas -->
+    <div class="p-container-padding grid grid-cols-12 gap-6 bg-background">
+      <!-- Role Management Header -->
+      <div class="col-span-12 flex justify-between items-end mb-6">
         <div>
-          <h4 id="viewRoleName" class="font-bold text-xl text-slate-900 leading-tight">--</h4>
-          <span id="viewRoleCodeBadge" class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-[10px] font-bold mt-2 bg-slate-50 text-slate-700 border border-slate-200">--</span>
+          <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Role Management</h2>
+          <p class="font-body-md text-body-md text-on-surface-variant">Configure security authorization settings, define
+            module access, and control permissions matrix.</p>
         </div>
-      </div>
-      
-      <!-- Details Description -->
-      <div>
-        <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Description</span>
-        <p id="viewRoleDescription" class="text-slate-700 font-medium leading-relaxed bg-slate-50 p-3 rounded-lg border border-slate-100 text-xs">--</p>
+        <button
+          class="flex items-center gap-2 bg-primary text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm"
+          onclick="openAddRoleDrawer()">
+          <span class="material-symbols-outlined text-[18px]">add_moderator</span>
+          Create Custom Role
+        </button>
       </div>
 
-      <!-- Vertical sections (One after another) -->
-      <div class="space-y-6 pt-4 border-t border-slate-100">
-        <!-- 1. Screen Access permissions -->
-        <div>
-          <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">1. Screen Navigation Access</span>
-          <div id="viewRoleScreensList" class="space-y-2 max-h-[300px] overflow-y-auto custom-scrollbar pr-1">
-            <!-- Dynamically populated -->
+      <!-- Horizontal Bento Summary Cards -->
+      <div class="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-6 mb-2">
+        <!-- Card 1: TOTAL ROLES -->
+        <div
+          class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
+          <div>
+            <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Total System Roles</p>
+            <p class="text-3xl font-bold text-primary" id="statTotalRoles">--</p>
           </div>
+          <span class="material-symbols-outlined text-[32px] text-primary">security</span>
         </div>
-
-        <!-- 2. Granular Capabilities -->
-        <div class="pt-4 border-t border-slate-100">
-          <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">2. Granular Operations &amp; Scopes</span>
-          <div id="viewRoleFeaturesList" class="space-y-2 max-h-[300px] overflow-y-auto custom-scrollbar pr-1">
-            <!-- Dynamically populated -->
+        <!-- Card 2: CUSTOM ROLES -->
+        <div
+          class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
+          <div>
+            <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Custom Roles</p>
+            <p class="text-3xl font-bold text-slate-800" id="statCustomRoles">--</p>
           </div>
+          <span class="material-symbols-outlined text-[32px] text-slate-600"
+            style="font-variation-settings: 'FILL' 0;">admin_panel_settings</span>
+        </div>
+        <!-- Card 3: ACCESS PRIVILEGES AVAILABLE -->
+        <div
+          class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
+          <div>
+            <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Access Screens Mapped</p>
+            <p class="text-3xl font-bold text-primary">13</p>
+          </div>
+          <span class="material-symbols-outlined text-[32px] text-primary">fact_check</span>
         </div>
       </div>
-    </div>
-    
-    <!-- Drawer Footer (Fixed at absolute bottom) -->
-    <div class="bg-slate-50 p-4 border-t border-outline-variant/30 flex justify-end flex-shrink-0">
-      <button class="px-5 h-10 rounded-lg bg-primary text-white font-semibold text-sm shadow-sm hover:opacity-90 transition-all cursor-pointer" onclick="toggleViewRoleModal(false)">Close Profile</button>
-    </div>
-  </div>
 
-  <!-- Slide-over Drawer for Add/Edit (from Right, max-width 620px) -->
-  <div id="addRoleModalBackdrop" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[90] transition-opacity duration-300 opacity-0" onclick="toggleAddRoleModal(false)"></div>
-  <div id="addRoleModal" class="fixed top-0 right-0 h-full w-full max-w-[620px] bg-white z-[100] shadow-2xl border-l border-outline-variant/30 transform translate-x-full transition-transform duration-300 ease-out flex flex-col overflow-hidden">
-    <div class="bg-slate-50 px-6 py-5 border-b border-outline-variant/30 flex justify-between items-center flex-shrink-0">
-      <h3 class="font-headline-md text-headline-md text-primary" id="roleDrawerTitle">Create Custom Role</h3>
-      <button class="text-on-surface-variant hover:text-primary transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100" onclick="toggleAddRoleModal(false)">
-        <span class="material-symbols-outlined text-[20px]">close</span>
-      </button>
-    </div>
-    
-    <!-- Flex Container form to constrain scrolling area -->
-    <form class="flex-1 flex flex-col overflow-hidden h-full" onsubmit="saveRole(event)">
-      <!-- Scrollable content area -->
-      <div class="flex-grow overflow-y-auto p-6 space-y-5">
-        
-        <!-- Code / Name Grid -->
-        <div class="grid grid-cols-2 gap-4">
-          <!-- Role Code -->
-          <div class="col-span-2 space-y-1.5">
-            <label class="block text-xs font-bold uppercase text-slate-500">Role Code</label>
-            <input id="drawerRoleCode" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white" placeholder="e.g. LINE_LEAD" type="text" required />
-          </div>
-          <!-- Role Name -->
-          <div class="col-span-1 space-y-1.5">
-            <label class="block text-xs font-bold uppercase text-slate-500">Role Name</label>
-            <input id="drawerRoleName" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white" placeholder="e.g. Line Lead" type="text" required />
-          </div>
-          <!-- Classification -->
-          <div class="col-span-1 space-y-1.5">
-            <label class="block text-xs font-bold uppercase text-slate-500">Classification</label>
-            <select id="drawerRoleType" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-slate-50 text-slate-500 cursor-not-allowed" disabled>
-              <option value="CUSTOM">Custom Role</option>
+      <!-- Bento Layout: Roles List -->
+      <section
+        class="col-span-12 bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm flex flex-col">
+        <div
+          class="px-6 py-4 border-b border-outline-variant/30 flex justify-between items-center bg-slate-50 flex-wrap gap-4">
+          <h3 class="font-headline-md text-headline-md text-primary">Role Configurations</h3>
+          <div class="flex items-center gap-3">
+            <!-- Search Box -->
+            <div class="relative w-48">
+              <span
+                class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
+              <input id="roleSearchInput"
+                class="w-full bg-white border border-outline-variant/30 rounded-lg pl-8 pr-3 py-1 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-8"
+                placeholder="Filter roles..." type="text" oninput="handleRoleSearch()" />
+            </div>
+            <!-- Role Type Filter -->
+            <select id="roleTypeFilter"
+              class="bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-3 pr-8 py-1 font-semibold min-w-[170px]"
+              onchange="handleRoleTypeFilterChange()">
+              <option value="ALL">All Classifications</option>
               <option value="SYSTEM">System Protected</option>
+              <option value="CUSTOM">Custom Roles</option>
             </select>
           </div>
-          <!-- Description -->
-          <div class="col-span-2 space-y-1.5">
-            <label class="block text-xs font-bold uppercase text-slate-500">Description</label>
-            <textarea id="drawerRoleDescription" rows="2" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm p-3 font-semibold placeholder-slate-400 bg-white" placeholder="Write role privileges summary..." required></textarea>
+        </div>
+
+        <!-- Table View Container -->
+        <div id="roleTableViewContainer" class="overflow-x-auto">
+          <table class="w-full text-left border-collapse whitespace-nowrap">
+            <thead>
+              <tr class="bg-white border-b border-outline-variant/30">
+                <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Role Name
+                </th>
+                <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">
+                  Classification</th>
+                <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Description
+                </th>
+                <th
+                  class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-center">
+                  Assigned Users</th>
+                <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-right">
+                  Action</th>
+              </tr>
+            </thead>
+            <tbody id="roleTableBody" class="divide-y divide-outline-variant/30">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination Footer -->
+        <div
+          class="px-6 py-4 border-t border-outline-variant/30 flex justify-between items-center bg-slate-50 text-xs font-semibold text-on-surface-variant flex-shrink-0 select-none">
+          <div id="rolePaginationInfo">Showing 0 to 0 of 0 entries</div>
+          <div class="flex items-center gap-2">
+            <button id="rolePrevPageBtn"
+              class="px-3 py-1.5 border border-outline-variant/30 bg-white rounded-lg hover:bg-slate-50 transition-colors cursor-pointer"
+              onclick="changeRolePage(-1)">Previous</button>
+            <div id="rolePageNumbers" class="flex gap-1.5">
+              <!-- Page numbers inserted dynamically -->
+            </div>
+            <button id="roleNextPageBtn"
+              class="px-3 py-1.5 border border-outline-variant/30 bg-white rounded-lg hover:bg-slate-50 transition-colors cursor-pointer"
+              onclick="changeRolePage(1)">Next</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide-over Drawer for View Details (from Right, max-width 620px) -->
+      <div id="viewRoleModalBackdrop"
+        class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[90] transition-opacity duration-300 opacity-0"
+        onclick="toggleViewRoleModal(false)"></div>
+      <div id="viewRoleModal"
+        class="fixed top-0 right-0 h-full w-full max-w-[620px] bg-white z-[100] shadow-2xl border-l border-outline-variant/30 transform translate-x-full transition-transform duration-300 ease-out flex flex-col overflow-hidden">
+        <div
+          class="bg-slate-50 px-6 py-5 border-b border-outline-variant/30 flex justify-between items-center flex-shrink-0">
+          <h3 class="font-headline-md text-headline-md text-primary">Personnel Role Profile</h3>
+          <button
+            class="text-on-surface-variant hover:text-slate-900 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100"
+            onclick="toggleViewRoleModal(false)">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+
+        <div class="p-6 flex-1 overflow-y-auto space-y-6">
+          <!-- Header info with initials -->
+          <div class="flex items-center gap-4 pb-5 border-b border-outline-variant/20">
+            <div id="viewRoleAvatar"
+              class="w-16 h-16 rounded-full bg-slate-100 text-slate-800 flex items-center justify-center font-bold text-2xl border border-slate-200">
+              RO</div>
+            <div>
+              <h4 id="viewRoleName" class="font-bold text-xl text-slate-900 leading-tight">--</h4>
+              <span id="viewRoleCodeBadge"
+                class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-[10px] font-bold mt-2 bg-slate-50 text-slate-700 border border-slate-200">--</span>
+            </div>
+          </div>
+
+          <!-- Details Description -->
+          <div>
+            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Description</span>
+            <p id="viewRoleDescription"
+              class="text-slate-700 font-medium leading-relaxed bg-slate-50 p-3 rounded-lg border border-slate-100 text-xs">
+              --</p>
+          </div>
+
+          <!-- Vertical sections (One after another) -->
+          <div class="space-y-6 pt-4 border-t border-slate-100">
+            <!-- 1. Screen Access permissions -->
+            <div>
+              <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">1. Screen
+                Navigation Access</span>
+              <div id="viewRoleScreensList" class="space-y-2 max-h-[300px] overflow-y-auto custom-scrollbar pr-1">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <!-- 2. Granular Capabilities -->
+            <div class="pt-4 border-t border-slate-100">
+              <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">2. Granular
+                Operations &amp; Scopes</span>
+              <div id="viewRoleFeaturesList" class="space-y-2 max-h-[300px] overflow-y-auto custom-scrollbar pr-1">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Section 1: Screen Access checklist -->
-        <div class="pt-2 border-t border-slate-100">
-          <span class="block text-xs font-bold uppercase text-slate-500 mb-2">1. Screen Navigation Access</span>
-          <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-outline-variant/30 max-h-[300px] overflow-y-auto custom-scrollbar">
-            
-            <!-- Dashboard -->
-            <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-              <div class="max-w-[70%]">
-                <span class="block text-xs font-bold text-slate-800">Dashboard</span>
-                <span class="block text-[9px] text-slate-400">KPI charts and shift statistics</span>
+        <!-- Drawer Footer (Fixed at absolute bottom) -->
+        <div class="bg-slate-50 p-4 border-t border-outline-variant/30 flex justify-end flex-shrink-0">
+          <button
+            class="px-5 h-10 rounded-lg bg-primary text-white font-semibold text-sm shadow-sm hover:opacity-90 transition-all cursor-pointer"
+            onclick="toggleViewRoleModal(false)">Close Profile</button>
+        </div>
+      </div>
+
+      <!-- Slide-over Drawer for Add/Edit (from Right, max-width 620px) -->
+      <div id="addRoleModalBackdrop"
+        class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[90] transition-opacity duration-300 opacity-0"
+        onclick="toggleAddRoleModal(false)"></div>
+      <div id="addRoleModal"
+        class="fixed top-0 right-0 h-full w-full max-w-[620px] bg-white z-[100] shadow-2xl border-l border-outline-variant/30 transform translate-x-full transition-transform duration-300 ease-out flex flex-col overflow-hidden">
+        <div
+          class="bg-slate-50 px-6 py-5 border-b border-outline-variant/30 flex justify-between items-center flex-shrink-0">
+          <h3 class="font-headline-md text-headline-md text-primary" id="roleDrawerTitle">Create Custom Role</h3>
+          <button
+            class="text-on-surface-variant hover:text-primary transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100"
+            onclick="toggleAddRoleModal(false)">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+
+        <!-- Flex Container form to constrain scrolling area -->
+        <form class="flex-1 flex flex-col overflow-hidden h-full" onsubmit="saveRole(event)">
+          <!-- Scrollable content area -->
+          <div class="flex-grow overflow-y-auto p-6 space-y-5">
+
+            <!-- Code / Name Grid -->
+            <div class="grid grid-cols-2 gap-4">
+              <!-- Hidden Role Code -->
+              <input id="drawerRoleCode" type="hidden" />
+
+              <!-- Role Name -->
+              <div class="col-span-1 space-y-1.5">
+                <label class="block text-xs font-bold uppercase text-slate-500">Role Name</label>
+                <input id="drawerRoleName"
+                  class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white"
+                  placeholder="Enter name" type="text" required />
               </div>
-              <div class="flex gap-3 select-none shrink-0">
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_dashboard_view" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">View</span>
-                </label>
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_dashboard_operate" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">Operate</span>
-                </label>
+              <!-- Classification -->
+              <div class="col-span-1 space-y-1.5">
+                <label class="block text-xs font-bold uppercase text-slate-500">Classification</label>
+                <select id="drawerRoleType"
+                  class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white text-slate-800">
+                  <option value="CUSTOM">Custom Role</option>
+                  <option value="SYSTEM">System Protected</option>
+                </select>
+              </div>
+              <!-- Description -->
+              <div class="col-span-2 space-y-1.5">
+                <label class="block text-xs font-bold uppercase text-slate-500">Description</label>
+                <textarea id="drawerRoleDescription" rows="2"
+                  class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm p-3 font-semibold placeholder-slate-400 bg-white"
+                  placeholder="Write role privileges summary..." required></textarea>
               </div>
             </div>
 
-            <!-- Work Orders -->
-            <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-              <div class="max-w-[70%]">
-                <span class="block text-xs font-bold text-slate-800">Work Orders</span>
-                <span class="block text-[9px] text-slate-400">View and dispatch work cards</span>
+            <!-- Section 1: Screen Access checklist -->
+            <div class="pt-6 pb-4 border-t border-slate-100">
+              <div class="flex justify-between items-center mb-3">
+                <span class="block text-xs font-bold uppercase text-slate-650 tracking-wider">1. Admin Screen Navigation
+                  Access</span>
+                <div class="flex gap-2">
+                  <button type="button" onclick="selectAllScreens(true)"
+                    class="text-[11px] font-bold text-primary hover:underline cursor-pointer">Select All</button>
+                  <span class="text-slate-350 text-[11px]">|</span>
+                  <button type="button" onclick="selectAllScreens(false)"
+                    class="text-[11px] font-bold text-slate-500 hover:underline cursor-pointer">Clear All</button>
+                </div>
               </div>
-              <div class="flex gap-3 select-none shrink-0">
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_work_orders_view" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">View</span>
-                </label>
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_work_orders_operate" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">Operate</span>
-                </label>
+              <div
+                class="space-y-3 bg-slate-50 p-4 rounded-xl border border-outline-variant/30 max-h-[300px] overflow-y-auto custom-scrollbar">
+
+                <!-- Dashboard -->
+                <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
+                  <div class="max-w-[70%]">
+                    <span class="block text-xs font-bold text-slate-800">Dashboard</span>
+                    <span class="block text-[9px] text-slate-400">KPI charts and shift statistics</span>
+                  </div>
+                  <div class="flex gap-3 select-none shrink-0">
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_dashboard_view"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">View</span>
+                    </label>
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_dashboard_operate"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">Operate</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Work Orders -->
+                <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
+                  <div class="max-w-[70%]">
+                    <span class="block text-xs font-bold text-slate-800">Work Orders</span>
+                    <span class="block text-[9px] text-slate-400">View and dispatch work cards</span>
+                  </div>
+                  <div class="flex gap-3 select-none shrink-0">
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_work_orders_view"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">View</span>
+                    </label>
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_work_orders_operate"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">Operate</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Supervisor Planning -->
+                <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
+                  <div class="max-w-[70%]">
+                    <span class="block text-xs font-bold text-slate-800">Supervisor Planning</span>
+                    <span class="block text-[9px] text-slate-400">Shift plans and lines allocations</span>
+                  </div>
+                  <div class="flex gap-3 select-none shrink-0">
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_supervisor_planning_view"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">View</span>
+                    </label>
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_supervisor_planning_operate"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">Operate</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- QC Pending Approvals -->
+                <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
+                  <div class="max-w-[70%]">
+                    <span class="block text-xs font-bold text-slate-800">QC Pending Approvals</span>
+                    <span class="block text-[9px] text-slate-400">Review alerts, approve checklists</span>
+                  </div>
+                  <div class="flex gap-3 select-none shrink-0">
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_qc_pending_approvals_view"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">View</span>
+                    </label>
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_qc_pending_approvals_operate"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">Operate</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Traceability Search -->
+                <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
+                  <div class="max-w-[70%]">
+                    <span class="block text-xs font-bold text-slate-800">Traceability Search</span>
+                    <span class="block text-[9px] text-slate-400">Perform lot investigations</span>
+                  </div>
+                  <div class="flex gap-3 select-none shrink-0">
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_traceability_search_view"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">View</span>
+                    </label>
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_traceability_search_operate"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">Operate</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- QC Reports -->
+                <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
+                  <div class="max-w-[70%]">
+                    <span class="block text-xs font-bold text-slate-800">QC Reports</span>
+                    <span class="block text-[9px] text-slate-400">Quality stats, export CSV logs</span>
+                  </div>
+                  <div class="flex gap-3 select-none shrink-0">
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_qc_reports_view"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">View</span>
+                    </label>
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_qc_reports_operate"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">Operate</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Audit Reports -->
+                <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
+                  <div class="max-w-[70%]">
+                    <span class="block text-xs font-bold text-slate-800">Audit Reports</span>
+                    <span class="block text-[9px] text-slate-400">System actions and event logs</span>
+                  </div>
+                  <div class="flex gap-3 select-none shrink-0">
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_audit_reports_view"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">View</span>
+                    </label>
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_audit_reports_operate"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">Operate</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Workflow Configuration -->
+                <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
+                  <div class="max-w-[70%]">
+                    <span class="block text-xs font-bold text-slate-800">Workflow Configuration</span>
+                    <span class="block text-[9px] text-slate-400">Edit flowchart canvas templates</span>
+                  </div>
+                  <div class="flex gap-3 select-none shrink-0">
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_workflow_configuration_view"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">View</span>
+                    </label>
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_workflow_configuration_operate"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">Operate</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- User Management -->
+                <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
+                  <div class="max-w-[70%]">
+                    <span class="block text-xs font-bold text-slate-800">User Management</span>
+                    <span class="block text-[9px] text-slate-400">Personnel accounts list controls</span>
+                  </div>
+                  <div class="flex gap-3 select-none shrink-0">
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_user_management_view"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">View</span>
+                    </label>
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_user_management_operate"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">Operate</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Role Management -->
+                <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
+                  <div class="max-w-[70%]">
+                    <span class="block text-xs font-bold text-slate-800">Role Management</span>
+                    <span class="block text-[9px] text-slate-400">Update security roles, matrices</span>
+                  </div>
+                  <div class="flex gap-3 select-none shrink-0">
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_role_management_view"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">View</span>
+                    </label>
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_role_management_operate"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">Operate</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Skill Management -->
+                <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
+                  <div class="max-w-[70%]">
+                    <span class="block text-xs font-bold text-slate-800">Skill Management</span>
+                    <span class="block text-[9px] text-slate-400">Certified steps tracking lists</span>
+                  </div>
+                  <div class="flex gap-3 select-none shrink-0">
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_skill_management_view"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">View</span>
+                    </label>
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_skill_management_operate"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">Operate</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Machine Management -->
+                <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
+                  <div class="max-w-[70%]">
+                    <span class="block text-xs font-bold text-slate-800">Machine Management</span>
+                    <span class="block text-[9px] text-slate-400">Toolings network IPs, calibrations</span>
+                  </div>
+                  <div class="flex gap-3 select-none shrink-0">
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_machine_management_view"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">View</span>
+                    </label>
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_machine_management_operate"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">Operate</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Device Management -->
+                <div class="flex items-center justify-between py-2">
+                  <div class="max-w-[70%]">
+                    <span class="block text-xs font-bold text-slate-800">Device Management</span>
+                    <span class="block text-[9px] text-slate-400">Tablet connections sync log</span>
+                  </div>
+                  <div class="flex gap-3 select-none shrink-0">
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_device_management_view"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">View</span>
+                    </label>
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_device_management_operate"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">Operate</span>
+                    </label>
+                  </div>
+                </div>
+
               </div>
             </div>
 
-            <!-- Supervisor Planning -->
-            <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-              <div class="max-w-[70%]">
-                <span class="block text-xs font-bold text-slate-800">Supervisor Planning</span>
-                <span class="block text-[9px] text-slate-400">Shift plans and lines allocations</span>
+            <!-- Section 2: Granular Operations list -->
+            <div class="pt-6 pb-4 border-t border-slate-100">
+              <div class="flex justify-between items-center mb-3">
+                <span class="block text-xs font-bold uppercase text-slate-650 tracking-wider">2. Granular Operations
+                  Scopes</span>
+                <div class="flex gap-2">
+                  <button type="button" onclick="selectAllFeatures(true)"
+                    class="text-[11px] font-bold text-primary hover:underline cursor-pointer">Select All</button>
+                  <span class="text-slate-350 text-[11px]">|</span>
+                  <button type="button" onclick="selectAllFeatures(false)"
+                    class="text-[11px] font-bold text-slate-500 hover:underline cursor-pointer">Clear All</button>
+                </div>
               </div>
-              <div class="flex gap-3 select-none shrink-0">
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_supervisor_planning_view" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">View</span>
-                </label>
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_supervisor_planning_operate" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">Operate</span>
-                </label>
-              </div>
-            </div>
+              <div
+                class="space-y-3 bg-slate-50 p-4 rounded-xl border border-outline-variant/30 max-h-[300px] overflow-y-auto custom-scrollbar">
 
-            <!-- QC Pending Approvals -->
-            <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-              <div class="max-w-[70%]">
-                <span class="block text-xs font-bold text-slate-800">QC Pending Approvals</span>
-                <span class="block text-[9px] text-slate-400">Review alerts, approve checklists</span>
-              </div>
-              <div class="flex gap-3 select-none shrink-0">
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_qc_pending_approvals_view" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">View</span>
-                </label>
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_qc_pending_approvals_operate" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">Operate</span>
-                </label>
-              </div>
-            </div>
+                <!-- Production Scopes -->
+                <div class="pb-2 border-b border-slate-200/50">
+                  <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Production
+                    Scopes</span>
+                  <label class="flex items-start gap-2 cursor-pointer py-1">
+                    <input type="checkbox" id="feat_release_sap_orders"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
+                    <div class="ml-2">
+                      <span class="block text-xs font-semibold text-slate-800">Release SAP Orders</span>
+                      <span class="block text-[9px] text-slate-400">Release SAP orders &amp; dispatch to line tablet
+                        terminals</span>
+                    </div>
+                  </label>
+                  <label class="flex items-start gap-2 cursor-pointer py-1">
+                    <input type="checkbox" id="feat_hold_production_run"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
+                    <div class="ml-2">
+                      <span class="block text-xs font-semibold text-slate-800">Hold Production Run</span>
+                      <span class="block text-[9px] text-slate-400">Halt line execution and suspend active runs</span>
+                    </div>
+                  </label>
+                </div>
 
-            <!-- Traceability Search -->
-            <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-              <div class="max-w-[70%]">
-                <span class="block text-xs font-bold text-slate-800">Traceability Search</span>
-                <span class="block text-[9px] text-slate-400">Perform lot investigations</span>
-              </div>
-              <div class="flex gap-3 select-none shrink-0">
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_traceability_search_view" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">View</span>
-                </label>
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_traceability_search_operate" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">Operate</span>
-                </label>
-              </div>
-            </div>
+                <!-- Shopfloor Execution -->
+                <div class="py-2 border-b border-slate-200/50">
+                  <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Shopfloor
+                    Execution</span>
+                  <label class="flex items-start gap-2 cursor-pointer py-1">
+                    <input type="checkbox" id="feat_barcode_scan_lots"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
+                    <div class="ml-2">
+                      <span class="block text-xs font-semibold text-slate-800">Barcode Scanning &amp; Lot Check</span>
+                      <span class="block text-[9px] text-slate-400">Verify material lot barcodes and check inputs
+                        compatibility</span>
+                    </div>
+                  </label>
+                  <label class="flex items-start gap-2 cursor-pointer py-1">
+                    <input type="checkbox" id="feat_verify_step_actions"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
+                    <div class="ml-2">
+                      <span class="block text-xs font-semibold text-slate-800">Confirm Checklist Steps</span>
+                      <span class="block text-[9px] text-slate-400">Complete tablet-based control card verification
+                        checkpoints</span>
+                    </div>
+                  </label>
+                </div>
 
-            <!-- QC Reports -->
-            <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-              <div class="max-w-[70%]">
-                <span class="block text-xs font-bold text-slate-800">QC Reports</span>
-                <span class="block text-[9px] text-slate-400">Quality stats, export CSV logs</span>
-              </div>
-              <div class="flex gap-3 select-none shrink-0">
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_qc_reports_view" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">View</span>
-                </label>
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_qc_reports_operate" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">Operate</span>
-                </label>
-              </div>
-            </div>
+                <!-- Quality Assurance -->
+                <div class="py-2 border-b border-slate-200/50">
+                  <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Quality
+                    Assurance</span>
+                  <label class="flex items-start gap-2 cursor-pointer py-1">
+                    <input type="checkbox" id="feat_approve_qc_checks"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
+                    <div class="ml-2">
+                      <span class="block text-xs font-semibold text-slate-800">Approve QC Gates</span>
+                      <span class="block text-[9px] text-slate-400">Certify tolerance checks and sign-off inspect
+                        approvals</span>
+                    </div>
+                  </label>
+                  <label class="flex items-start gap-2 cursor-pointer py-1">
+                    <input type="checkbox" id="feat_override_qc_tolerances"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
+                    <div class="ml-2">
+                      <span class="block text-xs font-semibold text-slate-800">Override Tolerances</span>
+                      <span class="block text-[9px] text-slate-400">Force override critical alarm limits and step
+                        failures</span>
+                    </div>
+                  </label>
+                </div>
 
-            <!-- Audit Reports -->
-            <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-              <div class="max-w-[70%]">
-                <span class="block text-xs font-bold text-slate-800">Audit Reports</span>
-                <span class="block text-[9px] text-slate-400">System actions and event logs</span>
-              </div>
-              <div class="flex gap-3 select-none shrink-0">
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_audit_reports_view" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">View</span>
-                </label>
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_audit_reports_operate" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">Operate</span>
-                </label>
-              </div>
-            </div>
+                <!-- Data & Exports -->
+                <div class="py-2 border-b border-slate-200/50">
+                  <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Data &amp;
+                    Exports</span>
+                  <label class="flex items-start gap-2 cursor-pointer py-1">
+                    <input type="checkbox" id="feat_export_csv_reports"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
+                    <div class="ml-2">
+                      <span class="block text-xs font-semibold text-slate-800">Export Reports</span>
+                      <span class="block text-[9px] text-slate-400">Export logs to CSV/Excel</span>
+                    </div>
+                  </label>
+                  <label class="flex items-start gap-2 cursor-pointer py-1">
+                    <input type="checkbox" id="feat_purge_historical_logs"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
+                    <div class="ml-2">
+                      <span class="block text-xs font-semibold text-slate-800">Purge Data Logs</span>
+                      <span class="block text-[9px] text-slate-400">Erase history data, reset audit logs (Admins
+                        only)</span>
+                    </div>
+                  </label>
+                </div>
 
-            <!-- Workflow Configuration -->
-            <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-              <div class="max-w-[70%]">
-                <span class="block text-xs font-bold text-slate-800">Workflow Configuration</span>
-                <span class="block text-[9px] text-slate-400">Edit flowchart canvas templates</span>
-              </div>
-              <div class="flex gap-3 select-none shrink-0">
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_workflow_configuration_view" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">View</span>
-                </label>
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_workflow_configuration_operate" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">Operate</span>
-                </label>
-              </div>
-            </div>
+                <!-- Template Design -->
+                <div class="py-2 border-b border-slate-200/50">
+                  <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Template
+                    Design</span>
+                  <label class="flex items-start gap-2 cursor-pointer py-1">
+                    <input type="checkbox" id="feat_design_flowchart_canvas"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
+                    <div class="ml-2">
+                      <span class="block text-xs font-semibold text-slate-800">Design Flowchart Canvas</span>
+                      <span class="block text-[9px] text-slate-400">Draw stage charts, sequence steps, tolerances</span>
+                    </div>
+                  </label>
+                  <label class="flex items-start gap-2 cursor-pointer py-1">
+                    <input type="checkbox" id="feat_publish_template_versions"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
+                    <div class="ml-2">
+                      <span class="block text-xs font-semibold text-slate-800">Publish Revisions</span>
+                      <span class="block text-[9px] text-slate-400">Release new revisions of control card kanbans</span>
+                    </div>
+                  </label>
+                </div>
 
-            <!-- User Management -->
-            <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-              <div class="max-w-[70%]">
-                <span class="block text-xs font-bold text-slate-800">User Management</span>
-                <span class="block text-[9px] text-slate-400">Personnel accounts list controls</span>
-              </div>
-              <div class="flex gap-3 select-none shrink-0">
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_user_management_view" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">View</span>
-                </label>
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_user_management_operate" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">Operate</span>
-                </label>
-              </div>
-            </div>
+                <!-- Security & Admin -->
+                <div class="py-2 border-b border-slate-200/50">
+                  <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Security &amp;
+                    Admin</span>
+                  <label class="flex items-start gap-2 cursor-pointer py-1">
+                    <input type="checkbox" id="feat_reset_passwords"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
+                    <div class="ml-2">
+                      <span class="block text-xs font-semibold text-slate-800">Reset Credentials</span>
+                      <span class="block text-[9px] text-slate-400">Reset credentials, suspend users</span>
+                    </div>
+                  </label>
+                  <label class="flex items-start gap-2 cursor-pointer py-1">
+                    <input type="checkbox" id="feat_create_security_roles"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
+                    <div class="ml-2">
+                      <span class="block text-xs font-semibold text-slate-800">Create Security Roles</span>
+                      <span class="block text-[9px] text-slate-400">Define custom security roles and scopes
+                        checklists</span>
+                    </div>
+                  </label>
+                </div>
 
-            <!-- Role Management -->
-            <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-              <div class="max-w-[70%]">
-                <span class="block text-xs font-bold text-slate-800">Role Management</span>
-                <span class="block text-[9px] text-slate-400">Update security roles, matrices</span>
-              </div>
-              <div class="flex gap-3 select-none shrink-0">
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_role_management_view" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">View</span>
-                </label>
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_role_management_operate" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">Operate</span>
-                </label>
-              </div>
-            </div>
+                <!-- Hardware & Equipment -->
+                <div class="py-2 border-b border-slate-200/50">
+                  <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Hardware &amp;
+                    Equipment</span>
+                  <label class="flex items-start gap-2 cursor-pointer py-1">
+                    <input type="checkbox" id="feat_calibrate_machine_tooling"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
+                    <div class="ml-2">
+                      <span class="block text-xs font-semibold text-slate-800">Calibrate Tooling</span>
+                      <span class="block text-[9px] text-slate-400">Log torque calibrations, update active tooling
+                        parameters</span>
+                    </div>
+                  </label>
+                  <label class="flex items-start gap-2 cursor-pointer py-1">
+                    <input type="checkbox" id="feat_bind_plc_connections"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
+                    <div class="ml-2">
+                      <span class="block text-xs font-semibold text-slate-800">Configure PLC IP Bindings</span>
+                      <span class="block text-[9px] text-slate-400">Bind IP connections, monitor line controller
+                        outputs</span>
+                    </div>
+                  </label>
+                </div>
 
-            <!-- Skill Management -->
-            <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-              <div class="max-w-[70%]">
-                <span class="block text-xs font-bold text-slate-800">Skill Management</span>
-                <span class="block text-[9px] text-slate-400">Certified steps tracking lists</span>
-              </div>
-              <div class="flex gap-3 select-none shrink-0">
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_skill_management_view" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">View</span>
-                </label>
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_skill_management_operate" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">Operate</span>
-                </label>
-              </div>
-            </div>
+                <!-- Employee Training -->
+                <div class="pt-2">
+                  <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Employee
+                    Training</span>
+                  <label class="flex items-start gap-2 cursor-pointer py-1">
+                    <input type="checkbox" id="feat_certify_operator_training"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
+                    <div class="ml-2">
+                      <span class="block text-xs font-semibold text-slate-800">Certify Operator Skills</span>
+                      <span class="block text-[9px] text-slate-400">Update certified training levels for assembly
+                        tasks</span>
+                    </div>
+                  </label>
+                </div>
 
-            <!-- Machine Management -->
-            <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-              <div class="max-w-[70%]">
-                <span class="block text-xs font-bold text-slate-800">Machine Management</span>
-                <span class="block text-[9px] text-slate-400">Toolings network IPs, calibrations</span>
-              </div>
-              <div class="flex gap-3 select-none shrink-0">
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_machine_management_view" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">View</span>
-                </label>
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_machine_management_operate" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">Operate</span>
-                </label>
-              </div>
-            </div>
-
-            <!-- Device Management -->
-            <div class="flex items-center justify-between py-2">
-              <div class="max-w-[70%]">
-                <span class="block text-xs font-bold text-slate-800">Device Management</span>
-                <span class="block text-[9px] text-slate-400">Tablet connections sync log</span>
-              </div>
-              <div class="flex gap-3 select-none shrink-0">
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_device_management_view" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">View</span>
-                </label>
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="perm_device_management_operate" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4"/>
-                  <span class="text-xs font-semibold text-slate-600">Operate</span>
-                </label>
               </div>
             </div>
 
           </div>
-        </div>
 
-        <!-- Section 2: Granular Operations list -->
-        <div class="pt-4 border-t border-slate-100">
-          <span class="block text-xs font-bold uppercase text-slate-500 mb-2">2. Granular Operations Scopes</span>
-          <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-outline-variant/30 max-h-[300px] overflow-y-auto custom-scrollbar">
-            
-            <!-- Production Scopes -->
-            <div class="pb-2 border-b border-slate-200/50">
-              <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Production Scopes</span>
-              <label class="flex items-start gap-2 cursor-pointer py-1">
-                <input type="checkbox" id="feat_release_sap_orders" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5"/>
-                <div class="ml-2">
-                  <span class="block text-xs font-semibold text-slate-800">Release SAP Orders</span>
-                  <span class="block text-[9px] text-slate-400">Release SAP orders &amp; dispatch to line tablet terminals</span>
-                </div>
-              </label>
-              <label class="flex items-start gap-2 cursor-pointer py-1">
-                <input type="checkbox" id="feat_hold_production_run" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5"/>
-                <div class="ml-2">
-                  <span class="block text-xs font-semibold text-slate-800">Hold Production Run</span>
-                  <span class="block text-[9px] text-slate-400">Halt line execution and suspend active runs</span>
-                </div>
-              </label>
-            </div>
+          <!-- Footer Buttons (Statically positioned at absolute bottom, outside scroll area) -->
+          <div
+            class="bg-slate-50 p-4 border-t border-outline-variant/30 flex justify-end gap-3 flex-shrink-0 select-none z-20">
+            <button
+              class="px-5 h-10 rounded-lg font-semibold text-sm text-slate-600 hover:bg-slate-100 transition-colors"
+              onclick="toggleAddRoleModal(false)" type="button">Cancel</button>
+            <button
+              class="px-6 h-10 rounded-lg bg-primary text-white font-semibold text-sm shadow-sm hover:bg-primary/95 transition-all"
+              type="submit" id="roleSubmitBtnText">Save Role</button>
+          </div>
+        </form>
+      </div>
 
-            <!-- Shopfloor Execution -->
-            <div class="py-2 border-b border-slate-200/50">
-              <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Shopfloor Execution</span>
-              <label class="flex items-start gap-2 cursor-pointer py-1">
-                <input type="checkbox" id="feat_barcode_scan_lots" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5"/>
-                <div class="ml-2">
-                  <span class="block text-xs font-semibold text-slate-800">Barcode Scanning &amp; Lot Check</span>
-                  <span class="block text-[9px] text-slate-400">Verify material lot barcodes and check inputs compatibility</span>
-                </div>
-              </label>
-              <label class="flex items-start gap-2 cursor-pointer py-1">
-                <input type="checkbox" id="feat_verify_step_actions" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5"/>
-                <div class="ml-2">
-                  <span class="block text-xs font-semibold text-slate-800">Confirm Checklist Steps</span>
-                  <span class="block text-[9px] text-slate-400">Complete tablet-based control card verification checkpoints</span>
-                </div>
-              </label>
-            </div>
-
-            <!-- Quality Assurance -->
-            <div class="py-2 border-b border-slate-200/50">
-              <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Quality Assurance</span>
-              <label class="flex items-start gap-2 cursor-pointer py-1">
-                <input type="checkbox" id="feat_approve_qc_checks" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5"/>
-                <div class="ml-2">
-                  <span class="block text-xs font-semibold text-slate-800">Approve QC Gates</span>
-                  <span class="block text-[9px] text-slate-400">Certify tolerance checks and sign-off inspect approvals</span>
-                </div>
-              </label>
-              <label class="flex items-start gap-2 cursor-pointer py-1">
-                <input type="checkbox" id="feat_override_qc_tolerances" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5"/>
-                <div class="ml-2">
-                  <span class="block text-xs font-semibold text-slate-800">Override Tolerances</span>
-                  <span class="block text-[9px] text-slate-400">Force override critical alarm limits and step failures</span>
-                </div>
-              </label>
-            </div>
-
-            <!-- Data & Exports -->
-            <div class="py-2 border-b border-slate-200/50">
-              <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Data &amp; Exports</span>
-              <label class="flex items-start gap-2 cursor-pointer py-1">
-                <input type="checkbox" id="feat_export_csv_reports" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5"/>
-                <div class="ml-2">
-                  <span class="block text-xs font-semibold text-slate-800">Export Reports</span>
-                  <span class="block text-[9px] text-slate-400">Export logs to CSV/Excel</span>
-                </div>
-              </label>
-              <label class="flex items-start gap-2 cursor-pointer py-1">
-                <input type="checkbox" id="feat_purge_historical_logs" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5"/>
-                <div class="ml-2">
-                  <span class="block text-xs font-semibold text-slate-800">Purge Data Logs</span>
-                  <span class="block text-[9px] text-slate-400">Erase history data, reset audit logs (Admins only)</span>
-                </div>
-              </label>
-            </div>
-
-            <!-- Template Design -->
-            <div class="py-2 border-b border-slate-200/50">
-              <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Template Design</span>
-              <label class="flex items-start gap-2 cursor-pointer py-1">
-                <input type="checkbox" id="feat_design_flowchart_canvas" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5"/>
-                <div class="ml-2">
-                  <span class="block text-xs font-semibold text-slate-800">Design Flowchart Canvas</span>
-                  <span class="block text-[9px] text-slate-400">Draw stage charts, sequence steps, tolerances</span>
-                </div>
-              </label>
-              <label class="flex items-start gap-2 cursor-pointer py-1">
-                <input type="checkbox" id="feat_publish_template_versions" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5"/>
-                <div class="ml-2">
-                  <span class="block text-xs font-semibold text-slate-800">Publish Revisions</span>
-                  <span class="block text-[9px] text-slate-400">Release new revisions of control card kanbans</span>
-                </div>
-              </label>
-            </div>
-
-            <!-- Security & Admin -->
-            <div class="py-2 border-b border-slate-200/50">
-              <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Security &amp; Admin</span>
-              <label class="flex items-start gap-2 cursor-pointer py-1">
-                <input type="checkbox" id="feat_reset_passwords" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5"/>
-                <div class="ml-2">
-                  <span class="block text-xs font-semibold text-slate-800">Reset Credentials</span>
-                  <span class="block text-[9px] text-slate-400">Reset credentials, suspend users</span>
-                </div>
-              </label>
-              <label class="flex items-start gap-2 cursor-pointer py-1">
-                <input type="checkbox" id="feat_create_security_roles" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5"/>
-                <div class="ml-2">
-                  <span class="block text-xs font-semibold text-slate-800">Create Security Roles</span>
-                  <span class="block text-[9px] text-slate-400">Define custom security roles and scopes checklists</span>
-                </div>
-              </label>
-            </div>
-
-            <!-- Hardware & Equipment -->
-            <div class="py-2 border-b border-slate-200/50">
-              <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Hardware &amp; Equipment</span>
-              <label class="flex items-start gap-2 cursor-pointer py-1">
-                <input type="checkbox" id="feat_calibrate_machine_tooling" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5"/>
-                <div class="ml-2">
-                  <span class="block text-xs font-semibold text-slate-800">Calibrate Tooling</span>
-                  <span class="block text-[9px] text-slate-400">Log torque calibrations, update active tooling parameters</span>
-                </div>
-              </label>
-              <label class="flex items-start gap-2 cursor-pointer py-1">
-                <input type="checkbox" id="feat_bind_plc_connections" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5"/>
-                <div class="ml-2">
-                  <span class="block text-xs font-semibold text-slate-800">Configure PLC IP Bindings</span>
-                  <span class="block text-[9px] text-slate-400">Bind IP connections, monitor line controller outputs</span>
-                </div>
-              </label>
-            </div>
-
-            <!-- Employee Training -->
-            <div class="pt-2">
-              <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Employee Training</span>
-              <label class="flex items-start gap-2 cursor-pointer py-1">
-                <input type="checkbox" id="feat_certify_operator_training" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5"/>
-                <div class="ml-2">
-                  <span class="block text-xs font-semibold text-slate-800">Certify Operator Skills</span>
-                  <span class="block text-[9px] text-slate-400">Update certified training levels for assembly tasks</span>
-                </div>
-              </label>
-            </div>
-
+      <!-- Custom Delete Confirmation Modal (Centered popup) -->
+      <div id="deleteConfirmModalBackdrop"
+        class="hidden fixed inset-0 bg-black/45 backdrop-blur-sm z-[110] transition-opacity duration-300 opacity-0"
+        onclick="closeDeleteConfirmModal()"></div>
+      <div id="deleteConfirmModal"
+        class="hidden fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-white rounded-xl shadow-2xl border border-outline-variant/30 z-[120] transform scale-95 opacity-0 transition-all duration-300 p-6">
+        <div class="flex items-start gap-4">
+          <div
+            class="w-10 h-10 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center shrink-0 border border-rose-100">
+            <span class="material-symbols-outlined text-[22px]">warning</span>
+          </div>
+          <div class="space-y-1.5 flex-1">
+            <h4 class="font-headline-sm text-headline-sm text-slate-900" id="deleteConfirmTitle">Delete custom role?
+            </h4>
+            <p class="text-xs text-on-surface-variant leading-relaxed font-medium" id="deleteConfirmMessage">Are you
+              sure you want to permanently delete this custom role? This action cannot be undone and will revoke
+              privileges from any assigned users.</p>
           </div>
         </div>
-
+        <div class="mt-6 flex justify-end gap-3 pt-3 border-t border-slate-100 select-none">
+          <button class="px-4 h-9 rounded-lg font-semibold text-xs text-slate-600 hover:bg-slate-100 transition-colors"
+            onclick="closeDeleteConfirmModal()">Cancel</button>
+          <button
+            class="px-5 h-9 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs shadow-sm transition-all"
+            id="confirmDeleteBtn">Yes, Delete Role</button>
+        </div>
       </div>
-      
-      <!-- Footer Buttons (Statically positioned at absolute bottom, outside scroll area) -->
-      <div class="bg-slate-50 p-4 border-t border-outline-variant/30 flex justify-end gap-3 flex-shrink-0 select-none z-20">
-        <button class="px-5 h-10 rounded-lg font-semibold text-sm text-slate-600 hover:bg-slate-100 transition-colors" onclick="toggleAddRoleModal(false)" type="button">Cancel</button>
-        <button class="px-6 h-10 rounded-lg bg-primary text-white font-semibold text-sm shadow-sm hover:bg-primary/95 transition-all" type="submit" id="roleSubmitBtnText">Save Role</button>
+
+      <div id="roleToast"
+        class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 ease-out z-[100] border border-slate-800 text-sm">
+        <span class="material-symbols-outlined text-emerald-400">check_circle</span>
+        <span id="roleToastMessage">Changes successfully saved!</span>
       </div>
-    </form>
-  </div>
 
-  <!-- Custom Delete Confirmation Modal (Centered popup) -->
-  <div id="deleteConfirmModalBackdrop" class="hidden fixed inset-0 bg-black/45 backdrop-blur-sm z-[110] transition-opacity duration-300 opacity-0" onclick="closeDeleteConfirmModal()"></div>
-  <div id="deleteConfirmModal" class="hidden fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-white rounded-xl shadow-2xl border border-outline-variant/30 z-[120] transform scale-95 opacity-0 transition-all duration-300 p-6">
-    <div class="flex items-start gap-4">
-      <div class="w-10 h-10 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center shrink-0 border border-rose-100">
-        <span class="material-symbols-outlined text-[22px]">warning</span>
-      </div>
-      <div class="space-y-1.5 flex-1">
-        <h4 class="font-headline-sm text-headline-sm text-slate-900" id="deleteConfirmTitle">Delete custom role?</h4>
-        <p class="text-xs text-on-surface-variant leading-relaxed font-medium" id="deleteConfirmMessage">Are you sure you want to permanently delete this custom role? This action cannot be undone and will revoke privileges from any assigned users.</p>
-      </div>
-    </div>
-    <div class="mt-6 flex justify-end gap-3 pt-3 border-t border-slate-100 select-none">
-      <button class="px-4 h-9 rounded-lg font-semibold text-xs text-slate-600 hover:bg-slate-100 transition-colors" onclick="closeDeleteConfirmModal()">Cancel</button>
-      <button class="px-5 h-9 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs shadow-sm transition-all" id="confirmDeleteBtn">Yes, Delete Role</button>
-    </div>
-  </div>
+      <script>
+          (function () {
+            let rolesList = [];
+            let currentRolePage = 1;
+            const rolePageSize = 5;
+            let roleFilterQuery = '';
+            let roleSelectedClassification = 'ALL';
+            let roleToDeleteCode = null;
 
-  <div id="roleToast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 ease-out z-[100] border border-slate-800 text-sm">
-    <span class="material-symbols-outlined text-emerald-400">check_circle</span>
-    <span id="roleToastMessage">Changes successfully saved!</span>
-  </div>
+            const featureKeys = ['dashboard', 'work_orders', 'supervisor_planning', 'qc_pending_approvals', 'traceability_search', 'qc_reports', 'audit_reports', 'workflow_configuration', 'user_management', 'role_management', 'skill_management', 'machine_management', 'device_management'];
 
-  <script>
-    (function() {
-      let rolesList = [];
-      let currentRolePage = 1;
-      const rolePageSize = 5;
-      let roleFilterQuery = '';
-      let roleSelectedClassification = 'ALL';
-      let roleToDeleteCode = null;
+            const granularKeys = [
+              'release_sap_orders', 'hold_production_run',
+              'barcode_scan_lots', 'verify_step_actions',
+              'approve_qc_checks', 'override_qc_tolerances',
+              'export_csv_reports', 'purge_historical_logs',
+              'design_flowchart_canvas', 'publish_template_versions',
+              'reset_passwords', 'create_security_roles',
+              'calibrate_machine_tooling', 'bind_plc_connections',
+              'certify_operator_training'
+            ];
 
-      const featureKeys = ['dashboard', 'work_orders', 'supervisor_planning', 'qc_pending_approvals', 'traceability_search', 'qc_reports', 'audit_reports', 'workflow_configuration', 'user_management', 'role_management', 'skill_management', 'machine_management', 'device_management'];
-      
-      const granularKeys = [
-          'release_sap_orders', 'hold_production_run',
-          'barcode_scan_lots', 'verify_step_actions',
-          'approve_qc_checks', 'override_qc_tolerances',
-          'export_csv_reports', 'purge_historical_logs',
-          'design_flowchart_canvas', 'publish_template_versions',
-          'reset_passwords', 'create_security_roles',
-          'calibrate_machine_tooling', 'bind_plc_connections',
-          'certify_operator_training'
-      ];
+            const systemDefaults = ['ADMIN', 'SUPERVISOR', 'QC_MANAGER', 'PRODUCTION_LEAD', 'QC_INSPECTOR', 'LINE_INSPECTOR', 'OPERATOR'];
 
-      const systemDefaults = ['ADMIN', 'SUPERVISOR', 'QC_MANAGER', 'PRODUCTION_LEAD', 'QC_INSPECTOR', 'LINE_INSPECTOR', 'OPERATOR'];
+            // Fetch or read role configurations
+            async function fetchRoles() {
+              try {
+                const res = await fetch('./roles.json');
+                if (!res.ok) throw new Error('Could not fetch default roles database');
+                const defaultRoles = await res.json();
 
-      // Fetch or read role configurations
-      async function fetchRoles() {
-          try {
-              const localRoles = localStorage.getItem('rolesList');
-              let loadedFromLocal = false;
+                const localRoles = localStorage.getItem('rolesList');
+                let loadedFromLocal = false;
 
-              if (localRoles) {
+                if (localRoles) {
                   try {
-                      const parsed = JSON.parse(localRoles);
-                      if (parsed && parsed.length > 0 && parsed[0].permissions && typeof parsed[0].permissions.dashboard !== 'undefined') {
-                          rolesList = parsed;
-                          loadedFromLocal = true;
+                    const parsed = JSON.parse(localRoles);
+                    if (parsed && parsed.length > 0 && parsed[0].permissions && typeof parsed[0].permissions.dashboard !== 'undefined') {
+                      rolesList = parsed;
+                      
+                      let mergedCount = 0;
+                      defaultRoles.forEach(defRole => {
+                        const exists = rolesList.some(r => r.roleCode.toUpperCase() === defRole.roleCode.toUpperCase());
+                        if (!exists) {
+                          rolesList.push(defRole);
+                          mergedCount++;
+                        }
+                      });
+                      if (mergedCount > 0) {
+                        localStorage.setItem('rolesList', JSON.stringify(rolesList));
                       }
+                      loadedFromLocal = true;
+                    }
                   } catch (e) {
-                      console.warn("Outdated or corrupt local roles database structure. Re-initializing...");
+                    console.warn("Outdated or corrupt local roles database structure. Re-initializing...");
                   }
-              }
+                }
 
-              if (!loadedFromLocal) {
-                  // Fetch default json
-                  const res = await fetch('./roles.json');
-                  if (!res.ok) throw new Error('Could not fetch default roles database');
-                  rolesList = await res.json();
+                if (!loadedFromLocal) {
+                  rolesList = defaultRoles;
                   localStorage.setItem('rolesList', JSON.stringify(rolesList));
+                }
+
+                renderRoles();
+              } catch (e) {
+                console.error(e);
+                showRoleToast('Error loading system role configurations.');
               }
+            }
 
-              renderRoles();
-          } catch(e) {
-              console.error(e);
-              showRoleToast('Error loading system role configurations.');
-          }
-      }
+            // Calculations, metrics and table updates
+            function renderRoles() {
+              // stats bento counts
+              const totalCount = rolesList.length;
+              const customCount = rolesList.filter(r => !systemDefaults.includes(r.roleCode.toUpperCase())).length;
 
-      // Calculations, metrics and table updates
-      function renderRoles() {
-          // stats bento counts
-          const totalCount = rolesList.length;
-          const customCount = rolesList.filter(r => !systemDefaults.includes(r.roleCode.toUpperCase())).length;
+              document.getElementById('statTotalRoles').textContent = totalCount;
+              document.getElementById('statCustomRoles').textContent = customCount;
 
-          document.getElementById('statTotalRoles').textContent = totalCount;
-          document.getElementById('statCustomRoles').textContent = customCount;
+              // filters
+              const query = roleFilterQuery.toLowerCase().trim();
+              const filtered = rolesList.filter(r => {
+                const matchesSearch = r.roleCode.toLowerCase().includes(query) ||
+                  r.roleName.toLowerCase().includes(query) ||
+                  r.description.toLowerCase().includes(query);
 
-          // filters
-          const query = roleFilterQuery.toLowerCase().trim();
-          const filtered = rolesList.filter(r => {
-              const matchesSearch = r.roleCode.toLowerCase().includes(query) ||
-                                    r.roleName.toLowerCase().includes(query) ||
-                                    r.description.toLowerCase().includes(query);
-                                    
-              const isSystem = systemDefaults.includes(r.roleCode.toUpperCase());
-              let matchesType = true;
-              if (roleSelectedClassification === 'SYSTEM') {
+                const isSystem = systemDefaults.includes(r.roleCode.toUpperCase());
+                let matchesType = true;
+                if (roleSelectedClassification === 'SYSTEM') {
                   matchesType = isSystem;
-              } else if (roleSelectedClassification === 'CUSTOM') {
+                } else if (roleSelectedClassification === 'CUSTOM') {
                   matchesType = !isSystem;
-              }
+                }
 
-              return matchesSearch && matchesType;
-          });
+                return matchesSearch && matchesType;
+              });
 
-          // slice
-          const totalFiltered = filtered.length;
-          const totalPages = Math.ceil(totalFiltered / rolePageSize) || 1;
+              // slice
+              const totalFiltered = filtered.length;
+              const totalPages = Math.ceil(totalFiltered / rolePageSize) || 1;
 
-          if (currentRolePage > totalPages) currentRolePage = totalPages;
-          if (currentRolePage < 1) currentRolePage = 1;
+              if (currentRolePage > totalPages) currentRolePage = totalPages;
+              if (currentRolePage < 1) currentRolePage = 1;
 
-          const startIdx = (currentRolePage - 1) * rolePageSize;
-          const endIdx = Math.min(startIdx + rolePageSize, totalFiltered);
-          const paginated = filtered.slice(startIdx, endIdx);
+              const startIdx = (currentRolePage - 1) * rolePageSize;
+              const endIdx = Math.min(startIdx + rolePageSize, totalFiltered);
+              const paginated = filtered.slice(startIdx, endIdx);
 
-          // Update ranges
-          const rangeInfo = totalFiltered > 0
-              ? `Showing ${startIdx + 1} to ${endIdx} of ${totalFiltered} entries`
-              : 'Showing 0 to 0 of 0 entries';
-          document.getElementById('rolePaginationInfo').textContent = rangeInfo;
+              // Update ranges
+              const rangeInfo = totalFiltered > 0
+                ? `Showing ${startIdx + 1} to ${endIdx} of ${totalFiltered} entries`
+                : 'Showing 0 to 0 of 0 entries';
+              document.getElementById('rolePaginationInfo').textContent = rangeInfo;
 
-          renderRolePageNumbers(totalPages);
-          renderRoleTableRows(paginated);
-      }
+              renderRolePageNumbers(totalPages);
+              renderRoleTableRows(paginated);
+            }
 
-      function renderRoleTableRows(items) {
-          const tbody = document.getElementById('roleTableBody');
-          tbody.innerHTML = '';
+            function renderRoleTableRows(items) {
+              const tbody = document.getElementById('roleTableBody');
+              tbody.innerHTML = '';
 
-          if (items.length === 0) {
-              tbody.innerHTML = `
+              if (items.length === 0) {
+                tbody.innerHTML = `
                   <tr>
                       <td colspan="6" class="px-6 py-12 text-center text-on-surface-variant font-medium">
                           No role definitions matched search filters.
                       </td>
                   </tr>
               `;
-              return;
-          }
+                return;
+              }
 
-          items.forEach(r => {
-              const tr = document.createElement('tr');
-              tr.className = 'hover:bg-slate-50/50 transition-colors group';
+              items.forEach(r => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50/50 transition-colors group';
 
-              // badge style
-              let badgeColor = 'bg-slate-50 text-slate-700 border-slate-200';
-              if (r.roleCode === 'ADMIN') badgeColor = 'bg-emerald-50 text-emerald-700 border-emerald-200';
-              else if (r.roleCode === 'SUPERVISOR') badgeColor = 'bg-blue-50 text-blue-700 border-blue-200';
-              else if (r.roleCode.includes('QC')) badgeColor = 'bg-purple-50 text-purple-700 border-purple-200';
-              else if (r.roleCode.includes('LEAD')) badgeColor = 'bg-indigo-50 text-indigo-700 border-indigo-200';
-              else if (r.roleCode === 'OPERATOR') badgeColor = 'bg-amber-50 text-amber-700 border-amber-200';
+                // badge style
+                let badgeColor = 'bg-slate-50 text-slate-700 border-slate-200';
+                if (r.roleCode === 'ADMIN') badgeColor = 'bg-emerald-50 text-emerald-700 border-emerald-200';
+                else if (r.roleCode === 'SUPERVISOR') badgeColor = 'bg-blue-50 text-blue-700 border-blue-200';
+                else if (r.roleCode.includes('QC')) badgeColor = 'bg-purple-50 text-purple-700 border-purple-200';
+                else if (r.roleCode.includes('LEAD')) badgeColor = 'bg-indigo-50 text-indigo-700 border-indigo-200';
+                else if (r.roleCode === 'OPERATOR') badgeColor = 'bg-amber-50 text-amber-700 border-amber-200';
 
-              const isSystem = systemDefaults.includes(r.roleCode.toUpperCase());
+                const isSystem = systemDefaults.includes(r.roleCode.toUpperCase());
 
-              // classification badge
-              const classBadge = isSystem
+                // classification badge
+                const classBadge = isSystem
                   ? `<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold bg-slate-100 text-slate-500 border border-slate-200"><span class="w-1.5 h-1.5 rounded-full bg-slate-400 mr-1.5"></span>System</span>`
                   : `<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200"><span class="w-1.5 h-1.5 rounded-full bg-indigo-500 mr-1.5"></span>Custom</span>`;
 
-              // Render action controls: Lock indicator instead of delete for system defaults
-              const actionControls = isSystem 
+                // Render action controls: Lock indicator instead of delete for system defaults
+                const actionControls = isSystem
                   ? `<button class="w-8 h-8 rounded-lg border border-slate-200 bg-slate-50 flex items-center justify-center text-slate-400 cursor-not-allowed" title="System default role is protected" disabled>
                          <span class="material-symbols-outlined text-[16px]">lock</span>
                      </button>`
@@ -892,10 +1077,7 @@
                          <span class="material-symbols-outlined text-[16px]">delete</span>
                      </button>`;
 
-              tr.innerHTML = `
-                  <td class="px-6 py-4 font-bold text-slate-900 font-data-tabular text-data-tabular">
-                      <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold border ${badgeColor}">${r.roleCode}</span>
-                  </td>
+                tr.innerHTML = `
                   <td class="px-6 py-4 font-semibold text-slate-900">${r.roleName}</td>
                   <td class="px-6 py-4">${classBadge}</td>
                   <td class="px-6 py-4 text-xs text-on-surface-variant font-medium max-w-xs truncate" title="${r.description}">${r.description}</td>
@@ -912,135 +1094,135 @@
                       </div>
                   </td>
               `;
-              tbody.appendChild(tr);
-          });
-      }
+                tbody.appendChild(tr);
+              });
+            }
 
-      function renderRolePageNumbers(totalPages) {
-          const wrapper = document.getElementById('rolePageNumbers');
-          wrapper.innerHTML = '';
+            function renderRolePageNumbers(totalPages) {
+              const wrapper = document.getElementById('rolePageNumbers');
+              wrapper.innerHTML = '';
 
-          document.getElementById('rolePrevPageBtn').disabled = currentRolePage === 1;
-          document.getElementById('roleNextPageBtn').disabled = currentRolePage === totalPages;
+              document.getElementById('rolePrevPageBtn').disabled = currentRolePage === 1;
+              document.getElementById('roleNextPageBtn').disabled = currentRolePage === totalPages;
 
-          for (let i = 1; i <= totalPages; i++) {
-              const btn = document.createElement('button');
-              btn.className = i === currentRolePage
+              for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.className = i === currentRolePage
                   ? 'px-3 py-1 bg-primary text-white border border-primary rounded-lg text-xs font-bold transition-all shadow-sm'
                   : 'px-3 py-1 border border-outline-variant/30 bg-white hover:bg-slate-50 rounded-lg text-xs transition-colors cursor-pointer';
-              btn.textContent = i;
-              btn.onclick = () => {
+                btn.textContent = i;
+                btn.onclick = () => {
                   currentRolePage = i;
                   renderRoles();
-              };
-              wrapper.appendChild(btn);
-          }
-      }
+                };
+                wrapper.appendChild(btn);
+              }
+            }
 
-      function changeRolePage(dir) {
-          currentRolePage += dir;
-          renderRoles();
-      }
+            function changeRolePage(dir) {
+              currentRolePage += dir;
+              renderRoles();
+            }
 
-      // Live searches
-      function handleRoleSearch() {
-          roleFilterQuery = document.getElementById('roleSearchInput').value;
-          currentRolePage = 1;
-          renderRoles();
-      }
+            // Live searches
+            function handleRoleSearch() {
+              roleFilterQuery = document.getElementById('roleSearchInput').value;
+              currentRolePage = 1;
+              renderRoles();
+            }
 
-      function handleRoleTypeFilterChange() {
-          roleSelectedClassification = document.getElementById('roleTypeFilter').value;
-          currentRolePage = 1;
-          renderRoles();
-      }
+            function handleRoleTypeFilterChange() {
+              roleSelectedClassification = document.getElementById('roleTypeFilter').value;
+              currentRolePage = 1;
+              renderRoles();
+            }
 
-      // Slide-over Drawer animation controls (from Right side, using translate-x-full classes)
-      function toggleAddRoleModal(isOpen) {
-          const backdrop = document.getElementById('addRoleModalBackdrop');
-          const drawer = document.getElementById('addRoleModal');
-          if (isOpen) {
-              backdrop.classList.remove('hidden');
-              setTimeout(() => {
+            // Slide-over Drawer animation controls (from Right side, using translate-x-full classes)
+            function toggleAddRoleModal(isOpen) {
+              const backdrop = document.getElementById('addRoleModalBackdrop');
+              const drawer = document.getElementById('addRoleModal');
+              if (isOpen) {
+                backdrop.classList.remove('hidden');
+                setTimeout(() => {
                   backdrop.classList.add('opacity-100');
                   drawer.classList.remove('translate-x-full');
-              }, 50);
-          } else {
-              backdrop.classList.remove('opacity-100');
-              drawer.classList.add('translate-x-full');
-              setTimeout(() => {
+                }, 50);
+              } else {
+                backdrop.classList.remove('opacity-100');
+                drawer.classList.add('translate-x-full');
+                setTimeout(() => {
                   backdrop.classList.add('hidden');
-              }, 300);
-          }
-      }
+                }, 300);
+              }
+            }
 
-      function toggleViewRoleModal(isOpen) {
-          const backdrop = document.getElementById('viewRoleModalBackdrop');
-          const drawer = document.getElementById('viewRoleModal');
-          if (isOpen) {
-              backdrop.classList.remove('hidden');
-              setTimeout(() => {
+            function toggleViewRoleModal(isOpen) {
+              const backdrop = document.getElementById('viewRoleModalBackdrop');
+              const drawer = document.getElementById('viewRoleModal');
+              if (isOpen) {
+                backdrop.classList.remove('hidden');
+                setTimeout(() => {
                   backdrop.classList.add('opacity-100');
                   drawer.classList.remove('translate-x-full');
-              }, 50);
-          } else {
-              backdrop.classList.remove('opacity-100');
-              drawer.classList.add('translate-x-full');
-              setTimeout(() => {
+                }, 50);
+              } else {
+                backdrop.classList.remove('opacity-100');
+                drawer.classList.add('translate-x-full');
+                setTimeout(() => {
                   backdrop.classList.add('hidden');
-              }, 300);
-          }
-      }
+                }, 300);
+              }
+            }
 
-      function openViewRoleDrawer(roleCode) {
-          const r = rolesList.find(x => x.roleCode.toUpperCase() === roleCode.toUpperCase());
-          if (!r) return;
+            function openViewRoleDrawer(roleCode) {
+              const r = rolesList.find(x => x.roleCode.toUpperCase() === roleCode.toUpperCase());
+              if (!r) return;
 
-          // initials
-          const initials = r.roleName.substring(0, 2).toUpperCase();
-          document.getElementById('viewRoleAvatar').textContent = initials;
-          document.getElementById('viewRoleName').textContent = r.roleName;
-          document.getElementById('viewRoleCodeBadge').textContent = r.roleCode;
-          document.getElementById('viewRoleDescription').textContent = r.description;
+              // initials
+              const initials = r.roleName.substring(0, 2).toUpperCase();
+              document.getElementById('viewRoleAvatar').textContent = initials;
+              document.getElementById('viewRoleName').textContent = r.roleName;
+              document.getElementById('viewRoleCodeBadge').textContent = r.roleCode;
+              document.getElementById('viewRoleDescription').textContent = r.description;
 
-          // 1. Screen Navigation list
-          const screensContainer = document.getElementById('viewRoleScreensList');
-          screensContainer.innerHTML = '';
-          const screens = [
-              { key: 'dashboard', name: 'Dashboard', desc: 'System dashboard graphs and shift stats' },
-              { key: 'work_orders', name: 'Work Orders', desc: 'Main production work orders database' },
-              { key: 'supervisor_planning', name: 'Supervisor Planning', desc: 'Shift allocation and line loading' },
-              { key: 'qc_pending_approvals', name: 'QC Pending Approvals', desc: 'Quality inspection validations queue' },
-              { key: 'traceability_search', name: 'Traceability Search', desc: 'Batch traceability timeline checks' },
-              { key: 'qc_reports', name: 'QC Reports', desc: 'Shift reports and measurements exports' },
-              { key: 'audit_reports', name: 'Audit Reports', desc: 'System event log auditing reports' },
-              { key: 'workflow_configuration', name: 'Workflow Configuration', desc: 'Canvas editor, stage sequence planner' },
-              { key: 'user_management', name: 'User Management', desc: 'Personnel directory and access configurations' },
-              { key: 'role_management', name: 'Role Management', desc: 'System role permissions and checklists' },
-              { key: 'skill_management', name: 'Skill Management', desc: 'Employee certification levels logs' },
-              { key: 'machine_management', name: 'Machine Management', desc: 'Calibrators tracking and IP networking controls' },
-              { key: 'device_management', name: 'Device Management', desc: 'Active tablet terminal connection log' }
-          ];
+              // 1. Screen Navigation list
+              const screensContainer = document.getElementById('viewRoleScreensList');
+              screensContainer.innerHTML = '';
+              const screens = [
+                { key: 'dashboard', name: 'Dashboard', desc: 'System dashboard graphs and shift stats' },
+                { key: 'work_orders', name: 'Work Orders', desc: 'Main production work orders database' },
+                { key: 'supervisor_planning', name: 'Supervisor Planning', desc: 'Shift allocation and line loading' },
+                { key: 'qc_pending_approvals', name: 'QC Pending Approvals', desc: 'Quality inspection validations queue' },
+                { key: 'traceability_search', name: 'Traceability Search', desc: 'Batch traceability timeline checks' },
+                { key: 'qc_reports', name: 'QC Reports', desc: 'Shift reports and measurements exports' },
+                { key: 'audit_reports', name: 'Audit Reports', desc: 'System event log auditing reports' },
+                { key: 'workflow_configuration', name: 'Workflow Configuration', desc: 'Canvas editor, stage sequence planner' },
+                { key: 'user_management', name: 'User Management', desc: 'Personnel directory and access configurations' },
+                { key: 'role_management', name: 'Role Management', desc: 'System role permissions and checklists' },
+                { key: 'skill_management', name: 'Skill Management', desc: 'Employee certification levels logs' },
+                { key: 'machine_management', name: 'Machine Management', desc: 'Calibrators tracking and IP networking controls' },
+                { key: 'device_management', name: 'Device Management', desc: 'Active tablet terminal connection log' }
+              ];
 
-          const perms = r.permissions || {};
-          screens.forEach(s => {
-              const userPerms = perms[s.key] || [];
-              const hasView = userPerms.includes('view');
-              const hasOperate = userPerms.includes('operate');
+              const perms = r.permissions || {};
+              screens.forEach(s => {
+                const userPerms = perms[s.key] || [];
+                const hasView = userPerms.includes('view');
+                const hasOperate = userPerms.includes('operate');
 
-              const row = document.createElement('div');
-              row.className = 'flex items-center justify-between p-2.5 rounded-lg border text-xs transition-colors ' + 
+                const row = document.createElement('div');
+                row.className = 'flex items-center justify-between p-2.5 rounded-lg border text-xs transition-colors ' +
                   (hasView || hasOperate ? 'bg-white border-slate-200 hover:border-slate-300' : 'bg-slate-50/70 border-slate-100 opacity-60');
-              
-              const viewBadge = hasView 
+
+                const viewBadge = hasView
                   ? `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-[9px] uppercase"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>View</span>`
                   : `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-slate-100 text-slate-400 border border-slate-200 font-bold text-[9px] uppercase">No View</span>`;
 
-              const operateBadge = hasOperate
+                const operateBadge = hasOperate
                   ? `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-[9px] uppercase"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>Operate</span>`
                   : `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-slate-100 text-slate-400 border border-slate-200 font-bold text-[9px] uppercase">No Operate</span>`;
 
-              row.innerHTML = `
+                row.innerHTML = `
                   <div class="space-y-0.5 max-w-[60%]">
                       <span class="font-bold text-slate-800">${s.name}</span>
                       <p class="text-[9px] text-slate-400 font-medium truncate">${s.desc}</p>
@@ -1050,273 +1232,296 @@
                       ${operateBadge}
                   </div>
               `;
-              screensContainer.appendChild(row);
-          });
+                screensContainer.appendChild(row);
+              });
 
-          // 2. Granular Capabilities
-          const featuresContainer = document.getElementById('viewRoleFeaturesList');
-          featuresContainer.innerHTML = '';
+              // 2. Granular Capabilities
+              const featuresContainer = document.getElementById('viewRoleFeaturesList');
+              featuresContainer.innerHTML = '';
 
-          const granularLabels = {
-              'release_sap_orders': { name: 'Release SAP Orders', desc: 'Release SAP orders & dispatch to line tablet terminals' },
-              'hold_production_run': { name: 'Hold Production Run', desc: 'Halt line execution and set active card runs to suspended status' },
-              'barcode_scan_lots': { name: 'Barcode Scanning & Lot Check', desc: 'Verify material lot barcodes and check inputs compatibility' },
-              'verify_step_actions': { name: 'Confirm Checklist Steps', desc: 'Complete tablet-based control card verification checkpoints' },
-              'approve_qc_checks': { name: 'Approve QC Gates', desc: 'Certify tolerance checks and sign-off inspect approvals' },
-              'override_qc_tolerances': { name: 'Override Tolerances', desc: 'Force override critical alarm limits and step failures' },
-              'export_csv_reports': { name: 'Export Reports', desc: 'Export shift reports, traceability databases, logs to CSV/Excel' },
-              'purge_historical_logs': { name: 'Purge Data Logs', desc: 'Erase history data, reset audit logs (Admins only)' },
-              'design_flowchart_canvas': { name: 'Design Flowchart Canvas', desc: 'Draw stage charts, sequence steps, limits tolerances' },
-              'publish_template_versions': { name: 'Publish Revisions', desc: 'Release new revisions of control card kanbans' },
-              'reset_passwords': { name: 'Reset Credentials', desc: 'Reset credentials, toggle user suspension state' },
-              'create_security_roles': { name: 'Create Security Roles', desc: 'Define custom security roles, update screens access matrix' },
-              'calibrate_machine_tooling': { name: 'Calibrate Tooling', desc: 'Log torque calibrations, update active tooling parameters' },
-              'bind_plc_connections': { name: 'Configure PLC IP Bindings', desc: 'Bind IP connections, monitor line controller outputs' },
-              'certify_operator_training': { name: 'Certify Operator Skills', desc: 'Update certified training levels for assembly tasks' }
-          };
+              const granularLabels = {
+                'release_sap_orders': { name: 'Release SAP Orders', desc: 'Release SAP orders & dispatch to line tablet terminals' },
+                'hold_production_run': { name: 'Hold Production Run', desc: 'Halt line execution and set active card runs to suspended status' },
+                'barcode_scan_lots': { name: 'Barcode Scanning & Lot Check', desc: 'Verify material lot barcodes and check inputs compatibility' },
+                'verify_step_actions': { name: 'Confirm Checklist Steps', desc: 'Complete tablet-based control card verification checkpoints' },
+                'approve_qc_checks': { name: 'Approve QC Gates', desc: 'Certify tolerance checks and sign-off inspect approvals' },
+                'override_qc_tolerances': { name: 'Override Tolerances', desc: 'Force override critical alarm limits and step failures' },
+                'export_csv_reports': { name: 'Export Reports', desc: 'Export shift reports, traceability databases, logs to CSV/Excel' },
+                'purge_historical_logs': { name: 'Purge Data Logs', desc: 'Erase history data, reset audit logs (Admins only)' },
+                'design_flowchart_canvas': { name: 'Design Flowchart Canvas', desc: 'Draw stage charts, sequence steps, limits tolerances' },
+                'publish_template_versions': { name: 'Publish Revisions', desc: 'Release new revisions of control card kanbans' },
+                'reset_passwords': { name: 'Reset Credentials', desc: 'Reset credentials, toggle user suspension state' },
+                'create_security_roles': { name: 'Create Security Roles', desc: 'Define custom security roles, update screens access matrix' },
+                'calibrate_machine_tooling': { name: 'Calibrate Tooling', desc: 'Log torque calibrations, update active tooling parameters' },
+                'bind_plc_connections': { name: 'Configure PLC IP Bindings', desc: 'Bind IP connections, monitor line controller outputs' },
+                'certify_operator_training': { name: 'Certify Operator Skills', desc: 'Update certified training levels for assembly tasks' }
+              };
 
-          const activeFeatures = r.features || [];
+              const activeFeatures = r.features || [];
 
-          granularKeys.forEach(key => {
-              const labelInfo = granularLabels[key];
-              const isActive = activeFeatures.includes(key);
+              granularKeys.forEach(key => {
+                const labelInfo = granularLabels[key];
+                const isActive = activeFeatures.includes(key);
 
-              const row = document.createElement('div');
-              row.className = 'flex items-center justify-between p-2 rounded-lg border text-xs transition-colors ' + 
+                const row = document.createElement('div');
+                row.className = 'flex items-center justify-between p-2 rounded-lg border text-xs transition-colors ' +
                   (isActive ? 'bg-white border-slate-200 hover:border-slate-300' : 'bg-slate-50/70 border-slate-100 opacity-60');
 
-              const statusBadge = isActive
+                const statusBadge = isActive
                   ? `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-[9px] uppercase"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>Active</span>`
                   : `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-slate-100 text-slate-400 border border-slate-200 font-bold text-[9px] uppercase">Disabled</span>`;
 
-              row.innerHTML = `
+                row.innerHTML = `
                   <div class="space-y-0.5 max-w-[70%]">
                       <span class="font-bold text-slate-800">${labelInfo.name}</span>
                       <p class="text-[9px] text-slate-400 font-medium truncate">${labelInfo.desc}</p>
                   </div>
                   ${statusBadge}
               `;
-              featuresContainer.appendChild(row);
-          });
+                featuresContainer.appendChild(row);
+              });
 
-          toggleViewRoleModal(true);
-      }
+              toggleViewRoleModal(true);
+            }
 
-      function openAddRoleDrawer() {
-          document.getElementById('roleDrawerTitle').textContent = 'Create Custom Role';
-          document.getElementById('roleSubmitBtnText').textContent = 'Save Role';
-          
-          const codeInput = document.getElementById('drawerRoleCode');
-          codeInput.value = '';
-          codeInput.readOnly = false;
-          codeInput.classList.remove('bg-slate-50', 'text-slate-500');
+            function openAddRoleDrawer() {
+              document.getElementById('roleDrawerTitle').textContent = 'Create Custom Role';
+              document.getElementById('roleSubmitBtnText').textContent = 'Save Role';
 
-          const nameInput = document.getElementById('drawerRoleName');
-          nameInput.value = '';
-          nameInput.readOnly = false;
-          nameInput.classList.remove('bg-slate-50', 'text-slate-500');
+              const codeInput = document.getElementById('drawerRoleCode');
+              codeInput.value = '';
+              codeInput.readOnly = false;
+              codeInput.classList.remove('bg-slate-50', 'text-slate-500');
 
-          const descInput = document.getElementById('drawerRoleDescription');
-          descInput.value = '';
-          descInput.readOnly = false;
-          descInput.classList.remove('bg-slate-50', 'text-slate-500');
-
-          const typeSelect = document.getElementById('drawerRoleType');
-          typeSelect.value = 'CUSTOM';
-
-          // Reset checkboxes for screens
-          featureKeys.forEach(key => {
-              document.getElementById(`perm_${key}_view`).checked = false;
-              document.getElementById(`perm_${key}_operate`).checked = false;
-          });
-
-          // Reset checkboxes for granular features
-          granularKeys.forEach(key => {
-              document.getElementById(`feat_${key}`).checked = false;
-          });
-
-          toggleAddRoleModal(true);
-      }
-
-      function openEditRoleDrawer(roleCode) {
-          const r = rolesList.find(x => x.roleCode.toUpperCase() === roleCode.toUpperCase());
-          if (!r) return;
-
-          const isSystem = systemDefaults.includes(r.roleCode.toUpperCase());
-
-          document.getElementById('roleDrawerTitle').textContent = 'Edit Access Privileges';
-          document.getElementById('roleSubmitBtnText').textContent = 'Save Changes';
-
-          const codeInput = document.getElementById('drawerRoleCode');
-          codeInput.value = r.roleCode;
-          codeInput.readOnly = true;
-          codeInput.classList.add('bg-slate-50', 'text-slate-500');
-
-          const nameInput = document.getElementById('drawerRoleName');
-          nameInput.value = r.roleName;
-          if (isSystem) {
-              nameInput.readOnly = true;
-              nameInput.classList.add('bg-slate-50', 'text-slate-500');
-          } else {
+              const nameInput = document.getElementById('drawerRoleName');
+              nameInput.value = '';
               nameInput.readOnly = false;
               nameInput.classList.remove('bg-slate-50', 'text-slate-500');
-          }
 
-          const descInput = document.getElementById('drawerRoleDescription');
-          descInput.value = r.description;
-          if (isSystem) {
-              descInput.readOnly = true;
-              descInput.classList.add('bg-slate-50', 'text-slate-500');
-          } else {
+              const descInput = document.getElementById('drawerRoleDescription');
+              descInput.value = '';
               descInput.readOnly = false;
               descInput.classList.remove('bg-slate-50', 'text-slate-500');
-          }
 
-          const typeSelect = document.getElementById('drawerRoleType');
-          typeSelect.value = isSystem ? 'SYSTEM' : 'CUSTOM';
+              const typeSelect = document.getElementById('drawerRoleType');
+              typeSelect.value = 'CUSTOM';
 
-          // Check boxes setup for screens
-          const perms = r.permissions || {};
-          featureKeys.forEach(key => {
-              const userPerms = perms[key] || [];
-              document.getElementById(`perm_${key}_view`).checked = userPerms.includes('view');
-              document.getElementById(`perm_${key}_operate`).checked = userPerms.includes('operate');
-          });
+              // Reset checkboxes for screens
+              featureKeys.forEach(key => {
+                document.getElementById(`perm_${key}_view`).checked = false;
+                document.getElementById(`perm_${key}_operate`).checked = false;
+              });
 
-          // Check boxes setup for granular features
-          const activeFeatures = r.features || [];
-          granularKeys.forEach(key => {
-              document.getElementById(`feat_${key}`).checked = activeFeatures.includes(key);
-          });
+              // Reset checkboxes for granular features
+              granularKeys.forEach(key => {
+                document.getElementById(`feat_${key}`).checked = false;
+              });
 
-          toggleAddRoleModal(true);
-      }
+              toggleAddRoleModal(true);
+            }
 
-      // Save custom role details (Add / Edit)
-      function saveRole(e) {
-          e.preventDefault();
-          const roleCode = document.getElementById('drawerRoleCode').value.toUpperCase().replace(/\s+/g, '_');
-          const roleName = document.getElementById('drawerRoleName').value;
-          const description = document.getElementById('drawerRoleDescription').value;
+            function openEditRoleDrawer(roleCode) {
+              const r = rolesList.find(x => x.roleCode.toUpperCase() === roleCode.toUpperCase());
+              if (!r) return;
 
-          // Retrieve screens permissions checked
-          const permissions = {};
-          featureKeys.forEach(key => {
-              const viewChecked = document.getElementById(`perm_${key}_view`).checked;
-              const operateChecked = document.getElementById(`perm_${key}_operate`).checked;
-              
-              const actions = [];
-              if (viewChecked) actions.push('view');
-              if (operateChecked) actions.push('operate');
-              permissions[key] = actions;
-          });
+              const isSystem = systemDefaults.includes(r.roleCode.toUpperCase());
 
-          // Retrieve active features checked
-          const features = [];
-          granularKeys.forEach(key => {
-              const checked = document.getElementById(`feat_${key}`).checked;
-              if (checked) features.push(key);
-          });
+              document.getElementById('roleDrawerTitle').textContent = 'Edit Access Privileges';
+              document.getElementById('roleSubmitBtnText').textContent = 'Save Changes';
 
-          const existingIdx = rolesList.findIndex(r => r.roleCode.toUpperCase() === roleCode.toUpperCase());
+              const codeInput = document.getElementById('drawerRoleCode');
+              codeInput.value = r.roleCode;
+              codeInput.readOnly = true;
+              codeInput.classList.add('bg-slate-50', 'text-slate-500');
 
-          if (existingIdx > -1) {
-              // Edit existing
-              const assignedCount = rolesList[existingIdx].assignedCount || 0;
-              rolesList[existingIdx] = { roleCode, roleName, description, assignedCount, permissions, features };
-              showRoleToast(`Privileges for ${roleName} updated successfully.`);
-          } else {
-              // Register new
-              rolesList.unshift({ roleCode, roleName, description, assignedCount: 0, permissions, features });
-              showRoleToast(`Custom security role ${roleName} created successfully.`);
-          }
+              const nameInput = document.getElementById('drawerRoleName');
+              nameInput.value = r.roleName;
+              if (isSystem) {
+                nameInput.readOnly = true;
+                nameInput.classList.add('bg-slate-50', 'text-slate-500');
+              } else {
+                nameInput.readOnly = false;
+                nameInput.classList.remove('bg-slate-50', 'text-slate-500');
+              }
 
-          localStorage.setItem('rolesList', JSON.stringify(rolesList));
-          toggleAddRoleModal(false);
-          renderRoles();
-      }
+              const descInput = document.getElementById('drawerRoleDescription');
+              descInput.value = r.description;
+              if (isSystem) {
+                descInput.readOnly = true;
+                descInput.classList.add('bg-slate-50', 'text-slate-500');
+              } else {
+                descInput.readOnly = false;
+                descInput.classList.remove('bg-slate-50', 'text-slate-500');
+              }
 
-      // Trigger custom warning modal for role deletions
-      function deleteRole(roleCode) {
-          const r = rolesList.find(x => x.roleCode.toUpperCase() === roleCode.toUpperCase());
-          if (!r) return;
+              const typeSelect = document.getElementById('drawerRoleType');
+              typeSelect.value = isSystem ? 'SYSTEM' : 'CUSTOM';
 
-          roleToDeleteCode = roleCode;
-          document.getElementById('deleteConfirmTitle').textContent = `Delete Role: ${r.roleName}?`;
-          document.getElementById('deleteConfirmMessage').innerHTML = `Are you sure you want to permanently delete the custom role <strong class="text-slate-900">${r.roleCode}</strong>? This action cannot be undone and will revoke permissions from any assigned users.`;
+              // Check boxes setup for screens
+              const perms = r.permissions || {};
+              featureKeys.forEach(key => {
+                const userPerms = perms[key] || [];
+                document.getElementById(`perm_${key}_view`).checked = userPerms.includes('view');
+                document.getElementById(`perm_${key}_operate`).checked = userPerms.includes('operate');
+              });
 
-          // Bind trigger callback to click
-          document.getElementById('confirmDeleteBtn').onclick = () => executeDeleteRole();
+              // Check boxes setup for granular features
+              const activeFeatures = r.features || [];
+              granularKeys.forEach(key => {
+                document.getElementById(`feat_${key}`).checked = activeFeatures.includes(key);
+              });
 
-          toggleDeleteConfirmModal(true);
-      }
+              toggleAddRoleModal(true);
+            }
 
-      function executeDeleteRole() {
-          if (!roleToDeleteCode) return;
-          const idx = rolesList.findIndex(r => r.roleCode.toUpperCase() === roleToDeleteCode.toUpperCase());
-          if (idx > -1) {
-              const roleName = rolesList[idx].roleName;
-              rolesList.splice(idx, 1);
+            // Save custom role details (Add / Edit)
+            function saveRole(e) {
+              e.preventDefault();
+              const roleName = document.getElementById('drawerRoleName').value.trim();
+              const description = document.getElementById('drawerRoleDescription').value.trim();
+              let roleCode = document.getElementById('drawerRoleCode').value.toUpperCase().replace(/\s+/g, '_').trim();
+              if (!roleCode) {
+                roleCode = roleName.toUpperCase().replace(/[^A-Z0-9]/g, '_').replace(/_+/g, '_');
+              }
+
+              // Retrieve screens permissions checked
+              const permissions = {};
+              featureKeys.forEach(key => {
+                const viewChecked = document.getElementById(`perm_${key}_view`).checked;
+                const operateChecked = document.getElementById(`perm_${key}_operate`).checked;
+
+                const actions = [];
+                if (viewChecked) actions.push('view');
+                if (operateChecked) actions.push('operate');
+                permissions[key] = actions;
+              });
+
+              // Retrieve active features checked
+              const features = [];
+              granularKeys.forEach(key => {
+                const checked = document.getElementById(`feat_${key}`).checked;
+                if (checked) features.push(key);
+              });
+
+              const existingIdx = rolesList.findIndex(r => r.roleCode.toUpperCase() === roleCode.toUpperCase());
+
+              if (existingIdx > -1) {
+                // Edit existing
+                const assignedCount = rolesList[existingIdx].assignedCount || 0;
+                rolesList[existingIdx] = { roleCode, roleName, description, assignedCount, permissions, features };
+                showRoleToast(`Privileges for ${roleName} updated successfully.`);
+              } else {
+                // Register new
+                rolesList.unshift({ roleCode, roleName, description, assignedCount: 0, permissions, features });
+                showRoleToast(`Custom security role ${roleName} created successfully.`);
+              }
+
               localStorage.setItem('rolesList', JSON.stringify(rolesList));
-              showRoleToast(`Role definition ${roleName} has been deleted.`);
+              toggleAddRoleModal(false);
               renderRoles();
-          }
-          toggleDeleteConfirmModal(false);
-      }
+            }
 
-      function toggleDeleteConfirmModal(isOpen) {
-          const backdrop = document.getElementById('deleteConfirmModalBackdrop');
-          const modal = document.getElementById('deleteConfirmModal');
-          if (isOpen) {
-              backdrop.classList.remove('hidden');
-              modal.classList.remove('hidden');
-              setTimeout(() => {
+            // Trigger custom warning modal for role deletions
+            function deleteRole(roleCode) {
+              const r = rolesList.find(x => x.roleCode.toUpperCase() === roleCode.toUpperCase());
+              if (!r) return;
+
+              roleToDeleteCode = roleCode;
+              document.getElementById('deleteConfirmTitle').textContent = `Delete Role: ${r.roleName}?`;
+              document.getElementById('deleteConfirmMessage').innerHTML = `Are you sure you want to permanently delete the custom role <strong class="text-slate-900">${r.roleCode}</strong>? This action cannot be undone and will revoke permissions from any assigned users.`;
+
+              // Bind trigger callback to click
+              document.getElementById('confirmDeleteBtn').onclick = () => executeDeleteRole();
+
+              toggleDeleteConfirmModal(true);
+            }
+
+            function executeDeleteRole() {
+              if (!roleToDeleteCode) return;
+              const idx = rolesList.findIndex(r => r.roleCode.toUpperCase() === roleToDeleteCode.toUpperCase());
+              if (idx > -1) {
+                const roleName = rolesList[idx].roleName;
+                rolesList.splice(idx, 1);
+                localStorage.setItem('rolesList', JSON.stringify(rolesList));
+                showRoleToast(`Role definition ${roleName} has been deleted.`);
+                renderRoles();
+              }
+              toggleDeleteConfirmModal(false);
+            }
+
+            function toggleDeleteConfirmModal(isOpen) {
+              const backdrop = document.getElementById('deleteConfirmModalBackdrop');
+              const modal = document.getElementById('deleteConfirmModal');
+              if (isOpen) {
+                backdrop.classList.remove('hidden');
+                modal.classList.remove('hidden');
+                setTimeout(() => {
                   backdrop.classList.add('opacity-100');
                   modal.classList.remove('scale-95', 'opacity-0');
                   modal.classList.add('scale-100', 'opacity-100');
-              }, 50);
-          } else {
-              backdrop.classList.remove('opacity-100');
-              modal.classList.remove('scale-100', 'opacity-100');
-              modal.classList.add('scale-95', 'opacity-0');
-              setTimeout(() => {
+                }, 50);
+              } else {
+                backdrop.classList.remove('opacity-100');
+                modal.classList.remove('scale-100', 'opacity-100');
+                modal.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
                   backdrop.classList.add('hidden');
                   modal.classList.add('hidden');
-              }, 300);
-              roleToDeleteCode = null;
-          }
-      }
+                }, 300);
+                roleToDeleteCode = null;
+              }
+            }
 
-      function closeDeleteConfirmModal() {
-          toggleDeleteConfirmModal(false);
-      }
-
-      // Modal key listeners
-      window.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape') {
-              toggleAddRoleModal(false);
-              toggleViewRoleModal(false);
+            function closeDeleteConfirmModal() {
               toggleDeleteConfirmModal(false);
-          }
-      });
+            }
 
-      // Bind all dynamic action callbacks to window scope for inline HTML onclick resolution
-      window.openAddRoleDrawer = openAddRoleDrawer;
-      window.openEditRoleDrawer = openEditRoleDrawer;
-      window.deleteRole = deleteRole;
-      window.saveRole = saveRole;
-      window.toggleAddRoleModal = toggleAddRoleModal;
-      window.toggleViewRoleModal = toggleViewRoleModal;
-      window.closeDeleteConfirmModal = closeDeleteConfirmModal;
-      window.openViewRoleDrawer = openViewRoleDrawer;
-      window.changeRolePage = changeRolePage;
-      window.handleRoleSearch = handleRoleSearch;
-      window.handleRoleTypeFilterChange = handleRoleTypeFilterChange;
+            // Modal key listeners
+            window.addEventListener('keydown', (e) => {
+              if (e.key === 'Escape') {
+                toggleAddRoleModal(false);
+                toggleViewRoleModal(false);
+                toggleDeleteConfirmModal(false);
+              }
+            });
 
-      // Execute on dynamic page load
-      fetchRoles();
-    })();
-  </script>
-</div>
-</main>
-</body></html>
+            function selectAllScreens(check) {
+              featureKeys.forEach(key => {
+                const viewChk = document.getElementById(`perm_${key}_view`);
+                const operateChk = document.getElementById(`perm_${key}_operate`);
+                if (viewChk) viewChk.checked = check;
+                if (operateChk) operateChk.checked = check;
+              });
+            }
+
+            function selectAllFeatures(check) {
+              granularKeys.forEach(key => {
+                const chk = document.getElementById(`feat_${key}`);
+                if (chk) chk.checked = check;
+              });
+            }
+
+            // Bind all dynamic action callbacks to window scope for inline HTML onclick resolution
+            window.openAddRoleDrawer = openAddRoleDrawer;
+            window.openEditRoleDrawer = openEditRoleDrawer;
+            window.deleteRole = deleteRole;
+            window.saveRole = saveRole;
+            window.toggleAddRoleModal = toggleAddRoleModal;
+            window.toggleViewRoleModal = toggleViewRoleModal;
+            window.closeDeleteConfirmModal = closeDeleteConfirmModal;
+            window.openViewRoleDrawer = openViewRoleDrawer;
+            window.changeRolePage = changeRolePage;
+            window.handleRoleSearch = handleRoleSearch;
+            window.handleRoleTypeFilterChange = handleRoleTypeFilterChange;
+            window.selectAllScreens = selectAllScreens;
+            window.selectAllFeatures = selectAllFeatures;
+
+            // Execute on dynamic page load
+            fetchRoles();
+          })();
+      </script>
+    </div>
+  </main>
+</body>
+
+</html>

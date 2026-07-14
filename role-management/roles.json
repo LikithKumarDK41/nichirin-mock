@@ -197,5 +197,36 @@
       "barcode_scan_lots",
       "verify_step_actions"
     ]
+  },
+  {
+    "roleCode": "LINE_LEADER",
+    "roleName": "Line Leader",
+    "description": "Floor production leader. Assists supervisor with shifts schedules and monitors barcode scan logs.",
+    "assignedCount": 2,
+    "permissions": {
+      "dashboard": ["view"],
+      "work_orders": ["view", "operate"],
+      "supervisor_planning": ["view"],
+      "qc_pending_approvals": []
+    },
+    "features": [
+      "barcode_scan_lots",
+      "verify_step_actions"
+    ]
+  },
+  {
+    "roleCode": "MAINTENANCE_TECH",
+    "roleName": "Maintenance Technician",
+    "description": "Tooling and network calibration technician. Manages PLC settings and torque tools calibrations.",
+    "assignedCount": 1,
+    "permissions": {
+      "dashboard": ["view"],
+      "machine_management": ["view", "operate"],
+      "device_management": ["view", "operate"]
+    },
+    "features": [
+      "calibrate_machine_tooling",
+      "bind_plc_connections"
+    ]
   }
 ]
