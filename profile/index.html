@@ -372,19 +372,7 @@
         }
 
         function updateSystemEnvironment(dept) {
-          const systemConfigStr = localStorage.getItem('system_config');
           let activeSite = 'Japan - Nagoya Plant B';
-
-          if (systemConfigStr) {
-            try {
-              const sysConfig = JSON.parse(systemConfigStr);
-              if (sysConfig.sysPlant) activeSite = sysConfig.sysPlant;
-            } catch (e) {
-              console.error(e);
-            }
-          } else {
-            activeSite = localStorage.getItem('profileSite') || 'Japan - Nagoya Plant B';
-          }
 
           let activeWorkstation = 'NIC-ADMIN-CONSOLE-01';
           let activeLine = 'Global';
@@ -489,7 +477,6 @@
               avatarIcon.classList.add('hidden');
               avatarPreview.src = base64;
               avatarPreview.classList.remove('hidden');
-              localStorage.setItem('profileAvatar', base64);
               showToast('avatar_success', 'Profile image updated successfully.');
             };
             reader.readAsDataURL(file);
@@ -506,13 +493,6 @@
           const newShift = shiftSelect.value;
           const newSite = siteInput.value.trim();
           const newLang = langSelect.value;
-
-          localStorage.setItem('profileName', newName);
-          localStorage.setItem('profileEmail', newEmail);
-          localStorage.setItem('profileDept', newDept);
-          localStorage.setItem('profileShift', newShift);
-          localStorage.setItem('profileSite', newSite);
-          localStorage.setItem('profileLang', newLang);
 
           cardName.textContent = newName;
           if (cardSite) {

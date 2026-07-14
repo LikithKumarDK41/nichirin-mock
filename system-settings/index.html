@@ -179,32 +179,7 @@
           sysSapFreq: '1'
         };
 
-        // Load configuration
-        function getConfig() {
-          const stored = localStorage.getItem('system_config');
-          if (stored) {
-            try {
-              const parsed = JSON.parse(stored);
-              // Migrate/clean up properties that are no longer used
-              const cleaned = {
-                sysName: parsed.sysName || defaultConfig.sysName,
-                sysPlant: parsed.sysPlant || defaultConfig.sysPlant,
-                sysTimezone: parsed.sysTimezone || defaultConfig.sysTimezone,
-                sysTimeout: parsed.sysTimeout || defaultConfig.sysTimeout,
-                sysRetries: parsed.sysRetries || defaultConfig.sysRetries,
-                sysSapUrl: parsed.sysSapUrl || defaultConfig.sysSapUrl,
-                sysSapFreq: parsed.sysSapFreq || defaultConfig.sysSapFreq
-              };
-              return cleaned;
-            } catch (e) {
-              return defaultConfig;
-            }
-          }
-          localStorage.setItem('system_config', JSON.stringify(defaultConfig));
-          return defaultConfig;
-        }
-
-        const config = getConfig();
+        const config = defaultConfig;
 
         // DOM elements
         const nameInput = document.getElementById('sys-name');
@@ -242,8 +217,6 @@
             sysSapFreq: sapFreqSelect.value
           };
 
-          localStorage.setItem('system_config', JSON.stringify(newConfig));
-
           // Update header title in DOM immediately
           const headerTitle = document.querySelector('header span.text-primary');
           if (headerTitle) {
@@ -256,7 +229,6 @@
         // Reset Settings button listener
         document.getElementById('btn-reset-settings').addEventListener('click', () => {
           if (confirm('Are you sure you want to revert all system values to defaults?')) {
-            localStorage.setItem('system_config', JSON.stringify(defaultConfig));
             populateForm(defaultConfig);
 
             // Sync header immediately
