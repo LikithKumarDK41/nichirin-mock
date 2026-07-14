@@ -223,7 +223,7 @@
   function syncProfileHeader() {
     const profileNameEl = document.getElementById('header-profile-name');
     if (profileNameEl) {
-      profileNameEl.textContent = localStorage.getItem('profileName') || 'T. Nakagawa';
+      profileNameEl.textContent = 'T. Nakagawa';
     }
 
     const headerProfileBtn = document.getElementById('header-profile-btn');
@@ -820,12 +820,6 @@
         defaultTitle.className = 'text-lg sm:text-xl font-black text-primary select-none tracking-tight leading-none';
         
         let sysName = 'Control Card Digitization System';
-        try {
-          const config = JSON.parse(localStorage.getItem('system_config'));
-          if (config && config.sysName) {
-            sysName = config.sysName;
-          }
-        } catch(e) {}
         
         defaultTitle.textContent = sysName;
         mainHeaderLeft.appendChild(defaultTitle);
