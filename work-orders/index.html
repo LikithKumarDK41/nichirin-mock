@@ -287,11 +287,24 @@
         </div>
       </div>
 
+      <!-- Mobile View Tabs (Visible only on viewports below 1024px) -->
+      <div class="lg:hidden flex border-b border-slate-200 bg-slate-50 flex-shrink-0 select-none">
+        <button id="tab-btn-stages" onclick="switchMobileTab('stages')" class="flex-1 py-3 text-center text-xs font-bold uppercase border-b-2 border-primary text-primary cursor-pointer">
+          Stages
+        </button>
+        <button id="tab-btn-timeline" onclick="switchMobileTab('timeline')" class="flex-1 py-3 text-center text-xs font-bold uppercase border-b-2 border-transparent text-slate-500 cursor-pointer">
+          Timeline
+        </button>
+        <button id="tab-btn-inspector" onclick="switchMobileTab('inspector')" class="flex-1 py-3 text-center text-xs font-bold uppercase border-b-2 border-transparent text-slate-500 cursor-pointer">
+          Rules
+        </button>
+      </div>
+
       <!-- 3-Column Workspace -->
-      <div class="flex-grow flex overflow-hidden">
+      <div class="flex-grow flex lg:flex-row flex-col overflow-hidden relative">
         
         <!-- LEFT COLUMN: Stage Components -->
-        <div class="w-1/4 min-w-[280px] bg-slate-50 border-r border-slate-200 flex flex-col overflow-hidden shrink-0 select-none">
+        <div id="col-stages" class="lg:w-1/4 lg:min-w-[280px] w-full h-full lg:h-auto bg-slate-50 border-r border-slate-200 flex flex-col overflow-hidden shrink-0 select-none">
           <div class="px-5 py-3 border-b border-slate-200 bg-slate-100 flex-shrink-0">
             <h2 class="text-xs font-black text-slate-900 uppercase tracking-wider">Stage Components</h2>
           </div>
@@ -301,7 +314,7 @@
         </div>
 
         <!-- CENTER COLUMN: Steps Timeline -->
-        <div class="w-2/4 bg-white flex flex-col overflow-hidden relative border-r border-slate-200">
+        <div id="col-timeline" class="flex-grow bg-white flex flex-col overflow-hidden relative border-r border-slate-200">
           <!-- Dot grid backdrop -->
           <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(#191c1e 1.2px, transparent 1.2px); background-size: 20px 20px;"></div>
           
@@ -323,7 +336,7 @@
         </div>
 
         <!-- RIGHT COLUMN: Step Configuration Side Drawer -->
-        <div class="w-[450px] bg-slate-50 flex flex-col overflow-hidden shrink-0 select-none border-l border-slate-200">
+        <div id="col-inspector" class="lg:w-[450px] w-full h-full lg:h-auto bg-slate-50 flex flex-col overflow-hidden shrink-0 select-none border-l border-slate-200">
           <div class="px-5 py-3 border-b border-slate-200 bg-slate-100 flex justify-between items-center flex-shrink-0">
             <div class="flex items-center gap-2">
               <span class="material-symbols-outlined text-primary text-[18px]">account_tree</span>
@@ -902,6 +915,9 @@
             renderSteps();
             updateInspectorConfig();
             runWorkflowValidation();
+            if (window.innerWidth < 1024) {
+                switchMobileTab('timeline');
+            }
         }
 
         function addStage() {
@@ -1122,6 +1138,9 @@
             currentStepId = stepId;
             renderSteps();
             updateInspectorConfig();
+            if (window.innerWidth < 1024) {
+                switchMobileTab('inspector');
+            }
         }
 
         function addStep() {
@@ -2267,11 +2286,71 @@
             }
         }
 
+        let activeMobileTab = 'timeline';
+        function switchMobileTab(tabName) {
+            activeMobileTab = tabName;
+            
+            const paneStages = document.getElementById('col-stages');
+            const paneTimeline = document.getElementById('col-timeline');
+            const paneInspector = document.getElementById('col-inspector');
+
+            const btnStages = document.getElementById('tab-btn-stages');
+            const btnTimeline = document.getElementById('tab-btn-timeline');
+            const btnInspector = document.getElementById('tab-btn-inspector');
+
+            [btnStages, btnTimeline, btnInspector].forEach(btn => {
+                if (btn) {
+                    btn.classList.remove('border-primary', 'text-primary');
+                    btn.classList.add('border-transparent', 'text-slate-500');
+                }
+            });
+
+            const activeBtn = document.getElementById('tab-btn-' + tabName);
+            if (activeBtn) {
+                activeBtn.classList.remove('border-transparent', 'text-slate-500');
+                activeBtn.classList.add('border-primary', 'text-primary');
+            }
+
+            [paneStages, paneTimeline, paneInspector].forEach(pane => {
+                if (pane) {
+                    pane.classList.add('hidden');
+                    pane.classList.remove('flex');
+                }
+            });
+
+            const activePane = document.getElementById('col-' + tabName);
+            if (activePane) {
+                activePane.classList.remove('hidden');
+                activePane.classList.add('flex');
+            }
+        }
+
+        function updateResponsivePanes() {
+            const isDesktop = window.innerWidth >= 1024;
+            const paneStages = document.getElementById('col-stages');
+            const paneTimeline = document.getElementById('col-timeline');
+            const paneInspector = document.getElementById('col-inspector');
+
+            if (isDesktop) {
+                [paneStages, paneTimeline, paneInspector].forEach(pane => {
+                    if (pane) {
+                        pane.classList.remove('hidden');
+                        pane.classList.add('flex');
+                    }
+                });
+            } else {
+                switchMobileTab(activeMobileTab);
+            }
+        }
+
+        window.addEventListener('resize', updateResponsivePanes);
+
         function openWorkflowConfigModal() {
             const modal = document.getElementById('workflowConfigModal');
             if (modal) {
                 modal.classList.remove('hidden');
                 loadWorkflowConfig();
+                updateResponsivePanes();
                 document.getElementById('cfg-empty-state').classList.remove('hidden');
                 document.getElementById('cfg-editor-content').classList.add('hidden');
             }
@@ -2285,6 +2364,7 @@
         }
 
         // Window scope bindings for HTML onClick calls
+        window.switchMobileTab = switchMobileTab;
         window.changeWOPage = changeWOPage;
         window.handleWOSearch = handleWOSearch;
         window.handleWODirtyFilter = handleWODirtyFilter;
