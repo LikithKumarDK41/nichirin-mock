@@ -50,8 +50,7 @@
             <input type="file" id="avatar-upload" class="hidden" accept="image/*" />
           </div>
 
-          <h3 id="card-profile-name" class="font-headline-sm text-headline-sm text-on-surface font-bold">T. Nakagawa
-          </h3>
+          <h3 id="card-profile-name" class="font-headline-sm text-headline-sm text-on-surface font-bold">T. Nakagawa</h3>
           <p
             class="text-xs font-bold text-primary bg-primary-container text-on-primary-container px-2.5 py-1 rounded-full uppercase tracking-wider mt-1.5 inline-block">
             Site Admin</p>
@@ -63,15 +62,18 @@
           <!-- Quick Status Grid -->
           <div class="grid grid-cols-3 gap-2 w-full">
             <div class="bg-slate-50 p-2.5 rounded-lg border border-outline-variant/15">
-              <span class="block text-lg font-extrabold text-primary font-data-tabular">148</span>
+              <span class="block text-lg font-extrabold text-primary font-data-tabular"
+                id="profile-approved-count">2</span>
               <span class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wide">Approved</span>
             </div>
             <div class="bg-slate-50 p-2.5 rounded-lg border border-outline-variant/15">
-              <span class="block text-lg font-extrabold text-amber-500 font-data-tabular">2</span>
+              <span class="block text-lg font-extrabold text-amber-500 font-data-tabular"
+                id="profile-pending-count">3</span>
               <span class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wide">Pending</span>
             </div>
             <div class="bg-slate-50 p-2.5 rounded-lg border border-outline-variant/15">
-              <span class="block text-lg font-extrabold text-emerald-500 font-data-tabular">99.8%</span>
+              <span class="block text-lg font-extrabold text-emerald-500 font-data-tabular"
+                id="profile-accuracy-rate">99.8%</span>
               <span class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wide">Accuracy</span>
             </div>
           </div>
@@ -80,22 +82,22 @@
         <!-- System Status Info Card -->
         <div class="bg-white border border-outline-variant/30 rounded-xl p-5 shadow-sm">
           <h4 class="font-headline-sm text-headline-sm text-on-surface font-bold mb-3">System Environment</h4>
-          <div class="space-y-3.5 text-xs">
-            <div class="flex justify-between border-b border-outline-variant/20 pb-2">
-              <span class="text-on-surface-variant">Active Site Location:</span>
+          <div class="space-y-3.5 text-[11px]">
+            <div class="flex justify-between items-start gap-4 border-b border-outline-variant/20 pb-2">
+              <span class="text-on-surface-variant whitespace-nowrap">Active Site Location:</span>
               <span id="card-site-location" class="font-semibold text-on-surface text-right">Japan - Nagoya Plant B</span>
             </div>
-            <div class="flex justify-between border-b border-outline-variant/20 pb-2">
-              <span class="text-on-surface-variant">Workstation / Terminal:</span>
-              <span class="font-semibold text-on-surface text-right">QC-TERM-04A</span>
+            <div class="flex justify-between items-start gap-4 border-b border-outline-variant/20 pb-2">
+              <span class="text-on-surface-variant whitespace-nowrap">Workstation / Terminal:</span>
+              <span id="card-workstation-terminal" class="font-semibold text-on-surface text-right">NIC-ADMIN-CONSOLE-01</span>
             </div>
-            <div class="flex justify-between border-b border-outline-variant/20 pb-2">
-              <span class="text-on-surface-variant">Assigned Line:</span>
-              <span class="font-semibold text-on-surface text-right">Line A (Assembly & QC)</span>
+            <div class="flex justify-between items-start gap-4 border-b border-outline-variant/20 pb-2">
+              <span class="text-on-surface-variant whitespace-nowrap">Assigned Line:</span>
+              <span id="card-assigned-line" class="font-semibold text-on-surface text-right">Global</span>
             </div>
-            <div class="flex justify-between">
-              <span class="text-on-surface-variant">Last Session Auth:</span>
-              <span class="font-semibold text-on-surface text-right">2026-07-13 16:12</span>
+            <div class="flex justify-between items-start gap-4">
+              <span class="text-on-surface-variant whitespace-nowrap">Last Session Auth:</span>
+              <span id="card-last-session-auth" class="font-semibold text-on-surface text-right">2026-07-13 16:12</span>
             </div>
           </div>
         </div>
@@ -107,8 +109,7 @@
 
         <!-- Profile Form Card -->
         <div class="bg-white border border-outline-variant/30 rounded-xl shadow-sm overflow-hidden">
-          <div
-            class="p-5 border-b border-outline-variant/30 bg-slate-50 flex justify-between items-center">
+          <div class="p-5 border-b border-outline-variant/30 bg-slate-50 flex justify-between items-center">
             <h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Personal & Work Identification
               Details</h3>
           </div>
@@ -169,8 +170,10 @@
                 <div class="relative">
                   <span
                     class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">domain</span>
-                  <select id="profile-dept-select"
-                    class="w-full pl-10 pr-3 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
+                  <select id="profile-dept-select" disabled
+                    class="w-full pl-10 pr-3 py-2 text-sm bg-slate-50 border border-outline-variant/40 rounded-lg opacity-70 cursor-not-allowed focus:outline-none">
+                    <option value="Plant Administration">Plant Administration</option>
+                    <option value="IT Infrastructure">IT Infrastructure</option>
                     <option value="Quality Control">Quality Control</option>
                     <option value="Assembly Operations">Assembly Operations</option>
                     <option value="Logistics & Picking">Logistics & Picking</option>
@@ -269,18 +272,23 @@
                 <input type="password" id="old-pass"
                   class="w-full pl-3 pr-10 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   required />
-                <button type="button" class="password-toggle-btn absolute right-3 top-2.5 text-on-surface-variant hover:text-primary transition-colors focus:outline-none" data-target="old-pass">
+                <button type="button"
+                  class="password-toggle-btn absolute right-3 top-2.5 text-on-surface-variant hover:text-primary transition-colors focus:outline-none"
+                  data-target="old-pass">
                   <span class="material-symbols-outlined text-[18px]">visibility</span>
                 </button>
               </div>
             </div>
             <div>
-              <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">New Security Password</label>
+              <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">New Security
+                Password</label>
               <div class="relative">
                 <input type="password" id="new-pass"
                   class="w-full pl-3 pr-10 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   required />
-                <button type="button" class="password-toggle-btn absolute right-3 top-2.5 text-on-surface-variant hover:text-primary transition-colors focus:outline-none" data-target="new-pass">
+                <button type="button"
+                  class="password-toggle-btn absolute right-3 top-2.5 text-on-surface-variant hover:text-primary transition-colors focus:outline-none"
+                  data-target="new-pass">
                   <span class="material-symbols-outlined text-[18px]">visibility</span>
                 </button>
               </div>
@@ -291,7 +299,9 @@
                 <input type="password" id="confirm-pass"
                   class="w-full pl-3 pr-10 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   required />
-                <button type="button" class="password-toggle-btn absolute right-3 top-2.5 text-on-surface-variant hover:text-primary transition-colors focus:outline-none" data-target="confirm-pass">
+                <button type="button"
+                  class="password-toggle-btn absolute right-3 top-2.5 text-on-surface-variant hover:text-primary transition-colors focus:outline-none"
+                  data-target="confirm-pass">
                   <span class="material-symbols-outlined text-[18px]">visibility</span>
                 </button>
               </div>
@@ -319,7 +329,7 @@
           username: localStorage.getItem('profileUsername') || 'tnakagawa',
           email: localStorage.getItem('profileEmail') || 't.nakagawa@nichirin.jp',
           employeeId: localStorage.getItem('profileEmployeeId') || 'NICH-2026-99',
-          department: localStorage.getItem('profileDept') || 'Quality Control',
+          department: localStorage.getItem('profileDept') || 'Plant Administration',
           shift: localStorage.getItem('profileShift') || 'General Shift (08:00 - 17:00)',
           site: localStorage.getItem('profileSite') || 'Japan - Nagoya Plant B',
           language: localStorage.getItem('profileLang') || 'English',
@@ -360,6 +370,104 @@
         if (cardSite) {
           cardSite.textContent = profileData.site;
         }
+
+        function updateSystemEnvironment(dept) {
+          const systemConfigStr = localStorage.getItem('system_config');
+          let activeSite = 'Japan - Nagoya Plant B';
+
+          if (systemConfigStr) {
+            try {
+              const sysConfig = JSON.parse(systemConfigStr);
+              if (sysConfig.sysPlant) activeSite = sysConfig.sysPlant;
+            } catch (e) {
+              console.error(e);
+            }
+          } else {
+            activeSite = localStorage.getItem('profileSite') || 'Japan - Nagoya Plant B';
+          }
+
+          let activeWorkstation = 'NIC-ADMIN-CONSOLE-01';
+          let activeLine = 'Global';
+
+          if (dept === 'Plant Administration' || dept === 'IT Infrastructure') {
+            activeWorkstation = 'NIC-ADMIN-CONSOLE-01';
+            activeLine = 'Global';
+          } else if (dept === 'Quality Control') {
+            activeWorkstation = 'NIC-LINEA-TERM-04';
+            activeLine = 'Line A (Assembly & QC)';
+          } else if (dept === 'Production Assembly') {
+            activeWorkstation = 'NIC-LINEA-TERM-02';
+            activeLine = 'Line A (Assembly)';
+          }
+
+          const siteLocationEl = document.getElementById('card-site-location');
+          if (siteLocationEl) {
+            siteLocationEl.textContent = activeSite;
+          }
+
+          const workstationEl = document.getElementById('card-workstation-terminal');
+          const lineEl = document.getElementById('card-assigned-line');
+
+          if (workstationEl) {
+            workstationEl.textContent = activeWorkstation;
+          }
+          if (lineEl) {
+            lineEl.textContent = activeLine;
+          }
+
+          const lastAuthEl = document.getElementById('card-last-session-auth');
+          if (lastAuthEl) {
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            yesterday.setHours(16, 12, 0, 0);
+            
+            const yyyy = yesterday.getFullYear();
+            const mm = String(yesterday.getMonth() + 1).padStart(2, '0');
+            const dd = String(yesterday.getDate()).padStart(2, '0');
+            const hh = String(yesterday.getHours()).padStart(2, '0');
+            const min = String(yesterday.getMinutes()).padStart(2, '0');
+            
+            lastAuthEl.textContent = `${yyyy}-${mm}-${dd} ${hh}:${min}`;
+          }
+        }
+
+        updateSystemEnvironment(profileData.department);
+
+        // Dynamically compute stats from work orders list
+        (async function () {
+          let woList = [];
+          const woListStr = localStorage.getItem('workOrdersList');
+          if (woListStr) {
+            try {
+              woList = JSON.parse(woListStr);
+            } catch (e) {
+              console.error(e);
+            }
+          } else {
+            try {
+              let res = await fetch('../work-orders/workorders.json');
+              if (!res.ok) {
+                res = await fetch('./work-orders/workorders.json');
+              }
+              if (res.ok) {
+                woList = await res.json();
+                localStorage.setItem('workOrdersList', JSON.stringify(woList));
+              }
+            } catch (e) {
+              console.error(e);
+            }
+          }
+
+          if (woList && woList.length > 0) {
+            const completed = woList.filter(w => w.status === 'Completed').length;
+            const running = woList.filter(w => w.status === 'Running').length;
+
+            const approvedEl = document.getElementById('profile-approved-count');
+            const pendingEl = document.getElementById('profile-pending-count');
+            if (approvedEl) approvedEl.textContent = completed;
+            if (pendingEl) pendingEl.textContent = running;
+          }
+        })();
 
         if (profileData.avatar) {
           avatarIcon.classList.add('hidden');
@@ -410,6 +518,8 @@
           if (cardSite) {
             cardSite.textContent = newSite;
           }
+
+          updateSystemEnvironment(newDept);
 
           // Update global header name if available
           const headerName = document.getElementById('header-profile-name');
