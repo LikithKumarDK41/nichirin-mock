@@ -189,7 +189,7 @@
     listContainer.innerHTML = list.map(n => {
       const isSelected = selectedNotificationIds.includes(n.id);
       return `
-        <div data-id="${n.id}" class="notification-item p-3.5 flex gap-3 hover:bg-surface-container-high/50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group ${!n.read ? 'bg-primary-subtle' : ''} ${isSelected ? 'bg-slate-50 dark:bg-slate-900/50' : ''}">
+        <div data-id="${n.id}" class="notification-item p-3.5 flex gap-3 hover:bg-surface-container-high/50 transition-colors cursor-pointer group ${!n.read ? 'bg-primary-subtle' : ''} ${isSelected ? 'bg-slate-50' : ''}">
           <!-- Checkbox for item selection -->
           <div class="flex items-center flex-shrink-0 toggle-select-container">
             <input type="checkbox" class="item-select-checkbox w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary/20 cursor-pointer" data-id="${n.id}" ${isSelected ? 'checked' : ''}>
@@ -223,7 +223,7 @@
   function syncProfileHeader() {
     const profileNameEl = document.getElementById('header-profile-name');
     if (profileNameEl) {
-      profileNameEl.textContent = localStorage.getItem('profileName') || 'T. Nakagawa';
+      profileNameEl.textContent = 'T. Nakagawa';
     }
 
     const headerProfileBtn = document.getElementById('header-profile-btn');
@@ -246,7 +246,7 @@
         if (existingIcon && existingIcon.tagName === 'IMG') {
           existingIcon.remove();
           const span = document.createElement('span');
-          span.className = 'material-symbols-outlined text-primary dark:text-red-500 text-[32px] select-none';
+          span.className = 'material-symbols-outlined text-primary text-[32px] select-none';
           span.textContent = 'account_circle';
           headerProfileBtn.appendChild(span);
         }
@@ -362,7 +362,7 @@
     `;
 
     const HEADER_HTML = `
-      <header class="fixed top-0 right-0 h-[64px] w-full lg:w-[calc(100%-260px)] px-6 bg-white dark:bg-surface border-b border-outline-variant/30 flex items-center justify-between z-40 transition-all duration-300 rounded-none shadow-sm select-none">
+      <header class="fixed top-0 right-0 h-[64px] w-full lg:w-[calc(100%-260px)] px-6 bg-white border-b border-outline-variant/30 flex items-center justify-between z-40 transition-all duration-300 rounded-none shadow-sm select-none">
         <div class="flex items-center gap-4">
           <button class="sidebar-toggle-btn flex items-center justify-center w-10 h-10 text-on-surface-variant hover:text-primary rounded-xl transition-colors" aria-label="Toggle Sidebar">
             <span class="material-symbols-outlined">menu</span>
@@ -379,8 +379,8 @@
             </button>
             
             <!-- Notification Dropdown Panel -->
-            <div id="notification-dropdown" class="hidden absolute right-0 mt-2 w-[340px] sm:w-[380px] bg-white dark:bg-surface border border-outline-variant/50 rounded-xl shadow-xl z-50 overflow-hidden text-left select-none">
-              <div class="px-4 py-3 border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-low dark:bg-surface-container-low min-h-[48px]" id="notification-header-actions">
+            <div id="notification-dropdown" class="hidden absolute right-0 mt-2 w-[340px] sm:w-[380px] bg-white border border-outline-variant/50 rounded-xl shadow-xl z-50 overflow-hidden text-left select-none">
+              <div class="px-4 py-3 border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-low min-h-[48px]" id="notification-header-actions">
                 <!-- Loaded dynamically -->
               </div>
               <div class="max-h-[300px] overflow-y-auto custom-scrollbar divide-y divide-outline-variant/20" id="notification-list">
@@ -398,10 +398,10 @@
           <!-- Clickable Profile Trigger -->
           <div id="header-profile-btn" class="flex items-center gap-2 ml-2 pl-4 border-l border-outline-variant/30 cursor-pointer hover:opacity-80 transition-opacity">
             <div class="text-right hidden sm:block">
-              <p id="header-profile-name" class="font-label-bold text-label-bold leading-none text-primary dark:text-red-500">T. Nakagawa</p>
+              <p id="header-profile-name" class="font-label-bold text-label-bold leading-none text-primary">T. Nakagawa</p>
               <p class="text-[10px] text-on-surface-variant uppercase mt-0.5 font-bold">Site Admin</p>
             </div>
-            <span class="material-symbols-outlined text-primary dark:text-red-500 text-[32px] select-none">account_circle</span>
+            <span class="material-symbols-outlined text-primary text-[32px] select-none">account_circle</span>
           </div>
         </div>
       </header>
@@ -780,6 +780,15 @@
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
 
+      // Sync dark mode configuration dynamically from the loaded view
+      if (doc.documentElement && doc.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('light');
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+      }
+
       // Update sidebar nav active state
       updateActiveNavItem(route);
 
@@ -829,7 +838,7 @@
             sysName = config.sysName;
           }
         } catch (e) { }
-
+        
         defaultTitle.textContent = sysName;
         mainHeaderLeft.appendChild(defaultTitle);
       }
