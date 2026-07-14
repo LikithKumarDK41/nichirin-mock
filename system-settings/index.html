@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 
 <head>
   <!-- SPA Layout Redirect Wrapper -->
@@ -31,9 +31,9 @@
 
         <!-- Left Column: Global & Security Settings -->
         <div class="col-span-12 lg:col-span-6 flex flex-col gap-6">
-          <div class="bg-white dark:bg-surface border border-outline-variant/30 rounded-xl shadow-sm overflow-hidden">
+          <div class="bg-white border border-outline-variant/30 rounded-xl shadow-sm overflow-hidden">
             <div
-              class="p-5 border-b border-outline-variant/30 bg-slate-50 dark:bg-slate-900/50 flex items-center justify-between">
+              class="p-5 border-b border-outline-variant/30 bg-slate-50 flex items-center justify-between">
               <h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Global &amp; Security Settings</h3>
               <span class="material-symbols-outlined text-[20px] text-primary">settings_applications</span>
             </div>
@@ -43,7 +43,7 @@
               <div>
                 <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">System Name</label>
                 <input type="text" id="sys-name"
-                  class="w-full px-3 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                  class="w-full px-3 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   placeholder="System Name" required />
               </div>
 
@@ -51,7 +51,7 @@
               <div>
                 <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">Site/Plant Identifier</label>
                 <input type="text" id="sys-plant"
-                  class="w-full px-3 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                  class="w-full px-3 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   placeholder="Plant ID" required />
               </div>
 
@@ -59,7 +59,7 @@
               <div>
                 <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">Timezone</label>
                 <select id="sys-timezone"
-                  class="w-full px-3 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
+                  class="w-full px-3 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
                   <option value="Asia/Tokyo">Asia/Tokyo (JST)</option>
                   <option value="Asia/Kolkata">Asia/Kolkata (IST)</option>
                   <option value="America/New_York">America/New_York (EST)</option>
@@ -72,13 +72,13 @@
                 <div>
                   <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">Session Timeout (Minutes)</label>
                   <input type="number" id="sys-timeout"
-                    class="w-full px-3 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                    class="w-full px-3 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                     min="5" max="120" required />
                 </div>
                 <div>
                   <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">Max Login Attempts</label>
                   <input type="number" id="sys-retries"
-                    class="w-full px-3 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                    class="w-full px-3 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                     min="3" max="10" required />
                 </div>
               </div>
@@ -88,9 +88,9 @@
 
         <!-- Right Column: SAP Server Integration -->
         <div class="col-span-12 lg:col-span-6 flex flex-col gap-6">
-          <div class="bg-white dark:bg-surface border border-outline-variant/30 rounded-xl shadow-sm overflow-hidden">
+          <div class="bg-white border border-outline-variant/30 rounded-xl shadow-sm overflow-hidden">
             <div
-              class="p-5 border-b border-outline-variant/30 bg-slate-50 dark:bg-slate-900/50 flex items-center justify-between">
+              class="p-5 border-b border-outline-variant/30 bg-slate-50 flex items-center justify-between">
               <h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">SAP Server Integration</h3>
               <span class="material-symbols-outlined text-[20px] text-primary">dns</span>
             </div>
@@ -102,8 +102,8 @@
                 <div class="relative">
                   <span
                     class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">link</span>
-                  <input type="url" id="sys-sap-url"
-                    class="w-full pl-10 pr-3 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                  <input type="text" id="sys-sap-url"
+                    class="w-full pl-10 pr-3 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                     placeholder="https://sap-gateway.nichirin.net/rfc" required />
                 </div>
               </div>
@@ -112,7 +112,7 @@
               <div>
                 <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">SAP Sync Frequency</label>
                 <select id="sys-sap-freq"
-                  class="w-full px-3 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
+                  class="w-full px-3 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
                   <option value="1">Hourly Sync</option>
                   <option value="6">Every 6 Hours</option>
                   <option value="12">Every 12 Hours</option>
@@ -123,7 +123,7 @@
               <!-- Connection Status & Test Button -->
               <div class="border-t border-outline-variant/20 pt-4 space-y-4">
                 <div
-                  class="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 dark:bg-slate-900/50 border border-outline-variant/10 text-xs">
+                  class="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 border border-outline-variant/10 text-xs">
                   <span class="text-on-surface-variant flex items-center gap-1.5"><span
                       class="material-symbols-outlined text-[16px] text-emerald-500">wifi</span> SAP RFC Gateway Status:</span>
                   <span class="font-bold text-emerald-500 uppercase flex items-center gap-1"><span
@@ -131,7 +131,7 @@
                 </div>
 
                 <button type="button" id="btn-sap-test"
-                  class="w-full px-3 py-2.5 border border-outline-variant/50 hover:bg-slate-50 dark:hover:bg-slate-900 text-on-surface font-semibold rounded-lg transition-colors flex items-center justify-center gap-1.5 cursor-pointer text-xs">
+                  class="w-full px-3 py-2.5 border border-outline-variant/50 hover:bg-slate-50 text-on-surface font-semibold rounded-lg transition-colors flex items-center justify-center gap-1.5 cursor-pointer text-xs">
                   <span class="material-symbols-outlined text-[16px]">sync_alt</span>
                   <span>Test SAP Connection</span>
                 </button>
@@ -145,7 +145,7 @@
       <!-- Footer Submit and Reset triggers -->
       <div class="pt-3 border-t border-outline-variant/30 flex justify-end gap-3 items-center">
         <button type="button" id="btn-reset-settings"
-          class="px-4 py-2 border border-outline-variant/50 bg-white dark:bg-slate-950 text-on-surface font-semibold text-xs rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors shadow-sm cursor-pointer">
+          class="px-4 py-2 border border-outline-variant/50 bg-white text-on-surface font-semibold text-xs rounded-lg hover:bg-slate-50 transition-colors shadow-sm cursor-pointer">
           Reset Default Configuration
         </button>
         <button type="submit"

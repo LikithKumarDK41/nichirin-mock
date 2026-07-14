@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 
 <head>
   <!-- SPA Layout Redirect Wrapper -->
@@ -34,10 +34,10 @@
 
         <!-- Avatar Card -->
         <div
-          class="bg-white dark:bg-surface border border-outline-variant/30 rounded-xl p-6 shadow-sm flex flex-col items-center text-center">
+          class="bg-white border border-outline-variant/30 rounded-xl p-6 shadow-sm flex flex-col items-center text-center">
           <div class="relative group mb-4">
             <div
-              class="w-32 h-32 rounded-full overflow-hidden border-2 border-primary/20 bg-slate-100 dark:bg-slate-900 flex items-center justify-center relative">
+              class="w-32 h-32 rounded-full overflow-hidden border-2 border-primary/20 bg-slate-100 flex items-center justify-center relative">
               <span class="material-symbols-outlined text-[72px] text-primary select-none"
                 id="avatar-icon">account_circle</span>
               <img id="avatar-preview" class="w-full h-full object-cover hidden" alt="Profile Preview" />
@@ -62,15 +62,15 @@
 
           <!-- Quick Status Grid -->
           <div class="grid grid-cols-3 gap-2 w-full">
-            <div class="bg-slate-50 dark:bg-slate-900/50 p-2.5 rounded-lg border border-outline-variant/15">
+            <div class="bg-slate-50 p-2.5 rounded-lg border border-outline-variant/15">
               <span class="block text-lg font-extrabold text-primary font-data-tabular">148</span>
               <span class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wide">Approved</span>
             </div>
-            <div class="bg-slate-50 dark:bg-slate-900/50 p-2.5 rounded-lg border border-outline-variant/15">
+            <div class="bg-slate-50 p-2.5 rounded-lg border border-outline-variant/15">
               <span class="block text-lg font-extrabold text-amber-500 font-data-tabular">2</span>
               <span class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wide">Pending</span>
             </div>
-            <div class="bg-slate-50 dark:bg-slate-900/50 p-2.5 rounded-lg border border-outline-variant/15">
+            <div class="bg-slate-50 p-2.5 rounded-lg border border-outline-variant/15">
               <span class="block text-lg font-extrabold text-emerald-500 font-data-tabular">99.8%</span>
               <span class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wide">Accuracy</span>
             </div>
@@ -78,7 +78,7 @@
         </div>
 
         <!-- System Status Info Card -->
-        <div class="bg-white dark:bg-surface border border-outline-variant/30 rounded-xl p-5 shadow-sm">
+        <div class="bg-white border border-outline-variant/30 rounded-xl p-5 shadow-sm">
           <h4 class="font-headline-sm text-headline-sm text-on-surface font-bold mb-3">System Environment</h4>
           <div class="space-y-3.5 text-xs">
             <div class="flex justify-between border-b border-outline-variant/20 pb-2">
@@ -106,9 +106,9 @@
       <div class="col-span-12 lg:col-span-8 flex flex-col gap-6">
 
         <!-- Profile Form Card -->
-        <div class="bg-white dark:bg-surface border border-outline-variant/30 rounded-xl shadow-sm overflow-hidden">
+        <div class="bg-white border border-outline-variant/30 rounded-xl shadow-sm overflow-hidden">
           <div
-            class="p-5 border-b border-outline-variant/30 bg-slate-50 dark:bg-slate-900/50 flex justify-between items-center">
+            class="p-5 border-b border-outline-variant/30 bg-slate-50 flex justify-between items-center">
             <h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Personal & Work Identification
               Details</h3>
           </div>
@@ -122,7 +122,7 @@
                   <span
                     class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">person</span>
                   <input type="text" id="profile-name-input"
-                    class="w-full pl-10 pr-3 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                    class="w-full pl-10 pr-3 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                     placeholder="Enter Full Name" required />
                 </div>
               </div>
@@ -134,7 +134,7 @@
                   <span
                     class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">badge</span>
                   <input type="text" id="profile-username-input"
-                    class="w-full pl-10 pr-3 py-2 text-sm bg-slate-100 dark:bg-slate-900 border border-outline-variant/30 rounded-lg text-on-surface-variant cursor-not-allowed"
+                    class="w-full pl-10 pr-3 py-2 text-sm bg-slate-100 border border-outline-variant/30 rounded-lg text-on-surface-variant cursor-not-allowed"
                     placeholder="Enter Username" readonly />
                 </div>
               </div>
@@ -146,7 +146,7 @@
                   <span
                     class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">mail</span>
                   <input type="email" id="profile-email-input"
-                    class="w-full pl-10 pr-3 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                    class="w-full pl-10 pr-3 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                     placeholder="Enter Email" required />
                 </div>
               </div>
@@ -158,7 +158,7 @@
                   <span
                     class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">fingerprint</span>
                   <input type="text" id="profile-empid-input"
-                    class="w-full pl-10 pr-3 py-2 text-sm bg-slate-100 dark:bg-slate-900 border border-outline-variant/30 rounded-lg text-on-surface-variant cursor-not-allowed"
+                    class="w-full pl-10 pr-3 py-2 text-sm bg-slate-100 border border-outline-variant/30 rounded-lg text-on-surface-variant cursor-not-allowed"
                     readonly />
                 </div>
               </div>
@@ -170,7 +170,7 @@
                   <span
                     class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">domain</span>
                   <select id="profile-dept-select"
-                    class="w-full pl-10 pr-3 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
+                    class="w-full pl-10 pr-3 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
                     <option value="Quality Control">Quality Control</option>
                     <option value="Assembly Operations">Assembly Operations</option>
                     <option value="Logistics & Picking">Logistics & Picking</option>
@@ -187,7 +187,7 @@
                   <span
                     class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">schedule</span>
                   <select id="profile-shift-select"
-                    class="w-full pl-10 pr-3 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
+                    class="w-full pl-10 pr-3 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
                     <option value="General Shift (08:00 - 17:00)">General Shift (08:00 - 17:00)</option>
                     <option value="Morning Rotation (06:00 - 14:00)">Morning Rotation (06:00 - 14:00)</option>
                     <option value="Night Rotation (14:00 - 22:00)">Night Rotation (14:00 - 22:00)</option>
@@ -202,7 +202,7 @@
                   <span
                     class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">location_on</span>
                   <input type="text" id="profile-site-input"
-                    class="w-full pl-10 pr-3 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                    class="w-full pl-10 pr-3 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                     placeholder="Enter Site Location" />
                 </div>
               </div>
@@ -215,7 +215,7 @@
                   <span
                     class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">language</span>
                   <select id="profile-lang-select"
-                    class="w-full pl-10 pr-3 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
+                    class="w-full pl-10 pr-3 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
                     <option value="English">English (US)</option>
                     <option value="Japanese">日本語 (JA)</option>
                     <option value="Spanish">Español (ES)</option>
@@ -227,7 +227,7 @@
 
             <div class="pt-2 border-t border-outline-variant/20 flex flex-wrap justify-between items-center gap-3">
               <button type="button" id="change-pwd-trigger"
-                class="px-4 py-2 border border-outline-variant/50 text-on-surface bg-white dark:bg-slate-950 font-semibold text-xs rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer">
+                class="px-4 py-2 border border-outline-variant/50 text-on-surface bg-white font-semibold text-xs rounded-lg hover:bg-slate-50 transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer">
                 <span class="material-symbols-outlined text-[16px]">lock_reset</span>
                 <span>Change Authorization Password</span>
               </button>
@@ -251,9 +251,9 @@
     <div id="password-modal"
       class="pointer-events-none fixed inset-0 z-[110] bg-black/0 backdrop-blur-none flex justify-end transition-all duration-300">
       <div id="password-drawer"
-        class="translate-x-full bg-white dark:bg-surface border-l border-outline-variant/50 w-full max-w-md h-full shadow-2xl flex flex-col transition-transform duration-300 ease-in-out">
+        class="translate-x-full bg-white border-l border-outline-variant/50 w-full max-w-md h-full shadow-2xl flex flex-col transition-transform duration-300 ease-in-out">
         <div
-          class="px-5 py-4 border-b border-outline-variant/30 bg-slate-50 dark:bg-slate-900/50 flex justify-between items-center flex-shrink-0">
+          class="px-5 py-4 border-b border-outline-variant/30 bg-slate-50 flex justify-between items-center flex-shrink-0">
           <h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Reset Authorization Password</h3>
           <button type="button" id="close-password-modal"
             class="text-on-surface-variant hover:text-primary transition-colors">
@@ -267,7 +267,7 @@
                 Password</label>
               <div class="relative">
                 <input type="password" id="old-pass"
-                  class="w-full pl-3 pr-10 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                  class="w-full pl-3 pr-10 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   required />
                 <button type="button" class="password-toggle-btn absolute right-3 top-2.5 text-on-surface-variant hover:text-primary transition-colors focus:outline-none" data-target="old-pass">
                   <span class="material-symbols-outlined text-[18px]">visibility</span>
@@ -278,7 +278,7 @@
               <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">New Security Password</label>
               <div class="relative">
                 <input type="password" id="new-pass"
-                  class="w-full pl-3 pr-10 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                  class="w-full pl-3 pr-10 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   required />
                 <button type="button" class="password-toggle-btn absolute right-3 top-2.5 text-on-surface-variant hover:text-primary transition-colors focus:outline-none" data-target="new-pass">
                   <span class="material-symbols-outlined text-[18px]">visibility</span>
@@ -289,7 +289,7 @@
               <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">Confirm New Password</label>
               <div class="relative">
                 <input type="password" id="confirm-pass"
-                  class="w-full pl-3 pr-10 py-2 text-sm bg-white dark:bg-slate-950 border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                  class="w-full pl-3 pr-10 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   required />
                 <button type="button" class="password-toggle-btn absolute right-3 top-2.5 text-on-surface-variant hover:text-primary transition-colors focus:outline-none" data-target="confirm-pass">
                   <span class="material-symbols-outlined text-[18px]">visibility</span>
@@ -299,7 +299,7 @@
           </div>
           <div class="pt-5 border-t border-outline-variant/20 flex justify-end gap-3 flex-shrink-0">
             <button type="button" id="cancel-password-modal"
-              class="px-4 py-2 border border-outline-variant/50 text-on-surface-variant font-semibold text-xs rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors cursor-pointer">Cancel</button>
+              class="px-4 py-2 border border-outline-variant/50 text-on-surface-variant font-semibold text-xs rounded-lg hover:bg-slate-50 transition-colors cursor-pointer">Cancel</button>
             <button type="submit"
               class="px-4 py-2 bg-primary text-white font-semibold text-xs rounded-lg hover:opacity-90 transition-opacity cursor-pointer">Update
               Password</button>
