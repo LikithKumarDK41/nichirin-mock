@@ -150,33 +150,6 @@
     </div>
   </div>
 
-  <!-- Horizontal Bento Summary Cards -->
-  <div class="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-6 mb-2">
-    <!-- Card 1: TOTAL MACHINERY -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
-      <div>
-        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Total Assets Registered</p>
-        <p class="text-3xl font-bold text-primary" id="statTotalMachines">--</p>
-      </div>
-      <span class="material-symbols-outlined text-[32px] text-primary">layers</span>
-    </div>
-    <!-- Card 2: IP CONNECTIONS BOUND -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
-      <div>
-        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">PLC IP Terminals Bound</p>
-        <p class="text-3xl font-bold text-slate-800" id="statPlcCount">--</p>
-      </div>
-      <span class="material-symbols-outlined text-[32px] text-slate-600" style="font-variation-settings: 'FILL' 0;">router</span>
-    </div>
-    <!-- Card 3: UNDER MAINTENANCE / OUT OF CALIBRATION -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
-      <div>
-        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Calibration Alert / Issues</p>
-        <p class="text-3xl font-bold text-primary" id="statCalibAlerts">--</p>
-      </div>
-      <span class="material-symbols-outlined text-[32px] text-primary">warning</span>
-    </div>
-  </div>
 
   <!-- Bento Layout: Machines List -->
   <section class="col-span-12 bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm flex flex-col">
@@ -188,13 +161,6 @@
           <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
           <input id="machineSearchInput" class="w-full bg-white border border-outline-variant/30 rounded-lg pl-8 pr-3 py-1 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-8" placeholder="Filter machinery..." type="text" oninput="handleMachineSearch()"/>
         </div>
-        <!-- Status Filter -->
-        <select id="machineStatusFilter" class="bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-3 pr-8 py-1 font-semibold flex-1 sm:flex-initial sm:min-w-[160px]" onchange="handleMachineStatusFilterChange()">
-          <option value="ALL">All Calibrations</option>
-          <option value="Calibrated">Calibrated</option>
-          <option value="Calibration Due">Calibration Due</option>
-          <option value="Under Maintenance">Under Maintenance</option>
-        </select>
       </div>
     </div>
     
@@ -206,9 +172,6 @@
             <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Asset Code</th>
             <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Equipment Name</th>
             <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Type</th>
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">PLC IP Terminal</th>
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Allocated Line</th>
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Calibration State</th>
             <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-right">Action</th>
           </tr>
         </thead>
@@ -256,29 +219,9 @@
       <!-- Key Properties vertical mapping -->
       <div class="space-y-4">
         <div class="grid grid-cols-2 gap-4">
-          <div>
+          <div class="col-span-2">
             <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Equipment Type</span>
             <p id="viewMachineType" class="text-slate-800 font-semibold text-sm">--</p>
-          </div>
-          <div>
-            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">PLC IP Terminal Binding</span>
-            <p id="viewMachinePlcBinding" class="text-slate-800 font-bold text-sm font-data-tabular">--</p>
-          </div>
-          <div>
-            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Allocated Line</span>
-            <p id="viewMachineLine" class="text-slate-800 font-semibold text-sm">--</p>
-          </div>
-          <div>
-            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Calibration Status</span>
-            <span id="viewMachineStatusBadge" class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold">--</span>
-          </div>
-          <div>
-            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Last Calibration Date</span>
-            <p id="viewMachineLastCalib" class="text-slate-800 font-semibold text-sm font-data-tabular">--</p>
-          </div>
-          <div>
-            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Next Calibration Date</span>
-            <p id="viewMachineNextCalib" class="text-slate-800 font-semibold text-sm font-data-tabular">--</p>
           </div>
         </div>
         <div class="pt-2 border-t border-slate-100">
@@ -324,50 +267,18 @@
           <!-- Type -->
           <div class="col-span-1 space-y-1.5">
             <label class="block text-xs font-bold uppercase text-slate-500">Equipment Type</label>
-            <select id="drawerMachineType" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white">
+            <select id="drawerMachineType" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white" onchange="handleMachineTypeChange(this)">
               <option value="Machine">Machine</option>
               <option value="Jig">Jig</option>
               <option value="Measurement Tool">Measurement Tool</option>
               <option value="PLC Terminal">PLC Terminal</option>
+              <option value="NEW_TYPE" class="text-primary font-bold">+ Add Custom Type...</option>
             </select>
-          </div>
-          <!-- PLC IP Binding -->
-          <div class="col-span-1 space-y-1.5">
-            <label class="block text-xs font-bold uppercase text-slate-500">PLC Network IP Address</label>
-            <input id="drawerMachineIp" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white font-data-tabular" placeholder="e.g. 192.168.1.106" type="text" required />
-          </div>
-          <!-- Line Allocated -->
-          <div class="col-span-1 space-y-1.5">
-            <label class="block text-xs font-bold uppercase text-slate-500">Allocated Line</label>
-            <select id="drawerMachineLine" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white">
-              <option value="Line A">Line A</option>
-              <option value="Line B">Line B</option>
-              <option value="Line C">Line C</option>
-            </select>
-          </div>
-          <!-- Calibration Status -->
-          <div class="col-span-2 space-y-1.5">
-            <label class="block text-xs font-bold uppercase text-slate-500">Calibration State</label>
-            <select id="drawerMachineStatus" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white">
-              <option value="Calibrated">Calibrated</option>
-              <option value="Calibration Due">Calibration Due</option>
-              <option value="Under Maintenance">Under Maintenance</option>
-            </select>
-          </div>
-          <!-- Last Calib -->
-          <div class="col-span-1 space-y-1.5">
-            <label class="block text-xs font-bold uppercase text-slate-500">Last Calibrated Date</label>
-            <input id="drawerMachineLast" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white font-data-tabular" type="date" required />
-          </div>
-          <!-- Next Calib -->
-          <div class="col-span-1 space-y-1.5">
-            <label class="block text-xs font-bold uppercase text-slate-500">Next Calibration Date</label>
-            <input id="drawerMachineNext" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white font-data-tabular" type="date" required />
           </div>
           <!-- Control Points -->
           <div class="col-span-2 space-y-1.5">
             <label class="block text-xs font-bold uppercase text-slate-500">Control Points &amp; Target Tolerances</label>
-            <textarea id="drawerMachineControlPoints" rows="3" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm p-3 font-semibold placeholder-slate-400 bg-white" placeholder="Describe parameters to watch, torque targets (e.g. 12-17Nm) or hydraulic limits (e.g. 6-7 Mpa)..." required></textarea>
+            <textarea id="drawerMachineControlPoints" rows="4" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm p-3 font-semibold placeholder-slate-400 bg-white" placeholder="Describe parameters to watch, torque targets (e.g. 12-17Nm) or hydraulic limits (e.g. 6-7 Mpa)..." required></textarea>
           </div>
         </div>
 
@@ -390,7 +301,7 @@
       </div>
       <div class="space-y-1.5 flex-1">
         <h4 class="font-headline-sm text-headline-sm text-slate-900" id="deleteConfirmTitle">Delete hardware asset?</h4>
-        <p class="text-xs text-on-surface-variant leading-relaxed font-medium" id="deleteConfirmMessage">Are you sure you want to permanently delete this equipment? This action cannot be undone and will disconnect any active PLC IP mappings.</p>
+        <p class="text-xs text-on-surface-variant leading-relaxed font-medium" id="deleteConfirmMessage">Are you sure you want to permanently delete this equipment? This action cannot be undone.</p>
       </div>
     </div>
     <div class="mt-6 flex justify-end gap-3 pt-3 border-t border-slate-100 select-none">
@@ -444,7 +355,7 @@
     <!-- Info / Schema guidelines -->
     <div class="text-[11px] text-slate-505 bg-slate-50 border border-slate-100 p-3.5 rounded-lg space-y-1.5 font-medium leading-relaxed">
       <p class="font-bold text-slate-700">Expected Columns for CSV:</p>
-      <code class="block bg-white p-1.5 rounded border border-slate-200 font-mono text-[9px] text-slate-600 select-all">machineCode, machineName, type, plcBinding, controlPoints, status, lastCalibrated, nextCalibration, lineAllocated</code>
+      <code class="block bg-white p-1.5 rounded border border-slate-200 font-mono text-[9px] text-slate-600 select-all">machineCode, machineName, type, controlPoints</code>
       <div class="flex justify-between items-center pt-2 text-[10px]">
         <a href="#" onclick="downloadCsvTemplate(event)" class="text-primary font-bold hover:underline flex items-center gap-1">
           <span class="material-symbols-outlined text-[12px]">download</span>
@@ -509,26 +420,15 @@
 
       function renderMachines() {
           const totalCount = machinesList.length;
-          const plcBoundCount = machinesList.filter(m => m.plcBinding && m.plcBinding !== 'X').length;
-          const calibAlertCount = machinesList.filter(m => m.status !== 'Calibrated').length;
-
-          document.getElementById('statTotalMachines').textContent = totalCount;
-          document.getElementById('statPlcCount').textContent = plcBoundCount;
-          document.getElementById('statCalibAlerts').textContent = calibAlertCount;
+          const statTotal = document.getElementById('statTotalMachines');
+          if (statTotal) statTotal.textContent = totalCount;
 
           const query = machineFilterQuery.toLowerCase().trim();
           const filtered = machinesList.filter(m => {
-              const matchesSearch = m.machineCode.toLowerCase().includes(query) ||
-                                    m.machineName.toLowerCase().includes(query) ||
-                                    m.plcBinding.toLowerCase().includes(query) ||
-                                    m.type.toLowerCase().includes(query) ||
-                                    m.controlPoints.toLowerCase().includes(query);
-                                    
-              let matchesStatus = true;
-              if (machineSelectedStatus !== 'ALL') {
-                  matchesStatus = m.status === machineSelectedStatus;
-              }
-              return matchesSearch && matchesStatus;
+              return m.machineCode.toLowerCase().includes(query) ||
+                     m.machineName.toLowerCase().includes(query) ||
+                     m.type.toLowerCase().includes(query) ||
+                     m.controlPoints.toLowerCase().includes(query);
           });
 
           const totalFiltered = filtered.length;
@@ -557,7 +457,7 @@
           const tbody = document.getElementById('machineTableBody');
           tbody.innerHTML = '';
           if (items.length === 0) {
-              tbody.innerHTML = `<tr><td colspan="7" class="px-6 py-12 text-center text-on-surface-variant font-medium">No machinery configurations matched search filters.</td></tr>`;
+              tbody.innerHTML = `<tr><td colspan="4" class="px-6 py-12 text-center text-on-surface-variant font-medium">No machinery configurations matched search filters.</td></tr>`;
               return;
           }
           items.forEach(m => {
@@ -569,18 +469,6 @@
               else if (m.type === 'Measurement Tool') typeColor = 'bg-amber-50 text-amber-700 border-amber-200';
               else if (m.type === 'PLC Terminal') typeColor = 'bg-indigo-50 text-indigo-700 border-indigo-200';
 
-              let calibBadge = '';
-              if (m.status === 'Calibrated') {
-                  calibBadge = `<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/50"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>Calibrated</span>`;
-              } else if (m.status === 'Calibration Due') {
-                  calibBadge = `<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200/50"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5"></span>Calibration Due</span>`;
-              } else {
-                  calibBadge = `<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200/50"><span class="w-1.5 h-1.5 rounded-full bg-rose-500 mr-1.5"></span>Maintenance</span>`;
-              }
-              const ipTag = m.plcBinding && m.plcBinding !== 'X'
-                  ? `<span class="font-bold text-slate-700 font-data-tabular text-xs flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>${m.plcBinding}</span>`
-                  : `<span class="text-slate-400 font-medium text-xs flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>No IP</span>`;
-
               tr.innerHTML = `
                   <td class="px-6 py-4 font-bold text-slate-900 font-data-tabular text-data-tabular">
                       <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold border bg-slate-50 border-slate-200 text-slate-700">${m.machineCode}</span>
@@ -589,9 +477,6 @@
                   <td class="px-6 py-4">
                       <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold border ${typeColor}">${m.type}</span>
                   </td>
-                  <td class="px-6 py-4">${ipTag}</td>
-                  <td class="px-6 py-4 font-semibold text-xs text-slate-600">${m.lineAllocated}</td>
-                  <td class="px-6 py-4">${calibBadge}</td>
                   <td class="px-6 py-4 text-right">
                       <div class="flex items-center justify-end gap-2">
                           <button class="w-8 h-8 rounded-lg border border-outline-variant/30 bg-white flex items-center justify-center text-slate-500 hover:text-primary hover:bg-slate-50 transition-colors shadow-sm cursor-pointer" onclick="openViewMachineDrawer('${m.machineCode}')" title="View details" type="button">
@@ -658,22 +543,34 @@
           document.getElementById('viewMachineName').textContent = m.machineName;
           document.getElementById('viewMachineCodeBadge').textContent = m.machineCode;
           document.getElementById('viewMachineType').textContent = m.type;
-          document.getElementById('viewMachinePlcBinding').textContent = m.plcBinding && m.plcBinding !== 'X' ? m.plcBinding : 'Not Bound';
-          document.getElementById('viewMachineLine').textContent = m.lineAllocated;
-          document.getElementById('viewMachineLastCalib').textContent = m.lastCalibrated;
-          document.getElementById('viewMachineNextCalib').textContent = m.nextCalibration;
           document.getElementById('viewMachineControlPoints').textContent = m.controlPoints;
           const iconEl = document.getElementById('viewMachineIcon');
           if (m.type === 'Machine') iconEl.textContent = 'precision_manufacturing';
           else if (m.type === 'Jig') iconEl.textContent = 'layers';
           else if (m.type === 'Measurement Tool') iconEl.textContent = 'square_foot';
           else iconEl.textContent = 'router';
-          const statusBadge = document.getElementById('viewMachineStatusBadge');
-          statusBadge.textContent = m.status;
-          if (m.status === 'Calibrated') statusBadge.className = 'inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200';
-          else if (m.status === 'Calibration Due') statusBadge.className = 'inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200';
-          else statusBadge.className = 'inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200';
           toggleViewMachineModal(true);
+      }
+
+      function handleMachineTypeChange(select) {
+          if (select.value === 'NEW_TYPE') {
+              const customType = prompt("Enter custom equipment type:");
+              if (customType && customType.trim()) {
+                  const trimmed = customType.trim();
+                  let existingOpt = Array.from(select.options).find(opt => opt.value.toLowerCase() === trimmed.toLowerCase());
+                  if (existingOpt) {
+                      select.value = existingOpt.value;
+                  } else {
+                      const newOpt = document.createElement('option');
+                      newOpt.value = trimmed;
+                      newOpt.textContent = trimmed;
+                      select.insertBefore(newOpt, select.options[select.options.length - 1]);
+                      select.value = trimmed;
+                  }
+              } else {
+                  select.value = 'Machine';
+              }
+          }
       }
 
       function openAddMachineDrawer() {
@@ -683,11 +580,6 @@
           codeInput.value = ''; codeInput.readOnly = false; codeInput.classList.remove('bg-slate-50', 'text-slate-500');
           document.getElementById('drawerMachineName').value = '';
           document.getElementById('drawerMachineType').value = 'Machine';
-          document.getElementById('drawerMachineIp').value = '';
-          document.getElementById('drawerMachineLine').selectedIndex = 0;
-          document.getElementById('drawerMachineStatus').value = 'Calibrated';
-          document.getElementById('drawerMachineLast').value = '';
-          document.getElementById('drawerMachineNext').value = '';
           document.getElementById('drawerMachineControlPoints').value = '';
           toggleAddMachineModal(true);
       }
@@ -700,12 +592,17 @@
           const codeInput = document.getElementById('drawerMachineCode');
           codeInput.value = m.machineCode; codeInput.readOnly = true; codeInput.classList.add('bg-slate-50', 'text-slate-500');
           document.getElementById('drawerMachineName').value = m.machineName;
-          document.getElementById('drawerMachineType').value = m.type;
-          document.getElementById('drawerMachineIp').value = m.plcBinding;
-          document.getElementById('drawerMachineLine').value = m.lineAllocated;
-          document.getElementById('drawerMachineStatus').value = m.status;
-          document.getElementById('drawerMachineLast').value = m.lastCalibrated;
-          document.getElementById('drawerMachineNext').value = m.nextCalibration;
+          
+          const typeSelect = document.getElementById('drawerMachineType');
+          let existingOpt = Array.from(typeSelect.options).find(opt => opt.value.toLowerCase() === m.type.toLowerCase());
+          if (!existingOpt) {
+              const newOpt = document.createElement('option');
+              newOpt.value = m.type;
+              newOpt.textContent = m.type;
+              typeSelect.insertBefore(newOpt, typeSelect.options[typeSelect.options.length - 1]);
+          }
+          typeSelect.value = m.type;
+          
           document.getElementById('drawerMachineControlPoints').value = m.controlPoints;
           toggleAddMachineModal(true);
       }
@@ -715,18 +612,34 @@
           const machineCode = document.getElementById('drawerMachineCode').value.toUpperCase().replace(/\s+/g, '_');
           const machineName = document.getElementById('drawerMachineName').value;
           const type = document.getElementById('drawerMachineType').value;
-          const plcBinding = document.getElementById('drawerMachineIp').value;
-          const lineAllocated = document.getElementById('drawerMachineLine').value;
-          const status = document.getElementById('drawerMachineStatus').value;
-          const lastCalibrated = document.getElementById('drawerMachineLast').value;
-          const nextCalibration = document.getElementById('drawerMachineNext').value;
           const controlPoints = document.getElementById('drawerMachineControlPoints').value;
           const existingIdx = machinesList.findIndex(m => m.machineCode.toUpperCase() === machineCode.toUpperCase());
           if (existingIdx > -1) {
-              machinesList[existingIdx] = { machineCode, machineName, type, plcBinding, lineAllocated, status, lastCalibrated, nextCalibration, controlPoints };
+              const old = machinesList[existingIdx];
+              machinesList[existingIdx] = {
+                  machineCode,
+                  machineName,
+                  type,
+                  controlPoints,
+                  plcBinding: old.plcBinding || 'X',
+                  lineAllocated: old.lineAllocated || '',
+                  status: old.status || 'Calibrated',
+                  lastCalibrated: old.lastCalibrated || '',
+                  nextCalibration: old.nextCalibration || ''
+              };
               showMachineToast(`Asset details for ${machineName} updated successfully.`);
           } else {
-              machinesList.unshift({ machineCode, machineName, type, plcBinding, lineAllocated, status, lastCalibrated, nextCalibration, controlPoints });
+              machinesList.unshift({
+                  machineCode,
+                  machineName,
+                  type,
+                  controlPoints,
+                  plcBinding: 'X',
+                  lineAllocated: '',
+                  status: 'Calibrated',
+                  lastCalibrated: '',
+                  nextCalibration: ''
+              });
               showMachineToast(`Equipment asset ${machineName} created successfully.`);
           }
           localStorage.setItem('machinesList', JSON.stringify(machinesList));
@@ -852,7 +765,7 @@
 
       function loadDemoData() {
           importFileNameStr = 'demo_assets_bulk.csv';
-          importFileContent = `machineCode,machineName,type,plcBinding,controlPoints,status,lastCalibrated,nextCalibration,lineAllocated\nMC-HEAT-05,Vulcanizing Press Station,Machine,192.168.1.115,Temperature press 160C,Calibrated,2026-06-01,2026-12-01,Line A\nJG-ALIGN-09,Sleeve Alignment Clamp Jig,Jig,192.168.1.116,Alignment contour match,Calibration Due,2026-01-10,2026-07-10,Line B\nTL-PRES-14,Electronic Depth Insertion Tool,Measurement Tool,192.168.1.117,Pin insertion depth 12mm,Calibrated,2026-06-15,2026-12-15,Line A`;
+          importFileContent = `machineCode,machineName,type,controlPoints\nMC-HEAT-05,Vulcanizing Press Station,Machine,Temperature press 160C\nJG-ALIGN-09,Sleeve Alignment Clamp Jig,Jig,Alignment contour match\nTL-PRES-14,Electronic Depth Insertion Tool,Measurement Tool,Pin insertion depth 12mm`;
           
           setupSelectedFile(importFileNameStr, '1.2 KB');
           showMachineToast('Simulated demo dataset populated! Click "Start Import" to verify.');
@@ -860,9 +773,9 @@
 
       function downloadCsvTemplate(e) {
           e.preventDefault();
-          const headers = "machineCode,machineName,type,plcBinding,controlPoints,status,lastCalibrated,nextCalibration,lineAllocated\n" +
-                          "MC-HEATER-09,Infrared Pre-Heating Tunnel,Machine,192.168.1.111,Infrared sensors 180C±5C,Calibrated,2026-06-01,2026-12-01,Line A\n" +
-                          "JG-CRIMP-05,Pneumatic Socket Assembly Jig,Jig,192.168.1.112,Crimp gauge ring,Calibration Due,2026-01-10,2026-07-10,Line B";
+          const headers = "machineCode,machineName,type,controlPoints\n" +
+                          "MC-HEATER-09,Infrared Pre-Heating Tunnel,Machine,Infrared sensors 180C±5C\n" +
+                          "JG-CRIMP-05,Pneumatic Socket Assembly Jig,Jig,Crimp gauge ring";
           const blob = new Blob([headers], { type: 'text/csv' });
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
@@ -991,6 +904,7 @@
 
       window.openAddMachineDrawer = openAddMachineDrawer;
       window.openEditMachineDrawer = openEditMachineDrawer;
+      window.handleMachineTypeChange = handleMachineTypeChange;
       window.deleteMachine = deleteMachine;
       window.saveMachine = saveMachine;
       window.toggleAddMachineModal = toggleAddMachineModal;

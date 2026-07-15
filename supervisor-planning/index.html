@@ -68,7 +68,7 @@
   <!-- Bento grid content -->
   <div class="col-span-12 grid grid-cols-1 lg:grid-cols-12 gap-6">
     <!-- Left Column: Work Order Summary -->
-    <div class="lg:col-span-3">
+    <div class="lg:col-span-4">
       <div class="bg-white border border-outline-variant/30 rounded-xl flex flex-col h-full shadow-sm overflow-hidden">
         <div class="p-4 border-b border-outline-variant/30 bg-slate-50">
           <h3 class="font-headline-sm text-headline-sm text-primary flex items-center gap-2">
@@ -116,7 +116,7 @@
     </div>
 
     <!-- Center Column: Planning Form -->
-    <div class="lg:col-span-6">
+    <div class="lg:col-span-8">
       <div class="bg-white border border-outline-variant/30 rounded-xl h-full shadow-sm overflow-hidden flex flex-col">
         <div class="p-4 border-b border-outline-variant/30 bg-slate-50">
           <h3 class="font-headline-sm text-headline-sm text-primary flex items-center gap-2">
@@ -176,30 +176,6 @@
           </div>
           <div class="pt-4 border-t border-outline-variant/30 flex justify-end">
             <button class="bg-primary text-white px-6 py-2 rounded-lg text-sm font-semibold hover:opacity-95 transition-all shadow-sm cursor-pointer" onclick="saveActiveWO()">Save Plan</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Right Column: Validation Checklist -->
-    <div class="lg:col-span-3">
-      <div class="bg-white border border-outline-variant/30 rounded-xl h-full flex flex-col shadow-sm overflow-hidden">
-        <div class="p-4 border-b border-outline-variant/30 bg-slate-50 flex justify-between items-center">
-          <h3 class="font-headline-sm text-headline-sm text-primary flex items-center gap-2">
-            <span class="material-symbols-outlined text-[20px] text-primary">fact_check</span>
-            Validation
-          </h3>
-          <span class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded-lg font-data-tabular text-data-tabular font-bold" id="validation-score-badge">0/7 OK</span>
-        </div>
-        <div class="p-4 flex-grow">
-          <ul class="space-y-4" id="validation-list-items">
-            <!-- populates dynamically with custom checkmarks -->
-          </ul>
-        </div>
-        <div class="p-4 border-t border-outline-variant/30 bg-slate-50" id="validation-warning-box">
-          <div class="bg-error-container/30 text-error px-3 py-2 rounded-lg font-body-sm text-body-sm border border-error-container flex items-center gap-2 font-semibold">
-            <span class="material-symbols-outlined text-[16px]">warning</span>
-            Resolve pending validations to release.
           </div>
         </div>
       </div>
