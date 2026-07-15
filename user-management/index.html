@@ -132,12 +132,12 @@
 <!-- Page Canvas -->
 <div class="p-container-padding grid grid-cols-12 gap-6 bg-background">
   <!-- User Management Header -->
-  <div class="col-span-12 flex justify-between items-end mb-6">
+  <div class="col-span-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
     <div>
       <h2 class="font-headline-lg text-headline-lg text-primary mb-1">User Management</h2>
       <p class="font-body-md text-body-md text-on-surface-variant">Manage global user accounts, line allocations, and status settings.</p>
     </div>
-    <button class="flex items-center gap-2 bg-primary text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm" onclick="openAddUserDrawer()">
+    <button class="flex items-center justify-center gap-2 bg-primary text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm w-full md:w-auto whitespace-nowrap" onclick="openAddUserDrawer()">
       <span class="material-symbols-outlined text-[18px]">person_add</span>
       Add New User
     </button>
@@ -181,16 +181,16 @@
 
   <!-- Bento Layout: User List -->
   <section class="col-span-12 bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm flex flex-col">
-    <div class="px-6 py-4 border-b border-outline-variant/30 flex justify-between items-center bg-slate-50">
+    <div class="px-6 py-4 border-b border-outline-variant/30 flex flex-col sm:flex-row justify-between items-start sm:items-center bg-slate-50 gap-4">
       <h3 class="font-headline-md text-headline-md text-primary">Authorized Personnel</h3>
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
         <!-- Search Box -->
-        <div class="relative w-48">
+        <div class="relative flex-grow sm:flex-none sm:w-48">
           <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
           <input id="searchInput" class="w-full bg-white border border-outline-variant/30 rounded-lg pl-8 pr-3 py-1 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-8" placeholder="Filter employees..." type="text" oninput="handleSearch()"/>
         </div>
         <!-- View Toggle Switch -->
-        <div class="flex items-center gap-1 bg-white p-1 rounded-lg border border-outline-variant/30 h-8">
+        <div class="flex items-center gap-1 bg-white p-1 rounded-lg border border-outline-variant/30 h-8 flex-shrink-0">
           <button id="viewTableBtn" class="p-1 rounded text-primary bg-slate-100 flex items-center justify-center w-6 h-6 hover:bg-slate-100 hover:text-primary transition-colors" onclick="setUserViewMode('table')">
             <span class="material-symbols-outlined text-[16px]">format_list_bulleted</span>
           </button>
@@ -226,9 +226,9 @@
     </div>
 
     <!-- Pagination Footer -->
-    <div class="px-6 py-4 border-t border-outline-variant/30 flex justify-between items-center bg-slate-50 text-xs font-semibold text-on-surface-variant flex-shrink-0 select-none">
-      <div id="paginationInfo">Showing 0 to 0 of 0 entries</div>
-      <div class="flex items-center gap-2">
+    <div class="px-6 py-4 border-t border-outline-variant/30 flex flex-col sm:flex-row justify-between items-center gap-3 bg-slate-50 text-xs font-semibold text-on-surface-variant flex-shrink-0 select-none">
+      <div id="paginationInfo" class="truncate whitespace-nowrap max-w-full" title="Showing 0 to 0 of 0 entries">Showing 0 to 0 of 0 entries</div>
+      <div class="flex items-center gap-2 flex-shrink-0">
         <button id="prevPageBtn" class="px-3 py-1.5 border border-outline-variant/30 bg-white rounded-lg hover:bg-slate-50 transition-colors cursor-pointer" onclick="changePage(-1)">Previous</button>
         <div id="pageNumbers" class="flex gap-1.5">
           <!-- Page numbers inserted dynamically -->
@@ -577,7 +577,11 @@
           const infoText = totalFiltered > 0 
               ? `Showing ${startIdx + 1} to ${endIdx} of ${totalFiltered} entries`
               : 'Showing 0 to 0 of 0 entries';
-          document.getElementById('paginationInfo').textContent = infoText;
+          const infoEl = document.getElementById('paginationInfo');
+          if (infoEl) {
+              infoEl.textContent = infoText;
+              infoEl.setAttribute('title', infoText);
+          }
 
           // Renders page numbers
           renderPageNumbers(totalPages);

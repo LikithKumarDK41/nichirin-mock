@@ -49,15 +49,15 @@
 <!-- Main Content Area -->
 <main class="flex-grow pt-1 px-6 pb-6 flex flex-col gap-6">
   <!-- Header Section -->
-  <div class="flex justify-between items-end mb-5">
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-5">
     <div>
       <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Shift Management</h2>
       <p class="font-body-md text-body-md text-on-surface-variant">Configure factory operation shifts, timing profiles, lunch breaks, and supervisor assignments.</p>
     </div>
-    <div class="flex gap-2">
-      <button onclick="openShiftDrawerForCreate()" class="px-4 py-2 bg-primary text-white font-label-bold text-label-bold rounded-lg hover:bg-primary/95 transition-colors flex items-center gap-2 text-sm font-semibold shadow-sm cursor-pointer">
+    <div class="flex gap-2 w-full md:w-auto md:justify-end shrink-0">
+      <button onclick="openShiftDrawerForCreate()" class="px-4 py-2 bg-primary text-white font-label-bold text-label-bold rounded-lg hover:bg-primary/95 transition-colors flex items-center justify-center gap-2 text-sm font-semibold shadow-sm cursor-pointer w-full md:w-auto whitespace-nowrap">
         <span class="material-symbols-outlined text-[18px]">add</span>
-        Add Shift Profile
+        <span>Add Shift Profile</span>
       </button>
     </div>
   </div>
@@ -109,9 +109,9 @@
     </div>
 
     <!-- Pagination / Footer -->
-    <div class="p-4 flex items-center justify-between border-t border-outline-variant/30 bg-slate-50">
-      <span id="shift-pagination-text" class="font-body-sm text-body-sm text-on-surface-variant">Showing -- to -- of -- shifts</span>
-      <div class="flex gap-1">
+    <div class="p-4 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-outline-variant/30 bg-slate-50">
+      <span id="shift-pagination-text" class="font-body-sm text-body-sm text-on-surface-variant truncate whitespace-nowrap max-w-full" title="Showing -- to -- of -- shifts">Showing -- to -- of -- shifts</span>
+      <div class="flex gap-1 flex-shrink-0">
         <button class="p-1 border border-outline-variant/30 rounded bg-white text-on-surface-variant hover:bg-slate-50 disabled:opacity-50" disabled>
           <span class="material-symbols-outlined text-[18px]">chevron_left</span>
         </button>
@@ -264,7 +264,11 @@
                       <td colspan="8" class="p-6 text-center text-slate-400 font-semibold">No shift profiles matching your filters</td>
                   </tr>
               `;
-              document.getElementById('shift-pagination-text').textContent = 'Showing 0 of 0 shift profiles';
+              const pagTextEl = document.getElementById('shift-pagination-text');
+              if (pagTextEl) {
+                  pagTextEl.textContent = 'Showing 0 of 0 shift profiles';
+                  pagTextEl.setAttribute('title', 'Showing 0 of 0 shift profiles');
+              }
               return;
           }
 
@@ -295,7 +299,12 @@
               tbody.appendChild(row);
           });
 
-          document.getElementById('shift-pagination-text').textContent = `Showing 1 to ${list.length} of ${list.length} shift profiles`;
+          const pagTextEl = document.getElementById('shift-pagination-text');
+          if (pagTextEl) {
+              const txt = `Showing 1 to ${list.length} of ${list.length} shift profiles`;
+              pagTextEl.textContent = txt;
+              pagTextEl.setAttribute('title', txt);
+          }
       }
 
       function openShiftDrawerForCreate() {

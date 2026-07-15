@@ -38,7 +38,7 @@
       <h2 class="font-headline-lg text-headline-lg text-primary mb-1">QC Pending Approvals</h2>
       <p class="font-body-md text-body-md text-on-surface-variant">Review and validate active quality control points before production sign-off.</p>
     </div>
-    <div class="relative min-w-[260px] z-50">
+    <div class="relative w-full sm:w-auto sm:min-w-[260px] z-50">
       <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Select Work Order ID</label>
       <div class="relative">
         <button id="qc-wo-dropdown-trigger" class="w-full bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-9 px-3 font-semibold flex items-center justify-between cursor-pointer" onclick="toggleQCDropdown()">
@@ -175,20 +175,22 @@
           <!-- Control Points Table -->
           <div>
             <h4 class="font-body-sm text-body-sm text-on-surface-variant font-bold mb-3 uppercase tracking-wide">Control Points</h4>
-            <div class="border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm bg-white">
-              <table class="w-full text-left border-collapse">
-                <thead class="bg-slate-50 border-b border-outline-variant/30 font-data-tabular text-data-tabular text-on-surface-variant">
-                  <tr>
-                    <th class="p-3 font-medium">Parameter</th>
-                    <th class="p-3 font-medium">Type</th>
-                    <th class="p-3 font-medium">Target / Spec</th>
-                    <th class="p-3 font-medium w-32 text-center">Status</th>
-                  </tr>
-                </thead>
-                <tbody id="qc-control-points-tbody" class="font-data-tabular text-data-tabular divide-y divide-outline-variant/20">
-                  <!-- Populated dynamically -->
-                </tbody>
-              </table>
+             <div class="border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm bg-white">
+              <div class="overflow-x-auto w-full">
+                <table class="w-full text-left border-collapse min-w-[500px] md:min-w-0">
+                  <thead class="bg-slate-50 border-b border-outline-variant/30 font-data-tabular text-data-tabular text-on-surface-variant">
+                    <tr>
+                      <th class="p-3 font-medium">Parameter</th>
+                      <th class="p-3 font-medium">Type</th>
+                      <th class="p-3 font-medium">Target / Spec</th>
+                      <th class="p-3 font-medium w-32 text-center">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="qc-control-points-tbody" class="font-data-tabular text-data-tabular divide-y divide-outline-variant/20">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
           

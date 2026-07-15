@@ -58,16 +58,16 @@
       <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Work Order Monitoring</h2>
       <p class="font-body-md text-body-md text-on-surface-variant">Real-time status of active production orders and control cards across all lines.</p>
     </div>
-    <div class="flex gap-3 select-none shrink-0 flex-nowrap">
-      <button class="flex items-center gap-2 border border-outline-variant/50 bg-white text-slate-700 h-9 px-4 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-all shadow-sm cursor-pointer whitespace-nowrap" onclick="openWorkflowConfigModal()">
+    <div class="flex flex-wrap gap-2 sm:gap-3 select-none shrink-0 w-full sm:w-auto">
+      <button class="flex-1 flex items-center justify-center gap-2 border border-outline-variant/50 bg-white text-slate-700 h-9 px-4 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-all shadow-sm cursor-pointer whitespace-nowrap sm:flex-initial sm:w-auto" onclick="openWorkflowConfigModal()">
         <span class="material-symbols-outlined text-[18px]">schema</span>
         Workflow Configuration
       </button>
-      <button class="flex items-center gap-2 bg-primary text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm cursor-pointer whitespace-nowrap" onclick="syncWithSAP()" id="sapSyncBtn">
+      <button class="flex-1 flex items-center justify-center gap-2 bg-primary text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm cursor-pointer whitespace-nowrap sm:flex-initial sm:w-auto" onclick="syncWithSAP()" id="sapSyncBtn">
         <span class="material-symbols-outlined text-[18px]" id="sapSyncIcon">sync</span>
         Sync with SAP
       </button>
-      <button class="flex items-center gap-2 border border-outline-variant/50 bg-white text-slate-700 h-9 px-4 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-all shadow-sm cursor-pointer whitespace-nowrap" onclick="exportWorkOrders()">
+      <button class="flex-1 flex items-center justify-center gap-2 border border-outline-variant/50 bg-white text-slate-700 h-9 px-4 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-all shadow-sm cursor-pointer whitespace-nowrap sm:flex-initial sm:w-auto" onclick="exportWorkOrders()">
         <span class="material-symbols-outlined text-[18px]">download</span>
         Export Report
       </button>
@@ -116,14 +116,14 @@
       <h3 class="font-headline-md text-headline-md text-primary">Production Schedule Tracking</h3>
       
       <!-- Filters Layout sequential -->
-      <div class="flex items-center gap-3 flex-wrap">
+      <div class="grid grid-cols-2 sm:flex sm:items-center gap-3 w-full sm:w-auto">
         <!-- Search Box -->
-        <div class="relative w-48">
+        <div class="relative w-full sm:w-48 col-span-2 sm:col-span-1">
           <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
           <input id="woSearchInput" class="w-full bg-white border border-outline-variant/30 rounded-lg pl-8 pr-3 py-1 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-8" placeholder="Search WO or Part..." type="text" oninput="handleWOSearch()"/>
         </div>
         <!-- Status Filter -->
-        <select id="woStatusFilter" class="bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-3 pr-8 py-1 font-semibold min-w-[130px]" onchange="handleWODirtyFilter()">
+        <select id="woStatusFilter" class="bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-3 pr-8 py-1 font-semibold w-full sm:min-w-[130px]" onchange="handleWODirtyFilter()">
           <option value="ALL">All Statuses</option>
           <option value="Running">Running</option>
           <option value="Waiting">Waiting</option>
@@ -131,14 +131,14 @@
           <option value="Held">Held</option>
         </select>
         <!-- Line Filter -->
-        <select id="woLineFilter" class="bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-3 pr-8 py-1 font-semibold min-w-[150px]" onchange="handleWODirtyFilter()">
+        <select id="woLineFilter" class="bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-3 pr-8 py-1 font-semibold w-full sm:min-w-[150px]" onchange="handleWODirtyFilter()">
           <option value="ALL">All Lines</option>
           <option value="Line 1">Line 1 (Hose)</option>
           <option value="Line 2">Line 2 (Tube)</option>
           <option value="Line 3">Line 3 (Jigs)</option>
         </select>
         <!-- Shift Filter -->
-        <select id="woShiftFilter" class="bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-3 pr-8 py-1 font-semibold min-w-[110px]" onchange="handleWODirtyFilter()">
+        <select id="woShiftFilter" class="bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-3 pr-8 py-1 font-semibold w-full sm:min-w-[110px]" onchange="handleWODirtyFilter()">
           <option value="ALL">All Shifts</option>
           <option value="Shift A">Shift A</option>
           <option value="Shift B">Shift B</option>
@@ -168,9 +168,9 @@
     </div>
 
     <!-- Pagination Footer -->
-    <div class="px-6 py-4 border-t border-outline-variant/30 flex justify-between items-center bg-slate-50 text-xs font-semibold text-on-surface-variant flex-shrink-0 select-none">
-      <div id="woPaginationInfo">Showing 0 to 0 of 0 entries</div>
-      <div class="flex items-center gap-2">
+    <div class="px-6 py-4 border-t border-outline-variant/30 flex flex-col sm:flex-row justify-between items-center gap-3 bg-slate-50 text-xs font-semibold text-on-surface-variant flex-shrink-0 select-none">
+      <div id="woPaginationInfo" class="truncate whitespace-nowrap max-w-full" title="Showing 0 to 0 of 0 entries">Showing 0 to 0 of 0 entries</div>
+      <div class="flex items-center gap-2 flex-shrink-0">
         <button id="woPrevPageBtn" class="px-3 py-1.5 border border-outline-variant/30 bg-white rounded-lg hover:bg-slate-50 transition-colors cursor-pointer" onclick="changeWOPage(-1)">Previous</button>
         <div id="woPageNumbers" class="flex gap-1.5">
           <!-- Page numbers inserted dynamically -->
@@ -267,22 +267,22 @@
     <div class="bg-white w-full h-full flex flex-col relative text-slate-800 rounded-none overflow-hidden font-body-md">
       
       <!-- Top Header Bar -->
-      <div class="h-16 border-b border-slate-200 px-6 flex items-center justify-between bg-slate-50 flex-shrink-0 select-none">
+      <div class="h-16 border-b border-slate-200 px-4 sm:px-6 flex items-center justify-between bg-slate-50 flex-shrink-0 select-none">
         <!-- Header Title -->
-        <div class="flex items-center gap-2.5">
+        <div class="flex items-center gap-2">
           <span class="material-symbols-outlined text-primary text-[22px]">schema</span>
-          <h1 class="text-sm font-black text-slate-900 tracking-wide uppercase">Workflow Configuration</h1>
+          <h1 class="text-xs sm:text-sm font-black text-slate-900 tracking-wide uppercase">Workflow<span class="hidden sm:inline"> Configuration</span></h1>
         </div>
         
         <!-- Actions & Closing -->
-        <div class="flex items-center gap-3">
-          <button class="px-4 py-1.5 bg-primary text-white font-bold text-xs rounded hover:opacity-95 transition-opacity flex items-center gap-1.5 cursor-pointer" onclick="saveWorkflowConfig()">
+        <div class="flex items-center gap-2 sm:gap-3">
+          <button class="px-3 sm:px-4 py-1.5 bg-primary text-white font-bold text-xs rounded hover:opacity-95 transition-opacity flex items-center gap-1 sm:gap-1.5 cursor-pointer" onclick="saveWorkflowConfig()">
             <span class="material-symbols-outlined text-[16px]">save</span>
-            Save Workflow
+            <span>Save<span class="hidden sm:inline"> Workflow</span></span>
           </button>
-          <button class="px-3 py-1.5 text-slate-700 font-bold text-xs border border-slate-300 rounded hover:bg-slate-100 transition-colors flex items-center gap-1.5 cursor-pointer" onclick="closeWorkflowConfigModal()">
+          <button class="px-2.5 sm:px-3 py-1.5 text-slate-700 font-bold text-xs border border-slate-300 rounded hover:bg-slate-100 transition-colors flex items-center gap-1 sm:gap-1.5 cursor-pointer" onclick="closeWorkflowConfigModal()">
             <span class="material-symbols-outlined text-[16px]">close</span>
-            Close
+            <span>Close</span>
           </button>
         </div>
       </div>
@@ -568,9 +568,14 @@
             const endIdx = Math.min(startIdx + woPageSize, totalFiltered);
             const paginated = filtered.slice(startIdx, endIdx);
 
-            document.getElementById('woPaginationInfo').textContent = totalFiltered > 0
+            const infoText = totalFiltered > 0
                 ? `Showing ${startIdx + 1} to ${endIdx} of ${totalFiltered} entries`
                 : 'Showing 0 to 0 of 0 entries';
+            const infoEl = document.getElementById('woPaginationInfo');
+            if (infoEl) {
+                infoEl.textContent = infoText;
+                infoEl.setAttribute('title', infoText);
+            }
 
             renderPageNumbers(totalPages);
             renderTableRows(paginated);

@@ -261,8 +261,8 @@
 
     const SIDEBAR_HTML = `
       <aside class="fixed top-0 left-0 h-full w-[260px] bg-white text-on-surface border-r border-outline-variant/30 flex flex-col z-50 -translate-x-full lg:translate-x-0 transition-transform duration-300 select-none">
-        <div class="h-[64px] px-6 border-b border-outline-variant/30 bg-white flex items-center justify-center relative select-none flex-shrink-0">
-          <a class="flex items-center justify-center gap-2" href="${relPrefix}work-orders/index.html">
+        <div class="h-[64px] px-6 border-b border-outline-variant/30 bg-white flex items-center justify-start lg:justify-center relative select-none flex-shrink-0">
+          <a class="flex items-center gap-2 justify-start lg:justify-center w-full" href="${relPrefix}work-orders/index.html">
             <img src="${relPrefix}assets/logo.png" class="h-10 w-auto object-contain select-none" alt="NICHIRIN Logo" />
           </a>
           <button class="sidebar-close-btn absolute right-4 top-1/2 -translate-y-1/2 lg:hidden text-on-surface-variant hover:text-primary" aria-label="Close Sidebar">
@@ -363,23 +363,23 @@
 
     const HEADER_HTML = `
       <header class="fixed top-0 right-0 h-[64px] w-full lg:w-[calc(100%-260px)] px-6 bg-white border-b border-outline-variant/30 flex items-center justify-between z-40 transition-all duration-300 rounded-none shadow-sm select-none">
-        <div class="flex items-center gap-4">
-          <button class="sidebar-toggle-btn flex items-center justify-center w-10 h-10 text-on-surface-variant hover:text-primary rounded-xl transition-colors" aria-label="Toggle Sidebar">
+        <div class="flex items-center gap-4 min-w-0">
+          <button class="sidebar-toggle-btn flex items-center justify-center w-10 h-10 text-on-surface-variant hover:text-primary rounded-xl transition-colors flex-shrink-0" aria-label="Toggle Sidebar">
             <span class="material-symbols-outlined">menu</span>
           </button>
-          <span class="text-lg sm:text-xl font-black text-primary select-none tracking-tight leading-none">Control Card Digitization System</span>
+          <span class="text-lg sm:text-xl font-black text-primary select-none tracking-tight leading-none truncate" title="Control Card Digitization System">Control Card Digitization System</span>
         </div>
         
-        <div class="flex items-center gap-4 flex-wrap sm:flex-nowrap" id="main-header-right">
+        <div class="flex items-center gap-2 flex-shrink-0" id="main-header-right">
           <!-- Notification Bell and Dropdown Container -->
-          <div class="relative">
-            <button id="header-notification-btn" class="relative text-on-surface-variant hover:text-primary transition-colors p-2 rounded focus:outline-none" aria-label="Notifications">
-              <span class="material-symbols-outlined">notifications</span>
-              <span id="header-notification-badge" class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full animate-pulse hidden"></span>
+          <div class="relative flex items-center justify-center">
+            <button id="header-notification-btn" class="flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors p-2 rounded focus:outline-none h-10 w-10" aria-label="Notifications">
+              <span class="material-symbols-outlined text-[24px] leading-none">notifications</span>
+              <span id="header-notification-badge" class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full animate-pulse hidden"></span>
             </button>
             
             <!-- Notification Dropdown Panel -->
-            <div id="notification-dropdown" class="hidden absolute right-0 mt-2 w-[340px] sm:w-[380px] bg-white border border-outline-variant/50 rounded-xl shadow-xl z-50 overflow-hidden text-left select-none">
+            <div id="notification-dropdown" class="hidden fixed sm:absolute top-[58px] sm:top-full right-4 sm:right-0 left-4 sm:left-auto w-auto sm:w-[380px] mt-2 bg-white border border-outline-variant/50 rounded-xl shadow-xl z-50 overflow-hidden text-left select-none">
               <div class="px-4 py-3 border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-low min-h-[48px]" id="notification-header-actions">
                 <!-- Loaded dynamically -->
               </div>
@@ -395,13 +395,16 @@
             </div>
           </div>
           
+          <!-- Vertical Separator Line -->
+          <div class="h-6 w-px bg-slate-300 flex-shrink-0"></div>
+          
           <!-- Clickable Profile Trigger -->
-          <div id="header-profile-btn" class="flex items-center gap-2 ml-2 pl-4 border-l border-outline-variant/30 cursor-pointer hover:opacity-80 transition-opacity">
+          <div id="header-profile-btn" class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0">
             <div class="text-right hidden sm:block">
               <p id="header-profile-name" class="font-label-bold text-label-bold leading-none text-primary">T. Nakagawa</p>
               <p class="text-[10px] text-on-surface-variant uppercase mt-0.5 font-bold">Site Admin</p>
             </div>
-            <span class="material-symbols-outlined text-primary text-[32px] select-none">account_circle</span>
+            <span class="material-symbols-outlined text-primary text-[32px] leading-none select-none">account_circle</span>
           </div>
         </div>
       </header>
@@ -409,6 +412,8 @@
 
     root.innerHTML = `
       <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar Backdrop overlay for mobile -->
+        <div id="sidebar-backdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[45] transition-opacity duration-300 opacity-0 pointer-events-none lg:hidden"></div>
         ${SIDEBAR_HTML}
         <div class="flex-1 flex flex-col h-full overflow-hidden bg-surface relative">
           ${HEADER_HTML}
@@ -429,15 +434,31 @@
       </div>
     `;
 
-    // Bind event handlers for template sidebar
     const sidebar = root.querySelector('aside');
     const toggleBtn = root.querySelector('.sidebar-toggle-btn');
     const closeBtn = root.querySelector('.sidebar-close-btn');
+    const backdrop = root.querySelector('#sidebar-backdrop');
+
+    function openSidebarMobile() {
+      sidebar.classList.remove('-translate-x-full');
+      if (backdrop) {
+        backdrop.classList.remove('opacity-0', 'pointer-events-none');
+        backdrop.classList.add('opacity-100', 'pointer-events-auto');
+      }
+    }
+
+    function closeSidebarMobile() {
+      sidebar.classList.add('-translate-x-full');
+      if (backdrop) {
+        backdrop.classList.remove('opacity-100', 'pointer-events-auto');
+        backdrop.classList.add('opacity-0', 'pointer-events-none');
+      }
+    }
 
     if (toggleBtn && sidebar) {
       toggleBtn.addEventListener('click', () => {
         if (window.innerWidth < 1024) {
-          sidebar.classList.remove('-translate-x-full');
+          openSidebarMobile();
         } else {
           const mainWrapper = root.querySelector('#main-wrapper');
           const header = root.querySelector('header');
@@ -451,7 +472,17 @@
 
     if (closeBtn && sidebar) {
       closeBtn.addEventListener('click', () => {
-        sidebar.classList.add('-translate-x-full');
+        if (window.innerWidth < 1024) {
+          closeSidebarMobile();
+        } else {
+          sidebar.classList.add('-translate-x-full');
+        }
+      });
+    }
+
+    if (backdrop) {
+      backdrop.addEventListener('click', () => {
+        closeSidebarMobile();
       });
     }
 
@@ -823,13 +854,17 @@
       // Render static header title next to hamburger button from system settings
       const mainHeaderLeft = document.querySelector('header > div:first-child');
       if (mainHeaderLeft) {
+        mainHeaderLeft.classList.add('min-w-0');
         const menuBtn = mainHeaderLeft.querySelector('.sidebar-toggle-btn');
+        if (menuBtn) {
+          menuBtn.classList.add('flex-shrink-0');
+        }
         mainHeaderLeft.innerHTML = '';
         if (menuBtn) {
           mainHeaderLeft.appendChild(menuBtn);
         }
         const defaultTitle = document.createElement('span');
-        defaultTitle.className = 'text-lg sm:text-xl font-black text-primary select-none tracking-tight leading-none';
+        defaultTitle.className = 'text-lg sm:text-xl font-black text-primary select-none tracking-tight leading-none truncate';
 
         let sysName = 'Control Card Digitization System';
         try {
@@ -840,6 +875,7 @@
         } catch (e) { }
         
         defaultTitle.textContent = sysName;
+        defaultTitle.setAttribute('title', sysName);
         mainHeaderLeft.appendChild(defaultTitle);
       }
 
@@ -927,6 +963,11 @@
       const mobileSidebar = document.querySelector('aside');
       if (mobileSidebar && !mobileSidebar.classList.contains('-translate-x-full')) {
         mobileSidebar.classList.add('-translate-x-full');
+      }
+      const backdropEl = document.getElementById('sidebar-backdrop');
+      if (backdropEl) {
+        backdropEl.classList.remove('opacity-100', 'pointer-events-auto');
+        backdropEl.classList.add('opacity-0', 'pointer-events-none');
       }
 
     } catch (err) {

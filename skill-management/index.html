@@ -133,12 +133,12 @@
 <!-- Page Canvas -->
 <div class="p-container-padding grid grid-cols-12 gap-6 bg-background">
   <!-- Skill Management Header -->
-  <div class="col-span-12 flex justify-between items-end mb-6">
+  <div class="col-span-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
     <div>
       <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Skill Management</h2>
       <p class="font-body-md text-body-md text-on-surface-variant">Configure operator process skills, specify minimum qualification tiers, and track certified technicians.</p>
     </div>
-    <button class="flex items-center gap-2 bg-primary text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm cursor-pointer" onclick="openAddSkillDrawer()">
+    <button class="flex items-center justify-center gap-2 bg-primary text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm cursor-pointer w-full md:w-auto whitespace-nowrap" onclick="openAddSkillDrawer()">
       <span class="material-symbols-outlined text-[18px]">verified</span>
       Create Custom Skill
     </button>
@@ -174,16 +174,16 @@
 
   <!-- Bento Layout: Skills List -->
   <section class="col-span-12 bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm flex flex-col">
-    <div class="px-6 py-4 border-b border-outline-variant/30 flex justify-between items-center bg-slate-50 flex-wrap gap-4">
+    <div class="px-6 py-4 border-b border-outline-variant/30 flex flex-col sm:flex-row justify-between items-start sm:items-center bg-slate-50 gap-4">
       <h3 class="font-headline-md text-headline-md text-primary">Process Operations Qualifications</h3>
-      <div class="flex items-center gap-3">
+      <div class="flex flex-col xs:flex-row items-stretch xs:items-center gap-3 w-full sm:w-auto">
         <!-- Search Box -->
-        <div class="relative w-48">
+        <div class="relative w-full xs:w-48">
           <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
           <input id="skillSearchInput" class="w-full bg-white border border-outline-variant/30 rounded-lg pl-8 pr-3 py-1 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-8" placeholder="Filter skills..." type="text" oninput="handleSkillSearch()"/>
         </div>
         <!-- Skill Status Filter -->
-        <select id="skillStatusFilter" class="bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-3 pr-8 py-1 font-semibold min-w-[150px]" onchange="handleSkillStatusFilterChange()">
+        <select id="skillStatusFilter" class="bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-3 pr-8 py-1 font-semibold w-full xs:min-w-[150px] xs:w-auto" onchange="handleSkillStatusFilterChange()">
           <option value="ALL">All Statuses</option>
           <option value="Active">Active</option>
           <option value="Inactive">Inactive</option>
@@ -212,9 +212,9 @@
     </div>
 
     <!-- Pagination Footer -->
-    <div class="px-6 py-4 border-t border-outline-variant/30 flex justify-between items-center bg-slate-50 text-xs font-semibold text-on-surface-variant flex-shrink-0 select-none">
-      <div id="skillPaginationInfo">Showing 0 to 0 of 0 entries</div>
-      <div class="flex items-center gap-2">
+    <div class="px-6 py-4 border-t border-outline-variant/30 flex flex-col sm:flex-row justify-between items-center gap-3 bg-slate-50 text-xs font-semibold text-on-surface-variant flex-shrink-0 select-none">
+      <div id="skillPaginationInfo" class="truncate whitespace-nowrap max-w-full" title="Showing 0 to 0 of 0 entries">Showing 0 to 0 of 0 entries</div>
+      <div class="flex items-center gap-2 flex-shrink-0">
         <button id="skillPrevPageBtn" class="px-3 py-1.5 border border-outline-variant/30 bg-white rounded-lg hover:bg-slate-50 transition-colors cursor-pointer" onclick="changeSkillPage(-1)">Previous</button>
         <div id="skillPageNumbers" class="flex gap-1.5">
           <!-- Page numbers inserted dynamically -->
@@ -456,7 +456,11 @@
           const rangeInfo = totalFiltered > 0
               ? `Showing ${startIdx + 1} to ${endIdx} of ${totalFiltered} entries`
               : 'Showing 0 to 0 of 0 entries';
-          document.getElementById('skillPaginationInfo').textContent = rangeInfo;
+          const infoEl = document.getElementById('skillPaginationInfo');
+          if (infoEl) {
+              infoEl.textContent = rangeInfo;
+              infoEl.setAttribute('title', rangeInfo);
+          }
 
           renderSkillPageNumbers(totalPages);
           renderSkillTableRows(paginated);

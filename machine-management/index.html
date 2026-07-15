@@ -138,12 +138,12 @@
       <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Machine &amp; Device Management</h2>
       <p class="font-body-md text-body-md text-on-surface-variant">Configure line machinery, tooling jigs, bind active PLC network terminal IPs, and audit equipment calibrations.</p>
     </div>
-    <div class="flex gap-3 select-none shrink-0 flex-nowrap">
-      <button class="flex items-center gap-2 border border-primary/30 text-primary bg-white h-9 px-4 rounded-lg text-sm font-bold hover:bg-primary/5 transition-all shadow-sm cursor-pointer whitespace-nowrap" onclick="openImportModal()">
+    <div class="flex flex-wrap gap-2 sm:gap-3 select-none shrink-0 w-full sm:w-auto">
+      <button class="flex-1 flex items-center justify-center gap-2 border border-primary/30 text-primary bg-white h-9 px-4 rounded-lg text-sm font-bold hover:bg-primary/5 transition-all shadow-sm cursor-pointer whitespace-nowrap sm:flex-initial sm:w-auto" onclick="openImportModal()">
         <span class="material-symbols-outlined text-[18px]">cloud_upload</span>
         Import Bulk Data
       </button>
-      <button class="flex items-center gap-2 bg-primary text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm cursor-pointer whitespace-nowrap" onclick="openAddMachineDrawer()">
+      <button class="flex-1 flex items-center justify-center gap-2 bg-primary text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm cursor-pointer whitespace-nowrap sm:flex-initial sm:w-auto" onclick="openAddMachineDrawer()">
         <span class="material-symbols-outlined text-[18px]">precision_manufacturing</span>
         Add Equipment / Device
       </button>
@@ -182,14 +182,14 @@
   <section class="col-span-12 bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm flex flex-col">
     <div class="px-6 py-4 border-b border-outline-variant/30 flex justify-between items-center bg-slate-50 flex-wrap gap-4">
       <h3 class="font-headline-md text-headline-md text-primary">Machinery &amp; Tooling Catalog</h3>
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-3 w-full sm:w-auto">
         <!-- Search Box -->
-        <div class="relative w-48">
+        <div class="relative flex-1 sm:flex-initial sm:w-48">
           <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
           <input id="machineSearchInput" class="w-full bg-white border border-outline-variant/30 rounded-lg pl-8 pr-3 py-1 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-8" placeholder="Filter machinery..." type="text" oninput="handleMachineSearch()"/>
         </div>
         <!-- Status Filter -->
-        <select id="machineStatusFilter" class="bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-3 pr-8 py-1 font-semibold min-w-[160px]" onchange="handleMachineStatusFilterChange()">
+        <select id="machineStatusFilter" class="bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-3 pr-8 py-1 font-semibold flex-1 sm:flex-initial sm:min-w-[160px]" onchange="handleMachineStatusFilterChange()">
           <option value="ALL">All Calibrations</option>
           <option value="Calibrated">Calibrated</option>
           <option value="Calibration Due">Calibration Due</option>
@@ -219,9 +219,9 @@
     </div>
 
     <!-- Pagination Footer -->
-    <div class="px-6 py-4 border-t border-outline-variant/30 flex justify-between items-center bg-slate-50 text-xs font-semibold text-on-surface-variant flex-shrink-0 select-none">
-      <div id="machinePaginationInfo">Showing 0 to 0 of 0 entries</div>
-      <div class="flex items-center gap-2">
+    <div class="px-6 py-4 border-t border-outline-variant/30 flex flex-col sm:flex-row justify-between items-center gap-3 bg-slate-50 text-xs font-semibold text-on-surface-variant flex-shrink-0 select-none">
+      <div id="machinePaginationInfo" class="truncate whitespace-nowrap max-w-full" title="Showing 0 to 0 of 0 entries">Showing 0 to 0 of 0 entries</div>
+      <div class="flex items-center gap-2 flex-shrink-0">
         <button id="machinePrevPageBtn" class="px-3 py-1.5 border border-outline-variant/30 bg-white rounded-lg hover:bg-slate-50 transition-colors cursor-pointer" onclick="changeMachinePage(-1)">Previous</button>
         <div id="machinePageNumbers" class="flex gap-1.5">
           <!-- Page numbers inserted dynamically -->
@@ -543,7 +543,11 @@
           const rangeInfo = totalFiltered > 0
               ? `Showing ${startIdx + 1} to ${endIdx} of ${totalFiltered} entries`
               : 'Showing 0 to 0 of 0 entries';
-          document.getElementById('machinePaginationInfo').textContent = rangeInfo;
+          const infoEl = document.getElementById('machinePaginationInfo');
+          if (infoEl) {
+              infoEl.textContent = rangeInfo;
+              infoEl.setAttribute('title', rangeInfo);
+          }
 
           renderMachinePageNumbers(totalPages);
           renderMachineTableRows(paginated);
