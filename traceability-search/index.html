@@ -169,58 +169,19 @@
       <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Traceability Search</h2>
       <p class="font-body-md text-body-md text-on-surface-variant">Perform deep-dive historical investigations on production steps, quality metrics, and batch identifiers.</p>
     </div>
-    <div class="flex gap-3 w-full md:w-auto md:justify-end shrink-0">
+    <div class="flex gap-3 w-full md:w-auto md:justify-end shrink-0 items-center">
+      <div class="relative w-64">
+        <select id="traceability-wo-select" class="w-full pl-3 pr-10 py-1.5 bg-white border border-outline-variant/30 rounded-lg text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-9 font-semibold appearance-none bg-none">
+          <!-- Populated dynamically -->
+        </select>
+        <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+      </div>
       <button class="flex items-center justify-center gap-2 border border-outline-variant/50 bg-white text-slate-700 h-9 px-4 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-all shadow-sm cursor-pointer w-full md:w-auto whitespace-nowrap" onclick="exportTraceabilityReport()">
         <span class="material-symbols-outlined text-[18px]">download</span>
         <span>Export Report</span>
       </button>
     </div>
   </div>
-
-  <!-- Search & Filters Section -->
-  <section class="bg-white border border-outline-variant/30 p-6 rounded-xl shadow-sm">
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-      <h2 class="font-headline-md text-headline-md text-primary flex items-center gap-2">
-        <span class="material-symbols-outlined text-secondary">search</span>
-        Traceability Filter
-      </h2>
-      <button onclick="executeTraceabilitySearch()" class="bg-primary text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer w-full sm:w-auto whitespace-nowrap">
-        <span class="material-symbols-outlined text-sm">filter_alt</span>
-        Execute Search
-      </button>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-grid-gutter">
-      <div class="space-y-1.5">
-        <label class="font-label-bold text-label-bold text-on-surface-variant uppercase">Work Order</label>
-        <div class="relative">
-          <input id="traceability-wo-input" list="traceability-wo-options" class="w-full bg-white border border-outline-variant/30 rounded-lg px-3 py-1.5 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-9 font-semibold" placeholder="Search WO ID..." type="text"/>
-          <datalist id="traceability-wo-options"></datalist>
-        </div>
-      </div>
-      <div class="space-y-1.5">
-        <label class="font-label-bold text-label-bold text-on-surface-variant uppercase">QR Code / Serial</label>
-        <div class="relative">
-          <input id="traceability-qr-input" class="w-full bg-white border border-outline-variant/30 rounded-lg pl-3 pr-10 py-1.5 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-9" placeholder="Scan or type..." type="text"/>
-          <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">qr_code_scanner</span>
-        </div>
-      </div>
-      <div class="space-y-1.5">
-        <label class="font-label-bold text-label-bold text-on-surface-variant uppercase">Batch Number</label>
-        <input id="traceability-batch-input" class="w-full bg-white border border-outline-variant/30 rounded-lg px-3 py-1.5 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-9" placeholder="B-882-90" type="text"/>
-      </div>
-      <div class="space-y-1.5">
-        <label class="font-label-bold text-label-bold text-on-surface-variant uppercase">Manufacturing Line</label>
-        <div class="relative">
-          <select id="traceability-line-select" class="w-full pl-3 pr-8 py-1.5 bg-white border border-outline-variant/30 rounded-lg text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors appearance-none bg-none h-9 font-semibold">
-            <option value="Line 1 (Faridabad Brake Hose Assembly)">Line 1 (Hose)</option>
-            <option value="Line 2 (Faridabad Brake Tube Assembly)">Line 2 (Tube)</option>
-            <option value="Line 3 (Specialty Jigs Assembly)">Line 3 (Jigs)</option>
-          </select>
-          <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-on-surface-variant">arrow_drop_down</span>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- Result Overview Grid -->
   <div class="grid grid-cols-12 gap-grid-gutter">
@@ -252,79 +213,7 @@
         </div>
       </div>
 
-      <!-- QC Results Card -->
-      <div class="bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm">
-        <div class="bg-slate-50 px-4 py-3 border-b border-outline-variant/30 flex justify-between items-center">
-          <h3 class="font-headline-sm text-headline-sm text-primary uppercase">QC Metrics</h3>
-          <span class="bg-secondary/15 text-secondary text-[10px] px-2.5 py-0.5 font-bold rounded-lg border border-secondary/20 uppercase">LIVE</span>
-        </div>
-        <div class="p-4 grid grid-cols-2 gap-4">
-          <div class="bg-slate-50/50 border border-outline-variant/30 p-3 text-center rounded-lg">
-            <p class="text-[10px] text-on-surface-variant font-bold uppercase mb-1">Pass (OK)</p>
-            <p id="trace-qc-ok-pct" class="text-2xl font-black text-secondary font-data-tabular">--</p>
-          </div>
-          <div class="bg-slate-50/50 border border-outline-variant/30 p-3 text-center rounded-lg">
-            <p class="text-[10px] text-on-surface-variant font-bold uppercase mb-1">Fail (NG)</p>
-            <p id="trace-qc-ng-pct" class="text-2xl font-black text-error font-data-tabular">--</p>
-          </div>
-        </div>
-        <div class="px-4 pb-4">
-          <div id="trace-qc-progress-container" class="w-full bg-outline-variant/50 h-2 rounded-full overflow-hidden flex">
-            <div id="trace-qc-ok-bar" class="bg-secondary h-full" style="width: 0%"></div>
-            <div id="trace-qc-ng-bar" class="bg-error h-full" style="width: 0%"></div>
-          </div>
-        </div>
-      </div>
 
-      <!-- SAP Sync Status -->
-      <div class="bg-white border border-outline-variant/30 rounded-xl p-4 shadow-sm">
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container border border-primary/10">
-            <span class="material-symbols-outlined">sync</span>
-          </div>
-          <div>
-            <p class="text-[10px] font-bold text-on-surface-variant uppercase">Enterprise Integration</p>
-            <p class="font-headline-sm text-headline-sm text-primary">SAP ERP Sync Status</p>
-          </div>
-        </div>
-        <div class="space-y-3">
-          <div class="flex items-center justify-between p-2.5 bg-emerald-50 text-emerald-700 border border-emerald-200/50 rounded-lg">
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-secondary text-[18px]">check_circle</span>
-              <span class="text-sm font-medium">BOM Alignment</span>
-            </div>
-            <span class="text-[10px] font-data-tabular font-bold">SYNCHRONIZED</span>
-          </div>
-          <div class="flex items-center justify-between p-2.5 bg-emerald-50 text-emerald-700 border border-emerald-200/50 rounded-lg">
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-secondary text-[18px]">check_circle</span>
-              <span class="text-sm font-medium">Inventory Release</span>
-            </div>
-            <span class="text-[10px] font-data-tabular font-bold">COMPLETE</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Rework History Log -->
-      <div class="bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm">
-        <div class="bg-slate-50 px-4 py-3 border-b border-outline-variant/30">
-          <h3 class="font-headline-sm text-headline-sm text-primary uppercase">Rework Log</h3>
-        </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left whitespace-nowrap">
-            <thead class="bg-slate-50 border-b border-outline-variant/30">
-              <tr>
-                <th class="px-4 py-2 text-[10px] font-bold text-on-surface-variant uppercase">Part ID</th>
-                <th class="px-4 py-2 text-[10px] font-bold text-on-surface-variant uppercase">Issue</th>
-                <th class="px-4 py-2 text-[10px] font-bold text-on-surface-variant uppercase text-right">Result</th>
-              </tr>
-            </thead>
-            <tbody id="trace-rework-tbody" class="divide-y divide-outline-variant/30">
-              <!-- populated dynamically -->
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
 
     <!-- Right Column: QR Scan Timeline (Focus) -->
@@ -333,14 +222,6 @@
         <div>
           <h2 class="font-headline-md text-headline-md text-primary">QR Scan Timeline</h2>
           <p id="trace-timeline-subtitle" class="text-on-surface-variant text-body-sm">Complete end-to-end event trail for Work Order</p>
-        </div>
-        <div class="flex items-center gap-2">
-          <button class="w-9 h-9 flex items-center justify-center border border-outline-variant/30 rounded-lg hover:bg-slate-100 transition-colors shadow-sm bg-white text-on-surface-variant">
-            <span class="material-symbols-outlined text-[20px]">download</span>
-          </button>
-          <button class="w-9 h-9 flex items-center justify-center border border-outline-variant/30 rounded-lg hover:bg-slate-100 transition-colors shadow-sm bg-white text-on-surface-variant">
-            <span class="material-symbols-outlined text-[20px]">print</span>
-          </button>
         </div>
       </div>
       <div class="flex-grow p-8 relative">
@@ -385,179 +266,133 @@
             }
 
             populateWOOptions();
-
-            // Set dynamic select listener
-            const woInput = document.getElementById('traceability-wo-input');
-            if (woInput) {
-                woInput.addEventListener('input', function() {
-                    const selectedWO = workOrdersList.find(w => w.woNumber === this.value.trim());
-                    if (selectedWO) {
-                        // Autofill Line
-                        document.getElementById('traceability-line-select').value = selectedWO.line;
-                    }
-                });
-            }
-
-            // Default search the first work order or query parameter
-            const params = new URLSearchParams(window.location.search);
-            const woQuery = params.get('wo');
-            if (woQuery) {
-                if (woInput) woInput.value = woQuery;
-                executeTraceabilitySearch(woQuery);
-            } else if (workOrdersList && workOrdersList.length > 0) {
-                if (woInput) woInput.value = workOrdersList[0].woNumber;
-                executeTraceabilitySearch(workOrdersList[0].woNumber);
-            }
-        }
-
-        function populateWOOptions() {
-            const datalist = document.getElementById('traceability-wo-options');
-            if (!datalist) return;
-            datalist.innerHTML = '';
-            workOrdersList.forEach(w => {
-                const opt = document.createElement('option');
-                opt.value = w.woNumber;
-                opt.textContent = `${w.productName} (${w.partNumber})`;
-                datalist.appendChild(opt);
-            });
-        }
-
-        function executeTraceabilitySearch(targetWO) {
-            const woVal = targetWO || document.getElementById('traceability-wo-input').value.trim();
-            const activeWO = workOrdersList.find(w => w.woNumber === woVal) || workOrdersList[0];
-            if (!activeWO) return;
-
-            // 1. Update WO Summary Card
-            document.getElementById('trace-summary-part').textContent = activeWO.partNumber;
-            document.getElementById('trace-summary-target').textContent = `${activeWO.targetQty.toLocaleString()} units`;
-            document.getElementById('trace-summary-built').textContent = `${activeWO.doneQty.toLocaleString()} units`;
-            document.getElementById('trace-summary-start').textContent = "2026.07.13 06:00 AM";
-
-            // 2. Update QC Metrics
-            const okPct = activeWO.doneQty > 0 ? (activeWO.okQty / activeWO.doneQty * 100) : 100;
-            const ngPct = activeWO.doneQty > 0 ? (activeWO.ngQty / activeWO.doneQty * 100) : 0;
-
-            document.getElementById('trace-qc-ok-pct').textContent = `${okPct.toFixed(1)}%`;
-            document.getElementById('trace-qc-ng-pct').textContent = `${ngPct.toFixed(1)}%`;
-
-            const okBar = document.getElementById('trace-qc-ok-bar');
-            const ngBar = document.getElementById('trace-qc-ng-bar');
-            if (okBar && ngBar) {
-                okBar.style.width = `${okPct}%`;
-                ngBar.style.width = `${ngPct}%`;
-            }
-
-            // 3. Update Rework Log
-            const tbody = document.getElementById('trace-rework-tbody');
-            if (tbody) {
-                tbody.innerHTML = '';
-                if (activeWO.ngQty > 0) {
-                    const row1 = document.createElement('tr');
-                    row1.className = 'hover:bg-slate-50/50 transition-colors';
-                    row1.innerHTML = `
-                        <td class="px-4 py-2.5 font-data-tabular text-data-tabular text-slate-700 font-semibold">${activeWO.partNumber.slice(0, 8)}-NG1</td>
-                        <td class="px-4 py-2.5 text-sm text-slate-600">Visual Defect / Scratch</td>
-                        <td class="px-4 py-2.5 text-right">
-                          <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200">SCRAP</span>
-                        </td>
-                    `;
-                    tbody.appendChild(row1);
-
-                    if (activeWO.ngQty > 1) {
-                        const row2 = document.createElement('tr');
-                        row2.className = 'hover:bg-slate-50/50 transition-colors';
-                        row2.innerHTML = `
-                            <td class="px-4 py-2.5 font-data-tabular text-data-tabular text-slate-700 font-semibold">${activeWO.partNumber.slice(0, 8)}-NG2</td>
-                            <td class="px-4 py-2.5 text-sm text-slate-600">Leak pressure deviation</td>
-                            <td class="px-4 py-2.5 text-right">
-                              <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">REWORKED</span>
-                            </td>
-                        `;
-                        tbody.appendChild(row2);
-                    }
-                } else {
-                    tbody.innerHTML = `
-                        <tr>
-                            <td colspan="3" class="px-4 py-4 text-xs text-slate-400 font-semibold italic text-center">No defects or rework logs recorded for this order.</td>
-                        </tr>
-                    `;
-                }
-            }
-
-            // 4. Update Timeline Subtitle
-            document.getElementById('trace-timeline-subtitle').textContent = `Complete end-to-end event trail for Work Order #${activeWO.woNumber}`;
-
-            // 5. Render Timeline List
-            const timelineList = document.getElementById('trace-timeline-list');
-            if (timelineList) {
-                timelineList.innerHTML = '';
-                
-                if (!activeWO.steps || activeWO.steps.length === 0) {
-                    timelineList.innerHTML = '<p class="text-slate-400 text-sm italic font-semibold text-center py-8">No process step logs available.</p>';
-                    return;
-                }
-
-                activeWO.steps.forEach((step, idx) => {
-                    let iconName = 'settings';
-                    const nameLower = step.name.toLowerCase();
-                    if (nameLower.includes('picking') || nameLower.includes('intake')) iconName = 'warehouse';
-                    else if (nameLower.includes('cutting') || nameLower.includes('cut')) iconName = 'content_cut';
-                    else if (nameLower.includes('bending') || nameLower.includes('bend')) iconName = 'architecture';
-                    else if (nameLower.includes('crimp') || nameLower.includes('crimping')) iconName = 'compress';
-                    else if (nameLower.includes('curing') || nameLower.includes('oven') || nameLower.includes('bake')) iconName = 'local_fire_department';
-                    else if (nameLower.includes('test') || nameLower.includes('leak') || nameLower.includes('pressure')) iconName = 'science';
-                    else if (nameLower.includes('inspection') || nameLower.includes('qc') || nameLower.includes('audit') || nameLower.includes('pack')) iconName = 'fact_check';
-
-                    let iconBgClass = 'bg-slate-200 text-slate-600';
-                    let borderClass = '';
-                    let statusColorClass = 'text-slate-500';
-
-                    if (step.status === 'completed') {
-                        iconBgClass = 'bg-primary text-white';
-                        borderClass = 'border-l-4 border-l-emerald-500';
-                        statusColorClass = 'text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded';
-                    } else if (step.status === 'active' || step.status === 'running') {
-                        iconBgClass = 'bg-secondary-container text-primary';
-                        borderClass = 'border-l-4 border-l-amber-500';
-                        statusColorClass = 'text-amber-600 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded';
-                    } else {
-                        iconBgClass = 'bg-slate-100 text-slate-400';
-                        borderClass = 'opacity-60';
-                        statusColorClass = 'text-slate-400 bg-slate-50 border border-slate-200 px-2 py-0.5 rounded';
-                    }
-
-                    const stepCard = document.createElement('div');
-                    stepCard.className = 'flex gap-6 timeline-item-card transition-all duration-200';
-                    stepCard.innerHTML = `
-                        <div class="flex-shrink-0 w-10 h-10 rounded-full border-4 border-white flex items-center justify-center shadow-sm ${iconBgClass}">
-                          <span class="material-symbols-outlined text-[20px]">${iconName}</span>
-                        </div>
-                        <div class="flex-1 bg-slate-50/50 border border-outline-variant/30 rounded-xl p-4 shadow-sm ${borderClass}">
-                          <div class="flex justify-between items-start mb-2">
-                            <div>
-                              <h4 class="font-bold text-primary font-headline-sm">${step.name}</h4>
-                              <p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wide">${step.machine || 'Manual Station'}</p>
-                            </div>
-                            <span class="text-data-tabular font-bold text-on-surface-variant bg-slate-100 border border-slate-200/50 px-2 py-0.5 rounded text-xs">${step.time}</span>
-                          </div>
-                          <p class="text-xs text-slate-500 mb-2 font-semibold">Limits: <span class="font-data-tabular text-slate-700">${step.limits || 'N/A'}</span> | Parameter: <span class="font-semibold text-slate-700">${step.parameter || 'N/A'}</span></p>
-                          <p class="text-sm text-on-surface-variant mb-3 leading-snug">${step.instruction || ''}</p>
-                          <div class="grid grid-cols-2 gap-4 mt-2 text-xs border-t border-outline-variant/10 pt-2.5">
-                            <div>
-                              <p class="text-[10px] text-on-surface-variant font-bold uppercase">Operator / Personnel</p>
-                              <p class="font-semibold text-slate-700">${step.operator || 'Unassigned'}</p>
-                            </div>
-                            <div class="text-right">
-                              <p class="text-[10px] text-on-surface-variant font-bold uppercase mb-0.5">Status</p>
-                              <span class="font-bold uppercase text-[10px] ${statusColorClass}">${step.status}</span>
-                            </div>
-                          </div>
-                        </div>
-                    `;
-                    timelineList.appendChild(stepCard);
-                });
-            }
-        }
+ 
+             // Set dynamic select listener
+             const woSelect = document.getElementById('traceability-wo-select');
+             if (woSelect) {
+                 woSelect.addEventListener('change', function() {
+                     executeTraceabilitySearch(this.value);
+                 });
+             }
+ 
+             // Default search the first work order or query parameter
+             const params = new URLSearchParams(window.location.search);
+             const woQuery = params.get('wo');
+             if (woQuery) {
+                 if (woSelect) woSelect.value = woQuery;
+                 executeTraceabilitySearch(woQuery);
+             } else if (workOrdersList && workOrdersList.length > 0) {
+                 if (woSelect) woSelect.value = workOrdersList[0].woNumber;
+                 executeTraceabilitySearch(workOrdersList[0].woNumber);
+             }
+         }
+ 
+         function populateWOOptions() {
+             const selectEl = document.getElementById('traceability-wo-select');
+             if (!selectEl) return;
+             selectEl.innerHTML = '';
+             workOrdersList.forEach(w => {
+                 const opt = document.createElement('option');
+                 opt.value = w.woNumber;
+                 opt.textContent = `${w.woNumber} - ${w.productName} (${w.partNumber})`;
+                 selectEl.appendChild(opt);
+             });
+         }
+ 
+         function executeTraceabilitySearch(targetWO) {
+             const selectEl = document.getElementById('traceability-wo-select');
+             const woVal = targetWO || (selectEl ? selectEl.value : '');
+             const activeWO = workOrdersList.find(w => w.woNumber === woVal) || workOrdersList[0];
+             if (!activeWO) return;
+ 
+             // 1. Update WO Summary Card
+             const partEl = document.getElementById('trace-summary-part');
+             const targetEl = document.getElementById('trace-summary-target');
+             const builtEl = document.getElementById('trace-summary-built');
+             const startEl = document.getElementById('trace-summary-start');
+ 
+             if (partEl) partEl.textContent = activeWO.partNumber;
+             if (targetEl) targetEl.textContent = `${activeWO.targetQty.toLocaleString()} units`;
+             if (builtEl) builtEl.textContent = `${activeWO.doneQty.toLocaleString()} units`;
+             if (startEl) startEl.textContent = "2026.07.13 06:00 AM";
+ 
+             // 2. Update Timeline Subtitle
+             const subtitleEl = document.getElementById('trace-timeline-subtitle');
+             if (subtitleEl) {
+                 subtitleEl.textContent = `Complete end-to-end event trail for Work Order #${activeWO.woNumber}`;
+             }
+ 
+             // 3. Render Timeline List
+             const timelineList = document.getElementById('trace-timeline-list');
+             if (timelineList) {
+                 timelineList.innerHTML = '';
+                 
+                 if (!activeWO.steps || activeWO.steps.length === 0) {
+                     timelineList.innerHTML = '<p class="text-slate-400 text-sm italic font-semibold text-center py-8">No process step logs available.</p>';
+                     return;
+                 }
+ 
+                 activeWO.steps.forEach((step, idx) => {
+                     let iconName = 'settings';
+                     const nameLower = step.name.toLowerCase();
+                     if (nameLower.includes('picking') || nameLower.includes('intake')) iconName = 'warehouse';
+                     else if (nameLower.includes('cutting') || nameLower.includes('cut')) iconName = 'content_cut';
+                     else if (nameLower.includes('bending') || nameLower.includes('bend')) iconName = 'architecture';
+                     else if (nameLower.includes('crimp') || nameLower.includes('crimping')) iconName = 'compress';
+                     else if (nameLower.includes('curing') || nameLower.includes('oven') || nameLower.includes('bake')) iconName = 'local_fire_department';
+                     else if (nameLower.includes('test') || nameLower.includes('leak') || nameLower.includes('pressure')) iconName = 'science';
+                     else if (nameLower.includes('inspection') || nameLower.includes('qc') || nameLower.includes('audit') || nameLower.includes('pack')) iconName = 'fact_check';
+ 
+                     let iconBgClass = 'bg-slate-200 text-slate-600';
+                     let borderClass = '';
+                     let statusColorClass = 'text-slate-500';
+ 
+                     if (step.status === 'completed') {
+                         iconBgClass = 'bg-primary text-white';
+                         borderClass = 'border-l-4 border-l-emerald-500';
+                         statusColorClass = 'text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded';
+                     } else if (step.status === 'active' || step.status === 'running') {
+                         iconBgClass = 'bg-secondary-container text-primary';
+                         borderClass = 'border-l-4 border-l-amber-500';
+                         statusColorClass = 'text-amber-600 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded';
+                     } else {
+                         iconBgClass = 'bg-slate-100 text-slate-400';
+                         borderClass = 'opacity-60';
+                         statusColorClass = 'text-slate-400 bg-slate-50 border border-slate-200 px-2 py-0.5 rounded';
+                     }
+ 
+                     const stepCard = document.createElement('div');
+                     stepCard.className = 'flex gap-6 timeline-item-card transition-all duration-200';
+                     stepCard.innerHTML = `
+                         <div class="flex-shrink-0 w-10 h-10 rounded-full border-4 border-white flex items-center justify-center shadow-sm ${iconBgClass}">
+                           <span class="material-symbols-outlined text-[20px]">${iconName}</span>
+                         </div>
+                         <div class="flex-1 bg-slate-50/50 border border-outline-variant/30 rounded-xl p-4 shadow-sm ${borderClass}">
+                           <div class="flex justify-between items-start mb-2">
+                             <div>
+                               <h4 class="font-bold text-primary font-headline-sm">${step.name}</h4>
+                               <p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wide">${step.machine || 'Manual Station'}</p>
+                             </div>
+                             <span class="text-data-tabular font-bold text-on-surface-variant bg-slate-100 border border-slate-200/50 px-2 py-0.5 rounded text-xs">${step.time}</span>
+                           </div>
+                           <p class="text-xs text-slate-500 mb-2 font-semibold">Limits: <span class="font-data-tabular text-slate-700">${step.limits || 'N/A'}</span> | Parameter: <span class="font-semibold text-slate-700">${step.parameter || 'N/A'}</span></p>
+                           <p class="text-sm text-on-surface-variant mb-3 leading-snug">${step.instruction || ''}</p>
+                           <div class="grid grid-cols-2 gap-4 mt-2 text-xs border-t border-outline-variant/10 pt-2.5">
+                             <div>
+                               <p class="text-[10px] text-on-surface-variant font-bold uppercase">Operator / Personnel</p>
+                               <p class="font-semibold text-slate-700">${step.operator || 'Unassigned'}</p>
+                             </div>
+                             <div class="text-right">
+                               <p class="text-[10px] text-on-surface-variant font-bold uppercase mb-0.5">Status</p>
+                               <span class="font-bold uppercase text-[10px] ${statusColorClass}">${step.status}</span>
+                             </div>
+                           </div>
+                         </div>
+                     `;
+                     timelineList.appendChild(stepCard);
+                 });
+             }
+         }
 
         function exportTraceabilityReport() {
             alert("Traceability Report exported successfully as PDF/Excel.");

@@ -284,11 +284,6 @@
               <span class="material-symbols-outlined text-[20px]">edit_calendar</span>
               <span>Supervisor Planning</span>
             </a>
-            
-            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}qc-pending-approvals/index.html" data-route="qc-pending-approvals">
-              <span class="material-symbols-outlined text-[20px]">fact_check</span>
-              <span>QC Pending Approvals</span>
-            </a>
           </div>
   
           <!-- TRACEABILITY & REPORTS SECTION -->
@@ -298,11 +293,6 @@
             <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}traceability-search/index.html" data-route="traceability-search">
               <span class="material-symbols-outlined text-[20px]">manage_search</span>
               <span>Traceability Search</span>
-            </a>
-            
-            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}qc-reports/index.html" data-route="qc-reports">
-              <span class="material-symbols-outlined text-[20px]">assignment</span>
-              <span>QC Reports</span>
             </a>
   
             <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}audit-reports/index.html" data-route="audit-reports">
@@ -315,6 +305,10 @@
           <div class="space-y-1 pt-2">
             <p class="text-[11px] font-bold text-slate-500 uppercase tracking-widest px-4 pt-5 pb-2 select-none">Master Configuration</p>
             
+            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}workflow-configuration/index.html" data-route="workflow-configuration">
+              <span class="material-symbols-outlined text-[20px]">account_tree</span>
+              <span>Workflow Configuration</span>
+            </a>
 
             <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}user-management/index.html" data-route="user-management">
               <span class="material-symbols-outlined text-[20px]">person</span>
@@ -348,12 +342,8 @@
           </div>
         </nav>
         
-        <div class="px-3 mt-auto border-t border-outline-variant/30 pt-4 pb-4 flex-shrink-0 flex gap-2">
-          <a href="#" class="flex items-center justify-center gap-1.5 px-3 py-2 border border-slate-200 rounded-xl text-slate-700 hover:bg-slate-50 transition-colors font-semibold text-xs flex-1">
-            <span class="material-symbols-outlined text-[16px] text-slate-600">help</span>
-            <span>Support</span>
-          </a>
-          <a id="logout-btn" href="${relPrefix}login-old/index.html" class="flex items-center justify-center gap-1.5 px-3 py-2 border border-primary/20 bg-primary/5 text-primary hover:bg-primary hover:text-white hover:border-transparent rounded-xl transition-colors font-semibold text-xs flex-1">
+        <div class="px-3 mt-auto border-t border-outline-variant/30 pt-4 pb-4 flex-shrink-0 flex justify-end">
+          <a id="logout-btn" href="${relPrefix}login-old/index.html" class="flex items-center justify-center gap-1.5 px-3 py-2 border border-primary/20 bg-primary/5 text-primary hover:bg-primary hover:text-white hover:border-transparent rounded-xl transition-colors font-semibold text-xs">
             <span class="material-symbols-outlined text-[16px]">logout</span>
             <span>Sign Out</span>
           </a>

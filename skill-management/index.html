@@ -145,7 +145,7 @@
   </div>
 
   <!-- Horizontal Bento Summary Cards -->
-  <div class="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-6 mb-2">
+  <div class="col-span-12 grid grid-cols-1 md:grid-cols-2 gap-6 mb-2">
     <!-- Card 1: TOTAL SKILLS -->
     <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
       <div>
@@ -161,14 +161,6 @@
         <p class="text-3xl font-bold text-slate-800" id="statActiveSkills">--</p>
       </div>
       <span class="material-symbols-outlined text-[32px] text-slate-600" style="font-variation-settings: 'FILL' 0;">check_circle</span>
-    </div>
-    <!-- Card 3: CERTIFIED TOTALS -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
-      <div>
-        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Certified Operators</p>
-        <p class="text-3xl font-bold text-primary" id="statTotalCertified">--</p>
-      </div>
-      <span class="material-symbols-outlined text-[32px] text-primary">groups</span>
     </div>
   </div>
 
@@ -199,8 +191,7 @@
             <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Skill Code</th>
             <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Skill Name</th>
             <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Process Step</th>
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Min Level</th>
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-center">Certified Ops</th>
+
             <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Status</th>
             <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-right">Action</th>
           </tr>
@@ -252,14 +243,7 @@
           <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Process Step Reference</span>
           <p id="viewSkillStep" class="text-slate-800 font-semibold text-sm">--</p>
         </div>
-        <div>
-          <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Minimum Certification Required</span>
-          <p id="viewSkillMinLevel" class="text-slate-800 font-semibold text-sm">--</p>
-        </div>
-        <div>
-          <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Certified Technicians Count</span>
-          <p id="viewSkillCertifiedCount" class="text-slate-800 font-semibold text-sm">--</p>
-        </div>
+
         <div>
           <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Status</span>
           <span id="viewSkillStatusBadge" class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold">--</span>
@@ -309,21 +293,7 @@
             <label class="block text-xs font-bold uppercase text-slate-500">Process Step Reference</label>
             <input id="drawerSkillStep" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white" placeholder="e.g. Crimping First" type="text" required />
           </div>
-          <!-- Minimum Level -->
-          <div class="col-span-1 space-y-1.5">
-            <label class="block text-xs font-bold uppercase text-slate-500">Minimum Certification Required</label>
-            <select id="drawerSkillMinLevel" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white">
-              <option value="L1 - Trainee">L1 - Trainee</option>
-              <option value="L2 - Semi-Skilled">L2 - Semi-Skilled</option>
-              <option value="L3 - Certified Operator">L3 - Certified Operator</option>
-              <option value="L4 - Expert Trainer">L4 - Expert Trainer</option>
-            </select>
-          </div>
-          <!-- Certified Count -->
-          <div class="col-span-1 space-y-1.5">
-            <label class="block text-xs font-bold uppercase text-slate-500">Certified Operators Count</label>
-            <input id="drawerSkillCertifiedCount" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white" type="number" min="0" required />
-          </div>
+
           <!-- Status -->
           <div class="col-span-2 space-y-1.5">
             <label class="block text-xs font-bold uppercase text-slate-500">Status</label>
@@ -391,7 +361,7 @@
               if (localSkills) {
                   try {
                       const parsed = JSON.parse(localSkills);
-                      if (parsed && parsed.length > 0 && parsed[0].skillCode) {
+                      if (parsed && parsed.length > 0 && parsed[0].skillCode && !parsed[0].hasOwnProperty('minCertLevel')) {
                           skillsList = parsed;
                           loadedFromLocal = true;
                       }
@@ -402,7 +372,11 @@
 
               if (!loadedFromLocal) {
                   // Fetch default json
-                  const res = await fetch('./skills.json');
+                  let jsonPath = './skills.json';
+                  if (!window.location.pathname.includes('/skill-management/')) {
+                      jsonPath = 'skill-management/skills.json';
+                  }
+                  const res = await fetch(jsonPath);
                   if (!res.ok) throw new Error('Could not fetch default skills database');
                   skillsList = await res.json();
                   localStorage.setItem('skillsList', JSON.stringify(skillsList));
@@ -419,11 +393,9 @@
           // stats bento counts
           const totalCount = skillsList.length;
           const activeCount = skillsList.filter(s => s.status === 'Active').length;
-          const totalCertified = skillsList.reduce((acc, curr) => acc + (parseInt(curr.certifiedCount) || 0), 0);
 
           document.getElementById('statTotalSkills').textContent = totalCount;
           document.getElementById('statActiveSkills').textContent = activeCount;
-          document.getElementById('statTotalCertified').textContent = totalCertified;
 
           // filters
           const query = skillFilterQuery.toLowerCase().trim();
@@ -473,7 +445,7 @@
           if (items.length === 0) {
               tbody.innerHTML = `
                   <tr>
-                      <td colspan="7" class="px-6 py-12 text-center text-on-surface-variant font-medium">
+                      <td colspan="5" class="px-6 py-12 text-center text-on-surface-variant font-medium">
                           No skills matched search filters.
                       </td>
                   </tr>
@@ -484,13 +456,6 @@
           items.forEach(s => {
               const tr = document.createElement('tr');
               tr.className = 'hover:bg-slate-50/50 transition-colors group';
-
-              // badge style for certification levels
-              let levelColor = 'bg-slate-50 text-slate-700 border-slate-200';
-              if (s.minCertLevel.includes('L4')) levelColor = 'bg-rose-50 text-rose-700 border-rose-200';
-              else if (s.minCertLevel.includes('L3')) levelColor = 'bg-amber-50 text-amber-700 border-amber-200';
-              else if (s.minCertLevel.includes('L2')) levelColor = 'bg-blue-50 text-blue-700 border-blue-200';
-              else if (s.minCertLevel.includes('L1')) levelColor = 'bg-indigo-50 text-indigo-700 border-indigo-200';
 
               // status badge style
               const statusBadge = s.status === 'Active'
@@ -503,10 +468,6 @@
                   </td>
                   <td class="px-6 py-4 font-semibold text-slate-900">${s.skillName}</td>
                   <td class="px-6 py-4 text-xs font-medium text-slate-700 max-w-xs truncate" title="${s.processStep}">${s.processStep}</td>
-                  <td class="px-6 py-4">
-                      <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold border ${levelColor}">${s.minCertLevel}</span>
-                  </td>
-                  <td class="px-6 py-4 text-center font-bold text-slate-800 font-data-tabular">${s.certifiedCount || 0}</td>
                   <td class="px-6 py-4">${statusBadge}</td>
                   <td class="px-6 py-4 text-right">
                       <div class="flex items-center justify-end gap-2">
@@ -601,7 +562,6 @@
               }, 300);
           }
       }
-
       function openViewSkillDrawer(skillCode) {
           const s = skillsList.find(x => x.skillCode.toUpperCase() === skillCode.toUpperCase());
           if (!s) return;
@@ -609,8 +569,6 @@
           document.getElementById('viewSkillName').textContent = s.skillName;
           document.getElementById('viewSkillCodeBadge').textContent = s.skillCode;
           document.getElementById('viewSkillStep').textContent = s.processStep;
-          document.getElementById('viewSkillMinLevel').textContent = s.minCertLevel;
-          document.getElementById('viewSkillCertifiedCount').textContent = `${s.certifiedCount} technicians`;
           document.getElementById('viewSkillDescription').textContent = s.description;
 
           const statusBadge = document.getElementById('viewSkillStatusBadge');
@@ -633,8 +591,6 @@
 
           document.getElementById('drawerSkillName').value = '';
           document.getElementById('drawerSkillStep').value = '';
-          document.getElementById('drawerSkillMinLevel').selectedIndex = 1;
-          document.getElementById('drawerSkillCertifiedCount').value = '0';
           document.getElementById('drawerSkillStatus').value = 'Active';
           document.getElementById('drawerSkillDescription').value = '';
 
@@ -655,8 +611,6 @@
 
           document.getElementById('drawerSkillName').value = s.skillName;
           document.getElementById('drawerSkillStep').value = s.processStep;
-          document.getElementById('drawerSkillMinLevel').value = s.minCertLevel;
-          document.getElementById('drawerSkillCertifiedCount').value = s.certifiedCount || 0;
           document.getElementById('drawerSkillStatus').value = s.status;
           document.getElementById('drawerSkillDescription').value = s.description;
 
@@ -669,8 +623,6 @@
           const skillCode = document.getElementById('drawerSkillCode').value.toUpperCase().replace(/\s+/g, '_');
           const skillName = document.getElementById('drawerSkillName').value;
           const processStep = document.getElementById('drawerSkillStep').value;
-          const minCertLevel = document.getElementById('drawerSkillMinLevel').value;
-          const certifiedCount = parseInt(document.getElementById('drawerSkillCertifiedCount').value) || 0;
           const status = document.getElementById('drawerSkillStatus').value;
           const description = document.getElementById('drawerSkillDescription').value;
 
@@ -678,11 +630,11 @@
 
           if (existingIdx > -1) {
               // Edit existing
-              skillsList[existingIdx] = { skillCode, skillName, processStep, minCertLevel, certifiedCount, status, description };
+              skillsList[existingIdx] = { skillCode, skillName, processStep, status, description };
               showSkillToast(`Skill details for ${skillName} updated successfully.`);
           } else {
               // Register new
-              skillsList.unshift({ skillCode, skillName, processStep, minCertLevel, certifiedCount, status, description });
+              skillsList.unshift({ skillCode, skillName, processStep, status, description });
               showSkillToast(`Process qualification skill ${skillName} created successfully.`);
           }
 
@@ -690,7 +642,6 @@
           toggleAddSkillModal(false);
           renderSkills();
       }
-
       // Trigger custom warning modal for skill deletions
       function deleteSkill(skillCode) {
           const s = skillsList.find(x => x.skillCode.toUpperCase() === skillCode.toUpperCase());

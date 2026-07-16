@@ -518,7 +518,11 @@
       async function fetchUsers() {
           try {
               await fetchSkillsMaster();
-              const res = await fetch('./users.json');
+              let jsonPath = './users.json';
+              if (!window.location.pathname.includes('/user-management/')) {
+                  jsonPath = 'user-management/users.json';
+              }
+              const res = await fetch(jsonPath);
               if (!res.ok) throw new Error('Could not load users json.');
               usersList = await res.json();
               render();

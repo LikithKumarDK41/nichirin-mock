@@ -352,21 +352,7 @@
       </div>
     </div>
 
-    <!-- Info / Schema guidelines -->
-    <div class="text-[11px] text-slate-505 bg-slate-50 border border-slate-100 p-3.5 rounded-lg space-y-1.5 font-medium leading-relaxed">
-      <p class="font-bold text-slate-700">Expected Columns for CSV:</p>
-      <code class="block bg-white p-1.5 rounded border border-slate-200 font-mono text-[9px] text-slate-600 select-all">machineCode, machineName, type, controlPoints</code>
-      <div class="flex justify-between items-center pt-2 text-[10px]">
-        <a href="#" onclick="downloadCsvTemplate(event)" class="text-primary font-bold hover:underline flex items-center gap-1">
-          <span class="material-symbols-outlined text-[12px]">download</span>
-          Download CSV Template
-        </a>
-        <button type="button" onclick="loadDemoData()" class="text-indigo-600 font-bold hover:underline flex items-center gap-1">
-          <span class="material-symbols-outlined text-[12px]">data_exploration</span>
-          Populate with 3 Demo Assets
-        </button>
-      </div>
-    </div>
+
 
     <!-- Actions -->
     <div class="flex justify-end gap-3 pt-3 border-t border-slate-100 select-none">
@@ -406,7 +392,11 @@
                   } catch (e) { console.warn("Outdated or corrupt local machines database. Re-initializing..."); }
               }
               if (!loadedFromLocal) {
-                  const res = await fetch('./machines.json');
+                  let jsonPath = './machines.json';
+                  if (!window.location.pathname.includes('/machine-management/')) {
+                      jsonPath = 'machine-management/machines.json';
+                  }
+                  const res = await fetch(jsonPath);
                   if (!res.ok) throw new Error('Could not fetch default machines database');
                   machinesList = await res.json();
                   localStorage.setItem('machinesList', JSON.stringify(machinesList));

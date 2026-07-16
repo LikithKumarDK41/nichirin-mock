@@ -943,7 +943,11 @@
             // Fetch or read role configurations
             async function fetchRoles() {
               try {
-                const res = await fetch('./roles.json');
+                let jsonPath = './roles.json';
+                if (!window.location.pathname.includes('/role-management/')) {
+                    jsonPath = 'role-management/roles.json';
+                }
+                const res = await fetch(jsonPath);
                 if (!res.ok) throw new Error('Could not fetch default roles database');
                 const defaultRoles = await res.json();
 
