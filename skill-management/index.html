@@ -168,14 +168,14 @@
   <section class="col-span-12 bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm flex flex-col">
     <div class="px-6 py-4 border-b border-outline-variant/30 flex flex-col sm:flex-row justify-between items-start sm:items-center bg-slate-50 gap-4">
       <h3 class="font-headline-md text-headline-md text-primary">Process Operations Qualifications</h3>
-      <div class="flex flex-col xs:flex-row items-stretch xs:items-center gap-3 w-full sm:w-auto">
+      <div class="flex items-center gap-3 w-full sm:w-auto">
         <!-- Search Box -->
-        <div class="relative w-full xs:w-48">
+        <div class="relative flex-1 sm:flex-initial sm:w-48">
           <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
           <input id="skillSearchInput" class="w-full bg-white border border-outline-variant/30 rounded-lg pl-8 pr-3 py-1 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-8" placeholder="Filter skills..." type="text" oninput="handleSkillSearch()"/>
         </div>
         <!-- Skill Status Filter -->
-        <select id="skillStatusFilter" class="bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-3 pr-8 py-1 font-semibold w-full xs:min-w-[150px] xs:w-auto" onchange="handleSkillStatusFilterChange()">
+        <select id="skillStatusFilter" class="bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-3 pr-8 py-1 font-semibold flex-1 sm:flex-initial sm:min-w-[150px] sm:w-auto" onchange="handleSkillStatusFilterChange()">
           <option value="ALL">All Statuses</option>
           <option value="Active">Active</option>
           <option value="Inactive">Inactive</option>
