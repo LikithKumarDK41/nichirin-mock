@@ -413,12 +413,15 @@
             <!-- Primary Role -->
             <div class="col-span-1 space-y-1.5">
               <label class="block text-xs font-bold uppercase text-slate-500">Primary Role</label>
-              <select id="drawerRole"
+              <select id="drawerRole" onchange="handleRoleChange()"
                 class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white">
                 <option value="ADMIN">Admin</option>
                 <option value="SUPERVISOR">Supervisor</option>
                 <option value="QC">QC</option>
                 <option value="OPERATOR">Operator</option>
+                <option value="PRODUCT_MANAGER">Product Manager</option>
+                <option value="LINE_LEADER">Line Leader</option>
+                <option value="MAINTENANCE_TECH">Maintenance Technician</option>
               </select>
             </div>
             <!-- Account Status -->
@@ -432,7 +435,7 @@
               </select>
             </div>
             <!-- Certified Skills Multi-Select -->
-            <div class="col-span-1 sm:col-span-2 space-y-1.5 relative">
+            <div id="skillsSelectorWrapper" class="col-span-1 sm:col-span-2 space-y-1.5 relative">
               <label class="block text-xs font-bold uppercase text-slate-500">Certified Process Skills</label>
               <button type="button" id="skillsDropdownBtn" onclick="toggleSkillsDropdown()"
                 class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white flex justify-between items-center text-left text-slate-700 cursor-pointer shadow-sm">
@@ -711,6 +714,7 @@
                 else if (u.role === 'SUPERVISOR') roleBadgeClass = 'bg-blue-50 text-blue-700 border-blue-200';
                 else if (u.role === 'QC') roleBadgeClass = 'bg-purple-50 text-purple-700 border-purple-200';
                 else if (u.role === 'OPERATOR') roleBadgeClass = 'bg-amber-50 text-amber-700 border-amber-200';
+                else if (u.role === 'PRODUCT_MANAGER') roleBadgeClass = 'bg-rose-50 text-rose-700 border-rose-200';
 
                 // Status Badge styling
                 let statusBadgeClass = 'bg-slate-50 text-slate-700 border-slate-200/50';
@@ -789,6 +793,7 @@
                 else if (u.role === 'SUPERVISOR') roleBadgeClass = 'bg-blue-50 text-blue-700 border-blue-200';
                 else if (u.role === 'QC') roleBadgeClass = 'bg-purple-50 text-purple-700 border-purple-200';
                 else if (u.role === 'OPERATOR') roleBadgeClass = 'bg-amber-50 text-amber-700 border-amber-200';
+                else if (u.role === 'PRODUCT_MANAGER') roleBadgeClass = 'bg-rose-50 text-rose-700 border-rose-200';
 
                 // Status badge styling
                 let statusTextClass = 'text-slate-700';
@@ -1018,6 +1023,7 @@
                 chk.checked = user.skills && user.skills.includes(chk.value);
               });
               updateSelectedSkills();
+              handleRoleChange();
 
               toggleAddUserModal(true);
             }
@@ -1041,9 +1047,23 @@
               const checkboxes = document.querySelectorAll('#skillsDropdownOptions input[type="checkbox"]');
               checkboxes.forEach(chk => chk.checked = false);
               updateSelectedSkills();
+              handleRoleChange();
 
               toggleAddUserModal(true);
             }
+
+            function handleRoleChange() {
+              const roleVal = document.getElementById('drawerRole').value;
+              const wrapper = document.getElementById('skillsSelectorWrapper');
+              if (wrapper) {
+                if (roleVal === 'OPERATOR') {
+                  wrapper.classList.remove('hidden');
+                } else {
+                  wrapper.classList.add('hidden');
+                }
+              }
+            }
+            window.handleRoleChange = handleRoleChange;
 
             function saveUser(e) {
               e.preventDefault();
@@ -1102,7 +1122,10 @@
                   { roleCode: 'ADMIN', roleName: 'Admin' },
                   { roleCode: 'SUPERVISOR', roleName: 'Supervisor' },
                   { roleCode: 'QC', roleName: 'QC' },
-                  { roleCode: 'OPERATOR', roleName: 'Operator' }
+                  { roleCode: 'OPERATOR', roleName: 'Operator' },
+                  { roleCode: 'PRODUCT_MANAGER', roleName: 'Product Manager' },
+                  { roleCode: 'LINE_LEADER', roleName: 'Line Leader' },
+                  { roleCode: 'MAINTENANCE_TECH', roleName: 'Maintenance Technician' }
                 ];
               }
 
