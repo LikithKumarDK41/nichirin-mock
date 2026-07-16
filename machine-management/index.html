@@ -257,9 +257,9 @@
       <div id="drawerScrollContainer" class="flex-grow overflow-y-auto p-6 space-y-5">
         
         <!-- Form Fields Grid -->
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <!-- Machine Code -->
-          <div class="col-span-2 space-y-1.5">
+          <div class="col-span-1 sm:col-span-2 space-y-1.5">
             <label class="block text-xs font-bold uppercase text-slate-500">Asset Code</label>
             <input id="drawerMachineCode" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white" placeholder="e.g. MC-CRIMP-03" type="text" required />
           </div>
@@ -280,7 +280,7 @@
             </select>
           </div>
           <!-- Preventive Maintenance Date & Time -->
-          <div class="col-span-2 space-y-1.5 relative" id="maintDatePickerContainer">
+          <div class="col-span-1 sm:col-span-2 space-y-1.5 relative" id="maintDatePickerContainer">
             <label class="block text-xs font-bold uppercase text-slate-500">Preventive Maintenance Date &amp; Time</label>
             <!-- Input Display Trigger -->
             <div id="maintDateTrigger" class="w-full border border-slate-500 rounded-lg focus-within:border-primary focus-within:ring-1 focus-within:ring-primary text-sm h-10 px-3 font-semibold bg-white flex items-center justify-between cursor-pointer select-none">
@@ -350,7 +350,7 @@
             </div>
           </div>
           <!-- Control Points -->
-          <div class="col-span-2 space-y-1.5">
+          <div class="col-span-1 sm:col-span-2 space-y-1.5">
             <label class="block text-xs font-bold uppercase text-slate-500">Control Points &amp; Target Tolerances</label>
             <textarea id="drawerMachineControlPoints" rows="4" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm p-3 font-semibold placeholder-slate-400 bg-white" placeholder="Describe parameters to watch, torque targets (e.g. 12-17Nm) or hydraulic limits (e.g. 6-7 Mpa)..." required></textarea>
           </div>

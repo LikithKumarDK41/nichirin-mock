@@ -381,7 +381,7 @@
           </button>
         </div>
         <form class="p-6 flex-1 overflow-y-auto" onsubmit="saveUser(event)">
-          <div class="grid grid-cols-2 gap-4 pb-24">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-24">
             <!-- Employee Code -->
             <div class="col-span-1 space-y-1.5">
               <label class="block text-xs font-bold uppercase text-slate-500">Employee Code</label>
@@ -397,14 +397,14 @@
                 placeholder="First Last" type="text" required />
             </div>
             <!-- Email -->
-            <div class="col-span-2 space-y-1.5">
+            <div class="col-span-1 sm:col-span-2 space-y-1.5">
               <label class="block text-xs font-bold uppercase text-slate-500">Email Address</label>
               <input id="drawerEmail"
                 class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white"
                 placeholder="employee@nichirin.com" type="email" required />
             </div>
             <!-- Phone -->
-            <div class="col-span-2 space-y-1.5">
+            <div class="col-span-1 sm:col-span-2 space-y-1.5">
               <label class="block text-xs font-bold uppercase text-slate-500">Phone Number</label>
               <input id="drawerPhone"
                 class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white"
@@ -432,7 +432,7 @@
               </select>
             </div>
             <!-- Certified Skills Multi-Select -->
-            <div class="col-span-2 space-y-1.5 relative">
+            <div class="col-span-1 sm:col-span-2 space-y-1.5 relative">
               <label class="block text-xs font-bold uppercase text-slate-500">Certified Process Skills</label>
               <button type="button" id="skillsDropdownBtn" onclick="toggleSkillsDropdown()"
                 class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white flex justify-between items-center text-left text-slate-700 cursor-pointer shadow-sm">
