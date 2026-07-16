@@ -20,28 +20,35 @@
       "device_management": ["view", "operate"]
     },
     "features": [
-      "release_sap_orders",
-      "hold_production_run",
-      "barcode_scan_lots",
-      "verify_step_actions",
-      "approve_qc_checks",
-      "override_qc_tolerances",
-      "export_csv_reports",
-      "purge_historical_logs",
-      "design_flowchart_canvas",
-      "publish_template_versions",
-      "reset_passwords",
-      "create_security_roles",
-      "calibrate_machine_tooling",
-      "bind_plc_connections",
-      "certify_operator_training"
+      "release_work_order_view",
+      "release_work_order_operate",
+      "verify_synchronized_work_order_view",
+      "verify_synchronized_work_order_operate",
+      "assign_production_date_shift_view",
+      "assign_production_date_shift_operate",
+      "approve_work_order_readiness_view",
+      "approve_work_order_readiness_operate",
+      "process_defines_dependencies_view",
+      "process_defines_dependencies_operate",
+      "process_system_enforces_rules_view",
+      "process_system_enforces_rules_operate",
+      "skill_crud_skill_view",
+      "skill_crud_skill_operate",
+      "skill_assigning_to_user_view",
+      "skill_assigning_to_user_operate",
+      "reports_monitoring_view",
+      "reports_monitoring_operate",
+      "roles_roles_permissions_view",
+      "roles_roles_permissions_operate",
+      "audit_audit_logs_system_admin_view",
+      "audit_audit_logs_system_admin_operate"
     ]
   },
   {
     "roleCode": "SUPERVISOR",
     "roleName": "Supervisor",
     "description": "Line supervisor. Manages shift plans, releases work orders, monitors traceability, and certifies operator skills.",
-    "assignedCount": 2,
+    "assignedCount": 3,
     "permissions": {
       "dashboard": ["view"],
       "work_orders": ["view", "operate"],
@@ -58,126 +65,45 @@
       "device_management": ["view"]
     },
     "features": [
-      "release_sap_orders",
-      "hold_production_run",
-      "barcode_scan_lots",
-      "verify_step_actions",
-      "export_csv_reports",
-      "certify_operator_training"
-    ]
-  },
-  {
-    "roleCode": "QC_MANAGER",
-    "roleName": "QC Manager",
-    "description": "Quality Manager. Defines inspection levels, overrides out-of-tolerance alerts, and generates monthly audit logs.",
-    "assignedCount": 1,
-    "permissions": {
-      "dashboard": ["view"],
-      "work_orders": ["view"],
-      "supervisor_planning": ["view"],
-      "qc_pending_approvals": ["view", "operate"],
-      "traceability_search": ["view", "operate"],
-      "qc_reports": ["view", "operate"],
-      "audit_reports": ["view", "operate"],
-      "workflow_configuration": ["view", "operate"],
-      "user_management": ["view"],
-      "role_management": ["view"],
-      "skill_management": ["view"],
-      "machine_management": ["view"],
-      "device_management": ["view"]
-    },
-    "features": [
-      "approve_qc_checks",
-      "override_qc_tolerances",
-      "export_csv_reports",
-      "design_flowchart_canvas",
-      "publish_template_versions"
-    ]
-  },
-  {
-    "roleCode": "PRODUCTION_LEAD",
-    "roleName": "Production Lead",
-    "description": "Line lead. Responsible for tablet assignments, scheduling adjustments, and tracking equipment configurations.",
-    "assignedCount": 2,
-    "permissions": {
-      "dashboard": ["view"],
-      "work_orders": ["view", "operate"],
-      "supervisor_planning": ["view", "operate"],
-      "qc_pending_approvals": ["view"],
-      "traceability_search": ["view"],
-      "qc_reports": ["view"],
-      "audit_reports": ["view"],
-      "workflow_configuration": ["view"],
-      "user_management": ["view"],
-      "role_management": ["view"],
-      "skill_management": ["view"],
-      "machine_management": ["view", "operate"],
-      "device_management": ["view", "operate"]
-    },
-    "features": [
-      "release_sap_orders",
-      "hold_production_run",
-      "barcode_scan_lots",
-      "verify_step_actions",
-      "calibrate_machine_tooling",
-      "bind_plc_connections"
-    ]
-  },
-  {
-    "roleCode": "QC_INSPECTOR",
-    "roleName": "QC Inspector",
-    "description": "Floor quality inspector. Approves inspection checks on production lines and logs torque/measurements deviations.",
-    "assignedCount": 3,
-    "permissions": {
-      "dashboard": ["view"],
-      "work_orders": ["view"],
-      "supervisor_planning": ["view"],
-      "qc_pending_approvals": ["view", "operate"],
-      "traceability_search": ["view"],
-      "qc_reports": ["view"],
-      "audit_reports": ["view"],
-      "workflow_configuration": ["view"],
-      "user_management": [],
-      "role_management": [],
-      "skill_management": [],
-      "machine_management": ["view"],
-      "device_management": []
-    },
-    "features": [
-      "approve_qc_checks"
-    ]
-  },
-  {
-    "roleCode": "LINE_INSPECTOR",
-    "roleName": "Line Inspector",
-    "description": "Senior technician. Audits active processes and executes torque calibrator checks.",
-    "assignedCount": 1,
-    "permissions": {
-      "dashboard": ["view"],
-      "work_orders": ["view"],
-      "supervisor_planning": ["view", "operate"],
-      "qc_pending_approvals": ["view", "operate"],
-      "traceability_search": ["view"],
-      "qc_reports": [],
-      "audit_reports": [],
-      "workflow_configuration": [],
-      "user_management": [],
-      "role_management": [],
-      "skill_management": [],
-      "machine_management": ["view"],
-      "device_management": []
-    },
-    "features": [
-      "barcode_scan_lots",
-      "verify_step_actions",
-      "approve_qc_checks"
+      "verify_synchronized_work_order_view",
+      "verify_synchronized_work_order_operate",
+      "assign_production_date_shift_view",
+      "assign_production_date_shift_operate",
+      "resolve_material_mismatch_view",
+      "resolve_material_mismatch_operate",
+      "offline_exception_approval_view",
+      "offline_exception_approval_operate",
+      "online_exception_approval_view",
+      "online_exception_approval_operate",
+      "online_ng_disposition_view",
+      "online_ng_disposition_operate",
+      "final_approve_completed_lot_view",
+      "final_approve_completed_lot_operate",
+      "final_correct_production_issue_view",
+      "final_correct_production_issue_operate",
+      "final_approve_reject_rework_view",
+      "final_approve_reject_rework_operate",
+      "packing_quantity_view",
+      "packing_quantity_operate",
+      "rework_confirm_defect_view",
+      "rework_confirm_defect_operate",
+      "rework_decide_rework_scrap_view",
+      "rework_decide_rework_scrap_operate",
+      "rework_define_rework_method_view",
+      "rework_define_rework_method_operate",
+      "rework_approve_reworked_item_view",
+      "rework_approve_reworked_item_operate",
+      "process_defines_dependencies_view",
+      "process_defines_dependencies_operate",
+      "process_system_enforces_rules_view",
+      "process_system_enforces_rules_operate"
     ]
   },
   {
     "roleCode": "OPERATOR",
     "roleName": "Operator",
     "description": "Tablet floor technician. Executes barcode scanning, step verification, and reports line outcomes.",
-    "assignedCount": 4,
+    "assignedCount": 6,
     "permissions": {
       "dashboard": ["view"],
       "work_orders": ["view"],
@@ -194,8 +120,92 @@
       "device_management": []
     },
     "features": [
-      "barcode_scan_lots",
-      "verify_step_actions"
+      "pick_material_view",
+      "pick_material_operate",
+      "scan_box_material_tag_view",
+      "scan_box_material_tag_operate",
+      "confirm_part_lot_number_view",
+      "confirm_part_lot_number_operate",
+      "offline_execution_qc_view",
+      "offline_execution_qc_operate",
+      "offline_machine_jig_setup_view",
+      "offline_machine_jig_setup_operate",
+      "online_qc_view",
+      "online_qc_operate",
+      "online_jig_setup_view",
+      "online_jig_setup_operate",
+      "packing_qc_view",
+      "packing_qc_operate",
+      "packing_jig_setup_view",
+      "packing_jig_setup_operate",
+      "rework_report_defect_view",
+      "rework_report_defect_operate",
+      "rework_perform_rework_view",
+      "rework_perform_rework_operate"
+    ]
+  },
+  {
+    "roleCode": "QC",
+    "roleName": "QC",
+    "description": "Quality Control inspector. Approves inspection checks on production lines, reviews logs, and manages quality gates.",
+    "assignedCount": 4,
+    "permissions": {
+      "dashboard": ["view"],
+      "work_orders": ["view"],
+      "supervisor_planning": ["view"],
+      "qc_pending_approvals": ["view", "operate"],
+      "traceability_search": ["view", "operate"],
+      "qc_reports": ["view", "operate"],
+      "audit_reports": ["view", "operate"],
+      "workflow_configuration": ["view", "operate"],
+      "machine_management": ["view"],
+      "device_management": ["view"]
+    },
+    "features": [
+      "offline_inspection_quantity_view",
+      "offline_inspection_quantity_operate",
+      "online_quantity_view",
+      "online_quantity_operate",
+      "online_ng_disposition_view",
+      "online_ng_disposition_operate",
+      "final_inspection_view",
+      "final_inspection_operate",
+      "final_approve_completed_lot_view",
+      "final_approve_completed_lot_operate",
+      "final_correct_production_issue_view",
+      "final_correct_production_issue_operate",
+      "packing_quantity_view",
+      "packing_quantity_operate",
+      "rework_confirm_defect_view",
+      "rework_confirm_defect_operate",
+      "rework_decide_rework_scrap_view",
+      "rework_decide_rework_scrap_operate",
+      "rework_approve_reworked_item_view",
+      "rework_approve_reworked_item_operate"
+    ]
+  },
+  {
+    "roleCode": "PRODUCT_MANAGER",
+    "roleName": "Product Manager",
+    "description": "Product and workflows manager. Configures lines, manages workflows, and sets machine routing.",
+    "assignedCount": 1,
+    "permissions": {
+      "dashboard": ["view"],
+      "work_orders": ["view", "operate"],
+      "supervisor_planning": ["view", "operate"],
+      "workflow_configuration": ["view", "operate"],
+      "machine_management": ["view", "operate"],
+      "device_management": ["view", "operate"]
+    },
+    "features": [
+      "verify_synchronized_work_order_view",
+      "verify_synchronized_work_order_operate",
+      "assign_production_date_shift_view",
+      "assign_production_date_shift_operate",
+      "process_defines_dependencies_view",
+      "process_defines_dependencies_operate",
+      "process_system_enforces_rules_view",
+      "process_system_enforces_rules_operate"
     ]
   },
   {
@@ -210,8 +220,28 @@
       "qc_pending_approvals": []
     },
     "features": [
-      "barcode_scan_lots",
-      "verify_step_actions"
+      "pick_material_view",
+      "pick_material_operate",
+      "scan_box_material_tag_view",
+      "scan_box_material_tag_operate",
+      "confirm_part_lot_number_view",
+      "confirm_part_lot_number_operate",
+      "offline_execution_qc_view",
+      "offline_execution_qc_operate",
+      "offline_machine_jig_setup_view",
+      "offline_machine_jig_setup_operate",
+      "online_qc_view",
+      "online_qc_operate",
+      "online_jig_setup_view",
+      "online_jig_setup_operate",
+      "packing_qc_view",
+      "packing_qc_operate",
+      "packing_jig_setup_view",
+      "packing_jig_setup_operate",
+      "rework_report_defect_view",
+      "rework_report_defect_operate",
+      "rework_perform_rework_view",
+      "rework_perform_rework_operate"
     ]
   },
   {
@@ -225,8 +255,12 @@
       "device_management": ["view", "operate"]
     },
     "features": [
-      "calibrate_machine_tooling",
-      "bind_plc_connections"
+      "offline_machine_jig_setup_view",
+      "offline_machine_jig_setup_operate",
+      "online_jig_setup_view",
+      "online_jig_setup_operate",
+      "packing_jig_setup_view",
+      "packing_jig_setup_operate"
     ]
   }
 ]

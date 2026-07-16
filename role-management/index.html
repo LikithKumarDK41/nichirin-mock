@@ -410,18 +410,22 @@
 
                 <!-- Dashboard -->
                 <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-                  <div class="max-w-[70%]">
-                    <span class="block text-xs font-bold text-slate-800">Dashboard</span>
-                    <span class="block text-[9px] text-slate-400">KPI charts and shift statistics</span>
+                  <div class="flex items-center gap-3 max-w-[70%] select-none">
+                    <input type="checkbox" id="main_dashboard" onchange="toggleRowPermissions('dashboard', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <div>
+                      <span class="block text-xs font-bold text-slate-800">Dashboard</span>
+                      <span class="block text-[9px] text-slate-400">KPI charts and shift statistics</span>
+                    </div>
                   </div>
                   <div class="flex gap-3 select-none shrink-0">
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_dashboard_view"
+                      <input type="checkbox" id="perm_dashboard_view" onchange="updateMainCheckbox('dashboard')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">View</span>
                     </label>
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_dashboard_operate"
+                      <input type="checkbox" id="perm_dashboard_operate" onchange="updateMainCheckbox('dashboard')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">Operate</span>
                     </label>
@@ -430,18 +434,22 @@
 
                 <!-- Work Orders -->
                 <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-                  <div class="max-w-[70%]">
-                    <span class="block text-xs font-bold text-slate-800">Work Orders</span>
-                    <span class="block text-[9px] text-slate-400">View and dispatch work cards</span>
+                  <div class="flex items-center gap-3 max-w-[70%] select-none">
+                    <input type="checkbox" id="main_work_orders" onchange="toggleRowPermissions('work_orders', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <div>
+                      <span class="block text-xs font-bold text-slate-800">Work Orders</span>
+                      <span class="block text-[9px] text-slate-400">View and dispatch work cards</span>
+                    </div>
                   </div>
                   <div class="flex gap-3 select-none shrink-0">
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_work_orders_view"
+                      <input type="checkbox" id="perm_work_orders_view" onchange="updateMainCheckbox('work_orders')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">View</span>
                     </label>
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_work_orders_operate"
+                      <input type="checkbox" id="perm_work_orders_operate" onchange="updateMainCheckbox('work_orders')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">Operate</span>
                     </label>
@@ -450,18 +458,22 @@
 
                 <!-- Supervisor Planning -->
                 <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-                  <div class="max-w-[70%]">
-                    <span class="block text-xs font-bold text-slate-800">Supervisor Planning</span>
-                    <span class="block text-[9px] text-slate-400">Shift plans and lines allocations</span>
+                  <div class="flex items-center gap-3 max-w-[70%] select-none">
+                    <input type="checkbox" id="main_supervisor_planning" onchange="toggleRowPermissions('supervisor_planning', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <div>
+                      <span class="block text-xs font-bold text-slate-800">Supervisor Planning</span>
+                      <span class="block text-[9px] text-slate-400">Shift plans and lines allocations</span>
+                    </div>
                   </div>
                   <div class="flex gap-3 select-none shrink-0">
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_supervisor_planning_view"
+                      <input type="checkbox" id="perm_supervisor_planning_view" onchange="updateMainCheckbox('supervisor_planning')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">View</span>
                     </label>
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_supervisor_planning_operate"
+                      <input type="checkbox" id="perm_supervisor_planning_operate" onchange="updateMainCheckbox('supervisor_planning')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">Operate</span>
                     </label>
@@ -470,18 +482,22 @@
 
                 <!-- QC Pending Approvals -->
                 <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-                  <div class="max-w-[70%]">
-                    <span class="block text-xs font-bold text-slate-800">QC Pending Approvals</span>
-                    <span class="block text-[9px] text-slate-400">Review alerts, approve checklists</span>
+                  <div class="flex items-center gap-3 max-w-[70%] select-none">
+                    <input type="checkbox" id="main_qc_pending_approvals" onchange="toggleRowPermissions('qc_pending_approvals', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <div>
+                      <span class="block text-xs font-bold text-slate-800">QC Pending Approvals</span>
+                      <span class="block text-[9px] text-slate-400">Review alerts, approve checklists</span>
+                    </div>
                   </div>
                   <div class="flex gap-3 select-none shrink-0">
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_qc_pending_approvals_view"
+                      <input type="checkbox" id="perm_qc_pending_approvals_view" onchange="updateMainCheckbox('qc_pending_approvals')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">View</span>
                     </label>
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_qc_pending_approvals_operate"
+                      <input type="checkbox" id="perm_qc_pending_approvals_operate" onchange="updateMainCheckbox('qc_pending_approvals')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">Operate</span>
                     </label>
@@ -490,18 +506,22 @@
 
                 <!-- Traceability Search -->
                 <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-                  <div class="max-w-[70%]">
-                    <span class="block text-xs font-bold text-slate-800">Traceability Search</span>
-                    <span class="block text-[9px] text-slate-400">Perform lot investigations</span>
+                  <div class="flex items-center gap-3 max-w-[70%] select-none">
+                    <input type="checkbox" id="main_traceability_search" onchange="toggleRowPermissions('traceability_search', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <div>
+                      <span class="block text-xs font-bold text-slate-800">Traceability Search</span>
+                      <span class="block text-[9px] text-slate-400">Perform lot investigations</span>
+                    </div>
                   </div>
                   <div class="flex gap-3 select-none shrink-0">
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_traceability_search_view"
+                      <input type="checkbox" id="perm_traceability_search_view" onchange="updateMainCheckbox('traceability_search')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">View</span>
                     </label>
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_traceability_search_operate"
+                      <input type="checkbox" id="perm_traceability_search_operate" onchange="updateMainCheckbox('traceability_search')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">Operate</span>
                     </label>
@@ -510,18 +530,22 @@
 
                 <!-- QC Reports -->
                 <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-                  <div class="max-w-[70%]">
-                    <span class="block text-xs font-bold text-slate-800">QC Reports</span>
-                    <span class="block text-[9px] text-slate-400">Quality stats, export CSV logs</span>
+                  <div class="flex items-center gap-3 max-w-[70%] select-none">
+                    <input type="checkbox" id="main_qc_reports" onchange="toggleRowPermissions('qc_reports', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <div>
+                      <span class="block text-xs font-bold text-slate-800">QC Reports</span>
+                      <span class="block text-[9px] text-slate-400">Quality stats, export CSV logs</span>
+                    </div>
                   </div>
                   <div class="flex gap-3 select-none shrink-0">
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_qc_reports_view"
+                      <input type="checkbox" id="perm_qc_reports_view" onchange="updateMainCheckbox('qc_reports')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">View</span>
                     </label>
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_qc_reports_operate"
+                      <input type="checkbox" id="perm_qc_reports_operate" onchange="updateMainCheckbox('qc_reports')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">Operate</span>
                     </label>
@@ -530,18 +554,22 @@
 
                 <!-- Audit Reports -->
                 <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-                  <div class="max-w-[70%]">
-                    <span class="block text-xs font-bold text-slate-800">Audit Reports</span>
-                    <span class="block text-[9px] text-slate-400">System actions and event logs</span>
+                  <div class="flex items-center gap-3 max-w-[70%] select-none">
+                    <input type="checkbox" id="main_audit_reports" onchange="toggleRowPermissions('audit_reports', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <div>
+                      <span class="block text-xs font-bold text-slate-800">Audit Reports</span>
+                      <span class="block text-[9px] text-slate-400">System actions and event logs</span>
+                    </div>
                   </div>
                   <div class="flex gap-3 select-none shrink-0">
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_audit_reports_view"
+                      <input type="checkbox" id="perm_audit_reports_view" onchange="updateMainCheckbox('audit_reports')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">View</span>
                     </label>
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_audit_reports_operate"
+                      <input type="checkbox" id="perm_audit_reports_operate" onchange="updateMainCheckbox('audit_reports')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">Operate</span>
                     </label>
@@ -550,18 +578,22 @@
 
                 <!-- Workflow Configuration -->
                 <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-                  <div class="max-w-[70%]">
-                    <span class="block text-xs font-bold text-slate-800">Workflow Configuration</span>
-                    <span class="block text-[9px] text-slate-400">Edit flowchart canvas templates</span>
+                  <div class="flex items-center gap-3 max-w-[70%] select-none">
+                    <input type="checkbox" id="main_workflow_configuration" onchange="toggleRowPermissions('workflow_configuration', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <div>
+                      <span class="block text-xs font-bold text-slate-800">Workflow Configuration</span>
+                      <span class="block text-[9px] text-slate-400">Edit flowchart canvas templates</span>
+                    </div>
                   </div>
                   <div class="flex gap-3 select-none shrink-0">
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_workflow_configuration_view"
+                      <input type="checkbox" id="perm_workflow_configuration_view" onchange="updateMainCheckbox('workflow_configuration')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">View</span>
                     </label>
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_workflow_configuration_operate"
+                      <input type="checkbox" id="perm_workflow_configuration_operate" onchange="updateMainCheckbox('workflow_configuration')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">Operate</span>
                     </label>
@@ -570,18 +602,22 @@
 
                 <!-- User Management -->
                 <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-                  <div class="max-w-[70%]">
-                    <span class="block text-xs font-bold text-slate-800">User Management</span>
-                    <span class="block text-[9px] text-slate-400">Personnel accounts list controls</span>
+                  <div class="flex items-center gap-3 max-w-[70%] select-none">
+                    <input type="checkbox" id="main_user_management" onchange="toggleRowPermissions('user_management', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <div>
+                      <span class="block text-xs font-bold text-slate-800">User Management</span>
+                      <span class="block text-[9px] text-slate-400">Personnel accounts list controls</span>
+                    </div>
                   </div>
                   <div class="flex gap-3 select-none shrink-0">
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_user_management_view"
+                      <input type="checkbox" id="perm_user_management_view" onchange="updateMainCheckbox('user_management')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">View</span>
                     </label>
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_user_management_operate"
+                      <input type="checkbox" id="perm_user_management_operate" onchange="updateMainCheckbox('user_management')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">Operate</span>
                     </label>
@@ -590,18 +626,22 @@
 
                 <!-- Role Management -->
                 <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-                  <div class="max-w-[70%]">
-                    <span class="block text-xs font-bold text-slate-800">Role Management</span>
-                    <span class="block text-[9px] text-slate-400">Update security roles, matrices</span>
+                  <div class="flex items-center gap-3 max-w-[70%] select-none">
+                    <input type="checkbox" id="main_role_management" onchange="toggleRowPermissions('role_management', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <div>
+                      <span class="block text-xs font-bold text-slate-800">Role Management</span>
+                      <span class="block text-[9px] text-slate-400">Update security roles, matrices</span>
+                    </div>
                   </div>
                   <div class="flex gap-3 select-none shrink-0">
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_role_management_view"
+                      <input type="checkbox" id="perm_role_management_view" onchange="updateMainCheckbox('role_management')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">View</span>
                     </label>
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_role_management_operate"
+                      <input type="checkbox" id="perm_role_management_operate" onchange="updateMainCheckbox('role_management')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">Operate</span>
                     </label>
@@ -610,18 +650,22 @@
 
                 <!-- Skill Management -->
                 <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-                  <div class="max-w-[70%]">
-                    <span class="block text-xs font-bold text-slate-800">Skill Management</span>
-                    <span class="block text-[9px] text-slate-400">Certified steps tracking lists</span>
+                  <div class="flex items-center gap-3 max-w-[70%] select-none">
+                    <input type="checkbox" id="main_skill_management" onchange="toggleRowPermissions('skill_management', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <div>
+                      <span class="block text-xs font-bold text-slate-800">Skill Management</span>
+                      <span class="block text-[9px] text-slate-400">Certified steps tracking lists</span>
+                    </div>
                   </div>
                   <div class="flex gap-3 select-none shrink-0">
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_skill_management_view"
+                      <input type="checkbox" id="perm_skill_management_view" onchange="updateMainCheckbox('skill_management')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">View</span>
                     </label>
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_skill_management_operate"
+                      <input type="checkbox" id="perm_skill_management_operate" onchange="updateMainCheckbox('skill_management')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">Operate</span>
                     </label>
@@ -630,18 +674,22 @@
 
                 <!-- Machine Management -->
                 <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-                  <div class="max-w-[70%]">
-                    <span class="block text-xs font-bold text-slate-800">Machine Management</span>
-                    <span class="block text-[9px] text-slate-400">Toolings network IPs, calibrations</span>
+                  <div class="flex items-center gap-3 max-w-[70%] select-none">
+                    <input type="checkbox" id="main_machine_management" onchange="toggleRowPermissions('machine_management', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <div>
+                      <span class="block text-xs font-bold text-slate-800">Machine Management</span>
+                      <span class="block text-[9px] text-slate-400">Toolings network IPs, calibrations</span>
+                    </div>
                   </div>
                   <div class="flex gap-3 select-none shrink-0">
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_machine_management_view"
+                      <input type="checkbox" id="perm_machine_management_view" onchange="updateMainCheckbox('machine_management')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">View</span>
                     </label>
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_machine_management_operate"
+                      <input type="checkbox" id="perm_machine_management_operate" onchange="updateMainCheckbox('machine_management')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">Operate</span>
                     </label>
@@ -649,19 +697,23 @@
                 </div>
 
                 <!-- Device Management -->
-                <div class="flex items-center justify-between py-2">
-                  <div class="max-w-[70%]">
-                    <span class="block text-xs font-bold text-slate-800">Device Management</span>
-                    <span class="block text-[9px] text-slate-400">Tablet connections sync log</span>
+                <div class="flex items-center justify-between py-2 font-medium">
+                  <div class="flex items-center gap-3 max-w-[70%] select-none">
+                    <input type="checkbox" id="main_device_management" onchange="toggleRowPermissions('device_management', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <div>
+                      <span class="block text-xs font-bold text-slate-800">Device Management</span>
+                      <span class="block text-[9px] text-slate-400">Tablet connections sync log</span>
+                    </div>
                   </div>
                   <div class="flex gap-3 select-none shrink-0">
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_device_management_view"
+                      <input type="checkbox" id="perm_device_management_view" onchange="updateMainCheckbox('device_management')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">View</span>
                     </label>
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_device_management_operate"
+                      <input type="checkbox" id="perm_device_management_operate" onchange="updateMainCheckbox('device_management')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">Operate</span>
                     </label>
@@ -685,184 +737,891 @@
                 </div>
               </div>
               <div
-                class="space-y-3 bg-slate-50 p-4 rounded-xl border border-outline-variant/30 max-h-[300px] overflow-y-auto custom-scrollbar">
+                class="space-y-4 bg-slate-50 p-4 rounded-xl border border-outline-variant/30 max-h-[300px] overflow-y-auto custom-scrollbar">
 
-                <!-- Production Scopes -->
+                <!-- 1. Work-order release and planning -->
                 <div class="pb-2 border-b border-slate-200/50">
-                  <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Production
-                    Scopes</span>
-                  <label class="flex items-start gap-2 cursor-pointer py-1">
-                    <input type="checkbox" id="feat_release_sap_orders"
-                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
-                    <div class="ml-2">
-                      <span class="block text-xs font-semibold text-slate-800">Release SAP Orders</span>
-                      <span class="block text-[9px] text-slate-400">Release SAP orders &amp; dispatch to line tablet
-                        terminals</span>
+                  <div class="flex items-center gap-2 mb-2 select-none">
+                    <input type="checkbox" id="cat_work_order" onchange="toggleCategoryCheckboxes('work_order', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Work-order release and planning</span>
+                  </div>
+                  
+                  <!-- Release work order -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_release_work_order_main" onchange="toggleFeatureRow('release_work_order', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-work_order-main" />
+                      <span class="text-xs font-semibold text-slate-800">Release work order</span>
                     </div>
-                  </label>
-                  <label class="flex items-start gap-2 cursor-pointer py-1">
-                    <input type="checkbox" id="feat_hold_production_run"
-                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
-                    <div class="ml-2">
-                      <span class="block text-xs font-semibold text-slate-800">Hold Production Run</span>
-                      <span class="block text-[9px] text-slate-400">Halt line execution and suspend active runs</span>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_release_work_order_view" onchange="updateFeatureRowMain('release_work_order')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-work_order-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_release_work_order_operate" onchange="updateFeatureRowMain('release_work_order')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-work_order-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
                     </div>
-                  </label>
+                  </div>
+
+                  <!-- Verify synchronized work order -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_verify_synchronized_work_order_main" onchange="toggleFeatureRow('verify_synchronized_work_order', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-work_order-main" />
+                      <span class="text-xs font-semibold text-slate-800">Verify synchronized work order</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_verify_synchronized_work_order_view" onchange="updateFeatureRowMain('verify_synchronized_work_order')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-work_order-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_verify_synchronized_work_order_operate" onchange="updateFeatureRowMain('verify_synchronized_work_order')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-work_order-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Assign production date and shift -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_assign_production_date_shift_main" onchange="toggleFeatureRow('assign_production_date_shift', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-work_order-main" />
+                      <span class="text-xs font-semibold text-slate-800">Assign production date and shift</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_assign_production_date_shift_view" onchange="updateFeatureRowMain('assign_production_date_shift')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-work_order-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_assign_production_date_shift_operate" onchange="updateFeatureRowMain('assign_production_date_shift')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-work_order-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Approve work-order readiness -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_approve_work_order_readiness_main" onchange="toggleFeatureRow('approve_work_order_readiness', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-work_order-main" />
+                      <span class="text-xs font-semibold text-slate-800">Approve work-order readiness</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_approve_work_order_readiness_view" onchange="updateFeatureRowMain('approve_work_order_readiness')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-work_order-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_approve_work_order_readiness_operate" onchange="updateFeatureRowMain('approve_work_order_readiness')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-work_order-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
                 </div>
 
-                <!-- Shopfloor Execution -->
+                <!-- 2. Material picking and verification -->
                 <div class="py-2 border-b border-slate-200/50">
-                  <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Shopfloor
-                    Execution</span>
-                  <label class="flex items-start gap-2 cursor-pointer py-1">
-                    <input type="checkbox" id="feat_barcode_scan_lots"
-                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
-                    <div class="ml-2">
-                      <span class="block text-xs font-semibold text-slate-800">Barcode Scanning &amp; Lot Check</span>
-                      <span class="block text-[9px] text-slate-400">Verify material lot barcodes and check inputs
-                        compatibility</span>
+                  <div class="flex items-center gap-2 mb-2 select-none">
+                    <input type="checkbox" id="cat_material" onchange="toggleCategoryCheckboxes('material', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Material picking and verification</span>
+                  </div>
+
+                  <!-- Pick material -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_pick_material_main" onchange="toggleFeatureRow('pick_material', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-material-main" />
+                      <span class="text-xs font-semibold text-slate-800">Pick material</span>
                     </div>
-                  </label>
-                  <label class="flex items-start gap-2 cursor-pointer py-1">
-                    <input type="checkbox" id="feat_verify_step_actions"
-                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
-                    <div class="ml-2">
-                      <span class="block text-xs font-semibold text-slate-800">Confirm Checklist Steps</span>
-                      <span class="block text-[9px] text-slate-400">Complete tablet-based control card verification
-                        checkpoints</span>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_pick_material_view" onchange="updateFeatureRowMain('pick_material')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-material-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_pick_material_operate" onchange="updateFeatureRowMain('pick_material')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-material-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
                     </div>
-                  </label>
+                  </div>
+
+                  <!-- Scan box or material tag -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_scan_box_material_tag_main" onchange="toggleFeatureRow('scan_box_material_tag', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-material-main" />
+                      <span class="text-xs font-semibold text-slate-800">Scan box or material tag</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_scan_box_material_tag_view" onchange="updateFeatureRowMain('scan_box_material_tag')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-material-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_scan_box_material_tag_operate" onchange="updateFeatureRowMain('scan_box_material_tag')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-material-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Confirm part and lot number -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_confirm_part_lot_number_main" onchange="toggleFeatureRow('confirm_part_lot_number', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-material-main" />
+                      <span class="text-xs font-semibold text-slate-800">Confirm part and lot number</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_confirm_part_lot_number_view" onchange="updateFeatureRowMain('confirm_part_lot_number')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-material-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_confirm_part_lot_number_operate" onchange="updateFeatureRowMain('confirm_part_lot_number')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-material-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Resolve material mismatch -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_resolve_material_mismatch_main" onchange="toggleFeatureRow('resolve_material_mismatch', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-material-main" />
+                      <span class="text-xs font-semibold text-slate-800">Resolve material mismatch</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_resolve_material_mismatch_view" onchange="updateFeatureRowMain('resolve_material_mismatch')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-material-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_resolve_material_mismatch_operate" onchange="updateFeatureRowMain('resolve_material_mismatch')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-material-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
                 </div>
 
-                <!-- Quality Assurance -->
+                <!-- 3. Offline production processes -->
                 <div class="py-2 border-b border-slate-200/50">
-                  <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Quality
-                    Assurance</span>
-                  <label class="flex items-start gap-2 cursor-pointer py-1">
-                    <input type="checkbox" id="feat_approve_qc_checks"
-                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
-                    <div class="ml-2">
-                      <span class="block text-xs font-semibold text-slate-800">Approve QC Gates</span>
-                      <span class="block text-[9px] text-slate-400">Certify tolerance checks and sign-off inspect
-                        approvals</span>
+                  <div class="flex items-center gap-2 mb-2 select-none">
+                    <input type="checkbox" id="cat_offline" onchange="toggleCategoryCheckboxes('offline', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Offline production processes</span>
+                  </div>
+
+                  <!-- Execution/Quality Control -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_offline_execution_qc_main" onchange="toggleFeatureRow('offline_execution_qc', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-offline-main" />
+                      <span class="text-xs font-semibold text-slate-800">Execution/Quality Control</span>
                     </div>
-                  </label>
-                  <label class="flex items-start gap-2 cursor-pointer py-1">
-                    <input type="checkbox" id="feat_override_qc_tolerances"
-                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
-                    <div class="ml-2">
-                      <span class="block text-xs font-semibold text-slate-800">Override Tolerances</span>
-                      <span class="block text-[9px] text-slate-400">Force override critical alarm limits and step
-                        failures</span>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_offline_execution_qc_view" onchange="updateFeatureRowMain('offline_execution_qc')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-offline-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_offline_execution_qc_operate" onchange="updateFeatureRowMain('offline_execution_qc')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-offline-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
                     </div>
-                  </label>
+                  </div>
+
+                  <!-- Machine/Jig setup -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_offline_machine_jig_setup_main" onchange="toggleFeatureRow('offline_machine_jig_setup', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-offline-main" />
+                      <span class="text-xs font-semibold text-slate-800">Machine/Jig setup</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_offline_machine_jig_setup_view" onchange="updateFeatureRowMain('offline_machine_jig_setup')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-offline-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_offline_machine_jig_setup_operate" onchange="updateFeatureRowMain('offline_machine_jig_setup')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-offline-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Inspection/Quantity -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_offline_inspection_quantity_main" onchange="toggleFeatureRow('offline_inspection_quantity', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-offline-main" />
+                      <span class="text-xs font-semibold text-slate-800">Inspection/Quantity</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_offline_inspection_quantity_view" onchange="updateFeatureRowMain('offline_inspection_quantity')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-offline-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_offline_inspection_quantity_operate" onchange="updateFeatureRowMain('offline_inspection_quantity')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-offline-chk" />
+                        <span class="text-[11px] font-medium text-slate-650">Operate</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Exception approval -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_offline_exception_approval_main" onchange="toggleFeatureRow('offline_exception_approval', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-offline-main" />
+                      <span class="text-xs font-semibold text-slate-800">Exception approval</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_offline_exception_approval_view" onchange="updateFeatureRowMain('offline_exception_approval')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-offline-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_offline_exception_approval_operate" onchange="updateFeatureRowMain('offline_exception_approval')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-offline-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
                 </div>
 
-                <!-- Data & Exports -->
+                <!-- 4. Online assembly processes -->
                 <div class="py-2 border-b border-slate-200/50">
-                  <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Data &amp;
-                    Exports</span>
-                  <label class="flex items-start gap-2 cursor-pointer py-1">
-                    <input type="checkbox" id="feat_export_csv_reports"
-                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
-                    <div class="ml-2">
-                      <span class="block text-xs font-semibold text-slate-800">Export Reports</span>
-                      <span class="block text-[9px] text-slate-400">Export logs to CSV/Excel</span>
+                  <div class="flex items-center gap-2 mb-2 select-none">
+                    <input type="checkbox" id="cat_online" onchange="toggleCategoryCheckboxes('online', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Online assembly processes</span>
+                  </div>
+
+                  <!-- Quality Control -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_online_qc_main" onchange="toggleFeatureRow('online_qc', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-online-main" />
+                      <span class="text-xs font-semibold text-slate-800">Quality Control</span>
                     </div>
-                  </label>
-                  <label class="flex items-start gap-2 cursor-pointer py-1">
-                    <input type="checkbox" id="feat_purge_historical_logs"
-                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
-                    <div class="ml-2">
-                      <span class="block text-xs font-semibold text-slate-800">Purge Data Logs</span>
-                      <span class="block text-[9px] text-slate-400">Erase history data, reset audit logs (Admins
-                        only)</span>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_online_qc_view" onchange="updateFeatureRowMain('online_qc')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-online-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_online_qc_operate" onchange="updateFeatureRowMain('online_qc')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-online-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
                     </div>
-                  </label>
+                  </div>
+
+                  <!-- Jig Setup -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_online_jig_setup_main" onchange="toggleFeatureRow('online_jig_setup', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-online-main" />
+                      <span class="text-xs font-semibold text-slate-800">Jig Setup</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_online_jig_setup_view" onchange="updateFeatureRowMain('online_jig_setup')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-online-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_online_jig_setup_operate" onchange="updateFeatureRowMain('online_jig_setup')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-online-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Quantity -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_online_quantity_main" onchange="toggleFeatureRow('online_quantity', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-online-main" />
+                      <span class="text-xs font-semibold text-slate-800">Quantity</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_online_quantity_view" onchange="updateFeatureRowMain('online_quantity')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-online-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_online_quantity_operate" onchange="updateFeatureRowMain('online_quantity')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-online-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Exception approval -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_online_exception_approval_main" onchange="toggleFeatureRow('online_exception_approval', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-online-main" />
+                      <span class="text-xs font-semibold text-slate-800">Exception approval</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_online_exception_approval_view" onchange="updateFeatureRowMain('online_exception_approval')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-online-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_online_exception_approval_operate" onchange="updateFeatureRowMain('online_exception_approval')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-online-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- NG disposition -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_online_ng_disposition_main" onchange="toggleFeatureRow('online_ng_disposition', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-online-main" />
+                      <span class="text-xs font-semibold text-slate-800">NG disposition</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_online_ng_disposition_view" onchange="updateFeatureRowMain('online_ng_disposition')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-online-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_online_ng_disposition_operate" onchange="updateFeatureRowMain('online_ng_disposition')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-online-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
                 </div>
 
-                <!-- Template Design -->
+                <!-- 5. Final inspection -->
                 <div class="py-2 border-b border-slate-200/50">
-                  <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Template
-                    Design</span>
-                  <label class="flex items-start gap-2 cursor-pointer py-1">
-                    <input type="checkbox" id="feat_design_flowchart_canvas"
-                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
-                    <div class="ml-2">
-                      <span class="block text-xs font-semibold text-slate-800">Design Flowchart Canvas</span>
-                      <span class="block text-[9px] text-slate-400">Draw stage charts, sequence steps, tolerances</span>
+                  <div class="flex items-center gap-2 mb-2 select-none">
+                    <input type="checkbox" id="cat_final_inspect" onchange="toggleCategoryCheckboxes('final_inspect', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Final inspection</span>
+                  </div>
+
+                  <!-- final inspection -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_final_inspection_main" onchange="toggleFeatureRow('final_inspection', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-final_inspect-main" />
+                      <span class="text-xs font-semibold text-slate-800">final inspection</span>
                     </div>
-                  </label>
-                  <label class="flex items-start gap-2 cursor-pointer py-1">
-                    <input type="checkbox" id="feat_publish_template_versions"
-                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
-                    <div class="ml-2">
-                      <span class="block text-xs font-semibold text-slate-800">Publish Revisions</span>
-                      <span class="block text-[9px] text-slate-400">Release new revisions of control card kanbans</span>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_final_inspection_view" onchange="updateFeatureRowMain('final_inspection')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-final_inspect-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_final_inspection_operate" onchange="updateFeatureRowMain('final_inspection')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-final_inspect-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
                     </div>
-                  </label>
+                  </div>
+
+                  <!-- Approve completed lot -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_final_approve_completed_lot_main" onchange="toggleFeatureRow('final_approve_completed_lot', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-final_inspect-main" />
+                      <span class="text-xs font-semibold text-slate-800">Approve completed lot</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_final_approve_completed_lot_view" onchange="updateFeatureRowMain('final_approve_completed_lot')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-final_inspect-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_final_approve_completed_lot_operate" onchange="updateFeatureRowMain('final_approve_completed_lot')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-final_inspect-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Correct production issue -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_final_correct_production_issue_main" onchange="toggleFeatureRow('final_correct_production_issue', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-final_inspect-main" />
+                      <span class="text-xs font-semibold text-slate-800">Correct production issue</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_final_correct_production_issue_view" onchange="updateFeatureRowMain('final_correct_production_issue')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-final_inspect-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_final_correct_production_issue_operate" onchange="updateFeatureRowMain('final_correct_production_issue')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-final_inspect-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Approve/Reject rework -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_final_approve_reject_rework_main" onchange="toggleFeatureRow('final_approve_reject_rework', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-final_inspect-main" />
+                      <span class="text-xs font-semibold text-slate-800">Approve/Reject rework</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_final_approve_reject_rework_view" onchange="updateFeatureRowMain('final_approve_reject_rework')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-final_inspect-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_final_approve_reject_rework_operate" onchange="updateFeatureRowMain('final_approve_reject_rework')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-final_inspect-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
                 </div>
 
-                <!-- Security & Admin -->
+                <!-- 6. Packing -->
                 <div class="py-2 border-b border-slate-200/50">
-                  <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Security &amp;
-                    Admin</span>
-                  <label class="flex items-start gap-2 cursor-pointer py-1">
-                    <input type="checkbox" id="feat_reset_passwords"
-                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
-                    <div class="ml-2">
-                      <span class="block text-xs font-semibold text-slate-800">Reset Credentials</span>
-                      <span class="block text-[9px] text-slate-400">Reset credentials, suspend users</span>
+                  <div class="flex items-center gap-2 mb-2 select-none">
+                    <input type="checkbox" id="cat_packing" onchange="toggleCategoryCheckboxes('packing', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Packing</span>
+                  </div>
+
+                  <!-- Quality Control -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_packing_qc_main" onchange="toggleFeatureRow('packing_qc', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-packing-main" />
+                      <span class="text-xs font-semibold text-slate-800">Quality Control</span>
                     </div>
-                  </label>
-                  <label class="flex items-start gap-2 cursor-pointer py-1">
-                    <input type="checkbox" id="feat_create_security_roles"
-                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
-                    <div class="ml-2">
-                      <span class="block text-xs font-semibold text-slate-800">Create Security Roles</span>
-                      <span class="block text-[9px] text-slate-400">Define custom security roles and scopes
-                        checklists</span>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_packing_qc_view" onchange="updateFeatureRowMain('packing_qc')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-packing-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_packing_qc_operate" onchange="updateFeatureRowMain('packing_qc')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-packing-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
                     </div>
-                  </label>
+                  </div>
+
+                  <!-- Jig Setup -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_packing_jig_setup_main" onchange="toggleFeatureRow('packing_jig_setup', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-packing-main" />
+                      <span class="text-xs font-semibold text-slate-800">Jig Setup</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_packing_jig_setup_view" onchange="updateFeatureRowMain('packing_jig_setup')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-packing-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_packing_jig_setup_operate" onchange="updateFeatureRowMain('packing_jig_setup')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-packing-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Quantity -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_packing_quantity_main" onchange="toggleFeatureRow('packing_quantity', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-packing-main" />
+                      <span class="text-xs font-semibold text-slate-800">Quantity</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_packing_quantity_view" onchange="updateFeatureRowMain('packing_quantity')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-packing-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_packing_quantity_operate" onchange="updateFeatureRowMain('packing_quantity')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-packing-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
                 </div>
 
-                <!-- Hardware & Equipment -->
+                <!-- 7. Rework -->
                 <div class="py-2 border-b border-slate-200/50">
-                  <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Hardware &amp;
-                    Equipment</span>
-                  <label class="flex items-start gap-2 cursor-pointer py-1">
-                    <input type="checkbox" id="feat_calibrate_machine_tooling"
-                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
-                    <div class="ml-2">
-                      <span class="block text-xs font-semibold text-slate-800">Calibrate Tooling</span>
-                      <span class="block text-[9px] text-slate-400">Log torque calibrations, update active tooling
-                        parameters</span>
+                  <div class="flex items-center gap-2 mb-2 select-none">
+                    <input type="checkbox" id="cat_rework" onchange="toggleCategoryCheckboxes('rework', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Rework</span>
+                  </div>
+
+                  <!-- Report defect -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_rework_report_defect_main" onchange="toggleFeatureRow('rework_report_defect', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-rework-main" />
+                      <span class="text-xs font-semibold text-slate-800">Report defect</span>
                     </div>
-                  </label>
-                  <label class="flex items-start gap-2 cursor-pointer py-1">
-                    <input type="checkbox" id="feat_bind_plc_connections"
-                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
-                    <div class="ml-2">
-                      <span class="block text-xs font-semibold text-slate-800">Configure PLC IP Bindings</span>
-                      <span class="block text-[9px] text-slate-400">Bind IP connections, monitor line controller
-                        outputs</span>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_rework_report_defect_view" onchange="updateFeatureRowMain('rework_report_defect')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-rework-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_rework_report_defect_operate" onchange="updateFeatureRowMain('rework_report_defect')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-rework-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
                     </div>
-                  </label>
+                  </div>
+
+                  <!-- Confirm defect -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_rework_confirm_defect_main" onchange="toggleFeatureRow('rework_confirm_defect', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-rework-main" />
+                      <span class="text-xs font-semibold text-slate-800">Confirm defect</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_rework_confirm_defect_view" onchange="updateFeatureRowMain('rework_confirm_defect')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-rework-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_rework_confirm_defect_operate" onchange="updateFeatureRowMain('rework_confirm_defect')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-rework-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Decide rework or scrap -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_rework_decide_rework_scrap_main" onchange="toggleFeatureRow('rework_decide_rework_scrap', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-rework-main" />
+                      <span class="text-xs font-semibold text-slate-800">Decide rework or scrap</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_rework_decide_rework_scrap_view" onchange="updateFeatureRowMain('rework_decide_rework_scrap')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-rework-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_rework_decide_rework_scrap_operate" onchange="updateFeatureRowMain('rework_decide_rework_scrap')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-rework-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Define rework method -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_rework_define_rework_method_main" onchange="toggleFeatureRow('rework_define_rework_method', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-rework-main" />
+                      <span class="text-xs font-semibold text-slate-800">Define rework method</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_rework_define_rework_method_view" onchange="updateFeatureRowMain('rework_define_rework_method')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-rework-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_rework_define_rework_method_operate" onchange="updateFeatureRowMain('rework_define_rework_method')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-rework-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Perform rework -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_rework_perform_rework_main" onchange="toggleFeatureRow('rework_perform_rework', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-rework-main" />
+                      <span class="text-xs font-semibold text-slate-800">Perform rework</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_rework_perform_rework_view" onchange="updateFeatureRowMain('rework_perform_rework')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-rework-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_rework_perform_rework_operate" onchange="updateFeatureRowMain('rework_perform_rework')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-rework-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Approve reworked item -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_rework_approve_reworked_item_main" onchange="toggleFeatureRow('rework_approve_reworked_item', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-rework-main" />
+                      <span class="text-xs font-semibold text-slate-800">Approve reworked item</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_rework_approve_reworked_item_view" onchange="updateFeatureRowMain('rework_approve_reworked_item')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-rework-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_rework_approve_reworked_item_operate" onchange="updateFeatureRowMain('rework_approve_reworked_item')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-rework-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
                 </div>
 
-                <!-- Employee Training -->
+                <!-- 8. Process dependency and stage-gate features -->
+                <div class="py-2 border-b border-slate-200/50">
+                  <div class="flex items-center gap-2 mb-2 select-none">
+                    <input type="checkbox" id="cat_process" onchange="toggleCategoryCheckboxes('process', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Process dependency and stage-gate features</span>
+                  </div>
+
+                  <!-- Defines process dependencies -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_process_defines_dependencies_main" onchange="toggleFeatureRow('process_defines_dependencies', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-process-main" />
+                      <span class="text-xs font-semibold text-slate-800">Defines process dependencies</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_process_defines_dependencies_view" onchange="updateFeatureRowMain('process_defines_dependencies')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-process-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_process_defines_dependencies_operate" onchange="updateFeatureRowMain('process_defines_dependencies')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-process-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- System enforces the rules/validation -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_process_system_enforces_rules_main" onchange="toggleFeatureRow('process_system_enforces_rules', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-process-main" />
+                      <span class="text-xs font-semibold text-slate-800">System enforces the rules/validation</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_process_system_enforces_rules_view" onchange="updateFeatureRowMain('process_system_enforces_rules')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-process-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_process_system_enforces_rules_operate" onchange="updateFeatureRowMain('process_system_enforces_rules')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-process-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 9. Skill Management -->
+                <div class="py-2 border-b border-slate-200/50">
+                  <div class="flex items-center gap-2 mb-2 select-none">
+                    <input type="checkbox" id="cat_skill" onchange="toggleCategoryCheckboxes('skill', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Skill Management</span>
+                  </div>
+
+                  <!-- CRUD skill -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_skill_crud_skill_main" onchange="toggleFeatureRow('skill_crud_skill', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-skill-main" />
+                      <span class="text-xs font-semibold text-slate-800">CRUD skill</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_skill_crud_skill_view" onchange="updateFeatureRowMain('skill_crud_skill')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-skill-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_skill_crud_skill_operate" onchange="updateFeatureRowMain('skill_crud_skill')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-skill-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Assigning Skill to user -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_skill_assigning_to_user_main" onchange="toggleFeatureRow('skill_assigning_to_user', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-skill-main" />
+                      <span class="text-xs font-semibold text-slate-800">Assigning Skill to user</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_skill_assigning_to_user_view" onchange="updateFeatureRowMain('skill_assigning_to_user')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-skill-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_skill_assigning_to_user_operate" onchange="updateFeatureRowMain('skill_assigning_to_user')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-skill-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 10. Reports and Traceability -->
+                <div class="py-2 border-b border-slate-200/50">
+                  <div class="flex items-center gap-2 mb-2 select-none">
+                    <input type="checkbox" id="cat_reports" onchange="toggleCategoryCheckboxes('reports', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Reports and Traceability</span>
+                  </div>
+
+                  <!-- Monitoring -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_reports_monitoring_main" onchange="toggleFeatureRow('reports_monitoring', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-reports-main" />
+                      <span class="text-xs font-semibold text-slate-800">Monitoring</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_reports_monitoring_view" onchange="updateFeatureRowMain('reports_monitoring')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-reports-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_reports_monitoring_operate" onchange="updateFeatureRowMain('reports_monitoring')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-reports-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 11. Roles and Permissions -->
+                <div class="py-2 border-b border-slate-200/50">
+                  <div class="flex items-center gap-2 mb-2 select-none">
+                    <input type="checkbox" id="cat_roles" onchange="toggleCategoryCheckboxes('roles', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Roles and Permissions</span>
+                  </div>
+
+                  <!-- Roles and Permissions -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_roles_roles_permissions_main" onchange="toggleFeatureRow('roles_roles_permissions', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-roles-main" />
+                      <span class="text-xs font-semibold text-slate-800">Roles and Permissions</span>
+                    </div>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_roles_roles_permissions_view" onchange="updateFeatureRowMain('roles_roles_permissions')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-roles-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_roles_roles_permissions_operate" onchange="updateFeatureRowMain('roles_roles_permissions')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-roles-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 12. Audit Logs and System Administration -->
                 <div class="pt-2">
-                  <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Employee
-                    Training</span>
-                  <label class="flex items-start gap-2 cursor-pointer py-1">
-                    <input type="checkbox" id="feat_certify_operator_training"
-                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 mt-0.5" />
-                    <div class="ml-2">
-                      <span class="block text-xs font-semibold text-slate-800">Certify Operator Skills</span>
-                      <span class="block text-[9px] text-slate-400">Update certified training levels for assembly
-                        tasks</span>
+                  <div class="flex items-center gap-2 mb-2 select-none">
+                    <input type="checkbox" id="cat_audit" onchange="toggleCategoryCheckboxes('audit', this)"
+                      class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Audit Logs and System Administration</span>
+                  </div>
+
+                  <!-- Audit Logs and System Administration -->
+                  <div class="flex items-center justify-between py-1.5 pl-6">
+                    <div class="flex items-center gap-2 select-none">
+                      <input type="checkbox" id="feat_audit_audit_logs_system_admin_main" onchange="toggleFeatureRow('audit_audit_logs_system_admin', this)"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer feat-audit-main" />
+                      <span class="text-xs font-semibold text-slate-800">Audit Logs and System Administration</span>
                     </div>
-                  </label>
+                    <div class="flex gap-4 select-none shrink-0">
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_audit_audit_logs_system_admin_view" onchange="updateFeatureRowMain('audit_audit_logs_system_admin')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-audit-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">View</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="feat_audit_audit_logs_system_admin_operate" onchange="updateFeatureRowMain('audit_audit_logs_system_admin')"
+                          class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 feat-audit-chk" />
+                        <span class="text-[11px] font-medium text-slate-600">Operate</span>
+                      </label>
+                    </div>
+                  </div>
                 </div>
 
               </div>
@@ -928,18 +1687,28 @@
 
             const featureKeys = ['dashboard', 'work_orders', 'supervisor_planning', 'qc_pending_approvals', 'traceability_search', 'qc_reports', 'audit_reports', 'workflow_configuration', 'user_management', 'role_management', 'skill_management', 'machine_management', 'device_management'];
 
-            const granularKeys = [
-              'release_sap_orders', 'hold_production_run',
-              'barcode_scan_lots', 'verify_step_actions',
-              'approve_qc_checks', 'override_qc_tolerances',
-              'export_csv_reports', 'purge_historical_logs',
-              'design_flowchart_canvas', 'publish_template_versions',
-              'reset_passwords', 'create_security_roles',
-              'calibrate_machine_tooling', 'bind_plc_connections',
-              'certify_operator_training'
+            const granularBaseKeys = [
+              'release_work_order', 'verify_synchronized_work_order', 'assign_production_date_shift', 'approve_work_order_readiness',
+              'pick_material', 'scan_box_material_tag', 'confirm_part_lot_number', 'resolve_material_mismatch',
+              'offline_execution_qc', 'offline_machine_jig_setup', 'offline_inspection_quantity', 'offline_exception_approval',
+              'online_qc', 'online_jig_setup', 'online_quantity', 'online_exception_approval', 'online_ng_disposition',
+              'final_inspection', 'final_approve_completed_lot', 'final_correct_production_issue', 'final_approve_reject_rework',
+              'packing_qc', 'packing_jig_setup', 'packing_quantity',
+              'rework_report_defect', 'rework_confirm_defect', 'rework_decide_rework_scrap', 'rework_define_rework_method', 'rework_perform_rework', 'rework_approve_reworked_item',
+              'process_defines_dependencies', 'process_system_enforces_rules',
+              'skill_crud_skill', 'skill_assigning_to_user',
+              'reports_monitoring',
+              'roles_roles_permissions',
+              'audit_audit_logs_system_admin'
             ];
 
-            const systemDefaults = ['ADMIN', 'SUPERVISOR', 'QC_MANAGER', 'PRODUCTION_LEAD', 'QC_INSPECTOR', 'LINE_INSPECTOR', 'OPERATOR'];
+            const granularKeys = [];
+            granularBaseKeys.forEach(base => {
+              granularKeys.push(`${base}_view`);
+              granularKeys.push(`${base}_operate`);
+            });
+
+            const systemDefaults = ['ADMIN', 'SUPERVISOR', 'OPERATOR', 'QC', 'PRODUCT_MANAGER'];
 
             // Fetch or read role configurations
             async function fetchRoles() {
@@ -958,6 +1727,11 @@
                 if (localRoles) {
                   try {
                     const parsed = JSON.parse(localRoles);
+                    const hasOldFeatures = parsed.some(r => r.features && r.features.some(f => !f.endsWith('_view') && !f.endsWith('_operate')));
+                    const hasOldRoles = parsed.some(r => ['QC_MANAGER', 'QC_INSPECTOR', 'LINE_INSPECTOR', 'PRODUCTION_LEAD'].includes(r.roleCode.toUpperCase()));
+                    if (hasOldFeatures || hasOldRoles) {
+                      throw new Error("Outdated role structure or deprecated roles found. Forcing upgrade.");
+                    }
                     if (parsed && parsed.length > 0 && parsed[0].permissions && typeof parsed[0].permissions.dashboard !== 'undefined') {
                       rolesList = parsed;
 
@@ -1249,50 +2023,145 @@
               featuresContainer.innerHTML = '';
 
               const granularLabels = {
-                'release_sap_orders': { name: 'Release SAP Orders', desc: 'Release SAP orders & dispatch to line tablet terminals' },
-                'hold_production_run': { name: 'Hold Production Run', desc: 'Halt line execution and set active card runs to suspended status' },
-                'barcode_scan_lots': { name: 'Barcode Scanning & Lot Check', desc: 'Verify material lot barcodes and check inputs compatibility' },
-                'verify_step_actions': { name: 'Confirm Checklist Steps', desc: 'Complete tablet-based control card verification checkpoints' },
-                'approve_qc_checks': { name: 'Approve QC Gates', desc: 'Certify tolerance checks and sign-off inspect approvals' },
-                'override_qc_tolerances': { name: 'Override Tolerances', desc: 'Force override critical alarm limits and step failures' },
-                'export_csv_reports': { name: 'Export Reports', desc: 'Export shift reports, traceability databases, logs to CSV/Excel' },
-                'purge_historical_logs': { name: 'Purge Data Logs', desc: 'Erase history data, reset audit logs (Admins only)' },
-                'design_flowchart_canvas': { name: 'Design Flowchart Canvas', desc: 'Draw stage charts, sequence steps, limits tolerances' },
-                'publish_template_versions': { name: 'Publish Revisions', desc: 'Release new revisions of control card kanbans' },
-                'reset_passwords': { name: 'Reset Credentials', desc: 'Reset credentials, toggle user suspension state' },
-                'create_security_roles': { name: 'Create Security Roles', desc: 'Define custom security roles, update screens access matrix' },
-                'calibrate_machine_tooling': { name: 'Calibrate Tooling', desc: 'Log torque calibrations, update active tooling parameters' },
-                'bind_plc_connections': { name: 'Configure PLC IP Bindings', desc: 'Bind IP connections, monitor line controller outputs' },
-                'certify_operator_training': { name: 'Certify Operator Skills', desc: 'Update certified training levels for assembly tasks' }
+                // Work-order release and planning
+                'release_work_order': { name: 'Release work order', desc: 'Work-order release and planning' },
+                'verify_synchronized_work_order': { name: 'Verify synchronized work order', desc: 'Work-order release and planning' },
+                'assign_production_date_shift': { name: 'Assign production date and shift', desc: 'Work-order release and planning' },
+                'approve_work_order_readiness': { name: 'Approve work-order readiness', desc: 'Work-order release and planning' },
+                // Material picking and verification
+                'pick_material': { name: 'Pick material', desc: 'Material picking and verification' },
+                'scan_box_material_tag': { name: 'Scan box or material tag', desc: 'Material picking and verification' },
+                'confirm_part_lot_number': { name: 'Confirm part and lot number', desc: 'Material picking and verification' },
+                'resolve_material_mismatch': { name: 'Resolve material mismatch', desc: 'Material picking and verification' },
+                // Offline production processes
+                'offline_execution_qc': { name: 'Execution/Quality Control', desc: 'Offline production processes' },
+                'offline_machine_jig_setup': { name: 'Machine/Jig setup', desc: 'Offline production processes' },
+                'offline_inspection_quantity': { name: 'Inspection/Quantity', desc: 'Offline production processes' },
+                'offline_exception_approval': { name: 'Exception approval', desc: 'Offline production processes' },
+                // Online assembly processes
+                'online_qc': { name: 'Quality Control', desc: 'Online assembly processes' },
+                'online_jig_setup': { name: 'Jig Setup', desc: 'Online assembly processes' },
+                'online_quantity': { name: 'Quantity', desc: 'Online assembly processes' },
+                'online_exception_approval': { name: 'Exception approval', desc: 'Online assembly processes' },
+                'online_ng_disposition': { name: 'NG disposition', desc: 'Online assembly processes' },
+                // Final inspection
+                'final_inspection': { name: 'final inspection', desc: 'Final inspection' },
+                'final_approve_completed_lot': { name: 'Approve completed lot', desc: 'Final inspection' },
+                'final_correct_production_issue': { name: 'Correct production issue', desc: 'Final inspection' },
+                'final_approve_reject_rework': { name: 'Approve/Reject rework', desc: 'Final inspection' },
+                // Packing
+                'packing_qc': { name: 'Quality Control', desc: 'Packing' },
+                'packing_jig_setup': { name: 'Jig Setup', desc: 'Packing' },
+                'packing_quantity': { name: 'Quantity', desc: 'Packing' },
+                // Rework
+                'rework_report_defect': { name: 'Report defect', desc: 'Rework' },
+                'rework_confirm_defect': { name: 'Confirm defect', desc: 'Rework' },
+                'rework_decide_rework_scrap': { name: 'Decide rework or scrap', desc: 'Rework' },
+                'rework_define_rework_method': { name: 'Define rework method', desc: 'Rework' },
+                'rework_perform_rework': { name: 'Perform rework', desc: 'Rework' },
+                'rework_approve_reworked_item': { name: 'Approve reworked item', desc: 'Rework' },
+                // Process dependency and stage-gate features
+                'process_defines_dependencies': { name: 'Defines process dependencies', desc: 'Process dependency and stage-gate features' },
+                'process_system_enforces_rules': { name: 'System enforces the rules/validation', desc: 'Process dependency and stage-gate features' },
+                // Skill Management
+                'skill_crud_skill': { name: 'CRUD skill', desc: 'Skill Management' },
+                'skill_assigning_to_user': { name: 'Assigning Skill to user', desc: 'Skill Management' },
+                // Reports and Traceability
+                'reports_monitoring': { name: 'Monitoring', desc: 'Reports and Traceability' },
+                // Roles and Permissions
+                'roles_roles_permissions': { name: 'Roles and Permissions', desc: 'Roles and Permissions' },
+                // Audit Logs and System Administration
+                'audit_audit_logs_system_admin': { name: 'Audit Logs and System Administration', desc: 'Audit Logs and System Administration' }
               };
 
               const activeFeatures = r.features || [];
-
-              granularKeys.forEach(key => {
-                const labelInfo = granularLabels[key];
-                const isActive = activeFeatures.includes(key);
+              granularBaseKeys.forEach(baseKey => {
+                const labelInfo = granularLabels[baseKey] || { name: baseKey, desc: '' };
+                const hasView = activeFeatures.includes(`${baseKey}_view`);
+                const hasOperate = activeFeatures.includes(`${baseKey}_operate`);
 
                 const row = document.createElement('div');
                 row.className = 'flex flex-wrap items-center justify-between gap-2 p-2 rounded-lg border text-xs transition-colors ' +
-                  (isActive ? 'bg-white border-slate-200 hover:border-slate-300' : 'bg-slate-50/70 border-slate-100 opacity-60');
+                  (hasView || hasOperate ? 'bg-white border-slate-200 hover:border-slate-300' : 'bg-slate-50/70 border-slate-100 opacity-60');
 
-                const statusBadge = isActive
-                  ? `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-[9px] uppercase"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>Active</span>`
-                  : `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-slate-100 text-slate-400 border border-slate-200 font-bold text-[9px] uppercase">Disabled</span>`;
+                const viewBadge = hasView
+                  ? `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-[9px] uppercase"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>View</span>`
+                  : `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-slate-100 text-slate-400 border border-slate-200 font-bold text-[9px] uppercase">No View</span>`;
+
+                const operateBadge = hasOperate
+                  ? `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-[9px] uppercase"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>Operate</span>`
+                  : `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-slate-100 text-slate-400 border border-slate-200 font-bold text-[9px] uppercase">No Operate</span>`;
 
                 row.innerHTML = `
                   <div class="space-y-0.5 flex-1 min-w-[150px]">
                       <span class="font-bold text-slate-800">${labelInfo.name}</span>
                       <p class="text-[9px] text-slate-400 font-medium truncate">${labelInfo.desc}</p>
                   </div>
-                  <div class="shrink-0 ml-auto">
-                      ${statusBadge}
+                  <div class="flex gap-1.5 shrink-0 ml-auto">
+                      ${viewBadge}
+                      ${operateBadge}
                   </div>
-              `;
+                `;
                 featuresContainer.appendChild(row);
               });
 
               toggleViewRoleModal(true);
+            }
+
+            function toggleRowPermissions(key, mainEl) {
+              const checked = mainEl.checked;
+              document.getElementById(`perm_${key}_view`).checked = checked;
+              document.getElementById(`perm_${key}_operate`).checked = checked;
+            }
+
+            function updateMainCheckbox(key) {
+              const viewChecked = document.getElementById(`perm_${key}_view`).checked;
+              const operateChecked = document.getElementById(`perm_${key}_operate`).checked;
+              document.getElementById(`main_${key}`).checked = viewChecked && operateChecked;
+            }
+
+            function toggleCategoryCheckboxes(catName, catEl) {
+              const checked = catEl.checked;
+              const mains = document.querySelectorAll(`.feat-${catName}-main`);
+              mains.forEach(el => {
+                el.checked = checked;
+              });
+              const chks = document.querySelectorAll(`.feat-${catName}-chk`);
+              chks.forEach(el => {
+                el.checked = checked;
+              });
+            }
+
+            function toggleFeatureRow(key, mainEl) {
+              const checked = mainEl.checked;
+              document.getElementById(`feat_${key}_view`).checked = checked;
+              document.getElementById(`feat_${key}_operate`).checked = checked;
+              updateCategoryHeaderState(mainEl);
+            }
+
+            function updateFeatureRowMain(key) {
+              const viewChecked = document.getElementById(`feat_${key}_view`).checked;
+              const operateChecked = document.getElementById(`feat_${key}_operate`).checked;
+              const mainEl = document.getElementById(`feat_${key}_main`);
+              if (mainEl) mainEl.checked = viewChecked && operateChecked;
+              const viewChk = document.getElementById(`feat_${key}_view`);
+              updateCategoryHeaderState(viewChk);
+            }
+
+            function updateCategoryHeaderState(chkEl) {
+              let catName = null;
+              chkEl.classList.forEach(c => {
+                if (c.startsWith('feat-') && (c.endsWith('-chk') || c.endsWith('-main'))) {
+                  catName = c.split('-')[1];
+                }
+              });
+              if (!catName) return;
+              const catHeader = document.getElementById(`cat_${catName}`);
+              if (!catHeader) return;
+
+              const chks = document.querySelectorAll(`.feat-${catName}-chk`);
+              const allChecked = chks.length > 0 && Array.from(chks).every(el => el.checked);
+              catHeader.checked = allChecked;
             }
 
             function openAddRoleDrawer() {
@@ -1321,11 +2190,22 @@
               featureKeys.forEach(key => {
                 document.getElementById(`perm_${key}_view`).checked = false;
                 document.getElementById(`perm_${key}_operate`).checked = false;
+                document.getElementById(`main_${key}`).checked = false;
               });
 
               // Reset checkboxes for granular features
               granularKeys.forEach(key => {
-                document.getElementById(`feat_${key}`).checked = false;
+                const chk = document.getElementById(`feat_${key}`);
+                if (chk) chk.checked = false;
+              });
+              granularBaseKeys.forEach(base => {
+                const mainEl = document.getElementById(`feat_${base}_main`);
+                if (mainEl) mainEl.checked = false;
+              });
+              const categories = ['work_order', 'material', 'offline', 'online', 'final_inspect', 'packing', 'rework', 'process', 'skill', 'reports', 'roles', 'audit'];
+              categories.forEach(cat => {
+                const catEl = document.getElementById(`cat_${cat}`);
+                if (catEl) catEl.checked = false;
               });
 
               toggleAddRoleModal(true);
@@ -1372,14 +2252,35 @@
               const perms = r.permissions || {};
               featureKeys.forEach(key => {
                 const userPerms = perms[key] || [];
-                document.getElementById(`perm_${key}_view`).checked = userPerms.includes('view');
-                document.getElementById(`perm_${key}_operate`).checked = userPerms.includes('operate');
+                const hasView = userPerms.includes('view');
+                const hasOperate = userPerms.includes('operate');
+                document.getElementById(`perm_${key}_view`).checked = hasView;
+                document.getElementById(`perm_${key}_operate`).checked = hasOperate;
+                document.getElementById(`main_${key}`).checked = hasView && hasOperate;
               });
 
               // Check boxes setup for granular features
               const activeFeatures = r.features || [];
               granularKeys.forEach(key => {
-                document.getElementById(`feat_${key}`).checked = activeFeatures.includes(key);
+                const chk = document.getElementById(`feat_${key}`);
+                if (chk) chk.checked = activeFeatures.includes(key);
+              });
+              // Set mains for features
+              granularBaseKeys.forEach(base => {
+                const hasView = activeFeatures.includes(`${base}_view`);
+                const hasOperate = activeFeatures.includes(`${base}_operate`);
+                const mainEl = document.getElementById(`feat_${base}_main`);
+                if (mainEl) mainEl.checked = hasView && hasOperate;
+              });
+              // Set category headers state
+              const categories = ['work_order', 'material', 'offline', 'online', 'final_inspect', 'packing', 'rework', 'process', 'skill', 'reports', 'roles', 'audit'];
+              categories.forEach(cat => {
+                const catEl = document.getElementById(`cat_${cat}`);
+                if (catEl) {
+                  const chks = document.querySelectorAll(`.feat-${cat}-chk`);
+                  const allChecked = chks.length > 0 && Array.from(chks).every(el => el.checked);
+                  catEl.checked = allChecked;
+                }
               });
 
               toggleAddRoleModal(true);
@@ -1496,12 +2397,14 @@
               }
             });
 
-            function selectAllScreens(check) {
+             function selectAllScreens(check) {
               featureKeys.forEach(key => {
                 const viewChk = document.getElementById(`perm_${key}_view`);
                 const operateChk = document.getElementById(`perm_${key}_operate`);
+                const mainChk = document.getElementById(`main_${key}`);
                 if (viewChk) viewChk.checked = check;
                 if (operateChk) operateChk.checked = check;
+                if (mainChk) mainChk.checked = check;
               });
             }
 
@@ -1509,6 +2412,15 @@
               granularKeys.forEach(key => {
                 const chk = document.getElementById(`feat_${key}`);
                 if (chk) chk.checked = check;
+              });
+              granularBaseKeys.forEach(base => {
+                const mainEl = document.getElementById(`feat_${base}_main`);
+                if (mainEl) mainEl.checked = check;
+              });
+              const categories = ['work_order', 'material', 'offline', 'online', 'final_inspect', 'packing', 'rework', 'process', 'skill', 'reports', 'roles', 'audit'];
+              categories.forEach(cat => {
+                const catEl = document.getElementById(`cat_${cat}`);
+                if (catEl) catEl.checked = check;
               });
             }
 
@@ -1526,6 +2438,11 @@
             window.handleRoleTypeFilterChange = handleRoleTypeFilterChange;
             window.selectAllScreens = selectAllScreens;
             window.selectAllFeatures = selectAllFeatures;
+            window.toggleRowPermissions = toggleRowPermissions;
+            window.updateMainCheckbox = updateMainCheckbox;
+            window.toggleCategoryCheckboxes = toggleCategoryCheckboxes;
+            window.toggleFeatureRow = toggleFeatureRow;
+            window.updateFeatureRowMain = updateFeatureRowMain;
 
             // Execute on dynamic page load
             fetchRoles();
