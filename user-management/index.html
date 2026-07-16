@@ -1,423 +1,512 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en"><head>
-<!-- SPA Layout Redirect Wrapper -->
-<script>
-  if (!document.getElementById('app-root')) {
-    const p = window.location.pathname;
-    const rel = '../';
-    window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
-  }
-</script>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>User Management - Nichirin Admin</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Extended Theme Configuration -->
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "on-tertiary": "#ffffff",
-                        "on-surface-variant": "#43474e",
-                        "inverse-on-surface": "#f2f0f3",
-                        "background": "#faf9fc",
-                        "on-secondary": "#ffffff",
-                        "surface-bright": "#faf9fc",
-                        "surface-container-low": "#f4f3f6",
-                        "on-error": "#ffffff",
-                        "tertiary": "#110200",
-                        "outline": "#74777f",
-                        "surface-container-lowest": "#ffffff",
-                        "surface": "#faf9fc",
-                        "on-surface": "#1a1c1e",
-                        "secondary-container": "#7af2f2",
-                        "primary-container": "#001f3f",
-                        "on-primary-container": "#6f88ad",
-                        "on-error-container": "#93000a",
-                        "on-background": "#1a1c1e",
-                        "on-primary-fixed": "#001c3a",
-                        "surface-container-high": "#e9e7eb",
-                        "inverse-surface": "#2f3033",
-                        "inverse-primary": "#afc8f0",
-                        "surface-dim": "#dbd9dd",
-                        "on-secondary-container": "#006e6e",
-                        "surface-container-highest": "#e3e2e5",
-                        "outline-variant": "#c4c6cf",
-                        "secondary": "#006a6a",
-                        "on-primary": "#ffffff",
-                        "primary": "var(--color-primary, #c8102e)",
-                        "surface-tint": "#476083",
-                        "surface-variant": "#e3e2e5",
-                        "error": "#ba1a1a",
-                        "surface-container": "#efedf0",
-                        "error-container": "#ffdad6"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                    },
-                    "spacing": {
-                        "stack-gap-md": "16px",
-                        "sidebar-width": "260px",
-                        "header-height": "64px",
-                        "stack-gap-sm": "8px",
-                        "grid-gutter": "20px",
-                        "container-padding": "24px"
-                    },
-                    "fontFamily": {
-                        "headline-sm": ["Inter"],
-                        "label-bold": ["Inter"],
-                        "headline-md": ["Inter"],
-                        "body-md": ["Inter"],
-                        "body-lg": ["Inter"],
-                        "headline-lg": ["Inter"],
-                        "body-sm": ["Inter"],
-                        "data-tabular": ["Inter"]
-                    },
-                    "fontSize": {
-                        "headline-sm": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
-                        "label-bold": ["11px", {"lineHeight": "16px", "fontWeight": "700"}],
-                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                        "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
-                        "data-tabular": ["13px", {"lineHeight": "16px", "fontWeight": "500"}]
-                    }
-                }
-            }
-        }
-    </script>
-<style>
-        body { font-family: 'Inter', sans-serif; background-color: #faf9fc; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #c4c6cf; border-radius: 10px; }
-        /* Strict checkbox theme coloring overriding Tailwind forms default blue */
-        input[type="checkbox"] {
-            color: #c8102e !important;
-        }
-        input[type="checkbox"]:focus {
-            --tw-ring-color: #c8102e !important;
-            border-color: #c8102e !important;
-        }
-    </style>
-</head>
-<body class="flex min-h-screen overflow-x-hidden">
-<!-- SideNavBar (Fallback) -->
-<aside class="fixed left-0 top-0 h-full w-[260px] bg-primary text-on-primary flex flex-col py-4 border-r border-outline-variant z-50">
-</aside>
-<!-- Main Content Area -->
-<main class="flex-1 ml-[260px] pt-[64px] min-h-screen">
-<!-- TopNavBar -->
-<header class="fixed top-0 right-0 h-[64px] w-[calc(100%-260px)] bg-surface flex justify-between items-center px-container-padding border-b border-outline-variant z-40">
-<div class="flex items-center gap-4">
-<nav class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
-<span class="">Plant</span>
-<span class="material-symbols-outlined text-[14px]">chevron_right</span>
-<span class="">Line A</span>
-<span class="material-symbols-outlined text-[14px]">chevron_right</span>
-<span class="text-primary font-bold border-b-2 border-primary pb-1">User Management</span>
-</nav>
-</div>
-</header>
-<!-- Page Canvas -->
-<div class="p-container-padding grid grid-cols-12 gap-6 bg-background">
-  <!-- User Management Header -->
-  <div class="col-span-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
-    <div>
-      <h2 class="font-headline-lg text-headline-lg text-primary mb-1">User Management</h2>
-      <p class="font-body-md text-body-md text-on-surface-variant">Manage global user accounts, line allocations, and status settings.</p>
-    </div>
-    <button class="flex items-center justify-center gap-2 bg-primary text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm w-full md:w-auto whitespace-nowrap" onclick="openAddUserDrawer()">
-      <span class="material-symbols-outlined text-[18px]">person_add</span>
-      Add New User
-    </button>
-  </div>
+<html class="light" lang="en">
 
-  <!-- Horizontal Bento Summary Cards -->
-  <div class="col-span-12 grid grid-cols-1 md:grid-cols-4 gap-6 mb-2">
-    <!-- Card 1: TOTAL PERSONNEL -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
-      <div>
-        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Total Personnel</p>
-        <p class="text-3xl font-bold text-primary" id="statTotal">--</p>
-      </div>
-      <span class="material-symbols-outlined text-[32px] text-primary">group</span>
-    </div>
-    <!-- Card 2: ACTIVE USERS -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
-      <div>
-        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Active Users</p>
-        <p class="text-3xl font-bold text-slate-800" id="statActive">--</p>
-      </div>
-      <span class="material-symbols-outlined text-[32px] text-slate-600" style="font-variation-settings: 'FILL' 0;">verified_user</span>
-    </div>
-    <!-- Card 3: INACTIVE USERS -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
-      <div>
-        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Inactive Users</p>
-        <p class="text-3xl font-bold text-slate-500" id="statInactive">--</p>
-      </div>
-      <span class="material-symbols-outlined text-[32px] text-slate-400">person_off</span>
-    </div>
-    <!-- Card 4: SUSPENDED ACCOUNTS -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
-      <div>
-        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Suspended Accounts</p>
-        <p class="text-3xl font-bold text-primary" id="statSuspended">--</p>
-      </div>
-      <span class="material-symbols-outlined text-[32px] text-primary">block</span>
-    </div>
-  </div>
-
-  <!-- Bento Layout: User List -->
-  <section class="col-span-12 bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm flex flex-col">
-    <div class="px-6 py-4 border-b border-outline-variant/30 flex flex-col sm:flex-row justify-between items-start sm:items-center bg-slate-50 gap-4">
-      <h3 class="font-headline-md text-headline-md text-primary">Authorized Personnel</h3>
-      <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
-        <!-- Search Box -->
-        <div class="relative flex-grow sm:flex-none sm:w-48">
-          <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
-          <input id="searchInput" class="w-full bg-white border border-outline-variant/30 rounded-lg pl-8 pr-3 py-1 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-8" placeholder="Filter employees..." type="text" oninput="handleSearch()"/>
-        </div>
-        <!-- View Toggle Switch -->
-        <div class="flex items-center gap-1 bg-white p-1 rounded-lg border border-outline-variant/30 h-8 flex-shrink-0">
-          <button id="viewTableBtn" class="p-1 rounded text-primary bg-slate-100 flex items-center justify-center w-6 h-6 hover:bg-slate-100 hover:text-primary transition-colors" onclick="setUserViewMode('table')">
-            <span class="material-symbols-outlined text-[16px]">format_list_bulleted</span>
-          </button>
-          <button id="viewGridBtn" class="p-1 rounded text-on-surface-variant flex items-center justify-center w-6 h-6 hover:bg-slate-50 hover:text-primary transition-colors" onclick="setUserViewMode('grid')">
-            <span class="material-symbols-outlined text-[16px]">grid_view</span>
-          </button>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Table View Container -->
-    <div id="tableViewContainer" class="overflow-x-auto">
-      <table class="w-full text-left border-collapse whitespace-nowrap">
-        <thead>
-          <tr class="bg-white border-b border-outline-variant/30">
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Employee Code</th>
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Name</th>
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Role</th>
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Skills</th>
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Status</th>
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-left">Action</th>
-          </tr>
-        </thead>
-        <tbody id="userTableBody" class="divide-y divide-outline-variant/30">
-          <!-- Dynamically populated -->
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Card Grid View Container -->
-    <div id="gridViewContainer" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4 p-6 overflow-y-auto bg-slate-50/30">
-      <!-- Dynamically populated -->
-    </div>
-
-    <!-- Pagination Footer -->
-    <div class="px-6 py-4 border-t border-outline-variant/30 flex flex-col sm:flex-row justify-between items-center gap-3 bg-slate-50 text-xs font-semibold text-on-surface-variant flex-shrink-0 select-none">
-      <div id="paginationInfo" class="truncate whitespace-nowrap max-w-full" title="Showing 0 to 0 of 0 entries">Showing 0 to 0 of 0 entries</div>
-      <div class="flex items-center gap-2 flex-shrink-0">
-        <button id="prevPageBtn" class="px-3 py-1.5 border border-outline-variant/30 bg-white rounded-lg hover:bg-slate-50 transition-colors cursor-pointer" onclick="changePage(-1)">Previous</button>
-        <div id="pageNumbers" class="flex gap-1.5">
-          <!-- Page numbers inserted dynamically -->
-        </div>
-        <button id="nextPageBtn" class="px-3 py-1.5 border border-outline-variant/30 bg-white rounded-lg hover:bg-slate-50 transition-colors cursor-pointer" onclick="changePage(1)">Next</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- View Details Modal Backdrop -->
-  <div id="viewUserModalBackdrop" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[90] transition-opacity duration-300 opacity-0" onclick="toggleViewUserModal(false)"></div>
-  <!-- View Details Modal (Slide-over Drawer from Right) -->
-  <div id="viewUserModal" class="fixed top-0 right-0 h-full w-full max-w-[480px] bg-white z-[100] shadow-2xl border-l border-outline-variant/30 transform translate-x-full transition-transform duration-300 ease-out flex flex-col">
-    <div class="bg-slate-50 px-6 py-5 border-b border-outline-variant/30 flex justify-between items-center">
-      <h3 class="font-headline-md text-headline-md text-primary">Personnel Details</h3>
-      <button class="text-on-surface-variant hover:text-slate-900 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100" onclick="toggleViewUserModal(false)">
-        <span class="material-symbols-outlined text-[20px]">close</span>
-      </button>
-    </div>
-    <div class="p-6 flex-1 overflow-y-auto space-y-6">
-      <!-- Header info with initials -->
-      <div class="flex items-center gap-4 pb-5 border-b border-outline-variant/20">
-        <div id="viewUserAvatar" class="w-16 h-16 rounded-full bg-slate-100 text-slate-800 flex items-center justify-center font-bold text-2xl border border-slate-200">SH</div>
-        <div>
-          <h4 id="viewUserName" class="font-bold text-xl text-slate-900 leading-tight">--</h4>
-          <span id="viewUserRole" class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-[10px] font-bold mt-2">--</span>
-        </div>
-      </div>
-      
-      <!-- Info Details -->
-      <div class="space-y-4 text-sm">
-        <div class="grid grid-cols-2 gap-4">
-          <div class="space-y-1 col-span-2">
-            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Employee Code</span>
-            <span id="viewUserCode" class="font-bold text-slate-900 font-data-tabular">--</span>
-          </div>
-        </div>
-        
-        <div class="space-y-1 pt-2 border-t border-slate-100">
-          <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Certified Process Skills</span>
-          <div id="viewUserSkills" class="flex flex-wrap gap-1 mt-1.5">
-            <!-- Injected dynamically -->
-          </div>
-        </div>
-        
-        <div class="space-y-1 pt-2 border-t border-slate-100">
-          <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Email Address</span>
-          <span id="viewUserEmail" class="font-medium text-slate-800">--</span>
-        </div>
-        
-        <div class="space-y-1 pt-2 border-t border-slate-100">
-          <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Phone Number</span>
-          <span id="viewUserPhone" class="font-medium text-slate-800">--</span>
-        </div>
-        
-        <div class="space-y-1 pt-2 border-t border-slate-100">
-          <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Access Status</span>
-          <div class="mt-1">
-            <span id="viewUserStatus" class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold">--</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Drawer Footer -->
-    <div class="bg-slate-50 p-4 border-t border-outline-variant/30 flex justify-end">
-      <button class="px-5 h-10 rounded-lg bg-primary text-white font-semibold text-sm shadow-sm hover:opacity-90 transition-all cursor-pointer" onclick="toggleViewUserModal(false)">Close Details</button>
-    </div>
-  </div>
-
-  <!-- Add/Edit Backdrop Overlay -->
-  <div id="addUserModalBackdrop" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[90] transition-opacity duration-300 opacity-0" onclick="toggleAddUserModal(false)"></div>
-  <!-- Slide-over Drawer (Add/Edit User) -->
-  <div id="addUserModal" class="fixed top-0 right-0 h-full w-full max-w-[480px] bg-white z-[100] shadow-2xl border-l border-outline-variant/30 transform translate-x-full transition-transform duration-300 ease-out flex flex-col">
-    <div class="bg-slate-50 px-6 py-5 border-b border-outline-variant/30 flex justify-between items-center">
-      <h3 class="font-headline-md text-headline-md text-primary" id="drawerTitle">Register New Personnel</h3>
-      <button class="text-on-surface-variant hover:text-primary transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100" onclick="toggleAddUserModal(false)">
-        <span class="material-symbols-outlined text-[20px]">close</span>
-      </button>
-    </div>
-    <form class="p-6 flex-1 overflow-y-auto" onsubmit="saveUser(event)">
-      <div class="grid grid-cols-2 gap-4 pb-24">
-        <!-- Employee Code -->
-        <div class="col-span-1 space-y-1.5">
-          <label class="block text-xs font-bold uppercase text-slate-500">Employee Code</label>
-          <input id="drawerEmpCode" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white" placeholder="e.g. EMP-0000" type="text" required />
-        </div>
-        <!-- Full Name -->
-        <div class="col-span-1 space-y-1.5">
-          <label class="block text-xs font-bold uppercase text-slate-500">Full Name</label>
-          <input id="drawerFullName" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white" placeholder="First Last" type="text" required />
-        </div>
-        <!-- Email -->
-        <div class="col-span-2 space-y-1.5">
-          <label class="block text-xs font-bold uppercase text-slate-500">Email Address</label>
-          <input id="drawerEmail" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white" placeholder="employee@nichirin.com" type="email" required />
-        </div>
-        <!-- Phone -->
-        <div class="col-span-2 space-y-1.5">
-          <label class="block text-xs font-bold uppercase text-slate-500">Phone Number</label>
-          <input id="drawerPhone" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white" placeholder="+81 90-0000-0000" type="tel" required />
-        </div>
-        <!-- Primary Role -->
-        <div class="col-span-1 space-y-1.5">
-          <label class="block text-xs font-bold uppercase text-slate-500">Primary Role</label>
-          <select id="drawerRole" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white">
-            <option value="ADMIN">Admin</option>
-            <option value="SUPERVISOR">Supervisor</option>
-            <option value="QC">QC</option>
-            <option value="OPERATOR">Operator</option>
-          </select>
-        </div>
-        <!-- Account Status -->
-        <div class="col-span-1 space-y-1.5">
-          <label class="block text-xs font-bold uppercase text-slate-500">Account Access Status</label>
-          <select id="drawerStatus" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white">
-            <option value="Active">Active</option>
-            <option value="Suspended">Suspended</option>
-            <option value="Inactive">Inactive</option>
-          </select>
-        </div>
-        <!-- Certified Skills Multi-Select -->
-        <div class="col-span-2 space-y-1.5 relative">
-          <label class="block text-xs font-bold uppercase text-slate-500">Certified Process Skills</label>
-          <button type="button" id="skillsDropdownBtn" onclick="toggleSkillsDropdown()" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white flex justify-between items-center text-left text-slate-700 cursor-pointer shadow-sm">
-            <span id="selectedSkillsText" class="text-slate-400 font-medium">Select process skills...</span>
-            <span class="material-symbols-outlined text-[18px]">arrow_drop_down</span>
-          </button>
-          <div id="skillsDropdownOptions" class="hidden absolute bottom-full mb-1 left-0 right-0 bg-white border border-outline-variant/30 rounded-lg shadow-lg max-h-48 overflow-y-auto z-20 p-2 space-y-1 custom-scrollbar">
-            <!-- Injected dynamically -->
-          </div>
-          <div id="selectedSkillsTags" class="flex flex-wrap gap-1 mt-1.5">
-            <!-- Injected dynamically -->
-          </div>
-        </div>
-      </div>
-      
-      <!-- Footer Absolute-like at bottom of drawer -->
-      <div class="absolute bottom-0 left-0 right-0 bg-slate-50 p-4 border-t border-outline-variant/30 flex justify-end gap-3 z-10">
-        <button class="px-4 h-10 rounded-lg font-semibold text-sm text-slate-600 hover:bg-slate-100 transition-colors" onclick="toggleAddUserModal(false)" type="button">Cancel</button>
-        <button class="px-6 h-10 rounded-lg bg-primary text-white font-semibold text-sm shadow-sm hover:bg-primary/95 transition-all" type="submit" id="submitBtnText">Register User</button>
-      </div>
-    </form>
-  </div>
-
-  <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 ease-out z-[100] border border-slate-800 text-sm">
-    <span class="material-symbols-outlined text-emerald-400">check_circle</span>
-    <span id="toastMessage">Access levels successfully saved!</span>
-  </div>
-
+<head>
+  <!-- SPA Layout Redirect Wrapper -->
   <script>
-    (function() {
-      let usersList = [];
-      let skillsMasterList = [];
-      let currentPage = 1;
-      const pageSize = 5;
-      let filterQuery = '';
-      let currentViewMode = 'table';
-      let tempSelectedSkills = [];
+    if (!document.getElementById('app-root')) {
+      const p = window.location.pathname;
+      const rel = '../';
+      window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
+    }
+  </script>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>User Management - Nichirin Admin</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <!-- Extended Theme Configuration -->
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary": "#ffffff",
+            "on-surface-variant": "#43474e",
+            "inverse-on-surface": "#f2f0f3",
+            "background": "#faf9fc",
+            "on-secondary": "#ffffff",
+            "surface-bright": "#faf9fc",
+            "surface-container-low": "#f4f3f6",
+            "on-error": "#ffffff",
+            "tertiary": "#110200",
+            "outline": "#74777f",
+            "surface-container-lowest": "#ffffff",
+            "surface": "#faf9fc",
+            "on-surface": "#1a1c1e",
+            "secondary-container": "#7af2f2",
+            "primary-container": "#001f3f",
+            "on-primary-container": "#6f88ad",
+            "on-error-container": "#93000a",
+            "on-background": "#1a1c1e",
+            "on-primary-fixed": "#001c3a",
+            "surface-container-high": "#e9e7eb",
+            "inverse-surface": "#2f3033",
+            "inverse-primary": "#afc8f0",
+            "surface-dim": "#dbd9dd",
+            "on-secondary-container": "#006e6e",
+            "surface-container-highest": "#e3e2e5",
+            "outline-variant": "#c4c6cf",
+            "secondary": "#006a6a",
+            "on-primary": "#ffffff",
+            "primary": "var(--color-primary, #c8102e)",
+            "surface-tint": "#476083",
+            "surface-variant": "#e3e2e5",
+            "error": "#ba1a1a",
+            "surface-container": "#efedf0",
+            "error-container": "#ffdad6"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "stack-gap-md": "16px",
+            "sidebar-width": "260px",
+            "header-height": "64px",
+            "stack-gap-sm": "8px",
+            "grid-gutter": "20px",
+            "container-padding": "24px"
+          },
+          "fontFamily": {
+            "headline-sm": ["Inter"],
+            "label-bold": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-sm": ["Inter"],
+            "data-tabular": ["Inter"]
+          },
+          "fontSize": {
+            "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "label-bold": ["11px", { "lineHeight": "16px", "fontWeight": "700" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "data-tabular": ["13px", { "lineHeight": "16px", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #faf9fc;
+    }
 
-      // Fetch or read skill configurations
-      async function fetchSkillsMaster() {
-          try {
-              const localSkills = localStorage.getItem('skillsList');
-              let loadedFromLocal = false;
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
 
-              if (localSkills) {
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #c4c6cf;
+      border-radius: 10px;
+    }
+
+    /* Strict checkbox theme coloring overriding Tailwind forms default blue */
+    input[type="checkbox"] {
+      color: #c8102e !important;
+    }
+
+    input[type="checkbox"]:focus {
+      --tw-ring-color: #c8102e !important;
+      border-color: #c8102e !important;
+    }
+  </style>
+</head>
+
+<body class="flex min-h-screen overflow-x-hidden">
+  <!-- SideNavBar (Fallback) -->
+  <aside
+    class="fixed left-0 top-0 h-full w-[260px] bg-primary text-on-primary flex flex-col py-4 border-r border-outline-variant z-50">
+  </aside>
+  <!-- Main Content Area -->
+  <main class="flex-1 ml-[260px] pt-[64px] min-h-screen">
+    <!-- TopNavBar -->
+    <header
+      class="fixed top-0 right-0 h-[64px] w-[calc(100%-260px)] bg-surface flex justify-between items-center px-container-padding border-b border-outline-variant z-40">
+      <div class="flex items-center gap-4">
+        <nav class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+          <span class="">Plant</span>
+          <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+          <span class="">Line A</span>
+          <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+          <span class="text-primary font-bold border-b-2 border-primary pb-1">User Management</span>
+        </nav>
+      </div>
+    </header>
+    <!-- Page Canvas -->
+    <div class="p-container-padding grid grid-cols-12 gap-6 bg-background">
+      <!-- User Management Header -->
+      <div class="col-span-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+        <div>
+          <h2 class="font-headline-lg text-headline-lg text-primary mb-1">User Management</h2>
+          <p class="font-body-md text-body-md text-on-surface-variant">Manage global user accounts, line allocations,
+            and status settings.</p>
+        </div>
+        <button
+          class="flex items-center justify-center gap-2 bg-primary text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm w-full md:w-auto whitespace-nowrap"
+          onclick="openAddUserDrawer()">
+          <span class="material-symbols-outlined text-[18px]">person_add</span>
+          Add New User
+        </button>
+      </div>
+
+      <!-- Horizontal Bento Summary Cards -->
+      <div class="col-span-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-2">
+        <!-- Card 1: TOTAL PERSONNEL -->
+        <div
+          class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
+          <div>
+            <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Total Personnel</p>
+            <p class="text-3xl font-bold text-primary" id="statTotal">--</p>
+          </div>
+          <span class="material-symbols-outlined text-[32px] text-primary">group</span>
+        </div>
+        <!-- Card 2: ACTIVE USERS -->
+        <div
+          class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
+          <div>
+            <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Active Users</p>
+            <p class="text-3xl font-bold text-slate-800" id="statActive">--</p>
+          </div>
+          <span class="material-symbols-outlined text-[32px] text-slate-600"
+            style="font-variation-settings: 'FILL' 0;">verified_user</span>
+        </div>
+        <!-- Card 3: INACTIVE USERS -->
+        <div
+          class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
+          <div>
+            <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Inactive Users</p>
+            <p class="text-3xl font-bold text-slate-500" id="statInactive">--</p>
+          </div>
+          <span class="material-symbols-outlined text-[32px] text-slate-400">person_off</span>
+        </div>
+        <!-- Card 4: SUSPENDED ACCOUNTS -->
+        <div
+          class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
+          <div>
+            <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Suspended Accounts</p>
+            <p class="text-3xl font-bold text-primary" id="statSuspended">--</p>
+          </div>
+          <span class="material-symbols-outlined text-[32px] text-primary">block</span>
+        </div>
+      </div>
+
+      <!-- Bento Layout: User List -->
+      <section
+        class="col-span-12 bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm flex flex-col">
+        <div
+          class="px-6 py-4 border-b border-outline-variant/30 flex flex-col sm:flex-row justify-between items-start sm:items-center bg-slate-50 gap-4">
+          <h3 class="font-headline-md text-headline-md text-primary">Authorized Personnel</h3>
+          <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+            <!-- Search Box -->
+            <div class="relative flex-grow sm:flex-none sm:w-48">
+              <span
+                class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
+              <input id="searchInput"
+                class="w-full bg-white border border-outline-variant/30 rounded-lg pl-8 pr-3 py-1 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-8"
+                placeholder="Filter employees..." type="text" oninput="handleSearch()" />
+            </div>
+            <!-- View Toggle Switch -->
+            <div
+              class="flex items-center gap-1 bg-white p-1 rounded-lg border border-outline-variant/30 h-8 flex-shrink-0">
+              <button id="viewTableBtn"
+                class="p-1 rounded text-primary bg-slate-100 flex items-center justify-center w-6 h-6 hover:bg-slate-100 hover:text-primary transition-colors"
+                onclick="setUserViewMode('table')">
+                <span class="material-symbols-outlined text-[16px]">format_list_bulleted</span>
+              </button>
+              <button id="viewGridBtn"
+                class="p-1 rounded text-on-surface-variant flex items-center justify-center w-6 h-6 hover:bg-slate-50 hover:text-primary transition-colors"
+                onclick="setUserViewMode('grid')">
+                <span class="material-symbols-outlined text-[16px]">grid_view</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table View Container -->
+        <div id="tableViewContainer" class="overflow-x-auto">
+          <table class="w-full text-left border-collapse whitespace-nowrap">
+            <thead>
+              <tr class="bg-white border-b border-outline-variant/30">
+                <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Employee
+                  Code</th>
+                <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Name</th>
+                <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Role</th>
+                <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Skills</th>
+                <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Status</th>
+                <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-left">
+                  Action</th>
+              </tr>
+            </thead>
+            <tbody id="userTableBody" class="divide-y divide-outline-variant/30">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Card Grid View Container -->
+        <div id="gridViewContainer"
+          class="hidden grid grid-cols-1 md:grid-cols-2 gap-4 p-6 overflow-y-auto bg-slate-50/30">
+          <!-- Dynamically populated -->
+        </div>
+
+        <!-- Pagination Footer -->
+        <div
+          class="px-6 py-4 border-t border-outline-variant/30 flex flex-col sm:flex-row justify-between items-center gap-3 bg-slate-50 text-xs font-semibold text-on-surface-variant flex-shrink-0 select-none">
+          <div id="paginationInfo" class="truncate whitespace-nowrap max-w-full" title="Showing 0 to 0 of 0 entries">
+            Showing 0 to 0 of 0 entries</div>
+          <div class="flex items-center gap-2 flex-shrink-0">
+            <button id="prevPageBtn"
+              class="px-3 py-1.5 border border-outline-variant/30 bg-white rounded-lg hover:bg-slate-50 transition-colors cursor-pointer"
+              onclick="changePage(-1)">Previous</button>
+            <div id="pageNumbers" class="flex gap-1.5">
+              <!-- Page numbers inserted dynamically -->
+            </div>
+            <button id="nextPageBtn"
+              class="px-3 py-1.5 border border-outline-variant/30 bg-white rounded-lg hover:bg-slate-50 transition-colors cursor-pointer"
+              onclick="changePage(1)">Next</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- View Details Modal Backdrop -->
+      <div id="viewUserModalBackdrop"
+        class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[90] transition-opacity duration-300 opacity-0"
+        onclick="toggleViewUserModal(false)"></div>
+      <!-- View Details Modal (Slide-over Drawer from Right) -->
+      <div id="viewUserModal"
+        class="fixed top-0 right-0 h-full w-full max-w-[480px] bg-white z-[100] shadow-2xl border-l border-outline-variant/30 transform translate-x-full transition-transform duration-300 ease-out flex flex-col">
+        <div class="bg-slate-50 px-6 py-5 border-b border-outline-variant/30 flex justify-between items-center">
+          <h3 class="font-headline-md text-headline-md text-primary">Personnel Details</h3>
+          <button
+            class="text-on-surface-variant hover:text-slate-900 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100"
+            onclick="toggleViewUserModal(false)">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+        <div class="p-6 flex-1 overflow-y-auto space-y-6">
+          <!-- Header info with initials -->
+          <div class="flex items-center gap-4 pb-5 border-b border-outline-variant/20">
+            <div id="viewUserAvatar"
+              class="w-16 h-16 rounded-full bg-slate-100 text-slate-800 flex items-center justify-center font-bold text-2xl border border-slate-200">
+              SH</div>
+            <div>
+              <h4 id="viewUserName" class="font-bold text-xl text-slate-900 leading-tight">--</h4>
+              <span id="viewUserRole"
+                class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-[10px] font-bold mt-2">--</span>
+            </div>
+          </div>
+
+          <!-- Info Details -->
+          <div class="space-y-4 text-sm">
+            <div class="grid grid-cols-2 gap-4">
+              <div class="space-y-1 col-span-2">
+                <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Employee Code</span>
+                <span id="viewUserCode" class="font-bold text-slate-900 font-data-tabular">--</span>
+              </div>
+            </div>
+
+            <div class="space-y-1 pt-2 border-t border-slate-100">
+              <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Certified Process
+                Skills</span>
+              <div id="viewUserSkills" class="flex flex-wrap gap-1 mt-1.5">
+                <!-- Injected dynamically -->
+              </div>
+            </div>
+
+            <div class="space-y-1 pt-2 border-t border-slate-100">
+              <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Email Address</span>
+              <span id="viewUserEmail" class="font-medium text-slate-800">--</span>
+            </div>
+
+            <div class="space-y-1 pt-2 border-t border-slate-100">
+              <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Phone Number</span>
+              <span id="viewUserPhone" class="font-medium text-slate-800">--</span>
+            </div>
+
+            <div class="space-y-1 pt-2 border-t border-slate-100">
+              <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Access Status</span>
+              <div class="mt-1">
+                <span id="viewUserStatus"
+                  class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold">--</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Drawer Footer -->
+        <div class="bg-slate-50 p-4 border-t border-outline-variant/30 flex justify-end">
+          <button
+            class="px-5 h-10 rounded-lg bg-primary text-white font-semibold text-sm shadow-sm hover:opacity-90 transition-all cursor-pointer"
+            onclick="toggleViewUserModal(false)">Close Details</button>
+        </div>
+      </div>
+
+      <!-- Add/Edit Backdrop Overlay -->
+      <div id="addUserModalBackdrop"
+        class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[90] transition-opacity duration-300 opacity-0"
+        onclick="toggleAddUserModal(false)"></div>
+      <!-- Slide-over Drawer (Add/Edit User) -->
+      <div id="addUserModal"
+        class="fixed top-0 right-0 h-full w-full max-w-[480px] bg-white z-[100] shadow-2xl border-l border-outline-variant/30 transform translate-x-full transition-transform duration-300 ease-out flex flex-col">
+        <div class="bg-slate-50 px-6 py-5 border-b border-outline-variant/30 flex justify-between items-center">
+          <h3 class="font-headline-md text-headline-md text-primary" id="drawerTitle">Register New Personnel</h3>
+          <button
+            class="text-on-surface-variant hover:text-primary transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100"
+            onclick="toggleAddUserModal(false)">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+        <form class="p-6 flex-1 overflow-y-auto" onsubmit="saveUser(event)">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-24">
+            <!-- Employee Code -->
+            <div class="col-span-1 space-y-1.5">
+              <label class="block text-xs font-bold uppercase text-slate-500">Employee Code</label>
+              <input id="drawerEmpCode"
+                class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white"
+                placeholder="e.g. EMP-0000" type="text" required />
+            </div>
+            <!-- Full Name -->
+            <div class="col-span-1 space-y-1.5">
+              <label class="block text-xs font-bold uppercase text-slate-500">Full Name</label>
+              <input id="drawerFullName"
+                class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white"
+                placeholder="First Last" type="text" required />
+            </div>
+            <!-- Email -->
+            <div class="col-span-1 sm:col-span-2 space-y-1.5">
+              <label class="block text-xs font-bold uppercase text-slate-500">Email Address</label>
+              <input id="drawerEmail"
+                class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white"
+                placeholder="employee@nichirin.com" type="email" required />
+            </div>
+            <!-- Phone -->
+            <div class="col-span-1 sm:col-span-2 space-y-1.5">
+              <label class="block text-xs font-bold uppercase text-slate-500">Phone Number</label>
+              <input id="drawerPhone"
+                class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white"
+                placeholder="+81 90-0000-0000" type="tel" required />
+            </div>
+            <!-- Primary Role -->
+            <div class="col-span-1 space-y-1.5">
+              <label class="block text-xs font-bold uppercase text-slate-500">Primary Role</label>
+              <select id="drawerRole"
+                class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white">
+                <option value="ADMIN">Admin</option>
+                <option value="SUPERVISOR">Supervisor</option>
+                <option value="QC">QC</option>
+                <option value="OPERATOR">Operator</option>
+              </select>
+            </div>
+            <!-- Account Status -->
+            <div class="col-span-1 space-y-1.5">
+              <label class="block text-xs font-bold uppercase text-slate-500">Account Access Status</label>
+              <select id="drawerStatus"
+                class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white">
+                <option value="Active">Active</option>
+                <option value="Suspended">Suspended</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+            <!-- Certified Skills Multi-Select -->
+            <div class="col-span-1 sm:col-span-2 space-y-1.5 relative">
+              <label class="block text-xs font-bold uppercase text-slate-500">Certified Process Skills</label>
+              <button type="button" id="skillsDropdownBtn" onclick="toggleSkillsDropdown()"
+                class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white flex justify-between items-center text-left text-slate-700 cursor-pointer shadow-sm">
+                <span id="selectedSkillsText" class="text-slate-400 font-medium">Select process skills...</span>
+                <span class="material-symbols-outlined text-[18px]">arrow_drop_down</span>
+              </button>
+              <div id="skillsDropdownOptions"
+                class="hidden absolute bottom-full mb-1 left-0 right-0 bg-white border border-outline-variant/30 rounded-lg shadow-lg max-h-48 overflow-y-auto z-20 p-2 space-y-1 custom-scrollbar">
+                <!-- Injected dynamically -->
+              </div>
+              <div id="selectedSkillsTags" class="flex flex-wrap gap-1 mt-1.5">
+                <!-- Injected dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer Absolute-like at bottom of drawer -->
+          <div
+            class="absolute bottom-0 left-0 right-0 bg-slate-50 p-4 border-t border-outline-variant/30 flex justify-end gap-3 z-10">
+            <button
+              class="px-4 h-10 rounded-lg font-semibold text-sm text-slate-600 hover:bg-slate-100 transition-colors"
+              onclick="toggleAddUserModal(false)" type="button">Cancel</button>
+            <button
+              class="px-6 h-10 rounded-lg bg-primary text-white font-semibold text-sm shadow-sm hover:bg-primary/95 transition-all"
+              type="submit" id="submitBtnText">Register User</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="toast"
+        class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 ease-out z-[100] border border-slate-800 text-sm">
+        <span class="material-symbols-outlined text-emerald-400">check_circle</span>
+        <span id="toastMessage">Access levels successfully saved!</span>
+      </div>
+
+      <script>
+          (function () {
+            let usersList = [];
+            let skillsMasterList = [];
+            let currentPage = 1;
+            const pageSize = 5;
+            let filterQuery = '';
+            let currentViewMode = 'table';
+            let tempSelectedSkills = [];
+
+            // Fetch or read skill configurations
+            async function fetchSkillsMaster() {
+              try {
+                const localSkills = localStorage.getItem('skillsList');
+                let loadedFromLocal = false;
+
+                if (localSkills) {
                   try {
-                      const parsed = JSON.parse(localSkills);
-                      if (parsed && parsed.length > 0 && parsed[0].skillCode) {
-                          skillsMasterList = parsed;
-                          loadedFromLocal = true;
-                      }
-                  } catch (e) {}
-              }
+                    const parsed = JSON.parse(localSkills);
+                    if (parsed && parsed.length > 0 && parsed[0].skillCode) {
+                      skillsMasterList = parsed;
+                      loadedFromLocal = true;
+                    }
+                  } catch (e) { }
+                }
 
-              if (!loadedFromLocal) {
+                if (!loadedFromLocal) {
                   const res = await fetch('../skill-management/skills.json');
                   if (res.ok) {
-                      skillsMasterList = await res.json();
-                      localStorage.setItem('skillsList', JSON.stringify(skillsMasterList));
+                    skillsMasterList = await res.json();
+                    localStorage.setItem('skillsList', JSON.stringify(skillsMasterList));
                   }
+                }
+              } catch (e) {
+                console.error(e);
               }
-          } catch(e) {
-              console.error(e);
-          }
 
-          if (!skillsMasterList || skillsMasterList.length === 0) {
-              skillsMasterList = [
+              if (!skillsMasterList || skillsMasterList.length === 0) {
+                skillsMasterList = [
                   { skillCode: "SKILL-CUT-01", skillName: "Rubber Hose Cutting" },
                   { skillCode: "SKILL-PROT-02", skillName: "Protector Tube Processing" },
                   { skillCode: "SKILL-SHRNK-03", skillName: "Pipe Shrinkable Tubing" },
@@ -428,228 +517,228 @@
                   { skillCode: "SKILL-TORQ-08", skillName: "Double Pipe Torquing" },
                   { skillCode: "SKILL-TEST-09", skillName: "Pressure & Leakage Testing" },
                   { skillCode: "SKILL-INSP-10", skillName: "Final Inspection & Packing" }
-              ];
-          }
+                ];
+              }
 
-          populateSkillsDropdown();
-      }
+              populateSkillsDropdown();
+            }
 
-      function populateSkillsDropdown() {
-          const container = document.getElementById('skillsDropdownOptions');
-          if (!container) return;
-          container.innerHTML = '';
-          
-          skillsMasterList.forEach(s => {
-              const div = document.createElement('div');
-              div.className = 'flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer select-none';
-              div.onclick = (e) => {
+            function populateSkillsDropdown() {
+              const container = document.getElementById('skillsDropdownOptions');
+              if (!container) return;
+              container.innerHTML = '';
+
+              skillsMasterList.forEach(s => {
+                const div = document.createElement('div');
+                div.className = 'flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer select-none';
+                div.onclick = (e) => {
                   if (e.target.tagName === 'INPUT') return;
                   const checkbox = div.querySelector('input');
                   checkbox.checked = !checkbox.checked;
                   updateSelectedSkills();
-              };
+                };
 
-              div.innerHTML = `
+                div.innerHTML = `
                   <input type="checkbox" id="chk-${s.skillCode}" value="${s.skillCode}" onchange="updateSelectedSkills()" class="rounded text-primary focus:ring-primary border-outline-variant/35 w-4 h-4 cursor-pointer" />
                   <label for="chk-${s.skillCode}" class="text-xs font-semibold text-slate-700 cursor-pointer flex-1">${s.skillName} (${s.skillCode})</label>
               `;
-              container.appendChild(div);
-          });
-      }
+                container.appendChild(div);
+              });
+            }
 
-      function updateSelectedSkills() {
-          const checkboxes = document.querySelectorAll('#skillsDropdownOptions input[type="checkbox"]');
-          tempSelectedSkills = [];
-          checkboxes.forEach(chk => {
-              if (chk.checked) {
+            function updateSelectedSkills() {
+              const checkboxes = document.querySelectorAll('#skillsDropdownOptions input[type="checkbox"]');
+              tempSelectedSkills = [];
+              checkboxes.forEach(chk => {
+                if (chk.checked) {
                   tempSelectedSkills.push(chk.value);
+                }
+              });
+
+              const btnText = document.getElementById('selectedSkillsText');
+              if (tempSelectedSkills.length === 0) {
+                btnText.textContent = 'Select process skills...';
+                btnText.className = 'text-slate-400 font-medium text-sm';
+              } else {
+                btnText.textContent = `${tempSelectedSkills.length} skill(s) selected`;
+                btnText.className = 'text-slate-800 font-bold text-sm';
               }
-          });
 
-          const btnText = document.getElementById('selectedSkillsText');
-          if (tempSelectedSkills.length === 0) {
-              btnText.textContent = 'Select process skills...';
-              btnText.className = 'text-slate-400 font-medium text-sm';
-          } else {
-              btnText.textContent = `${tempSelectedSkills.length} skill(s) selected`;
-              btnText.className = 'text-slate-800 font-bold text-sm';
-          }
-
-          const tagsContainer = document.getElementById('selectedSkillsTags');
-          tagsContainer.innerHTML = '';
-          tempSelectedSkills.forEach(code => {
-              const skill = skillsMasterList.find(s => s.skillCode === code);
-              const name = skill ? skill.skillName : code;
-              const tag = document.createElement('span');
-              tag.className = 'inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200 select-none';
-              tag.innerHTML = `
+              const tagsContainer = document.getElementById('selectedSkillsTags');
+              tagsContainer.innerHTML = '';
+              tempSelectedSkills.forEach(code => {
+                const skill = skillsMasterList.find(s => s.skillCode === code);
+                const name = skill ? skill.skillName : code;
+                const tag = document.createElement('span');
+                tag.className = 'inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200 select-none';
+                tag.innerHTML = `
                   <span>${name}</span>
                   <span class="material-symbols-outlined text-[12px] cursor-pointer text-slate-450 hover:text-slate-650" onclick="event.stopPropagation(); removeSkillTag('${code}')">close</span>
               `;
-              tagsContainer.appendChild(tag);
-          });
-      }
+                tagsContainer.appendChild(tag);
+              });
+            }
 
-      function removeSkillTag(code) {
-          const chk = document.getElementById(`chk-${code}`);
-          if (chk) {
-              chk.checked = false;
-              updateSelectedSkills();
-          }
-      }
+            function removeSkillTag(code) {
+              const chk = document.getElementById(`chk-${code}`);
+              if (chk) {
+                chk.checked = false;
+                updateSelectedSkills();
+              }
+            }
 
-      function toggleSkillsDropdown() {
-          const menu = document.getElementById('skillsDropdownOptions');
-          menu.classList.toggle('hidden');
-      }
+            function toggleSkillsDropdown() {
+              const menu = document.getElementById('skillsDropdownOptions');
+              menu.classList.toggle('hidden');
+            }
 
-      // Hide dropdown on outside click
-      document.addEventListener('click', (e) => {
-          const dropdown = document.getElementById('skillsDropdownOptions');
-          const btn = document.getElementById('skillsDropdownBtn');
-          if (dropdown && btn && !dropdown.classList.contains('hidden')) {
-              if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+            // Hide dropdown on outside click
+            document.addEventListener('click', (e) => {
+              const dropdown = document.getElementById('skillsDropdownOptions');
+              const btn = document.getElementById('skillsDropdownBtn');
+              if (dropdown && btn && !dropdown.classList.contains('hidden')) {
+                if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
                   dropdown.classList.add('hidden');
+                }
               }
-          }
-      });
+            });
 
-      // Load personnel dataset from local json file
-      async function fetchUsers() {
-          try {
-              await fetchSkillsMaster();
-              let jsonPath = './users.json';
-              if (!window.location.pathname.includes('/user-management/')) {
+            // Load personnel dataset from local json file
+            async function fetchUsers() {
+              try {
+                await fetchSkillsMaster();
+                let jsonPath = './users.json';
+                if (!window.location.pathname.includes('/user-management/')) {
                   jsonPath = 'user-management/users.json';
+                }
+                const res = await fetch(jsonPath);
+                if (!res.ok) throw new Error('Could not load users json.');
+                usersList = await res.json();
+                render();
+              } catch (e) {
+                console.error(e);
+                showToast('Error loading personnel registry data.');
               }
-              const res = await fetch(jsonPath);
-              if (!res.ok) throw new Error('Could not load users json.');
-              usersList = await res.json();
-              render();
-          } catch (e) {
-              console.error(e);
-              showToast('Error loading personnel registry data.');
-          }
-      }
+            }
 
-      // Update calculations, render tables/grids and control pages
-      function render() {
-          // 1. Calculate Bento Card Stats
-          const totalCount = usersList.filter(u => u.status !== 'Suspended').length;
-          const activeCount = usersList.filter(u => u.status === 'Active').length;
-          const inactiveCount = usersList.filter(u => u.status === 'Inactive').length;
-          const suspendedCount = usersList.filter(u => u.status === 'Suspended').length;
+            // Update calculations, render tables/grids and control pages
+            function render() {
+              // 1. Calculate Bento Card Stats
+              const totalCount = usersList.filter(u => u.status !== 'Suspended').length;
+              const activeCount = usersList.filter(u => u.status === 'Active').length;
+              const inactiveCount = usersList.filter(u => u.status === 'Inactive').length;
+              const suspendedCount = usersList.filter(u => u.status === 'Suspended').length;
 
-          document.getElementById('statTotal').textContent = totalCount;
-          document.getElementById('statActive').textContent = activeCount;
-          document.getElementById('statInactive').textContent = inactiveCount;
-          document.getElementById('statSuspended').textContent = suspendedCount;
+              document.getElementById('statTotal').textContent = totalCount;
+              document.getElementById('statActive').textContent = activeCount;
+              document.getElementById('statInactive').textContent = inactiveCount;
+              document.getElementById('statSuspended').textContent = suspendedCount;
 
-          // 2. Filter list based on search bar (hide Suspended users)
-          const query = filterQuery.toLowerCase().trim();
-          const filtered = usersList.filter(u => {
-              if (u.status === 'Suspended') return false;
-              
-              const skillMatch = u.skills && u.skills.some(code => {
+              // 2. Filter list based on search bar (hide Suspended users)
+              const query = filterQuery.toLowerCase().trim();
+              const filtered = usersList.filter(u => {
+                if (u.status === 'Suspended') return false;
+
+                const skillMatch = u.skills && u.skills.some(code => {
                   const skill = skillsMasterList.find(s => s.skillCode === code);
                   return code.toLowerCase().includes(query) || (skill && skill.skillName.toLowerCase().includes(query));
+                });
+
+                return u.empCode.toLowerCase().includes(query) ||
+                  u.name.toLowerCase().includes(query) ||
+                  u.role.toLowerCase().includes(query) ||
+                  (u.email && u.email.toLowerCase().includes(query)) ||
+                  skillMatch;
               });
 
-              return u.empCode.toLowerCase().includes(query) ||
-                     u.name.toLowerCase().includes(query) ||
-                     u.role.toLowerCase().includes(query) ||
-                     (u.email && u.email.toLowerCase().includes(query)) ||
-                     skillMatch;
-          });
+              // 3. Slice and Paginate items
+              const totalFiltered = filtered.length;
+              const totalPages = Math.ceil(totalFiltered / pageSize) || 1;
 
-          // 3. Slice and Paginate items
-          const totalFiltered = filtered.length;
-          const totalPages = Math.ceil(totalFiltered / pageSize) || 1;
-          
-          if (currentPage > totalPages) {
-              currentPage = totalPages;
-          }
-          if (currentPage < 1) {
-              currentPage = 1;
-          }
+              if (currentPage > totalPages) {
+                currentPage = totalPages;
+              }
+              if (currentPage < 1) {
+                currentPage = 1;
+              }
 
-          const startIdx = (currentPage - 1) * pageSize;
-          const endIdx = Math.min(startIdx + pageSize, totalFiltered);
-          const paginatedItems = filtered.slice(startIdx, endIdx);
+              const startIdx = (currentPage - 1) * pageSize;
+              const endIdx = Math.min(startIdx + pageSize, totalFiltered);
+              const paginatedItems = filtered.slice(startIdx, endIdx);
 
-          // Update pagination Info text
-          const infoText = totalFiltered > 0 
-              ? `Showing ${startIdx + 1} to ${endIdx} of ${totalFiltered} entries`
-              : 'Showing 0 to 0 of 0 entries';
-          const infoEl = document.getElementById('paginationInfo');
-          if (infoEl) {
-              infoEl.textContent = infoText;
-              infoEl.setAttribute('title', infoText);
-          }
+              // Update pagination Info text
+              const infoText = totalFiltered > 0
+                ? `Showing ${startIdx + 1} to ${endIdx} of ${totalFiltered} entries`
+                : 'Showing 0 to 0 of 0 entries';
+              const infoEl = document.getElementById('paginationInfo');
+              if (infoEl) {
+                infoEl.textContent = infoText;
+                infoEl.setAttribute('title', infoText);
+              }
 
-          // Renders page numbers
-          renderPageNumbers(totalPages);
+              // Renders page numbers
+              renderPageNumbers(totalPages);
 
-          // Render Table Rows
-          renderTable(paginatedItems);
+              // Render Table Rows
+              renderTable(paginatedItems);
 
-          // Render Cards Grid
-          renderGrid(paginatedItems);
-      }
+              // Render Cards Grid
+              renderGrid(paginatedItems);
+            }
 
-      function renderTable(items) {
-          const tbody = document.getElementById('userTableBody');
-          tbody.innerHTML = '';
+            function renderTable(items) {
+              const tbody = document.getElementById('userTableBody');
+              tbody.innerHTML = '';
 
-          if (items.length === 0) {
-              tbody.innerHTML = `
+              if (items.length === 0) {
+                tbody.innerHTML = `
                   <tr>
                       <td colspan="6" class="px-6 py-12 text-center text-on-surface-variant font-medium">
                           No personnel matched search query.
                       </td>
                   </tr>
               `;
-              return;
-          }
+                return;
+              }
 
-          items.forEach(u => {
-              const tr = document.createElement('tr');
-              tr.className = 'hover:bg-slate-50/50 transition-colors group';
+              items.forEach(u => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50/50 transition-colors group';
 
-              // Role Badge styling
-              let roleBadgeClass = 'bg-slate-50 text-slate-700 border-slate-200';
-              if (u.role === 'ADMIN') roleBadgeClass = 'bg-emerald-50 text-emerald-700 border-emerald-200';
-              else if (u.role === 'SUPERVISOR') roleBadgeClass = 'bg-blue-50 text-blue-700 border-blue-200';
-              else if (u.role === 'QC') roleBadgeClass = 'bg-purple-50 text-purple-700 border-purple-200';
-              else if (u.role === 'OPERATOR') roleBadgeClass = 'bg-amber-50 text-amber-700 border-amber-200';
+                // Role Badge styling
+                let roleBadgeClass = 'bg-slate-50 text-slate-700 border-slate-200';
+                if (u.role === 'ADMIN') roleBadgeClass = 'bg-emerald-50 text-emerald-700 border-emerald-200';
+                else if (u.role === 'SUPERVISOR') roleBadgeClass = 'bg-blue-50 text-blue-700 border-blue-200';
+                else if (u.role === 'QC') roleBadgeClass = 'bg-purple-50 text-purple-700 border-purple-200';
+                else if (u.role === 'OPERATOR') roleBadgeClass = 'bg-amber-50 text-amber-700 border-amber-200';
 
-              // Status Badge styling
-              let statusBadgeClass = 'bg-slate-50 text-slate-700 border-slate-200/50';
-              let statusDotColor = 'bg-slate-500';
-              if (u.status === 'Active') {
+                // Status Badge styling
+                let statusBadgeClass = 'bg-slate-50 text-slate-700 border-slate-200/50';
+                let statusDotColor = 'bg-slate-500';
+                if (u.status === 'Active') {
                   statusBadgeClass = 'bg-emerald-50 text-emerald-700 border-emerald-200/50';
                   statusDotColor = 'bg-emerald-500';
-              } else if (u.status === 'Suspended') {
+                } else if (u.status === 'Suspended') {
                   statusBadgeClass = 'bg-rose-50 text-rose-700 border-rose-200/50';
                   statusDotColor = 'bg-rose-500';
-              }
+                }
 
-              // Render skills badges
-              let skillsHTML = '';
-              if (u.skills && u.skills.length > 0) {
+                // Render skills badges
+                let skillsHTML = '';
+                if (u.skills && u.skills.length > 0) {
                   u.skills.slice(0, 2).forEach(code => {
-                      const skill = skillsMasterList.find(s => s.skillCode === code);
-                      const name = skill ? skill.skillName.split(' ')[0] : code;
-                      skillsHTML += `<span class="inline-flex items-center px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold mr-1">${name.trim()}</span>`;
+                    const skill = skillsMasterList.find(s => s.skillCode === code);
+                    const name = skill ? skill.skillName.split(' ')[0] : code;
+                    skillsHTML += `<span class="inline-flex items-center px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold mr-1">${name.trim()}</span>`;
                   });
                   if (u.skills.length > 2) {
-                      skillsHTML += `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-primary/5 text-primary border border-primary/10 text-[10px] font-extrabold">+${u.skills.length - 2}</span>`;
+                    skillsHTML += `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-primary/5 text-primary border border-primary/10 text-[10px] font-extrabold">+${u.skills.length - 2}</span>`;
                   }
-              } else {
+                } else {
                   skillsHTML = `<span class="text-slate-400 italic text-[11px]">No Skills</span>`;
-              }
+                }
 
-              tr.innerHTML = `
+                tr.innerHTML = `
                   <td class="px-6 py-4 font-bold text-slate-900 font-data-tabular text-data-tabular">${u.empCode}</td>
                   <td class="px-6 py-4 font-semibold text-slate-900">${u.name}</td>
                   <td class="px-6 py-4">
@@ -673,61 +762,61 @@
                       </div>
                   </td>
               `;
-              tbody.appendChild(tr);
-          });
-      }
+                tbody.appendChild(tr);
+              });
+            }
 
-      function renderGrid(items) {
-          const container = document.getElementById('gridViewContainer');
-          container.innerHTML = '';
+            function renderGrid(items) {
+              const container = document.getElementById('gridViewContainer');
+              container.innerHTML = '';
 
-          if (items.length === 0) {
-              container.innerHTML = `
+              if (items.length === 0) {
+                container.innerHTML = `
                   <div class="col-span-2 py-12 text-center text-on-surface-variant font-medium bg-white border border-outline-variant/20 rounded-xl">
                       No personnel matched search query.
                   </div>
               `;
-              return;
-          }
+                return;
+              }
 
-          items.forEach(u => {
-              const card = document.createElement('div');
-              card.className = 'bg-white border border-outline-variant/30 rounded-xl p-5 flex flex-col justify-between shadow-sm hover:border-primary/30 transition-all group relative';
+              items.forEach(u => {
+                const card = document.createElement('div');
+                card.className = 'bg-white border border-outline-variant/30 rounded-xl p-5 flex flex-col justify-between shadow-sm hover:border-primary/30 transition-all group relative';
 
-              // Role Badge styling
-              let roleBadgeClass = 'bg-slate-50 text-slate-700 border-slate-200';
-              if (u.role === 'ADMIN') roleBadgeClass = 'bg-emerald-50 text-emerald-700 border-emerald-200';
-              else if (u.role === 'SUPERVISOR') roleBadgeClass = 'bg-blue-50 text-blue-700 border-blue-200';
-              else if (u.role === 'QC') roleBadgeClass = 'bg-purple-50 text-purple-700 border-purple-200';
-              else if (u.role === 'OPERATOR') roleBadgeClass = 'bg-amber-50 text-amber-700 border-amber-200';
+                // Role Badge styling
+                let roleBadgeClass = 'bg-slate-50 text-slate-700 border-slate-200';
+                if (u.role === 'ADMIN') roleBadgeClass = 'bg-emerald-50 text-emerald-700 border-emerald-200';
+                else if (u.role === 'SUPERVISOR') roleBadgeClass = 'bg-blue-50 text-blue-700 border-blue-200';
+                else if (u.role === 'QC') roleBadgeClass = 'bg-purple-50 text-purple-700 border-purple-200';
+                else if (u.role === 'OPERATOR') roleBadgeClass = 'bg-amber-50 text-amber-700 border-amber-200';
 
-              // Status badge styling
-              let statusTextClass = 'text-slate-700';
-              let statusDotColor = 'bg-slate-500';
-              if (u.status === 'Active') {
+                // Status badge styling
+                let statusTextClass = 'text-slate-700';
+                let statusDotColor = 'bg-slate-500';
+                if (u.status === 'Active') {
                   statusTextClass = 'text-emerald-700';
                   statusDotColor = 'bg-emerald-500';
-              } else if (u.status === 'Suspended') {
+                } else if (u.status === 'Suspended') {
                   statusTextClass = 'text-rose-700';
                   statusDotColor = 'bg-rose-500';
-              }
+                }
 
-              // Initials for avatar
-              const initials = u.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                // Initials for avatar
+                const initials = u.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
 
-              // Skills badges in grid
-              let skillsHTMLGrid = '';
-              if (u.skills && u.skills.length > 0) {
+                // Skills badges in grid
+                let skillsHTMLGrid = '';
+                if (u.skills && u.skills.length > 0) {
                   u.skills.forEach(code => {
-                      const skill = skillsMasterList.find(s => s.skillCode === code);
-                      const name = skill ? skill.skillName : code;
-                      skillsHTMLGrid += `<span class="inline-flex items-center px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold mr-1 mt-1">${name}</span>`;
+                    const skill = skillsMasterList.find(s => s.skillCode === code);
+                    const name = skill ? skill.skillName : code;
+                    skillsHTMLGrid += `<span class="inline-flex items-center px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold mr-1 mt-1">${name}</span>`;
                   });
-              } else {
+                } else {
                   skillsHTMLGrid = `<span class="text-slate-400 italic text-[11px] mt-1 block">No Certified Skills</span>`;
-              }
+                }
 
-              card.innerHTML = `
+                card.innerHTML = `
                   <div class="flex justify-between items-start mb-3">
                       <div class="flex items-center gap-3">
                           <div class="w-10 h-10 rounded-full bg-primary/5 text-primary flex items-center justify-center font-bold text-sm border border-primary/10 select-none">${initials}</div>
@@ -761,287 +850,289 @@
                       </div>
                   </div>
               `;
-              container.appendChild(card);
-          });
-      }
+                container.appendChild(card);
+              });
+            }
 
-      function renderPageNumbers(totalPages) {
-          const wrapper = document.getElementById('pageNumbers');
-          wrapper.innerHTML = '';
+            function renderPageNumbers(totalPages) {
+              const wrapper = document.getElementById('pageNumbers');
+              wrapper.innerHTML = '';
 
-          document.getElementById('prevPageBtn').disabled = currentPage === 1;
-          document.getElementById('nextPageBtn').disabled = currentPage === totalPages;
+              document.getElementById('prevPageBtn').disabled = currentPage === 1;
+              document.getElementById('nextPageBtn').disabled = currentPage === totalPages;
 
-          for (let i = 1; i <= totalPages; i++) {
-              const btn = document.createElement('button');
-              btn.className = i === currentPage 
+              for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.className = i === currentPage
                   ? 'px-3 py-1 bg-primary text-white border border-primary rounded-lg text-xs font-bold transition-all shadow-sm'
                   : 'px-3 py-1 border border-outline-variant/30 bg-white hover:bg-slate-50 rounded-lg text-xs transition-colors cursor-pointer';
-              btn.textContent = i;
-              btn.onclick = () => {
+                btn.textContent = i;
+                btn.onclick = () => {
                   currentPage = i;
                   render();
-              };
-              wrapper.appendChild(btn);
-          }
-      }
+                };
+                wrapper.appendChild(btn);
+              }
+            }
 
-      function changePage(dir) {
-          currentPage += dir;
-          render();
-      }
+            function changePage(dir) {
+              currentPage += dir;
+              render();
+            }
 
-      function handleSearch() {
-          filterQuery = document.getElementById('searchInput').value;
-          currentPage = 1;
-          render();
-      }
+            function handleSearch() {
+              filterQuery = document.getElementById('searchInput').value;
+              currentPage = 1;
+              render();
+            }
 
-      function toggleViewUserModal(isOpen) {
-          const backdrop = document.getElementById('viewUserModalBackdrop');
-          const drawer = document.getElementById('viewUserModal');
-          if (isOpen) {
-              backdrop.classList.remove('hidden');
-              setTimeout(() => {
+            function toggleViewUserModal(isOpen) {
+              const backdrop = document.getElementById('viewUserModalBackdrop');
+              const drawer = document.getElementById('viewUserModal');
+              if (isOpen) {
+                backdrop.classList.remove('hidden');
+                setTimeout(() => {
                   backdrop.classList.add('opacity-100');
                   drawer.classList.remove('translate-x-full');
-              }, 50);
-          } else {
-              backdrop.classList.remove('opacity-100');
-              drawer.classList.add('translate-x-full');
-              setTimeout(() => {
+                }, 50);
+              } else {
+                backdrop.classList.remove('opacity-100');
+                drawer.classList.add('translate-x-full');
+                setTimeout(() => {
                   backdrop.classList.add('hidden');
-              }, 300);
-          }
-      }
+                }, 300);
+              }
+            }
 
-      function openViewUserModal(empCode) {
-          const user = usersList.find(u => u.empCode === empCode);
-          if (!user) return;
+            function openViewUserModal(empCode) {
+              const user = usersList.find(u => u.empCode === empCode);
+              if (!user) return;
 
-          const initials = user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-          document.getElementById('viewUserAvatar').textContent = initials;
-          document.getElementById('viewUserName').textContent = user.name;
-          document.getElementById('viewUserCode').textContent = user.empCode;
-          document.getElementById('viewUserEmail').textContent = user.email;
-          document.getElementById('viewUserPhone').textContent = user.phone;
-          
-          // Skills badge container
-          const skillsContainer = document.getElementById('viewUserSkills');
-          skillsContainer.innerHTML = '';
-          if (user.skills && user.skills.length > 0) {
-              user.skills.forEach(code => {
+              const initials = user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+              document.getElementById('viewUserAvatar').textContent = initials;
+              document.getElementById('viewUserName').textContent = user.name;
+              document.getElementById('viewUserCode').textContent = user.empCode;
+              document.getElementById('viewUserEmail').textContent = user.email;
+              document.getElementById('viewUserPhone').textContent = user.phone;
+
+              // Skills badge container
+              const skillsContainer = document.getElementById('viewUserSkills');
+              skillsContainer.innerHTML = '';
+              if (user.skills && user.skills.length > 0) {
+                user.skills.forEach(code => {
                   const skill = skillsMasterList.find(s => s.skillCode === code);
                   const name = skill ? skill.skillName : code;
                   const span = document.createElement('span');
                   span.className = 'inline-flex items-center px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold';
                   span.textContent = `${name} (${code})`;
                   skillsContainer.appendChild(span);
-              });
-          } else {
-              skillsContainer.innerHTML = `<span class="text-slate-400 italic text-[11px]">No Certified Skills</span>`;
-          }
-          
-          const roleEl = document.getElementById('viewUserRole');
-          roleEl.textContent = user.role;
-          roleEl.className = 'inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold mt-1.5 border';
-          if (user.role === 'ADMIN') roleEl.classList.add('bg-emerald-50', 'text-emerald-700', 'border-emerald-200');
-          else if (user.role === 'SUPERVISOR') roleEl.classList.add('bg-blue-50', 'text-blue-700', 'border-blue-200');
-          else if (user.role === 'QC') roleEl.classList.add('bg-purple-50', 'text-purple-700', 'border-purple-200');
-          else if (user.role === 'OPERATOR') roleEl.classList.add('bg-amber-50', 'text-amber-700', 'border-amber-200');
+                });
+              } else {
+                skillsContainer.innerHTML = `<span class="text-slate-400 italic text-[11px]">No Certified Skills</span>`;
+              }
 
-          const statusEl = document.getElementById('viewUserStatus');
-          statusEl.textContent = user.status;
-          statusEl.className = 'inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold border';
-          if (user.status === 'Active') {
-              statusEl.className += ' bg-emerald-50 text-emerald-700 border-emerald-200/50';
-          } else if (user.status === 'Suspended') {
-              statusEl.className += ' bg-rose-50 text-rose-700 border-rose-200/50';
-          } else {
-              statusEl.className += ' bg-slate-50 text-slate-700 border-slate-200/50';
-          }
+              const roleEl = document.getElementById('viewUserRole');
+              roleEl.textContent = user.role;
+              roleEl.className = 'inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold mt-1.5 border';
+              if (user.role === 'ADMIN') roleEl.classList.add('bg-emerald-50', 'text-emerald-700', 'border-emerald-200');
+              else if (user.role === 'SUPERVISOR') roleEl.classList.add('bg-blue-50', 'text-blue-700', 'border-blue-200');
+              else if (user.role === 'QC') roleEl.classList.add('bg-purple-50', 'text-purple-700', 'border-purple-200');
+              else if (user.role === 'OPERATOR') roleEl.classList.add('bg-amber-50', 'text-amber-700', 'border-amber-200');
 
-          toggleViewUserModal(true);
-      }
+              const statusEl = document.getElementById('viewUserStatus');
+              statusEl.textContent = user.status;
+              statusEl.className = 'inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold border';
+              if (user.status === 'Active') {
+                statusEl.className += ' bg-emerald-50 text-emerald-700 border-emerald-200/50';
+              } else if (user.status === 'Suspended') {
+                statusEl.className += ' bg-rose-50 text-rose-700 border-rose-200/50';
+              } else {
+                statusEl.className += ' bg-slate-50 text-slate-700 border-slate-200/50';
+              }
 
-      function setUserViewMode(mode) {
-          currentViewMode = mode;
-          const table = document.getElementById('tableViewContainer');
-          const grid = document.getElementById('gridViewContainer');
-          const tableBtn = document.getElementById('viewTableBtn');
-          const gridBtn = document.getElementById('viewGridBtn');
-          if (mode === 'table') {
-              table.classList.remove('hidden');
-              grid.classList.add('hidden');
-              tableBtn.classList.add('bg-slate-100', 'text-primary');
-              tableBtn.classList.remove('text-on-surface-variant');
-              gridBtn.classList.remove('bg-slate-100', 'text-primary');
-              gridBtn.classList.add('text-on-surface-variant');
-          } else {
-              table.classList.add('hidden');
-              grid.classList.remove('hidden');
-              gridBtn.classList.add('bg-slate-100', 'text-primary');
-              gridBtn.classList.remove('text-on-surface-variant');
-              tableBtn.classList.remove('bg-slate-100', 'text-primary');
-              tableBtn.classList.add('text-on-surface-variant');
-          }
-      }
+              toggleViewUserModal(true);
+            }
 
-      function toggleAddUserModal(isOpen) {
-          const backdrop = document.getElementById('addUserModalBackdrop');
-          const drawer = document.getElementById('addUserModal');
-          if (isOpen) {
-              backdrop.classList.remove('hidden');
-              setTimeout(() => {
+            function setUserViewMode(mode) {
+              currentViewMode = mode;
+              const table = document.getElementById('tableViewContainer');
+              const grid = document.getElementById('gridViewContainer');
+              const tableBtn = document.getElementById('viewTableBtn');
+              const gridBtn = document.getElementById('viewGridBtn');
+              if (mode === 'table') {
+                table.classList.remove('hidden');
+                grid.classList.add('hidden');
+                tableBtn.classList.add('bg-slate-100', 'text-primary');
+                tableBtn.classList.remove('text-on-surface-variant');
+                gridBtn.classList.remove('bg-slate-100', 'text-primary');
+                gridBtn.classList.add('text-on-surface-variant');
+              } else {
+                table.classList.add('hidden');
+                grid.classList.remove('hidden');
+                gridBtn.classList.add('bg-slate-100', 'text-primary');
+                gridBtn.classList.remove('text-on-surface-variant');
+                tableBtn.classList.remove('bg-slate-100', 'text-primary');
+                tableBtn.classList.add('text-on-surface-variant');
+              }
+            }
+
+            function toggleAddUserModal(isOpen) {
+              const backdrop = document.getElementById('addUserModalBackdrop');
+              const drawer = document.getElementById('addUserModal');
+              if (isOpen) {
+                backdrop.classList.remove('hidden');
+                setTimeout(() => {
                   backdrop.classList.add('opacity-100');
                   drawer.classList.remove('translate-x-full');
-               }, 50);
-          } else {
-              backdrop.classList.remove('opacity-100');
-              drawer.classList.add('translate-x-full');
-              setTimeout(() => {
+                }, 50);
+              } else {
+                backdrop.classList.remove('opacity-100');
+                drawer.classList.add('translate-x-full');
+                setTimeout(() => {
                   backdrop.classList.add('hidden');
-               }, 300);
-          }
-      }
+                }, 300);
+              }
+            }
 
-      function openEditUserDrawer(empCode) {
-          const user = usersList.find(u => u.empCode === empCode);
-          if (!user) return;
-          
-          document.getElementById('drawerTitle').textContent = 'Edit Personnel Details';
-          document.getElementById('submitBtnText').textContent = 'Save Changes';
-          
-          const codeInput = document.getElementById('drawerEmpCode');
-          codeInput.value = empCode;
-          codeInput.readOnly = true;
-          codeInput.classList.add('bg-slate-50', 'text-slate-500');
-          
-          document.getElementById('drawerFullName').value = user.name;
-          document.getElementById('drawerEmail').value = user.email;
-          document.getElementById('drawerPhone').value = user.phone;
-          document.getElementById('drawerRole').value = user.role;
-          document.getElementById('drawerStatus').value = user.status;
+            function openEditUserDrawer(empCode) {
+              const user = usersList.find(u => u.empCode === empCode);
+              if (!user) return;
 
-          // Check user's skills checkboxes
-          const checkboxes = document.querySelectorAll('#skillsDropdownOptions input[type="checkbox"]');
-          checkboxes.forEach(chk => {
-              chk.checked = user.skills && user.skills.includes(chk.value);
-          });
-          updateSelectedSkills();
-          
-          toggleAddUserModal(true);
-      }
+              document.getElementById('drawerTitle').textContent = 'Edit Personnel Details';
+              document.getElementById('submitBtnText').textContent = 'Save Changes';
 
-      function openAddUserDrawer() {
-          document.getElementById('drawerTitle').textContent = 'Register New Personnel';
-          document.getElementById('submitBtnText').textContent = 'Register User';
-          
-          const codeInput = document.getElementById('drawerEmpCode');
-          codeInput.value = '';
-          codeInput.readOnly = false;
-          codeInput.classList.remove('bg-slate-50', 'text-slate-500');
-          
-          document.getElementById('drawerFullName').value = '';
-          document.getElementById('drawerEmail').value = '';
-          document.getElementById('drawerPhone').value = '';
-          document.getElementById('drawerRole').selectedIndex = 0;
-          document.getElementById('drawerStatus').selectedIndex = 0;
+              const codeInput = document.getElementById('drawerEmpCode');
+              codeInput.value = empCode;
+              codeInput.readOnly = true;
+              codeInput.classList.add('bg-slate-50', 'text-slate-500');
 
-          // Reset skills
-          const checkboxes = document.querySelectorAll('#skillsDropdownOptions input[type="checkbox"]');
-          checkboxes.forEach(chk => chk.checked = false);
-          updateSelectedSkills();
-          
-          toggleAddUserModal(true);
-      }
+              document.getElementById('drawerFullName').value = user.name;
+              document.getElementById('drawerEmail').value = user.email;
+              document.getElementById('drawerPhone').value = user.phone;
+              document.getElementById('drawerRole').value = user.role;
+              document.getElementById('drawerStatus').value = user.status;
 
-      function saveUser(e) {
-          e.preventDefault();
-          const empCode = document.getElementById('drawerEmpCode').value;
-          const name = document.getElementById('drawerFullName').value;
-          const email = document.getElementById('drawerEmail').value;
-          const phone = document.getElementById('drawerPhone').value;
-          const role = document.getElementById('drawerRole').value;
-          const status = document.getElementById('drawerStatus').value;
+              // Check user's skills checkboxes
+              const checkboxes = document.querySelectorAll('#skillsDropdownOptions input[type="checkbox"]');
+              checkboxes.forEach(chk => {
+                chk.checked = user.skills && user.skills.includes(chk.value);
+              });
+              updateSelectedSkills();
 
-          const existingIdx = usersList.findIndex(u => u.empCode === empCode);
-          if (existingIdx > -1) {
-              usersList[existingIdx] = { empCode, name, email, phone, role, skills: tempSelectedSkills, status };
-              showToast(`Changes for ${name} successfully synchronized.`);
-          } else {
-              usersList.unshift({ empCode, name, email, phone, role, skills: tempSelectedSkills, status });
-              showToast(`Personnel record for ${name} registered successfully.`);
-          }
+              toggleAddUserModal(true);
+            }
 
-          toggleAddUserModal(false);
-          render();
-      }
+            function openAddUserDrawer() {
+              document.getElementById('drawerTitle').textContent = 'Register New Personnel';
+              document.getElementById('submitBtnText').textContent = 'Register User';
 
-      function showToast(message) {
-          const toast = document.getElementById('toast');
-          const msg = document.getElementById('toastMessage');
-          msg.textContent = message;
-          toast.classList.remove('translate-y-20', 'opacity-0');
-          toast.classList.add('translate-y-0', 'opacity-100');
-          
-          setTimeout(() => {
-              toast.classList.remove('translate-y-0', 'opacity-100');
-              toast.classList.add('translate-y-20', 'opacity-0');
-          }, 3000);
-      }
+              const codeInput = document.getElementById('drawerEmpCode');
+              codeInput.value = '';
+              codeInput.readOnly = false;
+              codeInput.classList.remove('bg-slate-50', 'text-slate-500');
 
-      window.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape') {
+              document.getElementById('drawerFullName').value = '';
+              document.getElementById('drawerEmail').value = '';
+              document.getElementById('drawerPhone').value = '';
+              document.getElementById('drawerRole').selectedIndex = 0;
+              document.getElementById('drawerStatus').selectedIndex = 0;
+
+              // Reset skills
+              const checkboxes = document.querySelectorAll('#skillsDropdownOptions input[type="checkbox"]');
+              checkboxes.forEach(chk => chk.checked = false);
+              updateSelectedSkills();
+
+              toggleAddUserModal(true);
+            }
+
+            function saveUser(e) {
+              e.preventDefault();
+              const empCode = document.getElementById('drawerEmpCode').value;
+              const name = document.getElementById('drawerFullName').value;
+              const email = document.getElementById('drawerEmail').value;
+              const phone = document.getElementById('drawerPhone').value;
+              const role = document.getElementById('drawerRole').value;
+              const status = document.getElementById('drawerStatus').value;
+
+              const existingIdx = usersList.findIndex(u => u.empCode === empCode);
+              if (existingIdx > -1) {
+                usersList[existingIdx] = { empCode, name, email, phone, role, skills: tempSelectedSkills, status };
+                showToast(`Changes for ${name} successfully synchronized.`);
+              } else {
+                usersList.unshift({ empCode, name, email, phone, role, skills: tempSelectedSkills, status });
+                showToast(`Personnel record for ${name} registered successfully.`);
+              }
+
               toggleAddUserModal(false);
-              toggleViewUserModal(false);
-          }
-      });
+              render();
+            }
 
-      function populateRolesDropdown() {
-          const select = document.getElementById('drawerRole');
-          if (!select) return;
-          select.innerHTML = '';
-          
-          let roles = [];
-          try {
-              roles = JSON.parse(localStorage.getItem('rolesList'));
-          } catch(e) {}
-          
-          if (!roles || roles.length === 0) {
-              roles = [
+            function showToast(message) {
+              const toast = document.getElementById('toast');
+              const msg = document.getElementById('toastMessage');
+              msg.textContent = message;
+              toast.classList.remove('translate-y-20', 'opacity-0');
+              toast.classList.add('translate-y-0', 'opacity-100');
+
+              setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+              }, 3000);
+            }
+
+            window.addEventListener('keydown', (e) => {
+              if (e.key === 'Escape') {
+                toggleAddUserModal(false);
+                toggleViewUserModal(false);
+              }
+            });
+
+            function populateRolesDropdown() {
+              const select = document.getElementById('drawerRole');
+              if (!select) return;
+              select.innerHTML = '';
+
+              let roles = [];
+              try {
+                roles = JSON.parse(localStorage.getItem('rolesList'));
+              } catch (e) { }
+
+              if (!roles || roles.length === 0) {
+                roles = [
                   { roleCode: 'ADMIN', roleName: 'Admin' },
                   { roleCode: 'SUPERVISOR', roleName: 'Supervisor' },
                   { roleCode: 'QC', roleName: 'QC' },
                   { roleCode: 'OPERATOR', roleName: 'Operator' }
-              ];
-          }
-          
-          roles.forEach(r => {
-              const opt = document.createElement('option');
-              opt.value = r.roleCode;
-              opt.textContent = r.roleName;
-              select.appendChild(opt);
-          });
-      }
+                ];
+              }
 
-      window.openAddUserDrawer = openAddUserDrawer;
-      window.openEditUserDrawer = openEditUserDrawer;
-      window.saveUser = saveUser;
-      window.toggleAddUserModal = toggleAddUserModal;
-      window.toggleViewUserModal = toggleViewUserModal;
-      window.openViewUserModal = openViewUserModal;
-      window.changePage = changePage;
-      window.handleSearch = handleSearch;
-      window.setUserViewMode = setUserViewMode;
-      window.toggleSkillsDropdown = toggleSkillsDropdown;
-      window.removeSkillTag = removeSkillTag;
-      window.updateSelectedSkills = updateSelectedSkills;
+              roles.forEach(r => {
+                const opt = document.createElement('option');
+                opt.value = r.roleCode;
+                opt.textContent = r.roleName;
+                select.appendChild(opt);
+              });
+            }
 
-      populateRolesDropdown();
-      fetchUsers();
-    })();
-  </script>
-</div>
-</main>
-</body></html>
+            window.openAddUserDrawer = openAddUserDrawer;
+            window.openEditUserDrawer = openEditUserDrawer;
+            window.saveUser = saveUser;
+            window.toggleAddUserModal = toggleAddUserModal;
+            window.toggleViewUserModal = toggleViewUserModal;
+            window.openViewUserModal = openViewUserModal;
+            window.changePage = changePage;
+            window.handleSearch = handleSearch;
+            window.setUserViewMode = setUserViewMode;
+            window.toggleSkillsDropdown = toggleSkillsDropdown;
+            window.removeSkillTag = removeSkillTag;
+            window.updateSelectedSkills = updateSelectedSkills;
+
+            populateRolesDropdown();
+            fetchUsers();
+          })();
+      </script>
+    </div>
+  </main>
+</body>
+
+</html>
