@@ -225,6 +225,10 @@
           </div>
         </div>
         <div class="pt-2 border-t border-slate-100">
+          <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Preventive Maintenance Date &amp; Time</span>
+          <p id="viewMachineMaintDate" class="text-slate-800 font-semibold text-sm">--</p>
+        </div>
+        <div class="pt-2 border-t border-slate-100">
           <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Control Points &amp; Tolerances</span>
           <p id="viewMachineControlPoints" class="text-slate-700 font-medium leading-relaxed bg-slate-50 p-4 rounded-lg border border-slate-100 text-xs">--</p>
         </div>
@@ -250,7 +254,7 @@
     <!-- Flex Container form to constrain scrolling area -->
     <form class="flex-1 flex flex-col overflow-hidden h-full" onsubmit="saveMachine(event)">
       <!-- Scrollable content area -->
-      <div class="flex-grow overflow-y-auto p-6 space-y-5">
+      <div id="drawerScrollContainer" class="flex-grow overflow-y-auto p-6 space-y-5">
         
         <!-- Form Fields Grid -->
         <div class="grid grid-cols-2 gap-4">
@@ -274,6 +278,76 @@
               <option value="PLC Terminal">PLC Terminal</option>
               <option value="NEW_TYPE" class="text-primary font-bold">+ Add Custom Type...</option>
             </select>
+          </div>
+          <!-- Preventive Maintenance Date & Time -->
+          <div class="col-span-2 space-y-1.5 relative" id="maintDatePickerContainer">
+            <label class="block text-xs font-bold uppercase text-slate-500">Preventive Maintenance Date &amp; Time</label>
+            <!-- Input Display Trigger -->
+            <div id="maintDateTrigger" class="w-full border border-slate-500 rounded-lg focus-within:border-primary focus-within:ring-1 focus-within:ring-primary text-sm h-10 px-3 font-semibold bg-white flex items-center justify-between cursor-pointer select-none">
+              <span id="maintDateLabel" class="text-slate-400">Select Date &amp; Time...</span>
+              <span class="material-symbols-outlined text-[18px] text-slate-400">calendar_today</span>
+            </div>
+            <!-- Visually hidden input for browser standard validation -->
+            <input type="text" id="drawerMachineMaintDate" class="absolute opacity-0 w-0 h-0" required />
+            
+            <!-- Custom Calendar Card Dropdown (Full Width) -->
+            <div id="maintDateCalendarCard" class="hidden absolute top-[68px] left-0 right-0 w-full bg-white border border-outline-variant/30 rounded-xl shadow-xl p-4 z-[110] select-none">
+              <!-- Calendar Month/Year and Navigation -->
+              <div class="flex items-center justify-between mb-3">
+                <button type="button" id="prevMonthBtn" class="w-8 h-8 rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-500 cursor-pointer">
+                  <span class="material-symbols-outlined text-[18px]">chevron_left</span>
+                </button>
+                <span id="calendarMonthYear" class="text-xs font-bold text-slate-800">--</span>
+                <button type="button" id="nextMonthBtn" class="w-8 h-8 rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-500 cursor-pointer">
+                  <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+                </button>
+              </div>
+              
+              <!-- Weekday Headers -->
+              <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-slate-400 mb-1">
+                <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+              </div>
+              
+              <!-- Days Grid -->
+              <div id="calendarDaysGrid" class="grid grid-cols-7 gap-1">
+                <!-- Days populated dynamically by JavaScript -->
+              </div>
+
+              <!-- Time Selector Section (Custom Dropdowns) -->
+              <div class="border-t border-slate-100 pt-2 mt-2 flex items-center justify-between">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Set Time</span>
+                <div class="flex items-center gap-1.5 relative select-none">
+                  <!-- Custom Hour Dropdown -->
+                  <div class="relative" id="customHourContainer">
+                    <button type="button" id="maintHourTrigger" class="bg-slate-50 border border-slate-200 hover:bg-slate-100 rounded-lg text-xs font-bold px-2.5 py-1.5 text-slate-700 cursor-pointer flex items-center gap-1">
+                      <span id="maintHourVal">09</span>
+                      <span class="material-symbols-outlined text-[12px] text-slate-400">arrow_drop_down</span>
+                    </button>
+                    <!-- Hour Options List -->
+                    <div id="maintHourOptions" class="hidden absolute bottom-[34px] left-0 w-16 max-h-40 overflow-y-auto bg-white border border-slate-200 rounded-lg shadow-lg z-[120] text-center divide-y divide-slate-100">
+                      <!-- Populated by JS -->
+                    </div>
+                  </div>
+                  
+                  <span class="text-slate-400 font-bold text-xs">:</span>
+                  
+                  <!-- Custom Minute Dropdown -->
+                  <div class="relative" id="customMinContainer">
+                    <button type="button" id="maintMinTrigger" class="bg-slate-50 border border-slate-200 hover:bg-slate-100 rounded-lg text-xs font-bold px-2.5 py-1.5 text-slate-700 cursor-pointer flex items-center gap-1">
+                      <span id="maintMinVal">00</span>
+                      <span class="material-symbols-outlined text-[12px] text-slate-400">arrow_drop_down</span>
+                    </button>
+                    <!-- Minute Options List -->
+                    <div id="maintMinOptions" class="hidden absolute bottom-[34px] left-0 w-16 max-h-40 overflow-y-auto bg-white border border-slate-200 rounded-lg shadow-lg z-[120] text-center divide-y divide-slate-100">
+                      <!-- Populated by JS -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Done Button -->
+              <button type="button" id="maintDateDoneBtn" class="w-full mt-2 bg-primary text-white text-xs font-bold py-2 rounded-lg hover:opacity-90 transition-all cursor-pointer">Done</button>
+            </div>
           </div>
           <!-- Control Points -->
           <div class="col-span-2 space-y-1.5">
@@ -386,7 +460,14 @@
                   try {
                       const parsed = JSON.parse(localMachines);
                       if (parsed && parsed.length > 0 && parsed[0].machineCode) {
-                          machinesList = parsed;
+                          // Migration: ensure every machine has a preventiveMaintenanceDate
+                          machinesList = parsed.map(m => {
+                              if (!m.preventiveMaintenanceDate) {
+                                  m.preventiveMaintenanceDate = m.nextCalibration || "2026-08-15";
+                              }
+                              return m;
+                          });
+                          localStorage.setItem('machinesList', JSON.stringify(machinesList));
                           loadedFromLocal = true;
                       }
                   } catch (e) { console.warn("Outdated or corrupt local machines database. Re-initializing..."); }
@@ -418,7 +499,8 @@
               return m.machineCode.toLowerCase().includes(query) ||
                      m.machineName.toLowerCase().includes(query) ||
                      m.type.toLowerCase().includes(query) ||
-                     m.controlPoints.toLowerCase().includes(query);
+                     m.controlPoints.toLowerCase().includes(query) ||
+                     (m.preventiveMaintenanceDate && m.preventiveMaintenanceDate.toLowerCase().includes(query));
           });
 
           const totalFiltered = filtered.length;
@@ -511,7 +593,11 @@
               setTimeout(() => { backdrop.classList.add('opacity-100'); drawer.classList.remove('translate-x-full'); }, 50);
           } else {
               backdrop.classList.remove('opacity-100'); drawer.classList.add('translate-x-full');
-              setTimeout(() => { backdrop.classList.add('hidden'); }, 300);
+              setTimeout(() => { 
+                  backdrop.classList.add('hidden'); 
+                  document.getElementById('maintDateCalendarCard').classList.add('hidden');
+                  document.getElementById('drawerScrollContainer').style.paddingBottom = '';
+              }, 300);
           }
       }
 
@@ -533,6 +619,23 @@
           document.getElementById('viewMachineName').textContent = m.machineName;
           document.getElementById('viewMachineCodeBadge').textContent = m.machineCode;
           document.getElementById('viewMachineType').textContent = m.type;
+          
+          let formattedMaintDate = 'Not Scheduled';
+          if (m.preventiveMaintenanceDate) {
+              const parts = m.preventiveMaintenanceDate.trim().split(/\s+/);
+              const dParts = parts[0].split('-');
+              if (dParts.length === 3) {
+                  const year = dParts[0];
+                  const monthIdx = parseInt(dParts[1]) - 1;
+                  const day = parseInt(dParts[2]);
+                  const monthName = monthNames[monthIdx] ? monthNames[monthIdx].substring(0, 3) : '';
+                  const time = parts[1] || '09:00';
+                  formattedMaintDate = `${day} ${monthName} ${year}, ${time}`;
+              } else {
+                  formattedMaintDate = m.preventiveMaintenanceDate;
+              }
+          }
+          document.getElementById('viewMachineMaintDate').textContent = formattedMaintDate;
           document.getElementById('viewMachineControlPoints').textContent = m.controlPoints;
           const iconEl = document.getElementById('viewMachineIcon');
           if (m.type === 'Machine') iconEl.textContent = 'precision_manufacturing';
@@ -570,6 +673,7 @@
           codeInput.value = ''; codeInput.readOnly = false; codeInput.classList.remove('bg-slate-50', 'text-slate-500');
           document.getElementById('drawerMachineName').value = '';
           document.getElementById('drawerMachineType').value = 'Machine';
+          setMaintDate('');
           document.getElementById('drawerMachineControlPoints').value = '';
           toggleAddMachineModal(true);
       }
@@ -593,6 +697,7 @@
           }
           typeSelect.value = m.type;
           
+          setMaintDate(m.preventiveMaintenanceDate || '');
           document.getElementById('drawerMachineControlPoints').value = m.controlPoints;
           toggleAddMachineModal(true);
       }
@@ -602,6 +707,7 @@
           const machineCode = document.getElementById('drawerMachineCode').value.toUpperCase().replace(/\s+/g, '_');
           const machineName = document.getElementById('drawerMachineName').value;
           const type = document.getElementById('drawerMachineType').value;
+          const preventiveMaintenanceDate = document.getElementById('drawerMachineMaintDate').value;
           const controlPoints = document.getElementById('drawerMachineControlPoints').value;
           const existingIdx = machinesList.findIndex(m => m.machineCode.toUpperCase() === machineCode.toUpperCase());
           if (existingIdx > -1) {
@@ -611,6 +717,7 @@
                   machineName,
                   type,
                   controlPoints,
+                  preventiveMaintenanceDate,
                   plcBinding: old.plcBinding || 'X',
                   lineAllocated: old.lineAllocated || '',
                   status: old.status || 'Calibrated',
@@ -624,6 +731,7 @@
                   machineName,
                   type,
                   controlPoints,
+                  preventiveMaintenanceDate,
                   plcBinding: 'X',
                   lineAllocated: '',
                   status: 'Calibrated',
@@ -848,7 +956,8 @@
                                           status: rowObj.status || 'Calibrated',
                                           lastCalibrated: rowObj.lastCalibrated || new Date().toISOString().split('T')[0],
                                           nextCalibration: rowObj.nextCalibration || new Date().toISOString().split('T')[0],
-                                          lineAllocated: rowObj.lineAllocated || 'Line A'
+                                          lineAllocated: rowObj.lineAllocated || 'Line A',
+                                          preventiveMaintenanceDate: rowObj.preventiveMaintenanceDate || new Date().toISOString().split('T')[0]
                                       });
                                       importedCount++;
                                   }
@@ -871,7 +980,8 @@
                   status: "Calibrated",
                   lastCalibrated: "2026-06-01",
                   nextCalibration: "2026-12-01",
-                  lineAllocated: "Line A"
+                  lineAllocated: "Line A",
+                  preventiveMaintenanceDate: "2026-08-15"
               }, {
                   machineCode: "JG-ALIGN-09",
                   machineName: "Sleeve Alignment Clamp Jig",
@@ -881,7 +991,8 @@
                   status: "Calibration Due",
                   lastCalibrated: "2026-01-10",
                   nextCalibration: "2026-07-10",
-                  lineAllocated: "Line B"
+                  lineAllocated: "Line B",
+                  preventiveMaintenanceDate: "2026-09-01"
               });
               importedCount = 2;
           }
@@ -912,6 +1023,276 @@
       window.downloadCsvTemplate = downloadCsvTemplate;
       window.executeImport = executeImport;
 
+      // Custom Calendar Date & Time Picker State & Functions
+      let selectedMaintDateOnly = '';
+      let selectedMaintTimeOnly = '09:00';
+      let currentCalendarMonth = new Date().getMonth();
+      let currentCalendarYear = new Date().getFullYear();
+      const monthNames = [
+          "January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December"
+      ];
+
+      function populateCustomTimeOptions() {
+          const hourOpts = document.getElementById('maintHourOptions');
+          const minOpts = document.getElementById('maintMinOptions');
+          hourOpts.innerHTML = '';
+          minOpts.innerHTML = '';
+
+          // Hours 00-23
+          for (let i = 0; i < 24; i++) {
+              const val = String(i).padStart(2, '0');
+              const btn = document.createElement('button');
+              btn.type = 'button';
+              btn.className = 'w-full py-1.5 text-xs text-slate-700 hover:bg-slate-100 font-semibold cursor-pointer block text-center focus:outline-none';
+              btn.textContent = val;
+              btn.addEventListener('click', (e) => {
+                  e.stopPropagation();
+                  selectedMaintTimeOnly = `${val}:${selectedMaintTimeOnly.split(':')[1]}`;
+                  updateMaintDateInputAndLabel();
+                  hourOpts.classList.add('hidden');
+              });
+              hourOpts.appendChild(btn);
+          }
+
+          // Minutes 00-55 in steps of 5
+          for (let i = 0; i < 60; i += 5) {
+              const val = String(i).padStart(2, '0');
+              const btn = document.createElement('button');
+              btn.type = 'button';
+              btn.className = 'w-full py-1.5 text-xs text-slate-700 hover:bg-slate-100 font-semibold cursor-pointer block text-center focus:outline-none';
+              btn.textContent = val;
+              btn.addEventListener('click', (e) => {
+                  e.stopPropagation();
+                  selectedMaintTimeOnly = `${selectedMaintTimeOnly.split(':')[0]}:${val}`;
+                  updateMaintDateInputAndLabel();
+                  minOpts.classList.add('hidden');
+              });
+              minOpts.appendChild(btn);
+          }
+      }
+
+      function initDatePicker() {
+          populateCustomTimeOptions();
+          
+          const trigger = document.getElementById('maintDateTrigger');
+          const card = document.getElementById('maintDateCalendarCard');
+          const prevBtn = document.getElementById('prevMonthBtn');
+          const nextBtn = document.getElementById('nextMonthBtn');
+          const doneBtn = document.getElementById('maintDateDoneBtn');
+          
+          const hourTrigger = document.getElementById('maintHourTrigger');
+          const minTrigger = document.getElementById('maintMinTrigger');
+          const hourOpts = document.getElementById('maintHourOptions');
+          const minOpts = document.getElementById('maintMinOptions');
+
+          trigger.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const isHidden = card.classList.contains('hidden');
+              const container = document.getElementById('drawerScrollContainer');
+              if (isHidden) {
+                  card.classList.remove('hidden');
+                  container.style.paddingBottom = '340px';
+                  let viewDate = new Date();
+                  if (selectedMaintDateOnly) {
+                      viewDate = new Date(selectedMaintDateOnly);
+                  }
+                  currentCalendarMonth = viewDate.getMonth();
+                  currentCalendarYear = viewDate.getFullYear();
+                  renderDatePickerCalendar();
+                  
+                  // Smoothly scroll the container to make the calendar card fully visible (aligning bottom to show Done button)
+                  setTimeout(() => {
+                      card.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                  }, 100);
+              } else {
+                  card.classList.add('hidden');
+                  hourOpts.classList.add('hidden');
+                  minOpts.classList.add('hidden');
+                  container.style.paddingBottom = '';
+              }
+          });
+
+          prevBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              currentCalendarMonth--;
+              if (currentCalendarMonth < 0) {
+                  currentCalendarMonth = 11;
+                  currentCalendarYear--;
+              }
+              renderDatePickerCalendar();
+          });
+
+          nextBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              currentCalendarMonth++;
+              if (currentCalendarMonth > 11) {
+                  currentCalendarMonth = 0;
+                  currentCalendarYear++;
+              }
+              renderDatePickerCalendar();
+          });
+
+          hourTrigger.addEventListener('click', (e) => {
+              e.stopPropagation();
+              minOpts.classList.add('hidden');
+              hourOpts.classList.toggle('hidden');
+          });
+
+          minTrigger.addEventListener('click', (e) => {
+              e.stopPropagation();
+              hourOpts.classList.add('hidden');
+              minOpts.classList.toggle('hidden');
+          });
+
+          doneBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              card.classList.add('hidden');
+              hourOpts.classList.add('hidden');
+              minOpts.classList.add('hidden');
+              document.getElementById('drawerScrollContainer').style.paddingBottom = '';
+          });
+
+          document.addEventListener('click', (e) => {
+              const pickerContainer = document.getElementById('maintDatePickerContainer');
+              if (pickerContainer && !pickerContainer.contains(e.target)) {
+                  card.classList.add('hidden');
+                  hourOpts.classList.add('hidden');
+                  minOpts.classList.add('hidden');
+                  document.getElementById('drawerScrollContainer').style.paddingBottom = '';
+              }
+          });
+      }
+
+      function setMaintDate(dateStr) {
+          const label = document.getElementById('maintDateLabel');
+          const input = document.getElementById('drawerMachineMaintDate');
+          const hourValEl = document.getElementById('maintHourVal');
+          const minValEl = document.getElementById('maintMinVal');
+          
+          if (dateStr) {
+              const parts = dateStr.trim().split(/\s+/);
+              selectedMaintDateOnly = parts[0];
+              selectedMaintTimeOnly = parts[1] || '09:00';
+              
+              input.value = `${selectedMaintDateOnly} ${selectedMaintTimeOnly}`;
+              
+              // Set hour & minute display values
+              const timeParts = selectedMaintTimeOnly.split(':');
+              if (timeParts.length === 2) {
+                  if (hourValEl) hourValEl.textContent = timeParts[0];
+                  // snap minutes to nearest 5
+                  let minVal = parseInt(timeParts[1]);
+                  minVal = Math.round(minVal / 5) * 5;
+                  if (minVal >= 60) minVal = 55;
+                  if (minValEl) minValEl.textContent = String(minVal).padStart(2, '0');
+                  selectedMaintTimeOnly = `${timeParts[0]}:${String(minVal).padStart(2, '0')}`;
+              }
+
+              // Update trigger label
+              updateMaintDateInputAndLabel();
+          } else {
+              selectedMaintDateOnly = '';
+              selectedMaintTimeOnly = '09:00';
+              input.value = '';
+              if (hourValEl) hourValEl.textContent = '09';
+              if (minValEl) minValEl.textContent = '00';
+              label.textContent = 'Select Date & Time...';
+              label.classList.add('text-slate-400');
+              label.classList.remove('text-slate-900');
+          }
+      }
+
+      function updateMaintDateInputAndLabel() {
+          const label = document.getElementById('maintDateLabel');
+          const input = document.getElementById('drawerMachineMaintDate');
+          const hourValEl = document.getElementById('maintHourVal');
+          const minValEl = document.getElementById('maintMinVal');
+          
+          if (selectedMaintDateOnly) {
+              input.value = `${selectedMaintDateOnly} ${selectedMaintTimeOnly}`;
+              
+              // Update display numbers inside the calendar card stepper/picker
+              const [h, m] = selectedMaintTimeOnly.split(':');
+              if (hourValEl) hourValEl.textContent = h;
+              if (minValEl) minValEl.textContent = m;
+
+              const parts = selectedMaintDateOnly.split('-');
+              if (parts.length === 3) {
+                  const year = parts[0];
+                  const monthIdx = parseInt(parts[1]) - 1;
+                  const day = parseInt(parts[2]);
+                  const monthName = monthNames[monthIdx].substring(0, 3);
+                  label.textContent = `${day} ${monthName} ${year}, ${selectedMaintTimeOnly}`;
+                  label.classList.remove('text-slate-400');
+                  label.classList.add('text-slate-900');
+              } else {
+                  label.textContent = `${selectedMaintDateOnly}, ${selectedMaintTimeOnly}`;
+                  label.classList.remove('text-slate-400');
+                  label.classList.add('text-slate-900');
+              }
+          }
+      }
+
+      function renderDatePickerCalendar() {
+          const grid = document.getElementById('calendarDaysGrid');
+          const monthYearLabel = document.getElementById('calendarMonthYear');
+          
+          grid.innerHTML = '';
+          monthYearLabel.textContent = `${monthNames[currentCalendarMonth]} ${currentCalendarYear}`;
+
+          const firstDayIndex = new Date(currentCalendarYear, currentCalendarMonth, 1).getDay();
+          const totalDays = new Date(currentCalendarYear, currentCalendarMonth + 1, 0).getDate();
+          const prevMonthTotalDays = new Date(currentCalendarYear, currentCalendarMonth, 0).getDate();
+
+          // Previous month days
+          for (let i = firstDayIndex - 1; i >= 0; i--) {
+              const dayNum = prevMonthTotalDays - i;
+              const cell = document.createElement('div');
+              cell.className = 'w-full h-8 rounded-lg text-xs font-medium text-slate-350 bg-slate-50/30 flex items-center justify-center select-none';
+              cell.textContent = dayNum;
+              grid.appendChild(cell);
+          }
+
+          // Current month days
+          for (let day = 1; day <= totalDays; day++) {
+              const cell = document.createElement('button');
+              cell.type = 'button';
+              
+              const mStr = String(currentCalendarMonth + 1).padStart(2, '0');
+              const dStr = String(day).padStart(2, '0');
+              const dateVal = `${currentCalendarYear}-${mStr}-${dStr}`;
+
+              const isSelected = dateVal === selectedMaintDateOnly;
+              
+              if (isSelected) {
+                  cell.className = 'w-full h-8 rounded-lg text-xs font-bold bg-primary text-white flex items-center justify-center cursor-pointer transition-colors shadow-sm';
+              } else {
+                  cell.className = 'w-full h-8 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-100 flex items-center justify-center cursor-pointer transition-colors border border-transparent hover:border-slate-200';
+              }
+              
+              cell.textContent = day;
+              cell.addEventListener('click', (e) => {
+                  e.stopPropagation();
+                  selectedMaintDateOnly = dateVal;
+                  updateMaintDateInputAndLabel();
+                  renderDatePickerCalendar(); // refresh highlight
+              });
+              grid.appendChild(cell);
+          }
+
+          // Next month days
+          const cellsFilled = firstDayIndex + totalDays;
+          const cellsRemaining = 42 - cellsFilled;
+          for (let day = 1; day <= cellsRemaining; day++) {
+              const cell = document.createElement('div');
+              cell.className = 'w-full h-8 rounded-lg text-xs font-medium text-slate-355 bg-slate-50/30 flex items-center justify-center select-none';
+              cell.textContent = day;
+              grid.appendChild(cell);
+          }
+      }
+
+      initDatePicker();
       fetchMachines();
     })();
   </script>
