@@ -1,437 +1,486 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
+
 <head>
-<!-- SPA Layout Redirect Wrapper -->
-<script>
-  if (!document.getElementById('app-root')) {
-    const p = window.location.pathname + window.location.search;
-    const rel = '../';
-    window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
-  }
-</script>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Production Reports - Control Card Digitization</title>
+  <!-- SPA Layout Redirect Wrapper -->
+  <script>
+    if (!document.getElementById('app-root')) {
+      const p = window.location.pathname + window.location.search;
+      const rel = '../';
+      window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
+    }
+  </script>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Production Reports - Control Card Digitization</title>
 
-<!-- Tailwind CSS Engine -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Extended Theme Configuration -->
-<script src="../assets/js/tailwind-config.js"></script>
-<!-- Shared Stylesheets -->
-<link href="../assets/css/custom.css" rel="stylesheet"/>
+  <!-- Tailwind CSS Engine -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Extended Theme Configuration -->
+  <script src="../assets/js/tailwind-config.js"></script>
+  <!-- Shared Stylesheets -->
+  <link href="../assets/css/custom.css" rel="stylesheet" />
 
-<!-- Google Fonts & Icons -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <!-- Google Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
 
-<style>
-  body { font-family: 'Inter', sans-serif; }
-  .material-symbols-outlined {
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    vertical-align: middle;
-  }
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 4px;
-  }
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
-  }
-</style>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
 </head>
+
 <body class="bg-surface text-on-surface h-screen overflow-hidden flex font-body-md">
-<!-- Main Content Area -->
-<div class="flex-grow pt-1 px-6 pb-6 flex flex-col gap-6">
-  <!-- Header Section -->
-  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-1">
-    <div>
-      <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Production Reports</h2>
-      <p class="font-body-md text-body-md text-on-surface-variant">Comprehensive summary of production run statuses, passed/failed yields, process routings, and compliance logs.</p>
-    </div>
-    <div class="flex gap-3 w-full md:w-auto md:justify-end shrink-0">
-      <button onclick="exportOverallReport()" class="px-4 py-2 border border-outline-variant/50 text-slate-700 hover:bg-slate-50 font-label-bold text-label-bold rounded-lg transition-colors flex items-center justify-center gap-2 text-sm font-semibold shadow-sm bg-white cursor-pointer h-9 w-full md:w-auto whitespace-nowrap">
-        <span class="material-symbols-outlined text-[18px]">download</span>
-        <span>Export Report</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- KPI Cards Grid -->
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-    <!-- Card 1: TOTAL RUNS -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all select-none">
+  <!-- Main Content Area -->
+  <div class="flex-grow pt-1 px-6 pb-6 flex flex-col gap-6">
+    <!-- Header Section -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-1">
       <div>
-        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Total Work Orders</p>
-        <p class="text-3xl font-black text-slate-800" id="stat-total-wo">--</p>
+        <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Production Reports</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant">Comprehensive summary of production run statuses,
+          passed/failed yields, process routings, and compliance logs.</p>
       </div>
-      <div class="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 text-slate-500">
-        <span class="material-symbols-outlined text-[28px]">assessment</span>
-      </div>
-    </div>
-    <!-- Card 2: PASSED -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all select-none">
-      <div>
-        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Passed (OK)</p>
-        <p class="text-3xl font-black text-emerald-600" id="stat-passed-wo">--</p>
-      </div>
-      <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center border border-emerald-100 text-emerald-600">
-        <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-      </div>
-    </div>
-    <!-- Card 3: FAILED / HELD -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all select-none">
-      <div>
-        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Failed / Held (NG)</p>
-        <p class="text-3xl font-black text-primary" id="stat-failed-wo">--</p>
-      </div>
-      <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center border border-red-100 text-primary">
-        <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">warning</span>
-      </div>
-    </div>
-    <!-- Card 4: IN-PROGRESS -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all select-none">
-      <div>
-        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Active / Running</p>
-        <p class="text-3xl font-black text-amber-600 animate-pulse" id="stat-running-wo">--</p>
-      </div>
-      <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center border border-amber-100 text-amber-600">
-        <span class="material-symbols-outlined text-[28px]">autorenew</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Reports Console Grid & Table -->
-  <div class="bg-white border border-outline-variant/30 rounded-xl flex-grow overflow-hidden flex flex-col shadow-sm">
-    <!-- Filters Header -->
-    <div class="p-4 border-b border-outline-variant/30 bg-slate-50/50">
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
-        <div class="flex flex-col">
-          <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Search Reports</label>
-          <div class="relative">
-            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
-            <input id="report-search" oninput="filterReports()" class="pl-9 pr-3 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-full h-9 font-semibold" placeholder="Search Work Order ID, Product, Line..." type="text"/>
-          </div>
-        </div>
-        <div class="flex flex-col">
-          <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Workflow Status</label>
-          <div class="relative">
-            <select id="report-filter-status" onchange="filterReports()" class="pl-3 pr-8 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-full h-9 appearance-none bg-none font-semibold">
-              <option value="All">All Statuses</option>
-              <option value="Completed">Passed (Completed)</option>
-              <option value="Held">Failed / Held</option>
-              <option value="Running">Running (Active)</option>
-              <option value="Waiting">Waiting</option>
-            </select>
-            <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-on-surface-variant">arrow_drop_down</span>
-          </div>
-        </div>
-        <div class="flex flex-col">
-          <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Production Line</label>
-          <div class="relative">
-            <select id="report-filter-line" onchange="filterReports()" class="pl-3 pr-8 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-full h-9 appearance-none bg-none font-semibold">
-              <option value="All">All Lines</option>
-              <option value="Line 1">Line 1 (Hose)</option>
-              <option value="Line 2">Line 2 (Tube)</option>
-              <option value="Line 3">Line 3 (Jigs)</option>
-            </select>
-            <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-on-surface-variant">arrow_drop_down</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Data Table -->
-    <div class="overflow-y-auto custom-scrollbar flex-grow">
-      <table class="w-full text-left border-collapse whitespace-nowrap">
-        <thead class="sticky top-0 bg-slate-50 border-b border-outline-variant/30 font-data-tabular text-data-tabular text-on-surface-variant z-10">
-          <tr>
-            <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-12 text-center">#</th>
-            <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-36">Work Order ID</th>
-            <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider">Product Details</th>
-            <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider">Assigned Line</th>
-            <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-24">Shift</th>
-            <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-40 text-right">Yield (OK / Target)</th>
-            <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-36 text-center">Status</th>
-            <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-20 text-center">Details</th>
-          </tr>
-        </thead>
-        <tbody id="reports-tbody" class="divide-y divide-outline-variant/20 font-data-tabular text-data-tabular">
-          <!-- Populated dynamically -->
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Pagination -->
-    <div class="p-4 flex items-center justify-between border-t border-outline-variant/30 bg-slate-50">
-      <span id="reports-pagination-text" class="font-body-sm text-body-sm text-on-surface-variant">Showing -- to -- of -- reports</span>
-      <div class="flex gap-1">
-        <button class="p-1 border border-outline-variant/30 rounded bg-white text-on-surface-variant hover:bg-slate-50 disabled:opacity-50" disabled>
-          <span class="material-symbols-outlined text-[18px]">chevron_left</span>
-        </button>
-        <button class="w-7 h-7 rounded bg-primary text-white text-xs font-semibold flex items-center justify-center">1</button>
-        <button class="p-1 border border-outline-variant/30 rounded bg-white text-on-surface-variant hover:bg-slate-50 disabled:opacity-50" disabled>
-          <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+      <div class="flex gap-3 w-full md:w-auto md:justify-end shrink-0">
+        <button onclick="exportOverallReport()"
+          class="px-4 py-2 border border-outline-variant/50 text-slate-700 hover:bg-slate-50 font-label-bold text-label-bold rounded-lg transition-colors flex items-center justify-center gap-2 text-sm font-semibold shadow-sm bg-white cursor-pointer h-9 w-full md:w-auto whitespace-nowrap">
+          <span class="material-symbols-outlined text-[18px]">download</span>
+          <span>Export Report</span>
         </button>
       </div>
     </div>
-  </div>
 
-  <!-- Detailed Report Drawer Modal (Slides from Right Side) -->
-  <div id="report-detail-modal" class="fixed inset-0 z-[100] hidden flex justify-end">
-    <!-- Backdrop -->
-    <div id="report-detail-backdrop" onclick="closeReportModal()" class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300 opacity-0"></div>
-    
-    <!-- Drawer Panel -->
-    <div id="report-detail-drawer" class="relative h-full w-[600px] max-w-full bg-white border-l border-outline-variant/30 shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out translate-x-full">
-      
-      <!-- Drawer Header -->
-      <div class="flex justify-between items-start border-b border-outline-variant/20 p-6 flex-shrink-0 bg-slate-50">
+    <!-- KPI Cards Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Card 1: TOTAL RUNS -->
+      <div
+        class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all select-none">
         <div>
-          <span class="bg-primary/5 text-primary text-[10px] px-2.5 py-0.5 font-bold rounded-lg border border-primary/10 uppercase tracking-wider block w-fit mb-1.5">Work Order Detailed Report</span>
-          <h3 id="detail-wo-id" class="text-xl font-black text-slate-800 leading-none">WO-XXXX-XXXX</h3>
-          <p id="detail-wo-product" class="text-xs text-slate-500 font-semibold mt-1.5">Product Name -- (Part #--)</p>
+          <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Total Work Orders</p>
+          <p class="text-3xl font-black text-slate-800" id="stat-total-wo">--</p>
         </div>
-        <button onclick="closeReportModal()" class="p-1.5 hover:bg-slate-200/65 rounded-lg text-slate-400 hover:text-slate-600 transition-colors cursor-pointer flex items-center justify-center">
-          <span class="material-symbols-outlined text-[20px]">close</span>
-        </button>
+        <div
+          class="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 text-slate-500">
+          <span class="material-symbols-outlined text-[28px]">assessment</span>
+        </div>
       </div>
-      
-      <!-- Drawer Scrollable Body -->
-      <div class="flex-grow p-6 overflow-y-auto space-y-6 custom-scrollbar text-xs text-slate-700">
-        
-        <!-- Summary Info Grid -->
-        <div class="grid grid-cols-2 gap-x-6 gap-y-4 pb-5 border-b border-slate-100">
-          <div>
-            <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Assigned Line</span>
-            <span id="detail-wo-line" class="font-bold text-slate-800 text-sm">--</span>
+      <!-- Card 2: PASSED -->
+      <div
+        class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all select-none">
+        <div>
+          <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Passed (OK)</p>
+          <p class="text-3xl font-black text-emerald-600" id="stat-passed-wo">--</p>
+        </div>
+        <div
+          class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center border border-emerald-100 text-emerald-600">
+          <span class="material-symbols-outlined text-[28px]"
+            style="font-variation-settings: 'FILL' 1;">check_circle</span>
+        </div>
+      </div>
+      <!-- Card 3: FAILED / HELD -->
+      <div
+        class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all select-none">
+        <div>
+          <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Failed / Held (NG)</p>
+          <p class="text-3xl font-black text-primary" id="stat-failed-wo">--</p>
+        </div>
+        <div
+          class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center border border-red-100 text-primary">
+          <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+        </div>
+      </div>
+      <!-- Card 4: IN-PROGRESS -->
+      <div
+        class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all select-none">
+        <div>
+          <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Active / Running</p>
+          <p class="text-3xl font-black text-amber-600 animate-pulse" id="stat-running-wo">--</p>
+        </div>
+        <div
+          class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center border border-amber-100 text-amber-600">
+          <span class="material-symbols-outlined text-[28px]">autorenew</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reports Console Grid & Table -->
+    <div class="bg-white border border-outline-variant/30 rounded-xl flex-grow overflow-hidden flex flex-col shadow-sm">
+      <!-- Filters Header -->
+      <div class="p-4 border-b border-outline-variant/30 bg-slate-50/50">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="flex flex-col">
+            <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Search Reports</label>
+            <div class="relative">
+              <span
+                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
+              <input id="report-search" oninput="filterReports()"
+                class="pl-9 pr-3 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-full h-9 font-semibold"
+                placeholder="Search Work Order ID, Product, Line..." type="text" />
+            </div>
           </div>
-          <div>
-            <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Shift / Operator</span>
-            <span id="detail-wo-operator" class="font-bold text-slate-800 text-sm">--</span>
+          <div class="flex flex-col">
+            <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Workflow Status</label>
+            <div class="relative">
+              <select id="report-filter-status" onchange="filterReports()"
+                class="pl-3 pr-8 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-full h-9 appearance-none bg-none font-semibold">
+                <option value="All">All Status</option>
+                <option value="Completed">Passed (Completed)</option>
+                <option value="Held">Failed / Held</option>
+                <option value="Running">Running (Active)</option>
+                <option value="Waiting">Waiting</option>
+              </select>
+              <span
+                class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+            </div>
           </div>
-          <div>
-            <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Quality Inspector</span>
-            <span id="detail-wo-inspector" class="font-semibold text-slate-700 text-xs">--</span>
+          <div class="flex flex-col">
+            <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Production Line</label>
+            <div class="relative">
+              <select id="report-filter-line" onchange="filterReports()"
+                class="pl-3 pr-8 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-full h-9 appearance-none bg-none font-semibold">
+                <option value="All">All Lines</option>
+                <option value="Line 1">Line 1 (Hose)</option>
+                <option value="Line 2">Line 2 (Tube)</option>
+                <option value="Line 3">Line 3 (Jigs)</option>
+              </select>
+              <span
+                class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+            </div>
           </div>
+        </div>
+      </div>
+
+      <!-- Data Table -->
+      <div class="overflow-y-auto custom-scrollbar flex-grow">
+        <table class="w-full text-left border-collapse whitespace-nowrap">
+          <thead
+            class="sticky top-0 bg-slate-50 border-b border-outline-variant/30 font-data-tabular text-data-tabular text-on-surface-variant z-10">
+            <tr>
+              <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-12 text-center">#</th>
+              <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-36">Work Order ID</th>
+              <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider">Product Details</th>
+              <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider">Assigned Line</th>
+              <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-24">Shift</th>
+              <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-40 text-right">Yield (OK / Target)</th>
+              <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-36 text-center">Status</th>
+              <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-20 text-center">Details</th>
+            </tr>
+          </thead>
+          <tbody id="reports-tbody" class="divide-y divide-outline-variant/20 font-data-tabular text-data-tabular">
+            <!-- Populated dynamically -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="p-4 flex items-center justify-between border-t border-outline-variant/30 bg-slate-50">
+        <span id="reports-pagination-text" class="font-body-sm text-body-sm text-on-surface-variant">Showing -- to -- of
+          -- reports</span>
+        <div class="flex gap-1">
+          <button
+            class="p-1 border border-outline-variant/30 rounded bg-white text-on-surface-variant hover:bg-slate-50 disabled:opacity-50"
+            disabled>
+            <span class="material-symbols-outlined text-[18px]">chevron_left</span>
+          </button>
+          <button
+            class="w-7 h-7 rounded bg-primary text-white text-xs font-semibold flex items-center justify-center">1</button>
+          <button
+            class="p-1 border border-outline-variant/30 rounded bg-white text-on-surface-variant hover:bg-slate-50 disabled:opacity-50"
+            disabled>
+            <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detailed Report Drawer Modal (Slides from Right Side) -->
+    <div id="report-detail-modal" class="fixed inset-0 z-[100] hidden flex justify-end">
+      <!-- Backdrop -->
+      <div id="report-detail-backdrop" onclick="closeReportModal()"
+        class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300 opacity-0"></div>
+
+      <!-- Drawer Panel -->
+      <div id="report-detail-drawer"
+        class="relative h-full w-[600px] max-w-full bg-white border-l border-outline-variant/30 shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out translate-x-full">
+
+        <!-- Drawer Header -->
+        <div class="flex justify-between items-start border-b border-outline-variant/20 p-6 flex-shrink-0 bg-slate-50">
           <div>
-            <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Cryptographic Card Hash</span>
-            <span id="detail-wo-hash" class="font-mono text-slate-700 font-bold text-[10px]">--</span>
+            <span
+              class="bg-primary/5 text-primary text-[10px] px-2.5 py-0.5 font-bold rounded-lg border border-primary/10 uppercase tracking-wider block w-fit mb-1.5">Work
+              Order Detailed Report</span>
+            <h3 id="detail-wo-id" class="text-xl font-black text-slate-800 leading-none">WO-XXXX-XXXX</h3>
+            <p id="detail-wo-product" class="text-xs text-slate-500 font-semibold mt-1.5">Product Name -- (Part #--)</p>
           </div>
+          <button onclick="closeReportModal()"
+            class="p-1.5 hover:bg-slate-200/65 rounded-lg text-slate-400 hover:text-slate-600 transition-colors cursor-pointer flex items-center justify-center">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
         </div>
 
-        <!-- Yield Stats Card -->
-        <div class="bg-slate-50 border border-slate-200/50 p-4 rounded-xl space-y-3">
-          <div class="flex justify-between items-center select-none">
-            <span class="font-bold text-[11px] uppercase text-slate-500 tracking-wider">Yield Performance</span>
-            <span id="detail-wo-status-badge" class="px-2 py-0.5 rounded text-[10px] font-bold uppercase">--</span>
-          </div>
-          <div class="grid grid-cols-3 gap-2 text-center py-2.5">
-            <div class="border-r border-slate-200">
-              <span class="block text-[9px] text-slate-400 font-bold uppercase">Target Qty</span>
-              <span id="detail-wo-target" class="text-lg font-black text-slate-700 font-data-tabular">--</span>
-            </div>
-            <div class="border-r border-slate-200">
-              <span class="block text-[9px] text-slate-400 font-bold uppercase">OK Passed</span>
-              <span id="detail-wo-ok" class="text-lg font-black text-emerald-600 font-data-tabular">--</span>
+        <!-- Drawer Scrollable Body -->
+        <div class="flex-grow p-6 overflow-y-auto overflow-x-hidden space-y-6 custom-scrollbar text-xs text-slate-700">
+
+          <!-- Summary Info Grid -->
+          <div class="grid grid-cols-2 gap-x-6 gap-y-4 pb-5 border-b border-slate-100">
+            <div>
+              <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Assigned
+                Line</span>
+              <span id="detail-wo-line" class="font-bold text-slate-800 text-sm">--</span>
             </div>
             <div>
-              <span class="block text-[9px] text-slate-400 font-bold uppercase">NG Defects</span>
-              <span id="detail-wo-ng" class="text-lg font-black text-primary font-data-tabular">--</span>
+              <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Shift /
+                Operator</span>
+              <span id="detail-wo-operator" class="font-bold text-slate-800 text-sm">--</span>
+            </div>
+            <div>
+              <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Quality
+                Inspector</span>
+              <span id="detail-wo-inspector" class="font-semibold text-slate-700 text-xs">--</span>
+            </div>
+            <div>
+              <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Cryptographic
+                Card Hash</span>
+              <span id="detail-wo-hash" class="font-mono text-slate-700 font-bold text-[10px] break-all">--</span>
             </div>
           </div>
-          <!-- Progress bar -->
-          <div class="space-y-1">
-            <div class="flex justify-between text-[10px] text-slate-500 font-semibold select-none">
-              <span>Overall Progress</span>
-              <span id="detail-wo-progress-pct">0%</span>
+
+          <!-- Yield Stats Card -->
+          <div class="bg-slate-50 border border-slate-200/50 p-4 rounded-xl space-y-3">
+            <div class="flex justify-between items-center select-none">
+              <span class="font-bold text-[11px] uppercase text-slate-500 tracking-wider">Yield Performance</span>
+              <span id="detail-wo-status-badge" class="px-2 py-0.5 rounded text-[10px] font-bold uppercase">--</span>
             </div>
-            <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
-              <div id="detail-wo-progress-bar" class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+            <div class="grid grid-cols-3 gap-2 text-center py-2.5">
+              <div class="border-r border-slate-200">
+                <span class="block text-[9px] text-slate-400 font-bold uppercase">Target Qty</span>
+                <span id="detail-wo-target" class="text-lg font-black text-slate-700 font-data-tabular">--</span>
+              </div>
+              <div class="border-r border-slate-200">
+                <span class="block text-[9px] text-slate-400 font-bold uppercase">OK Passed</span>
+                <span id="detail-wo-ok" class="text-lg font-black text-emerald-600 font-data-tabular">--</span>
+              </div>
+              <div>
+                <span class="block text-[9px] text-slate-400 font-bold uppercase">NG Defects</span>
+                <span id="detail-wo-ng" class="text-lg font-black text-primary font-data-tabular">--</span>
+              </div>
+            </div>
+            <!-- Progress bar -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-[10px] text-slate-500 font-semibold select-none">
+                <span>Overall Progress</span>
+                <span id="detail-wo-progress-pct">0%</span>
+              </div>
+              <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                <div id="detail-wo-progress-bar" class="bg-emerald-500 h-full rounded-full transition-all duration-500"
+                  style="width: 0%"></div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Process Routing Steps Table -->
-        <div class="space-y-2">
-          <h4 class="font-bold text-[11px] uppercase text-slate-500 tracking-wider select-none">Process Routing Checklist</h4>
-          <div class="border border-slate-200/60 rounded-lg overflow-hidden">
-            <table class="w-full text-left border-collapse text-[11px]">
-              <thead class="bg-slate-100 border-b border-slate-200 text-slate-600">
-                <tr>
-                  <th class="p-2 font-bold w-6 text-center">#</th>
-                  <th class="p-2 font-bold">Process Step</th>
-                  <th class="p-2 font-bold">Machine</th>
-                  <th class="p-2 font-bold text-center">Status</th>
-                  <th class="p-2 font-bold text-right w-16">Time</th>
-                </tr>
-              </thead>
-              <tbody id="detail-wo-steps-tbody" class="divide-y divide-slate-100 font-medium">
-                <!-- Injected dynamically -->
-              </tbody>
-            </table>
+          <!-- Process Routing Steps Table -->
+          <div class="space-y-2">
+            <h4 class="font-bold text-[11px] uppercase text-slate-500 tracking-wider select-none">Process Routing
+              Checklist</h4>
+            <div class="border border-slate-200/60 rounded-lg overflow-x-auto">
+              <table class="w-full text-left border-collapse text-[11px] whitespace-nowrap">
+                <thead class="bg-slate-100 border-b border-slate-200 text-slate-600">
+                  <tr>
+                    <th class="p-2 font-bold w-6 text-center">#</th>
+                    <th class="p-2 font-bold">Process Step</th>
+                    <th class="p-2 font-bold">Machine</th>
+                    <th class="p-2 font-bold text-center">Status</th>
+                    <th class="p-2 font-bold text-right w-16">Time</th>
+                  </tr>
+                </thead>
+                <tbody id="detail-wo-steps-tbody" class="divide-y divide-slate-100 font-medium">
+                  <!-- Injected dynamically -->
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
 
-        <!-- Bill of Materials (BOM) checklist -->
-        <div class="space-y-2">
-          <h4 class="font-bold text-[11px] uppercase text-slate-500 tracking-wider select-none">BOM Material Verification</h4>
-          <div class="border border-slate-200/60 rounded-lg overflow-hidden">
-            <table class="w-full text-left border-collapse text-[11px]">
-              <thead class="bg-slate-100 border-b border-slate-200 text-slate-600">
-                <tr>
-                  <th class="p-2 font-bold">Material Code</th>
-                  <th class="p-2 font-bold">Description</th>
-                  <th class="p-2 font-bold">Lot Number</th>
-                  <th class="p-2 font-bold text-center">Verification</th>
-                </tr>
-              </thead>
-              <tbody id="detail-wo-bom-tbody" class="divide-y divide-slate-100 font-medium">
-                <!-- Injected dynamically -->
-              </tbody>
-            </table>
+          <!-- Bill of Materials (BOM) checklist -->
+          <div class="space-y-2">
+            <h4 class="font-bold text-[11px] uppercase text-slate-500 tracking-wider select-none">BOM Material
+              Verification</h4>
+            <div class="border border-slate-200/60 rounded-lg overflow-x-auto">
+              <table class="w-full text-left border-collapse text-[11px] whitespace-nowrap">
+                <thead class="bg-slate-100 border-b border-slate-200 text-slate-600">
+                  <tr>
+                    <th class="p-2 font-bold">Material Code</th>
+                    <th class="p-2 font-bold">Description</th>
+                    <th class="p-2 font-bold">Lot Number</th>
+                    <th class="p-2 font-bold text-center">Verification</th>
+                  </tr>
+                </thead>
+                <tbody id="detail-wo-bom-tbody" class="divide-y divide-slate-100 font-medium">
+                  <!-- Injected dynamically -->
+                </tbody>
+              </table>
+            </div>
           </div>
+
         </div>
 
-      </div>
-      
-      <!-- Drawer Footer -->
-      <div class="p-6 border-t border-outline-variant/20 flex justify-between items-center bg-slate-50 flex-shrink-0">
-        <button onclick="exportSingleReportPDF()" class="px-4 py-2 border border-outline-variant/50 text-slate-700 hover:bg-slate-100 font-body-sm text-body-sm font-semibold rounded-lg shadow-sm transition-colors cursor-pointer flex items-center gap-1.5 h-9 bg-white">
-          <span class="material-symbols-outlined text-[16px]">picture_as_pdf</span>
-          Export PDF
-        </button>
-        <button onclick="closeReportModal()" class="px-5 py-2 bg-primary text-white font-body-sm text-body-sm font-semibold rounded-lg hover:opacity-95 shadow-sm transition-colors cursor-pointer h-9">
-          Close Report
-        </button>
+        <!-- Drawer Footer -->
+        <div class="p-6 border-t border-outline-variant/20 flex justify-between items-center bg-slate-50 flex-shrink-0">
+          <button onclick="exportSingleReportPDF()"
+            class="px-4 py-2 border border-outline-variant/50 text-slate-700 hover:bg-slate-100 font-body-sm text-body-sm font-semibold rounded-lg shadow-sm transition-colors cursor-pointer flex items-center gap-1.5 h-9 bg-white">
+            <span class="material-symbols-outlined text-[16px]">picture_as_pdf</span>
+            Export PDF
+          </button>
+          <button onclick="closeReportModal()"
+            class="px-5 py-2 bg-primary text-white font-body-sm text-body-sm font-semibold rounded-lg hover:opacity-95 shadow-sm transition-colors cursor-pointer h-9">
+            Close Report
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<script>
-  (function() {
+  <script>
+    (function () {
       let workOrdersList = [];
 
       async function initReportsDashboard() {
-          try {
-              // Try reading from localStorage first
-              const localData = localStorage.getItem('workOrdersList');
-              let loaded = false;
-              if (localData) {
-                  try {
-                      const parsed = JSON.parse(localData);
-                      if (parsed && parsed.length >= 5 && parsed[0].woNumber) {
-                          workOrdersList = parsed;
-                          loaded = true;
-                      }
-                  } catch(e) {}
+        try {
+          // Try reading from localStorage first
+          const localData = localStorage.getItem('workOrdersList');
+          let loaded = false;
+          if (localData) {
+            try {
+              const parsed = JSON.parse(localData);
+              if (parsed && parsed.length >= 5 && parsed[0].woNumber) {
+                workOrdersList = parsed;
+                loaded = true;
               }
-              if (!loaded) {
-                  const res = await fetch('../work-orders/workorders.json');
-                  if (!res.ok) throw new Error('Could not fetch workorders database');
-                  workOrdersList = await res.json();
-                  localStorage.setItem('workOrdersList', JSON.stringify(workOrdersList));
-              }
-
-              calculateKPIs();
-              filterReports();
-          } catch(e) {
-              console.error(e);
+            } catch (e) { }
           }
+          if (!loaded) {
+            const res = await fetch('../work-orders/workorders.json');
+            if (!res.ok) throw new Error('Could not fetch workorders database');
+            workOrdersList = await res.json();
+            localStorage.setItem('workOrdersList', JSON.stringify(workOrdersList));
+          }
+
+          calculateKPIs();
+          filterReports();
+        } catch (e) {
+          console.error(e);
+        }
       }
 
       function calculateKPIs() {
-          if (!workOrdersList || workOrdersList.length === 0) return;
+        if (!workOrdersList || workOrdersList.length === 0) return;
 
-          const total = workOrdersList.length;
-          const passed = workOrdersList.filter(w => w.status === 'Completed').length;
-          const failed = workOrdersList.filter(w => w.status === 'Held').length;
-          const running = workOrdersList.filter(w => w.status === 'Running' || w.status === 'Waiting').length;
+        const total = workOrdersList.length;
+        const passed = workOrdersList.filter(w => w.status === 'Completed').length;
+        const failed = workOrdersList.filter(w => w.status === 'Held').length;
+        const running = workOrdersList.filter(w => w.status === 'Running' || w.status === 'Waiting').length;
 
-          document.getElementById('stat-total-wo').textContent = total;
-          document.getElementById('stat-passed-wo').textContent = `${passed} (${(passed/total*100).toFixed(0)}%)`;
-          document.getElementById('stat-failed-wo').textContent = `${failed} (${(failed/total*100).toFixed(0)}%)`;
-          document.getElementById('stat-running-wo').textContent = `${running} (${(running/total*100).toFixed(0)}%)`;
+        document.getElementById('stat-total-wo').textContent = total;
+        document.getElementById('stat-passed-wo').textContent = `${passed} (${(passed / total * 100).toFixed(0)}%)`;
+        document.getElementById('stat-failed-wo').textContent = `${failed} (${(failed / total * 100).toFixed(0)}%)`;
+        document.getElementById('stat-running-wo').textContent = `${running} (${(running / total * 100).toFixed(0)}%)`;
       }
 
       function filterReports() {
-          const q = document.getElementById('report-search').value.toLowerCase().trim();
-          const statusVal = document.getElementById('report-filter-status').value;
-          const lineVal = document.getElementById('report-filter-line').value;
+        const q = document.getElementById('report-search').value.toLowerCase().trim();
+        const statusVal = document.getElementById('report-filter-status').value;
+        const lineVal = document.getElementById('report-filter-line').value;
 
-          const filtered = workOrdersList.filter(w => {
-              // Search text
-              if (q) {
-                  const match = w.woNumber.toLowerCase().includes(q) ||
-                                w.productName.toLowerCase().includes(q) ||
-                                w.partNumber.toLowerCase().includes(q) ||
-                                w.line.toLowerCase().includes(q);
-                  if (!match) return false;
-              }
+        const filtered = workOrdersList.filter(w => {
+          // Search text
+          if (q) {
+            const match = w.woNumber.toLowerCase().includes(q) ||
+              w.productName.toLowerCase().includes(q) ||
+              w.partNumber.toLowerCase().includes(q) ||
+              w.line.toLowerCase().includes(q);
+            if (!match) return false;
+          }
 
-              // Status Filter
-              if (statusVal !== 'All' && w.status !== statusVal) {
-                  return false;
-              }
+          // Status Filter
+          if (statusVal !== 'All' && w.status !== statusVal) {
+            return false;
+          }
 
-              // Line Filter
-              if (lineVal !== 'All') {
-                  if (!w.line.toLowerCase().includes(lineVal.toLowerCase())) {
-                      return false;
-                  }
-              }
+          // Line Filter
+          if (lineVal !== 'All') {
+            if (!w.line.toLowerCase().includes(lineVal.toLowerCase())) {
+              return false;
+            }
+          }
 
-              return true;
-          });
+          return true;
+        });
 
-          renderReportsTable(filtered);
+        renderReportsTable(filtered);
       }
 
       function renderReportsTable(list) {
-          const tbody = document.getElementById('reports-tbody');
-          if (!tbody) return;
-          tbody.innerHTML = '';
+        const tbody = document.getElementById('reports-tbody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
 
-          if (list.length === 0) {
-              tbody.innerHTML = `
+        if (list.length === 0) {
+          tbody.innerHTML = `
                   <tr>
                       <td colspan="8" class="p-6 text-center text-slate-400 font-semibold">No work order reports match your search criteria</td>
                   </tr>
               `;
-              document.getElementById('reports-pagination-text').textContent = 'Showing 0 to 0 of 0 reports';
-              return;
+          document.getElementById('reports-pagination-text').textContent = 'Showing 0 to 0 of 0 reports';
+          return;
+        }
+
+        list.forEach((w, index) => {
+          const row = document.createElement('tr');
+          row.className = 'hover:bg-slate-50/50 border-b border-outline-variant/15 transition-colors cursor-pointer font-medium';
+          row.onclick = (e) => {
+            if (e.target.closest('button') || e.target.closest('a')) return;
+            openReportModal(w);
+          };
+
+          // Status Badge
+          let statusBadge = '';
+          if (w.status === 'Completed') {
+            statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Passed</span>';
+          } else if (w.status === 'Running') {
+            statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200 animate-pulse">Running</span>';
+          } else if (w.status === 'Held') {
+            statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200">Held / Failed</span>';
+          } else {
+            statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-650 border border-slate-200">Waiting</span>';
           }
 
-          list.forEach((w, index) => {
-              const row = document.createElement('tr');
-              row.className = 'hover:bg-slate-50/50 border-b border-outline-variant/15 transition-colors cursor-pointer font-medium';
-              row.onclick = (e) => {
-                  if (e.target.closest('button') || e.target.closest('a')) return;
-                  openReportModal(w);
-              };
+          const cleanLine = w.line.split('(')[0].trim();
 
-              // Status Badge
-              let statusBadge = '';
-              if (w.status === 'Completed') {
-                  statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Passed</span>';
-              } else if (w.status === 'Running') {
-                  statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200 animate-pulse">Running</span>';
-              } else if (w.status === 'Held') {
-                  statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200">Held / Failed</span>';
-              } else {
-                  statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-650 border border-slate-200">Waiting</span>';
-              }
-
-              const cleanLine = w.line.split('(')[0].trim();
-
-              row.innerHTML = `
+          row.innerHTML = `
                   <td class="p-3 text-center text-on-surface-variant">${index + 1}</td>
                   <td class="p-3 text-primary font-bold font-data-tabular">${w.woNumber}</td>
                   <td class="p-3 text-slate-800">
@@ -450,142 +499,142 @@
                     </button>
                   </td>
               `;
-              tbody.appendChild(row);
-          });
+          tbody.appendChild(row);
+        });
 
-          document.getElementById('reports-pagination-text').textContent = `Showing 1 to ${list.length} of ${list.length} reports`;
+        document.getElementById('reports-pagination-text').textContent = `Showing 1 to ${list.length} of ${list.length} reports`;
       }
 
       function openReportModal(w) {
-          document.getElementById('detail-wo-id').textContent = w.woNumber;
-          document.getElementById('detail-wo-product').textContent = `${w.productName} (Part #${w.partNumber})`;
-          document.getElementById('detail-wo-line').textContent = w.line;
-          document.getElementById('detail-wo-operator').textContent = `${w.shift} / ${w.operator || 'Unassigned'}`;
-          document.getElementById('detail-wo-inspector').textContent = w.inspector || 'Vikram Malhotra';
-          document.getElementById('detail-wo-hash').textContent = w.cardHash || 'N/A';
+        document.getElementById('detail-wo-id').textContent = w.woNumber;
+        document.getElementById('detail-wo-product').textContent = `${w.productName} (Part #${w.partNumber})`;
+        document.getElementById('detail-wo-line').textContent = w.line;
+        document.getElementById('detail-wo-operator').textContent = `${w.shift} / ${w.operator || 'Unassigned'}`;
+        document.getElementById('detail-wo-inspector').textContent = w.inspector || 'Vikram Malhotra';
+        document.getElementById('detail-wo-hash').textContent = w.cardHash || 'N/A';
 
-          // Status Badge details
-          const statusBadge = document.getElementById('detail-wo-status-badge');
-          statusBadge.textContent = w.status;
-          if (w.status === 'Completed') {
-              statusBadge.className = 'px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-emerald-50 text-emerald-700 border border-emerald-200';
-          } else if (w.status === 'Running') {
-              statusBadge.className = 'px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-amber-50 text-amber-700 border border-amber-200 animate-pulse';
-          } else if (w.status === 'Held') {
-              statusBadge.className = 'px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-rose-50 text-rose-700 border border-rose-200';
-          } else {
-              statusBadge.className = 'px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-100 text-slate-650 border border-slate-200';
-          }
+        // Status Badge details
+        const statusBadge = document.getElementById('detail-wo-status-badge');
+        statusBadge.textContent = w.status;
+        if (w.status === 'Completed') {
+          statusBadge.className = 'px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-emerald-50 text-emerald-700 border border-emerald-200';
+        } else if (w.status === 'Running') {
+          statusBadge.className = 'px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-amber-50 text-amber-700 border border-amber-200 animate-pulse';
+        } else if (w.status === 'Held') {
+          statusBadge.className = 'px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-rose-50 text-rose-700 border border-rose-200';
+        } else {
+          statusBadge.className = 'px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-100 text-slate-650 border border-slate-200';
+        }
 
-          // Quantities
-          document.getElementById('detail-wo-target').textContent = w.targetQty.toLocaleString();
-          document.getElementById('detail-wo-ok').textContent = w.okQty.toLocaleString();
-          document.getElementById('detail-wo-ng').textContent = w.ngQty.toLocaleString();
+        // Quantities
+        document.getElementById('detail-wo-target').textContent = w.targetQty.toLocaleString();
+        document.getElementById('detail-wo-ok').textContent = w.okQty.toLocaleString();
+        document.getElementById('detail-wo-ng').textContent = w.ngQty.toLocaleString();
 
-          // Progress
-          const pct = w.targetQty > 0 ? Math.min(100, Math.round(w.doneQty / w.targetQty * 100)) : 0;
-          document.getElementById('detail-wo-progress-pct').textContent = `${pct}%`;
-          document.getElementById('detail-wo-progress-bar').style.width = `${pct}%`;
+        // Progress
+        const pct = w.targetQty > 0 ? Math.min(100, Math.round(w.doneQty / w.targetQty * 100)) : 0;
+        document.getElementById('detail-wo-progress-pct').textContent = `${pct}%`;
+        document.getElementById('detail-wo-progress-bar').style.width = `${pct}%`;
 
-          // Process steps list
-          const stepsTbody = document.getElementById('detail-wo-steps-tbody');
-          stepsTbody.innerHTML = '';
-          if (w.steps && w.steps.length > 0) {
-              w.steps.forEach((step, idx) => {
-                  const tr = document.createElement('tr');
-                  
-                  let statusLabel = '';
-                  if (step.status === 'completed') {
-                      statusLabel = '<span class="text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-0.2 rounded text-[10px] uppercase font-bold">Passed</span>';
-                  } else if (step.status === 'active' || step.status === 'running') {
-                      statusLabel = '<span class="text-amber-600 bg-amber-50 border border-amber-100 px-2 py-0.2 rounded text-[10px] uppercase font-bold">Active</span>';
-                  } else {
-                      statusLabel = '<span class="text-slate-400 bg-slate-50 border border-slate-100 px-2 py-0.2 rounded text-[10px] uppercase font-bold">Pending</span>';
-                  }
+        // Process steps list
+        const stepsTbody = document.getElementById('detail-wo-steps-tbody');
+        stepsTbody.innerHTML = '';
+        if (w.steps && w.steps.length > 0) {
+          w.steps.forEach((step, idx) => {
+            const tr = document.createElement('tr');
 
-                  tr.innerHTML = `
+            let statusLabel = '';
+            if (step.status === 'completed') {
+              statusLabel = '<span class="text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-0.2 rounded text-[10px] uppercase font-bold">Passed</span>';
+            } else if (step.status === 'active' || step.status === 'running') {
+              statusLabel = '<span class="text-amber-600 bg-amber-50 border border-amber-100 px-2 py-0.2 rounded text-[10px] uppercase font-bold">Active</span>';
+            } else {
+              statusLabel = '<span class="text-slate-400 bg-slate-50 border border-slate-100 px-2 py-0.2 rounded text-[10px] uppercase font-bold">Pending</span>';
+            }
+
+            tr.innerHTML = `
                       <td class="p-2 text-center text-slate-400 font-semibold">${idx + 1}</td>
                       <td class="p-2 font-bold text-slate-800">${step.name}</td>
                       <td class="p-2 text-slate-500">${step.machine.split('(')[0]}</td>
                       <td class="p-2 text-center">${statusLabel}</td>
                       <td class="p-2 text-right text-slate-500 font-data-tabular">${step.time}</td>
                   `;
-                  stepsTbody.appendChild(tr);
-              });
-          } else {
-              stepsTbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-slate-400 italic">No routing steps logged.</td></tr>`;
-          }
+            stepsTbody.appendChild(tr);
+          });
+        } else {
+          stepsTbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-slate-400 italic">No routing steps logged.</td></tr>`;
+        }
 
-          // BOM checklist
-          const bomTbody = document.getElementById('detail-wo-bom-tbody');
-          bomTbody.innerHTML = '';
-          if (w.bom && w.bom.length > 0) {
-              w.bom.forEach(item => {
-                  const tr = document.createElement('tr');
-                  const checkLabel = item.verification === 'VERIFIED'
-                      ? '<span class="inline-flex items-center text-emerald-600 gap-1 font-bold text-[10px]"><span class="material-symbols-outlined text-[14px]">check_circle</span>OK</span>'
-                      : '<span class="inline-flex items-center text-slate-400 gap-1 font-bold text-[10px]"><span class="material-symbols-outlined text-[14px]">radio_button_unchecked</span>PENDING</span>';
+        // BOM checklist
+        const bomTbody = document.getElementById('detail-wo-bom-tbody');
+        bomTbody.innerHTML = '';
+        if (w.bom && w.bom.length > 0) {
+          w.bom.forEach(item => {
+            const tr = document.createElement('tr');
+            const checkLabel = item.verification === 'VERIFIED'
+              ? '<span class="inline-flex items-center text-emerald-600 gap-1 font-bold text-[10px]"><span class="material-symbols-outlined text-[14px]">check_circle</span>OK</span>'
+              : '<span class="inline-flex items-center text-slate-400 gap-1 font-bold text-[10px]"><span class="material-symbols-outlined text-[14px]">radio_button_unchecked</span>PENDING</span>';
 
-                  tr.innerHTML = `
+            tr.innerHTML = `
                       <td class="p-2 font-bold text-slate-800 font-data-tabular">${item.code}</td>
                       <td class="p-2 text-slate-650">${item.desc}</td>
                       <td class="p-2 text-slate-500 font-data-tabular">${item.lot || 'N/A'}</td>
                       <td class="p-2 text-center">${checkLabel}</td>
                   `;
-                  bomTbody.appendChild(tr);
-              });
-          } else {
-              bomTbody.innerHTML = `<tr><td colspan="4" class="p-3 text-center text-slate-400 italic">No materials checklist logged.</td></tr>`;
-          }
+            bomTbody.appendChild(tr);
+          });
+        } else {
+          bomTbody.innerHTML = `<tr><td colspan="4" class="p-3 text-center text-slate-400 italic">No materials checklist logged.</td></tr>`;
+        }
 
-          // Drawer animations
-          const container = document.getElementById('report-detail-modal');
-          const backdrop = document.getElementById('report-detail-backdrop');
-          const drawer = document.getElementById('report-detail-drawer');
-          
-          container.classList.remove('hidden');
-          drawer.offsetHeight; // Force reflow
-          
-          backdrop.classList.remove('opacity-0');
-          backdrop.classList.add('opacity-100');
-          drawer.classList.remove('translate-x-full');
-          drawer.classList.add('translate-x-0');
+        // Drawer animations
+        const container = document.getElementById('report-detail-modal');
+        const backdrop = document.getElementById('report-detail-backdrop');
+        const drawer = document.getElementById('report-detail-drawer');
+
+        container.classList.remove('hidden');
+        drawer.offsetHeight; // Force reflow
+
+        backdrop.classList.remove('opacity-0');
+        backdrop.classList.add('opacity-100');
+        drawer.classList.remove('translate-x-full');
+        drawer.classList.add('translate-x-0');
       }
 
       function openReportModalByNo(woNumber) {
-          const w = workOrdersList.find(item => item.woNumber === woNumber);
-          if (w) openReportModal(w);
+        const w = workOrdersList.find(item => item.woNumber === woNumber);
+        if (w) openReportModal(w);
       }
 
       function closeReportModal() {
-          const backdrop = document.getElementById('report-detail-backdrop');
-          const drawer = document.getElementById('report-detail-drawer');
-          
-          if (backdrop && drawer) {
-              backdrop.classList.remove('opacity-100');
-              backdrop.classList.add('opacity-0');
-              drawer.classList.remove('translate-x-0');
-              drawer.classList.add('translate-x-full');
-              
-              setTimeout(() => {
-                  document.getElementById('report-detail-modal').classList.add('hidden');
-              }, 300);
-          } else {
-              document.getElementById('report-detail-modal').classList.add('hidden');
-          }
+        const backdrop = document.getElementById('report-detail-backdrop');
+        const drawer = document.getElementById('report-detail-drawer');
+
+        if (backdrop && drawer) {
+          backdrop.classList.remove('opacity-100');
+          backdrop.classList.add('opacity-0');
+          drawer.classList.remove('translate-x-0');
+          drawer.classList.add('translate-x-full');
+
+          setTimeout(() => {
+            document.getElementById('report-detail-modal').classList.add('hidden');
+          }, 300);
+        } else {
+          document.getElementById('report-detail-modal').classList.add('hidden');
+        }
       }
 
       function refreshOverallReport() {
-          initReportsDashboard();
+        initReportsDashboard();
       }
 
       function exportOverallReport() {
-          alert("Overall Production Report exported successfully as PDF/Excel (9 work orders included).");
+        alert("Overall Production Report exported successfully as PDF/Excel (9 work orders included).");
       }
 
       function exportSingleReportPDF() {
-          const woNo = document.getElementById('detail-wo-id').textContent;
-          alert(`PDF Report for ${woNo} generated and downloaded successfully.`);
+        const woNo = document.getElementById('detail-wo-id').textContent;
+        alert(`PDF Report for ${woNo} generated and downloaded successfully.`);
       }
 
       // Bind functions to window
@@ -597,7 +646,8 @@
       window.exportSingleReportPDF = exportSingleReportPDF;
 
       initReportsDashboard();
-  })();
-</script>
+    })();
+  </script>
 </body>
+
 </html>

@@ -1,468 +1,564 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en"><head>
-<!-- SPA Layout Redirect Wrapper -->
-<script>
-  if (!document.getElementById('app-root')) {
-    const p = window.location.pathname;
-    const rel = '../';
-    window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
-  }
-</script>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Skill Management - Nichirin Admin</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Extended Theme Configuration -->
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "on-tertiary": "#ffffff",
-                        "on-surface-variant": "#43474e",
-                        "inverse-on-surface": "#f2f0f3",
-                        "background": "#faf9fc",
-                        "on-secondary": "#ffffff",
-                        "surface-bright": "#faf9fc",
-                        "surface-container-low": "#f4f3f6",
-                        "on-error": "#ffffff",
-                        "tertiary": "#110200",
-                        "outline": "#74777f",
-                        "surface-container-lowest": "#ffffff",
-                        "surface": "#faf9fc",
-                        "on-surface": "#1a1c1e",
-                        "secondary-container": "#7af2f2",
-                        "primary-container": "#001f3f",
-                        "on-primary-container": "#6f88ad",
-                        "on-error-container": "#93000a",
-                        "on-background": "#1a1c1e",
-                        "on-primary-fixed": "#001c3a",
-                        "surface-container-high": "#e9e7eb",
-                        "inverse-surface": "#2f3033",
-                        "inverse-primary": "#afc8f0",
-                        "surface-dim": "#dbd9dd",
-                        "on-secondary-container": "#006e6e",
-                        "surface-container-highest": "#e3e2e5",
-                        "outline-variant": "#c4c6cf",
-                        "secondary": "#006a6a",
-                        "on-primary": "#ffffff",
-                        "primary": "var(--color-primary, #c8102e)",
-                        "surface-tint": "#476083",
-                        "surface-variant": "#e3e2e5",
-                        "error": "#ba1a1a",
-                        "surface-container": "#efedf0",
-                        "error-container": "#ffdad6"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                    },
-                    "spacing": {
-                        "stack-gap-md": "16px",
-                        "sidebar-width": "260px",
-                        "header-height": "64px",
-                        "stack-gap-sm": "8px",
-                        "grid-gutter": "20px",
-                        "container-padding": "24px"
-                    },
-                    "fontFamily": {
-                        "headline-sm": ["Inter"],
-                        "label-bold": ["Inter"],
-                        "headline-md": ["Inter"],
-                        "body-md": ["Inter"],
-                        "body-lg": ["Inter"],
-                        "headline-lg": ["Inter"],
-                        "body-sm": ["Inter"],
-                        "data-tabular": ["Inter"]
-                    },
-                    "fontSize": {
-                        "headline-sm": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
-                        "label-bold": ["11px", {"lineHeight": "16px", "fontWeight": "700"}],
-                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                        "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
-                        "data-tabular": ["13px", {"lineHeight": "16px", "fontWeight": "500"}]
-                    }
-                }
-            }
+<html class="light" lang="en">
+
+<head>
+  <!-- SPA Layout Redirect Wrapper -->
+  <script>
+    if (!document.getElementById('app-root')) {
+      const p = window.location.pathname;
+      const rel = '../';
+      window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
+    }
+  </script>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Skill Management - Nichirin Admin</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <!-- Extended Theme Configuration -->
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary": "#ffffff",
+            "on-surface-variant": "#43474e",
+            "inverse-on-surface": "#f2f0f3",
+            "background": "#faf9fc",
+            "on-secondary": "#ffffff",
+            "surface-bright": "#faf9fc",
+            "surface-container-low": "#f4f3f6",
+            "on-error": "#ffffff",
+            "tertiary": "#110200",
+            "outline": "#74777f",
+            "surface-container-lowest": "#ffffff",
+            "surface": "#faf9fc",
+            "on-surface": "#1a1c1e",
+            "secondary-container": "#7af2f2",
+            "primary-container": "#001f3f",
+            "on-primary-container": "#6f88ad",
+            "on-error-container": "#93000a",
+            "on-background": "#1a1c1e",
+            "on-primary-fixed": "#001c3a",
+            "surface-container-high": "#e9e7eb",
+            "inverse-surface": "#2f3033",
+            "inverse-primary": "#afc8f0",
+            "surface-dim": "#dbd9dd",
+            "on-secondary-container": "#006e6e",
+            "surface-container-highest": "#e3e2e5",
+            "outline-variant": "#c4c6cf",
+            "secondary": "#006a6a",
+            "on-primary": "#ffffff",
+            "primary": "var(--color-primary, #c8102e)",
+            "surface-tint": "#476083",
+            "surface-variant": "#e3e2e5",
+            "error": "#ba1a1a",
+            "surface-container": "#efedf0",
+            "error-container": "#ffdad6"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "stack-gap-md": "16px",
+            "sidebar-width": "260px",
+            "header-height": "64px",
+            "stack-gap-sm": "8px",
+            "grid-gutter": "20px",
+            "container-padding": "24px"
+          },
+          "fontFamily": {
+            "headline-sm": ["Inter"],
+            "label-bold": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-sm": ["Inter"],
+            "data-tabular": ["Inter"]
+          },
+          "fontSize": {
+            "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "label-bold": ["11px", { "lineHeight": "16px", "fontWeight": "700" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "data-tabular": ["13px", { "lineHeight": "16px", "fontWeight": "500" }]
+          }
         }
-    </script>
-<style>
-        body { font-family: 'Inter', sans-serif; background-color: #faf9fc; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #c4c6cf; border-radius: 10px; }
-        
-        /* Strict checkbox theme coloring overriding Tailwind forms default blue */
-        input[type="checkbox"] {
-            color: #c8102e !important;
-        }
-        input[type="checkbox"]:focus {
-            --tw-ring-color: #c8102e !important;
-            border-color: #c8102e !important;
-        }
-    </style>
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #faf9fc;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #c4c6cf;
+      border-radius: 10px;
+    }
+
+    /* Strict checkbox theme coloring overriding Tailwind forms default blue */
+    input[type="checkbox"] {
+      color: #c8102e !important;
+    }
+
+    input[type="checkbox"]:focus {
+      --tw-ring-color: #c8102e !important;
+      border-color: #c8102e !important;
+    }
+  </style>
 </head>
+
 <body class="flex min-h-screen overflow-x-hidden">
-<!-- SideNavBar (Fallback) -->
-<aside class="fixed left-0 top-0 h-full w-[260px] bg-primary text-on-primary flex flex-col py-4 border-r border-outline-variant z-50">
-</aside>
-<!-- Main Content Area -->
-<main class="flex-1 ml-[260px] pt-[64px] min-h-screen">
-<!-- TopNavBar (Fallback) -->
-<header class="fixed top-0 right-0 h-[64px] w-[calc(100%-260px)] bg-surface flex justify-between items-center px-container-padding border-b border-outline-variant z-40">
-<div class="flex items-center gap-4">
-<nav class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
-<span class="">Plant</span>
-<span class="material-symbols-outlined text-[14px]">chevron_right</span>
-<span class="">Line A</span>
-<span class="material-symbols-outlined text-[14px]">chevron_right</span>
-<span class="text-primary font-bold border-b-2 border-primary pb-1">Skill Management</span>
-</nav>
-</div>
-</header>
-<!-- Page Canvas -->
-<div class="p-container-padding grid grid-cols-12 gap-6 bg-background">
-  <!-- Skill Management Header -->
-  <div class="col-span-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
-    <div>
-      <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Skill Management</h2>
-      <p class="font-body-md text-body-md text-on-surface-variant">Configure operator process skills, specify minimum qualification tiers, and track certified technicians.</p>
-    </div>
-    <button class="flex items-center justify-center gap-2 bg-primary text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm cursor-pointer w-full md:w-auto whitespace-nowrap" onclick="openAddSkillDrawer()">
-      <span class="material-symbols-outlined text-[18px]">verified</span>
-      Create Custom Skill
-    </button>
-  </div>
-
-  <!-- Horizontal Bento Summary Cards -->
-  <div class="col-span-12 grid grid-cols-1 md:grid-cols-2 gap-6 mb-2">
-    <!-- Card 1: TOTAL SKILLS -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
-      <div>
-        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Total Process Skills</p>
-        <p class="text-3xl font-bold text-primary" id="statTotalSkills">--</p>
+  <!-- SideNavBar (Fallback) -->
+  <aside
+    class="fixed left-0 top-0 h-full w-[260px] bg-primary text-on-primary flex flex-col py-4 border-r border-outline-variant z-50">
+  </aside>
+  <!-- Main Content Area -->
+  <main class="flex-1 ml-[260px] pt-[64px] min-h-screen">
+    <!-- TopNavBar (Fallback) -->
+    <header
+      class="fixed top-0 right-0 h-[64px] w-[calc(100%-260px)] bg-surface flex justify-between items-center px-container-padding border-b border-outline-variant z-40">
+      <div class="flex items-center gap-4">
+        <nav class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+          <span class="">Plant</span>
+          <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+          <span class="">Line A</span>
+          <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+          <span class="text-primary font-bold border-b-2 border-primary pb-1">Skill Management</span>
+        </nav>
       </div>
-      <span class="material-symbols-outlined text-[32px] text-primary">psychology</span>
-    </div>
-    <!-- Card 2: ACTIVE SKILLS -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
-      <div>
-        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Active Skills</p>
-        <p class="text-3xl font-bold text-slate-800" id="statActiveSkills">--</p>
-      </div>
-      <span class="material-symbols-outlined text-[32px] text-slate-600" style="font-variation-settings: 'FILL' 0;">check_circle</span>
-    </div>
-  </div>
-
-  <!-- Bento Layout: Skills List -->
-  <section class="col-span-12 bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm flex flex-col">
-    <div class="px-6 py-4 border-b border-outline-variant/30 flex flex-col sm:flex-row justify-between items-start sm:items-center bg-slate-50 gap-4">
-      <h3 class="font-headline-md text-headline-md text-primary">Process Operations Qualifications</h3>
-      <div class="flex items-center gap-3 w-full sm:w-auto">
-        <!-- Search Box -->
-        <div class="relative flex-1 sm:flex-initial sm:w-48">
-          <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
-          <input id="skillSearchInput" class="w-full bg-white border border-outline-variant/30 rounded-lg pl-8 pr-3 py-1 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-8" placeholder="Filter skills..." type="text" oninput="handleSkillSearch()"/>
-        </div>
-        <!-- Skill Status Filter -->
-        <select id="skillStatusFilter" class="bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-3 pr-8 py-1 font-semibold flex-1 sm:flex-initial sm:min-w-[150px] sm:w-auto" onchange="handleSkillStatusFilterChange()">
-          <option value="ALL">All Statuses</option>
-          <option value="Active">Active</option>
-          <option value="Inactive">Inactive</option>
-        </select>
-      </div>
-    </div>
-    
-    <!-- Table View Container -->
-    <div id="skillTableViewContainer" class="overflow-x-auto">
-      <table class="w-full text-left border-collapse whitespace-nowrap">
-        <thead>
-          <tr class="bg-white border-b border-outline-variant/30">
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Skill Code</th>
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Skill Name</th>
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Process Step</th>
-
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Status</th>
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-right">Action</th>
-          </tr>
-        </thead>
-        <tbody id="skillTableBody" class="divide-y divide-outline-variant/30">
-          <!-- Dynamically populated -->
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Pagination Footer -->
-    <div class="px-6 py-4 border-t border-outline-variant/30 flex flex-col sm:flex-row justify-between items-center gap-3 bg-slate-50 text-xs font-semibold text-on-surface-variant flex-shrink-0 select-none">
-      <div id="skillPaginationInfo" class="truncate whitespace-nowrap max-w-full" title="Showing 0 to 0 of 0 entries">Showing 0 to 0 of 0 entries</div>
-      <div class="flex items-center gap-2 flex-shrink-0">
-        <button id="skillPrevPageBtn" class="px-3 py-1.5 border border-outline-variant/30 bg-white rounded-lg hover:bg-slate-50 transition-colors cursor-pointer" onclick="changeSkillPage(-1)">Previous</button>
-        <div id="skillPageNumbers" class="flex gap-1.5">
-          <!-- Page numbers inserted dynamically -->
-        </div>
-        <button id="skillNextPageBtn" class="px-3 py-1.5 border border-outline-variant/30 bg-white rounded-lg hover:bg-slate-50 transition-colors cursor-pointer" onclick="changeSkillPage(1)">Next</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Slide-over Drawer for View Details (from Right, max-width 620px) -->
-  <div id="viewSkillModalBackdrop" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[90] transition-opacity duration-300 opacity-0" onclick="toggleViewSkillModal(false)"></div>
-  <div id="viewSkillModal" class="fixed top-0 right-0 h-full w-full max-w-[620px] bg-white z-[100] shadow-2xl border-l border-outline-variant/30 transform translate-x-full transition-transform duration-300 ease-out flex flex-col overflow-hidden">
-    <div class="bg-slate-50 px-6 py-5 border-b border-outline-variant/30 flex justify-between items-center flex-shrink-0">
-      <h3 class="font-headline-md text-headline-md text-primary">Process Operation Skill Profile</h3>
-      <button class="text-on-surface-variant hover:text-slate-900 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 cursor-pointer" onclick="toggleViewSkillModal(false)">
-        <span class="material-symbols-outlined text-[20px]">close</span>
-      </button>
-    </div>
-    
-    <div class="p-6 flex-1 overflow-y-auto space-y-6">
-      <!-- Header info with avatar icon -->
-      <div class="flex items-center gap-4 pb-5 border-b border-outline-variant/20">
-        <div class="w-16 h-16 rounded-full bg-rose-50 text-primary flex items-center justify-center font-bold text-2xl border border-rose-100 shrink-0">
-          <span class="material-symbols-outlined text-[32px]">workspace_premium</span>
-        </div>
+    </header>
+    <!-- Page Canvas -->
+    <div class="p-container-padding grid grid-cols-12 gap-6 bg-background">
+      <!-- Skill Management Header -->
+      <div class="col-span-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
         <div>
-          <h4 id="viewSkillName" class="font-bold text-xl text-slate-900 leading-tight">--</h4>
-          <span id="viewSkillCodeBadge" class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-[10px] font-bold mt-2 bg-slate-50 text-slate-700 border border-slate-200">--</span>
+          <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Skill Management</h2>
+          <p class="font-body-md text-body-md text-on-surface-variant">Configure operator process skills, specify
+            minimum qualification tiers, and track certified technicians.</p>
         </div>
+        <button
+          class="flex items-center justify-center gap-2 bg-primary text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm cursor-pointer w-full md:w-auto whitespace-nowrap"
+          onclick="openAddSkillDrawer()">
+          <span class="material-symbols-outlined text-[18px]">verified</span>
+          Create Custom Skill
+        </button>
       </div>
-      
-      <!-- Key Properties vertical mapping -->
-      <div class="space-y-4">
-        <div>
-          <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Process Step Reference</span>
-          <p id="viewSkillStep" class="text-slate-800 font-semibold text-sm">--</p>
-        </div>
 
-        <div>
-          <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Status</span>
-          <span id="viewSkillStatusBadge" class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold">--</span>
-        </div>
-        <div>
-          <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Skill Description</span>
-          <p id="viewSkillDescription" class="text-slate-700 font-medium leading-relaxed bg-slate-50 p-4 rounded-lg border border-slate-100 text-xs">--</p>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Drawer Footer (Fixed at absolute bottom) -->
-    <div class="bg-slate-50 p-4 border-t border-outline-variant/30 flex justify-end flex-shrink-0">
-      <button class="px-5 h-10 rounded-lg bg-primary text-white font-semibold text-sm shadow-sm hover:opacity-90 transition-all cursor-pointer" onclick="toggleViewSkillModal(false)">Close Profile</button>
-    </div>
-  </div>
-
-  <!-- Slide-over Drawer for Add/Edit (from Right, max-width 620px) -->
-  <div id="addSkillModalBackdrop" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[90] transition-opacity duration-300 opacity-0" onclick="toggleAddSkillModal(false)"></div>
-  <div id="addSkillModal" class="fixed top-0 right-0 h-full w-full max-w-[620px] bg-white z-[100] shadow-2xl border-l border-outline-variant/30 transform translate-x-full transition-transform duration-300 ease-out flex flex-col overflow-hidden">
-    <div class="bg-slate-50 px-6 py-5 border-b border-outline-variant/30 flex justify-between items-center flex-shrink-0">
-      <h3 class="font-headline-md text-headline-md text-primary" id="skillDrawerTitle">Create Custom Skill</h3>
-      <button class="text-on-surface-variant hover:text-primary transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 cursor-pointer" onclick="toggleAddSkillModal(false)">
-        <span class="material-symbols-outlined text-[20px]">close</span>
-      </button>
-    </div>
-    
-    <!-- Flex Container form to constrain scrolling area -->
-    <form class="flex-1 flex flex-col overflow-hidden h-full" onsubmit="saveSkill(event)">
-      <!-- Scrollable content area -->
-      <div class="flex-grow overflow-y-auto p-6 space-y-5">
-        
-        <!-- Form Fields Grid -->
-        <div class="grid grid-cols-2 gap-4">
-          <!-- Skill Code -->
-          <div class="col-span-2 space-y-1.5">
-            <label class="block text-xs font-bold uppercase text-slate-500">Skill Code</label>
-            <input id="drawerSkillCode" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white" placeholder="e.g. SKILL-CRIMP-01" type="text" required />
+      <!-- Horizontal Bento Summary Cards -->
+      <div class="col-span-12 grid grid-cols-1 sm:grid-cols-2 gap-6 mb-2">
+        <!-- Card 1: TOTAL SKILLS -->
+        <div
+          class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
+          <div>
+            <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Total Process Skills</p>
+            <p class="text-3xl font-bold text-primary" id="statTotalSkills">--</p>
           </div>
-          <!-- Skill Name -->
-          <div class="col-span-1 space-y-1.5">
-            <label class="block text-xs font-bold uppercase text-slate-500">Skill Name</label>
-            <input id="drawerSkillName" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white" placeholder="e.g. Fitting Hose Crimping" type="text" required />
+          <span class="material-symbols-outlined text-[32px] text-primary">psychology</span>
+        </div>
+        <!-- Card 2: ACTIVE SKILLS -->
+        <div
+          class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
+          <div>
+            <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Active Skills</p>
+            <p class="text-3xl font-bold text-slate-800" id="statActiveSkills">--</p>
           </div>
-          <!-- Process Step -->
-          <div class="col-span-1 space-y-1.5">
-            <label class="block text-xs font-bold uppercase text-slate-500">Process Step Reference</label>
-            <input id="drawerSkillStep" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white" placeholder="e.g. Crimping First" type="text" required />
-          </div>
+          <span class="material-symbols-outlined text-[32px] text-slate-600"
+            style="font-variation-settings: 'FILL' 0;">check_circle</span>
+        </div>
+      </div>
 
-          <!-- Status -->
-          <div class="col-span-2 space-y-1.5">
-            <label class="block text-xs font-bold uppercase text-slate-500">Status</label>
-            <select id="drawerSkillStatus" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white">
+      <!-- Bento Layout: Skills List -->
+      <section
+        class="col-span-12 bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm flex flex-col">
+        <div
+          class="px-6 py-4 border-b border-outline-variant/30 flex flex-col sm:flex-row justify-between items-start sm:items-center bg-slate-50 gap-4">
+          <h3 class="font-headline-md text-headline-md text-primary">Process Operations Qualifications</h3>
+          <div class="flex items-center gap-3 w-full sm:w-auto">
+            <!-- Search Box -->
+            <div class="relative flex-1 sm:flex-initial sm:w-48">
+              <span
+                class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
+              <input id="skillSearchInput"
+                class="w-full bg-white border border-outline-variant/30 rounded-lg pl-8 pr-3 py-1 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-8"
+                placeholder="Filter skills..." type="text" oninput="handleSkillSearch()" />
+            </div>
+            <!-- Skill Status Filter -->
+            <select id="skillStatusFilter"
+              class="bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-3 pr-8 py-1 font-semibold flex-1 sm:flex-initial sm:min-w-[150px] sm:w-auto"
+              onchange="handleSkillStatusFilterChange()">
+              <option value="ALL">All Status</option>
               <option value="Active">Active</option>
               <option value="Inactive">Inactive</option>
             </select>
           </div>
-          <!-- Description -->
-          <div class="col-span-2 space-y-1.5">
-            <label class="block text-xs font-bold uppercase text-slate-500">Skill Description</label>
-            <textarea id="drawerSkillDescription" rows="4" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm p-3 font-semibold placeholder-slate-400 bg-white" placeholder="Describe the step process limits, tolerances checking, and calibration requirements..." required></textarea>
+        </div>
+
+        <!-- Table View Container -->
+        <div id="skillTableViewContainer" class="overflow-x-auto">
+          <table class="w-full text-left border-collapse whitespace-nowrap">
+            <thead>
+              <tr class="bg-white border-b border-outline-variant/30">
+                <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Skill Code
+                </th>
+                <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Skill Name
+                </th>
+                <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Process
+                  Step</th>
+
+                <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Status</th>
+                <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-right">
+                  Action</th>
+              </tr>
+            </thead>
+            <tbody id="skillTableBody" class="divide-y divide-outline-variant/30">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination Footer -->
+        <div
+          class="px-6 py-4 border-t border-outline-variant/30 flex flex-col sm:flex-row justify-between items-center gap-3 bg-slate-50 text-xs font-semibold text-on-surface-variant flex-shrink-0 select-none">
+          <div id="skillPaginationInfo" class="truncate whitespace-nowrap max-w-full"
+            title="Showing 0 to 0 of 0 entries">Showing 0 to 0 of 0 entries</div>
+          <div class="flex items-center gap-2 flex-shrink-0">
+            <button id="skillPrevPageBtn"
+              class="px-3 py-1.5 border border-outline-variant/30 bg-white rounded-lg hover:bg-slate-50 transition-colors cursor-pointer"
+              onclick="changeSkillPage(-1)">Previous</button>
+            <div id="skillPageNumbers" class="flex gap-1.5">
+              <!-- Page numbers inserted dynamically -->
+            </div>
+            <button id="skillNextPageBtn"
+              class="px-3 py-1.5 border border-outline-variant/30 bg-white rounded-lg hover:bg-slate-50 transition-colors cursor-pointer"
+              onclick="changeSkillPage(1)">Next</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide-over Drawer for View Details (from Right, max-width 620px) -->
+      <div id="viewSkillModalBackdrop"
+        class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[90] transition-opacity duration-300 opacity-0"
+        onclick="toggleViewSkillModal(false)"></div>
+      <div id="viewSkillModal"
+        class="fixed top-0 right-0 h-full w-full max-w-[620px] bg-white z-[100] shadow-2xl border-l border-outline-variant/30 transform translate-x-full transition-transform duration-300 ease-out flex flex-col overflow-hidden">
+        <div
+          class="bg-slate-50 px-6 py-5 border-b border-outline-variant/30 flex justify-between items-center flex-shrink-0">
+          <h3 class="font-headline-md text-headline-md text-primary">Process Operation Skill Profile</h3>
+          <button
+            class="text-on-surface-variant hover:text-slate-900 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 cursor-pointer"
+            onclick="toggleViewSkillModal(false)">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+
+        <div class="p-6 flex-1 overflow-y-auto space-y-6">
+          <!-- Header info with avatar icon -->
+          <div class="flex items-center gap-4 pb-5 border-b border-outline-variant/20">
+            <div
+              class="w-16 h-16 rounded-full bg-rose-50 text-primary flex items-center justify-center font-bold text-2xl border border-rose-100 shrink-0">
+              <span class="material-symbols-outlined text-[32px]">workspace_premium</span>
+            </div>
+            <div>
+              <h4 id="viewSkillName" class="font-bold text-xl text-slate-900 leading-tight">--</h4>
+              <span id="viewSkillCodeBadge"
+                class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-[10px] font-bold mt-2 bg-slate-50 text-slate-700 border border-slate-200">--</span>
+            </div>
+          </div>
+
+          <!-- Key Properties vertical mapping -->
+          <div class="space-y-4">
+            <div>
+              <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Process Step
+                Reference</span>
+              <p id="viewSkillStep" class="text-slate-800 font-semibold text-sm">--</p>
+            </div>
+
+            <div>
+              <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Status</span>
+              <span id="viewSkillStatusBadge"
+                class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold">--</span>
+            </div>
+            <div>
+              <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Skill
+                Description</span>
+              <p id="viewSkillDescription"
+                class="text-slate-700 font-medium leading-relaxed bg-slate-50 p-4 rounded-lg border border-slate-100 text-xs">
+                --</p>
+            </div>
           </div>
         </div>
 
+        <!-- Drawer Footer (Fixed at absolute bottom) -->
+        <div class="bg-slate-50 p-4 border-t border-outline-variant/30 flex justify-end flex-shrink-0">
+          <button
+            class="px-5 h-10 rounded-lg bg-primary text-white font-semibold text-sm shadow-sm hover:opacity-90 transition-all cursor-pointer"
+            onclick="toggleViewSkillModal(false)">Close Profile</button>
+        </div>
       </div>
-      
-      <!-- Footer Buttons (Statically positioned at absolute bottom, outside scroll area) -->
-      <div class="bg-slate-50 p-4 border-t border-outline-variant/30 flex justify-end gap-3 flex-shrink-0 select-none z-20">
-        <button class="px-5 h-10 rounded-lg font-semibold text-sm text-slate-600 hover:bg-slate-100 transition-colors" onclick="toggleAddSkillModal(false)" type="button">Cancel</button>
-        <button class="px-6 h-10 rounded-lg bg-primary text-white font-semibold text-sm shadow-sm hover:opacity-95 transition-all cursor-pointer" type="submit" id="skillSubmitBtnText">Save Skill</button>
+
+      <!-- Slide-over Drawer for Add/Edit (from Right, max-width 620px) -->
+      <div id="addSkillModalBackdrop"
+        class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[90] transition-opacity duration-300 opacity-0"
+        onclick="toggleAddSkillModal(false)"></div>
+      <div id="addSkillModal"
+        class="fixed top-0 right-0 h-full w-full max-w-[620px] bg-white z-[100] shadow-2xl border-l border-outline-variant/30 transform translate-x-full transition-transform duration-300 ease-out flex flex-col overflow-hidden">
+        <div
+          class="bg-slate-50 px-6 py-5 border-b border-outline-variant/30 flex justify-between items-center flex-shrink-0">
+          <h3 class="font-headline-md text-headline-md text-primary" id="skillDrawerTitle">Create Custom Skill</h3>
+          <button
+            class="text-on-surface-variant hover:text-primary transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 cursor-pointer"
+            onclick="toggleAddSkillModal(false)">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+
+        <!-- Flex Container form to constrain scrolling area -->
+        <form class="flex-1 flex flex-col overflow-hidden h-full" onsubmit="saveSkill(event)">
+          <!-- Scrollable content area -->
+          <div class="flex-grow overflow-y-auto p-6 space-y-5">
+
+            <!-- Form Fields Grid -->
+            <div class="grid grid-cols-2 gap-4">
+              <!-- Skill Code -->
+              <div class="col-span-2 space-y-1.5">
+                <label class="block text-xs font-bold uppercase text-slate-500">Skill Code</label>
+                <input id="drawerSkillCode"
+                  class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white"
+                  placeholder="e.g. SKILL-CRIMP-01" type="text" required />
+              </div>
+              <!-- Skill Name -->
+              <div class="col-span-2 sm:col-span-1 space-y-1.5">
+                <label class="block text-xs font-bold uppercase text-slate-500">Skill Name</label>
+                <input id="drawerSkillName"
+                  class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white"
+                  placeholder="e.g. Fitting Hose Crimping" type="text" required />
+              </div>
+              <!-- Process Step -->
+              <div class="col-span-2 sm:col-span-1 space-y-1.5">
+                <label class="block text-xs font-bold uppercase text-slate-500">Process Step Reference</label>
+                <input id="drawerSkillStep"
+                  class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white"
+                  placeholder="e.g. Crimping First" type="text" required />
+              </div>
+
+              <!-- Status -->
+              <div class="col-span-2 space-y-1.5">
+                <label class="block text-xs font-bold uppercase text-slate-500">Status</label>
+                <select id="drawerSkillStatus"
+                  class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white">
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                </select>
+              </div>
+              <!-- Description -->
+              <div class="col-span-2 space-y-1.5">
+                <label class="block text-xs font-bold uppercase text-slate-500">Skill Description</label>
+                <textarea id="drawerSkillDescription" rows="4"
+                  class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm p-3 font-semibold placeholder-slate-400 bg-white"
+                  placeholder="Describe the step process limits, tolerances checking, and calibration requirements..."
+                  required></textarea>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Footer Buttons (Statically positioned at absolute bottom, outside scroll area) -->
+          <div
+            class="bg-slate-50 p-4 border-t border-outline-variant/30 flex justify-end gap-3 flex-shrink-0 select-none z-20">
+            <button
+              class="px-5 h-10 rounded-lg font-semibold text-sm text-slate-600 hover:bg-slate-100 transition-colors"
+              onclick="toggleAddSkillModal(false)" type="button">Cancel</button>
+            <button
+              class="px-6 h-10 rounded-lg bg-primary text-white font-semibold text-sm shadow-sm hover:opacity-95 transition-all cursor-pointer"
+              type="submit" id="skillSubmitBtnText">Save Skill</button>
+          </div>
+        </form>
       </div>
-    </form>
-  </div>
 
-  <!-- Custom Delete Confirmation Modal (Centered popup) -->
-  <div id="deleteConfirmModalBackdrop" class="hidden fixed inset-0 bg-black/45 backdrop-blur-sm z-[110] transition-opacity duration-300 opacity-0" onclick="closeDeleteConfirmModal()"></div>
-  <div id="deleteConfirmModal" class="hidden fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-white rounded-xl shadow-2xl border border-outline-variant/30 z-[120] transform scale-95 opacity-0 transition-all duration-300 p-6">
-    <div class="flex items-start gap-4">
-      <div class="w-10 h-10 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center shrink-0 border border-rose-100">
-        <span class="material-symbols-outlined text-[22px]">warning</span>
+      <!-- Custom Delete Confirmation Modal (Centered popup) -->
+      <div id="deleteConfirmModalBackdrop"
+        class="hidden fixed inset-0 bg-black/45 backdrop-blur-sm z-[110] transition-opacity duration-300 opacity-0"
+        onclick="closeDeleteConfirmModal()"></div>
+      <div id="deleteConfirmModal"
+        class="hidden fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-white rounded-xl shadow-2xl border border-outline-variant/30 z-[120] transform scale-95 opacity-0 transition-all duration-300 p-6">
+        <div class="flex items-start gap-4">
+          <div
+            class="w-10 h-10 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center shrink-0 border border-rose-100">
+            <span class="material-symbols-outlined text-[22px]">warning</span>
+          </div>
+          <div class="space-y-1.5 flex-1">
+            <h4 class="font-headline-sm text-headline-sm text-slate-900" id="deleteConfirmTitle">Delete custom skill?
+            </h4>
+            <p class="text-xs text-on-surface-variant leading-relaxed font-medium" id="deleteConfirmMessage">Are you
+              sure you want to permanently delete this skill? This action cannot be undone and will erase certification
+              mappings.</p>
+          </div>
+        </div>
+        <div class="mt-6 flex justify-end gap-3 pt-3 border-t border-slate-100 select-none">
+          <button class="px-4 h-9 rounded-lg font-semibold text-xs text-slate-600 hover:bg-slate-100 transition-colors"
+            onclick="closeDeleteConfirmModal()">Cancel</button>
+          <button
+            class="px-5 h-9 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs shadow-sm transition-all cursor-pointer"
+            id="confirmDeleteBtn">Yes, Delete Skill</button>
+        </div>
       </div>
-      <div class="space-y-1.5 flex-1">
-        <h4 class="font-headline-sm text-headline-sm text-slate-900" id="deleteConfirmTitle">Delete custom skill?</h4>
-        <p class="text-xs text-on-surface-variant leading-relaxed font-medium" id="deleteConfirmMessage">Are you sure you want to permanently delete this skill? This action cannot be undone and will erase certification mappings.</p>
+
+      <div id="skillToast"
+        class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 ease-out z-[100] border border-slate-800 text-sm">
+        <span class="material-symbols-outlined text-emerald-400">check_circle</span>
+        <span id="skillToastMessage">Changes successfully saved!</span>
       </div>
-    </div>
-    <div class="mt-6 flex justify-end gap-3 pt-3 border-t border-slate-100 select-none">
-      <button class="px-4 h-9 rounded-lg font-semibold text-xs text-slate-600 hover:bg-slate-100 transition-colors" onclick="closeDeleteConfirmModal()">Cancel</button>
-      <button class="px-5 h-9 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs shadow-sm transition-all cursor-pointer" id="confirmDeleteBtn">Yes, Delete Skill</button>
-    </div>
-  </div>
 
-  <div id="skillToast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 ease-out z-[100] border border-slate-800 text-sm">
-    <span class="material-symbols-outlined text-emerald-400">check_circle</span>
-    <span id="skillToastMessage">Changes successfully saved!</span>
-  </div>
+      <script>
+          (function () {
+            let skillsList = [];
+            let currentSkillPage = 1;
+            const skillPageSize = 5;
+            let skillFilterQuery = '';
+            let skillSelectedStatus = 'ALL';
+            let skillToDeleteCode = null;
 
-  <script>
-    (function() {
-      let skillsList = [];
-      let currentSkillPage = 1;
-      const skillPageSize = 5;
-      let skillFilterQuery = '';
-      let skillSelectedStatus = 'ALL';
-      let skillToDeleteCode = null;
+            // Fetch or read skill configurations
+            async function fetchSkills() {
+              try {
+                // Try loading from localStorage first
+                const localSkills = localStorage.getItem('skillsList');
+                let loadedFromLocal = false;
 
-      // Fetch or read skill configurations
-      async function fetchSkills() {
-          try {
-              // Try loading from localStorage first
-              const localSkills = localStorage.getItem('skillsList');
-              let loadedFromLocal = false;
-
-              if (localSkills) {
+                if (localSkills) {
                   try {
-                      const parsed = JSON.parse(localSkills);
-                      if (parsed && parsed.length > 0 && parsed[0].skillCode && !parsed[0].hasOwnProperty('minCertLevel')) {
-                          skillsList = parsed;
-                          loadedFromLocal = true;
-                      }
+                    const parsed = JSON.parse(localSkills);
+                    if (parsed && parsed.length > 0 && parsed[0].skillCode && !parsed[0].hasOwnProperty('minCertLevel')) {
+                      skillsList = parsed;
+                      loadedFromLocal = true;
+                    }
                   } catch (e) {
-                      console.warn("Outdated or corrupt local skills database. Re-initializing...");
+                    console.warn("Outdated or corrupt local skills database. Re-initializing...");
                   }
-              }
+                }
 
-              if (!loadedFromLocal) {
+                if (!loadedFromLocal) {
                   // Fetch default json
                   let jsonPath = './skills.json';
                   if (!window.location.pathname.includes('/skill-management/')) {
-                      jsonPath = 'skill-management/skills.json';
+                    jsonPath = 'skill-management/skills.json';
                   }
                   const res = await fetch(jsonPath);
                   if (!res.ok) throw new Error('Could not fetch default skills database');
                   skillsList = await res.json();
                   localStorage.setItem('skillsList', JSON.stringify(skillsList));
+                }
+                renderSkills();
+              } catch (e) {
+                console.error(e);
+                showSkillToast('Error loading process skill configurations.');
               }
-              renderSkills();
-          } catch(e) {
-              console.error(e);
-              showSkillToast('Error loading process skill configurations.');
-          }
-      }
+            }
 
-      // Calculations, metrics and table updates
-      function renderSkills() {
-          // stats bento counts
-          const totalCount = skillsList.length;
-          const activeCount = skillsList.filter(s => s.status === 'Active').length;
+            // Calculations, metrics and table updates
+            function renderSkills() {
+              // stats bento counts
+              const totalCount = skillsList.length;
+              const activeCount = skillsList.filter(s => s.status === 'Active').length;
 
-          document.getElementById('statTotalSkills').textContent = totalCount;
-          document.getElementById('statActiveSkills').textContent = activeCount;
+              document.getElementById('statTotalSkills').textContent = totalCount;
+              document.getElementById('statActiveSkills').textContent = activeCount;
 
-          // filters
-          const query = skillFilterQuery.toLowerCase().trim();
-          const filtered = skillsList.filter(s => {
-              const matchesSearch = s.skillCode.toLowerCase().includes(query) ||
-                                    s.skillName.toLowerCase().includes(query) ||
-                                    s.processStep.toLowerCase().includes(query) ||
-                                    s.description.toLowerCase().includes(query);
-                                    
-              let matchesStatus = true;
-              if (skillSelectedStatus !== 'ALL') {
+              // filters
+              const query = skillFilterQuery.toLowerCase().trim();
+              const filtered = skillsList.filter(s => {
+                const matchesSearch = s.skillCode.toLowerCase().includes(query) ||
+                  s.skillName.toLowerCase().includes(query) ||
+                  s.processStep.toLowerCase().includes(query) ||
+                  s.description.toLowerCase().includes(query);
+
+                let matchesStatus = true;
+                if (skillSelectedStatus !== 'ALL') {
                   matchesStatus = s.status === skillSelectedStatus;
+                }
+
+                return matchesSearch && matchesStatus;
+              });
+
+              // slice
+              const totalFiltered = filtered.length;
+              const totalPages = Math.ceil(totalFiltered / skillPageSize) || 1;
+
+              if (currentSkillPage > totalPages) currentSkillPage = totalPages;
+              if (currentSkillPage < 1) currentSkillPage = 1;
+
+              const startIdx = (currentSkillPage - 1) * skillPageSize;
+              const endIdx = Math.min(startIdx + skillPageSize, totalFiltered);
+              const paginated = filtered.slice(startIdx, endIdx);
+
+              // Update ranges
+              const rangeInfo = totalFiltered > 0
+                ? `Showing ${startIdx + 1} to ${endIdx} of ${totalFiltered} entries`
+                : 'Showing 0 to 0 of 0 entries';
+              const infoEl = document.getElementById('skillPaginationInfo');
+              if (infoEl) {
+                infoEl.textContent = rangeInfo;
+                infoEl.setAttribute('title', rangeInfo);
               }
 
-              return matchesSearch && matchesStatus;
-          });
+              renderSkillPageNumbers(totalPages);
+              renderSkillTableRows(paginated);
+            }
 
-          // slice
-          const totalFiltered = filtered.length;
-          const totalPages = Math.ceil(totalFiltered / skillPageSize) || 1;
+            function renderSkillTableRows(items) {
+              const tbody = document.getElementById('skillTableBody');
+              tbody.innerHTML = '';
 
-          if (currentSkillPage > totalPages) currentSkillPage = totalPages;
-          if (currentSkillPage < 1) currentSkillPage = 1;
-
-          const startIdx = (currentSkillPage - 1) * skillPageSize;
-          const endIdx = Math.min(startIdx + skillPageSize, totalFiltered);
-          const paginated = filtered.slice(startIdx, endIdx);
-
-          // Update ranges
-          const rangeInfo = totalFiltered > 0
-              ? `Showing ${startIdx + 1} to ${endIdx} of ${totalFiltered} entries`
-              : 'Showing 0 to 0 of 0 entries';
-          const infoEl = document.getElementById('skillPaginationInfo');
-          if (infoEl) {
-              infoEl.textContent = rangeInfo;
-              infoEl.setAttribute('title', rangeInfo);
-          }
-
-          renderSkillPageNumbers(totalPages);
-          renderSkillTableRows(paginated);
-      }
-
-      function renderSkillTableRows(items) {
-          const tbody = document.getElementById('skillTableBody');
-          tbody.innerHTML = '';
-
-          if (items.length === 0) {
-              tbody.innerHTML = `
+              if (items.length === 0) {
+                tbody.innerHTML = `
                   <tr>
                       <td colspan="5" class="px-6 py-12 text-center text-on-surface-variant font-medium">
                           No skills matched search filters.
                       </td>
                   </tr>
               `;
-              return;
-          }
+                return;
+              }
 
-          items.forEach(s => {
-              const tr = document.createElement('tr');
-              tr.className = 'hover:bg-slate-50/50 transition-colors group';
+              items.forEach(s => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50/50 transition-colors group';
 
-              // status badge style
-              const statusBadge = s.status === 'Active'
+                // status badge style
+                const statusBadge = s.status === 'Active'
                   ? `<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/50"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>Active</span>`
                   : `<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-500 border border-slate-200"><span class="w-1.5 h-1.5 rounded-full bg-slate-400 mr-1.5"></span>Inactive</span>`;
 
-              tr.innerHTML = `
+                tr.innerHTML = `
                   <td class="px-6 py-4 font-bold text-slate-900 font-data-tabular text-data-tabular">
                       <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold border bg-slate-50 border-slate-200 text-slate-700">${s.skillCode}</span>
                   </td>
@@ -483,259 +579,261 @@
                       </div>
                   </td>
               `;
-              tbody.appendChild(tr);
-          });
-      }
+                tbody.appendChild(tr);
+              });
+            }
 
-      function renderSkillPageNumbers(totalPages) {
-          const wrapper = document.getElementById('skillPageNumbers');
-          wrapper.innerHTML = '';
+            function renderSkillPageNumbers(totalPages) {
+              const wrapper = document.getElementById('skillPageNumbers');
+              wrapper.innerHTML = '';
 
-          document.getElementById('skillPrevPageBtn').disabled = currentSkillPage === 1;
-          document.getElementById('skillNextPageBtn').disabled = currentSkillPage === totalPages;
+              document.getElementById('skillPrevPageBtn').disabled = currentSkillPage === 1;
+              document.getElementById('skillNextPageBtn').disabled = currentSkillPage === totalPages;
 
-          for (let i = 1; i <= totalPages; i++) {
-              const btn = document.createElement('button');
-              btn.className = i === currentSkillPage
+              for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.className = i === currentSkillPage
                   ? 'px-3 py-1 bg-primary text-white border border-primary rounded-lg text-xs font-bold transition-all shadow-sm'
                   : 'px-3 py-1 border border-outline-variant/30 bg-white hover:bg-slate-50 rounded-lg text-xs transition-colors cursor-pointer';
-              btn.textContent = i;
-              btn.onclick = () => {
+                btn.textContent = i;
+                btn.onclick = () => {
                   currentSkillPage = i;
                   renderSkills();
-              };
-              wrapper.appendChild(btn);
-          }
-      }
+                };
+                wrapper.appendChild(btn);
+              }
+            }
 
-      function changeSkillPage(dir) {
-          currentSkillPage += dir;
-          renderSkills();
-      }
-
-      // Live searches
-      function handleSkillSearch() {
-          skillFilterQuery = document.getElementById('skillSearchInput').value;
-          currentSkillPage = 1;
-          renderSkills();
-      }
-
-      function handleSkillStatusFilterChange() {
-          skillSelectedStatus = document.getElementById('skillStatusFilter').value;
-          currentSkillPage = 1;
-          renderSkills();
-      }
-
-      // Slide-over Drawer animation controls (from Right side, using translate-x-full classes)
-      function toggleAddSkillModal(isOpen) {
-          const backdrop = document.getElementById('addSkillModalBackdrop');
-          const drawer = document.getElementById('addSkillModal');
-          if (isOpen) {
-              backdrop.classList.remove('hidden');
-              setTimeout(() => {
-                  backdrop.classList.add('opacity-100');
-                  drawer.classList.remove('translate-x-full');
-              }, 50);
-          } else {
-              backdrop.classList.remove('opacity-100');
-              drawer.classList.add('translate-x-full');
-              setTimeout(() => {
-                  backdrop.classList.add('hidden');
-              }, 300);
-          }
-      }
-
-      function toggleViewSkillModal(isOpen) {
-          const backdrop = document.getElementById('viewSkillModalBackdrop');
-          const drawer = document.getElementById('viewSkillModal');
-          if (isOpen) {
-              backdrop.classList.remove('hidden');
-              setTimeout(() => {
-                  backdrop.classList.add('opacity-100');
-                  drawer.classList.remove('translate-x-full');
-              }, 50);
-          } else {
-              backdrop.classList.remove('opacity-100');
-              drawer.classList.add('translate-x-full');
-              setTimeout(() => {
-                  backdrop.classList.add('hidden');
-              }, 300);
-          }
-      }
-      function openViewSkillDrawer(skillCode) {
-          const s = skillsList.find(x => x.skillCode.toUpperCase() === skillCode.toUpperCase());
-          if (!s) return;
-
-          document.getElementById('viewSkillName').textContent = s.skillName;
-          document.getElementById('viewSkillCodeBadge').textContent = s.skillCode;
-          document.getElementById('viewSkillStep').textContent = s.processStep;
-          document.getElementById('viewSkillDescription').textContent = s.description;
-
-          const statusBadge = document.getElementById('viewSkillStatusBadge');
-          statusBadge.textContent = s.status;
-          statusBadge.className = s.status === 'Active'
-              ? 'inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200'
-              : 'inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-500 border border-slate-200';
-
-          toggleViewSkillModal(true);
-      }
-
-      function openAddSkillDrawer() {
-          document.getElementById('skillDrawerTitle').textContent = 'Create Custom Skill';
-          document.getElementById('skillSubmitBtnText').textContent = 'Save Skill';
-          
-          const codeInput = document.getElementById('drawerSkillCode');
-          codeInput.value = '';
-          codeInput.readOnly = false;
-          codeInput.classList.remove('bg-slate-50', 'text-slate-500');
-
-          document.getElementById('drawerSkillName').value = '';
-          document.getElementById('drawerSkillStep').value = '';
-          document.getElementById('drawerSkillStatus').value = 'Active';
-          document.getElementById('drawerSkillDescription').value = '';
-
-          toggleAddSkillModal(true);
-      }
-
-      function openEditSkillDrawer(skillCode) {
-          const s = skillsList.find(x => x.skillCode.toUpperCase() === skillCode.toUpperCase());
-          if (!s) return;
-
-          document.getElementById('skillDrawerTitle').textContent = 'Edit Skill Details';
-          document.getElementById('skillSubmitBtnText').textContent = 'Save Changes';
-
-          const codeInput = document.getElementById('drawerSkillCode');
-          codeInput.value = s.skillCode;
-          codeInput.readOnly = true;
-          codeInput.classList.add('bg-slate-50', 'text-slate-500');
-
-          document.getElementById('drawerSkillName').value = s.skillName;
-          document.getElementById('drawerSkillStep').value = s.processStep;
-          document.getElementById('drawerSkillStatus').value = s.status;
-          document.getElementById('drawerSkillDescription').value = s.description;
-
-          toggleAddSkillModal(true);
-      }
-
-      // Save custom skill details (Add / Edit)
-      function saveSkill(e) {
-          e.preventDefault();
-          const skillCode = document.getElementById('drawerSkillCode').value.toUpperCase().replace(/\s+/g, '_');
-          const skillName = document.getElementById('drawerSkillName').value;
-          const processStep = document.getElementById('drawerSkillStep').value;
-          const status = document.getElementById('drawerSkillStatus').value;
-          const description = document.getElementById('drawerSkillDescription').value;
-
-          const existingIdx = skillsList.findIndex(s => s.skillCode.toUpperCase() === skillCode.toUpperCase());
-
-          if (existingIdx > -1) {
-              // Edit existing
-              skillsList[existingIdx] = { skillCode, skillName, processStep, status, description };
-              showSkillToast(`Skill details for ${skillName} updated successfully.`);
-          } else {
-              // Register new
-              skillsList.unshift({ skillCode, skillName, processStep, status, description });
-              showSkillToast(`Process qualification skill ${skillName} created successfully.`);
-          }
-
-          localStorage.setItem('skillsList', JSON.stringify(skillsList));
-          toggleAddSkillModal(false);
-          renderSkills();
-      }
-      // Trigger custom warning modal for skill deletions
-      function deleteSkill(skillCode) {
-          const s = skillsList.find(x => x.skillCode.toUpperCase() === skillCode.toUpperCase());
-          if (!s) return;
-
-          skillToDeleteCode = skillCode;
-          document.getElementById('deleteConfirmTitle').textContent = `Delete Skill: ${s.skillName}?`;
-          document.getElementById('deleteConfirmMessage').innerHTML = `Are you sure you want to permanently delete the process skill <strong class="text-slate-900">${s.skillCode}</strong>? This action cannot be undone and will revoke operator certification logs.`;
-
-          // Bind trigger callback to click
-          document.getElementById('confirmDeleteBtn').onclick = () => executeDeleteSkill();
-
-          toggleDeleteConfirmModal(true);
-      }
-
-      function executeDeleteSkill() {
-          if (!skillToDeleteCode) return;
-          const idx = skillsList.findIndex(s => s.skillCode.toUpperCase() === skillToDeleteCode.toUpperCase());
-          if (idx > -1) {
-              const skillName = skillsList[idx].skillName;
-              skillsList.splice(idx, 1);
-              localStorage.setItem('skillsList', JSON.stringify(skillsList));
-              showSkillToast(`Skill definition ${skillName} has been deleted.`);
+            function changeSkillPage(dir) {
+              currentSkillPage += dir;
               renderSkills();
-          }
-          toggleDeleteConfirmModal(false);
-      }
+            }
 
-      function toggleDeleteConfirmModal(isOpen) {
-          const backdrop = document.getElementById('deleteConfirmModalBackdrop');
-          const modal = document.getElementById('deleteConfirmModal');
-          if (isOpen) {
-              backdrop.classList.remove('hidden');
-              modal.classList.remove('hidden');
-              setTimeout(() => {
+            // Live searches
+            function handleSkillSearch() {
+              skillFilterQuery = document.getElementById('skillSearchInput').value;
+              currentSkillPage = 1;
+              renderSkills();
+            }
+
+            function handleSkillStatusFilterChange() {
+              skillSelectedStatus = document.getElementById('skillStatusFilter').value;
+              currentSkillPage = 1;
+              renderSkills();
+            }
+
+            // Slide-over Drawer animation controls (from Right side, using translate-x-full classes)
+            function toggleAddSkillModal(isOpen) {
+              const backdrop = document.getElementById('addSkillModalBackdrop');
+              const drawer = document.getElementById('addSkillModal');
+              if (isOpen) {
+                backdrop.classList.remove('hidden');
+                setTimeout(() => {
+                  backdrop.classList.add('opacity-100');
+                  drawer.classList.remove('translate-x-full');
+                }, 50);
+              } else {
+                backdrop.classList.remove('opacity-100');
+                drawer.classList.add('translate-x-full');
+                setTimeout(() => {
+                  backdrop.classList.add('hidden');
+                }, 300);
+              }
+            }
+
+            function toggleViewSkillModal(isOpen) {
+              const backdrop = document.getElementById('viewSkillModalBackdrop');
+              const drawer = document.getElementById('viewSkillModal');
+              if (isOpen) {
+                backdrop.classList.remove('hidden');
+                setTimeout(() => {
+                  backdrop.classList.add('opacity-100');
+                  drawer.classList.remove('translate-x-full');
+                }, 50);
+              } else {
+                backdrop.classList.remove('opacity-100');
+                drawer.classList.add('translate-x-full');
+                setTimeout(() => {
+                  backdrop.classList.add('hidden');
+                }, 300);
+              }
+            }
+            function openViewSkillDrawer(skillCode) {
+              const s = skillsList.find(x => x.skillCode.toUpperCase() === skillCode.toUpperCase());
+              if (!s) return;
+
+              document.getElementById('viewSkillName').textContent = s.skillName;
+              document.getElementById('viewSkillCodeBadge').textContent = s.skillCode;
+              document.getElementById('viewSkillStep').textContent = s.processStep;
+              document.getElementById('viewSkillDescription').textContent = s.description;
+
+              const statusBadge = document.getElementById('viewSkillStatusBadge');
+              statusBadge.textContent = s.status;
+              statusBadge.className = s.status === 'Active'
+                ? 'inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200'
+                : 'inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-500 border border-slate-200';
+
+              toggleViewSkillModal(true);
+            }
+
+            function openAddSkillDrawer() {
+              document.getElementById('skillDrawerTitle').textContent = 'Create Custom Skill';
+              document.getElementById('skillSubmitBtnText').textContent = 'Save Skill';
+
+              const codeInput = document.getElementById('drawerSkillCode');
+              codeInput.value = '';
+              codeInput.readOnly = false;
+              codeInput.classList.remove('bg-slate-50', 'text-slate-500');
+
+              document.getElementById('drawerSkillName').value = '';
+              document.getElementById('drawerSkillStep').value = '';
+              document.getElementById('drawerSkillStatus').value = 'Active';
+              document.getElementById('drawerSkillDescription').value = '';
+
+              toggleAddSkillModal(true);
+            }
+
+            function openEditSkillDrawer(skillCode) {
+              const s = skillsList.find(x => x.skillCode.toUpperCase() === skillCode.toUpperCase());
+              if (!s) return;
+
+              document.getElementById('skillDrawerTitle').textContent = 'Edit Skill Details';
+              document.getElementById('skillSubmitBtnText').textContent = 'Save Changes';
+
+              const codeInput = document.getElementById('drawerSkillCode');
+              codeInput.value = s.skillCode;
+              codeInput.readOnly = true;
+              codeInput.classList.add('bg-slate-50', 'text-slate-500');
+
+              document.getElementById('drawerSkillName').value = s.skillName;
+              document.getElementById('drawerSkillStep').value = s.processStep;
+              document.getElementById('drawerSkillStatus').value = s.status;
+              document.getElementById('drawerSkillDescription').value = s.description;
+
+              toggleAddSkillModal(true);
+            }
+
+            // Save custom skill details (Add / Edit)
+            function saveSkill(e) {
+              e.preventDefault();
+              const skillCode = document.getElementById('drawerSkillCode').value.toUpperCase().replace(/\s+/g, '_');
+              const skillName = document.getElementById('drawerSkillName').value;
+              const processStep = document.getElementById('drawerSkillStep').value;
+              const status = document.getElementById('drawerSkillStatus').value;
+              const description = document.getElementById('drawerSkillDescription').value;
+
+              const existingIdx = skillsList.findIndex(s => s.skillCode.toUpperCase() === skillCode.toUpperCase());
+
+              if (existingIdx > -1) {
+                // Edit existing
+                skillsList[existingIdx] = { skillCode, skillName, processStep, status, description };
+                showSkillToast(`Skill details for ${skillName} updated successfully.`);
+              } else {
+                // Register new
+                skillsList.unshift({ skillCode, skillName, processStep, status, description });
+                showSkillToast(`Process qualification skill ${skillName} created successfully.`);
+              }
+
+              localStorage.setItem('skillsList', JSON.stringify(skillsList));
+              toggleAddSkillModal(false);
+              renderSkills();
+            }
+            // Trigger custom warning modal for skill deletions
+            function deleteSkill(skillCode) {
+              const s = skillsList.find(x => x.skillCode.toUpperCase() === skillCode.toUpperCase());
+              if (!s) return;
+
+              skillToDeleteCode = skillCode;
+              document.getElementById('deleteConfirmTitle').textContent = `Delete Skill: ${s.skillName}?`;
+              document.getElementById('deleteConfirmMessage').innerHTML = `Are you sure you want to permanently delete the process skill <strong class="text-slate-900">${s.skillCode}</strong>? This action cannot be undone and will revoke operator certification logs.`;
+
+              // Bind trigger callback to click
+              document.getElementById('confirmDeleteBtn').onclick = () => executeDeleteSkill();
+
+              toggleDeleteConfirmModal(true);
+            }
+
+            function executeDeleteSkill() {
+              if (!skillToDeleteCode) return;
+              const idx = skillsList.findIndex(s => s.skillCode.toUpperCase() === skillToDeleteCode.toUpperCase());
+              if (idx > -1) {
+                const skillName = skillsList[idx].skillName;
+                skillsList.splice(idx, 1);
+                localStorage.setItem('skillsList', JSON.stringify(skillsList));
+                showSkillToast(`Skill definition ${skillName} has been deleted.`);
+                renderSkills();
+              }
+              toggleDeleteConfirmModal(false);
+            }
+
+            function toggleDeleteConfirmModal(isOpen) {
+              const backdrop = document.getElementById('deleteConfirmModalBackdrop');
+              const modal = document.getElementById('deleteConfirmModal');
+              if (isOpen) {
+                backdrop.classList.remove('hidden');
+                modal.classList.remove('hidden');
+                setTimeout(() => {
                   backdrop.classList.add('opacity-100');
                   modal.classList.remove('scale-95', 'opacity-0');
                   modal.classList.add('scale-100', 'opacity-100');
-              }, 50);
-          } else {
-              backdrop.classList.remove('opacity-100');
-              modal.classList.remove('scale-100', 'opacity-100');
-              modal.classList.add('scale-95', 'opacity-0');
-              setTimeout(() => {
+                }, 50);
+              } else {
+                backdrop.classList.remove('opacity-100');
+                modal.classList.remove('scale-100', 'opacity-100');
+                modal.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
                   backdrop.classList.add('hidden');
                   modal.classList.add('hidden');
-              }, 300);
-              skillToDeleteCode = null;
-          }
-      }
+                }, 300);
+                skillToDeleteCode = null;
+              }
+            }
 
-      function closeDeleteConfirmModal() {
-          toggleDeleteConfirmModal(false);
-      }
-
-      function showSkillToast(message) {
-          const toast = document.getElementById('skillToast');
-          const msg = document.getElementById('skillToastMessage');
-          msg.textContent = message;
-          toast.classList.remove('translate-y-20', 'opacity-0');
-          toast.classList.add('translate-y-0', 'opacity-100');
-          
-          setTimeout(() => {
-              toast.classList.remove('translate-y-0', 'opacity-100');
-              toast.classList.add('translate-y-20', 'opacity-0');
-          }, 3000);
-      }
-
-      // Modal key listeners
-      window.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape') {
-              toggleAddSkillModal(false);
-              toggleViewSkillModal(false);
+            function closeDeleteConfirmModal() {
               toggleDeleteConfirmModal(false);
-          }
-      });
+            }
 
-      // Bind all dynamic action callbacks to window scope for inline HTML onclick resolution
-      window.openAddSkillDrawer = openAddSkillDrawer;
-      window.openEditSkillDrawer = openEditSkillDrawer;
-      window.deleteSkill = deleteSkill;
-      window.saveSkill = saveSkill;
-      window.toggleAddSkillModal = toggleAddSkillModal;
-      window.toggleViewSkillModal = toggleViewSkillModal;
-      window.closeDeleteConfirmModal = closeDeleteConfirmModal;
-      window.openViewSkillDrawer = openViewSkillDrawer;
-      window.changeSkillPage = changeSkillPage;
-      window.handleSkillSearch = handleSkillSearch;
-      window.handleSkillStatusFilterChange = handleSkillStatusFilterChange;
+            function showSkillToast(message) {
+              const toast = document.getElementById('skillToast');
+              const msg = document.getElementById('skillToastMessage');
+              msg.textContent = message;
+              toast.classList.remove('translate-y-20', 'opacity-0');
+              toast.classList.add('translate-y-0', 'opacity-100');
 
-      // Execute on dynamic page load
-      fetchSkills();
-    })();
-  </script>
-</div>
-</main>
-</body></html>
+              setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+              }, 3000);
+            }
+
+            // Modal key listeners
+            window.addEventListener('keydown', (e) => {
+              if (e.key === 'Escape') {
+                toggleAddSkillModal(false);
+                toggleViewSkillModal(false);
+                toggleDeleteConfirmModal(false);
+              }
+            });
+
+            // Bind all dynamic action callbacks to window scope for inline HTML onclick resolution
+            window.openAddSkillDrawer = openAddSkillDrawer;
+            window.openEditSkillDrawer = openEditSkillDrawer;
+            window.deleteSkill = deleteSkill;
+            window.saveSkill = saveSkill;
+            window.toggleAddSkillModal = toggleAddSkillModal;
+            window.toggleViewSkillModal = toggleViewSkillModal;
+            window.closeDeleteConfirmModal = closeDeleteConfirmModal;
+            window.openViewSkillDrawer = openViewSkillDrawer;
+            window.changeSkillPage = changeSkillPage;
+            window.handleSkillSearch = handleSkillSearch;
+            window.handleSkillStatusFilterChange = handleSkillStatusFilterChange;
+
+            // Execute on dynamic page load
+            fetchSkills();
+          })();
+      </script>
+    </div>
+  </main>
+</body>
+
+</html>
