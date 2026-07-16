@@ -739,7 +739,7 @@
                     skillsHTML += `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-primary/5 text-primary border border-primary/10 text-[10px] font-extrabold">+${u.skills.length - 2}</span>`;
                   }
                 } else {
-                  skillsHTML = `<span class="text-slate-400 italic text-[11px]">No Skills</span>`;
+                  skillsHTML = `<span class="text-slate-400 font-semibold">-</span>`;
                 }
 
                 tr.innerHTML = `
@@ -818,7 +818,7 @@
                     skillsHTMLGrid += `<span class="inline-flex items-center px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold mr-1 mt-1">${name}</span>`;
                   });
                 } else {
-                  skillsHTMLGrid = `<span class="text-slate-400 italic text-[11px] mt-1 block">No Certified Skills</span>`;
+                  skillsHTMLGrid = `<span class="text-slate-400 font-semibold block mt-1">-</span>`;
                 }
 
                 card.innerHTML = `
@@ -933,7 +933,7 @@
                   skillsContainer.appendChild(span);
                 });
               } else {
-                skillsContainer.innerHTML = `<span class="text-slate-400 italic text-[11px]">No Certified Skills</span>`;
+                skillsContainer.innerHTML = `<span class="text-slate-400 font-semibold">-</span>`;
               }
 
               const roleEl = document.getElementById('viewUserRole');

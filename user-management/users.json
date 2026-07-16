@@ -5,7 +5,7 @@
     "email": "vikram.malhotra@nichirin.com",
     "phone": "+91 98100 88210",
     "role": "ADMIN",
-    "skills": ["SKILL-INSP-10"],
+    "skills": [],
     "status": "Active"
   },
   {
@@ -14,7 +14,7 @@
     "email": "sanjay.verma@nichirin.com",
     "phone": "+91 98200 90420",
     "role": "SUPERVISOR",
-    "skills": ["SKILL-CRMP-06", "SKILL-TORQ-08"],
+    "skills": [],
     "status": "Active"
   },
   {
@@ -23,7 +23,7 @@
     "email": "ramesh.kumar@nichirin.com",
     "phone": "+91 95400 77120",
     "role": "QC",
-    "skills": ["SKILL-TEST-09", "SKILL-INSP-10"],
+    "skills": [],
     "status": "Active"
   },
   {
@@ -50,7 +50,7 @@
     "email": "anil.kumar@nichirin.com",
     "phone": "+91 98300 55900",
     "role": "SUPERVISOR",
-    "skills": ["SKILL-BEND-04", "SKILL-FIT-05"],
+    "skills": [],
     "status": "Active"
   },
   {
@@ -59,7 +59,7 @@
     "email": "neha.dixit@nichirin.com",
     "phone": "+91 98400 66230",
     "role": "QC",
-    "skills": ["SKILL-TEST-09", "SKILL-INSP-10"],
+    "skills": [],
     "status": "Active"
   },
   {
@@ -86,7 +86,7 @@
     "email": "rajesh.patel@nichirin.com",
     "phone": "+91 98990 90880",
     "role": "QC",
-    "skills": ["SKILL-INSP-10"],
+    "skills": [],
     "status": "Active"
   },
   {
@@ -95,7 +95,7 @@
     "email": "meera.deshmukh@nichirin.com",
     "phone": "+91 98110 77880",
     "role": "SUPERVISOR",
-    "skills": ["SKILL-SHRNK-03", "SKILL-BOND-07"],
+    "skills": [],
     "status": "Active"
   },
   {
@@ -122,7 +122,7 @@
     "email": "karan.johar@nichirin.com",
     "phone": "+91 98120 11440",
     "role": "QC",
-    "skills": ["SKILL-TEST-09"],
+    "skills": [],
     "status": "Suspended"
   },
   {
