@@ -1,0 +1,474 @@
+{
+  "stages": [
+    { "id": "stage-picking", "name": "PICKING", "summary": "Retrieve rubber pipes, brackets, protect sleeve fittings from warehouse storage racks." },
+    { "id": "stage-offline", "name": "OFFLINE", "summary": "Offline raw materials preparation, barcode checks, cutting rubber pipes & metal sleeve sorting." },
+    { "id": "stage-online", "name": "ONLINE", "summary": "Double pipe assembly bending, metal hose fitting press crimping, baking, adhesive bonding, double pipe torque check." },
+    { "id": "stage-qc", "name": "QC APPROVAL", "summary": "100% leak test visual check, pressure inspection, stamping barcode tags, packaging release." }
+  ],
+  "steps": [
+    {
+      "id": "step-1",
+      "stageId": "stage-picking",
+      "stepNumber": "STEP 01",
+      "name": "Scan / Enter Codes Manually",
+      "code": "PRC-MAT-01",
+      "mandatory": true,
+      "description": "Retrieve materials and scan the barcode or enter the batch code manually to confirm picking.",
+      "fields": {
+        "Method": "QR Scan / Manual",
+        "Validation": "Lot verification"
+      },
+      "prerequisite": "",
+      "dependencies": [],
+      "parameters": [],
+      "startConditions": {
+        "operatorScan": true,
+        "machineReady": false,
+        "toolCalibration": false
+      },
+      "completionConditions": {
+        "allParameters": false,
+        "dualQCSignoff": false,
+        "autoPrintLabel": false
+      },
+      "sapSync": true,
+      "bomAvailable": true,
+      "operatorVerified": false,
+      "inputMethod": "QR/Barcode Scan (Strict)"
+    },
+    {
+      "id": "step-2",
+      "stageId": "stage-picking",
+      "stepNumber": "STEP 02",
+      "name": "Submit for Supervisor Verification",
+      "code": "PRC-MAT-02",
+      "mandatory": true,
+      "description": "Send verification request to supervisor's panel for review and signoff.",
+      "fields": {
+        "Authorization": "Supervisor Signoff",
+        "Type": "Dual Verification"
+      },
+      "prerequisite": "step-1",
+      "dependencies": [
+        { "name": "Scan / Enter Codes Manually", "code": "PRC-MAT-01" }
+      ],
+      "parameters": [],
+      "startConditions": {
+        "operatorScan": true,
+        "machineReady": false,
+        "toolCalibration": false
+      },
+      "completionConditions": {
+        "allParameters": false,
+        "dualQCSignoff": true,
+        "autoPrintLabel": false
+      },
+      "sapSync": true,
+      "bomAvailable": true,
+      "operatorVerified": false,
+      "inputMethod": "Supervisor Override"
+    },
+    {
+      "id": "step-3",
+      "stageId": "stage-picking",
+      "stepNumber": "STEP 03",
+      "name": "Generate & Print QR Code Tag",
+      "code": "PRC-MAT-03",
+      "mandatory": true,
+      "description": "Enable QR label generation button and print the barcode stamp to apply to the cleared batch.",
+      "fields": {
+        "Output": "Printed QR Stamp",
+        "Action": "Apply to batch"
+      },
+      "prerequisite": "step-2",
+      "dependencies": [
+        { "name": "Submit for Supervisor Verification", "code": "PRC-MAT-02" }
+      ],
+      "parameters": [],
+      "startConditions": {
+        "operatorScan": false,
+        "machineReady": false,
+        "toolCalibration": false
+      },
+      "completionConditions": {
+        "allParameters": false,
+        "dualQCSignoff": false,
+        "autoPrintLabel": true
+      },
+      "sapSync": true,
+      "bomAvailable": true,
+      "operatorVerified": false,
+      "inputMethod": "Auto Print"
+    },
+    {
+      "id": "step-off-1",
+      "stageId": "stage-offline",
+      "stepNumber": "STEP 01",
+      "name": "EPDM Inner Hose Prep",
+      "code": "PRC-OFF-01",
+      "mandatory": true,
+      "fields": {
+        "Material": "Inner rubber layer",
+        "Lot check": "Manual input"
+      },
+      "prerequisite": "",
+      "dependencies": [],
+      "parameters": [],
+      "startConditions": {
+        "operatorScan": true,
+        "machineReady": false,
+        "toolCalibration": false
+      },
+      "completionConditions": {
+        "allParameters": false,
+        "dualQCSignoff": false,
+        "autoPrintLabel": false
+      },
+      "sapSync": true,
+      "bomAvailable": true,
+      "operatorVerified": false,
+      "inputMethod": "Manual Entry + Photo"
+    },
+    {
+      "id": "step-off-2",
+      "stageId": "stage-offline",
+      "stepNumber": "STEP 02",
+      "name": "Sort Sleeve Brackets",
+      "code": "PRC-OFF-02",
+      "mandatory": true,
+      "fields": {
+        "Part": "Sleeve & bracket",
+        "Action": "Visual check sorting"
+      },
+      "prerequisite": "step-off-1",
+      "dependencies": [],
+      "parameters": [],
+      "startConditions": {
+        "operatorScan": false,
+        "machineReady": false,
+        "toolCalibration": false
+      },
+      "completionConditions": {
+        "allParameters": false,
+        "dualQCSignoff": false,
+        "autoPrintLabel": false
+      },
+      "sapSync": true,
+      "bomAvailable": true,
+      "operatorVerified": false,
+      "inputMethod": "Manual Entry + Photo"
+    },
+    {
+      "id": "step-onl-1",
+      "stageId": "stage-online",
+      "stepNumber": "STEP 01",
+      "name": "Assemble Sleeve to Pipe",
+      "code": "PRC-ONL-01",
+      "mandatory": true,
+      "fields": {
+        "Task": "Insert sleeve",
+        "Check": "Orientation"
+      },
+      "prerequisite": "",
+      "dependencies": [],
+      "parameters": [],
+      "startConditions": {
+        "operatorScan": true,
+        "machineReady": false,
+        "toolCalibration": false
+      },
+      "completionConditions": {
+        "allParameters": false,
+        "dualQCSignoff": false,
+        "autoPrintLabel": false
+      },
+      "sapSync": true,
+      "bomAvailable": true,
+      "operatorVerified": false,
+      "inputMethod": "Manual Entry + Photo"
+    },
+    {
+      "id": "step-onl-2",
+      "stageId": "stage-online",
+      "stepNumber": "STEP 02",
+      "name": "Double Pipe Bending",
+      "code": "PRC-ONL-02",
+      "mandatory": true,
+      "fields": {
+        "Action": "Bending machine #4",
+        "Mandrel": "Standard M-10"
+      },
+      "prerequisite": "step-onl-1",
+      "dependencies": [
+        { "name": "Assemble Sleeve to Pipe", "code": "PRC-ONL-01" }
+      ],
+      "parameters": [
+        { "name": "Bending Angle", "standard": "90.0 deg", "tolerance": "±2.0" }
+      ],
+      "startConditions": {
+        "operatorScan": true,
+        "machineReady": true,
+        "toolCalibration": false
+      },
+      "completionConditions": {
+        "allParameters": true,
+        "dualQCSignoff": false,
+        "autoPrintLabel": false
+      },
+      "sapSync": true,
+      "bomAvailable": true,
+      "operatorVerified": false,
+      "inputMethod": "Manual Entry + Photo"
+    },
+    {
+      "id": "step-onl-3",
+      "stageId": "stage-online",
+      "stepNumber": "STEP 03",
+      "name": "Press Fitting Hose",
+      "code": "PRC-ONL-03",
+      "mandatory": true,
+      "fields": {
+        "Action": "Pneumatic insertion",
+        "Force": "Target 12 kN"
+      },
+      "prerequisite": "step-onl-2",
+      "dependencies": [
+        { "name": "Double Pipe Bending", "code": "PRC-ONL-02" }
+      ],
+      "parameters": [
+        { "name": "Insertion Depth", "standard": "15.0 mm", "tolerance": "±0.5" }
+      ],
+      "startConditions": {
+        "operatorScan": true,
+        "machineReady": true,
+        "toolCalibration": true
+      },
+      "completionConditions": {
+        "allParameters": true,
+        "dualQCSignoff": false,
+        "autoPrintLabel": false
+      },
+      "sapSync": true,
+      "bomAvailable": true,
+      "operatorVerified": false,
+      "inputMethod": "Manual Entry + Photo"
+    },
+    {
+      "id": "step-onl-4",
+      "stageId": "stage-online",
+      "stepNumber": "STEP 04",
+      "name": "Metal Hose Crimping",
+      "code": "PRC-ONL-04",
+      "mandatory": true,
+      "fields": {
+        "Machine": "FinNp crimper",
+        "Die size": "14.5 mm"
+      },
+      "prerequisite": "step-onl-3",
+      "dependencies": [],
+      "parameters": [
+        { "name": "Crimped Diameter", "standard": "13.25 mm", "tolerance": "±0.08" }
+      ],
+      "startConditions": {
+        "operatorScan": true,
+        "machineReady": true,
+        "toolCalibration": true
+      },
+      "completionConditions": {
+        "allParameters": true,
+        "dualQCSignoff": true,
+        "autoPrintLabel": false
+      },
+      "sapSync": true,
+      "bomAvailable": true,
+      "operatorVerified": false,
+      "inputMethod": "Manual Entry + Photo"
+    },
+    {
+      "id": "step-onl-5",
+      "stageId": "stage-online",
+      "stepNumber": "STEP 05",
+      "name": "Baking Adhesive Curing",
+      "code": "PRC-ONL-05",
+      "mandatory": true,
+      "fields": {
+        "Station": "Tunnel Oven B",
+        "Adhesive": "ThreeBond 1102"
+      },
+      "prerequisite": "step-onl-4",
+      "dependencies": [],
+      "parameters": [
+        { "name": "Oven Temp", "standard": "120.0 °C", "tolerance": "+5.0 / -5.0" },
+        { "name": "Bake Duration", "standard": "180 s", "tolerance": "±10" }
+      ],
+      "startConditions": {
+        "operatorScan": false,
+        "machineReady": true,
+        "toolCalibration": false
+      },
+      "completionConditions": {
+        "allParameters": true,
+        "dualQCSignoff": false,
+        "autoPrintLabel": false
+      },
+      "sapSync": true,
+      "bomAvailable": true,
+      "operatorVerified": false,
+      "inputMethod": "Manual Entry + Photo"
+    },
+    {
+      "id": "step-onl-6",
+      "stageId": "stage-online",
+      "stepNumber": "STEP 06",
+      "name": "Double Pipe Torque Check",
+      "code": "PRC-ONL-06",
+      "mandatory": true,
+      "fields": {
+        "Tools": "Digital Torque Wrench",
+        "Spec": "Standard QC check"
+      },
+      "prerequisite": "step-onl-5",
+      "dependencies": [],
+      "parameters": [
+        { "name": "Tightness Torque", "standard": "18.0 Nm", "tolerance": "±1.5" }
+      ],
+      "startConditions": {
+        "operatorScan": true,
+        "machineReady": false,
+        "toolCalibration": true
+      },
+      "completionConditions": {
+        "allParameters": true,
+        "dualQCSignoff": true,
+        "autoPrintLabel": true
+      },
+      "sapSync": true,
+      "bomAvailable": true,
+      "operatorVerified": false,
+      "inputMethod": "Manual Entry + Photo"
+    },
+    {
+      "id": "step-qc-1",
+      "stageId": "stage-qc",
+      "stepNumber": "STEP 01",
+      "name": "100% Leak Test Check",
+      "code": "PRC-QC-01",
+      "mandatory": true,
+      "fields": {
+        "Method": "Pneumatic Chamber",
+        "Media": "Dry Nitrogen"
+      },
+      "prerequisite": "",
+      "dependencies": [],
+      "parameters": [
+        { "name": "Test Pressure", "standard": "8.0 bar", "tolerance": "+0.5 / -0" },
+        { "name": "Hold Time", "standard": "15.0 s", "tolerance": "±1.0" }
+      ],
+      "startConditions": {
+        "operatorScan": true,
+        "machineReady": true,
+        "toolCalibration": false
+      },
+      "completionConditions": {
+        "allParameters": true,
+        "dualQCSignoff": false,
+        "autoPrintLabel": false
+      },
+      "sapSync": true,
+      "bomAvailable": true,
+      "operatorVerified": false,
+      "inputMethod": "Manual Entry + Photo"
+    },
+    {
+      "id": "step-qc-2",
+      "stageId": "stage-qc",
+      "stepNumber": "STEP 02",
+      "name": "Pressure Leakage QC Check",
+      "code": "PRC-QC-02",
+      "mandatory": true,
+      "fields": {
+        "Verifier": "Quality Auditor ID",
+        "Audit": "100% Nitrogen check"
+      },
+      "prerequisite": "step-qc-1",
+      "dependencies": [
+        { "name": "100% Leak Test Check", "code": "PRC-QC-01" }
+      ],
+      "parameters": [
+        { "name": "Permissible Leak Rate", "standard": "0.0 cc/min", "tolerance": "+0.1" }
+      ],
+      "startConditions": {
+        "operatorScan": false,
+        "machineReady": false,
+        "toolCalibration": false
+      },
+      "completionConditions": {
+        "allParameters": true,
+        "dualQCSignoff": true,
+        "autoPrintLabel": false
+      },
+      "sapSync": true,
+      "bomAvailable": true,
+      "operatorVerified": false,
+      "inputMethod": "Manual Entry + Photo"
+    },
+    {
+      "id": "step-qc-3",
+      "stageId": "stage-qc",
+      "stepNumber": "STEP 03",
+      "name": "Stamping Barcode Tags",
+      "code": "PRC-QC-03",
+      "mandatory": true,
+      "fields": {
+        "Device": "Laser Marker #1",
+        "Format": "Control Card ID"
+      },
+      "prerequisite": "step-qc-2",
+      "dependencies": [],
+      "parameters": [],
+      "startConditions": {
+        "operatorScan": true,
+        "machineReady": true,
+        "toolCalibration": false
+      },
+      "completionConditions": {
+        "allParameters": false,
+        "dualQCSignoff": false,
+        "autoPrintLabel": false
+      },
+      "sapSync": true,
+      "bomAvailable": true,
+      "operatorVerified": false,
+      "inputMethod": "Manual Entry + Photo"
+    },
+    {
+      "id": "step-qc-4",
+      "stageId": "stage-qc",
+      "stepNumber": "STEP 04",
+      "name": "Packaging Release Approval",
+      "code": "PRC-QC-04",
+      "mandatory": true,
+      "fields": {
+        "Action": "Visual check packaging box",
+        "Verifier": "Supervisor Scan"
+      },
+      "prerequisite": "step-qc-3",
+      "dependencies": [],
+      "parameters": [],
+      "startConditions": {
+        "operatorScan": false,
+        "machineReady": false,
+        "toolCalibration": false
+      },
+      "completionConditions": {
+        "allParameters": false,
+        "dualQCSignoff": true,
+        "autoPrintLabel": true
+      },
+      "sapSync": true,
+      "bomAvailable": true,
+      "operatorVerified": false,
+      "inputMethod": "Manual Entry + Photo"
+    }
+  ]
+}

@@ -305,11 +305,6 @@
           <div class="space-y-1 pt-2">
             <p class="text-[11px] font-bold text-slate-500 uppercase tracking-widest px-4 pt-5 pb-2 select-none">Master Configuration</p>
             
-            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}workflow-configuration/index.html" data-route="workflow-configuration">
-              <span class="material-symbols-outlined text-[20px]">account_tree</span>
-              <span>Workflow Configuration</span>
-            </a>
-
             <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}user-management/index.html" data-route="user-management">
               <span class="material-symbols-outlined text-[20px]">person</span>
               <span>User Management</span>
@@ -815,7 +810,13 @@
 
       // Adjust wrapper height and scrolling for canvas-based views dynamically
       const mainWrapper = root.querySelector('#main-wrapper');
-      if (route === 'workflow-configuration' || route === 'workflow-canvas-overview' || route === 'workflow-stage-overview' || route.includes('-canvas')) {
+      if (route === 'workflow-configuration') {
+        content.className = "p-0 h-full overflow-hidden flex flex-col gap-0";
+        if (mainWrapper) {
+          mainWrapper.classList.remove('overflow-y-auto');
+          mainWrapper.classList.add('overflow-hidden');
+        }
+      } else if (route === 'workflow-canvas-overview' || route === 'workflow-stage-overview' || route.includes('-canvas')) {
         content.className = "pt-1 px-6 pb-6 h-full overflow-hidden flex flex-col gap-6";
         if (mainWrapper) {
           mainWrapper.classList.remove('overflow-y-auto');
@@ -895,12 +896,12 @@
       const main = doc.querySelector('main');
       let targetHtml = '';
       if (main) {
-        main.classList.remove('ml-[260px]', 'pt-[64px]', 'h-screen');
+        main.classList.remove('ml-[260px]', 'pt-[64px]', 'mt-[64px]', 'mt-16', 'h-screen');
         stripPadding(main);
         if (main.firstElementChild) {
           stripPadding(main.firstElementChild);
         }
-        targetHtml = main.innerHTML;
+        targetHtml = main.innerHTML.trim();
       } else {
         const children = Array.from(doc.body.children);
         const coreEl = children.find(el => el.tagName !== 'HEADER' && el.tagName !== 'ASIDE' && el.tagName !== 'NAV' && el.tagName !== 'SCRIPT' && el.tagName !== 'STYLE');
@@ -909,9 +910,9 @@
           if (coreEl.firstElementChild) {
             stripPadding(coreEl.firstElementChild);
           }
-          targetHtml = coreEl.innerHTML;
+          targetHtml = coreEl.innerHTML.trim();
         } else {
-          targetHtml = doc.body.innerHTML;
+          targetHtml = doc.body.innerHTML.trim();
         }
       }
 

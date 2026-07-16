@@ -156,13 +156,7 @@
       </div>
     </div>
 
-    <!-- General Instructions Panel -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl p-6 shadow-sm flex-grow">
-      <h3 class="font-headline-md text-headline-sm text-primary mb-3">General Work Instructions</h3>
-      <ul class="space-y-2.5 list-disc list-inside text-xs text-slate-600 font-medium leading-relaxed" id="wo-general-instructions">
-        <!-- Instructions dynamically populated -->
-      </ul>
-    </div>
+
   </div>
 
   <!-- Row 2 Left: Bill of Materials (BOM) Track -->
@@ -318,6 +312,10 @@
                   <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Process Name</label>
                   <input type="text" id="cfg-step-name" class="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" oninput="updateSelectedStepField('name', this.value)">
                 </div>
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Process Description</label>
+                  <textarea id="cfg-step-desc" rows="2" class="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" oninput="updateSelectedStepField('description', this.value)" placeholder="Enter process description..."></textarea>
+                </div>
                 <div class="grid grid-cols-2 gap-3">
                   <div>
                     <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Process Code</label>
@@ -351,7 +349,7 @@
             </section>
 
             <!-- SECTION 3: Control Points (Parameters) -->
-            <section class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm space-y-3">
+            <section id="cfg-section-parameters" class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm space-y-3">
               <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-1.5 flex justify-between items-center">
                 Control Points (Parameters)
                 <span class="material-symbols-outlined text-[14px]">tune</span>
@@ -365,7 +363,7 @@
             </section>
 
             <!-- SECTION 4: Execution Validations -->
-            <section class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm space-y-4">
+            <section id="cfg-section-validations" class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm space-y-4">
               <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-1.5">Execution Validations</h4>
               <div class="grid grid-cols-2 gap-4">
                 <div class="space-y-2.5">
@@ -422,6 +420,129 @@
     </div>
   </div>
 
+  <!-- Modal to select a step from the Master Catalog -->
+  <div id="selectMasterStepModalBackdrop" class="hidden fixed inset-0 z-[190] bg-slate-900/40 backdrop-blur-sm" onclick="closeSelectMasterStepModal()"></div>
+  <div id="selectMasterStepModal" class="hidden fixed inset-0 z-[200] flex items-center justify-center p-4 select-none">
+    <div class="bg-white w-full max-w-[450px] rounded-xl shadow-2xl flex flex-col overflow-hidden border border-outline-variant/30 text-slate-800">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex justify-between items-center">
+        <h3 class="text-sm font-black uppercase text-slate-900 tracking-wide flex items-center gap-1.5 font-headline-sm">
+          <span class="material-symbols-outlined text-secondary text-[18px]">add_circle</span>
+          Add Catalog Step
+        </h3>
+        <button onclick="closeSelectMasterStepModal()" class="text-slate-500 hover:text-slate-800 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 cursor-pointer">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+      
+      <div class="p-4 flex flex-col min-h-0 flex-grow max-h-[350px]">
+        <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wide mb-2.5">Select a master step to insert into this stage:</p>
+        <div id="select-master-step-list" class="space-y-2 overflow-y-auto custom-scrollbar flex-grow pr-1">
+          <!-- Dynamically populated list of catalog steps -->
+        </div>
+      </div>
+      
+      <div class="bg-slate-50 px-5 py-3.5 border-t border-slate-200 flex justify-end gap-2 flex-shrink-0">
+        <button onclick="closeSelectMasterStepModal()" class="px-3.5 py-1.5 border border-slate-350 text-slate-700 font-bold text-xs rounded hover:bg-slate-100 transition-colors cursor-pointer uppercase">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Centered Modal overlays replacing standard prompt inputs -->
+  <div id="customModalBackdrop" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[180] transition-opacity duration-300" onclick="closeCustomModal('all')"></div>
+  
+  <!-- Add Stage Modal -->
+  <div id="modalAddStage" class="hidden fixed inset-0 z-[190] flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-[400px] rounded-xl shadow-2xl border border-slate-200 overflow-hidden text-slate-800">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex justify-between items-center">
+        <h3 class="text-xs font-black uppercase text-slate-900 tracking-wider flex items-center gap-1.5 font-headline-sm">
+          <span class="material-symbols-outlined text-secondary text-[18px]">add_circle</span>
+          Add Stage
+        </h3>
+        <button type="button" onclick="closeCustomModal('modalAddStage')" class="text-slate-500 hover:text-slate-800 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 cursor-pointer">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+      <form onsubmit="submitAddStage(event)" class="p-5 space-y-4">
+        <div>
+          <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Stage Name</label>
+          <input type="text" id="input-stage-name" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary" placeholder="e.g. QUALITY TESTING" required>
+        </div>
+        <div>
+          <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Stage Summary</label>
+          <textarea id="input-stage-summary" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary" rows="2" placeholder="Brief summary of operations..." required>Custom process stage execution flow.</textarea>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeCustomModal('modalAddStage')" class="px-4 py-2 border border-slate-300 text-slate-700 font-bold text-xs rounded hover:bg-slate-105 transition-colors cursor-pointer uppercase">Cancel</button>
+          <button type="submit" class="px-4 py-2 bg-secondary text-white font-bold text-xs rounded hover:opacity-95 transition-opacity cursor-pointer uppercase">Add Stage</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Dependency Modal -->
+  <div id="modalAddDependency" class="hidden fixed inset-0 z-[190] flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-[400px] rounded-xl shadow-2xl border border-slate-200 overflow-hidden text-slate-800">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex justify-between items-center">
+        <h3 class="text-xs font-black uppercase text-slate-900 tracking-wider flex items-center gap-1.5 font-headline-sm">
+          <span class="material-symbols-outlined text-secondary text-[18px]">add_circle</span>
+          Add Dependency
+        </h3>
+        <button type="button" onclick="closeCustomModal('modalAddDependency')" class="text-slate-500 hover:text-slate-800 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 cursor-pointer">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+      <form onsubmit="submitAddDependency(event)" class="p-5 space-y-4">
+        <div>
+          <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Dependency Name</label>
+          <input type="text" id="input-dep-name" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:border-secondary" placeholder="e.g. Scan Work Order" required>
+        </div>
+        <div>
+          <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Dependency Code</label>
+          <input type="text" id="input-dep-code" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:border-secondary" placeholder="e.g. PRC-MAT-01" required>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeCustomModal('modalAddDependency')" class="px-4 py-2 border border-slate-300 text-slate-700 font-bold text-xs rounded hover:bg-slate-105 transition-colors cursor-pointer uppercase">Cancel</button>
+          <button type="submit" class="px-4 py-2 bg-secondary text-white font-bold text-xs rounded hover:opacity-95 transition-opacity cursor-pointer uppercase">Add Dependency</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Parameter Modal -->
+  <div id="modalAddParameter" class="hidden fixed inset-0 z-[190] flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-[400px] rounded-xl shadow-2xl border border-slate-200 overflow-hidden text-slate-800">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex justify-between items-center">
+        <h3 class="text-xs font-black uppercase text-slate-900 tracking-wider flex items-center gap-1.5 font-headline-sm">
+          <span class="material-symbols-outlined text-secondary text-[18px]">add_circle</span>
+          Add Parameter
+        </h3>
+        <button type="button" onclick="closeCustomModal('modalAddParameter')" class="text-slate-500 hover:text-slate-800 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 cursor-pointer">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+      <form onsubmit="submitAddParameter(event)" class="p-5 space-y-4">
+        <div>
+          <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Parameter Name</label>
+          <input type="text" id="input-param-name" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:border-secondary" placeholder="e.g. Oven temperature" required>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Standard Value</label>
+            <input type="text" id="input-param-standard" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none" placeholder="e.g. 150 °C" required>
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Tolerance</label>
+            <input type="text" id="input-param-tolerance" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none" placeholder="e.g. ±5 °C" required>
+          </div>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeCustomModal('modalAddParameter')" class="px-4 py-2 border border-slate-300 text-slate-700 font-bold text-xs rounded hover:bg-slate-105 transition-colors cursor-pointer uppercase">Cancel</button>
+          <button type="submit" class="px-4 py-2 bg-secondary text-white font-bold text-xs rounded hover:opacity-95 transition-opacity cursor-pointer uppercase">Add Parameter</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <div id="woToast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 ease-out z-[160] border border-slate-800 text-sm">
     <span class="material-symbols-outlined text-emerald-400">check_circle</span>
     <span id="woToastMessage">Changes successfully saved!</span>
@@ -461,6 +582,19 @@
                 activeWO = workOrdersList.find(w => w.woNumber.toUpperCase() === targetNo.toUpperCase());
                 if (!activeWO) {
                     activeWO = workOrdersList[0];
+                }
+
+                // Pre-fetch master template if not in local storage
+                if (!localStorage.getItem('workflow_master')) {
+                    try {
+                        const res = await fetch('../workflow-configuration/workflow_master.json');
+                        if (res.ok) {
+                            const data = await res.json();
+                            localStorage.setItem('workflow_master', JSON.stringify(data));
+                        }
+                    } catch(e) {
+                        console.error("Failed to pre-fetch master template on boot", e);
+                    }
                 }
 
                 // Find active or first step to highlight in inspector
@@ -543,7 +677,6 @@
             renderSpecs();
             renderBOM();
             renderTeam();
-            renderGeneralInstructions();
             renderInspector();
         }
 
@@ -680,6 +813,47 @@
                         <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Step Work Instruction</span>
                         <p class="text-xs text-slate-700 leading-relaxed bg-white p-3 rounded-lg border border-slate-100">${step.instruction}</p>
                     </div>
+
+                    ${(function() {
+                        const stepName = step.name.toLowerCase();
+                        if (stepName.includes('picking') || stepName.includes('pick')) {
+                            return `
+                                <div class="pt-4 border-t border-slate-100 mt-2 select-none">
+                                    <a href="../step-configuration-picking/index.html?wo=${activeWO.woNumber}" class="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs uppercase rounded-lg flex items-center justify-center gap-1.5 transition-colors shadow-sm text-center">
+                                        <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+                                        Launch Material Picking Client
+                                    </a>
+                                </div>
+                            `;
+                        } else if (stepName.includes('cutting') || stepName.includes('sleeve') || stepName.includes('offline')) {
+                            return `
+                                <div class="pt-4 border-t border-slate-100 mt-2 select-none">
+                                    <a href="../offline-prep-validation/index.html?wo=${activeWO.woNumber}" class="w-full py-2.5 bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs uppercase rounded-lg flex items-center justify-center gap-1.5 transition-colors shadow-sm text-center">
+                                        <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+                                        Launch Offline Prep Execution
+                                    </a>
+                                </div>
+                            `;
+                        } else if (stepName.includes('inspection') || stepName.includes('packing') || stepName.includes('qc')) {
+                            return `
+                                <div class="pt-4 border-t border-slate-100 mt-2 select-none">
+                                    <a href="../qc-approval-validation/index.html?wo=${activeWO.woNumber}" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase rounded-lg flex items-center justify-center gap-1.5 transition-colors shadow-sm text-center">
+                                        <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+                                        Launch QC Approval Terminal
+                                    </a>
+                                </div>
+                            `;
+                        } else {
+                            return `
+                                <div class="pt-4 border-t border-slate-100 mt-2 select-none">
+                                    <a href="../online-assembly-validation/index.html?wo=${activeWO.woNumber}" class="w-full py-2.5 bg-secondary hover:bg-secondary/90 text-white font-bold text-xs uppercase rounded-lg flex items-center justify-center gap-1.5 transition-colors shadow-sm text-center">
+                                        <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+                                        Launch Online Assembly Execution
+                                    </a>
+                                </div>
+                            `;
+                        }
+                    })()}
                 </div>
             `;
         }
@@ -790,23 +964,7 @@
             container.appendChild(insCard);
         }
 
-        function renderGeneralInstructions() {
-            const container = document.getElementById('wo-general-instructions');
-            if (!container) return;
-            container.innerHTML = '';
 
-            const instructions = activeWO.generalInstructions || [];
-            if (instructions.length === 0) {
-                container.innerHTML = `<li class="text-slate-400">No general notes logged.</li>`;
-                return;
-            }
-
-            instructions.forEach(ins => {
-                const li = document.createElement('li');
-                li.textContent = ins;
-                container.appendChild(li);
-            });
-        }
 
         function toggleActiveWOState() {
             const targetNo = activeWO.woNumber;
@@ -916,11 +1074,7 @@
                 listEl.appendChild(card);
             });
 
-            const addBtn = document.createElement('button');
-            addBtn.className = 'w-full mt-4 py-2 border border-dashed border-slate-300 rounded text-slate-500 hover:bg-slate-50 hover:text-primary transition-colors flex items-center justify-center gap-1 font-bold text-xs cursor-pointer';
-            addBtn.onclick = addStage;
-            addBtn.innerHTML = '<span class="material-symbols-outlined text-[16px]">add</span> Add Stage';
-            listEl.appendChild(addBtn);
+            // Add Stage Button removed
         }
 
         function selectStage(index) {
@@ -935,15 +1089,51 @@
             }
         }
 
+        function openCustomModal(modalId) {
+            const backdrop = document.getElementById('customModalBackdrop');
+            const modal = document.getElementById(modalId);
+            if (backdrop && modal) {
+                backdrop.classList.remove('hidden');
+                modal.classList.remove('hidden');
+                const form = modal.querySelector('form');
+                if (form) form.reset();
+            }
+        }
+
+        function closeCustomModal(modalId) {
+            const backdrop = document.getElementById('customModalBackdrop');
+            if (modalId === 'all') {
+                document.querySelectorAll('#modalAddStage, #modalAddDependency, #modalAddParameter').forEach(m => m.classList.add('hidden'));
+                if (backdrop) backdrop.classList.add('hidden');
+                return;
+            }
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+            const anyOpen = Array.from(document.querySelectorAll('#modalAddStage, #modalAddDependency, #modalAddParameter')).some(m => !m.classList.contains('hidden'));
+            if (!anyOpen && backdrop) {
+                backdrop.classList.add('hidden');
+            }
+        }
+
         function addStage() {
-            const name = prompt("Enter new Stage name:");
+            openCustomModal('modalAddStage');
+        }
+
+        function submitAddStage(e) {
+            e.preventDefault();
+            const name = document.getElementById('input-stage-name').value.trim();
+            const summary = document.getElementById('input-stage-summary').value.trim();
             if (!name) return;
             const id = 'stage-' + Date.now();
             workflowStages.push({
                 id: id,
                 name: name.toUpperCase(),
-                summary: "Custom process stage execution flow."
+                summary: summary || "Custom process stage execution flow."
             });
+            closeCustomModal('modalAddStage');
+            saveWorkflowConfigState();
             selectStage(workflowStages.length - 1);
             showWOToast("New stage added successfully.");
         }
@@ -1128,17 +1318,7 @@
                 containerEl.appendChild(gateWrapper);
             }
 
-            const addStepWrapper = document.createElement('div');
-            addStepWrapper.className = 'relative pt-2';
-            addStepWrapper.innerHTML = `
-                <button onclick="addStep()" class="absolute -left-[48px] w-8 h-8 rounded-full bg-white border border-dashed border-slate-400 text-slate-500 flex items-center justify-center hover:bg-slate-100 hover:text-primary transition-colors z-10 cursor-pointer">
-                  <span class="material-symbols-outlined text-[16px]">add</span>
-                </button>
-                <div class="pl-6 pt-1.5">
-                  <span class="text-xs text-slate-400 font-bold cursor-pointer hover:text-primary" onclick="addStep()">Add Step</span>
-                </div>
-            `;
-            containerEl.appendChild(addStepWrapper);
+            // Add Step Button removed
         }
 
         function selectStep(stepId) {
@@ -1151,8 +1331,71 @@
         }
 
         function addStep() {
-            const name = prompt("Enter Step Name:");
-            if (!name) return;
+            openSelectMasterStepModal();
+        }
+
+        function openSelectMasterStepModal() {
+            const backdrop = document.getElementById('selectMasterStepModalBackdrop');
+            const modal = document.getElementById('selectMasterStepModal');
+            const listEl = document.getElementById('select-master-step-list');
+            if (!modal || !listEl) return;
+
+            listEl.innerHTML = '';
+
+            const stage = workflowStages[currentStageIndex];
+            if (!stage) return;
+
+            // Load master steps from localStorage
+            let masterSteps = [];
+            const stored = localStorage.getItem('workflow_master');
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    if (parsed.steps) masterSteps = parsed.steps;
+                } catch(e) {}
+            }
+
+            // Filter master steps by matching stage id.
+            const activeStageId = stage.id;
+            const filtered = masterSteps.filter(s => {
+                if (s.stageId === activeStageId) return true;
+                const normMaster = s.stageId.toLowerCase().replace('stage-', '').replace(/\s/g, '');
+                const normActive = activeStageId.toLowerCase().replace('stage-', '').replace(/\s/g, '');
+                return normMaster.includes(normActive) || normActive.includes(normMaster);
+            });
+
+            if (filtered.length === 0) {
+                listEl.innerHTML = '<p class="text-xs text-slate-400 font-semibold italic p-4 text-center">No master steps defined for this stage category in the catalog.</p>';
+            } else {
+                filtered.forEach(mStep => {
+                    const item = document.createElement('div');
+                    item.className = 'p-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl cursor-pointer transition-colors flex items-center justify-between';
+                    item.onclick = () => addCatalogStepToTimeline(mStep);
+                    item.innerHTML = `
+                        <div>
+                          <p class="text-xs font-bold text-slate-800">${mStep.name}</p>
+                          <p class="text-[9px] text-slate-400 font-mono mt-0.5">${mStep.inputMethod || 'Manual Entry'}</p>
+                        </div>
+                        <span class="text-[9px] font-mono bg-slate-200 px-1.5 py-0.5 rounded font-bold text-slate-600">${mStep.code || 'PRC-00'}</span>
+                    `;
+                    listEl.appendChild(item);
+                });
+            }
+
+            backdrop.classList.remove('hidden');
+            modal.classList.remove('hidden');
+        }
+
+        function closeSelectMasterStepModal() {
+            const backdrop = document.getElementById('selectMasterStepModalBackdrop');
+            const modal = document.getElementById('selectMasterStepModal');
+            if (modal) {
+                backdrop.classList.add('hidden');
+                modal.classList.add('hidden');
+            }
+        }
+
+        function addCatalogStepToTimeline(mStep) {
             const stage = workflowStages[currentStageIndex];
             if (!stage) return;
 
@@ -1161,36 +1404,32 @@
             const stepNumber = "STEP " + (num < 10 ? '0' + num : num);
             const id = 'step-' + Date.now();
 
-            workflowSteps.push({
+            // Clone catalog step values
+            const newStep = {
                 id: id,
                 stageId: stage.id,
                 stepNumber: stepNumber,
-                name: name,
-                code: "PRC-" + stage.name.substring(0, 3).toUpperCase() + "-" + (num < 10 ? '0' + num : num),
-                mandatory: true,
-                fields: {},
+                name: mStep.name,
+                code: mStep.code || ("PRC-" + stage.name.substring(0, 3).toUpperCase() + "-" + (num < 10 ? '0' + num : num)),
+                mandatory: mStep.mandatory !== false,
+                fields: mStep.fields || {},
                 prerequisite: stageSteps.length > 0 ? stageSteps[stageSteps.length - 1].id : "",
-                dependencies: [],
-                parameters: [],
-                startConditions: {
-                    operatorScan: false,
-                    machineReady: false,
-                    toolCalibration: false
-                },
-                completionConditions: {
-                    allParameters: false,
-                    dualQCSignoff: false,
-                    autoPrintLabel: false
-                },
-                sapSync: true,
-                bomAvailable: true,
+                dependencies: mStep.dependencies ? JSON.parse(JSON.stringify(mStep.dependencies)) : [],
+                parameters: mStep.parameters ? JSON.parse(JSON.stringify(mStep.parameters)) : [],
+                startConditions: mStep.startConditions ? JSON.parse(JSON.stringify(mStep.startConditions)) : { operatorScan: false, machineReady: false, toolCalibration: false },
+                completionConditions: mStep.completionConditions ? JSON.parse(JSON.stringify(mStep.completionConditions)) : { allParameters: false, dualQCSignoff: false, autoPrintLabel: false },
+                sapSync: mStep.sapSync !== false,
+                bomAvailable: mStep.bomAvailable !== false,
                 operatorVerified: false,
-                inputMethod: "Manual Entry + Photo",
-                rules: getMethodRulesList("Manual Entry + Photo")
-            });
+                inputMethod: mStep.inputMethod || "Manual Entry + Photo",
+                rules: getMethodRulesList(mStep.inputMethod || "Manual Entry + Photo")
+            };
 
+            workflowSteps.push(newStep);
+            closeSelectMasterStepModal();
+            saveWorkflowConfigState();
             selectStep(id);
-            showWOToast("New step added to flow.");
+            showWOToast(`Added catalog step "${mStep.name}" to timeline.`);
         }
 
         function updateInspectorConfig() {
@@ -1221,6 +1460,7 @@
             badgeEl.textContent = step.stepNumber;
 
             document.getElementById('cfg-step-name').value = step.name;
+            document.getElementById('cfg-step-desc').value = step.description || "";
             document.getElementById('cfg-step-code').value = step.code || "";
             document.getElementById('cfg-step-mandatory').checked = step.mandatory !== false;
 
@@ -1292,6 +1532,19 @@
             document.getElementById('cfg-step-all-params').checked = !!cc.allParameters;
             document.getElementById('cfg-step-dual-qc').checked = !!cc.dualQCSignoff;
             document.getElementById('cfg-step-print-label').checked = !!cc.autoPrintLabel;
+
+            // Toggle visibility for Picking stage
+            const isPicking = step.stageId === 'stage-picking';
+            const paramSec = document.getElementById('cfg-section-parameters');
+            const validationSec = document.getElementById('cfg-section-validations');
+            
+            if (isPicking) {
+                if (paramSec) paramSec.classList.add('hidden');
+                if (validationSec) validationSec.classList.add('hidden');
+            } else {
+                if (paramSec) paramSec.classList.remove('hidden');
+                if (validationSec) validationSec.classList.remove('hidden');
+            }
         }
 
         function updateSelectedStepField(key, val) {
@@ -1312,17 +1565,23 @@
 
         function promptAddDependency() {
             if (!currentStepId) return;
+            openCustomModal('modalAddDependency');
+        }
+
+        function submitAddDependency(e) {
+            e.preventDefault();
+            if (!currentStepId) return;
             const step = workflowSteps.find(s => s.id === currentStepId);
             if (!step) return;
 
-            const name = prompt("Enter Dependency Name (e.g. Material Picking):");
-            if (!name) return;
-            const code = prompt("Enter Dependency Code (e.g. PRC-MAT-01):");
-            if (!code) return;
+            const name = document.getElementById('input-dep-name').value.trim();
+            const code = document.getElementById('input-dep-code').value.trim();
+            if (!name || !code) return;
 
             if (!step.dependencies) step.dependencies = [];
             step.dependencies.push({ name, code });
             
+            closeCustomModal('modalAddDependency');
             saveWorkflowConfigState();
             renderSteps();
             updateInspectorConfig();
@@ -1343,19 +1602,24 @@
 
         function promptAddParameter() {
             if (!currentStepId) return;
+            openCustomModal('modalAddParameter');
+        }
+
+        function submitAddParameter(e) {
+            e.preventDefault();
+            if (!currentStepId) return;
             const step = workflowSteps.find(s => s.id === currentStepId);
             if (!step) return;
 
-            const name = prompt("Enter Parameter Name (e.g. Crimping Diameter):");
-            if (!name) return;
-            const standard = prompt("Enter Standard Value (e.g. 9.00 mm):");
-            if (!standard) return;
-            const tolerance = prompt("Enter Tolerance (e.g. ±0.05):");
-            if (!tolerance) return;
+            const name = document.getElementById('input-param-name').value.trim();
+            const standard = document.getElementById('input-param-standard').value.trim();
+            const tolerance = document.getElementById('input-param-tolerance').value.trim();
+            if (!name || !standard || !tolerance) return;
 
             if (!step.parameters) step.parameters = [];
             step.parameters.push({ name, standard, tolerance });
             
+            closeCustomModal('modalAddParameter');
             saveWorkflowConfigState();
             renderSteps();
             updateInspectorConfig();
@@ -1450,39 +1714,78 @@
 
         function loadWorkflowConfig() {
             if (activeWO && activeWO.workflow_stages && activeWO.workflow_steps) {
-                workflowStages = activeWO.workflow_stages;
-                workflowSteps = activeWO.workflow_steps;
-            } else {
-                const storedStages = localStorage.getItem('workflow_stages');
-                const storedSteps = localStorage.getItem('workflow_steps');
-
-                if (storedStages && storedSteps) {
+                const hasStale = activeWO.workflow_steps.some(s => s.stageId === 'stage-picking' && s.name.includes("Load Material Checklist"));
+                if (hasStale) {
+                    delete activeWO.workflow_stages;
+                    delete activeWO.workflow_steps;
+                    const idx = workOrdersList.findIndex(w => w.woNumber.toUpperCase() === activeWO.woNumber.toUpperCase());
+                    if (idx !== -1) {
+                        delete workOrdersList[idx].workflow_stages;
+                        delete workOrdersList[idx].workflow_steps;
+                        localStorage.setItem('workOrdersList', JSON.stringify(workOrdersList));
+                    }
+                } else {
+                    workflowStages = activeWO.workflow_stages;
+                    workflowSteps = activeWO.workflow_steps;
+                }
+            }
+            if (!(activeWO && activeWO.workflow_stages && activeWO.workflow_steps)) {
+                const storedMaster = localStorage.getItem('workflow_master');
+                let loaded = false;
+                if (storedMaster) {
                     try {
-                        workflowStages = JSON.parse(storedStages);
-                        workflowSteps = JSON.parse(storedSteps);
-                        
-                        const needsReset = workflowSteps.some(s => s.stageId === 'stage-offline' && !s.dependencies) ||
-                                           !workflowSteps.some(s => s.stageId === 'stage-online') ||
-                                           !workflowSteps.some(s => s.stageId === 'stage-qc') ||
-                                           !workflowSteps.some(s => s.stageId === 'stage-rework');
-                        if (needsReset) {
+                        const parsed = JSON.parse(storedMaster);
+                        const hasRework = parsed.stages && parsed.stages.some(s => s.id === 'stage-rework' || s.name.includes("REWORK"));
+                        const hasStalePicking = parsed.steps && parsed.steps.some(s => s.stageId === 'stage-picking' && s.name.includes("Load Material Checklist"));
+                        if (parsed.stages && parsed.stages.length === 4 && !hasRework && !hasStalePicking && parsed.steps && parsed.steps.length > 0) {
+                            workflowStages = JSON.parse(JSON.stringify(parsed.stages));
+                            workflowSteps = JSON.parse(JSON.stringify(parsed.steps));
+                            loaded = true;
+                        } else {
+                            localStorage.removeItem('workflow_master');
+                        }
+                    } catch (e) {
+                        console.error("Error parsing stored master workflow template", e);
+                    }
+                }
+
+                if (!loaded) {
+                    const storedStages = localStorage.getItem('workflow_stages');
+                    const storedSteps = localStorage.getItem('workflow_steps');
+
+                    if (storedStages && storedSteps) {
+                        try {
+                            workflowStages = JSON.parse(storedStages);
+                            workflowSteps = JSON.parse(storedSteps);
+                            
+                            const needsReset = workflowSteps.some(s => s.stageId === 'stage-offline' && !s.dependencies) ||
+                                               !workflowSteps.some(s => s.stageId === 'stage-online') ||
+                                               !workflowSteps.some(s => s.stageId === 'stage-qc') ||
+                                               workflowSteps.some(s => s.stageId === 'stage-rework') ||
+                                               workflowSteps.some(s => s.stageId === 'stage-picking' && s.name.includes("Load Material Checklist"));
+                            if (needsReset) {
+                                workflowStages = [];
+                                workflowSteps = [];
+                            } else {
+                                const pickingStage = workflowStages.find(s => s.id === 'stage-picking');
+                                if (pickingStage) {
+                                    pickingStage.summary = "Retrieve rubber pipes, brackets, protect sleeve fittings from warehouse storage racks.";
+                                }
+                            }
+                        } catch(e) {
                             workflowStages = [];
                             workflowSteps = [];
                         }
-                    } catch(e) {
-                        workflowStages = [];
-                        workflowSteps = [];
                     }
                 }
             }
 
             if (!workflowStages || workflowStages.length === 0) {
                 workflowStages = [
-                    { id: "stage-picking", name: "PICKING", summary: "Material retrieval and verification process." },
-                    { id: "stage-offline", name: "OFFLINE PREP", summary: "Pre-assembly process execution." },
+                    { id: "stage-picking", name: "PICKING", summary: "Retrieve rubber pipes, brackets, protect sleeve fittings from warehouse storage racks." },
+                    { id: "stage-offline", name: "OFFLINE", summary: "Pre-assembly process execution." },
                     { id: "stage-online", name: "ONLINE ASSEMBLY", summary: "Final assembly process execution on the main line." },
-                    { id: "stage-qc", name: "QUALITY CONTROL", summary: "QC validation and final approval step." },
-                    { id: "stage-rework", name: "REWORK", summary: "NG correction process handling." }
+                    { id: "stage-qc", name: "QUALITY CONTROL", summary: "QC validation and final approval step." }
                 ];
             }
 
@@ -1492,20 +1795,18 @@
                         id: "step-1",
                         stageId: "stage-picking",
                         stepNumber: "STEP 01",
-                        name: "Scan Work Order",
+                        name: "Scan / Enter Codes Manually",
                         code: "PRC-MAT-01",
                         mandatory: true,
                         fields: {
-                            "Action": "Initiate via Barcode",
-                            "Target": "WO Barcode",
-                            "Validation": "System Match",
-                            "Dependency": "Assigned & Waiting"
+                            "Method": "QR Scan / Manual",
+                            "Validation": "Lot verification"
                         },
                         prerequisite: "",
                         dependencies: [],
                         parameters: [],
                         startConditions: { operatorScan: true, machineReady: false, toolCalibration: false },
-                        completionConditions: { allParameters: true, dualQCSignoff: false, autoPrintLabel: false },
+                        completionConditions: { allParameters: false, dualQCSignoff: false, autoPrintLabel: false },
                         sapSync: true,
                         bomAvailable: true,
                         operatorVerified: false,
@@ -1516,74 +1817,49 @@
                         id: "step-2",
                         stageId: "stage-picking",
                         stepNumber: "STEP 02",
-                        name: "Retrieve Material",
+                        name: "Submit for Supervisor Verification",
                         code: "PRC-MAT-02",
                         mandatory: true,
                         fields: {
-                            "Source": "SAP BOM",
-                            "Location": "Zone B, Rack 4",
-                            "Quantity": "150 kg"
+                            "Authorization": "Supervisor Signoff",
+                            "Type": "Dual Verification"
                         },
                         prerequisite: "step-1",
                         dependencies: [
-                            { name: "Scan Work Order", code: "PRC-MAT-01" }
+                            { name: "Scan / Enter Codes Manually", code: "PRC-MAT-01" }
                         ],
                         parameters: [],
-                        startConditions: { operatorScan: false, machineReady: false, toolCalibration: false },
-                        completionConditions: { allParameters: false, dualQCSignoff: false, autoPrintLabel: false },
+                        startConditions: { operatorScan: true, machineReady: false, toolCalibration: false },
+                        completionConditions: { allParameters: false, dualQCSignoff: true, autoPrintLabel: false },
                         sapSync: true,
                         bomAvailable: true,
                         operatorVerified: false,
-                        inputMethod: "Manual Entry + Photo",
-                        rules: getMethodRulesList("Manual Entry + Photo")
+                        inputMethod: "Supervisor Override",
+                        rules: getMethodRulesList("Supervisor Override")
                     },
                     {
                         id: "step-3",
                         stageId: "stage-picking",
                         stepNumber: "STEP 03",
-                        name: "Verify Batch Number",
+                        name: "Generate & Print QR Code Tag",
                         code: "PRC-MAT-03",
                         mandatory: true,
                         fields: {
-                            "Target": "Material Lot / Box Tag",
-                            "Method": "QR/Barcode",
-                            "Validation": "Strict Match",
-                            "Failure": "Block Completion"
+                            "Output": "Printed QR Stamp",
+                            "Action": "Apply to batch"
                         },
                         prerequisite: "step-2",
-                        dependencies: [],
-                        parameters: [],
-                        startConditions: { operatorScan: true, machineReady: false, toolCalibration: false },
-                        completionConditions: { allParameters: true, dualQCSignoff: false, autoPrintLabel: false },
-                        sapSync: true,
-                        bomAvailable: true,
-                        operatorVerified: false,
-                        inputMethod: "QR/Barcode Scan (Strict)",
-                        rules: getMethodRulesList("QR/Barcode Scan (Strict)")
-                    },
-                    {
-                        id: "step-4",
-                        stageId: "stage-picking",
-                        stepNumber: "STEP 04",
-                        name: "Material Confirmation",
-                        code: "PRC-MAT-04",
-                        mandatory: true,
-                        fields: {
-                            "Role": "Picker / Lead",
-                            "Dependency": "Step 03 Pass"
-                        },
-                        prerequisite: "step-3",
                         dependencies: [
-                            { name: "Verify Batch Number", code: "PRC-MAT-03" }
+                            { name: "Submit for Supervisor Verification", code: "PRC-MAT-02" }
                         ],
                         parameters: [],
                         startConditions: { operatorScan: false, machineReady: false, toolCalibration: false },
-                        completionConditions: { allParameters: false, dualQCSignoff: true, autoPrintLabel: false },
+                        completionConditions: { allParameters: false, dualQCSignoff: false, autoPrintLabel: true },
                         sapSync: true,
                         bomAvailable: true,
-                        operatorVerified: true,
-                        inputMethod: "Manual Entry + Photo",
-                        rules: getMethodRulesList("Manual Entry + Photo")
+                        operatorVerified: false,
+                        inputMethod: "Auto Print",
+                        rules: getMethodRulesList("Auto Print")
                     },
                     {
                         id: "step-off-1",
@@ -2103,102 +2379,6 @@
                         operatorVerified: false,
                         inputMethod: "Manual Entry + Photo",
                         rules: getMethodRulesList("Manual Entry + Photo")
-                    },
-                    {
-                        id: "step-rew-1",
-                        stageId: "stage-rework",
-                        stepNumber: "STEP 01",
-                        name: "Dismantle & Defect Analysis",
-                        code: "PRC-REW-01",
-                        mandatory: true,
-                        fields: {
-                            "Action": "Fitting Dismantling",
-                            "Check": "Inspect Thread / Seat Damage"
-                        },
-                        prerequisite: "",
-                        dependencies: [],
-                        parameters: [],
-                        startConditions: {
-                            operatorScan: true,
-                            machineReady: false,
-                            toolCalibration: false
-                        },
-                        completionConditions: {
-                            allParameters: false,
-                            dualQCSignoff: false,
-                            autoPrintLabel: false
-                        },
-                        sapSync: true,
-                        bomAvailable: true,
-                        operatorVerified: false,
-                        inputMethod: "Manual Entry + Photo",
-                        rules: getMethodRulesList("Manual Entry + Photo")
-                    },
-                    {
-                        id: "step-rew-2",
-                        stageId: "stage-rework",
-                        stepNumber: "STEP 02",
-                        name: "Re-crimp & Correction",
-                        code: "PRC-REW-02",
-                        mandatory: true,
-                        fields: {
-                            "Action": "Re-assembly Fitting",
-                            "Machine": "Rework Crimper #1"
-                        },
-                        prerequisite: "step-rew-1",
-                        dependencies: [
-                            { name: "Dismantle & Defect Analysis", code: "PRC-REW-01" }
-                        ],
-                        parameters: [
-                            { name: "Re-crimp Pressure", standard: "45 kN", tolerance: "±5 kN" }
-                        ],
-                        startConditions: {
-                            operatorScan: true,
-                            machineReady: true,
-                            toolCalibration: true
-                        },
-                        completionConditions: {
-                            allParameters: true,
-                            dualQCSignoff: false,
-                            autoPrintLabel: false
-                        },
-                        sapSync: true,
-                        bomAvailable: true,
-                        operatorVerified: false,
-                        inputMethod: "Manual Entry + Photo",
-                        rules: getMethodRulesList("Manual Entry + Photo")
-                    },
-                    {
-                        id: "step-rew-3",
-                        stageId: "stage-rework",
-                        stepNumber: "STEP 03",
-                        name: "Rework Quality Verification",
-                        code: "PRC-REW-03",
-                        mandatory: true,
-                        fields: {
-                            "Action": "Pneumatic Bubble Check",
-                            "QC Release": "Supervisor Clearance"
-                        },
-                        prerequisite: "step-rew-2",
-                        dependencies: [],
-                        parameters: [
-                            { name: "Leakage Check", standard: "Pass", tolerance: "No defects" }
-                        ],
-                        startConditions: {
-                            operatorScan: true,
-                            machineReady: false,
-                            toolCalibration: false
-                        },
-                        completionConditions: {
-                            allParameters: true,
-                            dualQCSignoff: true,
-                            autoPrintLabel: true
-                        },
-                        sapSync: true,
-                        bomAvailable: true,
-                        operatorVerified: false,
-                        inputMethod: "Manual Entry + Photo",
-                        rules: getMethodRulesList("Manual Entry + Photo")
                     }
                 ];
             }
@@ -2334,6 +2514,8 @@
         window.selectStage = selectStage;
         window.addStage = addStage;
         window.addStep = addStep;
+        window.openSelectMasterStepModal = openSelectMasterStepModal;
+        window.closeSelectMasterStepModal = closeSelectMasterStepModal;
         window.selectStep = selectStep;
         window.updateSelectedStepField = updateSelectedStepField;
         window.promptAddDependency = promptAddDependency;
@@ -2343,6 +2525,11 @@
         window.updateStepCondition = updateStepCondition;
         window.deleteSelectedStep = deleteSelectedStep;
         window.openWorkflowConfigModal = openWorkflowConfigModal;
+        window.openCustomModal = openCustomModal;
+        window.closeCustomModal = closeCustomModal;
+        window.submitAddStage = submitAddStage;
+        window.submitAddDependency = submitAddDependency;
+        window.submitAddParameter = submitAddParameter;
 
         fetchWODetail();
     })();

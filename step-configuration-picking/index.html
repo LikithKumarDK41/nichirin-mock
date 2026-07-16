@@ -1,584 +1,522 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Nichirin Admin - Workflow Configuration</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-  tailwind.config = {
-    darkMode: "class",
-    theme: {
-      extend: {
-        "colors": {
-                "inverse-on-surface": "#f2f0f3",
-                "secondary": "#006a6a",
-                "on-tertiary-fixed-variant": "#6b3a25",
-                "primary": "#000613",
-                "surface-container-highest": "#e3e2e5",
-                "inverse-primary": "#afc8f0",
-                "on-error": "#ffffff",
-                "surface-container-lowest": "#ffffff",
-                "on-background": "#1a1c1e",
-                "surface-container": "#efedf0",
-                "on-primary-fixed-variant": "#2f486a",
-                "surface-container-low": "#f4f3f6",
-                "secondary-fixed": "#7df5f5",
-                "surface-container-high": "#e9e7eb",
-                "error-container": "#ffdad6",
-                "background": "#faf9fc",
-                "on-primary-fixed": "#001c3a",
-                "inverse-surface": "#2f3033",
-                "on-surface-variant": "#43474e",
-                "on-primary": "#ffffff",
-                "on-error-container": "#93000a",
-                "tertiary-fixed-dim": "#fdb69a",
-                "on-tertiary": "#ffffff",
-                "primary-fixed-dim": "#afc8f0",
-                "outline-variant": "#c4c6cf",
-                "outline": "#74777f",
-                "tertiary-container": "#391303",
-                "tertiary-fixed": "#ffdbce",
-                "primary-fixed": "#d4e3ff",
-                "surface-bright": "#faf9fc",
-                "surface-dim": "#dbd9dd",
-                "secondary-fixed-dim": "#5dd9d8",
-                "primary-container": "#001f3f",
-                "surface": "#faf9fc",
-                "secondary-container": "#7af2f2",
-                "on-tertiary-fixed": "#351002",
-                "on-primary-container": "#6f88ad",
-                "tertiary": "#110200",
-                "on-surface": "#1a1c1e",
-                "on-secondary-fixed-variant": "#004f4f",
-                "surface-tint": "#476083",
-                "error": "#ba1a1a",
-                "on-secondary": "#ffffff",
-                "on-tertiary-container": "#b5785f",
-                "on-secondary-container": "#006e6e",
-                "on-secondary-fixed": "#002020",
-                "surface-variant": "#e3e2e5"
-        },
-        "borderRadius": {
-                "DEFAULT": "0.125rem",
-                "lg": "0.25rem",
-                "xl": "0.5rem",
-                "full": "0.75rem"
-        },
-        "spacing": {
-                "header-height": "64px",
-                "sidebar-width": "260px",
-                "stack-gap-md": "16px",
-                "container-padding": "24px",
-                "grid-gutter": "20px",
-                "stack-gap-sm": "8px"
-        },
-        "fontFamily": {
-                "headline-md": [
-                        "Inter"
-                ],
-                "headline-lg": [
-                        "Inter"
-                ],
-                "body-sm": [
-                        "Inter"
-                ],
-                "label-bold": [
-                        "Inter"
-                ],
-                "headline-sm": [
-                        "Inter"
-                ],
-                "body-md": [
-                        "Inter"
-                ],
-                "body-lg": [
-                        "Inter"
-                ],
-                "data-tabular": [
-                        "Inter"
-                ]
-        },
-        "fontSize": {
-                "headline-md": [
-                        "20px",
-                        {
-                                "lineHeight": "28px",
-                                "fontWeight": "600"
-                        }
-                ],
-                "headline-lg": [
-                        "24px",
-                        {
-                                "lineHeight": "32px",
-                                "letterSpacing": "-0.01em",
-                                "fontWeight": "600"
-                        }
-                ],
-                "body-sm": [
-                        "12px",
-                        {
-                                "lineHeight": "18px",
-                                "fontWeight": "400"
-                        }
-                ],
-                "label-bold": [
-                        "11px",
-                        {
-                                "lineHeight": "16px",
-                                "fontWeight": "700"
-                        }
-                ],
-                "headline-sm": [
-                        "16px",
-                        {
-                                "lineHeight": "24px",
-                                "fontWeight": "600"
-                        }
-                ],
-                "body-md": [
-                        "14px",
-                        {
-                                "lineHeight": "20px",
-                                "fontWeight": "400"
-                        }
-                ],
-                "body-lg": [
-                        "16px",
-                        {
-                                "lineHeight": "24px",
-                                "fontWeight": "400"
-                        }
-                ],
-                "data-tabular": [
-                        "13px",
-                        {
-                                "lineHeight": "16px",
-                                "fontWeight": "500"
-                        }
-                ]
-        }
-},
-    },
-  }
-</script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #c4c6cf; border-radius: 10px; }
-    </style>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Material Picking Operator View</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+    .scanner-active {
+      animation: scan-pulse 1.8s infinite ease-in-out;
+    }
+    @keyframes scan-pulse {
+      0%, 100% { border-color: #ef4444; box-shadow: 0 0 0 0px rgba(239, 68, 68, 0.4); }
+      50% { border-color: #3b82f6; box-shadow: 0 0 0 10px rgba(59, 130, 246, 0.2); }
+    }
+  </style>
 </head>
-<body class="bg-background text-on-surface font-body-md overflow-hidden">
-<!-- SideNavBar -->
-<aside class="fixed left-0 top-0 h-screen w-[260px] py-4 bg-primary dark:bg-primary-container border-r border-outline-variant flex flex-col z-50">
-<div class="px-6 mb-8">
-<img alt="Nichirin Logo" class="h-10 w-auto mb-2 filter brightness-0 invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACuef229Ut6ee4_WWLPqbgN1bz7SO_a_XfweFoJhfa5rw7T2KCwLNyeM1rCjkAvCPo0zSSsS-zV5pgAQ-EKhz1n2jPla7hQreosie2s70j-wxTuh4fUARgzJoTiS4F-WopCcrTxwCH_-Dnd3StN_hHudSWduU3bxPX1BKmQHK4WrdZrxWFQbNEmKo-YHR-3KEzZ_Wy70CcpI0RItYKmKw1NE5TXmmA8n7qrZcfPL_54zhtA7BTKSxgIDUAHjkYihWDa2Q"/>
-<p class="font-body-sm text-body-sm text-on-primary-fixed-variant opacity-80 mt-2">Monozukuri System</p>
-</div>
-<nav class="flex-1 px-3 space-y-1"><div class="space-y-1"><p class="px-3 mb-2 font-label-bold text-label-bold uppercase text-on-primary-fixed-variant opacity-60">Monitoring</p><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-white opacity-80 hover:bg-on-primary-fixed-variant hover:opacity-100 group" href="#"><span class="material-symbols-outlined">dashboard</span><span class="font-body-md text-body-md">Dashboard</span></a><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-white opacity-80 hover:bg-on-primary-fixed-variant hover:opacity-100 group" href="#"><span class="material-symbols-outlined">assignment</span><span class="font-body-md text-body-md">Work Order Monitoring</span></a><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-white opacity-80 hover:bg-on-primary-fixed-variant hover:opacity-100 group" href="#"><span class="material-symbols-outlined">event_note</span><span class="font-body-md text-body-md">Supervisor Planning</span></a><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-white opacity-80 hover:bg-on-primary-fixed-variant hover:opacity-100 group" href="#"><span class="material-symbols-outlined">fact_check</span><span class="font-body-md text-body-md">QC Pending Approvals</span></a><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-white opacity-80 hover:bg-on-primary-fixed-variant hover:opacity-100 group" href="#"><span class="material-symbols-outlined">report_problem</span><span class="font-body-md text-body-md">Breakdown / Rework</span></a></div><div class="mt-4"><p class="px-3 mb-2 font-label-bold text-label-bold uppercase text-on-primary-fixed-variant opacity-60">Master Configuration</p><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-white opacity-80 hover:bg-on-primary-fixed-variant hover:opacity-100 group" href="#"><span class="material-symbols-outlined">description</span><span class="font-body-md text-body-md">Control Card Templates</span></a><a class="flex items-center gap-3 px-3 py-2.5 transition-all bg-secondary-container text-on-secondary-container font-bold group" href="#"><span class="material-symbols-outlined">settings_applications</span><span class="font-body-md text-body-md">Workflow Configuration</span></a></div><div class="mt-4"><p class="px-3 mb-2 font-label-bold text-label-bold uppercase text-on-primary-fixed-variant opacity-60">Traceability &amp; Reports</p><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-white opacity-80 hover:bg-on-primary-fixed-variant hover:opacity-100 group" href="#"><span class="material-symbols-outlined">search</span><span class="font-body-md text-body-md">Traceability Search</span></a><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-white opacity-80 hover:bg-on-primary-fixed-variant hover:opacity-100 group" href="#"><span class="material-symbols-outlined">assessment</span><span class="font-body-md text-body-md">Audit Reports</span></a></div><div class="mt-4"><p class="px-3 mb-2 font-label-bold text-label-bold uppercase text-on-primary-fixed-variant opacity-60">Administration</p><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-white opacity-80 hover:bg-on-primary-fixed-variant hover:opacity-100 group" href="#"><span class="material-symbols-outlined">manage_accounts</span><span class="font-body-md text-body-md">User &amp; Role Management</span></a><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-white opacity-80 hover:bg-on-primary-fixed-variant hover:opacity-100 group" href="#"><span class="material-symbols-outlined">sync_alt</span><span class="font-body-md text-body-md">SAP Synchronization Logs</span></a><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-white opacity-80 hover:bg-on-primary-fixed-variant hover:opacity-100 group" href="#"><span class="material-symbols-outlined">map</span><span class="font-body-md text-body-md">SAP Field Mapping</span></a></div></nav>
-<div class="px-6 mb-4">
-<div class="bg-primary-fixed-dim/20 rounded-lg p-3 text-on-primary">
-<p class="font-label-bold text-label-bold uppercase opacity-60">System Status</p>
-<div class="flex items-center gap-2 mt-1">
-<span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span>
-<span class="font-body-sm text-body-sm">Active</span>
-</div>
-</div>
-</div>
-<footer class="px-3 border-t border-on-primary/10 pt-4 space-y-1">
-<a class="flex items-center gap-3 px-3 py-2 text-white opacity-80 hover:opacity-100 transition-colors" href="#">
-<span class="material-symbols-outlined">help</span>
-<span class="font-body-md text-body-md">Support</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 text-white opacity-80 hover:opacity-100 transition-colors" href="#">
-<span class="material-symbols-outlined">logout</span>
-<span class="font-body-md text-body-md">Sign Out</span>
-</a>
-</footer>
-</aside>
-<!-- TopNavBar -->
-<header class="fixed top-0 right-0 h-[100px] w-[calc(100%-260px)] ml-[260px] px-container-padding bg-surface dark:bg-surface-dim border-b border-outline-variant flex flex-col justify-center z-40">
-<div class="flex justify-between items-start w-full">
-<div class="flex flex-col gap-2">
-<div class="flex items-center gap-2 font-body-sm text-body-sm text-on-surface-variant">
-<span class="">Plant</span>
-<span class="material-symbols-outlined text-[16px]">chevron_right</span>
-<span class="">Line A</span>
-<span class="material-symbols-outlined text-[16px]">chevron_right</span>
-<span class="text-primary font-bold border-b-2 border-primary pb-1">Workflow Config</span>
-</div>
-<div class="flex items-center gap-6 mt-2">
-<div class="flex items-center gap-2">
-<span class="font-label-bold text-label-bold uppercase text-on-surface-variant">Control Card:</span>
-<span class="font-headline-sm text-headline-sm text-on-surface">Template A</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="font-label-bold text-label-bold uppercase text-on-surface-variant">Product Code:</span>
-<span class="font-body-md text-body-md text-on-surface font-medium">PN-7729</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="font-label-bold text-label-bold uppercase text-on-surface-variant">Mode:</span>
-<span class="bg-surface-variant text-on-surface px-2 py-0.5 rounded text-[12px] font-medium flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">edit_document</span> Draft Template</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="font-label-bold text-label-bold uppercase text-on-surface-variant">Version:</span>
-<span class="font-body-md text-body-md text-on-surface">v1.4</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="font-label-bold text-label-bold uppercase text-on-surface-variant">Status:</span>
-<span class="bg-surface-container-high text-on-surface px-2 py-0.5 rounded text-[12px] font-medium">Draft</span>
-</div>
-</div>
-</div>
-<div class="flex flex-col items-end gap-3">
-<div class="flex items-center gap-4 text-on-surface-variant">
-<span class="material-symbols-outlined cursor-pointer hover:text-secondary transition-colors">notifications</span>
-<div class="flex items-center gap-2 cursor-pointer hover:text-secondary transition-colors">
-<span class="material-symbols-outlined">account_circle</span>
-<span class="font-body-sm text-body-sm font-medium">H. Tanaka</span>
-</div>
-</div>
-<div class="flex items-center gap-2">
-<button class="bg-surface text-primary border border-primary px-3 py-1.5 rounded-lg font-body-sm text-body-sm hover:bg-surface-variant transition-colors">
-                Save Draft
-            </button>
-<button class="bg-surface text-primary border border-primary px-3 py-1.5 rounded-lg font-body-sm text-body-sm hover:bg-surface-variant transition-colors">
-                Validate
-            </button>
-<button class="bg-surface text-primary border border-primary px-3 py-1.5 rounded-lg font-body-sm text-body-sm hover:bg-surface-variant transition-colors flex items-center gap-1">
-<span class="material-symbols-outlined text-[16px]">tablet_mac</span> Preview
-            </button>
-<button class="bg-secondary-container text-on-secondary-container px-3 py-1.5 rounded-lg font-body-sm text-body-sm hover:opacity-90 transition-opacity">
-                Submit for Approval
-            </button>
-<button class="bg-primary text-on-primary px-4 py-1.5 rounded-lg font-headline-sm text-headline-sm hover:opacity-90 active:scale-95 transition-all opacity-50 cursor-not-allowed">
-                Activate
-            </button>
-</div>
-</div>
-</div>
-</header>
-<!-- Main Content Area -->
-<main class="ml-[260px] mt-[100px] h-[calc(100vh-100px)] flex flex-col bg-surface-container-lowest">
-<div class="flex flex-1 overflow-hidden">
-<!-- Left Panel: Stage Navigation -->
-<aside class="w-[280px] bg-white border-r border-outline-variant flex flex-col p-4 z-10 shadow-[2px_0_10px_rgba(0,0,0,0.05)]">
-<h3 class="font-headline-sm text-headline-sm text-on-surface mb-4">Production Stages</h3>
-<nav class="space-y-2 overflow-y-auto pr-2 pb-4"><div class="space-y-1"><p class="px-3 mb-2 font-label-bold text-label-bold uppercase text-on-primary-fixed-variant opacity-60">Monitoring</p><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-white opacity-80 hover:bg-on-primary-fixed-variant hover:opacity-100 group" href="#"><span class="material-symbols-outlined">dashboard</span><span class="font-body-md text-body-md">Dashboard</span></a><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-white opacity-80 hover:bg-on-primary-fixed-variant hover:opacity-100 group" href="#"><span class="material-symbols-outlined">assignment</span><span class="font-body-md text-body-md">Work Order Monitoring</span></a><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-white opacity-80 hover:bg-on-primary-fixed-variant hover:opacity-100 group" href="#"><span class="material-symbols-outlined">event_note</span><span class="font-body-md text-body-md">Supervisor Planning</span></a><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-white opacity-80 hover:bg-on-primary-fixed-variant hover:opacity-100 group" href="#"><span class="material-symbols-outlined">fact_check</span><span class="font-body-md text-body-md">QC Pending Approvals</span></a><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-white opacity-80 hover:bg-on-primary-fixed-variant hover:opacity-100 group" href="#"><span class="material-symbols-outlined">report_problem</span><span class="font-body-md text-body-md">Breakdown / Rework</span></a></div><div class="mt-4"><p class="px-3 mb-2 font-label-bold text-label-bold uppercase text-on-primary-fixed-variant opacity-60">Master Configuration</p><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-white opacity-80 hover:bg-on-primary-fixed-variant hover:opacity-100 group" href="#"><span class="material-symbols-outlined">description</span><span class="font-body-md text-body-md">Control Card Templates</span></a><a class="flex items-center gap-3 px-3 py-2.5 transition-all bg-secondary-container text-on-secondary-container font-bold group" href="#"><span class="material-symbols-outlined">settings_applications</span><span class="font-body-md text-body-md">Workflow Configuration</span></a></div><div class="mt-4"><p class="px-3 mb-2 font-label-bold text-label-bold uppercase text-on-primary-fixed-variant opacity-60">Traceability &amp; Reports</p><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-white opacity-80 hover:bg-on-primary-fixed-variant hover:opacity-100 group" href="#"><span class="material-symbols-outlined">search</span><span class="font-body-md text-body-md">Traceability Search</span></a><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-white opacity-80 hover:bg-on-primary-fixed-variant hover:opacity-100 group" href="#"><span class="material-symbols-outlined">assessment</span><span class="font-body-md text-body-md">Audit Reports</span></a></div><div class="mt-4"><p class="px-3 mb-2 font-label-bold text-label-bold uppercase text-on-primary-fixed-variant opacity-60">Administration</p><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-white opacity-80 hover:bg-on-primary-fixed-variant hover:opacity-100 group" href="#"><span class="material-symbols-outlined">manage_accounts</span><span class="font-body-md text-body-md">User &amp; Role Management</span></a><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-white opacity-80 hover:bg-on-primary-fixed-variant hover:opacity-100 group" href="#"><span class="material-symbols-outlined">sync_alt</span><span class="font-body-md text-body-md">SAP Synchronization Logs</span></a><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-white opacity-80 hover:bg-on-primary-fixed-variant hover:opacity-100 group" href="#"><span class="material-symbols-outlined">map</span><span class="font-body-md text-body-md">SAP Field Mapping</span></a></div></nav>
-<div class="mt-auto pt-4 border-t border-outline-variant">
-<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/30">
-<p class="font-label-bold text-label-bold text-on-surface-variant uppercase mb-2">Help</p>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Select a stage to view and configure its process steps.</p>
-</div>
-</div>
-</aside>
-<!-- Center Column: Steps List -->
-<section class="flex-1 bg-surface-container-lowest border-r border-outline-variant p-6 overflow-y-auto relative">
-<div class="max-w-2xl mx-auto">
-<div class="flex items-center justify-between mb-6">
-<h3 class="font-headline-md text-headline-md text-on-surface">Steps for: <span class="text-secondary">Picking</span></h3>
-<button class="flex items-center gap-1 text-secondary font-label-bold uppercase text-[12px] hover:bg-secondary-container/20 px-3 py-1.5 rounded transition-colors border border-secondary">
-<span class="material-symbols-outlined text-[16px]">add</span> Add Step
-</button>
-</div>
-<div class="space-y-4">
-<!-- Step 1 (Active) -->
-<div class="p-4 border-2 border-secondary bg-secondary-container/5 rounded-xl cursor-pointer transition-shadow shadow-sm">
-<div class="flex justify-between items-start mb-2">
-<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-primary-container text-on-primary-container flex items-center gap-1">
-<span class="material-symbols-outlined text-[12px]">sync</span> In Progress
-</span>
-<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">Seq: 010</span>
-</div>
-<h4 class="font-headline-sm text-headline-sm text-on-surface mb-1">Material Verification</h4>
-<p class="font-body-sm text-body-sm text-on-surface-variant mb-3">Validates BOM mapping, required QR scan, and previous processes before picking begins.</p>
-<div class="flex gap-2">
-<span class="px-2 py-1 bg-surface-variant rounded text-[11px] font-medium text-on-surface-variant">6 Start Rules</span>
-<span class="px-2 py-1 bg-surface-variant rounded text-[11px] font-medium text-on-surface-variant">4 Control Points</span>
-</div>
-</div>
-<!-- Step 2 -->
-<div class="p-4 border border-outline-variant bg-white rounded-xl cursor-pointer hover:border-secondary hover:shadow-sm transition-all">
-<div class="flex justify-between items-start mb-2">
-<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-secondary-container text-on-secondary-container flex items-center gap-1">
-<span class="material-symbols-outlined text-[12px]">done</span> Completed
-</span>
-<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">Seq: 020</span>
-</div>
-<h4 class="font-headline-sm text-headline-sm text-on-surface mb-1">QR Association</h4>
-<p class="font-body-sm text-body-sm text-on-surface-variant mb-3">Links physical bin to work order tracking ID.</p>
-<div class="flex gap-2">
-<span class="px-2 py-1 bg-surface-variant rounded text-[11px] font-medium text-on-surface-variant">2 Start Rules</span>
-</div>
-</div>
-<!-- Step 3 -->
-<div class="p-4 border border-outline-variant bg-white rounded-xl cursor-pointer hover:border-secondary hover:shadow-sm transition-all opacity-70">
-<div class="flex justify-between items-start mb-2">
-<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-surface-variant text-on-surface-variant flex items-center gap-1">
-<span class="material-symbols-outlined text-[12px]">schedule</span> Pending
-</span>
-<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">Seq: 030</span>
-</div>
-<h4 class="font-headline-sm text-headline-sm text-on-surface mb-1">Tray Preparation</h4>
-<p class="font-body-sm text-body-sm text-on-surface-variant mb-3">Configures batch sizes and sets up output containers.</p>
-<div class="flex gap-2">
-<span class="px-2 py-1 bg-surface-variant rounded text-[11px] font-medium text-on-surface-variant">1 Start Rule</span>
-</div>
-</div>
-<!-- Step 4 (Error State example) -->
-<div class="p-4 border border-error bg-error-container/10 rounded-xl cursor-pointer hover:shadow-sm transition-all">
-<div class="flex justify-between items-start mb-2">
-<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-error-container text-error flex items-center gap-1">
-<span class="material-symbols-outlined text-[12px]">block</span> Blocked
-</span>
-<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">Seq: 040</span>
-</div>
-<h4 class="font-headline-sm text-headline-sm text-error mb-1">Rework Target (Missing Route)</h4>
-<p class="font-body-sm text-body-sm text-on-surface-variant mb-3">Defines the return point for failed components.</p>
-<div class="flex gap-2">
-<span class="px-2 py-1 bg-error-container/50 text-error rounded text-[11px] font-medium flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">warning</span> Needs config</span>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Right Panel: Properties -->
-<aside class="w-[450px] bg-white border-l border-outline-variant flex flex-col shadow-[-2px_0_10px_rgba(0,0,0,0.05)] z-10 overflow-y-auto pb-24">
-<div class="p-4 border-b border-outline-variant bg-surface-container-low sticky top-0 z-10">
-<div class="flex items-center gap-2 font-body-sm text-body-sm text-on-surface-variant mb-1">
-<span class="material-symbols-outlined text-[16px]">settings_ethernet</span>
-<span class="">Process Validation &amp; Dependency Rules</span>
-</div>
-<h2 class="font-headline-md text-headline-md text-on-surface truncate">Material Verification</h2>
-</div>
-<div class="p-4 space-y-4">
-<!-- Control Card Step Info -->
-<details class="group bg-surface-container-lowest border border-outline-variant rounded-lg" open="">
-<summary class="flex justify-between items-center font-headline-sm cursor-pointer p-3 bg-surface-container-low rounded-t-lg">
-<div class="flex items-center gap-2">
-<span class="">Control Card Step Info</span>
-<span class="material-symbols-outlined text-[16px] text-outline" title="Read-only in Active Mode">lock</span>
-</div>
-<span class="material-symbols-outlined transition group-open:rotate-180">expand_more</span>
-</summary>
-<div class="p-3 border-t border-outline-variant text-body-sm text-on-surface-variant space-y-2 bg-surface-variant/30">
-<p class=""><span class="font-label-bold uppercase">Process Name:</span> Material Verification</p>
-<p class=""><span class="font-label-bold uppercase">Type:</span> Inspection</p>
-<p class=""><span class="font-label-bold uppercase">Cycle Time:</span> 45s</p>
-<p class=""><span class="font-label-bold uppercase">BOM Ref:</span> BOM-HOSE-ASSY</p>
-</div>
-</details>
-<!-- Start Validation -->
-<details class="group bg-surface-container-lowest border border-outline-variant rounded-lg" open="">
-<summary class="flex justify-between items-center font-headline-sm cursor-pointer p-3 bg-surface-container-low rounded-t-lg">
-<span class="">Start Validation</span>
-<span class="material-symbols-outlined transition group-open:rotate-180">expand_more</span>
-</summary>
-<div class="p-3 border-t border-outline-variant text-body-sm space-y-2">
-<label class="flex items-center gap-2"><input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> WO Assigned to Line</label>
-<label class="flex items-center gap-2"><input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> Previous Process Complete</label>
-<label class="flex items-center gap-2"><input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> BOM Material Verified (Scanning)</label>
-<label class="flex items-center gap-2"><input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> Operator QR Scanned</label>
-<label class="flex items-center gap-2"><input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> No Active Breakdown/Andon</label>
-<label class="flex items-center gap-2"><input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> Operator Role Allowed</label>
-</div>
-</details>
-<!-- Entry Validation -->
-<details class="group bg-surface-container-lowest border border-outline-variant rounded-lg">
-<summary class="flex justify-between items-center font-headline-sm cursor-pointer p-3 bg-surface-container-low rounded-t-lg">
-<span class="">Entry Validation (Fields to Display)</span>
-<span class="material-symbols-outlined transition group-open:rotate-180">expand_more</span>
-</summary>
-<div class="p-3 border-t border-outline-variant text-body-sm space-y-2">
-<label class="flex items-center gap-2"><input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> Machine #</label>
-<label class="flex items-center gap-2"><input class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> Jig / Fixture ID</label>
-<label class="flex items-center gap-2"><input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> Part #</label>
-<label class="flex items-center gap-2"><input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> Lot #</label>
-<label class="flex items-center gap-2"><input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> Operator ID</label>
-<label class="flex items-center gap-2"><input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> Qty (OK / NG / Total)</label>
-<label class="flex items-center gap-2"><input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> Remarks</label>
-</div>
-</details>
-<!-- Control Point Validation -->
-<details class="group bg-surface-container-lowest border border-outline-variant rounded-lg">
-<summary class="flex justify-between items-center font-headline-sm cursor-pointer p-3 bg-surface-container-low rounded-t-lg">
-<span class="">Control Point Validation</span>
-<span class="material-symbols-outlined transition group-open:rotate-180">expand_more</span>
-</summary>
-<div class="p-3 border-t border-outline-variant overflow-x-auto">
-<table class="w-full text-left text-body-sm border-collapse">
-<thead>
-<tr class="border-b border-outline-variant bg-surface text-on-surface-variant font-label-bold">
-<th class="p-2">Item</th>
-<th class="p-2">Standard</th>
-<th class="p-2">Input</th>
-<th class="p-2">Mandatory</th>
-</tr>
-</thead>
-<tbody>
-<tr class="border-b border-outline-variant">
-<td class="p-2">Machine #</td>
-<td class="p-2">Select List</td>
-<td class="p-2">Dropdown</td>
-<td class="p-2"><input checked="" disabled="" type="checkbox"/></td>
-</tr>
-<tr class="border-b border-outline-variant">
-<td class="p-2">Hose Part No.</td>
-<td class="p-2">Match BOM</td>
-<td class="p-2">Scan</td>
-<td class="p-2"><input checked="" disabled="" type="checkbox"/></td>
-</tr>
-<tr class="border-b border-outline-variant">
-<td class="p-2">Cut Length</td>
-<td class="p-2">150±2mm</td>
-<td class="p-2">Numeric</td>
-<td class="p-2"><input checked="" disabled="" type="checkbox"/></td>
-</tr>
-<tr class="border-b border-outline-variant">
-<td class="p-2">Appearance</td>
-<td class="p-2">No scratches</td>
-<td class="p-2">OK/NG</td>
-<td class="p-2"><input checked="" disabled="" type="checkbox"/></td>
-</tr>
-</tbody>
-</table>
-<button class="mt-2 text-secondary font-label-bold uppercase text-[11px] flex items-center gap-1 hover:underline"><span class="material-symbols-outlined text-[14px]">add</span> Add Control Point</button>
-</div>
-</details>
-<!-- Completion Validation -->
-<details class="group bg-surface-container-lowest border border-outline-variant rounded-lg">
-<summary class="flex justify-between items-center font-headline-sm cursor-pointer p-3 bg-surface-container-low rounded-t-lg">
-<span class="">Completion Validation</span>
-<span class="material-symbols-outlined transition group-open:rotate-180">expand_more</span>
-</summary>
-<div class="p-3 border-t border-outline-variant text-body-sm space-y-2">
-<label class="flex items-center gap-2"><input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> All Mandatory CPs Recorded</label>
-<label class="flex items-center gap-2"><input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> Qty Math Check (OK+NG=Total)</label>
-<label class="flex items-center gap-2"><input class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> QR Code / Photo Attached</label>
-<label class="flex items-center gap-2"><input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> NG Reason Provided if NG &gt; 0</label>
-<label class="flex items-center gap-2"><input class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> First-off Approval Required</label>
-</div>
-</details>
-<!-- Dependency Validation -->
-<details class="group bg-surface-container-lowest border border-outline-variant rounded-lg">
-<summary class="flex justify-between items-center font-headline-sm cursor-pointer p-3 bg-surface-container-low rounded-t-lg">
-<span class="">Dependency Validation</span>
-<span class="material-symbols-outlined transition group-open:rotate-180">expand_more</span>
-</summary>
-<div class="p-3 border-t border-outline-variant text-body-sm space-y-3">
-<div>
-<p class="font-label-bold uppercase text-on-surface-variant mb-1">Pre-requisite Process</p>
-<select class="w-full border-outline-variant rounded text-body-sm p-1.5 focus:ring-secondary focus:border-secondary">
-<option>Material Picking</option>
-</select>
-</div>
-<div class="bg-error-container/30 p-2 rounded border border-error-container text-error text-[12px]">
-<span class="font-bold flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">error</span> Error Message Preview:</span>
-                "Cannot start this process. Material Verification is not completed."
+<body class="bg-slate-50 text-slate-900 h-screen w-screen overflow-hidden flex flex-col">
+
+  <!-- Top Navigation Header -->
+  <header class="bg-white border-b border-slate-200 px-6 py-4 flex justify-between items-center select-none shrink-0 z-35">
+    <div class="flex items-center gap-3">
+      <a href="../work-order-detail/index.html" id="back-link" class="text-slate-600 hover:text-slate-900 flex items-center transition-colors">
+        <span class="material-symbols-outlined text-[24px]">chevron_left</span>
+      </a>
+      <h1 class="text-sm sm:text-base font-black text-slate-800 tracking-tight flex items-center gap-2">
+        Material Picking — <span id="header-part-number" class="text-slate-900 font-mono">BPD-F584A-00-IYN-R02</span>
+      </h1>
+    </div>
+
+    <!-- Alert / Simulator Status Badge -->
+    <div class="flex items-center gap-3">
+      <!-- Supervisor Simulation Quick Controls -->
+      <div id="supervisor-sim-box" class="hidden bg-amber-50 border border-amber-200 px-3 py-1 rounded-lg flex items-center gap-2">
+        <span class="text-[10px] font-black text-amber-700 uppercase tracking-wider">Supervisor Mode:</span>
+        <button onclick="approvePickingRequest()" class="bg-amber-600 text-white text-[9px] font-black px-2 py-0.5 rounded hover:bg-amber-700 transition-colors uppercase">Approve Request</button>
+      </div>
+
+      <div class="w-8 h-8 rounded-full bg-rose-50 flex items-center justify-center border border-rose-200 animate-pulse text-rose-500" title="System Status: Active Execution">
+        <span class="material-symbols-outlined text-[18px]">report</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Content Workspace -->
+  <main class="flex-grow flex overflow-hidden min-h-0 bg-white">
+
+    <!-- Left Column: Material List -->
+    <aside class="w-[320px] sm:w-[360px] border-r border-slate-200 flex flex-col p-4 shrink-0 h-full overflow-hidden bg-slate-50/50">
+      <div class="flex-grow overflow-y-auto space-y-2.5 pr-1" id="material-list-container">
+        <!-- Dynamically injected material cards -->
+      </div>
+
+      <!-- Bottom Panel for Submissions -->
+      <div class="mt-4 border-t border-slate-200 pt-4 flex flex-col gap-3 shrink-0">
+        <div class="flex justify-between items-center text-xs font-semibold text-slate-500">
+          <span id="picked-counter">Picked 0/9</span>
+          <span id="not-available-counter">Not available 0</span>
+        </div>
+        <button id="submit-verification-btn" onclick="submitForVerification()" disabled
+          class="w-full py-3 rounded-xl font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all cursor-not-allowed bg-slate-200 text-slate-400">
+          Submit for supervisor verification <span class="material-symbols-outlined text-[16px]">arrow_right_alt</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Right Column: Detail Spec & Scanner Panel -->
+    <section class="flex-grow flex flex-col p-6 overflow-y-auto h-full items-center justify-center relative">
+      <div class="w-full max-w-[580px] space-y-6" id="detail-spec-panel">
+        
+        <!-- Active Index counter -->
+        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest block" id="item-index-label">Item 1 of 9</span>
+        
+        <!-- Active Item Name -->
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight" id="active-item-title">PR0157-0000-IND</h2>
+
+        <!-- ITEM SPEC card -->
+        <div class="bg-white border border-slate-250 rounded-xl p-5 shadow-sm space-y-3 relative overflow-hidden">
+          <div class="absolute left-0 top-0 bottom-0 w-1 bg-rose-500"></div>
+          <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider block">Item Spec</span>
+          
+          <div class="grid grid-cols-3 gap-4 text-xs">
+            <div>
+              <span class="block text-[9px] font-black text-slate-400 uppercase tracking-wider mb-0.5">SFG Code</span>
+              <span class="font-bold text-slate-800" id="spec-sfg-code">PR0157-0190</span>
             </div>
-</div>
-</details>
-<!-- Unlock Rule -->
-<details class="group bg-surface-container-lowest border border-outline-variant rounded-lg">
-<summary class="flex justify-between items-center font-headline-sm cursor-pointer p-3 bg-surface-container-low rounded-t-lg">
-<span class="">Online Unlock Rule</span>
-<span class="material-symbols-outlined transition group-open:rotate-180">expand_more</span>
-</summary>
-<div class="p-3 border-t border-outline-variant text-body-sm space-y-2">
-<label class="flex items-center gap-2"><input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> Picking Completed</label>
-<label class="flex items-center gap-2"><input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> Offline Processes Completed</label>
-<label class="flex items-center gap-2"><input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> CP Records Passed</label>
-<label class="flex items-center gap-2"><input class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> QC Approvals Present</label>
-<label class="flex items-center gap-2"><input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> No Machine Breakdowns</label>
-</div>
-</details>
-<!-- Failure / Rework Rule -->
-<details class="group bg-surface-container-lowest border border-outline-variant rounded-lg">
-<summary class="flex justify-between items-center font-headline-sm cursor-pointer p-3 bg-surface-container-low rounded-t-lg">
-<span class="">Failure / Rework Rule</span>
-<span class="material-symbols-outlined transition group-open:rotate-180">expand_more</span>
-</summary>
-<div class="p-3 border-t border-outline-variant text-body-sm space-y-3">
-<label class="flex items-center gap-2"><input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> Block process on QC NG</label>
-<label class="flex items-center gap-2"><input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/> Hold WO on consecutive NGs</label>
-<div>
-<p class="font-label-bold uppercase text-on-surface-variant mb-1 mt-2">Rework Target</p>
-<select class="w-full border-outline-variant rounded text-body-sm p-1.5 focus:ring-secondary focus:border-secondary">
-<option>Rework Target</option>
-<option>None (Scrap)</option>
-</select>
-</div>
-<div>
-<p class="font-label-bold uppercase text-on-surface-variant mb-1 mt-2">Reset allowed by</p>
-<select class="w-full border-outline-variant rounded text-body-sm p-1.5 focus:ring-secondary focus:border-secondary">
-<option>Supervisor Only</option>
-<option>Operator</option>
-</select>
-</div>
-</div>
-</details>
-</div>
-</aside>
-</div>
-<!-- Bottom Panel: Validation Results -->
-<footer class="bg-surface-container-high border-t border-outline-variant flex flex-col z-20">
-<div class="px-4 py-2 bg-surface-container-highest border-b border-outline-variant flex justify-between items-center">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-[20px] text-on-surface-variant">checklist</span>
-<span class="font-headline-sm text-headline-sm text-on-surface">Workflow Validation Result</span>
-</div>
-<span class="px-2 py-1 bg-error-container text-error text-[12px] font-bold rounded-full">2 Issues</span>
-</div>
-<div class="p-4 flex gap-6 overflow-x-auto h-[120px]">
-<div class="flex-1 flex gap-4 pb-2">
-<div class="min-w-[280px] bg-white border border-outline-variant rounded-lg p-3 flex items-start gap-3 shadow-sm opacity-70">
-<span class="material-symbols-outlined text-secondary">check_circle</span>
-<div>
-<p class="font-label-bold text-label-bold text-secondary mb-1">NO CIRCULAR DEPENDENCY</p>
-<p class="font-body-sm text-body-sm text-on-surface">Process flow list is valid.</p>
-</div>
-</div>
-<div class="min-w-[280px] bg-white border border-outline-variant rounded-lg p-3 flex items-start gap-3 shadow-sm opacity-70">
-<span class="material-symbols-outlined text-secondary">check_circle</span>
-<div>
-<p class="font-label-bold text-label-bold text-secondary mb-1">BOM MAPPING</p>
-<p class="font-body-sm text-body-sm text-on-surface">BOM items mapped correctly.</p>
-</div>
-</div>
-<div class="min-w-[280px] bg-white border border-error rounded-lg p-3 flex items-start gap-3 shadow-sm">
-<span class="material-symbols-outlined text-error">warning</span>
-<div>
-<p class="font-label-bold text-label-bold text-error mb-1">REWORK PATH MISSING</p>
-<p class="font-body-sm text-body-sm text-on-surface">Hose Cutting 1 missing rework route.</p>
-</div>
-</div>
-<div class="min-w-[280px] bg-white border border-error rounded-lg p-3 flex items-start gap-3 shadow-sm">
-<span class="material-symbols-outlined text-error">error</span>
-<div>
-<p class="font-label-bold text-label-bold text-error mb-1">DEPENDENCY INCOMPLETE</p>
-<p class="font-body-sm text-body-sm text-on-surface">Rework Target node has no input.</p>
-</div>
-</div>
-<div class="min-w-[280px] bg-white border border-outline-variant rounded-lg p-3 flex items-start gap-3 shadow-sm opacity-70">
-<span class="material-symbols-outlined text-secondary">check_circle</span>
-<div>
-<p class="font-label-bold text-label-bold text-secondary mb-1">ONLINE UNLOCK</p>
-<p class="font-body-sm text-body-sm text-on-surface">Unlock rules properly configured.</p>
-</div>
-</div>
-</div>
-<div class="flex items-center gap-2 self-center sticky right-0 bg-surface-container-high pl-4 border-l border-outline-variant h-full">
-<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded font-headline-sm text-headline-sm flex items-center gap-2 hover:opacity-90 transition-opacity whitespace-nowrap">
-<span class="material-symbols-outlined">auto_fix_normal</span>
-                    Auto-resolve
-                </button>
-</div>
-</div>
-</footer>
-</main>
-</body></html>
+            <div>
+              <span class="block text-[9px] font-black text-slate-400 uppercase tracking-wider mb-0.5">Method</span>
+              <span class="font-bold text-slate-800" id="spec-method">Kanban</span>
+            </div>
+            <div>
+              <span class="block text-[9px] font-black text-slate-400 uppercase tracking-wider mb-0.5">Cut</span>
+              <span class="font-bold text-slate-800" id="spec-cut">C-190</span>
+            </div>
+            <div>
+              <span class="block text-[9px] font-black text-slate-400 uppercase tracking-wider mb-0.5">Bend</span>
+              <span class="font-bold text-slate-800" id="spec-bend">—</span>
+            </div>
+            <div>
+              <span class="block text-[9px] font-black text-slate-400 uppercase tracking-wider mb-0.5">Base Qty</span>
+              <span class="font-bold text-slate-800 font-mono" id="spec-base-qty">0.19</span>
+            </div>
+            <div>
+              <span class="block text-[9px] font-black text-slate-400 uppercase tracking-wider mb-0.5">UOM</span>
+              <span class="font-bold text-slate-800" id="spec-uom">mtr</span>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 flex flex-col">
+            <span class="block text-[9px] font-black text-slate-400 uppercase tracking-wider mb-0.5">Req. Qty</span>
+            <span class="text-sm font-black text-slate-900 font-mono" id="spec-req-qty">228</span>
+          </div>
+        </div>
+
+        <!-- Scanner Simulation Box -->
+        <div class="flex flex-col items-center justify-center py-2">
+          <!-- The Tap to Scan Target -->
+          <div onclick="simulateScan()" id="scan-box"
+            class="w-44 h-44 border-2 border-rose-500 rounded-xl bg-slate-50 flex flex-col items-center justify-center cursor-pointer transition-all hover:bg-slate-100/50 shadow-sm scanner-active">
+            <span class="material-symbols-outlined text-[48px] text-rose-500" id="scan-icon">qr_code_2</span>
+            <span class="text-[10px] font-bold text-slate-500 tracking-wider uppercase mt-3" id="scan-text">Tap to scan QR / Barcode</span>
+          </div>
+
+          <!-- Action buttons and helpers -->
+          <button onclick="openManualInput()" class="text-xs text-rose-600 font-black tracking-wide mt-4 hover:underline cursor-pointer">
+            No QR / barcode? Enter number manually
+          </button>
+        </div>
+
+        <!-- Bottom Action button: Not Available -->
+        <button onclick="markAsNotAvailable()" id="not-available-btn"
+          class="w-full py-2.5 bg-white border border-slate-350 text-slate-700 font-bold text-xs uppercase rounded-xl hover:bg-slate-100 transition-colors cursor-pointer text-center">
+          Not Available
+        </button>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Dialog: Manual Input -->
+  <div id="manualInputModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
+    <div class="bg-white w-full max-w-[400px] rounded-xl shadow-2xl border border-slate-200 overflow-hidden text-slate-800">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex justify-between items-center">
+        <h3 class="text-xs font-black uppercase text-slate-900 tracking-wider flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-rose-500 text-[18px]">keyboard</span>
+          Manual Entry
+        </h3>
+        <button onclick="closeManualInput()" class="text-slate-500 hover:text-slate-800 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 cursor-pointer">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+      <form onsubmit="submitManualEntry(event)" class="p-5 space-y-4">
+        <div>
+          <p class="text-xs text-slate-500 mb-2">Please key in the exact batch number or QR label value of the material below:</p>
+          <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Batch / Lot Code</label>
+          <input type="text" id="manual-code-input" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:border-rose-500" placeholder="e.g. LOT-231102A" required>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeManualInput()" class="px-4 py-2 border border-slate-300 text-slate-700 font-bold text-xs rounded hover:bg-slate-105 transition-colors cursor-pointer uppercase">Cancel</button>
+          <button type="submit" class="px-4 py-2 bg-rose-600 text-white font-bold text-xs rounded hover:bg-rose-700 transition-colors cursor-pointer uppercase">Verify Code</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Dialog: Printed QR Code Ticket Overlay (For Generate QR) -->
+  <div id="printTicketModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+    <div class="bg-white w-full max-w-[380px] rounded-xl shadow-2xl border border-slate-200 overflow-hidden text-slate-800 p-6 flex flex-col items-center">
+      <div class="w-full flex justify-between items-center border-b border-dashed border-slate-200 pb-3 mb-4 select-none">
+        <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider">Material Picking Ticket</span>
+        <button onclick="closePrintTicket()" class="text-slate-400 hover:text-slate-600"><span class="material-symbols-outlined text-[16px]">close</span></button>
+      </div>
+      
+      <!-- Receipt Layout -->
+      <div class="w-full border border-slate-200 rounded-lg p-4 bg-slate-50 flex flex-col items-center space-y-3 font-mono text-[10px] text-slate-800">
+        <span class="font-black text-xs text-rose-600 tracking-wider font-headline-sm">NICHIRIN AUTOMOTIVE</span>
+        
+        <div class="w-full space-y-1 text-slate-600 border-b border-slate-200 pb-2">
+          <div><span class="font-bold">PART NO:</span> <span id="ticket-part-no" class="float-right text-slate-900 font-bold">BPD-F584A-00</span></div>
+          <div><span class="font-bold">WO CODE:</span> <span id="ticket-wo-no" class="float-right text-slate-900">WO-2026-9041</span></div>
+          <div><span class="font-bold">OPERATOR:</span> <span id="ticket-operator" class="float-right text-slate-900">Amit Sharma</span></div>
+          <div><span class="font-bold">DATE:</span> <span id="ticket-date" class="float-right text-slate-900">2026-07-16</span></div>
+        </div>
+
+        <div class="w-32 h-32 bg-white border border-slate-300 p-2 flex items-center justify-center">
+          <span class="material-symbols-outlined text-[100px] text-slate-900">qr_code_2</span>
+        </div>
+
+        <div class="text-center font-bold text-slate-900 tracking-wider border-t border-slate-200 pt-2 w-full">
+          <span>*PICKING-CLEARED-VERIFIED*</span>
+        </div>
+      </div>
+
+      <div class="flex gap-2 w-full mt-5">
+        <button onclick="window.print()" class="flex-1 py-2.5 bg-slate-900 text-white font-bold text-xs uppercase rounded-xl hover:bg-slate-800 transition-colors flex items-center justify-center gap-1"><span class="material-symbols-outlined text-[16px]">print</span> Print Tag</button>
+        <button onclick="closePrintTicket()" class="flex-1 py-2.5 border border-slate-300 text-slate-700 font-bold text-xs uppercase rounded-xl hover:bg-slate-100 transition-colors">Dismiss</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast system notifications -->
+  <div id="woToast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 ease-out z-[200] border border-slate-800 text-sm">
+    <span class="material-symbols-outlined text-emerald-400" id="woToastIcon">check_circle</span>
+    <span id="woToastMessage">Success beep!</span>
+  </div>
+
+  <!-- Beep audio simulator -->
+  <audio id="beep-sound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-84.wav" preload="auto"></audio>
+
+  <script>
+    let materials = [
+      { id: 1, code: "05-0030-012-00-0000NA", lot: "05-0030-012-00-000094", desc: "EPDM Rubber Hose Layer 94", sfg: "PR0157-0190", method: "Kanban", cut: "C-190", bend: "—", baseQty: "0.19", uom: "mtr", reqQty: "228", status: "Yet to pick" },
+      { id: 2, code: "05-0030-012-00-0000NA", lot: "05-0030-012-00-000234", desc: "EPDM Rubber Hose Layer 234", sfg: "PR0157-0234", method: "Kanban", cut: "C-234", bend: "—", baseQty: "0.23", uom: "mtr", reqQty: "150", status: "Yet to pick" },
+      { id: 3, code: "K35286-30000-C3NII", lot: "K35286-30000", desc: "Metal Collar Sleeve C3", sfg: "COLLAR-C3", method: "Manual Lot Match", cut: "—", bend: "B-C3", baseQty: "1.0", uom: "pcs", reqQty: "1200", status: "Yet to pick" },
+      { id: 4, code: "K41341-00000NII", lot: "K41341-15015", desc: "Fitting Nut Collar 15", sfg: "NUT-15015", method: "Kanban", cut: "—", bend: "—", baseQty: "1.0", uom: "pcs", reqQty: "600", status: "Yet to pick" },
+      { id: 5, code: "K41358-00000NII", lot: "K41358L90180", desc: "Metal Hose Fitting Press 180", sfg: "FITTING-180", method: "Kanban", cut: "—", bend: "B-180", baseQty: "1.0", uom: "pcs", reqQty: "1200", status: "Yet to pick" },
+      { id: 6, code: "K41358-00000NII", lot: "K41358L90190", desc: "Metal Hose Fitting Press 190", sfg: "FITTING-190", method: "Kanban", cut: "—", bend: "B-190", baseQty: "1.0", uom: "pcs", reqQty: "1200", status: "Yet to pick" },
+      { id: 7, code: "PR0157-0000-IND", lot: "PR0157-0180", desc: "Bending Pipe Insert 180", sfg: "PIPE-180", method: "Manual Lot Match", cut: "—", bend: "—", baseQty: "1.0", uom: "pcs", reqQty: "300", status: "Yet to pick" },
+      { id: 8, code: "PR0157-0000-IND", lot: "PR0157-0190", desc: "Bending Pipe Insert 190", sfg: "PIPE-190", method: "Kanban", cut: "C-190", bend: "—", baseQty: "0.19", uom: "mtr", reqQty: "228", status: "Yet to pick" },
+      { id: 9, code: "BH-EPDM-01", lot: "BH-EPDM-01", desc: "EPDM Inner Rubber Hose", sfg: "EPDM-01", method: "Kanban", cut: "—", bend: "—", baseQty: "1.0", uom: "mtr", reqQty: "47", status: "Yet to pick" }
+    ];
+
+    let activeIndex = 7; // Item 8 (PR0157-0190) selected by default to match screenshot
+    let woNo = "WO-2026-9041";
+    let partNo = "BPD-F584A-00-IYN-R02";
+    let operatorName = "Amit Sharma";
+    let pickingStatus = "Yet to pick"; // Status of overall picking
+
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    const paramWO = getQueryParam('wo');
+    if (paramWO) {
+      woNo = paramWO;
+      try {
+        const storedList = localStorage.getItem('workOrdersList');
+        if (storedList) {
+          const parsed = JSON.parse(storedList);
+          const found = parsed.find(w => w.woNumber.toUpperCase() === woNo.toUpperCase());
+          if (found) {
+            partNo = found.partNumber;
+            operatorName = found.operator || "Amit Sharma";
+          }
+        }
+      } catch (e) {}
+    }
+
+    document.getElementById('header-part-number').textContent = partNo;
+    document.getElementById('back-link').setAttribute('href', `../work-order-detail/index.html?wo=${woNo}`);
+
+    function renderMaterialList() {
+      const container = document.getElementById('material-list-container');
+      container.innerHTML = '';
+
+      materials.forEach((m, idx) => {
+        const card = document.createElement('div');
+        const isSelected = idx === activeIndex;
+        
+        let statusStyle = "bg-slate-200 text-slate-600";
+        if (m.status === 'Picked') {
+          statusStyle = "bg-emerald-100 text-emerald-800 font-bold border border-emerald-300/40";
+        } else if (m.status === 'Not available') {
+          statusStyle = "bg-rose-100 text-rose-800 font-bold border border-rose-300/40";
+        }
+
+        card.className = `p-3.5 rounded-xl border cursor-pointer transition-all flex flex-col gap-2 ${
+          isSelected 
+            ? 'bg-white border-rose-500 shadow-md ring-2 ring-rose-500/10' 
+            : 'bg-white border-slate-200 hover:border-slate-350 hover:shadow-sm'
+        }`;
+        
+        card.onclick = () => selectItem(idx);
+        card.innerHTML = `
+          <div class="flex flex-col gap-0.5">
+            <span class="text-xs font-bold text-slate-800 tracking-tight leading-tight">${idx + 1}. ${m.code}</span>
+            <span class="text-[10px] text-slate-400 font-medium font-mono">${m.lot}</span>
+          </div>
+          <div class="flex items-center justify-between mt-1">
+            <span class="text-[9px] px-2.5 py-1 rounded-md font-bold uppercase tracking-wider transition-colors ${statusStyle}">
+              ${m.status === 'Picked' ? '✓ Picked' : m.status}
+            </span>
+            <span class="text-[9px] text-slate-400 font-bold uppercase">${m.reqQty} ${m.uom}</span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      updateCounters();
+    }
+
+    function selectItem(idx) {
+      activeIndex = idx;
+      const m = materials[idx];
+      
+      document.getElementById('item-index-label').textContent = `Item ${idx + 1} of ${materials.length}`;
+      document.getElementById('active-item-title').textContent = m.code;
+      document.getElementById('spec-sfg-code').textContent = m.sfg;
+      document.getElementById('spec-method').textContent = m.method;
+      document.getElementById('spec-cut').textContent = m.cut;
+      document.getElementById('spec-bend').textContent = m.bend;
+      document.getElementById('spec-base-qty').textContent = m.baseQty;
+      document.getElementById('spec-uom').textContent = m.uom;
+      document.getElementById('spec-req-qty').textContent = m.reqQty;
+
+      const scanBox = document.getElementById('scan-box');
+      const scanIcon = document.getElementById('scan-icon');
+      const scanText = document.getElementById('scan-text');
+
+      if (m.status === 'Picked') {
+        scanBox.className = "w-44 h-44 border-2 border-emerald-500 rounded-xl bg-emerald-50/30 flex flex-col items-center justify-center cursor-pointer transition-all shadow-sm";
+        scanIcon.textContent = "check_circle";
+        scanIcon.className = "material-symbols-outlined text-[48px] text-emerald-500";
+        scanText.textContent = "Item Picked successfully";
+      } else if (m.status === 'Not available') {
+        scanBox.className = "w-44 h-44 border-2 border-rose-500 rounded-xl bg-rose-50/30 flex flex-col items-center justify-center cursor-pointer transition-all shadow-sm";
+        scanIcon.textContent = "cancel";
+        scanIcon.className = "material-symbols-outlined text-[48px] text-rose-500";
+        scanText.textContent = "Marked as unavailable";
+      } else {
+        scanBox.className = "w-44 h-44 border-2 border-rose-500 rounded-xl bg-slate-50 flex flex-col items-center justify-center cursor-pointer transition-all hover:bg-slate-100/50 shadow-sm scanner-active";
+        scanIcon.textContent = "qr_code_2";
+        scanIcon.className = "material-symbols-outlined text-[48px] text-rose-500";
+        scanText.textContent = "Tap to scan QR / Barcode";
+      }
+
+      renderMaterialList();
+    }
+
+    function playBeep() {
+      const audio = document.getElementById('beep-sound');
+      if (audio) {
+        audio.currentTime = 0;
+        audio.play().catch(e => console.log("Audio play blocked", e));
+      }
+    }
+
+    function showToast(msg, isSuccess = true) {
+      const toast = document.getElementById('woToast');
+      const msgEl = document.getElementById('woToastMessage');
+      const iconEl = document.getElementById('woToastIcon');
+      if (toast && msgEl) {
+        msgEl.textContent = msg;
+        if (isSuccess) {
+          iconEl.textContent = 'check_circle';
+          iconEl.className = 'material-symbols-outlined text-emerald-400';
+        } else {
+          iconEl.textContent = 'warning';
+          iconEl.className = 'material-symbols-outlined text-rose-400';
+        }
+        toast.classList.add('translate-y-0', 'opacity-100');
+        toast.classList.remove('translate-y-20', 'opacity-0');
+        setTimeout(() => {
+          toast.classList.add('translate-y-20', 'opacity-0');
+          toast.classList.remove('translate-y-0', 'opacity-100');
+        }, 2500);
+      }
+    }
+
+    function simulateScan() {
+      const m = materials[activeIndex];
+      if (m.status === 'Picked') return;
+
+      playBeep();
+      m.status = "Picked";
+      showToast(`Scanned & picked lot "${m.lot}"`);
+      
+      let nextUnpicked = materials.findIndex((item, idx) => idx > activeIndex && item.status === 'Yet to pick');
+      if (nextUnpicked === -1) {
+        nextUnpicked = materials.findIndex(item => item.status === 'Yet to pick');
+      }
+
+      if (nextUnpicked > -1) {
+        setTimeout(() => selectItem(nextUnpicked), 800);
+      } else {
+        selectItem(activeIndex);
+      }
+    }
+
+    function markAsNotAvailable() {
+      const m = materials[activeIndex];
+      m.status = "Not available";
+      showToast(`Marked ${m.code} as unavailable`, false);
+      
+      let nextUnpicked = materials.findIndex((item, idx) => idx > activeIndex && item.status === 'Yet to pick');
+      if (nextUnpicked === -1) {
+        nextUnpicked = materials.findIndex(item => item.status === 'Yet to pick');
+      }
+
+      if (nextUnpicked > -1) {
+        selectItem(nextUnpicked);
+      } else {
+        selectItem(activeIndex);
+      }
+    }
+
+    function updateCounters() {
+      const picked = materials.filter(m => m.status === 'Picked').length;
+      const notAvail = materials.filter(m => m.status === 'Not available').length;
+      
+      document.getElementById('picked-counter').textContent = `Picked ${picked}/${materials.length}`;
+      document.getElementById('not-available-counter').textContent = `Not available ${notAvail}`;
+
+      const btn = document.getElementById('submit-verification-btn');
+      if (pickingStatus === 'Yet to pick') {
+        if (picked + notAvail === materials.length) {
+          btn.disabled = false;
+          btn.className = "w-full py-3 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-md cursor-pointer";
+        } else {
+          btn.disabled = true;
+          btn.className = "w-full py-3 rounded-xl font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all cursor-not-allowed bg-slate-200 text-slate-400";
+        }
+      } else if (pickingStatus === 'Pending Approval') {
+        btn.disabled = true;
+        btn.textContent = "Awaiting Supervisor approval...";
+        btn.className = "w-full py-3 rounded-xl font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all cursor-not-allowed bg-amber-500 text-white animate-pulse";
+      } else if (pickingStatus === 'Approved') {
+        btn.disabled = false;
+        btn.onclick = openPrintTicket;
+        btn.innerHTML = `<span class="material-symbols-outlined text-[16px]">qr_code_2</span> Generate QR & Print Tag`;
+        btn.className = "w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-md cursor-pointer";
+      }
+    }
+
+    function submitForVerification() {
+      pickingStatus = "Pending Approval";
+      document.getElementById('supervisor-sim-box').classList.remove('hidden');
+      showToast("Verification request sent to supervisor!");
+      updateCounters();
+    }
+
+    function approvePickingRequest() {
+      pickingStatus = "Approved";
+      document.getElementById('supervisor-sim-box').classList.add('hidden');
+      showToast("Picking verification approved by supervisor!", true);
+      
+      try {
+        const storedList = localStorage.getItem('workOrdersList');
+        if (storedList) {
+          const parsed = JSON.parse(storedList);
+          const idx = parsed.findIndex(w => w.woNumber.toUpperCase() === woNo.toUpperCase());
+          if (idx > -1) {
+            const stepIdx = parsed[idx].steps.findIndex(s => s.name.toLowerCase().includes('pick'));
+            if (stepIdx > -1) {
+              parsed[idx].steps[stepIdx].status = 'completed';
+              parsed[idx].steps[stepIdx].time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+              
+              if (parsed[idx].steps[stepIdx + 1]) {
+                parsed[idx].steps[stepIdx + 1].status = 'active';
+              }
+              
+              localStorage.setItem('workOrdersList', JSON.stringify(parsed));
+            }
+          }
+        }
+      } catch (e) {
+        console.error("Failed to update active step status in template storage", e);
+      }
+
+      updateCounters();
+    }
+
+    function openManualInput() {
+      document.getElementById('manualInputModal').classList.remove('hidden');
+      document.getElementById('manual-code-input').focus();
+    }
+
+    function closeManualInput() {
+      document.getElementById('manualInputModal').classList.add('hidden');
+    }
+
+    function submitManualEntry(e) {
+      e.preventDefault();
+      const code = document.getElementById('manual-code-input').value.trim();
+      const m = materials[activeIndex];
+      
+      playBeep();
+      m.status = "Picked";
+      m.lot = code;
+      
+      closeManualInput();
+      showToast(`Manual verification pass: "${code}"`);
+      
+      let nextUnpicked = materials.findIndex((item, idx) => idx > activeIndex && item.status === 'Yet to pick');
+      if (nextUnpicked === -1) {
+        nextUnpicked = materials.findIndex(item => item.status === 'Yet to pick');
+      }
+
+      if (nextUnpicked > -1) {
+        setTimeout(() => selectItem(nextUnpicked), 800);
+      } else {
+        selectItem(activeIndex);
+      }
+    }
+
+    function openPrintTicket() {
+      document.getElementById('ticket-part-no').textContent = partNo.substring(0, 12);
+      document.getElementById('ticket-wo-no').textContent = woNo;
+      document.getElementById('ticket-operator').textContent = operatorName;
+      document.getElementById('ticket-date').textContent = new Date().toISOString().split('T')[0];
+      
+      document.getElementById('printTicketModal').classList.remove('hidden');
+    }
+
+    function closePrintTicket() {
+      document.getElementById('printTicketModal').classList.add('hidden');
+    }
+
+    selectItem(7);
+  </script>
+</body>
+</html>
