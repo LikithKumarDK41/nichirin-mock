@@ -109,28 +109,82 @@
           </h3>
         </div>
         <div class="p-6 space-y-6 flex-1 text-sm">
+          <!-- Production Line & Priority (hidden but preserved in DOM for compatibility) -->
           <div class="grid grid-cols-2 gap-4 hidden">
             <div>
               <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Production Line <span class="text-error">*</span></label>
-              <select id="planning-line-select" class="w-full border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold" onchange="validatePlanningForm(); saveActiveWO();">
-                <option disabled="" value="">Select Line...</option>
+              <select id="planning-line-select">
                 <option value="Line 1 (Faridabad Brake Hose Assembly)">Line 1 (Hose)</option>
-                <option value="Line 2 (Faridabad Brake Tube Assembly)">Line 2 (Tube)</option>
-                <option value="Line 3 (Specialty Jigs Assembly)">Line 3 (Jigs)</option>
               </select>
             </div>
             <div>
               <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Priority</label>
-              <select id="planning-priority-select" class="w-full border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold" onchange="saveActiveWO();">
+              <select id="planning-priority-select">
                 <option value="Normal">Normal</option>
-                <option value="High">High Priority</option>
               </select>
             </div>
           </div>
+
+          <!-- Select Process -->
+          <div>
+            <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Select Process <span class="text-error">*</span></label>
+            <select id="planning-process-select" class="w-full border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold" onchange="onProcessChange()">
+              <option value="Picking (BOM)">Picking (BOM)</option>
+              <option value="Hose Cutting">Hose Cutting</option>
+              <option value="Protector Cutting">Protector Cutting</option>
+              <option value="Fitting Bending">Fitting Bending</option>
+              <option value="Manufacturing Lot Stamping">Manufacturing Lot Stamping</option>
+              <option value="Accessories Insertion-1">Accessories Insertion-1</option>
+              <option value="Crimping-1">Crimping-1</option>
+              <option value="Accessories Insertion-2">Accessories Insertion-2</option>
+              <option value="Crimping-2">Crimping-2</option>
+              <option value="Accessories Bonding">Accessories Bonding</option>
+              <option value="Pressure Test">Pressure Test</option>
+              <option value="Final Inspection">Final Inspection</option>
+              <option value="Packing">Packing</option>
+            </select>
+          </div>
+
+          <!-- Machine Allocation -->
+          <div>
+            <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Machine Allocation</label>
+            <select id="planning-machine-select" class="w-full border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold">
+              <option value="Store Area">Store Area</option>
+              <option value="Hose Cutter HC-04">Hose Cutter HC-04</option>
+              <option value="Sleeve Cutter SC-01">Sleeve Cutter SC-01</option>
+              <option value="CNC Pipe Bender PB-12">CNC Pipe Bender PB-12</option>
+              <option value="Lot Stamper LS-09">Lot Stamper LS-09</option>
+              <option value="Assembly Station-1">Assembly Station-1</option>
+              <option value="Assembly Station-2">Assembly Station-2</option>
+              <option value="Crimper CR-02">Crimper CR-02</option>
+              <option value="Crimper CR-05">Crimper CR-05</option>
+              <option value="Bonding Jig BJ-59">Bonding Jig BJ-59</option>
+              <option value="LTM-07 Rig">LTM-07 Rig</option>
+              <option value="FI-HMSI-59 Jig">FI-HMSI-59 Jig</option>
+              <option value="Packing Line PL-03">Packing Line PL-03</option>
+              <option value="Manual Station">Manual Station</option>
+            </select>
+          </div>
+
+          <!-- Operator Allocation -->
+          <div>
+            <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Operator Allocation</label>
+            <div class="flex gap-2">
+              <select id="planning-operator-select" class="flex-1 border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold">
+                <!-- populated dynamically with operators -->
+              </select>
+              <button class="bg-primary text-white px-4 py-2 rounded-lg font-semibold text-sm hover:opacity-95 transition-colors cursor-pointer shadow-sm" type="button" onclick="assignOperator()">Assign</button>
+            </div>
+            <div class="mt-3 flex flex-wrap gap-2" id="planning-operator-badges">
+              <!-- Badge populated dynamically -->
+            </div>
+          </div>
+
+          <!-- Shift Allocation & Target Time -->
           <div class="grid grid-cols-2 gap-4">
             <div>
               <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Shift Allocation <span class="text-error">*</span></label>
-              <select id="planning-shift-select" class="w-full border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold" onchange="validatePlanningForm(); saveActiveWO();">
+              <select id="planning-shift-select" class="w-full border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold" onchange="validatePlanningForm();">
                 <option disabled="" value="">Select Shift...</option>
                 <option value="Shift A">Shift A (06:00 - 14:00)</option>
                 <option value="Shift B">Shift B (14:00 - 22:00)</option>
@@ -138,24 +192,12 @@
             </div>
             <div>
               <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Target Start Time</label>
-              <input id="planning-start-time" class="w-full border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold" type="datetime-local" value="2026-07-13T06:00" onchange="saveActiveWO();"/>
+              <input id="planning-start-time" class="w-full border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold" type="datetime-local" value="2026-07-13T06:00"/>
             </div>
           </div>
-          <div>
-            <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Operator Allocation</label>
-            <div class="flex gap-2">
-              <select id="planning-operator-select" class="flex-1 border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold">
-                <!-- populated dynamically with Indian operators -->
-              </select>
-              <button class="bg-primary text-white px-4 py-2 rounded-lg font-semibold text-sm hover:opacity-95 transition-colors cursor-pointer shadow-sm" onclick="assignOperator()">Assign</button>
-            </div>
-            <div class="mt-3 flex flex-wrap gap-2" id="planning-operator-badges">
-              <!-- Badge populated dynamically -->
-            </div>
-          </div>
-
+          
           <div class="pt-4 border-t border-outline-variant/30 flex justify-end">
-            <button class="bg-primary text-white px-6 py-2 rounded-lg text-sm font-semibold hover:opacity-95 transition-all shadow-sm cursor-pointer" onclick="saveActiveWO()">Save Plan</button>
+            <button class="bg-primary text-white px-6 py-2 rounded-lg text-sm font-semibold hover:opacity-95 transition-all shadow-sm cursor-pointer" type="button" onclick="saveActiveWO()">Save Plan</button>
           </div>
         </div>
       </div>
@@ -167,14 +209,47 @@
 (function() {
     let workOrdersList = [];
     let activeWO = null;
+    let currentAssignedOperators = [];
 
-    // Load work orders database from localStorage
-    function loadWorkOrders() {
+    // Load work orders database from localStorage (or fetch from workorders.json)
+    async function loadWorkOrders() {
+        let loaded = false;
         const localData = localStorage.getItem('workOrdersList');
         if (localData) {
             try {
-                workOrdersList = JSON.parse(localData);
+                const parsed = JSON.parse(localData);
+                if (parsed && parsed.length >= 9 && parsed[0].woNumber) {
+                    workOrdersList = parsed;
+                    loaded = true;
+                }
             } catch(e) {}
+        }
+        if (!loaded) {
+            try {
+                const res = await fetch('../work-orders/workorders.json');
+                if (res.ok) {
+                    workOrdersList = await res.json();
+                    localStorage.setItem('workOrdersList', JSON.stringify(workOrdersList));
+                }
+            } catch(e) {
+                console.error("Failed to load workorders list", e);
+            }
+        }
+        
+        populateOperatorsDropdown();
+        
+        // Select initial WO
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlWo = urlParams.get('wo');
+        let initialWO = null;
+        if (urlWo) {
+            initialWO = workOrdersList.find(w => w.woNumber.toUpperCase() === urlWo.toUpperCase());
+        }
+        if (!initialWO) {
+            initialWO = workOrdersList.find(w => w.status === 'Waiting' || w.status === 'Held') || workOrdersList[0];
+        }
+        if (initialWO) {
+            selectPlanningWO(initialWO.woNumber);
         }
     }
 
@@ -249,6 +324,25 @@
         activeWO = workOrdersList.find(w => w.woNumber === woNumber) || workOrdersList[0];
         if (!activeWO) return;
 
+        // Ensure ccProcesses is initialized for this work order
+        if (!activeWO.ccProcesses) {
+            activeWO.ccProcesses = [
+                { name: "Picking (BOM)", machine: "Store Area", operator: "Pooja / Anil", status: "completed" },
+                { name: "Hose Cutting", machine: "Hose Cutter HC-04", operator: "Anish / Sunil", status: "completed" },
+                { name: "Protector Cutting", machine: "Sleeve Cutter SC-01", operator: "Amit", status: "completed" },
+                { name: "Fitting Bending", machine: "CNC Pipe Bender PB-12", operator: "Raju", status: "completed" },
+                { name: "Manufacturing Lot Stamping", machine: "Lot Stamper LS-09", operator: "Shiv Shambhu / Manoj", status: "completed" },
+                { name: "Accessories Insertion-1", machine: "Assembly Station-1", operator: "Vipin", status: "completed" },
+                { name: "Accessories Insertion-2", machine: "Assembly Station-2", operator: "Vipin", status: "completed" },
+                { name: "Crimping-1", machine: "Crimper CR-02", operator: "Vipin / Kiran", status: "completed" },
+                { name: "Crimping-2", machine: "Crimper CR-05", operator: "Vipin / Kiran", status: "completed" },
+                { name: "Accessories Bonding", machine: "Bonding Jig BJ-59", operator: "Nazma / Sushma", status: "completed" },
+                { name: "Pressure Test", machine: "LTM-07 Rig", operator: "Aniket", status: "completed" },
+                { name: "Final Inspection", machine: "FI-HMSI-59 Jig", operator: "Rubi / Garima", status: "completed" },
+                { name: "Packing", machine: "Packing Line PL-03", operator: "Anjali / Shy", status: "completed" }
+            ];
+        }
+
         // Update Summary details
         const selectedText = document.getElementById('planning-wo-selected-text');
         if (selectedText) {
@@ -260,22 +354,45 @@
         document.getElementById('wo-summary-qty').textContent = `${activeWO.targetQty.toLocaleString()} units`;
 
         // Update Form fields
-        document.getElementById('planning-line-select').value = activeWO.line.includes('Line 1') ? 'Line 1 (Faridabad Brake Hose Assembly)' :
-                                                                 activeWO.line.includes('Line 2') ? 'Line 2 (Faridabad Brake Tube Assembly)' :
-                                                                 activeWO.line.includes('Line 3') ? 'Line 3 (Specialty Jigs Assembly)' : '';
-        document.getElementById('planning-priority-select').value = activeWO.priority === 'High' ? 'High' : 'Normal';
         document.getElementById('planning-shift-select').value = activeWO.shift || 'Shift A';
 
-        // Update Operator Badges
-        renderOperatorBadges();
-
-        // Validate and update checklist
-        validatePlanningForm();
+        // Select the first process by default
+        document.getElementById('planning-process-select').value = "Picking (BOM)";
+        onProcessChange();
     }
 
-    function getOperatorsArray() {
-        if (!activeWO || !activeWO.operator || activeWO.operator === 'Unassigned') return [];
-        return activeWO.operator.split(',').map(s => s.trim()).filter(Boolean);
+    function onProcessChange() {
+        if (!activeWO) return;
+        const selectedProcName = document.getElementById('planning-process-select').value;
+        const proc = activeWO.ccProcesses.find(p => p.name === selectedProcName);
+        if (!proc) return;
+
+        // Sync machine dropdown
+        const machineSelect = document.getElementById('planning-machine-select');
+        if (machineSelect) {
+            // Find option matching proc.machine, otherwise fallback
+            let found = false;
+            for (let i = 0; i < machineSelect.options.length; i++) {
+                if (machineSelect.options[i].value === proc.machine) {
+                    machineSelect.selectedIndex = i;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                machineSelect.value = "Manual Station";
+            }
+        }
+
+        // Sync operators array
+        if (!proc.operator || proc.operator === 'Unassigned') {
+            currentAssignedOperators = [];
+        } else {
+            currentAssignedOperators = proc.operator.split('/').map(s => s.trim()).filter(Boolean);
+        }
+
+        renderOperatorBadges();
+        validatePlanningForm();
     }
 
     function renderOperatorBadges() {
@@ -283,18 +400,17 @@
         if (!badgesContainer) return;
         badgesContainer.innerHTML = '';
 
-        const ops = getOperatorsArray();
-        if (ops.length === 0) {
+        if (currentAssignedOperators.length === 0) {
             badgesContainer.innerHTML = '<span class="text-xs text-slate-400 font-semibold italic">No operators assigned</span>';
             return;
         }
 
-        ops.forEach(op => {
+        currentAssignedOperators.forEach(op => {
             const badge = document.createElement('span');
-            badge.className = 'bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-body-sm text-body-sm flex items-center gap-1 border border-secondary-fixed font-semibold select-none';
+            badge.className = 'bg-slate-100 text-slate-800 px-3 py-1 rounded-full font-body-sm text-body-sm flex items-center gap-1 border border-slate-200 font-semibold select-none';
             badge.innerHTML = `
                 ${op}
-                <span class="material-symbols-outlined text-[14px] cursor-pointer hover:text-error ml-1" onclick="removeOperator('${op}')">close</span>
+                <span class="material-symbols-outlined text-[14px] cursor-pointer hover:text-rose-600 ml-1 font-bold" onclick="removeOperator('${op}')">close</span>
             `;
             badgesContainer.appendChild(badge);
         });
@@ -305,16 +421,29 @@
         if (!select) return;
         select.innerHTML = '';
         
-        // List of realistic Indian operators matching users.json
+        // realistic operator names from work order details
         const operators = [
-            "Amit Sharma",
+            "Pooja",
+            "Anil",
+            "Anish",
+            "Sunil",
+            "Amit",
+            "Raju",
+            "Shiv Shambhu",
+            "Manoj",
+            "Vipin",
+            "Kiran",
+            "Nazma",
+            "Sushma",
+            "Aniket",
+            "Rubi",
+            "Garima",
+            "Anjali",
+            "Shy",
             "Sandeep Singh",
             "Ramesh Kumar",
             "Vijay Yadav",
-            "Rahul Sen",
-            "Sunita Sharma",
-            "Arjun Kapoor",
-            "Deepak Gupta"
+            "Rahul Sen"
         ];
         
         operators.forEach(op => {
@@ -329,39 +458,31 @@
         const select = document.getElementById('planning-operator-select');
         if (!select || !activeWO) return;
         const newOp = select.value;
-        let ops = getOperatorsArray();
-        if (!ops.includes(newOp)) {
-            ops.push(newOp);
+        if (!currentAssignedOperators.includes(newOp)) {
+            currentAssignedOperators.push(newOp);
         }
-        activeWO.operator = ops.join(', ');
         renderOperatorBadges();
         validatePlanningForm();
-        saveActiveWO();
     }
 
     function removeOperator(opName) {
         if (!activeWO) return;
-        let ops = getOperatorsArray();
-        ops = ops.filter(o => o !== opName);
-        activeWO.operator = ops.length > 0 ? ops.join(', ') : 'Unassigned';
+        currentAssignedOperators = currentAssignedOperators.filter(o => o !== opName);
         renderOperatorBadges();
         validatePlanningForm();
-        saveActiveWO();
     }
 
     function validatePlanningForm() {
         if (!activeWO) return;
 
-        const lineVal = document.getElementById('planning-line-select').value;
         const shiftVal = document.getElementById('planning-shift-select').value;
-        const hasOperator = activeWO.operator && activeWO.operator !== 'Unassigned';
+        const hasOperator = currentAssignedOperators.length > 0;
 
         const checks = {
             template: { ok: true, label: "Template mapped", desc: `Card #${activeWO.woNumber} structure confirmed.` },
             bom: { ok: true, label: "BOM available", desc: "Materials verified in SAP ERP." },
-            line: { ok: !!lineVal, label: "Line selected", desc: lineVal ? `Assigned: ${lineVal.split(' (')[0]}` : "Line selection pending." },
             shift: { ok: !!shiftVal, label: "Shift selected", desc: shiftVal ? `Assigned: ${shiftVal}` : "Shift selection pending." },
-            operator: { ok: hasOperator, label: "Operator assigned", desc: hasOperator ? `Assigned: ${activeWO.operator}` : "No operator assigned." },
+            operator: { ok: hasOperator, label: "Operator assigned", desc: hasOperator ? `Assigned: ${currentAssignedOperators.join(', ')}` : "No operator assigned." },
             stages: { ok: true, label: "Stages configured", desc: `${activeWO.steps.length} checklist stages verified.` },
             control: { ok: true, label: "Control points mapping", desc: "Quality inspection points bound." }
         };
@@ -399,14 +520,14 @@
         // Update score badge
         const scoreBadge = document.getElementById('validation-score-badge');
         if (scoreBadge) {
-            scoreBadge.textContent = `${okCount}/7 OK`;
+            scoreBadge.textContent = `${okCount}/6 OK`;
         }
 
         // Enable / Disable button and show warning
         const releaseBtn = document.getElementById('planningReleaseBtn');
         const warningBox = document.getElementById('validation-warning-box');
 
-        if (okCount === 7) {
+        if (okCount === 6) {
             if (releaseBtn) releaseBtn.disabled = false;
             if (warningBox) {
                 warningBox.innerHTML = `
@@ -445,12 +566,18 @@
         if (!activeWO) return;
         
         // Read form values and update activeWO
-        const lineVal = document.getElementById('planning-line-select').value;
-        const priorityVal = document.getElementById('planning-priority-select').value;
+        const selectedProcName = document.getElementById('planning-process-select').value;
+        const machineVal = document.getElementById('planning-machine-select').value;
         const shiftVal = document.getElementById('planning-shift-select').value;
 
-        activeWO.line = lineVal;
-        activeWO.priority = priorityVal;
+        // Save process-specific settings
+        const proc = activeWO.ccProcesses.find(p => p.name === selectedProcName);
+        if (proc) {
+            proc.machine = machineVal;
+            proc.operator = currentAssignedOperators.length > 0 ? currentAssignedOperators.join(' / ') : 'Unassigned';
+        }
+
+        // Save general work order shift
         activeWO.shift = shiftVal;
 
         // Save back to list and localStorage
@@ -460,7 +587,8 @@
             localStorage.setItem('workOrdersList', JSON.stringify(workOrdersList));
         }
 
-        showPlanningToast(`Plan for ${activeWO.woNumber} saved successfully.`);
+        showPlanningToast(`Plan for process "${selectedProcName}" saved successfully.`);
+        validatePlanningForm();
     }
 
     // Bind window functions
@@ -471,24 +599,10 @@
     window.validatePlanningForm = validatePlanningForm;
     window.togglePlanningDropdown = togglePlanningDropdown;
     window.filterPlanningDropdown = filterPlanningDropdown;
+    window.onProcessChange = onProcessChange;
 
     // Run on startup
     loadWorkOrders();
-    populateOperatorsDropdown();
-    
-    // Check URL parameters for pre-selected WO
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlWo = urlParams.get('wo');
-    let initialWO = null;
-    if (urlWo) {
-        initialWO = workOrdersList.find(w => w.woNumber.toUpperCase() === urlWo.toUpperCase());
-    }
-    if (!initialWO) {
-        initialWO = workOrdersList.find(w => w.status === 'Waiting' || w.status === 'Held') || workOrdersList[0];
-    }
-    if (initialWO) {
-        selectPlanningWO(initialWO.woNumber);
-    }
 })();
 </script>
 <div id="planningToast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 z-50 font-semibold text-sm">

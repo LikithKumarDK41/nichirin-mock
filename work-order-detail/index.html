@@ -1277,21 +1277,24 @@
             if (!tbody) return;
             tbody.innerHTML = '';
 
-            const ccProcesses = [
-                { name: "Picking (BOM)", machine: "Store Area", operator: "Pooja / Anil", status: "completed" },
-                { name: "Hose Cutting", machine: "Hose Cutter HC-04", operator: "Anish / Sunil", status: "completed" },
-                { name: "Protector Cutting", machine: "Sleeve Cutter SC-01", operator: "Amit", status: "completed" },
-                { name: "Fitting Bending", machine: "CNC Pipe Bender PB-12", operator: "Raju", status: "completed" },
-                { name: "Manufacturing Lot Stamping", machine: "Lot Stamper LS-09", operator: "Shiv Shambhu / Manoj", status: "completed" },
-                { name: "Accessories Insertion-1", machine: "Assembly Station-1", operator: "Vipin", status: "completed" },
-                { name: "Accessories Insertion-2", machine: "Assembly Station-2", operator: "Vipin", status: "completed" },
-                { name: "Crimping-1", machine: "Crimper CR-02", operator: "Vipin / Kiran", status: "completed" },
-                { name: "Crimping-2", machine: "Crimper CR-05", operator: "Vipin / Kiran", status: "completed" },
-                { name: "Accessories Bonding", machine: "Bonding Jig BJ-59", operator: "Nazma / Sushma", status: "completed" },
-                { name: "Pressure Test", machine: "LTM-07 Rig", operator: "Aniket", status: "completed" },
-                { name: "Final Inspection", machine: "FI-HMSI-59 Jig", operator: "Rubi / Garima", status: "completed" },
-                { name: "Packing", machine: "Packing Line PL-03", operator: "Anjali / Shy", status: "completed" }
-            ];
+            if (!activeWO.ccProcesses) {
+                activeWO.ccProcesses = [
+                    { name: "Picking (BOM)", machine: "Store Area", operator: "Pooja / Anil", status: "completed" },
+                    { name: "Hose Cutting", machine: "Hose Cutter HC-04", operator: "Anish / Sunil", status: "completed" },
+                    { name: "Protector Cutting", machine: "Sleeve Cutter SC-01", operator: "Amit", status: "completed" },
+                    { name: "Fitting Bending", machine: "CNC Pipe Bender PB-12", operator: "Raju", status: "completed" },
+                    { name: "Manufacturing Lot Stamping", machine: "Lot Stamper LS-09", operator: "Shiv Shambhu / Manoj", status: "completed" },
+                    { name: "Accessories Insertion-1", machine: "Assembly Station-1", operator: "Vipin", status: "completed" },
+                    { name: "Accessories Insertion-2", machine: "Assembly Station-2", operator: "Vipin", status: "completed" },
+                    { name: "Crimping-1", machine: "Crimper CR-02", operator: "Vipin / Kiran", status: "completed" },
+                    { name: "Crimping-2", machine: "Crimper CR-05", operator: "Vipin / Kiran", status: "completed" },
+                    { name: "Accessories Bonding", machine: "Bonding Jig BJ-59", operator: "Nazma / Sushma", status: "completed" },
+                    { name: "Pressure Test", machine: "LTM-07 Rig", operator: "Aniket", status: "completed" },
+                    { name: "Final Inspection", machine: "FI-HMSI-59 Jig", operator: "Rubi / Garima", status: "completed" },
+                    { name: "Packing", machine: "Packing Line PL-03", operator: "Anjali / Shy", status: "completed" }
+                ];
+            }
+            const ccProcesses = activeWO.ccProcesses;
 
             const totalItems = ccProcesses.length;
             const totalPages = Math.ceil(totalItems / teamPageSize);
