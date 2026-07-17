@@ -1,6 +1,6 @@
 [
   {
-    "woNumber": "WO-2026-9041",
+    "woNumber": "WO-22615540",
     "productName": "Brake Hose Assembly - Front Disc",
     "partNumber": "BPD-F584A-00-IYN-R02",
     "line": "Line 1 (Faridabad Brake Hose Assembly)",
@@ -41,7 +41,7 @@
     ]
   },
   {
-    "woNumber": "WO-2026-9042",
+    "woNumber": "WO-22615541",
     "productName": "Rear Brake Hose Tube Assembly",
     "partNumber": "BPD-X221B-00-IYN-R01",
     "line": "Line 2 (Faridabad Brake Tube Assembly)",
@@ -80,7 +80,7 @@
     ]
   },
   {
-    "woNumber": "WO-2026-9043",
+    "woNumber": "WO-22615542",
     "productName": "Front Caliper Hose Assembly",
     "partNumber": "BPD-C302F-00-IYN-R03",
     "line": "Line 1 (Faridabad Brake Hose Assembly)",
@@ -103,12 +103,12 @@
       { "name": "Hose Cutting 1 & 2", "time": "Pending", "status": "pending", "operator": "Amit Sharma", "machine": "Automatic Hose Cutter (MC-CUT-01)", "parameter": "Hose Cut Length", "limits": "234 ± 2 mm / 94 ± 2 mm", "instruction": "Load inner EPDM tube. Slice lengths to 234±2mm or 94±2mm on scaling deck. Check for smooth edges without distortion." }
     ],
     "bom": [
-      { "code": "BH-EPDM-01", "desc": "EPDM Inner Rubber Hose (Inner Layer)", "req": "47.0 meters", "lot": "LOT-231102A", "verification": "VERIFIED", "timestamp": "2026-07-13 06:15 AM" },
+      { "code": "BH-EPDM-01", "desc": "EPDM Inner Rubber Hose (Inner Layer)", "req": "47.0 meters", "lot": "LOT-231102A", "verification": "PENDING", "timestamp": "--" },
       { "code": "F-COLLAR-12", "desc": "Metal Fitting Collar 12mm", "req": "500 units", "lot": "LOT-231015C", "verification": "PENDING", "timestamp": "--" }
     ]
   },
   {
-    "woNumber": "WO-2026-9044",
+    "woNumber": "WO-22615543",
     "productName": "High Pressure Hose Assembly",
     "partNumber": "BPD-H882A-01-IYN-R04",
     "line": "Line 3 (Specialty Jigs Assembly)",
@@ -142,7 +142,7 @@
     ]
   },
   {
-    "woNumber": "WO-2026-9045",
+    "woNumber": "WO-22615544",
     "productName": "Front Brake Hose Assembly Left",
     "partNumber": "BPD-F585B-00-IYN-R05",
     "line": "Line 1 (Faridabad Brake Hose Assembly)",
@@ -170,7 +170,7 @@
     ]
   },
   {
-    "woNumber": "WO-2026-9046",
+    "woNumber": "WO-22615545",
     "productName": "Front Brake Hose Assembly Right",
     "partNumber": "BPD-F586C-00-IYN-R06",
     "line": "Line 1 (Faridabad Brake Hose Assembly)",
@@ -195,7 +195,7 @@
     ]
   },
   {
-    "woNumber": "WO-2026-9047",
+    "woNumber": "WO-22615546",
     "productName": "Rear Brake Hose Assembly Left",
     "partNumber": "BPD-X222C-00-IYN-R02",
     "line": "Line 2 (Faridabad Brake Tube Assembly)",
@@ -221,7 +221,7 @@
     ]
   },
   {
-    "woNumber": "WO-2026-9048",
+    "woNumber": "WO-22615547",
     "productName": "Rear Brake Hose Assembly Right",
     "partNumber": "BPD-X223D-00-IYN-R03",
     "line": "Line 2 (Faridabad Brake Tube Assembly)",
@@ -247,7 +247,7 @@
     ]
   },
   {
-    "woNumber": "WO-2026-9049",
+    "woNumber": "WO-22615548",
     "productName": "High Pressure Hose Assembly II",
     "partNumber": "BPD-H883B-01-IYN-R05",
     "line": "Line 3 (Specialty Jigs Assembly)",

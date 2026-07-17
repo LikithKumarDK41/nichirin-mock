@@ -2,8 +2,8 @@
   "stages": [
     { "id": "stage-picking", "name": "PICKING", "summary": "Retrieve rubber pipes, brackets, protect sleeve fittings from warehouse storage racks." },
     { "id": "stage-offline", "name": "OFFLINE", "summary": "Offline raw materials preparation, barcode checks, cutting rubber pipes & metal sleeve sorting." },
-    { "id": "stage-online", "name": "ONLINE", "summary": "Double pipe assembly bending, metal hose fitting press crimping, baking, adhesive bonding, double pipe torque check." },
-    { "id": "stage-qc", "name": "QC APPROVAL", "summary": "100% leak test visual check, pressure inspection, stamping barcode tags, packaging release." }
+    { "id": "stage-online", "name": "ONLINE ASSEMBLY", "summary": "Double pipe assembly bending, metal hose fitting press crimping, baking, adhesive bonding, double pipe torque check." },
+    { "id": "stage-qc", "name": "QUALITY CONTROL", "summary": "100% leak test visual check, pressure inspection, stamping barcode tags, packaging release." }
   ],
   "steps": [
     {
@@ -104,23 +104,30 @@
       "id": "step-off-1",
       "stageId": "stage-offline",
       "stepNumber": "STEP 01",
-      "name": "EPDM Inner Hose Prep",
+      "name": "Hose Cutting",
       "code": "PRC-OFF-01",
       "mandatory": true,
+      "description": "Slice EPDM tubes to standard cut lengths.",
       "fields": {
-        "Material": "Inner rubber layer",
-        "Lot check": "Manual input"
+        "Action": "EPDM Cutting",
+        "Machine": "Cutting Jig Scale",
+        "Length Std": "659 ± 3 mm"
       },
       "prerequisite": "",
-      "dependencies": [],
-      "parameters": [],
+      "dependencies": [
+        { "name": "Material Picking", "code": "PRC-MAT-01" }
+      ],
+      "parameters": [
+        { "name": "Cut Length", "standard": "659.0 mm", "tolerance": "±3.0 mm" },
+        { "name": "Insertion Mark", "standard": "16.0 mm", "tolerance": "+0 / -1.5 mm" }
+      ],
       "startConditions": {
         "operatorScan": true,
         "machineReady": false,
         "toolCalibration": false
       },
       "completionConditions": {
-        "allParameters": false,
+        "allParameters": true,
         "dualQCSignoff": false,
         "autoPrintLabel": false
       },
@@ -133,77 +140,22 @@
       "id": "step-off-2",
       "stageId": "stage-offline",
       "stepNumber": "STEP 02",
-      "name": "Sort Sleeve Brackets",
+      "name": "Protector Cutting",
       "code": "PRC-OFF-02",
       "mandatory": true,
+      "description": "Cut protector sleeve sleeves to standard lengths.",
       "fields": {
-        "Part": "Sleeve & bracket",
-        "Action": "Visual check sorting"
+        "Action": "Sleeve Cutting",
+        "Machine": "PCM-04 Machine",
+        "Standard L": "260 mm & 160 mm"
       },
       "prerequisite": "step-off-1",
-      "dependencies": [],
-      "parameters": [],
-      "startConditions": {
-        "operatorScan": false,
-        "machineReady": false,
-        "toolCalibration": false
-      },
-      "completionConditions": {
-        "allParameters": false,
-        "dualQCSignoff": false,
-        "autoPrintLabel": false
-      },
-      "sapSync": true,
-      "bomAvailable": true,
-      "operatorVerified": false,
-      "inputMethod": "Manual Entry + Photo"
-    },
-    {
-      "id": "step-onl-1",
-      "stageId": "stage-online",
-      "stepNumber": "STEP 01",
-      "name": "Assemble Sleeve to Pipe",
-      "code": "PRC-ONL-01",
-      "mandatory": true,
-      "fields": {
-        "Task": "Insert sleeve",
-        "Check": "Orientation"
-      },
-      "prerequisite": "",
-      "dependencies": [],
-      "parameters": [],
-      "startConditions": {
-        "operatorScan": true,
-        "machineReady": false,
-        "toolCalibration": false
-      },
-      "completionConditions": {
-        "allParameters": false,
-        "dualQCSignoff": false,
-        "autoPrintLabel": false
-      },
-      "sapSync": true,
-      "bomAvailable": true,
-      "operatorVerified": false,
-      "inputMethod": "Manual Entry + Photo"
-    },
-    {
-      "id": "step-onl-2",
-      "stageId": "stage-online",
-      "stepNumber": "STEP 02",
-      "name": "Double Pipe Bending",
-      "code": "PRC-ONL-02",
-      "mandatory": true,
-      "fields": {
-        "Action": "Bending machine #4",
-        "Mandrel": "Standard M-10"
-      },
-      "prerequisite": "step-onl-1",
       "dependencies": [
-        { "name": "Assemble Sleeve to Pipe", "code": "PRC-ONL-01" }
+        { "name": "Hose Cutting", "code": "PRC-OFF-01" }
       ],
       "parameters": [
-        { "name": "Bending Angle", "standard": "90.0 deg", "tolerance": "±2.0" }
+        { "name": "Sleeve L260", "standard": "260.0 mm", "tolerance": "±4.0 mm" },
+        { "name": "Sleeve L160", "standard": "160.0 mm", "tolerance": "±3.0 mm" }
       ],
       "startConditions": {
         "operatorScan": true,
@@ -221,22 +173,25 @@
       "inputMethod": "Manual Entry + Photo"
     },
     {
-      "id": "step-onl-3",
-      "stageId": "stage-online",
+      "id": "step-off-3",
+      "stageId": "stage-offline",
       "stepNumber": "STEP 03",
-      "name": "Press Fitting Hose",
-      "code": "PRC-ONL-03",
+      "name": "Fitting Bending",
+      "code": "PRC-OFF-03",
       "mandatory": true,
+      "description": "Bend fitting tubes to specified drawing angles.",
       "fields": {
-        "Action": "Pneumatic insertion",
-        "Force": "Target 12 kN"
+        "Action": "CNC Bending",
+        "Jig No": "K40543-C3",
+        "Bends Std": "50° Up / 35° Left"
       },
-      "prerequisite": "step-onl-2",
+      "prerequisite": "step-off-2",
       "dependencies": [
-        { "name": "Double Pipe Bending", "code": "PRC-ONL-02" }
+        { "name": "Protector Cutting", "code": "PRC-OFF-02" }
       ],
       "parameters": [
-        { "name": "Insertion Depth", "standard": "15.0 mm", "tolerance": "±0.5" }
+        { "name": "Up Angle", "standard": "50°", "tolerance": "±2°" },
+        { "name": "Left Angle", "standard": "35°", "tolerance": "±2°" }
       ],
       "startConditions": {
         "operatorScan": true,
@@ -254,20 +209,166 @@
       "inputMethod": "Manual Entry + Photo"
     },
     {
+      "id": "step-off-4",
+      "stageId": "stage-offline",
+      "stepNumber": "STEP 04",
+      "name": "Manufacturing Lot Stamping",
+      "code": "PRC-OFF-04",
+      "mandatory": true,
+      "description": "Stamp manufacturing lot code markings on fitting.",
+      "fields": {
+        "Action": "Engraving Stamp",
+        "Mark Code": "8-K1L-D411",
+        "TAC No": "CN2222"
+      },
+      "prerequisite": "step-off-3",
+      "dependencies": [
+        { "name": "Fitting Bending", "code": "PRC-OFF-03" }
+      ],
+      "parameters": [
+        { "name": "Stamp Clearness", "standard": "Clear level", "tolerance": "Pass" }
+      ],
+      "startConditions": {
+        "operatorScan": true,
+        "machineReady": false,
+        "toolCalibration": false
+      },
+      "completionConditions": {
+        "allParameters": true,
+        "dualQCSignoff": false,
+        "autoPrintLabel": true
+      },
+      "sapSync": true,
+      "bomAvailable": true,
+      "operatorVerified": false,
+      "inputMethod": "Manual Entry + Photo"
+    },
+    {
+      "id": "step-onl-1",
+      "stageId": "stage-online",
+      "stepNumber": "STEP 01",
+      "name": "Accessories Insertion-1",
+      "code": "PRC-ONL-01",
+      "mandatory": true,
+      "description": "Install rubber clamps and protective sleeves L-160.",
+      "fields": {
+        "Action": "Manual Insertion",
+        "Part A": "Rubber Clamp BU10024",
+        "Part B": "Protector L-160"
+      },
+      "prerequisite": "",
+      "dependencies": [
+        { "name": "Manufacturing Lot Stamping", "code": "PRC-OFF-04" }
+      ],
+      "parameters": [
+        { "name": "Sequence Check", "standard": "Clamp + Protector L160", "tolerance": "Correct" }
+      ],
+      "startConditions": {
+        "operatorScan": true,
+        "machineReady": false,
+        "toolCalibration": false
+      },
+      "completionConditions": {
+        "allParameters": true,
+        "dualQCSignoff": false,
+        "autoPrintLabel": false
+      },
+      "sapSync": true,
+      "bomAvailable": true,
+      "operatorVerified": false,
+      "inputMethod": "Manual Entry + Photo"
+    },
+    {
+      "id": "step-onl-2",
+      "stageId": "stage-online",
+      "stepNumber": "STEP 02",
+      "name": "First Crimping",
+      "code": "PRC-ONL-02",
+      "mandatory": true,
+      "description": "Crimp first fitting collar to EPDM hose assembly.",
+      "fields": {
+        "Action": "Press Fitting",
+        "Machine": "CRM-11",
+        "Jig No": "CJ-23-SLIM-01"
+      },
+      "prerequisite": "step-onl-1",
+      "dependencies": [
+        { "name": "Accessories Insertion-1", "code": "PRC-ONL-01" }
+      ],
+      "parameters": [
+        { "name": "Crimp Diameter", "standard": "9.00 mm", "tolerance": "±0.05 mm" },
+        { "name": "Crimp Location", "standard": "3.5 mm", "tolerance": "±0.5 mm" }
+      ],
+      "startConditions": {
+        "operatorScan": true,
+        "machineReady": true,
+        "toolCalibration": true
+      },
+      "completionConditions": {
+        "allParameters": true,
+        "dualQCSignoff": true,
+        "autoPrintLabel": false
+      },
+      "sapSync": true,
+      "bomAvailable": true,
+      "operatorVerified": false,
+      "inputMethod": "Manual Entry + Photo"
+    },
+    {
+      "id": "step-onl-3",
+      "stageId": "stage-online",
+      "stepNumber": "STEP 03",
+      "name": "Accessories Insertion-2",
+      "code": "PRC-ONL-03",
+      "mandatory": true,
+      "description": "Install protector sleeves L-260 & primary clamps.",
+      "fields": {
+        "Action": "Manual Insertion",
+        "Part A": "Protector L-260",
+        "Part B": "Rubber Clamp BU10024"
+      },
+      "prerequisite": "step-onl-2",
+      "dependencies": [
+        { "name": "First Crimping", "code": "PRC-ONL-02" }
+      ],
+      "parameters": [
+        { "name": "Sequence Check", "standard": "Protector L260 + Clamp", "tolerance": "Correct" }
+      ],
+      "startConditions": {
+        "operatorScan": true,
+        "machineReady": false,
+        "toolCalibration": false
+      },
+      "completionConditions": {
+        "allParameters": true,
+        "dualQCSignoff": false,
+        "autoPrintLabel": false
+      },
+      "sapSync": true,
+      "bomAvailable": true,
+      "operatorVerified": false,
+      "inputMethod": "Manual Entry + Photo"
+    },
+    {
       "id": "step-onl-4",
       "stageId": "stage-online",
       "stepNumber": "STEP 04",
-      "name": "Metal Hose Crimping",
+      "name": "Second Crimping",
       "code": "PRC-ONL-04",
       "mandatory": true,
+      "description": "Crimp second fitting collar to secure assembly.",
       "fields": {
-        "Machine": "FinNp crimper",
-        "Die size": "14.5 mm"
+        "Action": "Press Fitting",
+        "Machine": "CRM-10",
+        "Jig No": "WR-HMSI-59"
       },
       "prerequisite": "step-onl-3",
-      "dependencies": [],
+      "dependencies": [
+        { "name": "Accessories Insertion-2", "code": "PRC-ONL-03" }
+      ],
       "parameters": [
-        { "name": "Crimped Diameter", "standard": "13.25 mm", "tolerance": "±0.08" }
+        { "name": "Crimp Diameter", "standard": "9.00 mm", "tolerance": "±0.05 mm" },
+        { "name": "Assembly Length", "standard": "688.0 mm", "tolerance": "±4.0 mm" }
       ],
       "startConditions": {
         "operatorScan": true,
@@ -288,58 +389,30 @@
       "id": "step-onl-5",
       "stageId": "stage-online",
       "stepNumber": "STEP 05",
-      "name": "Baking Adhesive Curing",
+      "name": "Accessories Bonding",
       "code": "PRC-ONL-05",
       "mandatory": true,
+      "description": "Apply bonding adhesive compound Kakotora check.",
       "fields": {
-        "Station": "Tunnel Oven B",
-        "Adhesive": "ThreeBond 1102"
+        "Action": "Glue Bonding",
+        "Jig No": "BJ-HMSI-59",
+        "Adhesive": "Drops check"
       },
       "prerequisite": "step-onl-4",
-      "dependencies": [],
+      "dependencies": [
+        { "name": "Second Crimping", "code": "PRC-ONL-04" }
+      ],
       "parameters": [
-        { "name": "Oven Temp", "standard": "120.0 °C", "tolerance": "+5.0 / -5.0" },
-        { "name": "Bake Duration", "standard": "180 s", "tolerance": "±10" }
+        { "name": "Drops Quantity", "standard": "2-3 Drops", "tolerance": "No extra glue" }
       ],
       "startConditions": {
-        "operatorScan": false,
-        "machineReady": true,
+        "operatorScan": true,
+        "machineReady": false,
         "toolCalibration": false
       },
       "completionConditions": {
         "allParameters": true,
         "dualQCSignoff": false,
-        "autoPrintLabel": false
-      },
-      "sapSync": true,
-      "bomAvailable": true,
-      "operatorVerified": false,
-      "inputMethod": "Manual Entry + Photo"
-    },
-    {
-      "id": "step-onl-6",
-      "stageId": "stage-online",
-      "stepNumber": "STEP 06",
-      "name": "Double Pipe Torque Check",
-      "code": "PRC-ONL-06",
-      "mandatory": true,
-      "fields": {
-        "Tools": "Digital Torque Wrench",
-        "Spec": "Standard QC check"
-      },
-      "prerequisite": "step-onl-5",
-      "dependencies": [],
-      "parameters": [
-        { "name": "Tightness Torque", "standard": "18.0 Nm", "tolerance": "±1.5" }
-      ],
-      "startConditions": {
-        "operatorScan": true,
-        "machineReady": false,
-        "toolCalibration": true
-      },
-      "completionConditions": {
-        "allParameters": true,
-        "dualQCSignoff": true,
         "autoPrintLabel": true
       },
       "sapSync": true,
@@ -351,18 +424,22 @@
       "id": "step-qc-1",
       "stageId": "stage-qc",
       "stepNumber": "STEP 01",
-      "name": "100% Leak Test Check",
+      "name": "Pressure Test",
       "code": "PRC-QC-01",
       "mandatory": true,
+      "description": "Leakage testing under high hydraulic pressure.",
       "fields": {
-        "Method": "Pneumatic Chamber",
-        "Media": "Dry Nitrogen"
+        "Action": "Leakage Test",
+        "Rig No": "LTM-07 Rig",
+        "Pressure Std": "15.3 MPa"
       },
       "prerequisite": "",
-      "dependencies": [],
+      "dependencies": [
+        { "name": "Accessories Bonding", "code": "PRC-ONL-05" }
+      ],
       "parameters": [
-        { "name": "Test Pressure", "standard": "8.0 bar", "tolerance": "+0.5 / -0" },
-        { "name": "Hold Time", "standard": "15.0 s", "tolerance": "±1.0" }
+        { "name": "Pressure Value", "standard": "15.3 MPa", "tolerance": "+1.0 / -0 MPa" },
+        { "name": "Hold Duration", "standard": "10-40 Sec", "tolerance": "No leaks" }
       ],
       "startConditions": {
         "operatorScan": true,
@@ -371,7 +448,7 @@
       },
       "completionConditions": {
         "allParameters": true,
-        "dualQCSignoff": false,
+        "dualQCSignoff": true,
         "autoPrintLabel": false
       },
       "sapSync": true,
@@ -383,22 +460,25 @@
       "id": "step-qc-2",
       "stageId": "stage-qc",
       "stepNumber": "STEP 02",
-      "name": "Pressure Leakage QC Check",
+      "name": "Final Inspection",
       "code": "PRC-QC-02",
       "mandatory": true,
+      "description": "Dimensional check, plating colors, and visual audits.",
       "fields": {
-        "Verifier": "Quality Auditor ID",
-        "Audit": "100% Nitrogen check"
+        "Action": "Visual/Gauge Check",
+        "Jig No": "FI-HMSI-59",
+        "Part ID Check": "45128-K1L-D410-M1"
       },
       "prerequisite": "step-qc-1",
       "dependencies": [
-        { "name": "100% Leak Test Check", "code": "PRC-QC-01" }
+        { "name": "Pressure Test", "code": "PRC-QC-01" }
       ],
       "parameters": [
-        { "name": "Permissible Leak Rate", "standard": "0.0 cc/min", "tolerance": "+0.1" }
+        { "name": "Visual Defects", "standard": "Zero scuffs", "tolerance": "Pass" },
+        { "name": "Dimensional Pass", "standard": "Drawing standard", "tolerance": "Pass" }
       ],
       "startConditions": {
-        "operatorScan": false,
+        "operatorScan": true,
         "machineReady": false,
         "toolCalibration": false
       },
@@ -416,52 +496,29 @@
       "id": "step-qc-3",
       "stageId": "stage-qc",
       "stepNumber": "STEP 03",
-      "name": "Stamping Barcode Tags",
+      "name": "Packing",
       "code": "PRC-QC-03",
       "mandatory": true,
+      "description": "Verification of internal tags, storage, and bin sizing.",
       "fields": {
-        "Device": "Laser Marker #1",
-        "Format": "Control Card ID"
+        "Action": "Storage Bundling",
+        "Bin Dimension": "600 x 400 x 280 mm",
+        "Quantity Std": "60 units per bin"
       },
       "prerequisite": "step-qc-2",
-      "dependencies": [],
-      "parameters": [],
+      "dependencies": [
+        { "name": "Final Inspection", "code": "PRC-QC-02" }
+      ],
+      "parameters": [
+        { "name": "Bin Packing Count", "standard": "60 No's", "tolerance": "20 x 3 bundles" }
+      ],
       "startConditions": {
         "operatorScan": true,
-        "machineReady": true,
-        "toolCalibration": false
-      },
-      "completionConditions": {
-        "allParameters": false,
-        "dualQCSignoff": false,
-        "autoPrintLabel": false
-      },
-      "sapSync": true,
-      "bomAvailable": true,
-      "operatorVerified": false,
-      "inputMethod": "Manual Entry + Photo"
-    },
-    {
-      "id": "step-qc-4",
-      "stageId": "stage-qc",
-      "stepNumber": "STEP 04",
-      "name": "Packaging Release Approval",
-      "code": "PRC-QC-04",
-      "mandatory": true,
-      "fields": {
-        "Action": "Visual check packaging box",
-        "Verifier": "Supervisor Scan"
-      },
-      "prerequisite": "step-qc-3",
-      "dependencies": [],
-      "parameters": [],
-      "startConditions": {
-        "operatorScan": false,
         "machineReady": false,
         "toolCalibration": false
       },
       "completionConditions": {
-        "allParameters": false,
+        "allParameters": true,
         "dualQCSignoff": true,
         "autoPrintLabel": true
       },

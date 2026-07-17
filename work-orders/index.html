@@ -112,7 +112,7 @@
       <h3 class="font-headline-md text-headline-md text-primary">Production Schedule Tracking</h3>
       
       <!-- Filters Layout sequential -->
-      <div class="grid grid-cols-2 sm:flex sm:items-center gap-3 w-full sm:w-auto">
+      <div class="flex items-center gap-3 w-full sm:w-auto">
 
         <!-- Status Filter -->
         <select id="woStatusFilter" class="bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-3 pr-8 py-1 font-semibold w-full sm:min-w-[130px]" onchange="handleWODirtyFilter()">
@@ -121,19 +121,6 @@
           <option value="Waiting">Waiting</option>
           <option value="Completed">Completed</option>
           <option value="Held">Held</option>
-        </select>
-        <!-- Line Filter -->
-        <select id="woLineFilter" class="bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-3 pr-8 py-1 font-semibold w-full sm:min-w-[150px]" onchange="handleWODirtyFilter()">
-          <option value="ALL">All Lines</option>
-          <option value="Line 1">Line 1 (Hose)</option>
-          <option value="Line 2">Line 2 (Tube)</option>
-          <option value="Line 3">Line 3 (Jigs)</option>
-        </select>
-        <!-- Shift Filter -->
-        <select id="woShiftFilter" class="bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-3 pr-8 py-1 font-semibold w-full sm:min-w-[110px]" onchange="handleWODirtyFilter()">
-          <option value="ALL">All Shifts</option>
-          <option value="Shift A">Shift A</option>
-          <option value="Shift B">Shift B</option>
         </select>
       </div>
     </div>
@@ -149,7 +136,6 @@
             <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-right">OK / NG Qty</th>
             <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Current Step</th>
             <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Status</th>
-            <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Operator / Line Info</th>
             <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-center">Action</th>
           </tr>
         </thead>
@@ -189,7 +175,7 @@
           <!-- WO ID -->
           <div class="col-span-2 space-y-1.5">
             <label class="block text-xs font-bold uppercase text-slate-500">Work Order ID</label>
-            <input id="drawerWOId" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white" placeholder="e.g. WO-2026-9045" type="text" required />
+            <input id="drawerWOId" class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white" placeholder="e.g. WO-22615540" type="text" required />
           </div>
           <!-- Product Name -->
           <div class="col-span-1 space-y-1.5">
@@ -431,7 +417,7 @@
             if (items.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="8" class="px-6 py-12 text-center text-on-surface-variant font-medium">
+                        <td colspan="7" class="px-6 py-12 text-center text-on-surface-variant font-medium">
                             No work orders matched filters.
                         </td>
                     </tr>
@@ -485,18 +471,11 @@
                             ${priorityBadge}
                         </div>
                     </td>
-                    <td class="px-6 py-4 text-xs font-semibold text-slate-600 leading-normal">
-                        ${w.line.split('(')[0]} <br/>
-                        <span class="text-slate-400">Shift:</span> ${w.shift} | <span class="text-slate-400">Op:</span> ${w.operator}
-                    </td>
                     <td class="px-6 py-4 text-center">
                         <div class="flex items-center justify-center gap-2">
                             <a href="../work-order-detail/index.html?wo=${w.woNumber}" class="w-8 h-8 rounded-lg border border-outline-variant/30 bg-white flex items-center justify-center text-slate-500 hover:text-primary hover:bg-slate-50 transition-colors shadow-sm" title="View details Dashboard">
                                 <span class="material-symbols-outlined text-[18px]">visibility</span>
                             </a>
-                            <button class="w-8 h-8 rounded-lg border border-outline-variant/30 bg-white flex items-center justify-center text-slate-500 hover:text-amber-600 hover:bg-slate-50 transition-colors shadow-sm cursor-pointer" onclick="toggleWOState('${w.woNumber}')" title="Pause / Resume Order">
-                                <span class="material-symbols-outlined text-[18px]">${w.status === 'Running' ? 'pause_circle' : 'play_circle'}</span>
-                            </button>
                         </div>
                     </td>
                 `;
@@ -539,8 +518,6 @@
 
         function handleWODirtyFilter() {
             woFilterStatus = document.getElementById('woStatusFilter').value;
-            woFilterLine = document.getElementById('woLineFilter').value;
-            woFilterShift = document.getElementById('woShiftFilter').value;
             currentWOPage = 1;
             renderWorkOrders();
         }
