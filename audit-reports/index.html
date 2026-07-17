@@ -191,7 +191,7 @@
       </div>
     </div>
 
-    <!-- Detailed Report Drawer Modal (Slides from Right Side) -->
+    <!-- Detailed Report Drawer Modal (Slides from Right Side - Full Screen) -->
     <div id="report-detail-modal" class="fixed inset-0 z-[100] hidden flex justify-end">
       <!-- Backdrop -->
       <div id="report-detail-backdrop" onclick="closeReportModal()"
@@ -199,139 +199,152 @@
 
       <!-- Drawer Panel -->
       <div id="report-detail-drawer"
-        class="relative h-full w-[600px] max-w-full bg-white border-l border-outline-variant/30 shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out translate-x-full">
+        class="relative h-full w-full bg-white shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out translate-x-full">
 
         <!-- Drawer Header -->
-        <div class="flex justify-between items-start border-b border-outline-variant/20 p-6 flex-shrink-0 bg-slate-50">
-          <div>
-            <span
-              class="bg-primary/5 text-primary text-[10px] px-2.5 py-0.5 font-bold rounded-lg border border-primary/10 uppercase tracking-wider block w-fit mb-1.5">Work
-              Order Detailed Report</span>
-            <h3 id="detail-wo-id" class="text-xl font-black text-slate-800 leading-none">WO-XXXX-XXXX</h3>
-            <p id="detail-wo-product" class="text-xs text-slate-500 font-semibold mt-1.5">Product Name -- (Part #--)</p>
+        <div class="border-b border-outline-variant/20 p-6 flex-shrink-0 bg-slate-50">
+          <div class="w-full flex justify-between items-start">
+            <div>
+              <span
+                class="bg-primary/5 text-primary text-[10px] px-2.5 py-0.5 font-bold rounded-lg border border-primary/10 uppercase tracking-wider block w-fit mb-1.5">Work
+                Order Detailed Report</span>
+              <h3 id="detail-wo-id" class="text-xl font-black text-slate-800 leading-none">WO-XXXX-XXXX</h3>
+              <p id="detail-wo-product" class="text-xs text-slate-500 font-semibold mt-1.5">Product Name -- (Part #--)</p>
+            </div>
+            <button onclick="closeReportModal()"
+              class="p-1.5 hover:bg-slate-200/65 rounded-lg text-slate-400 hover:text-slate-600 transition-colors cursor-pointer flex items-center justify-center">
+              <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
           </div>
-          <button onclick="closeReportModal()"
-            class="p-1.5 hover:bg-slate-200/65 rounded-lg text-slate-400 hover:text-slate-600 transition-colors cursor-pointer flex items-center justify-center">
-            <span class="material-symbols-outlined text-[20px]">close</span>
-          </button>
         </div>
 
-        <!-- Drawer Scrollable Body -->
-        <div class="flex-grow p-6 overflow-y-auto overflow-x-hidden space-y-6 custom-scrollbar text-xs text-slate-700">
+        <!-- Drawer Scrollable Body (Native Scrollbar Alignment) -->
+        <div class="flex-grow overflow-y-auto overflow-x-hidden custom-scrollbar bg-slate-50/50">
+          <div class="w-full p-8 space-y-8 text-xs text-slate-700">
 
-          <!-- Summary Info Grid -->
-          <div class="grid grid-cols-2 gap-x-6 gap-y-4 pb-5 border-b border-slate-100">
-            <div>
-              <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Assigned
-                Line</span>
-              <span id="detail-wo-line" class="font-bold text-slate-800 text-sm">--</span>
+            <!-- Summary Info Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="bg-white border border-outline-variant/20 rounded-xl p-4 shadow-sm flex flex-col justify-center">
+                <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1 select-none">Assigned Line</span>
+                <span id="detail-wo-line" class="font-extrabold text-slate-800 text-sm">--</span>
+              </div>
+              <div class="bg-white border border-outline-variant/20 rounded-xl p-4 shadow-sm flex flex-col justify-center">
+                <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1 select-none">Shift / Operator</span>
+                <span id="detail-wo-operator" class="font-extrabold text-slate-800 text-sm">--</span>
+              </div>
+              <div class="bg-white border border-outline-variant/20 rounded-xl p-4 shadow-sm flex flex-col justify-center">
+                <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1 select-none">Quality Inspector</span>
+                <span id="detail-wo-inspector" class="font-bold text-slate-700 text-xs">--</span>
+              </div>
+              <div class="bg-white border border-outline-variant/20 rounded-xl p-4 shadow-sm flex flex-col justify-center">
+                <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1 select-none">Cryptographic Card Hash</span>
+                <span id="detail-wo-hash" class="font-mono text-slate-700 font-bold text-[10px] break-all">--</span>
+              </div>
             </div>
-            <div>
-              <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Shift /
-                Operator</span>
-              <span id="detail-wo-operator" class="font-bold text-slate-800 text-sm">--</span>
+
+            <!-- Yield Stats Card -->
+            <div class="bg-white border border-outline-variant/20 rounded-xl p-6 shadow-sm space-y-4">
+              <div class="flex justify-between items-center select-none border-b border-slate-100 pb-3">
+                <span class="font-bold text-[11px] uppercase text-slate-500 tracking-wider flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-[16px] text-primary">analytics</span>
+                  Yield Performance
+                </span>
+                <span id="detail-wo-status-badge" class="px-2.5 py-0.5 rounded-lg text-[10px] font-bold uppercase">--</span>
+              </div>
+              <div class="grid grid-cols-3 gap-4 text-center py-2">
+                <div class="border-r border-slate-100">
+                  <span class="block text-[9px] text-slate-400 font-bold uppercase mb-0.5">Target Qty</span>
+                  <span id="detail-wo-target" class="text-2xl font-black text-slate-700 font-data-tabular">--</span>
+                </div>
+                <div class="border-r border-slate-100">
+                  <span class="block text-[9px] text-slate-400 font-bold uppercase mb-0.5">OK Passed</span>
+                  <span id="detail-wo-ok" class="text-2xl font-black text-emerald-600 font-data-tabular">--</span>
+                </div>
+                <div>
+                  <span class="block text-[9px] text-slate-400 font-bold uppercase mb-0.5">NG Defects</span>
+                  <span id="detail-wo-ng" class="text-2xl font-black text-primary font-data-tabular">--</span>
+                </div>
+              </div>
+              <!-- Progress bar -->
+              <div class="space-y-1.5 pt-2">
+                <div class="flex justify-between text-[10px] text-slate-500 font-semibold select-none">
+                  <span>Overall Progress</span>
+                  <span id="detail-wo-progress-pct" class="font-bold text-slate-700">0%</span>
+                </div>
+                <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden border border-slate-200/30">
+                  <div id="detail-wo-progress-bar" class="bg-emerald-500 h-full rounded-full transition-all duration-500"
+                    style="width: 0%"></div>
+                </div>
+              </div>
             </div>
-            <div>
-              <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Quality
-                Inspector</span>
-              <span id="detail-wo-inspector" class="font-semibold text-slate-700 text-xs">--</span>
+
+            <!-- Process Routing Steps Table -->
+            <div class="bg-white border border-outline-variant/20 rounded-xl shadow-sm overflow-hidden space-y-0">
+              <div class="bg-slate-50 border-b border-outline-variant/20 px-5 py-4 flex items-center justify-between">
+                <h4 class="font-bold text-[11px] uppercase text-slate-500 tracking-wider select-none flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-[16px] text-primary">route</span>
+                  Process Routing Checklist
+                </h4>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-[11px] whitespace-nowrap">
+                  <thead class="bg-slate-50/55 border-b border-slate-100 text-slate-500">
+                    <tr>
+                      <th class="p-3 font-bold w-12 text-center">#</th>
+                      <th class="p-3 font-bold">Process Step</th>
+                      <th class="p-3 font-bold">Machine</th>
+                      <th class="p-3 font-bold text-center w-28">Status</th>
+                      <th class="p-3 font-bold text-right w-24">Time</th>
+                    </tr>
+                  </thead>
+                  <tbody id="detail-wo-steps-tbody" class="divide-y divide-slate-100 font-medium text-slate-700">
+                    <!-- Injected dynamically -->
+                  </tbody>
+                </table>
+              </div>
             </div>
-            <div>
-              <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Cryptographic
-                Card Hash</span>
-              <span id="detail-wo-hash" class="font-mono text-slate-700 font-bold text-[10px] break-all">--</span>
+
+            <!-- Bill of Materials (BOM) checklist -->
+            <div class="bg-white border border-outline-variant/20 rounded-xl shadow-sm overflow-hidden space-y-0">
+              <div class="bg-slate-50 border-b border-outline-variant/20 px-5 py-4 flex items-center justify-between">
+                <h4 class="font-bold text-[11px] uppercase text-slate-500 tracking-wider select-none flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-[16px] text-primary">inventory_2</span>
+                  BOM Material Verification
+                </h4>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-[11px] whitespace-nowrap">
+                  <thead class="bg-slate-50/55 border-b border-slate-100 text-slate-500">
+                    <tr>
+                      <th class="p-3 font-bold w-36">Material Code</th>
+                      <th class="p-3 font-bold">Description</th>
+                      <th class="p-3 font-bold w-36">Lot Number</th>
+                      <th class="p-3 font-bold text-center w-32">Verification</th>
+                    </tr>
+                  </thead>
+                  <tbody id="detail-wo-bom-tbody" class="divide-y divide-slate-100 font-medium text-slate-700">
+                    <!-- Injected dynamically -->
+                  </tbody>
+                </table>
+              </div>
             </div>
+
           </div>
-
-          <!-- Yield Stats Card -->
-          <div class="bg-slate-50 border border-slate-200/50 p-4 rounded-xl space-y-3">
-            <div class="flex justify-between items-center select-none">
-              <span class="font-bold text-[11px] uppercase text-slate-500 tracking-wider">Yield Performance</span>
-              <span id="detail-wo-status-badge" class="px-2 py-0.5 rounded text-[10px] font-bold uppercase">--</span>
-            </div>
-            <div class="grid grid-cols-3 gap-2 text-center py-2.5">
-              <div class="border-r border-slate-200">
-                <span class="block text-[9px] text-slate-400 font-bold uppercase">Target Qty</span>
-                <span id="detail-wo-target" class="text-lg font-black text-slate-700 font-data-tabular">--</span>
-              </div>
-              <div class="border-r border-slate-200">
-                <span class="block text-[9px] text-slate-400 font-bold uppercase">OK Passed</span>
-                <span id="detail-wo-ok" class="text-lg font-black text-emerald-600 font-data-tabular">--</span>
-              </div>
-              <div>
-                <span class="block text-[9px] text-slate-400 font-bold uppercase">NG Defects</span>
-                <span id="detail-wo-ng" class="text-lg font-black text-primary font-data-tabular">--</span>
-              </div>
-            </div>
-            <!-- Progress bar -->
-            <div class="space-y-1">
-              <div class="flex justify-between text-[10px] text-slate-500 font-semibold select-none">
-                <span>Overall Progress</span>
-                <span id="detail-wo-progress-pct">0%</span>
-              </div>
-              <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
-                <div id="detail-wo-progress-bar" class="bg-emerald-500 h-full rounded-full transition-all duration-500"
-                  style="width: 0%"></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Process Routing Steps Table -->
-          <div class="space-y-2">
-            <h4 class="font-bold text-[11px] uppercase text-slate-500 tracking-wider select-none">Process Routing
-              Checklist</h4>
-            <div class="border border-slate-200/60 rounded-lg overflow-x-auto">
-              <table class="w-full text-left border-collapse text-[11px] whitespace-nowrap">
-                <thead class="bg-slate-100 border-b border-slate-200 text-slate-600">
-                  <tr>
-                    <th class="p-2 font-bold w-6 text-center">#</th>
-                    <th class="p-2 font-bold">Process Step</th>
-                    <th class="p-2 font-bold">Machine</th>
-                    <th class="p-2 font-bold text-center">Status</th>
-                    <th class="p-2 font-bold text-right w-16">Time</th>
-                  </tr>
-                </thead>
-                <tbody id="detail-wo-steps-tbody" class="divide-y divide-slate-100 font-medium">
-                  <!-- Injected dynamically -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Bill of Materials (BOM) checklist -->
-          <div class="space-y-2">
-            <h4 class="font-bold text-[11px] uppercase text-slate-500 tracking-wider select-none">BOM Material
-              Verification</h4>
-            <div class="border border-slate-200/60 rounded-lg overflow-x-auto">
-              <table class="w-full text-left border-collapse text-[11px] whitespace-nowrap">
-                <thead class="bg-slate-100 border-b border-slate-200 text-slate-600">
-                  <tr>
-                    <th class="p-2 font-bold">Material Code</th>
-                    <th class="p-2 font-bold">Description</th>
-                    <th class="p-2 font-bold">Lot Number</th>
-                    <th class="p-2 font-bold text-center">Verification</th>
-                  </tr>
-                </thead>
-                <tbody id="detail-wo-bom-tbody" class="divide-y divide-slate-100 font-medium">
-                  <!-- Injected dynamically -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-
         </div>
 
         <!-- Drawer Footer -->
-        <div class="p-6 border-t border-outline-variant/20 flex justify-between items-center bg-slate-50 flex-shrink-0">
-          <button onclick="exportSingleReport()"
-            class="px-4 py-2 border border-outline-variant/50 text-slate-700 hover:bg-slate-100 font-body-sm text-body-sm font-semibold rounded-lg shadow-sm transition-colors cursor-pointer flex items-center gap-1.5 h-9 bg-white">
-            <span class="material-symbols-outlined text-[16px]">download</span>
-            Export Report
-          </button>
-          <button onclick="closeReportModal()"
-            class="px-5 py-2 bg-primary text-white font-body-sm text-body-sm font-semibold rounded-lg hover:opacity-95 shadow-sm transition-colors cursor-pointer h-9">
-            Close Report
-          </button>
+        <div class="p-6 border-t border-outline-variant/20 bg-slate-50 flex-shrink-0">
+          <div class="w-full flex justify-between items-center">
+            <button onclick="exportSingleReport()"
+              class="px-4 py-2 border border-outline-variant/50 text-slate-700 hover:bg-slate-100 font-body-sm text-body-sm font-semibold rounded-lg shadow-sm transition-colors cursor-pointer flex items-center gap-1.5 h-9 bg-white">
+              <span class="material-symbols-outlined text-[16px]">download</span>
+              Export Report
+            </button>
+            <button onclick="closeReportModal()"
+              class="px-5 py-2 bg-primary text-white font-body-sm text-body-sm font-semibold rounded-lg hover:opacity-95 shadow-sm transition-colors cursor-pointer h-9">
+              Close Report
+            </button>
+          </div>
         </div>
       </div>
     </div>

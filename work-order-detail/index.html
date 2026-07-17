@@ -254,6 +254,10 @@
                 <span class="text-slate-400 font-bold block text-[10px] uppercase">Production Plan Date</span>
                 <p class="text-slate-800 font-bold font-data-tabular" id="cc-plan-date">27-06-2026 / 08-07-2026</p>
               </div>
+              <div>
+                <span class="text-slate-400 font-bold block text-[10px] uppercase">Target Quantity</span>
+                <p class="text-slate-800 font-bold font-data-tabular" id="cc-target-qty">800 units</p>
+              </div>
             </div>
 
             <!-- QR Code Column -->
@@ -332,27 +336,7 @@
           </div>
         </div>
 
-        <!-- Bottom row: Line info and Target vs Done quantities -->
-        <div
-          class="grid grid-cols-2 sm:grid-cols-4 gap-6 text-xs bg-slate-50/50 rounded-xl p-4 border border-slate-100">
-          <div>
-            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Allocated Line</span>
-            <p class="font-bold text-slate-800 text-xs" id="wo-detail-line">--</p>
-          </div>
-          <div>
-            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Shift</span>
-            <p class="font-bold text-slate-800 text-xs" id="wo-detail-shift">--</p>
-          </div>
-          <div>
-            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Quantity
-              (Target)</span>
-            <p class="font-bold text-slate-800 text-xs font-data-tabular" id="wo-detail-target">800</p>
-          </div>
-          <div>
-            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Done Qty</span>
-            <p class="font-bold text-primary text-xs" id="wo-detail-done">--</p>
-          </div>
-        </div>
+
 
       </div>
 
@@ -1206,6 +1190,8 @@
           if (shiftField) shiftField.textContent = activeWO.shift;
           const targetField = document.getElementById('wo-detail-target');
           if (targetField) targetField.textContent = `${activeWO.targetQty} units`;
+          const ccTargetQtyEl = document.getElementById('cc-target-qty');
+          if (ccTargetQtyEl) ccTargetQtyEl.textContent = `${activeWO.targetQty} units`;
           const doneField = document.getElementById('wo-detail-done');
           if (doneField) doneField.textContent = `${activeWO.doneQty} units`;
 

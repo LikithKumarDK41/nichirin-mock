@@ -166,15 +166,13 @@
                 <span class="text-slate-400 font-semibold block text-[10px] uppercase">PRODUCT ORDER NO</span>
                 <p class="text-slate-800 font-mono font-bold truncate text-[11px]" id="wo-summary-prod-order-no" title="--">--</p>
               </div>
-              <div class="grid grid-cols-2 gap-2 mt-1">
-                <div>
-                  <span class="text-slate-400 font-semibold block text-[9px] uppercase">PRODUCTION PLAN DATE</span>
-                  <p class="text-slate-800 font-bold font-data-tabular text-[10px]">27-06-2026 / 08-07-2026</p>
-                </div>
-                <div>
-                  <span class="text-slate-400 font-semibold block text-[9px] uppercase">TARGET QUANTITY</span>
-                  <p class="text-slate-800 font-bold font-data-tabular text-[10px]" id="wo-summary-qty">--</p>
-                </div>
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">PRODUCTION PLAN DATE</span>
+                <p class="text-slate-800 font-bold font-data-tabular text-[11px]">27-06-2026 / 08-07-2026</p>
+              </div>
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">TARGET QUANTITY</span>
+                <p class="text-slate-800 font-bold font-data-tabular text-[11px]" id="wo-summary-qty">--</p>
               </div>
             </div>
           </div>
@@ -446,6 +444,10 @@
     function selectPlanningWO(woNumber) {
         activeWO = workOrdersList.find(w => w.woNumber === woNumber) || workOrdersList[0];
         if (!activeWO) return;
+
+        if (activeWO.woNumber.toUpperCase() === 'WO-22615540') {
+            activeWO.targetQty = 800;
+        }
 
         // Ensure ccProcesses is initialized for this work order
         if (!activeWO.ccProcesses) {

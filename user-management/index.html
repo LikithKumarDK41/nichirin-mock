@@ -175,11 +175,11 @@
 
       <!-- Horizontal Bento Summary Cards -->
       <div class="col-span-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-2">
-        <!-- Card 1: TOTAL PERSONNEL -->
+        <!-- Card 1: TOTAL USERS -->
         <div
           class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
           <div>
-            <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Total Personnel</p>
+            <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Total Users</p>
             <p class="text-3xl font-bold text-primary" id="statTotal">--</p>
           </div>
           <span class="material-symbols-outlined text-[32px] text-primary">group</span>
@@ -219,7 +219,7 @@
         class="col-span-12 bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm flex flex-col">
         <div
           class="px-6 py-4 border-b border-outline-variant/30 flex flex-col sm:flex-row justify-between items-start sm:items-center bg-slate-50 gap-4">
-          <h3 class="font-headline-md text-headline-md text-primary">Authorized Personnel</h3>
+          <h3 class="font-headline-md text-headline-md text-primary">Authorized Users</h3>
           <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
             <!-- Search Box -->
             <div class="relative flex-grow sm:flex-none sm:w-48">
@@ -227,7 +227,7 @@
                 class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
               <input id="searchInput"
                 class="w-full bg-white border border-outline-variant/30 rounded-lg pl-8 pr-3 py-1 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-8"
-                placeholder="Filter employees..." type="text" oninput="handleSearch()" />
+                placeholder="Filter users..." type="text" oninput="handleSearch()" />
             </div>
             <!-- View Toggle Switch -->
             <div
@@ -300,7 +300,7 @@
       <div id="viewUserModal"
         class="fixed top-0 right-0 h-full w-full max-w-[480px] bg-white z-[100] shadow-2xl border-l border-outline-variant/30 transform translate-x-full transition-transform duration-300 ease-out flex flex-col">
         <div class="bg-slate-50 px-6 py-5 border-b border-outline-variant/30 flex justify-between items-center">
-          <h3 class="font-headline-md text-headline-md text-primary">Personnel Details</h3>
+          <h3 class="font-headline-md text-headline-md text-primary">User Details</h3>
           <button
             class="text-on-surface-variant hover:text-slate-900 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100"
             onclick="toggleViewUserModal(false)">
@@ -308,11 +308,12 @@
           </button>
         </div>
         <div class="p-6 flex-1 overflow-y-auto space-y-6">
-          <!-- Header info with initials -->
+          <!-- Header info with avatar -->
           <div class="flex items-center gap-4 pb-5 border-b border-outline-variant/20">
-            <div id="viewUserAvatar"
-              class="w-16 h-16 rounded-full bg-slate-100 text-slate-800 flex items-center justify-center font-bold text-2xl border border-slate-200">
-              SH</div>
+            <div id="viewUserAvatarContainer" class="w-16 h-16 rounded-full overflow-hidden border border-outline-variant/20 bg-slate-100 flex items-center justify-center relative shadow-sm select-none">
+              <span class="material-symbols-outlined text-[36px] text-primary select-none hidden" id="viewUserAvatarIcon">account_circle</span>
+              <img id="viewUserAvatarImg" class="w-full h-full object-cover" alt="User Avatar" />
+            </div>
             <div>
               <h4 id="viewUserName" class="font-bold text-xl text-slate-900 leading-tight">--</h4>
               <span id="viewUserRole"
@@ -373,7 +374,7 @@
       <div id="addUserModal"
         class="fixed top-0 right-0 h-full w-full max-w-[480px] bg-white z-[100] shadow-2xl border-l border-outline-variant/30 transform translate-x-full transition-transform duration-300 ease-out flex flex-col">
         <div class="bg-slate-50 px-6 py-5 border-b border-outline-variant/30 flex justify-between items-center">
-          <h3 class="font-headline-md text-headline-md text-primary" id="drawerTitle">Register New Personnel</h3>
+          <h3 class="font-headline-md text-headline-md text-primary" id="drawerTitle">Register New User</h3>
           <button
             class="text-on-surface-variant hover:text-primary transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100"
             onclick="toggleAddUserModal(false)">
@@ -382,6 +383,28 @@
         </div>
         <form class="p-6 flex-1 overflow-y-auto" onsubmit="saveUser(event)">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-24">
+            <!-- Avatar Upload Block -->
+            <div class="col-span-1 sm:col-span-2 flex items-center gap-4 border-b border-outline-variant/15 pb-4 mb-2">
+              <div class="relative group">
+                <div class="w-16 h-16 rounded-full overflow-hidden border border-outline-variant/40 bg-slate-100 flex items-center justify-center relative shadow-sm" id="drawerAvatarContainer">
+                  <span class="material-symbols-outlined text-[36px] text-primary select-none" id="drawerAvatarIcon">account_circle</span>
+                  <img id="drawerAvatarPreview" class="w-full h-full object-cover hidden" alt="Avatar Preview" />
+                  <!-- Upload Overlay -->
+                  <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                    <span class="material-symbols-outlined text-white text-[18px]">photo_camera</span>
+                  </div>
+                </div>
+                <input type="file" id="drawerAvatarUpload" class="hidden" accept="image/*" />
+              </div>
+              <div class="text-left">
+                <label class="block text-xs font-bold uppercase text-slate-500">Profile Photo</label>
+                <p class="text-[10px] text-slate-400 font-medium mt-0.5">JPG, PNG or SVG. Max size 1MB.</p>
+                <button type="button" class="text-xs text-primary font-bold hover:underline mt-1 cursor-pointer flex items-center gap-1" onclick="document.getElementById('drawerAvatarUpload').click()">
+                  <span class="material-symbols-outlined text-[14px]">cloud_upload</span> Upload Photo
+                </button>
+              </div>
+            </div>
+
             <!-- Employee Code -->
             <div class="col-span-1 space-y-1.5">
               <label class="block text-xs font-bold uppercase text-slate-500">Employee Code</label>
@@ -480,6 +503,23 @@
             let filterQuery = '';
             let currentViewMode = 'table';
             let tempSelectedSkills = [];
+            let currentDrawerAvatar = '';
+
+            function getDummyAvatarSvg(name) {
+              const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+              let hash = 0;
+              for (let i = 0; i < name.length; i++) {
+                hash = name.charCodeAt(i) + ((hash << 5) - hash);
+              }
+              const colors = [
+                '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', 
+                '#ec4899', '#06b6d4', '#14b8a6', '#f43f5e', '#64748b'
+              ];
+              const color = colors[Math.abs(hash) % colors.length];
+              
+              const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><rect width="100" height="100" fill="${color}"/><text x="50" y="55" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="bold" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">${initials}</text></svg>`;
+              return `data:image/svg+xml;utf8,${encodeURIComponent(svg.trim())}`;
+            }
 
             // Fetch or read skill configurations
             async function fetchSkillsMaster() {
@@ -744,7 +784,14 @@
 
                 tr.innerHTML = `
                   <td class="px-6 py-4 font-bold text-slate-900 font-data-tabular text-data-tabular">${u.empCode}</td>
-                  <td class="px-6 py-4 font-semibold text-slate-900">${u.name}</td>
+                  <td class="px-6 py-4 font-semibold text-slate-900">
+                    <div class="flex items-center gap-2.5">
+                      <div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant/20 bg-slate-100 flex items-center justify-center flex-shrink-0 shadow-sm select-none">
+                        <img src="${u.avatar || getDummyAvatarSvg(u.name)}" class="w-full h-full object-cover" alt="Avatar" />
+                      </div>
+                      <span class="font-bold text-slate-900">${u.name}</span>
+                    </div>
+                  </td>
                   <td class="px-6 py-4">
                       <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold border ${roleBadgeClass}">${u.role}</span>
                   </td>
@@ -824,7 +871,9 @@
                 card.innerHTML = `
                   <div class="flex justify-between items-start mb-3">
                       <div class="flex items-center gap-3">
-                          <div class="w-10 h-10 rounded-full bg-primary/5 text-primary flex items-center justify-center font-bold text-sm border border-primary/10 select-none">${initials}</div>
+                          <div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/20 bg-slate-100 flex items-center justify-center flex-shrink-0 shadow-sm select-none">
+                              <img src="${u.avatar || getDummyAvatarSvg(u.name)}" class="w-full h-full object-cover" alt="Avatar" />
+                          </div>
                           <div>
                               <h4 class="font-bold text-slate-900 text-sm group-hover:text-primary transition-colors">${u.name}</h4>
                               <p class="text-xs text-slate-800 font-bold font-data-tabular">${u.empCode}</p>
@@ -913,8 +962,7 @@
               const user = usersList.find(u => u.empCode === empCode);
               if (!user) return;
 
-              const initials = user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-              document.getElementById('viewUserAvatar').textContent = initials;
+              document.getElementById('viewUserAvatarImg').src = user.avatar || getDummyAvatarSvg(user.name);
               document.getElementById('viewUserName').textContent = user.name;
               document.getElementById('viewUserCode').textContent = user.empCode;
               document.getElementById('viewUserEmail').textContent = user.email;
@@ -1003,7 +1051,7 @@
               const user = usersList.find(u => u.empCode === empCode);
               if (!user) return;
 
-              document.getElementById('drawerTitle').textContent = 'Edit Personnel Details';
+              document.getElementById('drawerTitle').textContent = 'Edit User Details';
               document.getElementById('submitBtnText').textContent = 'Save Changes';
 
               const codeInput = document.getElementById('drawerEmpCode');
@@ -1017,6 +1065,21 @@
               document.getElementById('drawerRole').value = user.role;
               document.getElementById('drawerStatus').value = user.status;
 
+              // Populate avatar preview
+              currentDrawerAvatar = user.avatar || '';
+              const avatarPreview = document.getElementById('drawerAvatarPreview');
+              const avatarIcon = document.getElementById('drawerAvatarIcon');
+              if (currentDrawerAvatar) {
+                avatarIcon.classList.add('hidden');
+                avatarPreview.src = currentDrawerAvatar;
+                avatarPreview.classList.remove('hidden');
+              } else {
+                avatarIcon.classList.add('hidden');
+                avatarPreview.src = getDummyAvatarSvg(user.name);
+                avatarPreview.classList.remove('hidden');
+              }
+              document.getElementById('drawerAvatarUpload').value = '';
+
               // Check user's skills checkboxes
               const checkboxes = document.querySelectorAll('#skillsDropdownOptions input[type="checkbox"]');
               checkboxes.forEach(chk => {
@@ -1029,7 +1092,7 @@
             }
 
             function openAddUserDrawer() {
-              document.getElementById('drawerTitle').textContent = 'Register New Personnel';
+              document.getElementById('drawerTitle').textContent = 'Register New User';
               document.getElementById('submitBtnText').textContent = 'Register User';
 
               const codeInput = document.getElementById('drawerEmpCode');
@@ -1042,6 +1105,14 @@
               document.getElementById('drawerPhone').value = '';
               document.getElementById('drawerRole').selectedIndex = 0;
               document.getElementById('drawerStatus').selectedIndex = 0;
+
+              // Reset avatar preview
+              currentDrawerAvatar = '';
+              const avatarPreview = document.getElementById('drawerAvatarPreview');
+              const avatarIcon = document.getElementById('drawerAvatarIcon');
+              avatarIcon.classList.remove('hidden');
+              avatarPreview.classList.add('hidden');
+              document.getElementById('drawerAvatarUpload').value = '';
 
               // Reset skills
               const checkboxes = document.querySelectorAll('#skillsDropdownOptions input[type="checkbox"]');
@@ -1076,11 +1147,17 @@
 
               const existingIdx = usersList.findIndex(u => u.empCode === empCode);
               if (existingIdx > -1) {
-                usersList[existingIdx] = { empCode, name, email, phone, role, skills: tempSelectedSkills, status };
+                usersList[existingIdx] = { 
+                  empCode, name, email, phone, role, skills: tempSelectedSkills, status,
+                  avatar: currentDrawerAvatar || usersList[existingIdx].avatar
+                };
                 showToast(`Changes for ${name} successfully synchronized.`);
               } else {
-                usersList.unshift({ empCode, name, email, phone, role, skills: tempSelectedSkills, status });
-                showToast(`Personnel record for ${name} registered successfully.`);
+                usersList.unshift({ 
+                  empCode, name, email, phone, role, skills: tempSelectedSkills, status,
+                  avatar: currentDrawerAvatar
+                });
+                showToast(`User record for ${name} registered successfully.`);
               }
 
               toggleAddUserModal(false);
@@ -1149,6 +1226,27 @@
             window.toggleSkillsDropdown = toggleSkillsDropdown;
             window.removeSkillTag = removeSkillTag;
             window.updateSelectedSkills = updateSelectedSkills;
+
+            // Register Avatar Upload Event Listener
+            const drawerAvatarUpload = document.getElementById('drawerAvatarUpload');
+            const drawerAvatarIcon = document.getElementById('drawerAvatarIcon');
+            const drawerAvatarPreview = document.getElementById('drawerAvatarPreview');
+            
+            if (drawerAvatarUpload) {
+              drawerAvatarUpload.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                  const reader = new FileReader();
+                  reader.onload = function (evt) {
+                    currentDrawerAvatar = evt.target.result;
+                    drawerAvatarIcon.classList.add('hidden');
+                    drawerAvatarPreview.src = currentDrawerAvatar;
+                    drawerAvatarPreview.classList.remove('hidden');
+                  };
+                  reader.readAsDataURL(file);
+                }
+              });
+            }
 
             populateRolesDropdown();
             fetchUsers();

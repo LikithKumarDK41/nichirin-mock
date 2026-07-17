@@ -295,15 +295,13 @@
                 <span class="text-slate-400 font-semibold block text-[10px] uppercase">PRODUCT ORDER NO</span>
                 <p class="text-slate-800 font-mono font-bold truncate text-[11px]" id="trace-summary-prod-order-no" title="--">--</p>
               </div>
-              <div class="grid grid-cols-2 gap-2 mt-1">
-                <div>
-                  <span class="text-slate-400 font-semibold block text-[9px] uppercase leading-none">PRODUCTION PLAN DATE</span>
-                  <p class="text-slate-800 font-bold font-data-tabular text-[10px] mt-1">27-06-2026 / 08-07-2026</p>
-                </div>
-                <div>
-                  <span class="text-slate-400 font-semibold block text-[9px] uppercase leading-none">TARGET QUANTITY</span>
-                  <p class="text-slate-800 font-bold font-data-tabular text-[10px] mt-1" id="trace-summary-qty">--</p>
-                </div>
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">PRODUCTION PLAN DATE</span>
+                <p class="text-slate-800 font-bold font-data-tabular text-[11px]">27-06-2026 / 08-07-2026</p>
+              </div>
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">TARGET QUANTITY</span>
+                <p class="text-slate-800 font-bold font-data-tabular text-[11px]" id="trace-summary-qty">--</p>
               </div>
             </div>
           </div>
@@ -351,7 +349,7 @@
       </div>
     </div>
 
-    <!-- Right Column: QR Scan Timeline (Focus) -->
+    <!-- QR Scan Timeline & QC Metrics (Focus) -->
     <div class="col-span-12 bg-white border border-outline-variant/30 rounded-xl flex flex-col shadow-sm overflow-hidden">
       <div class="p-6 border-b border-outline-variant/30 flex items-center justify-between bg-slate-50">
         <div>
@@ -359,6 +357,29 @@
           <p id="trace-timeline-subtitle" class="text-on-surface-variant text-body-sm">Complete end-to-end event trail for Work Order</p>
         </div>
       </div>
+
+      <!-- QC Metrics Section (inside timeline top) -->
+      <div class="px-8 py-4 border-b border-slate-100 bg-slate-50/10">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div class="flex items-center gap-3">
+            <h3 class="text-xs font-black text-[#c8102e] uppercase tracking-wider">QC Metrics</h3>
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-[9px] font-bold bg-slate-100 text-slate-650 border border-slate-200 uppercase tracking-wider">Live</span>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-4 items-center w-full md:w-auto">
+            <div class="flex gap-4">
+              <div class="bg-white border border-slate-200/60 rounded-xl px-4 py-1.5 text-center min-w-[110px] shadow-sm">
+                <span class="block text-[9px] font-bold text-slate-450 uppercase tracking-wider mb-0.5">Pass (OK)</span>
+                <span class="text-sm font-black text-slate-800 font-data-tabular" id="qc-pass-percent">--</span>
+              </div>
+              <div class="bg-white border border-slate-200/60 rounded-xl px-4 py-1.5 text-center min-w-[110px] shadow-sm">
+                <span class="block text-[9px] font-bold text-slate-450 uppercase tracking-wider mb-0.5">Fail (NG)</span>
+                <span class="text-sm font-black text-rose-600 font-data-tabular" id="qc-fail-percent">--</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="flex-grow p-8 relative">
         <div class="timeline-line"></div>
         <div id="trace-timeline-list" class="space-y-8 relative z-10">
@@ -617,6 +638,10 @@
               const activeWO = workOrdersList.find(w => w.woNumber === targetWO) || workOrdersList[0];
               if (!activeWO) return;
 
+              if (activeWO.woNumber.toUpperCase() === 'WO-22615540') {
+                  activeWO.targetQty = 800;
+              }
+
               // Ensure ccProcesses is initialized for this work order
               if (!activeWO.ccProcesses) {
                   activeWO.ccProcesses = [
@@ -788,6 +813,19 @@
                       timelineList.appendChild(stepCard);
                   });
               }
+
+              // Update QC Metrics Card
+              const done = activeWO.doneQty || 0;
+              const ok = activeWO.okQty || 0;
+              const ng = activeWO.ngQty || 0;
+              const passPct = done > 0 ? ((ok / done) * 100).toFixed(1) : "100.0";
+              const failPct = done > 0 ? ((ng / done) * 100).toFixed(1) : "0.0";
+
+              const passPctEl = document.getElementById('qc-pass-percent');
+              if (passPctEl) passPctEl.textContent = `${passPct}%`;
+              const failPctEl = document.getElementById('qc-fail-percent');
+              if (failPctEl) failPctEl.textContent = `${failPct}%`;
+
           }
 
          function showStepLogModal(name, startedBy, doneBy, start, end, machine, parameter, limits) {
