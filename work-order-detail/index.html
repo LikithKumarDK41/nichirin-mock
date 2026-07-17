@@ -104,144 +104,137 @@
 
   <div id="step-content-1" class="grid grid-cols-12 gap-6 w-full">
     <div class="col-span-12 bg-white border border-outline-variant/30 rounded-xl p-6 shadow-sm">
-      <!-- Top level branding / status -->
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-4 border-b border-slate-100 mb-6">
-        <div class="space-y-1">
-          <div class="flex items-center gap-3">
-            <h2 class="text-2xl font-black text-primary tracking-tight leading-none" id="wo-detail-id">WO #22615539</h2>
-            <span class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-[#c8102e]/10 text-[#c8102e] border border-[#c8102e]/25" id="wo-detail-status">Running</span>
-          </div>
+      <!-- Top level control code (matching reference screenshot layout) -->
+      <div class="flex justify-between items-center mb-2">
+        <div class="flex items-center gap-3">
+          <span class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-[#c8102e]/10 text-[#c8102e] border border-[#c8102e]/25 animate-pulse" id="wo-detail-status">Running</span>
+          <span class="text-xs text-slate-400 font-bold" id="wo-detail-id">WO #22615539</span>
         </div>
-        <!-- Barcode Column (Exact replication of PDF top-left) -->
-        <div class="flex flex-col items-end">
-          <div class="h-9 bg-slate-950 w-48 flex flex-col justify-center items-center text-white font-mono select-none px-1 py-0.5 rounded shadow-sm">
-            <!-- Simulated Barcode Lines -->
-            <div class="text-[9px] tracking-[4px] leading-none font-bold">||| | || |||| | | |||| || || | ||| |</div>
-            <div class="text-[9px] tracking-[2px] leading-none font-bold mt-0.5">||||| | ||| |||| | || ||| || ||||</div>
-          </div>
-          <span id="wo-control-code" class="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-1">Control Code: 22615539</span>
-        </div>
+        <span id="wo-control-code" class="text-xs font-bold text-slate-500 tracking-wider">CONTROL CODE: 22615539</span>
       </div>
 
-      <!-- Grid of details -->
-      <div class="grid grid-cols-12 gap-6 border-b border-slate-100 pb-6 mb-6">
-        
-        <!-- Left Side: General Card Details (col-span-12 lg:col-span-8) -->
-        <div class="col-span-12 lg:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-xs md:border-r border-slate-100/50 md:pr-4">
-          <!-- Col 1: Card Specs -->
-          <div class="space-y-3">
-            <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-50 pb-1.5">Card Specifications</h4>
+      <!-- Divider line -->
+      <div class="border-t border-slate-200/80 my-3"></div>
+
+      <!-- Grid of details (Exact matching of reference image columns) -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 pb-6 border-b border-slate-100">
+        <!-- Col 1: Card Specifications -->
+        <div class="md:col-span-2 space-y-3">
+          <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider">CARD SPECIFICATIONS</h4>
+          <div class="space-y-2 text-xs">
             <div>
-              <span class="text-slate-400 font-bold block text-[10px] uppercase">Control Card No</span>
+              <span class="text-slate-400 font-semibold block text-[10px] uppercase">CONTROL CARD NO</span>
               <p class="text-slate-800 font-bold" id="cc-card-no">CC-HMSI-59</p>
             </div>
             <div>
-              <span class="text-slate-400 font-bold block text-[10px] uppercase">Control Card Type</span>
+              <span class="text-slate-400 font-semibold block text-[10px] uppercase">CONTROL CARD TYPE</span>
               <p class="text-slate-800 font-bold" id="cc-card-type">Brake Hose</p>
             </div>
             <div>
-              <span class="text-slate-400 font-bold block text-[10px] uppercase">Customer</span>
+              <span class="text-slate-400 font-semibold block text-[10px] uppercase">CUSTOMER</span>
               <p class="text-slate-800 font-bold" id="cc-customer">HMSI</p>
             </div>
           </div>
+        </div>
 
-          <!-- Col 2: Drawing & Revisioning -->
-          <div class="space-y-3">
-            <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-50 pb-1.5">Revision Control</h4>
+        <!-- Col 2: Revision Control -->
+        <div class="md:col-span-3 space-y-3 border-l border-slate-100/50 pl-4">
+          <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider">REVISION CONTROL</h4>
+          <div class="space-y-2 text-xs">
             <div>
-              <span class="text-slate-400 font-bold block text-[10px] uppercase">Drawing Revision</span>
+              <span class="text-slate-400 font-semibold block text-[10px] uppercase">DRAWING REVISION</span>
               <p class="text-slate-800 font-bold" id="cc-drawing-rev">M-23-F0674 (23 May-23)</p>
             </div>
             <div>
-              <span class="text-slate-400 font-bold block text-[10px] uppercase">Issue Date</span>
+              <span class="text-slate-400 font-semibold block text-[10px] uppercase">ISSUE DATE</span>
               <p class="text-slate-800 font-bold" id="cc-issue-date">07.04.2026</p>
             </div>
             <div>
-              <span class="text-slate-400 font-bold block text-[10px] uppercase">Revisions Summary</span>
+              <span class="text-slate-400 font-semibold block text-[10px] uppercase">REVISIONS SUMMARY</span>
               <p class="text-slate-800 font-semibold text-[11px] leading-snug" id="cc-revision-text">Protector and Grommet locations on Drawing</p>
             </div>
           </div>
+        </div>
 
-          <!-- Col 3: Quality Sign-offs -->
-          <div class="space-y-3">
-            <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-50 pb-1.5">Quality Sign-offs</h4>
+        <!-- Col 3: Quality Sign-offs -->
+        <div class="md:col-span-2 space-y-3 border-l border-slate-100/50 pl-4">
+          <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider">QUALITY SIGN-OFFS</h4>
+          <div class="space-y-2 text-xs">
             <div>
-              <span class="text-slate-400 font-bold block text-[10px] uppercase">Issued By</span>
+              <span class="text-slate-400 font-semibold block text-[10px] uppercase">ISSUED BY</span>
               <p class="text-slate-800 font-bold" id="cc-issued-by">Garima</p>
             </div>
             <div>
-              <span class="text-slate-400 font-bold block text-[10px] uppercase">Checked By</span>
+              <span class="text-slate-400 font-semibold block text-[10px] uppercase">CHECKED BY</span>
               <p class="text-slate-800 font-bold" id="cc-checked-by">GANESH VATS</p>
             </div>
             <div>
-              <span class="text-slate-400 font-bold block text-[10px] uppercase">Approved By</span>
+              <span class="text-slate-400 font-semibold block text-[10px] uppercase">APPROVED BY</span>
               <p class="text-slate-800 font-bold" id="cc-approved-by">AVRASH-SAN</p>
             </div>
           </div>
         </div>
 
-        <!-- Right Side: Production/SAP Details + QR Code (col-span-12 lg:col-span-4) -->
-        <div class="col-span-12 lg:col-span-4 flex justify-between gap-4 text-xs">
-          <!-- Production Info Fields -->
-          <div class="space-y-3 flex-grow">
-            <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-50 pb-1.5">Production Plan</h4>
+        <!-- Col 4: Production Plan -->
+        <div class="md:col-span-4 space-y-3 border-l border-slate-100/50 pl-4">
+          <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider">PRODUCTION PLAN</h4>
+          <div class="space-y-2 text-xs">
             <div>
-              <span class="text-slate-400 font-bold block text-[10px] uppercase">Part Name</span>
-              <p class="text-slate-800 font-bold truncate" id="cc-part-name" title="HOSE COMP D FR BRAKE">HOSE COMP D FR BRAKE</p>
+              <span class="text-slate-400 font-semibold block text-[10px] uppercase">PART NAME</span>
+              <p class="text-slate-800 font-bold truncate" id="cc-part-name" title="Brake Hose Assembly - Front Disc">Brake Hose Assembly - Front Disc</p>
             </div>
             <div>
-              <span class="text-slate-400 font-bold block text-[10px] uppercase">Part No</span>
-              <p class="text-primary font-bold font-mono" id="cc-part-no">45128-K1L-D410-M1-1FC-R02</p>
+              <span class="text-slate-400 font-semibold block text-[10px] uppercase">PART NO</span>
+              <p class="text-[#c8102e] font-bold font-mono text-[13px]" id="cc-part-no">BPD-F584A-00-IYN-R02</p>
             </div>
             <div>
-              <span class="text-slate-400 font-bold block text-[10px] uppercase">Product Order No</span>
-              <p class="text-slate-800 font-mono text-[10px] truncate" id="cc-prod-order-no" title="22615539/45128-K1L-D410-M1-1FC-R02">22615539/45128-K1L-D410-M1-1FC-R02</p>
+              <span class="text-slate-400 font-semibold block text-[10px] uppercase">PRODUCT ORDER NO</span>
+              <p class="text-slate-800 font-mono font-bold truncate text-[11px]" id="cc-prod-order-no" title="22615540/BPD-F584A-00-IYN-R02">22615540/BPD-F584A-00-IYN-R02</p>
             </div>
             <div>
-              <span class="text-slate-400 font-bold block text-[10px] uppercase">Production Plan Date</span>
+              <span class="text-slate-400 font-semibold block text-[10px] uppercase">PRODUCTION PLAN DATE</span>
               <p class="text-slate-800 font-bold font-data-tabular" id="cc-plan-date">27-06-2026 / 08-07-2026</p>
             </div>
           </div>
+        </div>
 
-          <!-- QR Code Column -->
-          <div class="flex flex-col items-center shrink-0 pl-4 border-l border-slate-100/50">
-            <!-- Simulated premium QR Code block -->
-            <div class="w-[88px] h-[88px] border border-slate-200 bg-white p-1 rounded-lg flex items-center justify-center relative select-none">
-              <!-- Mock QR grid pattern using small blocks -->
-              <div class="grid grid-cols-5 gap-[2px] w-full h-full opacity-85">
-                <div class="bg-slate-900 rounded-[1px]"></div>
-                <div class="bg-slate-900 rounded-[1px]"></div>
-                <div class="bg-slate-900 rounded-[1px]"></div>
-                <div class="bg-transparent"></div>
-                <div class="bg-slate-900 rounded-[1px]"></div>
-                
-                <div class="bg-slate-900 rounded-[1px]"></div>
-                <div class="bg-transparent"></div>
-                <div class="bg-slate-900 rounded-[1px]"></div>
-                <div class="bg-slate-900 rounded-[1px]"></div>
-                <div class="bg-slate-900 rounded-[1px]"></div>
-                
-                <div class="bg-slate-900 rounded-[1px]"></div>
-                <div class="bg-slate-900 rounded-[1px]"></div>
-                <div class="bg-transparent"></div>
-                <div class="bg-slate-900 rounded-[1px]"></div>
-                <div class="bg-transparent"></div>
-                
-                <div class="bg-transparent"></div>
-                <div class="bg-slate-900 rounded-[1px]"></div>
-                <div class="bg-slate-900 rounded-[1px]"></div>
-                <div class="bg-slate-900 rounded-[1px]"></div>
-                <div class="bg-slate-900 rounded-[1px]"></div>
-                
-                <div class="bg-slate-900 rounded-[1px]"></div>
-                <div class="bg-transparent"></div>
-                <div class="bg-slate-900 rounded-[1px]"></div>
-                <div class="bg-transparent"></div>
-                <div class="bg-slate-900 rounded-[1px]"></div>
-              </div>
+        <!-- Col 5: QR Code -->
+        <div class="md:col-span-1 flex flex-col items-center justify-start shrink-0 border-l border-slate-100/50 pl-4">
+          <div class="w-[72px] h-[72px] border border-slate-200 bg-white p-1 rounded flex items-center justify-center relative select-none">
+            <!-- Simulated QR Grid Pattern -->
+            <div class="grid grid-cols-5 gap-[2px] w-full h-full opacity-90">
+              <div class="bg-slate-900 rounded-[0.5px]"></div>
+              <div class="bg-transparent"></div>
+              <div class="bg-slate-900 rounded-[0.5px]"></div>
+              <div class="bg-slate-900 rounded-[0.5px]"></div>
+              <div class="bg-slate-900 rounded-[0.5px]"></div>
+              
+              <div class="bg-slate-900 rounded-[0.5px]"></div>
+              <div class="bg-transparent"></div>
+              <div class="bg-slate-900 rounded-[0.5px]"></div>
+              <div class="bg-transparent"></div>
+              <div class="bg-slate-900 rounded-[0.5px]"></div>
+              
+              <div class="bg-slate-900 rounded-[0.5px]"></div>
+              <div class="bg-slate-900 rounded-[0.5px]"></div>
+              <div class="bg-transparent"></div>
+              <div class="bg-slate-900 rounded-[0.5px]"></div>
+              <div class="bg-slate-900 rounded-[0.5px]"></div>
+              
+              <div class="bg-transparent"></div>
+              <div class="bg-slate-900 rounded-[0.5px]"></div>
+              <div class="bg-slate-900 rounded-[0.5px]"></div>
+              <div class="bg-slate-900 rounded-[0.5px]"></div>
+              <div class="bg-transparent"></div>
+              
+              <div class="bg-slate-900 rounded-[0.5px]"></div>
+              <div class="bg-transparent"></div>
+              <div class="bg-slate-900 rounded-[0.5px]"></div>
+              <div class="bg-transparent"></div>
+              <div class="bg-slate-900 rounded-[0.5px]"></div>
             </div>
-            <span class="text-[8.5px] text-slate-400 font-bold uppercase tracking-wider mt-2 font-mono">LOT: 6701</span>
           </div>
+          <span class="text-[8px] text-slate-400 font-bold uppercase tracking-wider mt-1.5 font-mono text-center">LOT: 6701</span>
         </div>
       </div>
 
