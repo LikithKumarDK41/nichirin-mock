@@ -169,12 +169,24 @@
       <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Traceability Search</h2>
       <p class="font-body-md text-body-md text-on-surface-variant">Perform deep-dive historical investigations on production steps, quality metrics, and batch identifiers.</p>
     </div>
-    <div class="flex gap-3 w-full md:w-auto md:justify-end shrink-0 items-center">
-      <div class="relative w-64">
-        <select id="traceability-wo-select" class="w-full pl-3 pr-10 py-1.5 bg-white border border-outline-variant/30 rounded-lg text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-9 font-semibold appearance-none bg-none">
-          <!-- Populated dynamically -->
-        </select>
-        <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+    <div class="flex gap-3 w-full md:w-auto md:justify-end shrink-0 items-end">
+      <div class="relative w-64 flex flex-col">
+        <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Work Order ID</label>
+        <div class="relative">
+          <button id="traceability-wo-dropdown-trigger" class="w-full bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-9 px-3 font-semibold flex items-center justify-between cursor-pointer" onclick="toggleTraceDropdown()">
+            <span id="traceability-wo-selected-text">WO-22615540</span>
+            <span class="material-symbols-outlined text-[20px] text-slate-500">expand_more</span>
+          </button>
+          <div id="traceability-wo-dropdown-container" class="absolute right-0 left-0 mt-1 bg-white border border-outline-variant/30 rounded-lg shadow-lg z-[100] hidden p-2 flex flex-col gap-2">
+            <div class="relative">
+              <input type="text" id="traceability-wo-dropdown-search" class="w-full bg-slate-50 border border-outline-variant/30 rounded-lg text-xs text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-8 pr-3 font-semibold" placeholder="Search WO ID..." oninput="filterTraceDropdown(this.value)" autocomplete="off" />
+              <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[16px] text-slate-400">search</span>
+            </div>
+            <div id="traceability-wo-dropdown-list" class="max-h-48 overflow-y-auto custom-scrollbar flex flex-col">
+              <!-- Dropdown items populated dynamically -->
+            </div>
+          </div>
+        </div>
       </div>
       <button class="flex items-center justify-center gap-2 border border-outline-variant/50 bg-white text-slate-700 h-9 px-4 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-all shadow-sm cursor-pointer w-full md:w-auto whitespace-nowrap" onclick="exportTraceabilityReport()">
         <span class="material-symbols-outlined text-[18px]">download</span>
@@ -185,39 +197,162 @@
 
   <!-- Result Overview Grid -->
   <div class="grid grid-cols-12 gap-grid-gutter">
-    <!-- Left Column: Summary Cards -->
-    <div class="col-span-12 lg:col-span-4 space-y-grid-gutter">
-      <!-- WO Summary Card -->
-      <div class="bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm">
-        <div class="bg-slate-50 px-4 py-3 border-b border-outline-variant/30 flex justify-between items-center">
-          <h3 class="font-headline-sm text-headline-sm text-primary uppercase">WO Summary</h3>
-          <span class="material-symbols-outlined text-secondary">info</span>
-        </div>
-        <div class="p-4 space-y-4">
-          <div class="flex justify-between items-center border-b border-outline-variant/30 pb-2">
-            <span class="text-on-surface-variant text-body-sm">Part Number</span>
-            <span class="text-primary font-bold font-data-tabular text-data-tabular" id="trace-summary-part">--</span>
+    <!-- Top Full-Width Row: WO Summary Card (Referred layout style) -->
+    <div class="col-span-12">
+      <div class="bg-white border border-outline-variant/30 rounded-xl p-6 shadow-sm overflow-hidden flex flex-col">
+        <!-- Top level control code (matching reference screenshot layout) -->
+        <div class="flex justify-between items-center mb-2">
+          <div class="flex items-center gap-3">
+            <h2 class="text-2xl font-black text-[#c8102e] tracking-tight leading-none" id="trace-summary-id">WO #--</h2>
+            <span class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-[#c8102e]/10 text-[#c8102e] border border-[#c8102e]/25 animate-pulse" id="trace-summary-status">RUNNING</span>
           </div>
-          <div class="flex justify-between items-center border-b border-outline-variant/30 pb-2">
-            <span class="text-on-surface-variant text-body-sm">Target Qty</span>
-            <span class="text-primary font-bold font-data-tabular text-data-tabular" id="trace-summary-target">--</span>
-          </div>
-          <div class="flex justify-between items-center border-b border-outline-variant/30 pb-2">
-            <span class="text-on-surface-variant text-body-sm">Actual Built</span>
-            <span class="text-primary font-bold font-data-tabular text-data-tabular" id="trace-summary-built">--</span>
-          </div>
-          <div class="flex justify-between items-center">
-            <span class="text-on-surface-variant text-body-sm">Start Time</span>
-            <span class="text-primary font-bold font-data-tabular text-data-tabular" id="trace-summary-start">--</span>
+          <!-- Barcode Column (Exact replication of PDF top-left) -->
+          <div class="flex flex-col items-end">
+            <div class="h-9 bg-slate-950 w-48 flex flex-col justify-center items-center text-white font-mono select-none px-1 py-0.5 rounded shadow-sm">
+              <!-- Simulated Barcode Lines -->
+              <div class="text-[9px] tracking-[4px] leading-none font-bold">||| | || |||| | | |||| || || | ||| |</div>
+              <div class="text-[9px] tracking-[2px] leading-none font-bold mt-0.5">||||| | ||| |||| | || ||| || ||||</div>
+            </div>
+            <span id="trace-summary-control-code" class="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-1">Control Code: --</span>
           </div>
         </div>
+
+        <!-- Divider line -->
+        <div class="border-t border-slate-200/80 my-3"></div>
+
+        <!-- Grid of details (Exact matching of reference image columns) -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 pb-2">
+          <!-- Col 1: Card Specifications -->
+          <div class="md:col-span-2 space-y-3">
+            <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider">CARD SPECIFICATIONS</h4>
+            <div class="space-y-2 text-xs">
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">CONTROL CARD NO</span>
+                <p class="text-slate-800 font-bold">CC-HMSI-59</p>
+              </div>
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">CONTROL CARD TYPE</span>
+                <p class="text-slate-800 font-bold">Brake Hose</p>
+              </div>
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">CUSTOMER</span>
+                <p class="text-slate-800 font-bold">HMSI</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Col 2: Revision Control -->
+          <div class="md:col-span-3 space-y-3 border-l border-slate-100/50 pl-4">
+            <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider">REVISION CONTROL</h4>
+            <div class="space-y-2 text-xs">
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">DRAWING REVISION</span>
+                <p class="text-slate-800 font-bold">M-23-F0674 (23 May-23)</p>
+              </div>
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">ISSUE DATE</span>
+                <p class="text-slate-800 font-bold">07.04.2026</p>
+              </div>
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">REVISIONS SUMMARY</span>
+                <p class="text-slate-800 font-semibold text-[11px] leading-snug">Protector and Grommet locations on Drawing</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Col 3: Quality Sign-offs -->
+          <div class="md:col-span-2 space-y-3 border-l border-slate-100/50 pl-4">
+            <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider">QUALITY SIGN-OFFS</h4>
+            <div class="space-y-2 text-xs">
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">ISSUED BY</span>
+                <p class="text-slate-800 font-bold">Garima</p>
+              </div>
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">CHECKED BY</span>
+                <p class="text-slate-800 font-bold">GANESH VATS</p>
+              </div>
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">APPROVED BY</span>
+                <p class="text-slate-800 font-bold">AVRASH-SAN</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Col 4: Production Plan -->
+          <div class="md:col-span-4 space-y-3 border-l border-slate-100/50 pl-4">
+            <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider">PRODUCTION PLAN</h4>
+            <div class="space-y-2 text-xs">
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">PART NAME</span>
+                <p class="text-slate-800 font-bold truncate text-[11px]" id="trace-summary-name" title="--">--</p>
+              </div>
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">PART NO</span>
+                <p class="text-[#c8102e] font-bold font-mono text-[13px]" id="trace-summary-part">--</p>
+              </div>
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">PRODUCT ORDER NO</span>
+                <p class="text-slate-800 font-mono font-bold truncate text-[11px]" id="trace-summary-prod-order-no" title="--">--</p>
+              </div>
+              <div class="grid grid-cols-2 gap-2 mt-1">
+                <div>
+                  <span class="text-slate-400 font-semibold block text-[9px] uppercase leading-none">PRODUCTION PLAN DATE</span>
+                  <p class="text-slate-800 font-bold font-data-tabular text-[10px] mt-1">27-06-2026 / 08-07-2026</p>
+                </div>
+                <div>
+                  <span class="text-slate-400 font-semibold block text-[9px] uppercase leading-none">TARGET QUANTITY</span>
+                  <p class="text-slate-800 font-bold font-data-tabular text-[10px] mt-1" id="trace-summary-qty">--</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Col 5: QR Code -->
+          <div class="md:col-span-1 flex flex-col items-center justify-start shrink-0 border-l border-slate-100/50 pl-4">
+            <div class="w-[72px] h-[72px] border border-slate-200 bg-white p-1 rounded flex items-center justify-center relative select-none">
+              <!-- Simulated QR Grid Pattern -->
+              <div class="grid grid-cols-5 gap-[2px] w-full h-full opacity-90">
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-transparent"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-transparent"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-transparent"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-transparent"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                
+                <div class="bg-transparent"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-transparent"></div>
+                
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-transparent"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-transparent"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+              </div>
+            </div>
+            <span class="text-[8px] text-slate-400 font-bold uppercase tracking-wider mt-1.5 font-mono text-center whitespace-nowrap">LOT: 6701</span>
+          </div>
+        </div>
+
       </div>
-
-
     </div>
 
     <!-- Right Column: QR Scan Timeline (Focus) -->
-    <div class="col-span-12 lg:col-span-8 bg-white border border-outline-variant/30 rounded-xl flex flex-col shadow-sm overflow-hidden">
+    <div class="col-span-12 bg-white border border-outline-variant/30 rounded-xl flex flex-col shadow-sm overflow-hidden">
       <div class="p-6 border-b border-outline-variant/30 flex items-center justify-between bg-slate-50">
         <div>
           <h2 class="font-headline-md text-headline-md text-primary">QR Scan Timeline</h2>
@@ -238,6 +373,26 @@
         </button>
       </div>
     </div>
+  <!-- Step Details Modal -->
+  <div id="stepDetailsModalBackdrop" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[150] transition-opacity duration-300 opacity-0" onclick="closeStepDetailsModal()"></div>
+  <div id="stepDetailsModal" class="hidden fixed inset-0 z-[160] flex items-center justify-center p-4 select-none pointer-events-none">
+    <div class="bg-white border border-outline-variant/30 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col pointer-events-auto transform scale-95 opacity-0 transition-all duration-300">
+      <div class="px-6 py-4 border-b border-outline-variant/30 flex justify-between items-center bg-slate-50">
+        <h3 class="font-headline-md text-headline-md text-primary flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary">fact_check</span>
+          Process Step Details
+        </h3>
+        <button class="text-on-surface-variant hover:text-primary transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 cursor-pointer" onclick="closeStepDetailsModal()">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+      <div class="p-6 space-y-4 text-sm" id="step-modal-content">
+        <!-- populated dynamically -->
+      </div>
+      <div class="bg-slate-50 p-4 border-t border-outline-variant/30 flex justify-end gap-3 z-20">
+        <button class="px-6 h-10 rounded-lg bg-primary text-white font-semibold text-sm shadow-sm hover:opacity-95 transition-all cursor-pointer" onclick="closeStepDetailsModal()">Close Details</button>
+      </div>
+    </div>
   </div>
 </main>
 <!-- Floating Action Button (Suppressed on Details/Search as per mandate, but included here for "Actionable Traceability" if needed in future) -->
@@ -246,16 +401,118 @@
     (function() {
         let workOrdersList = [];
 
+        const stepTimes = [
+            { start: "06:00 AM", end: "06:12 AM" },
+            { start: "06:12 AM", end: "07:30 AM" },
+            { start: "07:30 AM", end: "08:15 AM" },
+            { start: "08:15 AM", end: "09:00 AM" },
+            { start: "09:00 AM", end: "10:15 AM" },
+            { start: "10:15 AM", end: "11:00 AM" },
+            { start: "11:00 AM", end: "11:45 AM" },
+            { start: "11:45 AM", end: "12:30 PM" },
+            { start: "12:30 PM", end: "01:15 PM" },
+            { start: "01:15 PM", end: "02:00 PM" },
+            { start: "02:00 PM", end: "02:45 PM" },
+            { start: "02:45 PM", end: "03:30 PM" },
+            { start: "03:30 PM", end: "03:45 PM" }
+        ];
+
+        const processMetadata = {
+            "Picking (BOM)": {
+                icon: "warehouse",
+                parameter: "BOM Lot Verification",
+                limits: "Match SAP Checklist",
+                instruction: "Scan part QR labels. Verify EPDM Hose lot tags and metal collar batch counts against SAP Work Order details."
+            },
+            "Hose Cutting": {
+                icon: "content_cut",
+                parameter: "Hose Cut Length",
+                limits: "234 ± 2 mm / 94 ± 2 mm",
+                instruction: "Load inner EPDM tube. Slice lengths to 234±2mm or 94±2mm on scaling deck. Check for smooth edges without distortion."
+            },
+            "Protector Cutting": {
+                icon: "content_cut",
+                parameter: "Sleeve Cut Length",
+                limits: "190 ± 3 mm",
+                instruction: "Cut EPDM/NBR protector sleeve to 190±3mm length. Check lining thickness and ensure internal sleeves have zero debris."
+            },
+            "Fitting Bending": {
+                icon: "architecture",
+                parameter: "Fitting Alignment Height",
+                limits: "Height -274, L-R -L80",
+                instruction: "Double-check height parameter at -274 and L-R settings at -L80. Secure and bend fitting collars on EF02 blocks."
+            },
+            "Manufacturing Lot Stamping": {
+                icon: "sell",
+                parameter: "Stamp Depth & Legibility",
+                limits: "0.2 ± 0.05 mm / Clear",
+                instruction: "Engrave manufacturing LOT index onto sleeve surface. Perform visual scan check for depth and letters overlap."
+            },
+            "Accessories Insertion-1": {
+                icon: "login",
+                parameter: "Insertion Depth",
+                limits: "Fully Seated",
+                instruction: "Push end fitting collar inside inner EPDM rubber tube. Verify collar seats completely flat with zero gaps."
+            },
+            "Accessories Insertion-2": {
+                icon: "login",
+                parameter: "Insertion Depth",
+                limits: "Fully Seated",
+                instruction: "Push second end fitting collar inside inner EPDM rubber tube. Verify collar seats completely flat with zero gaps."
+            },
+            "Crimping-1": {
+                icon: "compress",
+                parameter: "Crimp Diameter",
+                limits: "9.00 ± 0.05 mm",
+                instruction: "Crimp first hose end fitting on CJ-22 press. Verify crimped diameter stays within 9.00±0.05mm range."
+            },
+            "Crimping-2": {
+                icon: "compress",
+                parameter: "Crimp Diameter",
+                limits: "9.00 ± 0.05 mm",
+                instruction: "Crimp second hose end fitting on CJ-22 press. Verify crimped diameter stays within 9.00±0.05mm range."
+            },
+            "Accessories Bonding": {
+                icon: "science",
+                parameter: "Bond Placement",
+                limits: "100% Surface Coverage",
+                instruction: "Apply adhesive compound evenly. Fix protector sleeve alignment on bonding jig and cure under pressure."
+            },
+            "Pressure Test": {
+                icon: "water_drop",
+                parameter: "Hydraulic Test Pressure",
+                limits: "15.2 +1.0/-0 MPa / 36s",
+                instruction: "Clamp assembly onto air/water tester. Pump test pressure to 15.2+1.0/-0 MPa for 36 seconds. Watch for bubble discharge."
+            },
+            "Final Inspection": {
+                icon: "fact_check",
+                parameter: "Visual & Dimensional Audit",
+                limits: "100% OK / No Scuffs",
+                instruction: "Validate overall lengths and orientation on final inspection jig. Perform strict cosmetic checks before packaging."
+            },
+            "Packing": {
+                icon: "package",
+                parameter: "Bin Count & Labeling",
+                limits: "50 units/box",
+                instruction: "Pack verified assemblies into plastic bins. Affix traceability QR codes and transfer completed batch to dispatch."
+            }
+        };
+
         async function initTraceability() {
             // Load work orders database
+            let loaded = false;
             const localData = localStorage.getItem('workOrdersList');
             if (localData) {
                 try {
-                    workOrdersList = JSON.parse(localData);
+                    const parsed = JSON.parse(localData);
+                    if (parsed && parsed.length >= 9 && parsed[0].woNumber && !parsed[0].woNumber.includes("2026")) {
+                        workOrdersList = parsed;
+                        loaded = true;
+                    }
                 } catch(e) {}
             }
             
-            if (!workOrdersList || workOrdersList.length === 0) {
+            if (!loaded) {
                 try {
                     const res = await fetch('../work-orders/workorders.json');
                     workOrdersList = await res.json();
@@ -265,134 +522,350 @@
                 }
             }
 
-            populateWOOptions();
- 
-             // Set dynamic select listener
-             const woSelect = document.getElementById('traceability-wo-select');
-             if (woSelect) {
-                 woSelect.addEventListener('change', function() {
-                     executeTraceabilitySearch(this.value);
-                 });
-             }
- 
              // Default search the first work order or query parameter
              const params = new URLSearchParams(window.location.search);
              const woQuery = params.get('wo');
+             let initialWO = null;
              if (woQuery) {
-                 if (woSelect) woSelect.value = woQuery;
-                 executeTraceabilitySearch(woQuery);
-             } else if (workOrdersList && workOrdersList.length > 0) {
-                 if (woSelect) woSelect.value = workOrdersList[0].woNumber;
-                 executeTraceabilitySearch(workOrdersList[0].woNumber);
+                 initialWO = workOrdersList.find(w => w.woNumber.toUpperCase() === woQuery.toUpperCase());
+             }
+             if (!initialWO && workOrdersList.length > 0) {
+                 initialWO = workOrdersList[0];
+             }
+             if (initialWO) {
+                 selectTraceWO(initialWO.woNumber);
              }
          }
  
-         function populateWOOptions() {
-             const selectEl = document.getElementById('traceability-wo-select');
-             if (!selectEl) return;
-             selectEl.innerHTML = '';
-             workOrdersList.forEach(w => {
-                 const opt = document.createElement('option');
-                 opt.value = w.woNumber;
-                 opt.textContent = `${w.woNumber} - ${w.productName} (${w.partNumber})`;
-                 selectEl.appendChild(opt);
+         function toggleTraceDropdown() {
+             const container = document.getElementById('traceability-wo-dropdown-container');
+             if (container) {
+                 container.classList.toggle('hidden');
+                 if (!container.classList.contains('hidden')) {
+                     const searchInput = document.getElementById('traceability-wo-dropdown-search');
+                     if (searchInput) {
+                         searchInput.value = '';
+                         searchInput.focus();
+                     }
+                     renderTraceDropdown('');
+                 }
+             }
+         }
+
+         // Close dropdown on click outside
+         document.addEventListener('click', function(event) {
+             const container = document.getElementById('traceability-wo-dropdown-container');
+             const trigger = document.getElementById('traceability-wo-dropdown-trigger');
+             if (container && trigger && !container.classList.contains('hidden')) {
+                 if (!trigger.contains(event.target) && !container.contains(event.target)) {
+                     container.classList.add('hidden');
+                 }
+             }
+         });
+
+         window.filterTraceDropdown = function(val) {
+             renderTraceDropdown(val);
+         }
+
+         function renderTraceDropdown(filterText) {
+             const list = document.getElementById('traceability-wo-dropdown-list');
+             if (!list) return;
+             list.innerHTML = '';
+
+             const q = filterText.toLowerCase().trim();
+             const filtered = workOrdersList.filter(w => {
+                 return w.woNumber.toLowerCase().includes(q) || 
+                        w.productName.toLowerCase().includes(q) ||
+                        w.partNumber.toLowerCase().includes(q);
+             });
+
+             if (filtered.length === 0) {
+                 const emptyItem = document.createElement('div');
+                 emptyItem.className = 'px-3 py-2 text-xs text-slate-400 font-semibold';
+                 emptyItem.textContent = 'No work orders found';
+                 list.appendChild(emptyItem);
+                 return;
+             }
+
+             filtered.forEach(w => {
+                 const item = document.createElement('div');
+                 item.className = 'px-3 py-2 text-xs text-slate-700 hover:bg-slate-50 font-semibold cursor-pointer border-b border-slate-100 last:border-0 transition-colors';
+                 item.innerHTML = `
+                     <div class="font-bold text-slate-800">${w.woNumber}</div>
+                     <div class="text-[10px] text-slate-500 truncate">${w.productName}</div>
+                 `;
+                 item.onclick = () => {
+                     selectTraceWO(w.woNumber);
+                     const container = document.getElementById('traceability-wo-dropdown-container');
+                     if (container) container.classList.add('hidden');
+                 };
+                 list.appendChild(item);
              });
          }
+
+         function selectTraceWO(woNumber) {
+             const selectedText = document.getElementById('traceability-wo-selected-text');
+             if (selectedText) {
+                 selectedText.textContent = woNumber;
+             }
+             executeTraceabilitySearch(woNumber);
+         }
+
+         window.toggleTraceDropdown = toggleTraceDropdown;
  
          function executeTraceabilitySearch(targetWO) {
-             const selectEl = document.getElementById('traceability-wo-select');
-             const woVal = targetWO || (selectEl ? selectEl.value : '');
-             const activeWO = workOrdersList.find(w => w.woNumber === woVal) || workOrdersList[0];
-             if (!activeWO) return;
+              const activeWO = workOrdersList.find(w => w.woNumber === targetWO) || workOrdersList[0];
+              if (!activeWO) return;
+
+              // Ensure ccProcesses is initialized for this work order
+              if (!activeWO.ccProcesses) {
+                  activeWO.ccProcesses = [
+                      { name: "Picking (BOM)", machine: "Store Area", operator: "Pooja / Anil", status: "completed" },
+                      { name: "Hose Cutting", machine: "Hose Cutter HC-04", operator: "Anish / Sunil", status: "completed" },
+                      { name: "Protector Cutting", machine: "Sleeve Cutter SC-01", operator: "Amit", status: "completed" },
+                      { name: "Fitting Bending", machine: "CNC Pipe Bender PB-12", operator: "Raju", status: "completed" },
+                      { name: "Manufacturing Lot Stamping", machine: "Lot Stamper LS-09", operator: "Shiv Shambhu / Manoj", status: "completed" },
+                      { name: "Accessories Insertion-1", machine: "Assembly Station-1", operator: "Vipin", status: "completed" },
+                      { name: "Accessories Insertion-2", machine: "Assembly Station-2", operator: "Vipin", status: "completed" },
+                      { name: "Crimping-1", machine: "Crimper CR-02", operator: "Vipin / Kiran", status: "completed" },
+                      { name: "Crimping-2", machine: "Crimper CR-05", operator: "Vipin / Kiran", status: "completed" },
+                      { name: "Accessories Bonding", machine: "Bonding Jig BJ-59", operator: "Nazma / Sushma", status: "completed" },
+                      { name: "Pressure Test", machine: "LTM-07 Rig", operator: "Aniket", status: "completed" },
+                      { name: "Final Inspection", machine: "FI-HMSI-59 Jig", operator: "Rubi / Garima", status: "completed" },
+                      { name: "Packing", machine: "Packing Line PL-03", operator: "Anjali / Shy", status: "completed" }
+                  ];
+
+                  // Align step statuses to match overall work order state
+                  if (activeWO.status === 'Running') {
+                      activeWO.ccProcesses.forEach((p, idx) => {
+                          if (idx < 5) p.status = 'completed';
+                          else if (idx === 5) p.status = 'active';
+                          else p.status = 'pending';
+                      });
+                  } else if (activeWO.status === 'Waiting' || activeWO.status === 'Held') {
+                      activeWO.ccProcesses.forEach(p => p.status = 'pending');
+                  } else if (activeWO.status === 'Completed') {
+                      activeWO.ccProcesses.forEach(p => p.status = 'completed');
+                  }
+              }
+  
+              const cleanWONum = activeWO.woNumber.replace('WO-', '');
+              document.getElementById('trace-summary-id').textContent = `WO #${cleanWONum}`;
+              
+              const statusEl = document.getElementById('trace-summary-status');
+              if (statusEl) {
+                  statusEl.textContent = activeWO.status.toUpperCase();
+                  if (activeWO.status === 'Running') {
+                      statusEl.className = "px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-[#c8102e]/10 text-[#c8102e] border border-[#c8102e]/25 animate-pulse";
+                  } else if (activeWO.status === 'Completed') {
+                      statusEl.className = "px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 border border-emerald-200";
+                  } else if (activeWO.status === 'Held') {
+                      statusEl.className = "px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-rose-100 text-rose-700 border border-rose-200";
+                  } else {
+                      statusEl.className = "px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-600 border border-slate-200";
+                  }
+              }
+              
+              const ctrlCodeEl = document.getElementById('trace-summary-control-code');
+              if (ctrlCodeEl) {
+                  ctrlCodeEl.textContent = `CONTROL CODE: ${cleanWONum}`;
+              }
  
-             // 1. Update WO Summary Card
-             const partEl = document.getElementById('trace-summary-part');
-             const targetEl = document.getElementById('trace-summary-target');
-             const builtEl = document.getElementById('trace-summary-built');
-             const startEl = document.getElementById('trace-summary-start');
+              const nameEl = document.getElementById('trace-summary-name');
+              if (nameEl) {
+                  nameEl.textContent = activeWO.productName;
+                  nameEl.title = activeWO.productName;
+              }
  
-             if (partEl) partEl.textContent = activeWO.partNumber;
-             if (targetEl) targetEl.textContent = `${activeWO.targetQty.toLocaleString()} units`;
-             if (builtEl) builtEl.textContent = `${activeWO.doneQty.toLocaleString()} units`;
-             if (startEl) startEl.textContent = "2026.07.13 06:00 AM";
+              const partEl = document.getElementById('trace-summary-part');
+              if (partEl) {
+                  partEl.textContent = activeWO.partNumber;
+              }
  
-             // 2. Update Timeline Subtitle
-             const subtitleEl = document.getElementById('trace-timeline-subtitle');
-             if (subtitleEl) {
-                 subtitleEl.textContent = `Complete end-to-end event trail for Work Order #${activeWO.woNumber}`;
-             }
+              const prodOrderEl = document.getElementById('trace-summary-prod-order-no');
+              if (prodOrderEl) {
+                  const orderVal = `${cleanWONum}/${activeWO.partNumber}`;
+                  prodOrderEl.textContent = orderVal;
+                  prodOrderEl.title = orderVal;
+              }
  
-             // 3. Render Timeline List
-             const timelineList = document.getElementById('trace-timeline-list');
-             if (timelineList) {
-                 timelineList.innerHTML = '';
-                 
-                 if (!activeWO.steps || activeWO.steps.length === 0) {
-                     timelineList.innerHTML = '<p class="text-slate-400 text-sm italic font-semibold text-center py-8">No process step logs available.</p>';
-                     return;
-                 }
+              const qtyEl = document.getElementById('trace-summary-qty');
+              if (qtyEl) {
+                  qtyEl.textContent = `${activeWO.targetQty.toLocaleString()} units`;
+              }
  
-                 activeWO.steps.forEach((step, idx) => {
-                     let iconName = 'settings';
-                     const nameLower = step.name.toLowerCase();
-                     if (nameLower.includes('picking') || nameLower.includes('intake')) iconName = 'warehouse';
-                     else if (nameLower.includes('cutting') || nameLower.includes('cut')) iconName = 'content_cut';
-                     else if (nameLower.includes('bending') || nameLower.includes('bend')) iconName = 'architecture';
-                     else if (nameLower.includes('crimp') || nameLower.includes('crimping')) iconName = 'compress';
-                     else if (nameLower.includes('curing') || nameLower.includes('oven') || nameLower.includes('bake')) iconName = 'local_fire_department';
-                     else if (nameLower.includes('test') || nameLower.includes('leak') || nameLower.includes('pressure')) iconName = 'science';
-                     else if (nameLower.includes('inspection') || nameLower.includes('qc') || nameLower.includes('audit') || nameLower.includes('pack')) iconName = 'fact_check';
- 
-                     let iconBgClass = 'bg-slate-200 text-slate-600';
-                     let borderClass = '';
-                     let statusColorClass = 'text-slate-500';
- 
-                     if (step.status === 'completed') {
-                         iconBgClass = 'bg-primary text-white';
-                         borderClass = 'border-l-4 border-l-emerald-500';
-                         statusColorClass = 'text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded';
-                     } else if (step.status === 'active' || step.status === 'running') {
-                         iconBgClass = 'bg-secondary-container text-primary';
-                         borderClass = 'border-l-4 border-l-amber-500';
-                         statusColorClass = 'text-amber-600 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded';
-                     } else {
-                         iconBgClass = 'bg-slate-100 text-slate-400';
-                         borderClass = 'opacity-60';
-                         statusColorClass = 'text-slate-400 bg-slate-50 border border-slate-200 px-2 py-0.5 rounded';
-                     }
- 
-                     const stepCard = document.createElement('div');
-                     stepCard.className = 'flex gap-6 timeline-item-card transition-all duration-200';
-                     stepCard.innerHTML = `
-                         <div class="flex-shrink-0 w-10 h-10 rounded-full border-4 border-white flex items-center justify-center shadow-sm ${iconBgClass}">
-                           <span class="material-symbols-outlined text-[20px]">${iconName}</span>
+              // 2. Update Timeline Subtitle
+              const subtitleEl = document.getElementById('trace-timeline-subtitle');
+              if (subtitleEl) {
+                  subtitleEl.textContent = `Complete end-to-end event trail for Work Order #${activeWO.woNumber}`;
+              }
+  
+              // 3. Render Timeline List
+              const timelineList = document.getElementById('trace-timeline-list');
+              if (timelineList) {
+                  timelineList.innerHTML = '';
+                  
+                  activeWO.ccProcesses.forEach((step, idx) => {
+                      const metadata = processMetadata[step.name] || { icon: "settings", parameter: "General", limits: "N/A", instruction: "" };
+                      let iconName = metadata.icon;
+  
+                      let iconBgClass = 'bg-slate-200 text-slate-600';
+                      let borderClass = '';
+                      let statusColorClass = 'text-slate-500';
+  
+                      let operators = step.operator ? step.operator.split('/').map(o => o.trim()) : [];
+                      let startedBy = operators[0] || 'Unassigned';
+                      let doneBy = operators[1] || operators[0] || 'Unassigned';
+  
+                      let displayStart = '--';
+                      let displayEnd = '--';
+  
+                      if (step.status === 'completed') {
+                          iconBgClass = 'bg-[#c8102e] text-white';
+                          borderClass = 'border-l-4 border-l-emerald-500';
+                          statusColorClass = 'text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded';
+                          displayStart = stepTimes[idx].start;
+                          displayEnd = stepTimes[idx].end;
+                      } else if (step.status === 'active' || step.status === 'running') {
+                          iconBgClass = 'bg-amber-500 text-white';
+                          borderClass = 'border-l-4 border-l-amber-500';
+                          statusColorClass = 'text-amber-600 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded animate-pulse';
+                          displayStart = stepTimes[idx].start;
+                          displayEnd = 'In Progress';
+                          doneBy = 'Pending';
+                      } else {
+                          iconBgClass = 'bg-slate-100 text-slate-400';
+                          borderClass = 'opacity-65';
+                          statusColorClass = 'text-slate-400 bg-slate-50 border border-slate-200 px-2 py-0.5 rounded';
+                          startedBy = 'Pending';
+                          doneBy = 'Pending';
+                      }
+  
+                      let timeBadgeText = 'Pending';
+                      if (step.status === 'completed') {
+                          timeBadgeText = `${displayStart} - ${displayEnd}`;
+                      } else if (step.status === 'active' || step.status === 'running') {
+                          timeBadgeText = `${displayStart} - In Progress`;
+                      }
+
+                      const stepCard = document.createElement('div');
+                      stepCard.className = 'flex gap-6 timeline-item-card transition-all duration-200';
+                      stepCard.innerHTML = `
+                          <div class="flex-shrink-0 w-10 h-10 rounded-full border-4 border-white flex items-center justify-center shadow-sm ${iconBgClass}">
+                            <span class="material-symbols-outlined text-[20px]">${iconName}</span>
+                          </div>
+                          <div class="flex-1 bg-slate-50/50 border border-outline-variant/30 rounded-xl p-4 shadow-sm ${borderClass}">
+                            <div class="flex justify-between items-start mb-2">
+                              <div>
+                                <h4 class="font-bold text-primary font-headline-sm">${step.name}</h4>
+                                <p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wide">${step.machine || 'Manual Station'}</p>
+                              </div>
+                              <div class="flex items-center gap-3">
+                                <span class="text-data-tabular font-bold text-on-surface-variant bg-slate-100 border border-slate-200/50 px-2 py-0.5 rounded text-xs">${timeBadgeText}</span>
+                                <button class="text-primary hover:bg-slate-200 w-8 h-8 rounded-full flex items-center justify-center transition-colors cursor-pointer" title="View Step Logs" onclick="showStepLogModal('${step.name}', '${startedBy}', '${doneBy}', '${displayStart}', '${displayEnd}', '${step.machine}', '${metadata.parameter}', '${metadata.limits}')">
+                                  <span class="material-symbols-outlined text-[20px]">info</span>
+                                </button>
+                              </div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-4 mt-2 text-xs border-t border-outline-variant/10 pt-2.5">
+                              <div>
+                                <p class="text-[10px] text-on-surface-variant font-bold uppercase">Started By</p>
+                                <p class="font-semibold text-slate-700 mt-0.5">${startedBy}</p>
+                                <p class="text-[9px] text-slate-400 font-mono mt-0.5">${displayStart}</p>
+                              </div>
+                              <div>
+                                <p class="text-[10px] text-on-surface-variant font-bold uppercase">Completed By</p>
+                                <p class="font-semibold text-slate-700 mt-0.5">${doneBy}</p>
+                                <p class="text-[9px] text-slate-400 font-mono mt-0.5">${displayEnd}</p>
+                              </div>
+                              <div class="text-right">
+                                <p class="text-[10px] text-on-surface-variant font-bold uppercase mb-0.5">Status</p>
+                                <span class="font-bold uppercase text-[10px] ${statusColorClass}">${step.status}</span>
+                              </div>
+                            </div>
+                          </div>
+                      `;
+                      timelineList.appendChild(stepCard);
+                  });
+              }
+          }
+
+         function showStepLogModal(name, startedBy, doneBy, start, end, machine, parameter, limits) {
+             const backdrop = document.getElementById('stepDetailsModalBackdrop');
+             const modal = document.getElementById('stepDetailsModal');
+             const content = document.getElementById('step-modal-content');
+             if (!backdrop || !modal || !content) return;
+
+             const metadata = processMetadata[name] || {};
+
+             content.innerHTML = `
+                 <div class="space-y-4">
+                     <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+                         <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Process Name</span>
+                         <span class="text-sm font-black text-primary">${name}</span>
+                     </div>
+                     <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+                         <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Machine Station</span>
+                         <span class="text-sm font-bold text-slate-700">${machine}</span>
+                     </div>
+                     <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+                         <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Control Parameter</span>
+                         <span class="text-sm font-bold text-slate-700">${parameter}</span>
+                     </div>
+                     <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+                         <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Tolerance Limits</span>
+                         <span class="text-sm font-bold text-emerald-600 font-mono">${limits}</span>
+                     </div>
+                     <div class="p-3 bg-slate-50 rounded-lg border border-slate-100">
+                         <span class="text-[10px] font-bold text-slate-450 uppercase tracking-wider block mb-1">Process Instruction</span>
+                         <p class="text-xs text-slate-600 leading-relaxed font-semibold">${metadata.instruction || 'Follow standard operating procedure.'}</p>
+                     </div>
+                     
+                     <div class="grid grid-cols-2 gap-4 pt-2">
+                         <div class="p-3 bg-slate-50 rounded-lg border border-slate-100">
+                             <span class="text-[10px] font-bold text-slate-450 uppercase tracking-wider block mb-1">Setup & Initiation</span>
+                             <p class="text-xs text-slate-700 font-bold">Started By: ${startedBy}</p>
+                             <p class="text-[10px] text-slate-400 font-mono mt-1">Time: ${start}</p>
+                             <span class="inline-block mt-2 px-1.5 py-0.5 rounded text-[9px] font-bold bg-blue-50 text-blue-700 border border-blue-100">SETUP VERIFIED</span>
                          </div>
-                         <div class="flex-1 bg-slate-50/50 border border-outline-variant/30 rounded-xl p-4 shadow-sm ${borderClass}">
-                           <div class="flex justify-between items-start mb-2">
-                             <div>
-                               <h4 class="font-bold text-primary font-headline-sm">${step.name}</h4>
-                               <p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wide">${step.machine || 'Manual Station'}</p>
-                             </div>
-                             <span class="text-data-tabular font-bold text-on-surface-variant bg-slate-100 border border-slate-200/50 px-2 py-0.5 rounded text-xs">${step.time}</span>
-                           </div>
-                           <p class="text-xs text-slate-500 mb-2 font-semibold">Limits: <span class="font-data-tabular text-slate-700">${step.limits || 'N/A'}</span> | Parameter: <span class="font-semibold text-slate-700">${step.parameter || 'N/A'}</span></p>
-                           <p class="text-sm text-on-surface-variant mb-3 leading-snug">${step.instruction || ''}</p>
-                           <div class="grid grid-cols-2 gap-4 mt-2 text-xs border-t border-outline-variant/10 pt-2.5">
-                             <div>
-                               <p class="text-[10px] text-on-surface-variant font-bold uppercase">Operator / Personnel</p>
-                               <p class="font-semibold text-slate-700">${step.operator || 'Unassigned'}</p>
-                             </div>
-                             <div class="text-right">
-                               <p class="text-[10px] text-on-surface-variant font-bold uppercase mb-0.5">Status</p>
-                               <span class="font-bold uppercase text-[10px] ${statusColorClass}">${step.status}</span>
-                             </div>
-                           </div>
+                         <div class="p-3 bg-slate-50 rounded-lg border border-slate-100">
+                             <span class="text-[10px] font-bold text-slate-450 uppercase tracking-wider block mb-1">Execution & Completion</span>
+                             <p class="text-xs text-slate-700 font-bold">Done By: ${doneBy}</p>
+                             <p class="text-[10px] text-slate-400 font-mono mt-1">Time: ${end}</p>
+                             <span class="inline-block mt-2 px-1.5 py-0.5 rounded text-[9px] font-bold ${end === 'In Progress' || end === '--' ? 'bg-amber-50 text-amber-700 border border-amber-100' : 'bg-emerald-50 text-emerald-700 border border-emerald-100'}">${end === 'In Progress' || end === '--' ? 'PENDING SIGN-OFF' : 'QC PASSED'}</span>
                          </div>
-                     `;
-                     timelineList.appendChild(stepCard);
-                 });
-             }
+                     </div>
+                 </div>
+             `;
+
+             backdrop.classList.remove('hidden');
+             modal.classList.remove('hidden');
+             setTimeout(() => {
+                 backdrop.classList.add('opacity-100');
+                 const child = modal.firstElementChild;
+                 child.classList.remove('scale-95', 'opacity-0');
+                 child.classList.add('scale-100', 'opacity-100');
+             }, 10);
          }
+
+         function closeStepDetailsModal() {
+             const backdrop = document.getElementById('stepDetailsModalBackdrop');
+             const modal = document.getElementById('stepDetailsModal');
+             if (!backdrop || !modal) return;
+
+             backdrop.classList.remove('opacity-100');
+             const child = modal.firstElementChild;
+             child.classList.remove('scale-100', 'opacity-100');
+             child.classList.add('scale-95', 'opacity-0');
+
+             setTimeout(() => {
+                 backdrop.classList.add('hidden');
+                 modal.classList.add('hidden');
+             }, 300);
+         }
+         
+         window.showStepLogModal = showStepLogModal;
+         window.closeStepDetailsModal = closeStepDetailsModal;
 
         function exportTraceabilityReport() {
             alert("Traceability Report exported successfully as PDF/Excel.");

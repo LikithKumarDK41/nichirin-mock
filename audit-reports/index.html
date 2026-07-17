@@ -132,7 +132,7 @@
     <div class="bg-white border border-outline-variant/30 rounded-xl flex-grow overflow-hidden flex flex-col shadow-sm">
       <!-- Filters Header -->
       <div class="p-4 border-b border-outline-variant/30 bg-slate-50/50">
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div class="flex flex-col">
             <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Search Reports</label>
             <div class="relative">
@@ -158,20 +158,6 @@
                 class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-on-surface-variant">arrow_drop_down</span>
             </div>
           </div>
-          <div class="flex flex-col">
-            <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Production Line</label>
-            <div class="relative">
-              <select id="report-filter-line" onchange="filterReports()"
-                class="pl-3 pr-8 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-full h-9 appearance-none bg-none font-semibold focus:outline-none">
-                <option value="All">All Lines</option>
-                <option value="Line 1">Line 1 (Hose)</option>
-                <option value="Line 2">Line 2 (Tube)</option>
-                <option value="Line 3">Line 3 (Jigs)</option>
-              </select>
-              <span
-                class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-on-surface-variant">arrow_drop_down</span>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -182,11 +168,9 @@
             class="sticky top-0 bg-slate-50 border-b border-outline-variant/30 font-data-tabular text-data-tabular text-on-surface-variant z-10">
             <tr>
               <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-12 text-center">#</th>
-              <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-36">Work Order ID</th>
+              <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-44">Work Order ID</th>
               <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider">Product Details</th>
-              <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider">Assigned Line</th>
-              <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-24">Shift</th>
-              <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-40 text-right">Yield (OK / Target)</th>
+              <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-48">Yield (OK / Target)</th>
               <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-36 text-center">Status</th>
               <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-20 text-center">Details</th>
             </tr>
@@ -201,19 +185,8 @@
       <div class="p-4 flex items-center justify-between border-t border-outline-variant/30 bg-slate-50">
         <span id="reports-pagination-text" class="font-body-sm text-body-sm text-on-surface-variant">Showing -- to -- of
           -- reports</span>
-        <div class="flex gap-1">
-          <button
-            class="p-1 border border-outline-variant/30 rounded bg-white text-on-surface-variant hover:bg-slate-50 disabled:opacity-50"
-            disabled>
-            <span class="material-symbols-outlined text-[18px]">chevron_left</span>
-          </button>
-          <button
-            class="w-7 h-7 rounded bg-primary text-white text-xs font-semibold flex items-center justify-center">1</button>
-          <button
-            class="p-1 border border-outline-variant/30 rounded bg-white text-on-surface-variant hover:bg-slate-50 disabled:opacity-50"
-            disabled>
-            <span class="material-symbols-outlined text-[18px]">chevron_right</span>
-          </button>
+        <div class="flex gap-1" id="reports-pagination-controls">
+          <!-- Populated dynamically -->
         </div>
       </div>
     </div>
@@ -350,10 +323,10 @@
 
         <!-- Drawer Footer -->
         <div class="p-6 border-t border-outline-variant/20 flex justify-between items-center bg-slate-50 flex-shrink-0">
-          <button onclick="exportSingleReportPDF()"
+          <button onclick="exportSingleReport()"
             class="px-4 py-2 border border-outline-variant/50 text-slate-700 hover:bg-slate-100 font-body-sm text-body-sm font-semibold rounded-lg shadow-sm transition-colors cursor-pointer flex items-center gap-1.5 h-9 bg-white">
-            <span class="material-symbols-outlined text-[16px]">picture_as_pdf</span>
-            Export PDF
+            <span class="material-symbols-outlined text-[16px]">download</span>
+            Export Report
           </button>
           <button onclick="closeReportModal()"
             class="px-5 py-2 bg-primary text-white font-body-sm text-body-sm font-semibold rounded-lg hover:opacity-95 shadow-sm transition-colors cursor-pointer h-9">
@@ -367,6 +340,9 @@
   <script>
     (function () {
       let workOrdersList = [];
+      let currentPage = 1;
+      const itemsPerPage = 5;
+      let filteredList = [];
 
       async function initReportsDashboard() {
         try {
@@ -413,7 +389,6 @@
       function filterReports() {
         const q = document.getElementById('report-search').value.toLowerCase().trim();
         const statusVal = document.getElementById('report-filter-status').value;
-        const lineVal = document.getElementById('report-filter-line').value;
 
         const filtered = workOrdersList.filter(w => {
           // Search text
@@ -430,17 +405,12 @@
             return false;
           }
 
-          // Line Filter
-          if (lineVal !== 'All') {
-            if (!w.line.toLowerCase().includes(lineVal.toLowerCase())) {
-              return false;
-            }
-          }
-
           return true;
         });
 
-        renderReportsTable(filtered);
+        filteredList = filtered;
+        currentPage = 1;
+        renderReportsTable(filteredList);
       }
 
       function renderReportsTable(list) {
@@ -451,14 +421,20 @@
         if (list.length === 0) {
           tbody.innerHTML = `
                   <tr>
-                      <td colspan="8" class="p-6 text-center text-slate-400 font-semibold">No work order reports match your search criteria</td>
+                      <td colspan="6" class="p-6 text-center text-slate-400 font-semibold">No work order reports match your search criteria</td>
                   </tr>
               `;
           document.getElementById('reports-pagination-text').textContent = 'Showing 0 to 0 of 0 reports';
+          const pagControls = document.getElementById('reports-pagination-controls');
+          if (pagControls) pagControls.innerHTML = '';
           return;
         }
 
-        list.forEach((w, index) => {
+        const startIdx = (currentPage - 1) * itemsPerPage;
+        const endIdx = startIdx + itemsPerPage;
+        const pagedList = list.slice(startIdx, endIdx);
+
+        pagedList.forEach((w, index) => {
           const row = document.createElement('tr');
           row.className = 'hover:bg-slate-50/50 border-b border-outline-variant/15 transition-colors cursor-pointer font-medium';
           row.onclick = (e) => {
@@ -478,18 +454,14 @@
             statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-650 border border-slate-200">Waiting</span>';
           }
 
-          const cleanLine = w.line.split('(')[0].trim();
-
           row.innerHTML = `
-                  <td class="p-3 text-center text-on-surface-variant">${index + 1}</td>
+                  <td class="p-3 text-center text-on-surface-variant">${startIdx + index + 1}</td>
                   <td class="p-3 text-primary font-bold font-data-tabular">${w.woNumber}</td>
                   <td class="p-3 text-slate-800">
                     <div class="font-bold text-slate-900">${w.productName}</div>
                     <div class="text-[10px] text-slate-400 font-semibold mt-0.5">${w.partNumber}</div>
                   </td>
-                  <td class="p-3 text-slate-700 font-semibold">${cleanLine}</td>
-                  <td class="p-3 text-slate-500 font-semibold">${w.shift}</td>
-                  <td class="p-3 text-right text-slate-800 font-bold font-data-tabular">
+                  <td class="p-3 text-slate-800 font-bold font-data-tabular">
                     <span class="text-emerald-600">${w.okQty} OK</span> / <span class="text-slate-500 text-[10px] font-semibold">${w.targetQty} units</span>
                   </td>
                   <td class="p-3 text-center">${statusBadge}</td>
@@ -502,8 +474,41 @@
           tbody.appendChild(row);
         });
 
-        document.getElementById('reports-pagination-text').textContent = `Showing 1 to ${list.length} of ${list.length} reports`;
+        // Update Pagination details
+        const totalPages = Math.ceil(list.length / itemsPerPage);
+        document.getElementById('reports-pagination-text').textContent = `Showing ${startIdx + 1} to ${Math.min(endIdx, list.length)} of ${list.length} reports`;
+
+        const pagControls = document.getElementById('reports-pagination-controls');
+        if (pagControls) {
+          let buttonsHTML = `
+            <button class="p-1 border border-outline-variant/30 rounded bg-white text-on-surface-variant hover:bg-slate-50 disabled:opacity-50 flex items-center justify-center w-7 h-7 cursor-pointer" onclick="changePage(currentPage - 1)" ${currentPage === 1 ? 'disabled' : ''}>
+              <span class="material-symbols-outlined text-[18px]">chevron_left</span>
+            </button>
+          `;
+
+          for (let i = 1; i <= totalPages; i++) {
+            buttonsHTML += `
+              <button class="w-7 h-7 rounded text-xs font-semibold flex items-center justify-center cursor-pointer ${i === currentPage ? 'bg-primary text-white' : 'bg-white border border-outline-variant/30 text-slate-700 hover:bg-slate-50'}" onclick="changePage(${i})">${i}</button>
+            `;
+          }
+
+          buttonsHTML += `
+            <button class="p-1 border border-outline-variant/30 rounded bg-white text-on-surface-variant hover:bg-slate-50 disabled:opacity-50 flex items-center justify-center w-7 h-7 cursor-pointer" onclick="changePage(currentPage + 1)" ${currentPage === totalPages ? 'disabled' : ''}>
+              <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+            </button>
+          `;
+
+          pagControls.innerHTML = buttonsHTML;
+        }
       }
+
+      function changePage(page) {
+        const totalPages = Math.ceil(filteredList.length / itemsPerPage);
+        if (page < 1 || page > totalPages) return;
+        currentPage = page;
+        renderReportsTable(filteredList);
+      }
+      window.changePage = changePage;
 
       function openReportModal(w) {
         document.getElementById('detail-wo-id').textContent = w.woNumber;
@@ -632,9 +637,9 @@
         alert("Overall Production Report exported successfully as PDF/Excel (9 work orders included).");
       }
 
-      function exportSingleReportPDF() {
+      function exportSingleReport() {
         const woNo = document.getElementById('detail-wo-id').textContent;
-        alert(`PDF Report for ${woNo} generated and downloaded successfully.`);
+        alert(`Report for ${woNo} generated and downloaded successfully.`);
       }
 
       // Bind functions to window
@@ -643,7 +648,7 @@
       window.closeReportModal = closeReportModal;
       window.refreshOverallReport = refreshOverallReport;
       window.exportOverallReport = exportOverallReport;
-      window.exportSingleReportPDF = exportSingleReportPDF;
+      window.exportSingleReport = exportSingleReport;
 
       initReportsDashboard();
     })();
