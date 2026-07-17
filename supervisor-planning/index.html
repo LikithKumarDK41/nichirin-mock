@@ -218,7 +218,7 @@
         if (localData) {
             try {
                 const parsed = JSON.parse(localData);
-                if (parsed && parsed.length >= 9 && parsed[0].woNumber) {
+                if (parsed && parsed.length >= 9 && parsed[0].woNumber && !parsed[0].woNumber.includes("2026")) {
                     workOrdersList = parsed;
                     loaded = true;
                 }
