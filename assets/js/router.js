@@ -1058,7 +1058,7 @@
     // Intercept login button click directly for bulletproof SPA transitions
     document.addEventListener('click', (e) => {
       const btn = e.target.closest('button[type="submit"]');
-      if (btn && btn.closest('form') && (btn.textContent.includes('AUTHORIZE ACCESS') || btn.closest('form').querySelector('input[type="password"]'))) {
+      if (btn && btn.closest('form') && (btn.textContent.includes('AUTHORIZE ACCESS') || btn.textContent.includes('SIGN IN') || btn.closest('form').id === 'login-form' || btn.closest('form').querySelector('input[type="password"]'))) {
         if (localStorage.getItem('loggedIn') === 'true') return;
         e.preventDefault();
         const relPrefix = getRelativePrefix();
@@ -1082,7 +1082,7 @@
     document.addEventListener('submit', (e) => {
       const form = e.target;
       if (form) {
-        const isSignIn = form.querySelector('input[type="password"]') || form.id === 'login-form';
+        const isSignIn = form.querySelector('input[type="password"]') || form.id === 'login-form' || form.action.includes('login-old');
         if (isSignIn) {
           e.preventDefault();
           const relPrefix = getRelativePrefix();

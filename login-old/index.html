@@ -221,7 +221,7 @@
             <p class="text-[11px] text-slate-500 font-medium">Manufacturing Execution &amp; Traceability System</p>
           </div>
         </div>
-        <form action="#" class="space-y-4" method="POST" onsubmit="return false;">
+        <form id="login-form" action="#" class="space-y-4" method="POST" onsubmit="return false;">
           <!-- Email Address Field -->
           <div class="space-y-1.5">
             <label class="block text-xs font-bold uppercase tracking-wider text-slate-600" for="user-id">
@@ -234,13 +234,13 @@
               </span>
               <input
                 class="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E] outline-none transition-all h-10 font-medium focus-ring"
-                id="user-id" name="user-id" placeholder="Enter email address" required="" type="text">
+                id="user-id" placeholder="Enter email address" required="" type="text">
             </div>
           </div>
           <!-- Password Field -->
           <div class="space-y-1.5">
             <div class="flex justify-between items-center">
-              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600" for="password">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600" for="user-pass">
                 Password
               </label>
               <a class="text-xs font-bold text-[#C8102E] hover:text-[#A60D25] transition-colors" href="#">
@@ -254,7 +254,7 @@
               </span>
               <input
                 class="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E] outline-none transition-all h-10 font-medium focus-ring"
-                id="password" name="password" placeholder="••••••••" required="" type="password">
+                id="user-pass" placeholder="••••••••" required="" type="text" style="-webkit-text-security: disc; text-security: disc;">
             </div>
           </div>
           <!-- Login Button -->
