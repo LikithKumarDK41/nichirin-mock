@@ -78,15 +78,15 @@
     <div class="grid grid-cols-1 sm:grid-cols-4 gap-6 mb-2">
       <!-- Card 1: TOTAL ACTIVE WO -->
       <div
-        class="bg-gradient-to-br from-red-50/30 via-white to-white border border-slate-200/80 border-l-4 border-l-[#C8102E] rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-w-0">
+        class="bg-gradient-to-br from-red-50/30 via-white to-white border border-slate-200/80 border-l-4 border-l-[#dc0111] rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-w-0">
         <div class="min-w-0 flex-1 mr-3">
           <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1 truncate"
             title="Total Active WO">Total Active WO</p>
-          <p class="text-3xl font-black text-[#C8102E] tracking-tight leading-none" id="statActiveWO">1</p>
+          <p class="text-3xl font-black text-[#dc0111] tracking-tight leading-none" id="statActiveWO">1</p>
         </div>
         <div
           class="bg-red-50/80 p-2.5 rounded-xl flex items-center justify-center border border-red-100/50 flex-shrink-0">
-          <span class="material-symbols-outlined text-[24px] text-[#C8102E]">play_circle</span>
+          <span class="material-symbols-outlined text-[24px] text-[#dc0111]">play_circle</span>
         </div>
       </div>
       <!-- Card 2: TOTAL PENDING WO -->
@@ -186,12 +186,12 @@
         <!-- Top Action Bar (Right Side: Export Report & Close Report) -->
         <div class="px-6 py-4 border-b border-slate-200 bg-slate-50 flex justify-between items-center flex-shrink-0 select-none">
           <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined text-[#C8102E] text-[20px]">assignment</span>
+            <span class="material-symbols-outlined text-[#dc0111] text-[20px]">assignment</span>
             <span class="text-xs font-black uppercase text-slate-800 tracking-wider">Control Card Detailed Report</span>
           </div>
           <div class="flex items-center gap-3">
             <button onclick="exportSingleReport()"
-              class="px-4 py-2 bg-[#C8102E] hover:bg-[#a00d24] text-white font-extrabold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5 cursor-pointer uppercase">
+              class="px-4 py-2 bg-[#dc0111] hover:bg-[#a00d24] text-white font-extrabold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5 cursor-pointer uppercase">
               <span class="material-symbols-outlined text-[16px]">download</span>
               <span>Export Report</span>
             </button>
@@ -220,7 +220,7 @@
                     </div>
                     <div class="space-y-0.5">
                       <h3 class="text-[12px] font-black text-slate-800 tracking-tight leading-none">Control Card Digitization System</h3>
-                      <div class="text-[9px] font-black uppercase text-[#C8102E] tracking-wider leading-none">MANAGEMENT PORTAL</div>
+                      <div class="text-[9px] font-black uppercase text-[#dc0111] tracking-wider leading-none">MANAGEMENT PORTAL</div>
                       <p class="text-[8px] text-slate-500 font-bold leading-tight">Manufacturing Execution &amp; Traceability System</p>
                     </div>
                   </div>
@@ -469,7 +469,7 @@
           const isActive = woFilterStatus === status.value;
 
           btn.className = isActive
-            ? 'px-3 py-1 bg-[#C8102E] text-white border border-[#C8102E] rounded-full text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5 whitespace-nowrap'
+            ? 'px-3 py-1 bg-[#dc0111] text-white border border-[#dc0111] rounded-full text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5 whitespace-nowrap'
             : 'px-3 py-1 bg-white text-slate-600 border border-slate-200 rounded-full text-xs font-semibold hover:bg-slate-50 hover:text-slate-800 transition-all shadow-sm cursor-pointer flex items-center gap-1.5 whitespace-nowrap';
 
           const countBadge = isActive
@@ -525,7 +525,7 @@
 
           const displayStatus = getDisplayStatus(w);
           let statusClass = 'text-slate-600 font-extrabold';
-          if (displayStatus === 'in-progress') statusClass = 'text-[#c8102e] font-extrabold';
+          if (displayStatus === 'in-progress') statusClass = 'text-[#dc0111] font-extrabold';
           else if (displayStatus === 'completed') statusClass = 'text-emerald-600 font-extrabold';
           else if (displayStatus === 'hold') statusClass = 'text-red-600 font-extrabold';
           else if (displayStatus === 'Not released') statusClass = 'text-slate-400 font-extrabold';
@@ -707,7 +707,7 @@
           if (displayStatus === 'COMPLETED') {
             stEl.className = 'px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200';
           } else if (displayStatus === 'IN-PROGRESS' || displayStatus === 'RUNNING') {
-            stEl.className = 'px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-[#c8102e]/10 text-[#c8102e] border border-[#c8102e]/25 animate-pulse';
+            stEl.className = 'px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-[#dc0111]/10 text-[#dc0111] border border-[#dc0111]/25 animate-pulse';
           } else {
             stEl.className = 'px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-700 border border-slate-200';
           }

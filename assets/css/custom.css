@@ -10,7 +10,7 @@
   --color-surface-container-high: #e2e8f0;
   --color-surface-container-highest: #cbd5e1;
   
-  --color-primary: #c8102e; /* Official Nichirin Corporate Red */
+  --color-primary: #dc0111; /* Official Nichirin Corporate Red */
   --color-on-primary: #ffffff;
   --color-primary-container: #fde8eb; /* Soft Red-pink container background */
   --color-on-primary-container: #4a000b; /* Dark Maroon text */
@@ -51,7 +51,7 @@
   --color-inverse-on-surface: #f8fafc;
   --color-inverse-primary: #ff4d66;
   --color-surface-variant: #f1f5f9;
-  --color-surface-tint: #c8102e;
+  --color-surface-tint: #dc0111;
 }
 
 .dark {
@@ -105,7 +105,7 @@
   --color-outline-variant: #374151; /* Slate-700 (thin lines) */
   --color-inverse-surface: #f8fafc;
   --color-inverse-on-surface: #0f172a;
-  --color-inverse-primary: #c8102e;
+  --color-inverse-primary: #dc0111;
   --color-surface-variant: #1e293b;
   --color-surface-tint: #ef4444;
 }
@@ -343,11 +343,11 @@ header.header-collapsed {
 
 /* Global Checkbox Brand Color Override */
 input[type="checkbox"] {
-  accent-color: var(--color-primary, #c8102e) !important;
-  color: var(--color-primary, #c8102e) !important;
+  accent-color: var(--color-primary, #dc0111) !important;
+  color: var(--color-primary, #dc0111) !important;
 }
 input[type="checkbox"]:focus {
-  --tw-ring-color: var(--color-primary, #c8102e) !important;
+  --tw-ring-color: var(--color-primary, #dc0111) !important;
 }
 
 /* Sidebar collapsed / expanded logo toggling */

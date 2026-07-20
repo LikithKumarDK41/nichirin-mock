@@ -46,12 +46,12 @@
 
         /* Strict checkbox theme coloring overriding Tailwind forms default blue */
         input[type="checkbox"] {
-            color: #c8102e !important;
+            color: #dc0111 !important;
         }
 
         input[type="checkbox"]:focus {
-            --tw-ring-color: #c8102e !important;
-            border-color: #c8102e !important;
+            --tw-ring-color: #dc0111 !important;
+            border-color: #dc0111 !important;
         }
     </style>
 </head>
@@ -99,16 +99,16 @@
             <div class="col-span-12 grid grid-cols-1 sm:grid-cols-4 gap-6 mb-2">
                 <!-- Card 1: TOTAL ACTIVE WO -->
                 <div
-                    class="bg-gradient-to-br from-red-50/30 via-white to-white border border-slate-200/80 border-l-4 border-l-[#C8102E] rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-w-0">
+                    class="bg-gradient-to-br from-red-50/30 via-white to-white border border-slate-200/80 border-l-4 border-l-[#dc0111] rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-w-0">
                     <div class="min-w-0 flex-1 mr-3">
                         <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1 truncate"
                             title="Total Active WO">Total Active WO</p>
-                        <p class="text-3xl font-black text-[#C8102E] tracking-tight leading-none" id="statActiveWO">--
+                        <p class="text-3xl font-black text-[#dc0111] tracking-tight leading-none" id="statActiveWO">--
                         </p>
                     </div>
                     <div
                         class="bg-red-50/80 p-2.5 rounded-xl flex items-center justify-center border border-red-100/50 flex-shrink-0">
-                        <span class="material-symbols-outlined text-[24px] text-[#C8102E]">play_circle</span>
+                        <span class="material-symbols-outlined text-[24px] text-[#dc0111]">play_circle</span>
                     </div>
                 </div>
                 <!-- Card 2: TOTAL PENDING WO -->
@@ -515,7 +515,7 @@
                         const isActive = woFilterStatus === status.value;
 
                         btn.className = isActive
-                            ? 'px-3 py-1 bg-[#C8102E] text-white border border-[#C8102E] rounded-full text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5 whitespace-nowrap'
+                            ? 'px-3 py-1 bg-[#dc0111] text-white border border-[#dc0111] rounded-full text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5 whitespace-nowrap'
                             : 'px-3 py-1 bg-white text-slate-600 border border-slate-200 rounded-full text-xs font-semibold hover:bg-slate-50 hover:text-slate-800 transition-all shadow-sm cursor-pointer flex items-center gap-1.5 whitespace-nowrap';
 
                         const countBadge = isActive
@@ -619,7 +619,7 @@
                         // Status tag styling
                         const displayStatus = getDisplayStatus(w);
                         let statusClass = 'text-slate-600 font-extrabold';
-                        if (displayStatus === 'in-progress') statusClass = 'text-[#c8102e] font-extrabold';
+                        if (displayStatus === 'in-progress') statusClass = 'text-[#dc0111] font-extrabold';
                         else if (displayStatus === 'completed') statusClass = 'text-emerald-600 font-extrabold';
                         else if (displayStatus === 'hold') statusClass = 'text-red-600 font-extrabold';
                         else if (displayStatus === 'Not released') statusClass = 'text-slate-400 font-extrabold';

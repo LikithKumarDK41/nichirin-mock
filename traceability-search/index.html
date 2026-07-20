@@ -203,8 +203,8 @@
         <!-- Top level control code (matching reference screenshot layout) -->
         <div class="flex justify-between items-center mb-2">
           <div class="flex items-center gap-3">
-            <h2 class="text-2xl font-black text-[#c8102e] tracking-tight leading-none" id="trace-summary-id">--</h2>
-            <span class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-[#c8102e]/10 text-[#c8102e] border border-[#c8102e]/25 animate-pulse" id="trace-summary-status">RUNNING</span>
+            <h2 class="text-2xl font-black text-[#dc0111] tracking-tight leading-none" id="trace-summary-id">--</h2>
+            <span class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-[#dc0111]/10 text-[#dc0111] border border-[#dc0111]/25 animate-pulse" id="trace-summary-status">RUNNING</span>
           </div>
           <!-- Barcode Column (Exact replication of PDF top-left) -->
           <div class="flex flex-col items-end">
@@ -289,7 +289,7 @@
               </div>
               <div>
                 <span class="text-slate-400 font-semibold block text-[10px] uppercase">PART NO</span>
-                <p class="text-[#c8102e] font-bold font-mono text-[13px]" id="trace-summary-part">--</p>
+                <p class="text-[#dc0111] font-bold font-mono text-[13px]" id="trace-summary-part">--</p>
               </div>
               <div>
                 <span class="text-slate-400 font-semibold block text-[10px] uppercase">PRODUCT ORDER NO</span>
@@ -362,7 +362,7 @@
       <div class="px-8 py-4 border-b border-slate-100 bg-slate-50/10">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div class="flex items-center gap-3">
-            <h3 class="text-xs font-black text-[#c8102e] uppercase tracking-wider">QC Metrics</h3>
+            <h3 class="text-xs font-black text-[#dc0111] uppercase tracking-wider">QC Metrics</h3>
             <span class="inline-flex items-center px-2 py-0.5 rounded text-[9px] font-bold bg-slate-100 text-slate-650 border border-slate-200 uppercase tracking-wider">Live</span>
           </div>
           <div class="flex flex-col sm:flex-row gap-4 items-center w-full md:w-auto">
@@ -693,7 +693,7 @@
                       statusClass = 'bg-emerald-100 text-emerald-700 border border-emerald-200';
                   } else if (activeWO.status === 'Running' || activeWO.status === 'in-progress') {
                       displayStatus = 'IN-PROGRESS';
-                      statusClass = 'bg-[#c8102e]/10 text-[#c8102e] border border-[#c8102e]/25 animate-pulse';
+                      statusClass = 'bg-[#dc0111]/10 text-[#dc0111] border border-[#dc0111]/25 animate-pulse';
                   }
                   statusEl.textContent = displayStatus.toUpperCase();
                   statusEl.className = `px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider ${statusClass}`;
@@ -754,7 +754,7 @@
                       let displayEnd = '--';
   
                       if (step.status === 'completed') {
-                          iconBgClass = 'bg-[#c8102e] text-white';
+                          iconBgClass = 'bg-[#dc0111] text-white';
                           borderClass = 'border-l-4 border-l-emerald-500';
                           statusColorClass = 'text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded';
                           displayStart = stepTimes[idx].start;

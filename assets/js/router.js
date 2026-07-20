@@ -765,7 +765,7 @@
           // Style the login card inside main
           const loginCard = mainEl.querySelector('.login-card') || mainEl.querySelector('div:last-child');
           if (loginCard) {
-            loginCard.className = "login-card w-full max-w-[460px] mx-4 sm:mx-0 bg-white/90 backdrop-blur-xl border-2 border-[#C8102E] rounded-3xl relative overflow-hidden shadow-2xl transition-all duration-300 hover:shadow-red-500/5 hover:border-[#A60D25] shrink-0";
+            loginCard.className = "login-card w-full max-w-[460px] mx-4 sm:mx-0 bg-white/90 backdrop-blur-xl border-2 border-[#dc0111] rounded-3xl relative overflow-hidden shadow-2xl transition-all duration-300 hover:shadow-red-500/5 hover:border-[#b8010e] shrink-0";
             
             // Adjust card inner padding and logo height dynamically if necessary
             const cardFormContainer = loginCard.querySelector('div');
