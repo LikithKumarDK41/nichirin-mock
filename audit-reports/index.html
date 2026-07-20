@@ -183,149 +183,178 @@
       <div id="report-detail-drawer"
         class="relative h-full w-full bg-white shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out translate-x-full">
 
-        <!-- Drawer Header -->
-        <div class="border-b border-outline-variant/20 p-6 flex-shrink-0 bg-slate-50">
-          <div class="w-full flex justify-between items-start">
-            <div>
-              <span
-                class="bg-primary/5 text-primary text-[10px] px-2.5 py-0.5 font-bold rounded-lg border border-primary/10 uppercase tracking-wider block w-fit mb-1.5">Work
-                Order Detailed Report</span>
-              <h3 id="detail-wo-id" class="text-xl font-black text-slate-800 leading-none">WO-XXXX-XXXX</h3>
-              <p id="detail-wo-product" class="text-xs text-slate-500 font-semibold mt-1.5">Product Name -- (Part #--)</p>
-            </div>
-            <button onclick="closeReportModal()"
-              class="p-1.5 hover:bg-slate-200/65 rounded-lg text-slate-400 hover:text-slate-600 transition-colors cursor-pointer flex items-center justify-center">
-              <span class="material-symbols-outlined text-[20px]">close</span>
-            </button>
+        <!-- Top Action Bar (Right Side: Export Report & Close Report) -->
+        <div class="px-6 py-4 border-b border-slate-200 bg-slate-50 flex justify-between items-center flex-shrink-0 select-none">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-[#C8102E] text-[20px]">assignment</span>
+            <span class="text-xs font-black uppercase text-slate-800 tracking-wider">Control Card Detailed Report</span>
           </div>
-        </div>
-
-        <!-- Drawer Scrollable Body (Native Scrollbar Alignment) -->
-        <div class="flex-grow overflow-y-auto overflow-x-hidden custom-scrollbar bg-slate-50/50">
-          <div class="w-full p-8 space-y-8 text-xs text-slate-700">
-
-            <!-- Summary Info Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div class="bg-white border border-outline-variant/20 rounded-xl p-4 shadow-sm flex flex-col justify-center">
-                <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1 select-none">Assigned Line</span>
-                <span id="detail-wo-line" class="font-extrabold text-slate-800 text-sm">--</span>
-              </div>
-              <div class="bg-white border border-outline-variant/20 rounded-xl p-4 shadow-sm flex flex-col justify-center">
-                <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1 select-none">Shift / Operator</span>
-                <span id="detail-wo-operator" class="font-extrabold text-slate-800 text-sm">--</span>
-              </div>
-              <div class="bg-white border border-outline-variant/20 rounded-xl p-4 shadow-sm flex flex-col justify-center">
-                <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1 select-none">Quality Inspector</span>
-                <span id="detail-wo-inspector" class="font-bold text-slate-700 text-xs">--</span>
-              </div>
-              <div class="bg-white border border-outline-variant/20 rounded-xl p-4 shadow-sm flex flex-col justify-center">
-                <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1 select-none">Cryptographic Card Hash</span>
-                <span id="detail-wo-hash" class="font-mono text-slate-700 font-bold text-[10px] break-all">--</span>
-              </div>
-            </div>
-
-            <!-- Yield Stats Card -->
-            <div class="bg-white border border-outline-variant/20 rounded-xl p-6 shadow-sm space-y-4">
-              <div class="flex justify-between items-center select-none border-b border-slate-100 pb-3">
-                <span class="font-bold text-[11px] uppercase text-slate-500 tracking-wider flex items-center gap-1.5">
-                  <span class="material-symbols-outlined text-[16px] text-primary">analytics</span>
-                  Yield Performance
-                </span>
-                <span id="detail-wo-status-badge" class="px-2.5 py-0.5 rounded-lg text-[10px] font-bold uppercase">--</span>
-              </div>
-              <div class="grid grid-cols-3 gap-4 text-center py-2">
-                <div class="border-r border-slate-100">
-                  <span class="block text-[9px] text-slate-400 font-bold uppercase mb-0.5">Target Qty</span>
-                  <span id="detail-wo-target" class="text-2xl font-black text-slate-700 font-data-tabular">--</span>
-                </div>
-                <div class="border-r border-slate-100">
-                  <span class="block text-[9px] text-slate-400 font-bold uppercase mb-0.5">OK Passed</span>
-                  <span id="detail-wo-ok" class="text-2xl font-black text-emerald-600 font-data-tabular">--</span>
-                </div>
-                <div>
-                  <span class="block text-[9px] text-slate-400 font-bold uppercase mb-0.5">NG Defects</span>
-                  <span id="detail-wo-ng" class="text-2xl font-black text-primary font-data-tabular">--</span>
-                </div>
-              </div>
-              <!-- Progress bar -->
-              <div class="space-y-1.5 pt-2">
-                <div class="flex justify-between text-[10px] text-slate-500 font-semibold select-none">
-                  <span>Overall Progress</span>
-                  <span id="detail-wo-progress-pct" class="font-bold text-slate-700">0%</span>
-                </div>
-                <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden border border-slate-200/30">
-                  <div id="detail-wo-progress-bar" class="bg-emerald-500 h-full rounded-full transition-all duration-500"
-                    style="width: 0%"></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Process Routing Steps Table -->
-            <div class="bg-white border border-outline-variant/20 rounded-xl shadow-sm overflow-hidden space-y-0">
-              <div class="bg-slate-50 border-b border-outline-variant/20 px-5 py-4 flex items-center justify-between">
-                <h4 class="font-bold text-[11px] uppercase text-slate-500 tracking-wider select-none flex items-center gap-1.5">
-                  <span class="material-symbols-outlined text-[16px] text-primary">route</span>
-                  Process Routing Checklist
-                </h4>
-              </div>
-              <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse text-[11px] whitespace-nowrap">
-                  <thead class="bg-slate-50/55 border-b border-slate-100 text-slate-500">
-                    <tr>
-                      <th class="p-3 font-bold w-12 text-center">#</th>
-                      <th class="p-3 font-bold">Process Step</th>
-                      <th class="p-3 font-bold">Machine</th>
-                      <th class="p-3 font-bold text-center w-28">Status</th>
-                      <th class="p-3 font-bold text-right w-24">Time</th>
-                    </tr>
-                  </thead>
-                  <tbody id="detail-wo-steps-tbody" class="divide-y divide-slate-100 font-medium text-slate-700">
-                    <!-- Injected dynamically -->
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <!-- Bill of Materials (BOM) checklist -->
-            <div class="bg-white border border-outline-variant/20 rounded-xl shadow-sm overflow-hidden space-y-0">
-              <div class="bg-slate-50 border-b border-outline-variant/20 px-5 py-4 flex items-center justify-between">
-                <h4 class="font-bold text-[11px] uppercase text-slate-500 tracking-wider select-none flex items-center gap-1.5">
-                  <span class="material-symbols-outlined text-[16px] text-primary">inventory_2</span>
-                  BOM Material Verification
-                </h4>
-              </div>
-              <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse text-[11px] whitespace-nowrap">
-                  <thead class="bg-slate-50/55 border-b border-slate-100 text-slate-500">
-                    <tr>
-                      <th class="p-3 font-bold w-36">Material Code</th>
-                      <th class="p-3 font-bold">Description</th>
-                      <th class="p-3 font-bold w-36">Lot Number</th>
-                      <th class="p-3 font-bold text-center w-32">Verification</th>
-                    </tr>
-                  </thead>
-                  <tbody id="detail-wo-bom-tbody" class="divide-y divide-slate-100 font-medium text-slate-700">
-                    <!-- Injected dynamically -->
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- Drawer Footer -->
-        <div class="p-6 border-t border-outline-variant/20 bg-slate-50 flex-shrink-0">
-          <div class="w-full flex justify-between items-center">
+          <div class="flex items-center gap-3">
             <button onclick="exportSingleReport()"
-              class="px-4 py-2 border border-outline-variant/50 text-slate-700 hover:bg-slate-100 font-body-sm text-body-sm font-semibold rounded-lg shadow-sm transition-colors cursor-pointer flex items-center gap-1.5 h-9 bg-white">
+              class="px-4 py-2 bg-[#C8102E] hover:bg-[#a00d24] text-white font-extrabold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5 cursor-pointer uppercase">
               <span class="material-symbols-outlined text-[16px]">download</span>
-              Export Report
+              <span>Export Report</span>
             </button>
             <button onclick="closeReportModal()"
-              class="px-5 py-2 bg-primary text-white font-body-sm text-body-sm font-semibold rounded-lg hover:opacity-95 shadow-sm transition-colors cursor-pointer h-9">
-              Close Report
+              class="px-4 py-2 bg-white hover:bg-slate-100 text-slate-700 font-extrabold text-xs rounded-xl border border-slate-300 shadow-sm transition-all flex items-center gap-1.5 cursor-pointer uppercase">
+              <span class="material-symbols-outlined text-[16px]">close</span>
+              <span>Close Report</span>
             </button>
+          </div>
+        </div>
+
+        <!-- Drawer Scrollable Body -->
+        <div class="flex-grow overflow-y-auto overflow-x-hidden custom-scrollbar bg-slate-50/50">
+          <div class="w-full p-8 space-y-6 text-xs text-slate-700">
+
+            <!-- OFFICIAL CONTROL CARD SHEET VIEW (Matching PDF 4044_001 (1) (1).pdf format) -->
+            <div id="report-official-sheet-view" class="bg-white border-2 border-slate-900 rounded-lg p-6 shadow-md text-slate-900 font-sans space-y-6 select-none">
+
+              <!-- Document Top Header Block -->
+              <div class="border-2 border-slate-900 rounded overflow-hidden">
+                <div class="grid grid-cols-12 divide-x-2 divide-slate-900 bg-slate-50 border-b-2 border-slate-900 text-center">
+                  <!-- Left: Logo & Company -->
+                  <div class="col-span-12 md:col-span-3 p-3 flex flex-col justify-center items-center bg-white border-b-2 md:border-b-0 border-slate-900 space-y-2 text-center select-none">
+                    <div class="bg-white border border-slate-200 shadow-sm rounded-xl px-4 py-1.5 flex items-center justify-center shrink-0">
+                      <img src="../assets/logo.png" class="h-8 w-auto object-contain select-none" alt="NICHIRIN Logo" />
+                    </div>
+                    <div class="space-y-0.5">
+                      <h3 class="text-[12px] font-black text-slate-800 tracking-tight leading-none">Control Card Digitization System</h3>
+                      <div class="text-[9px] font-black uppercase text-[#C8102E] tracking-wider leading-none">MANAGEMENT PORTAL</div>
+                      <p class="text-[8px] text-slate-500 font-bold leading-tight">Manufacturing Execution &amp; Traceability System</p>
+                    </div>
+                  </div>
+
+                  <!-- Center: Title & Document Specs -->
+                  <div class="col-span-12 md:col-span-6 p-3 flex flex-col justify-center items-center bg-slate-50 border-b-2 md:border-b-0 border-slate-900">
+                    <h2 class="text-base font-black text-slate-900 uppercase tracking-wide">PRODUCTION CONTROL CARD &amp; QUALITY RECORD SHEET</h2>
+                    <span class="text-xs font-extrabold text-slate-800 mt-0.5">PART: HOSE COMP D FR BRAKE &nbsp;|&nbsp; CONTROL CARD NO: CC-HMSI-59</span>
+                    <div class="flex flex-wrap justify-center items-center gap-2.5 text-[10px] font-bold text-slate-700 mt-1">
+                      <span>CUSTOMER: HMSI</span>
+                      <span>•</span>
+                      <span>MODEL: K1L (Front Disc)</span>
+                      <span>•</span>
+                      <span>PART NO: 45128-K1L-D410-M1-1FC-R02</span>
+                    </div>
+                  </div>
+
+                  <!-- Right: Sign-Off Approval Stamps -->
+                  <div class="col-span-12 md:col-span-3 p-2 bg-white">
+                    <div class="text-[9px] font-extrabold text-slate-600 uppercase border-b border-slate-300 pb-1 mb-1">Authorization Stamps</div>
+                    <div class="grid grid-cols-3 gap-1 text-[8px] font-bold text-center">
+                      <div class="border border-slate-400 rounded p-1 bg-slate-50">
+                        <span class="block text-slate-500 font-bold">PREPARED</span>
+                        <span class="block text-slate-900 mt-1 font-extrabold">Anish</span>
+                        <span class="block text-emerald-700 text-[7px] font-extrabold">VERIFIED</span>
+                      </div>
+                      <div class="border border-slate-400 rounded p-1 bg-slate-50">
+                        <span class="block text-slate-500 font-bold">CHECKED</span>
+                        <span class="block text-slate-900 mt-1 font-extrabold">Ramesh</span>
+                        <span class="block text-emerald-700 text-[7px] font-extrabold">PASSED</span>
+                      </div>
+                      <div class="border border-slate-400 rounded p-1 bg-slate-50">
+                        <span class="block text-slate-500 font-bold">APPROVED</span>
+                        <span class="block text-slate-900 mt-1 font-extrabold">Ganesh</span>
+                        <span class="block text-emerald-700 text-[7px] font-extrabold">SIGNED</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Sub-header metadata grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 divide-x divide-y md:divide-y-0 divide-slate-400 border-t border-slate-900 bg-white text-[11px] font-bold">
+                  <div class="p-2 text-center"><span class="block text-[9px] text-slate-500 font-semibold uppercase">WORK ORDER</span><span class="text-slate-900 font-mono" id="sheet-wo-no">22615540</span></div>
+                  <div class="p-2 text-center"><span class="block text-[9px] text-slate-500 font-semibold uppercase">LOT NO</span><span class="text-slate-900 font-mono" id="sheet-lot-no">6701</span></div>
+                  <div class="p-2 text-center"><span class="block text-[9px] text-slate-500 font-semibold uppercase">TARGET QTY</span><span class="text-slate-900 font-data-tabular">800 units</span></div>
+                  <div class="p-2 text-center"><span class="block text-[9px] text-slate-500 font-semibold uppercase">PLAN DATE</span><span class="text-slate-900 font-data-tabular">27-06-2026</span></div>
+                  <div class="p-2 text-center"><span class="block text-[9px] text-slate-500 font-semibold uppercase">ISSUE REV</span><span class="text-slate-900">REV-02 (23.05.2026)</span></div>
+                  <div class="p-2 text-center bg-emerald-50 text-emerald-800"><span class="block text-[9px] text-emerald-600 font-semibold uppercase">AUDIT STATUS</span><span>100% COMPLIANT</span></div>
+                </div>
+              </div>
+
+              <!-- Technical Drawing Specification Section -->
+              <div class="border-2 border-slate-900 rounded bg-slate-50 p-3 space-y-2">
+                <div class="flex justify-between items-center text-[11px] font-black uppercase text-slate-900">
+                  <span>TECHNICAL ASSEMBLY DRAWING SPECIFICATION (CC-HMSI-59)</span>
+                  <span class="text-[9px] text-slate-500 font-bold">DIMENSIONS IN MM &amp; ANGLES IN DEGREES</span>
+                </div>
+                <div class="bg-white border border-slate-300 rounded p-2 flex justify-center items-center h-48 overflow-hidden">
+                  <img src="../assets/drawing_cc_hmsi_59.png" class="max-h-full object-contain cursor-zoom-in" alt="Technical Assembly Drawing" onclick="window.openFullscreenDrawing &amp;&amp; window.openFullscreenDrawing()">
+                </div>
+              </div>
+
+              <!-- Official 13-Step Process Routing Engineering Table Grid -->
+              <div class="space-y-2">
+                <div class="flex justify-between items-center text-[11px] font-black uppercase text-slate-900 border-b-2 border-slate-900 pb-1">
+                  <span>PROCESS CONTROL &amp; QUALITY INSPECTION ROUTING (13 STEPS)</span>
+                  <span class="text-[9px] text-slate-500 font-bold">AS PER STANDARD OPERATING PROCEDURE SOP-HMSI-09</span>
+                </div>
+
+                <div class="overflow-x-auto border-2 border-slate-900 rounded">
+                  <table class="w-full text-left border-collapse text-[11px]">
+                    <thead class="bg-slate-100 text-slate-900 font-black uppercase text-[10px] border-b-2 border-slate-900 divide-x-2 divide-slate-900">
+                      <tr>
+                        <th class="p-2 text-center w-12">STEP</th>
+                        <th class="p-2 w-48">PROCESS &amp; MACHINE</th>
+                        <th class="p-2">INSPECTION PARAMETER &amp; LIMITS</th>
+                        <th class="p-2 w-32">CHECK METHOD</th>
+                        <th class="p-2 w-32">INSPECTION CHECKS</th>
+                        <th class="p-2 text-center w-16">OK QTY</th>
+                        <th class="p-2 w-36">DATE &amp; OPERATOR</th>
+                      </tr>
+                    </thead>
+                    <tbody id="sheet-official-tbody" class="divide-y-2 divide-slate-900 font-medium text-slate-900 text-[10.5px]">
+                      <!-- Dynamically populated rows matching official sheet format -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- BOM Component Traceability Grid -->
+              <div class="space-y-2">
+                <div class="text-[11px] font-black uppercase text-slate-900 border-b-2 border-slate-900 pb-1">
+                  BILL OF MATERIALS (BOM) &amp; STORE RAW MATERIAL TRACEABILITY MATRIX
+                </div>
+                <div class="overflow-x-auto border-2 border-slate-900 rounded">
+                  <table class="w-full text-left border-collapse text-[11px]">
+                    <thead class="bg-slate-100 text-slate-900 font-black uppercase text-[10px] border-b-2 border-slate-900 divide-x-2 divide-slate-900">
+                      <tr>
+                        <th class="p-2 text-center w-12">NO</th>
+                        <th class="p-2">COMPONENT DESCRIPTION</th>
+                        <th class="p-2">SPECIFICATION / PART CODE</th>
+                        <th class="p-2 text-right">REQ QTY</th>
+                        <th class="p-2">STORE LOT / BATCH NO</th>
+                        <th class="p-2 text-center">STATUS</th>
+                        <th class="p-2 text-right">SCAN TIMESTAMP</th>
+                      </tr>
+                    </thead>
+                    <tbody id="sheet-official-bom-tbody" class="divide-y divide-slate-400 font-medium text-slate-900 text-[10.5px]">
+                      <!-- Dynamically populated BOM rows -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Sheet Footer Sign-Off Block -->
+              <div class="border-2 border-slate-900 rounded p-4 bg-slate-50 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold">
+                <div class="space-y-1">
+                  <span class="block text-[10px] text-slate-500 uppercase">QUALITY CONTROL STATEMENT</span>
+                  <p class="text-slate-800 text-[11px]">Certified that all 13 process steps and BOM materials have been inspected, tested, and approved in accordance with Control Card Spec CC-HMSI-59.</p>
+                </div>
+                <div class="flex items-center gap-6 shrink-0">
+                  <div class="text-center">
+                    <span class="block text-[9px] text-slate-400 uppercase">CHIEF INSPECTOR</span>
+                    <span class="block text-slate-900 font-extrabold mt-0.5">Vikram Malhotra</span>
+                    <span class="text-[8px] text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded font-bold mt-0.5 inline-block">APPROVED</span>
+                  </div>
+                  <div class="w-12 h-12 bg-white border border-slate-300 rounded p-1 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[32px] text-slate-800">qr_code_2</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
           </div>
         </div>
       </div>
@@ -555,85 +584,642 @@
       window.changePage = changePage;
 
       function openReportModal(w) {
-        document.getElementById('detail-wo-id').textContent = w.woNumber;
-        document.getElementById('detail-wo-product').textContent = `${w.productName} (Part #${w.partNumber})`;
-        document.getElementById('detail-wo-line').textContent = w.line;
-        document.getElementById('detail-wo-operator').textContent = `${w.shift} / ${w.operator || 'Unassigned'}`;
-        document.getElementById('detail-wo-inspector').textContent = w.inspector || 'Vikram Malhotra';
-        document.getElementById('detail-wo-hash').textContent = w.cardHash || 'N/A';
+        const displayWO = String(w.woNumber).replace(/^WO-?/i, '');
+        const cleanWONum = displayWO;
 
-        // Status Badge details
+        // Header and Card Specs (Image 1)
+        if (document.getElementById('detail-wo-id')) document.getElementById('detail-wo-id').textContent = displayWO;
+        if (document.getElementById('detail-wo-id-large')) document.getElementById('detail-wo-id-large').textContent = displayWO;
+        if (document.getElementById('detail-wo-control-code')) document.getElementById('detail-wo-control-code').textContent = `CONTROL CODE: ${displayWO}`;
+        if (document.getElementById('detail-wo-product')) document.getElementById('detail-wo-product').textContent = `${w.productName} (Part #${w.partNumber})`;
+
+        // Card Specifications Grid
+        if (document.getElementById('detail-cc-card-no')) document.getElementById('detail-cc-card-no').textContent = 'CC-HMSI-59';
+        if (document.getElementById('detail-cc-card-type')) document.getElementById('detail-cc-card-type').textContent = 'Brake Hose';
+        if (document.getElementById('detail-cc-customer')) document.getElementById('detail-cc-customer').textContent = 'HMSI';
+
+        if (document.getElementById('detail-cc-drawing-rev')) document.getElementById('detail-cc-drawing-rev').textContent = 'M-23-F0674 (23 May-23)';
+        if (document.getElementById('detail-cc-issue-date')) document.getElementById('detail-cc-issue-date').textContent = '07.04.2026';
+        if (document.getElementById('detail-cc-revision-text')) document.getElementById('detail-cc-revision-text').textContent = 'Protector and Grommet locations on Drawing';
+
+        if (document.getElementById('detail-cc-issued-by')) document.getElementById('detail-cc-issued-by').textContent = 'Garima';
+        if (document.getElementById('detail-cc-checked-by')) document.getElementById('detail-cc-checked-by').textContent = 'GANESH VATS';
+        if (document.getElementById('detail-cc-approved-by')) document.getElementById('detail-cc-approved-by').textContent = 'AVRASH-SAN';
+
+        if (document.getElementById('detail-cc-part-name')) document.getElementById('detail-cc-part-name').textContent = w.productName || 'Brake Hose Assembly - Front Disc';
+        if (document.getElementById('detail-cc-part-no')) document.getElementById('detail-cc-part-no').textContent = w.partNumber || 'BPD-F584A-00-IYN-R02';
+        if (document.getElementById('detail-cc-prod-order-no')) document.getElementById('detail-cc-prod-order-no').textContent = `${displayWO}/${w.partNumber || 'BPD-F584A-00-IYN-R02'}`;
+        if (document.getElementById('detail-cc-plan-date')) document.getElementById('detail-cc-plan-date').textContent = '27-06-2026 / 08-07-2026';
+        if (document.getElementById('detail-cc-target-qty')) document.getElementById('detail-cc-target-qty').textContent = `${(w.targetQty || 1200).toLocaleString()} units`;
+
+        // Operations Team Assignment table populator (Matching exact 13 processes from work-order-detail)
+        const opTeamAssignmentData = [
+          { step: '1. Picking (BOM)', equipment: 'Store Area', operators: [{ init: 'PO', name: 'Pooja' }, { init: 'AN', name: 'Anil' }], status: 'Completed' },
+          { step: '2. Hose Cutting', equipment: 'Hose Cutter HC-04', operators: [{ init: 'AN', name: 'Anish' }, { init: 'SU', name: 'Sunil' }], status: 'Completed' },
+          { step: '3. Protector Cutting', equipment: 'Sleeve Cutter SC-01', operators: [{ init: 'PO', name: 'Pooja' }], status: 'Completed' },
+          { step: '4. Fitting Bending', equipment: 'CNC Pipe Bender PB-12', operators: [{ init: 'SH', name: 'Shiv Shambhu' }], status: 'Completed' },
+          { step: '5. Manufacturing Lot Stamping', equipment: 'Lot Stamper LS-09', operators: [{ init: 'KI', name: 'Kiran' }], status: 'Completed' },
+          { step: '6. Accessories Insertion-1', equipment: 'Accessory Jig A1', operators: [{ init: 'PO', name: 'Pooja' }], status: 'Completed' },
+          { step: '7. First Crimping', equipment: 'Crimp Press CP-03', operators: [{ init: 'AY', name: 'Ayush' }], status: 'Completed' },
+          { step: '8. Accessories Insertion-2', equipment: 'Accessory Station A2', operators: [{ init: 'SI', name: 'Sima' }], status: 'Completed' },
+          { step: '9. Second Crimping', equipment: 'Crimp Press CP-04', operators: [{ init: 'VI', name: 'Vipin' }], status: 'Completed' },
+          { step: '10. Accessories Bonding', equipment: 'Bonding Station B1', operators: [{ init: 'NA', name: 'Nazma' }, { init: 'SU', name: 'Sushma' }], status: 'Completed' },
+          { step: '11. Pressure Test', equipment: 'Hydro-Air Tester TEST-01', operators: [{ init: 'AN', name: 'Aniket' }], status: 'Completed' },
+          { step: '12. Final Inspection', equipment: 'Final Inspection Station', operators: [{ init: 'RU', name: 'Rubi' }], status: 'Completed' },
+          { step: '13. Packing', equipment: 'Packing Station P1', operators: [{ init: 'AN', name: 'Anjali' }, { init: 'SH', name: 'Shy' }], status: 'Completed' }
+        ];
+
+        let currentOpTeamPage = 1;
+        const opTeamItemsPerPage = 5;
+
+        function renderOpTeamTable() {
+          const tbody = document.getElementById('detail-op-team-tbody');
+          if (!tbody) return;
+          tbody.innerHTML = '';
+
+          const startIdx = (currentOpTeamPage - 1) * opTeamItemsPerPage;
+          const endIdx = Math.min(startIdx + opTeamItemsPerPage, opTeamAssignmentData.length);
+          const pageItems = opTeamAssignmentData.slice(startIdx, endIdx);
+
+          pageItems.forEach(item => {
+            const tr = document.createElement('tr');
+            tr.className = 'hover:bg-slate-50/60 transition-colors border-b border-slate-100/60';
+
+            const opsHtml = item.operators.map(op => `
+              <span class="inline-flex items-center gap-1.5 mr-3 my-0.5">
+                <span class="w-6 h-6 rounded-full bg-slate-100 border border-slate-200 text-[9px] font-extrabold text-slate-600 flex items-center justify-center font-mono shrink-0">${op.init}</span>
+                <span class="font-bold text-slate-800 text-xs">${op.name}</span>
+              </span>
+            `).join('');
+
+            const statusClass = item.status === 'Completed'
+              ? 'px-2.5 py-0.5 rounded text-[10px] font-extrabold uppercase bg-emerald-50 text-emerald-700 border border-emerald-200'
+              : 'px-2.5 py-0.5 rounded text-[10px] font-extrabold uppercase bg-slate-100 text-slate-500 border border-slate-200';
+
+            tr.innerHTML = `
+              <td class="p-3 font-extrabold text-slate-900 text-xs">${item.step}</td>
+              <td class="p-3 font-semibold text-slate-700">${item.equipment}</td>
+              <td class="p-3">${opsHtml}</td>
+              <td class="p-3 text-center"><span class="${statusClass}">${item.status}</span></td>
+            `;
+            tbody.appendChild(tr);
+          });
+
+          if (document.getElementById('detail-op-pagination-text')) {
+            document.getElementById('detail-op-pagination-text').textContent = `Showing ${startIdx + 1} to ${endIdx} of ${opTeamAssignmentData.length} processes`;
+          }
+
+          const prevBtn = document.getElementById('detail-op-prev-btn');
+          const nextBtn = document.getElementById('detail-op-next-btn');
+
+          if (prevBtn) {
+            prevBtn.disabled = currentOpTeamPage === 1;
+            prevBtn.className = currentOpTeamPage === 1
+              ? 'px-3 py-1.5 border border-slate-200 text-slate-300 rounded-lg text-xs font-bold uppercase cursor-not-allowed'
+              : 'px-3 py-1.5 border border-slate-200 text-slate-700 rounded-lg text-xs font-bold uppercase hover:bg-slate-50 cursor-pointer';
+          }
+
+          if (nextBtn) {
+            const maxPages = Math.ceil(opTeamAssignmentData.length / opTeamItemsPerPage);
+            nextBtn.disabled = currentOpTeamPage >= maxPages;
+            nextBtn.className = currentOpTeamPage >= maxPages
+              ? 'px-3 py-1.5 border border-slate-200 text-slate-300 rounded-lg text-xs font-bold uppercase cursor-not-allowed'
+              : 'px-3 py-1.5 border border-slate-200 text-slate-700 rounded-lg text-xs font-bold uppercase hover:bg-slate-50 cursor-pointer';
+          }
+        }
+
+        window.changeOpTeamPage = function(delta) {
+          const maxPages = Math.ceil(opTeamAssignmentData.length / opTeamItemsPerPage);
+          const newPage = currentOpTeamPage + delta;
+          if (newPage >= 1 && newPage <= maxPages) {
+            currentOpTeamPage = newPage;
+            renderOpTeamTable();
+          }
+        };
+
+        renderOpTeamTable();
+
+        // Status Badges
+        const displayStatus = getDisplayStatus(w).toUpperCase();
+        if (document.getElementById('detail-wo-status-large')) {
+          const stEl = document.getElementById('detail-wo-status-large');
+          stEl.textContent = displayStatus;
+          if (displayStatus === 'COMPLETED') {
+            stEl.className = 'px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200';
+          } else if (displayStatus === 'IN-PROGRESS' || displayStatus === 'RUNNING') {
+            stEl.className = 'px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-[#c8102e]/10 text-[#c8102e] border border-[#c8102e]/25 animate-pulse';
+          } else {
+            stEl.className = 'px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-700 border border-slate-200';
+          }
+        }
+
         const statusBadge = document.getElementById('detail-wo-status-badge');
-        statusBadge.textContent = w.status;
-        if (w.status === 'Completed') {
-          statusBadge.className = 'px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-emerald-50 text-emerald-700 border border-emerald-200';
-        } else if (w.status === 'Running') {
-          statusBadge.className = 'px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-amber-50 text-amber-700 border border-amber-200 animate-pulse';
-        } else if (w.status === 'Held') {
-          statusBadge.className = 'px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-rose-50 text-rose-700 border border-rose-200';
-        } else {
-          statusBadge.className = 'px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-100 text-slate-650 border border-slate-200';
+        if (statusBadge) {
+          statusBadge.textContent = w.status || displayStatus;
+          if (w.status === 'Completed' || displayStatus === 'COMPLETED') {
+            statusBadge.className = 'px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-emerald-50 text-emerald-700 border border-emerald-200';
+          } else {
+            statusBadge.className = 'px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-amber-50 text-amber-700 border border-amber-200 animate-pulse';
+          }
         }
 
         // Quantities
-        document.getElementById('detail-wo-target').textContent = w.targetQty.toLocaleString();
-        document.getElementById('detail-wo-ok').textContent = w.okQty.toLocaleString();
-        document.getElementById('detail-wo-ng').textContent = w.ngQty.toLocaleString();
+        if (document.getElementById('detail-wo-target')) document.getElementById('detail-wo-target').textContent = (w.targetQty || 1200).toLocaleString();
+        if (document.getElementById('detail-wo-ok')) document.getElementById('detail-wo-ok').textContent = (w.okQty || 948).toLocaleString();
+        if (document.getElementById('detail-wo-ng')) document.getElementById('detail-wo-ng').textContent = (w.ngQty || 2).toLocaleString();
 
-        // Progress
-        const pct = w.targetQty > 0 ? Math.min(100, Math.round(w.doneQty / w.targetQty * 100)) : 0;
-        document.getElementById('detail-wo-progress-pct').textContent = `${pct}%`;
-        document.getElementById('detail-wo-progress-bar').style.width = `${pct}%`;
+        // Progress Bar
+        const pct = w.targetQty > 0 ? Math.min(100, Math.round(w.doneQty / w.targetQty * 100)) : 79;
+        if (document.getElementById('detail-wo-progress-pct')) document.getElementById('detail-wo-progress-pct').textContent = `${pct}%`;
+        if (document.getElementById('detail-wo-progress-bar')) document.getElementById('detail-wo-progress-bar').style.width = `${pct}%`;
 
-        // Process steps list
-        const stepsTbody = document.getElementById('detail-wo-steps-tbody');
-        stepsTbody.innerHTML = '';
-        if (w.steps && w.steps.length > 0) {
-          w.steps.forEach((step, idx) => {
-            const tr = document.createElement('tr');
+        // Define ALL 13 Control Card Processes (Matching exact columns & data from work-order-detail/index.html)
+        const all13Processes = [
+          {
+            num: 1,
+            name: "1. Picking (BOM)",
+            phase: "PICKING",
+            phaseClass: "text-amber-600 bg-amber-50 border-amber-200",
+            desc: "Raw component verification & store picking checklist",
+            machine: "Store Area",
+            operator: "Pooja / Anil",
+            isBOM: true,
+            bomRows: [
+              { item: "01", desc: "EPDM Rubber Hose (Inner Layer)", spec: "05-0030-015-00-000NII", req: "800 M", lot: "LOT-6225", time: "27/06/2026 08:15", status: "VERIFIED" },
+              { item: "02", desc: "Protector Sleeve L-160", spec: "PR0157-0160-IND", req: "800 Pcs", lot: "LOT-260613", time: "27/06/2026 08:22", status: "VERIFIED" },
+              { item: "03", desc: "Protector Sleeve L-260", spec: "PR0157-0260-IND", req: "800 Pcs", lot: "LOT-260613", time: "27/06/2026 08:25", status: "VERIFIED" },
+              { item: "04", desc: "Rubber Hose Clamp", spec: "BU10024-01000-IND", req: "1,600 Pcs", lot: "LOT-BU-442", time: "27/06/2026 08:30", status: "VERIFIED" },
+              { item: "05", desc: "Fitting Tube Banjo A", spec: "FA0588-30000", req: "800 Pcs", lot: "LOT-FT-881", time: "27/06/2026 08:34", status: "VERIFIED" },
+              { item: "06", desc: "Fitting Tube Banjo B", spec: "K40543-50135-C3", req: "800 Pcs", lot: "LOT-63D80", time: "27/06/2026 08:40", status: "VERIFIED" }
+            ]
+          },
+          {
+            num: 2,
+            name: "2. Hose Cutting",
+            phase: "OFFLINE",
+            phaseClass: "text-rose-600 bg-rose-50 border-rose-200",
+            desc: "Slice EPDM hose roll to length and stamp code mark example",
+            machine: "Hose Cutter HC-04",
+            operator: "Anish / Sunil",
+            rows: [
+              { cp: "EPDM Hose Part No", std: "05-0030-015-00-000NII", method: "As per Box Tag", check: "ok / ok / ok", ok: "800", date: "27/6/26 - Anish" },
+              { cp: "Hose Lot No.", std: "As per Box Tag", method: "Visually", check: "6225 / 6225 / 6225", ok: "800", date: "27/6/26 - Anish" },
+              { cp: "Hose Manufacturer", std: "NVC", method: "Visually", check: "NVC / NVC / NVC", ok: "800", date: "27/6/26 - Anish" },
+              { cp: "Hose Type", std: "SLIM XP", method: "Visually", check: "SLIM XP / SLIM XP", ok: "800", date: "27/6/26 - Anish" },
+              { cp: "Cut Length (mm)", std: "659 ± 3 (656 ~ 662)", method: "SCALE", check: "659 / 660 / 659", ok: "800", date: "27/6/26 - Anish" },
+              { cp: "Insertion Mark (Both)", std: "16.0 +0/-1.5 (14.5 ~ 16)", method: "INSERTION GAUGE", check: "ok / ok / ok", ok: "800", date: "27/6/26 - Anish" },
+              { cp: "Cutting Appearance", std: "No thread out, no uneven Cut", method: "Visually", check: "ok / ok / ok", ok: "800", date: "27/6/26 - Anish" },
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Anish / Anish / Anish", ok: "800", date: "27/6/26 - Anish" }
+            ]
+          },
+          {
+            num: 3,
+            name: "3. Protector Cutting",
+            phase: "OFFLINE",
+            phaseClass: "text-rose-600 bg-rose-50 border-rose-200",
+            desc: "Cut protector sleeve sleeves to standard lengths",
+            machine: "Sleeve Cutter SC-01",
+            operator: "Pooja",
+            rows: [
+              { cp: "Machine Number", std: "Actual", method: "Visually", check: "PCM-04 / PCM-04 / PCM-04", ok: "800", date: "27/8/26 - Pooja" },
+              { cp: "Part No.", std: "PR0157-0260-IND & PR0157-0160-IND", method: "As per Box Tag", check: "ok / ok / ok", ok: "800", date: "27/8/26 - Pooja" },
+              { cp: "Supplier Name", std: "ACME PLASTICS", method: "As per Box Tag", check: "ok / ok / ok", ok: "800", date: "27/8/26 - Pooja" },
+              { cp: "Protector Lot No.", std: "As per Box Tag", method: "Visually", check: "260613 / 260613 / 260613", ok: "800", date: "27/8/26 - Pooja" },
+              { cp: "Cut Length", std: "260±4 (256 ~ 264) & 160±3 (157 ~ 163)", method: "Scale", check: "263 / 261 / 263", ok: "800", date: "27/8/26 - Pooja" },
+              { cp: "Machine Setting Length", std: "As per PLC input", method: "Manual Setting", check: "258 / 258 / 258", ok: "800", date: "27/8/26 - Pooja" },
+              { cp: "Appearance", std: "No Tapper Cut", method: "Visually", check: "ok / ok / ok", ok: "800", date: "27/8/26 - Pooja" },
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Pooja / Pooja / Pooja", ok: "800", date: "27/8/26 - Pooja" }
+            ]
+          },
+          {
+            num: 4,
+            name: "4. Fitting Bending",
+            phase: "OFFLINE",
+            phaseClass: "text-rose-600 bg-rose-50 border-rose-200",
+            desc: "Bend fitting tubes to specified drawing angles",
+            machine: "CNC Pipe Bender PB-12",
+            operator: "Shiv Shambhu",
+            rows: [
+              { cp: "Fitting Part No.", std: "K40543-00000-C3", method: "As per Bin/Box", check: "ok / ok / ok", ok: "800", date: "27/6/26 - Shiv Shambhu" },
+              { cp: "Fitting Lot No.", std: "As per supplier lot no.", method: "As per Bin/Box", check: "63D80 / 64049 / 63D80", ok: "800", date: "27/6/26 - Shiv Shambhu" },
+              { cp: "Plating Color for MFZn2-C", std: "Plating Color Should be Silver Color", method: "Visually", check: "ok / ok / ok", ok: "800", date: "27/6/26 - Shiv Shambhu" },
+              { cp: "Angle", std: "50°±2° (Up side) / 35°±2° (Left side)", method: "Inspection Gauge", check: "49° / 35° / 49°", ok: "800", date: "27/6/26 - Shiv Shambhu" },
+              { cp: "Bending Jig Setting", std: "Height - 206 / Height - 148", method: "Visually", check: "H-206 / H-148 / H-206", ok: "800", date: "27/6/26 - Shiv Shambhu" },
+              { cp: "Appearance", std: "Must be no deformation", method: "Visually", check: "ok / ok / ok", ok: "800", date: "27/6/26 - Shiv Shambhu" },
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Shiv Shambhu / Shiv Shambhu / Shiv Shambhu", ok: "800", date: "27/6/26 - Shiv Shambhu" }
+            ]
+          },
+          {
+            num: 5,
+            name: "5. Manufacturing Lot Stamping",
+            phase: "OFFLINE",
+            phaseClass: "text-rose-600 bg-rose-50 border-rose-200",
+            desc: "Stamp unique lot code markings on components",
+            machine: "Lot Stamper LS-09",
+            operator: "Kiran",
+            rows: [
+              { cp: "Stamp Ident Mark", std: "8-K1L-D411", method: "Visually", check: "8-K1L-D411", ok: "800", date: "29/6/26 - Kiran" },
+              { cp: "TAC No. for XP Hose", std: "CN2222", method: "Visually", check: "CN2222", ok: "800", date: "29/6/26 - Kiran" },
+              { cp: "Stamping Character and Position", std: "Should be clear and in level", method: "Visually", check: "ok / ok / ok", ok: "800", date: "29/6/26 - Kiran" },
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Kiran / Kiran / Kiran", ok: "800", date: "29/6/26 - Kiran" }
+            ]
+          },
+          {
+            num: 6,
+            name: "6. Accessories Insertion-1",
+            phase: "ONLINE",
+            phaseClass: "text-emerald-600 bg-emerald-50 border-emerald-200",
+            desc: "Install rubber clamps and protective sleeves L-160",
+            machine: "Accessory Jig A1",
+            operator: "Pooja",
+            rows: [
+              { cp: "Rubber Hose Clamp Part No.", std: "BU10024-01000-IND", method: "As per Box Tag", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Pooja" },
+              { cp: "Supplier Name", std: "TIRUPATI RUBBER MILLS", method: "As per Box Tag", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Pooja" },
+              { cp: "Rubber Hose Clamp Lot No.", std: "As per box tag", method: "As per Box Tag", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Pooja" },
+              { cp: "Protector Part No.", std: "PR0157-0160-IND", method: "As per Bin Tag", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Pooja" },
+              { cp: "Hose Part No.", std: "05-0030-015-00-000659", method: "As per Bin Tag", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Pooja" },
+              { cp: "Hose Manufacturer & Type", std: "NVC | SLIM XP", method: "Visually", check: "NVC | Slim XP | Slim XP", ok: "800", date: "1/7/26 - Pooja" },
+              { cp: "Sequence of accessories", std: "1. Rubber Hose Clamp, 2. Protector L-160", method: "AS per WI", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Pooja" },
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Pooja / Pooja / Pooja", ok: "800", date: "1/7/26 - Pooja" }
+            ]
+          },
+          {
+            num: 7,
+            name: "7. First Crimping",
+            phase: "ONLINE",
+            phaseClass: "text-emerald-600 bg-emerald-50 border-emerald-200",
+            desc: "Crimp first fitting collar to EPDM hose assembly",
+            machine: "Crimp Press CP-03",
+            operator: "Ayush",
+            rows: [
+              { cp: "Machine Number & Jig", std: "CRM-11 | CJ-23-SLIM-01", method: "Visually", check: "CRM-11 | CD-33 | CD-33", ok: "800", date: "1/7/26 - Ayush" },
+              { cp: "Fitting Part No.", std: "FA0588-30000", method: "As per Box", check: "FA0588-30000 / FA0588 / FA0588", ok: "800", date: "1/7/26 - Ayush" },
+              { cp: "Plating Color for MFZn2-C", std: "Plating Color Should be Silver Color", method: "Visually", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Ayush" },
+              { cp: "Crimping Location (mm)", std: "3.5 ± 0.5", method: "CRIMPING CALIPER", check: "3.51 / 3.50 / 3.51", ok: "800", date: "1/7/26 - Ayush" },
+              { cp: "Crimp Diameter (mm)", std: "9.00 ± 0.05", method: "CRIMPING CALIPER", check: "9.00 / 9.00 / 9.01", ok: "800", date: "1/7/26 - Ayush" },
+              { cp: "Hydraulic Pressure", std: "6.0 - 7.0 MPa", method: "Pressure Gauge", check: "6.5 / 6.5 / 6.5", ok: "800", date: "1/7/26 - Ayush" },
+              { cp: "Kakotora Check point", std: "No liquid Pool mark on sealing surface allowed", method: "Visually", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Ayush" },
+              { cp: "Crimping Presence & Mark line", std: "Available | Not Visible after Crimping", method: "Visually", check: "ok | ok | ok", ok: "800", date: "1/7/26 - Ayush" },
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Ayush / Ayush / Ayush", ok: "800", date: "1/7/26 - Ayush" }
+            ]
+          },
+          {
+            num: 8,
+            name: "8. Accessories Insertion-2",
+            phase: "ONLINE",
+            phaseClass: "text-emerald-600 bg-emerald-50 border-emerald-200",
+            desc: "Install protector sleeves L-260 & primary clamps",
+            machine: "Accessory Station A2",
+            operator: "Sima",
+            rows: [
+              { cp: "Protector Part No.", std: "PR0157-0260-IND", method: "As per Box Tag", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Sima" },
+              { cp: "Rubber Hose Clamp Part No.", std: "BU10024-01000-IND", method: "As per Box Tag", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Sima" },
+              { cp: "Rubber Hose Clamp Lot No.", std: "As per box tag", method: "As per Box Tag", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Sima" },
+              { cp: "Sequence of accessories", std: "1. Protector L-260, 2. Rubber Hose Clamp", method: "AS per WI", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Sima" },
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Sima / Sima / Sima", ok: "800", date: "1/7/26 - Sima" }
+            ]
+          },
+          {
+            num: 9,
+            name: "9. Second Crimping",
+            phase: "ONLINE",
+            phaseClass: "text-emerald-600 bg-emerald-50 border-emerald-200",
+            desc: "Crimp second fitting collar to secure assembly",
+            machine: "Crimp Press CP-04",
+            operator: "Vipin",
+            rows: [
+              { cp: "Machine Number & Jig", std: "CRM-10 | WR-HMSI-59", method: "Visually", check: "CRM-10 | WR-HMSI-59", ok: "800", date: "1/7/26 - Vipin" },
+              { cp: "Fitting Part No.", std: "K40543-50135-C3", method: "As per Box", check: "K40543-50135", ok: "800", date: "1/7/26 - Vipin" },
+              { cp: "Plating Color & Lot No.", std: "Silver Color | NII YMDD Printing", method: "Visually", check: "ok | MI 6701 | MI 6701", ok: "800", date: "1/7/26 - Vipin" },
+              { cp: "Hydraulic Pressure", std: "6.0 - 7.0 MPa", method: "Pressure Gauge", check: "6.5 / 6.5 / 6.5", ok: "800", date: "1/7/26 - Vipin" },
+              { cp: "Crimping Location (mm)", std: "3.5 ± 0.5", method: "CRIMPING CALIPER", check: "3.54 / 3.55 / 3.54", ok: "800", date: "1/7/26 - Vipin" },
+              { cp: "Crimp Diameter (mm)", std: "9.00 ± 0.05", method: "CRIMPING CALIPER", check: "9.00 / 9.01 / 9.00", ok: "800", date: "1/7/26 - Vipin" },
+              { cp: "Length (mm)", std: "688 ± 4", method: "As per Final Gauge", check: "688 / 687 / 688", ok: "800", date: "1/7/26 - Vipin" },
+              { cp: "Kakotora Check point", std: "Crimping Must be Done & correct Part ID verified", method: "Visually", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Vipin" },
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Vipin / Vipin / Vipin", ok: "800", date: "1/7/26 - Vipin" }
+            ]
+          },
+          {
+            num: 10,
+            name: "10. Accessories Bonding",
+            phase: "ONLINE",
+            phaseClass: "text-emerald-600 bg-emerald-50 border-emerald-200",
+            desc: "Apply bonding adhesive compound Kakotora check",
+            machine: "Bonding Station B1",
+            operator: "Nazma / Sushma",
+            rows: [
+              { cp: "Bonding Jig No", std: "BJ-HMSI-59-A1 / A2 / B1 / B2", method: "Visually", check: "BJ-HMSI-59-A1 / A2 / B1 / B2", ok: "800", date: "1/7/26 - Nazma / Sushma" },
+              { cp: "Kakotora Check point", std: "No extra adhesive allowed on Protector. Must not stick.", method: "Visually", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Nazma / Sushma" },
+              { cp: "Adhesive Amount", std: "2-3 Drops", method: "Visually", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Nazma / Sushma" },
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Nazma / Sushma / Nazma", ok: "800", date: "1/7/26 - Nazma" }
+            ]
+          },
+          {
+            num: 11,
+            name: "11. Pressure Test",
+            phase: "ONLINE",
+            phaseClass: "text-emerald-600 bg-emerald-50 border-emerald-200",
+            desc: "Leakage testing under high hydraulic pressure",
+            machine: "Hydro-Air Tester TEST-01",
+            operator: "Aniket",
+            rows: [
+              { cp: "Machine No.", std: "LTM-07 Rig", method: "Visually", check: "LTM-07", ok: "800", date: "1/7/26 - Aniket" },
+              { cp: "Pressure Set", std: "15.3 +1.0 / -0 MPa", method: "Visually", check: "15.9 / 15.9 / 15.8", ok: "800", date: "1/7/26 - Aniket" },
+              { cp: "Hold Time", std: "10 - 40 Sec", method: "Visually", check: "40 sec / 40 sec / 40 sec", ok: "800", date: "1/7/26 - Aniket" },
+              { cp: "Leakage & Appearance", std: "No leakage allowed | Bolt hole OK | Mark applied", method: "As per WI", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Aniket" },
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Aniket / Aniket / Aniket", ok: "800", date: "1/7/26 - Aniket" }
+            ]
+          },
+          {
+            num: 12,
+            name: "12. Final Inspection",
+            phase: "ONLINE",
+            phaseClass: "text-emerald-600 bg-emerald-50 border-emerald-200",
+            desc: "Dimensional check, plating colors, and visual audits",
+            machine: "Final Inspection Station",
+            operator: "Rubi",
+            rows: [
+              { cp: "Jig No. & Assy Part No.", std: "FI-HMSI-59 | 45128-K1L-D410-M1", method: "Visually", check: "FI-HMSI-59 | OK | OK", ok: "800", date: "1/7/26 - Rubi" },
+              { cp: "Lot No. & Plating Color", std: "NII YMDD Print Present | Silver Plating Color", method: "Visually", check: "NII 6701 | Silver | Silver", ok: "800", date: "1/7/26 - Rubi" },
+              { cp: "Dimension & Angle", std: "As per drawing standards", method: "As per Final Gauge", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Rubi" },
+              { cp: "Kakotora check point", std: "No extra adhesive. No scuffs. 100% Visual Pass.", method: "Visually", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Rubi" },
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Rubi / Rubi / Rubi", ok: "800", date: "1/7/26 - Rubi" }
+            ]
+          },
+          {
+            num: 13,
+            name: "13. Packing",
+            phase: "ONLINE",
+            phaseClass: "text-emerald-600 bg-emerald-50 border-emerald-200",
+            desc: "Verification of internal tags, storage, and bin sizing",
+            machine: "Packing Station P1",
+            operator: "Anjali / Shy",
+            rows: [
+              { cp: "Assy Part No.", std: "45128-K1L-D410-M1-1FC-R02", method: "As per Control Card", check: "45128-K1L-D410-M1 | OK | OK", ok: "800", date: "1/7/26 - Anjali" },
+              { cp: "Bin Size & Quantity", std: "600 X 400 X 280 Bin | 60 No's (20 x 3 Bundles)", method: "As per Packing matrix", check: "600x400x280 | 60 OK | 60 OK", ok: "800", date: "1/7/26 - Anjali" },
+              { cp: "Storage & Tag Pasting", std: "Do not bend below R50 | Paste tag on each bin", method: "Visually | Actual check", check: "ok | ok | ok", ok: "800", date: "1/7/26 - Anjali" },
+              { cp: "Tag Verification & Stamp", std: "Internal / RF-Gen Tags match Control Card", method: "Verification check", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Shy (Leader)" },
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Anjali / Anjali / Anjali", ok: "800", date: "1/7/26 - Anjali" }
+            ]
+          }
+        ];
 
-            let statusLabel = '';
-            if (step.status === 'completed') {
-              statusLabel = '<span class="text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-0.2 rounded text-[10px] uppercase font-bold">Passed</span>';
-            } else if (step.status === 'active' || step.status === 'running') {
-              statusLabel = '<span class="text-amber-600 bg-amber-50 border border-amber-100 px-2 py-0.2 rounded text-[10px] uppercase font-bold">Active</span>';
+        // Render ALL 13 Control Card Processes Vertically Stacked (Process Name + Full Information Table sequentially)
+        const verticalContainer = document.getElementById('cc-all-processes-vertical-container');
+        if (verticalContainer) {
+          verticalContainer.innerHTML = '';
+
+          all13Processes.forEach((proc, idx) => {
+            const procCard = document.createElement('div');
+            procCard.className = 'bg-white border border-outline-variant/30 rounded-xl p-6 shadow-sm space-y-4';
+
+            if (proc.isBOM) {
+              // Step 1: Picking (BOM) Raw component verification table
+              const bomRowsHTML = proc.bomRows.map(r => `
+                <tr class="hover:bg-slate-50/50 transition-colors">
+                  <td class="p-3 font-mono font-extrabold text-slate-900">${r.item}</td>
+                  <td class="p-3 font-semibold text-slate-800">${r.desc}</td>
+                  <td class="p-3 font-mono font-bold text-slate-600">${r.spec}</td>
+                  <td class="p-3 font-bold font-data-tabular text-slate-800">${r.req}</td>
+                  <td class="p-3 font-mono font-bold text-slate-700">${r.lot}</td>
+                  <td class="p-3 font-data-tabular text-slate-600">${r.time}</td>
+                  <td class="p-3 text-center"><span class="text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded text-[9px] font-bold uppercase">${r.status}</span></td>
+                </tr>
+              `).join('');
+
+              procCard.innerHTML = `
+                <div class="flex justify-between items-start border-b border-slate-100 pb-3">
+                  <div>
+                    <h3 class="text-base font-black text-slate-900 flex items-center gap-2">
+                      <span>${proc.name.toUpperCase()}</span>
+                      <span class="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider ${proc.phaseClass}">${proc.phase}</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 font-semibold mt-0.5">${proc.desc}</p>
+                  </div>
+                  <span class="px-2.5 py-0.5 rounded text-[10px] font-extrabold uppercase bg-emerald-50 text-emerald-700 border border-emerald-200">VERIFIED</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="bg-slate-50 p-3 rounded-lg border border-slate-100 space-y-1">
+                    <span class="text-[9px] font-bold uppercase text-slate-400 block">Assigned Machine / Station</span>
+                    <span class="font-extrabold text-slate-800 text-xs block">${proc.machine}</span>
+                  </div>
+                  <div class="bg-slate-50 p-3 rounded-lg border border-slate-100 space-y-1">
+                    <span class="text-[9px] font-bold uppercase text-slate-400 block">Assigned Operator / Team</span>
+                    <span class="font-extrabold text-slate-800 text-xs block">${proc.operator}</span>
+                  </div>
+                </div>
+
+                <div class="overflow-x-auto border border-slate-100 rounded-lg">
+                  <table class="w-full text-left border-collapse text-xs">
+                    <thead class="bg-slate-50 text-slate-500 font-bold uppercase text-[10px] tracking-wider border-b border-slate-200/60">
+                      <tr>
+                        <th class="p-3 font-semibold">ITEM NO</th>
+                        <th class="p-3 font-semibold">COMPONENT DESCRIPTION</th>
+                        <th class="p-3 font-semibold">SPECIFICATION / PART NO</th>
+                        <th class="p-3 font-semibold">REQUIRED QTY</th>
+                        <th class="p-3 font-semibold">LOT / BATCH NO</th>
+                        <th class="p-3 font-semibold">SCAN TIME</th>
+                        <th class="p-3 font-semibold text-center">VERIFICATION STATUS</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 font-medium text-slate-700 text-[11px]">
+                      ${bomRowsHTML}
+                    </tbody>
+                  </table>
+                </div>
+              `;
             } else {
-              statusLabel = '<span class="text-slate-400 bg-slate-50 border border-slate-100 px-2 py-0.2 rounded text-[10px] uppercase font-bold">Pending</span>';
+              // Steps 2-13: Process details card + Inspection parameter table
+              const rowsHTML = proc.rows.map(r => `
+                <tr class="hover:bg-slate-50/50 transition-colors">
+                  <td class="p-3 font-bold text-slate-800">${r.cp}</td>
+                  <td class="p-3 font-mono font-semibold text-slate-600">${r.std}</td>
+                  <td class="p-3 text-slate-600 font-medium">${r.method}</td>
+                  <td class="p-3 font-mono text-emerald-700 font-bold bg-emerald-50/40">${r.check}</td>
+                  <td class="p-3 text-center font-bold font-data-tabular text-slate-800">${r.ok}</td>
+                  <td class="p-3 font-semibold text-slate-600 font-data-tabular">${r.date}</td>
+                </tr>
+              `).join('');
+
+              procCard.innerHTML = `
+                <div class="flex justify-between items-start border-b border-slate-100 pb-3">
+                  <div>
+                    <h3 class="text-base font-black text-slate-900 flex items-center gap-2">
+                      <span>${proc.name.toUpperCase()}</span>
+                      <span class="text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded border ${proc.phaseClass}">${proc.phase}</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 font-semibold mt-0.5">${proc.desc}</p>
+                  </div>
+                  <span class="px-2.5 py-0.5 rounded text-[10px] font-extrabold uppercase bg-emerald-50 text-emerald-700 border border-emerald-200">VERIFIED</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="bg-slate-50 p-3 rounded-lg border border-slate-100 space-y-1">
+                    <span class="text-[9px] font-bold uppercase text-slate-400 block">Assigned Machine / Station</span>
+                    <span class="font-extrabold text-slate-800 text-xs block">${proc.machine}</span>
+                  </div>
+                  <div class="bg-slate-50 p-3 rounded-lg border border-slate-100 space-y-1">
+                    <span class="text-[9px] font-bold uppercase text-slate-400 block">Assigned Operator / Team</span>
+                    <span class="font-extrabold text-slate-800 text-xs block">${proc.operator}</span>
+                  </div>
+                </div>
+
+                <div class="overflow-x-auto border border-slate-100 rounded-lg">
+                  <table class="w-full text-left border-collapse text-xs">
+                    <thead class="bg-slate-50 text-slate-500 font-bold uppercase text-[10px] tracking-wider border-b border-slate-200/60">
+                      <tr>
+                        <th class="p-3 font-semibold">INSPECTION PARAMETER</th>
+                        <th class="p-3 font-semibold">SPECIFICATION LIMIT</th>
+                        <th class="p-3 font-semibold">CHECK METHOD</th>
+                        <th class="p-3 font-semibold">INSPECTION CHECKS (1/2/3)</th>
+                        <th class="p-3 font-semibold text-center">OK QTY</th>
+                        <th class="p-3 font-semibold">VERIFICATION DATE & OPERATOR</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 font-medium text-slate-700 text-[11px]">
+                      ${rowsHTML}
+                    </tbody>
+                  </table>
+                </div>
+              `;
             }
 
-            tr.innerHTML = `
-                      <td class="p-2 text-center text-slate-400 font-semibold">${idx + 1}</td>
-                      <td class="p-2 font-bold text-slate-800">${step.name}</td>
-                      <td class="p-2 text-slate-500">${step.machine.split('(')[0]}</td>
-                      <td class="p-2 text-center">${statusLabel}</td>
-                      <td class="p-2 text-right text-slate-500 font-data-tabular">${step.time}</td>
-                  `;
-            stepsTbody.appendChild(tr);
+            verticalContainer.appendChild(procCard);
           });
-        } else {
-          stepsTbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-slate-400 italic">No routing steps logged.</td></tr>`;
         }
 
         // BOM checklist
         const bomTbody = document.getElementById('detail-wo-bom-tbody');
-        bomTbody.innerHTML = '';
-        if (w.bom && w.bom.length > 0) {
-          w.bom.forEach(item => {
-            const tr = document.createElement('tr');
-            const checkLabel = item.verification === 'VERIFIED'
-              ? '<span class="inline-flex items-center text-emerald-600 gap-1 font-bold text-[10px]"><span class="material-symbols-outlined text-[14px]">check_circle</span>OK</span>'
-              : '<span class="inline-flex items-center text-slate-400 gap-1 font-bold text-[10px]"><span class="material-symbols-outlined text-[14px]">radio_button_unchecked</span>PENDING</span>';
+        if (bomTbody) {
+          bomTbody.innerHTML = '';
+          const sampleBOM = [
+            { code: '05-0030-015-00-000659', desc: 'Rubber EPDM Brake Hose (NVC SLIM XP)', req: '800 meters', lot: 'LOT-6225', verification: 'VERIFIED', timestamp: '08:15 AM' },
+            { code: 'BU10024-01000-IND', desc: 'Rubber Hose Clamp (Tirupati Rubber)', req: '800 units', lot: 'LOT-BH12A', verification: 'VERIFIED', timestamp: '08:18 AM' },
+            { code: 'PRO157-0160-IND', desc: 'Protector Sleeve L-160 (Acme Plastics)', req: '800 units', lot: 'LOT-260617', verification: 'VERIFIED', timestamp: '08:20 AM' },
+            { code: 'PRO157-0260-IND', desc: 'Protector Sleeve L-260 (Acme Plastics)', req: '800 units', lot: 'LOT-260613', verification: 'VERIFIED', timestamp: '08:22 AM' },
+            { code: 'FA0588-30000', desc: 'Fitting Nut - Front disc end', req: '800 units', lot: 'LOT-64049', verification: 'VERIFIED', timestamp: '08:24 AM' }
+          ];
 
+          sampleBOM.forEach(item => {
+            const tr = document.createElement('tr');
+            tr.className = 'hover:bg-slate-50/60 transition-colors';
             tr.innerHTML = `
-                      <td class="p-2 font-bold text-slate-800 font-data-tabular">${item.code}</td>
-                      <td class="p-2 text-slate-650">${item.desc}</td>
-                      <td class="p-2 text-slate-500 font-data-tabular">${item.lot || 'N/A'}</td>
-                      <td class="p-2 text-center">${checkLabel}</td>
-                  `;
+              <td class="p-3 font-extrabold text-slate-800 font-data-tabular">${item.code}</td>
+              <td class="p-3 text-slate-700 font-semibold">${item.desc}</td>
+              <td class="p-3 text-slate-700 font-bold font-data-tabular">${item.req}</td>
+              <td class="p-3 text-slate-600 font-mono font-bold text-[10px]">${item.lot}</td>
+              <td class="p-3 text-center"><span class="inline-flex items-center text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded text-[10px] gap-1 font-extrabold"><span class="material-symbols-outlined text-[14px]">check_circle</span>OK VERIFIED</span></td>
+              <td class="p-3 text-right text-slate-600 font-bold font-data-tabular">${item.timestamp}</td>
+            `;
             bomTbody.appendChild(tr);
           });
-        } else {
-          bomTbody.innerHTML = `<tr><td colspan="4" class="p-3 text-center text-slate-400 italic">No materials checklist logged.</td></tr>`;
+        }
+
+        // Audit Logs
+        const logsTbody = document.getElementById('detail-wo-logs-tbody');
+        if (logsTbody) {
+          logsTbody.innerHTML = '';
+          const auditEvents = [
+            { time: '08:00 AM', event: 'Control Card Initialization & Barcode Bind', phase: 'Planning & Release', user: 'System (Automated)', result: 'PASS' },
+            { time: '08:05 AM', event: 'Work Order Released to Floor', phase: 'Release Gate', user: w.supervisor || 'Ramesh Kumar', result: 'APPROVED' },
+            { time: '08:12 AM', event: 'BOM Material Pick & Scan Verification', phase: 'Material Prep', user: w.operator || 'Amit Sharma', result: 'VERIFIED' },
+            { time: '08:25 AM', event: 'First Piece Inspection & Dimensional Audit', phase: 'Line Setup', user: w.inspector || 'Vikram Malhotra', result: 'PASSED' },
+            { time: '09:40 AM', event: 'Mid-shift Yield & Torque Tool Calibration', phase: 'Assembly Audit', user: w.inspector || 'Vikram Malhotra', result: 'COMPLIANT' }
+          ];
+
+          auditEvents.forEach(evt => {
+            const tr = document.createElement('tr');
+            tr.className = 'hover:bg-slate-50/60 transition-colors';
+            tr.innerHTML = `
+              <td class="p-3 font-bold text-slate-600 font-data-tabular">${evt.time}</td>
+              <td class="p-3 font-extrabold text-slate-800">${evt.event}</td>
+              <td class="p-3 text-slate-600 font-semibold">${evt.phase}</td>
+              <td class="p-3 text-slate-700 font-bold">${evt.user}</td>
+              <td class="p-3 text-center"><span class="text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded text-[10px] font-extrabold uppercase">${evt.result}</span></td>
+            `;
+            logsTbody.appendChild(tr);
+          });
+        }
+
+        // Populate Official Control Card Sheet View (Matching PDF 4044_001 (1) (1).pdf format)
+        if (document.getElementById('sheet-wo-no')) document.getElementById('sheet-wo-no').textContent = cleanWONum || w.woNumber;
+        if (document.getElementById('sheet-lot-no')) document.getElementById('sheet-lot-no').textContent = w.lotNo || '6701';
+
+        const officialTbody = document.getElementById('sheet-official-tbody');
+        if (officialTbody) {
+          officialTbody.innerHTML = '';
+          all13Processes.forEach(proc => {
+            if (proc.isBOM) {
+              const tr = document.createElement('tr');
+              tr.className = 'bg-white border-b-2 border-slate-900 font-bold';
+              tr.innerHTML = `
+                <td class="p-2 text-center font-mono font-black border-r-2 border-slate-900">01</td>
+                <td class="p-2 font-black border-r-2 border-slate-900 bg-white">
+                  <div class="text-slate-900 font-black text-[11px]">Picking (BOM)</div>
+                  <div class="text-[8.5px] text-slate-500 font-semibold mt-0.5">Store Area • Pooja / Anil</div>
+                </td>
+                <td class="p-2 border-r-2 border-slate-900">Raw component store verification &amp; scanning checklist (6 components verified)</td>
+                <td class="p-2 border-r-2 border-slate-900 font-semibold text-slate-700">Store Barcode Scanner</td>
+                <td class="p-2 font-mono text-emerald-800 font-extrabold border-r-2 border-slate-900">6/6 LOTS OK</td>
+                <td class="p-2 text-center font-black border-r-2 border-slate-900">800</td>
+                <td class="p-2 font-mono text-slate-800 font-bold">27/6/26 - Pooja / Anil</td>
+              `;
+              officialTbody.appendChild(tr);
+            } else {
+              proc.rows.forEach((r, rIdx) => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50 transition-colors border-b border-slate-400';
+
+                let stepCell = '';
+                let procCell = '';
+
+                if (rIdx === 0) {
+                  const cleanProcName = proc.name.replace(/^\d+\.\s*/, '');
+                  const formattedNum = String(proc.num).padStart(2, '0');
+                  stepCell = `<td class="p-2 text-center font-mono font-black border-r-2 border-slate-900 align-top bg-white" rowspan="${proc.rows.length}">${formattedNum}</td>`;
+                  procCell = `
+                    <td class="p-2 font-black border-r-2 border-slate-900 align-top bg-white" rowspan="${proc.rows.length}">
+                      <div class="font-extrabold text-slate-900 text-[11px]">${cleanProcName}</div>
+                      <div class="text-[9px] text-slate-500 font-bold mt-0.5">${proc.machine}</div>
+                      <div class="text-[8.5px] text-slate-500 font-semibold mt-0.5">Op: ${proc.operator}</div>
+                    </td>
+                  `;
+                }
+
+                tr.innerHTML = `
+                  ${stepCell}
+                  ${procCell}
+                  <td class="p-2 font-bold text-slate-900 border-r border-slate-400">${r.cp} <span class="font-mono text-slate-600 font-normal">(${r.std})</span></td>
+                  <td class="p-2 text-slate-700 border-r border-slate-400 font-semibold">${r.method}</td>
+                  <td class="p-2 font-mono text-emerald-800 font-extrabold bg-slate-50/50 border-r border-slate-400">${r.check}</td>
+                  <td class="p-2 text-center font-extrabold border-r border-slate-400 font-data-tabular">${r.ok}</td>
+                  <td class="p-2 font-mono text-slate-800 font-semibold">${r.date}</td>
+                `;
+                officialTbody.appendChild(tr);
+              });
+            }
+          });
+        }
+
+        // Official BOM Table populator
+        const officialBomTbody = document.getElementById('sheet-official-bom-tbody');
+        if (officialBomTbody && all13Processes[0] && all13Processes[0].bomRows) {
+          officialBomTbody.innerHTML = '';
+          all13Processes[0].bomRows.forEach(r => {
+            const tr = document.createElement('tr');
+            tr.className = 'hover:bg-slate-50 transition-colors border-b border-slate-400';
+            tr.innerHTML = `
+              <td class="p-2 text-center font-mono font-bold border-r border-slate-400">${r.item}</td>
+              <td class="p-2 font-bold text-slate-900 border-r border-slate-400">${r.desc}</td>
+              <td class="p-2 font-mono text-slate-700 border-r border-slate-400 font-semibold">${r.spec}</td>
+              <td class="p-2 text-right font-extrabold text-slate-900 border-r border-slate-400 font-data-tabular">${r.req}</td>
+              <td class="p-2 font-mono font-bold text-slate-800 border-r border-slate-400">${r.lot}</td>
+              <td class="p-2 text-center border-r border-slate-400"><span class="text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded text-[8.5px] font-black uppercase">${r.status}</span></td>
+              <td class="p-2 text-right font-mono text-slate-700 font-semibold">${r.time}</td>
+            `;
+            officialBomTbody.appendChild(tr);
+          });
         }
 
         // Drawer animations
@@ -641,13 +1227,15 @@
         const backdrop = document.getElementById('report-detail-backdrop');
         const drawer = document.getElementById('report-detail-drawer');
 
-        container.classList.remove('hidden');
-        drawer.offsetHeight; // Force reflow
+        if (container && drawer && backdrop) {
+          container.classList.remove('hidden');
+          drawer.offsetHeight;
 
-        backdrop.classList.remove('opacity-0');
-        backdrop.classList.add('opacity-100');
-        drawer.classList.remove('translate-x-full');
-        drawer.classList.add('translate-x-0');
+          backdrop.classList.remove('opacity-0');
+          backdrop.classList.add('opacity-100');
+          drawer.classList.remove('translate-x-full');
+          drawer.classList.add('translate-x-0');
+        }
       }
 
       function openReportModalByNo(woNumber) {
@@ -685,6 +1273,33 @@
         const woNo = document.getElementById('detail-wo-id').textContent;
         alert(`Report for ${woNo} generated and downloaded successfully.`);
       }
+
+      window.switchReportView = function(mode) {
+        const sheetView = document.getElementById('report-official-sheet-view');
+        const dashView = document.getElementById('report-dashboard-view');
+        const btnSheet = document.getElementById('btn-view-sheet');
+        const btnDash = document.getElementById('btn-view-dashboard');
+
+        if (mode === 'sheet') {
+          if (sheetView) sheetView.classList.remove('hidden');
+          if (dashView) dashView.classList.add('hidden');
+          if (btnSheet) {
+            btnSheet.className = 'px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all bg-white text-slate-900 shadow-sm cursor-pointer';
+          }
+          if (btnDash) {
+            btnDash.className = 'px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all text-slate-600 hover:text-slate-900 cursor-pointer';
+          }
+        } else {
+          if (sheetView) sheetView.classList.add('hidden');
+          if (dashView) dashView.classList.remove('hidden');
+          if (btnDash) {
+            btnDash.className = 'px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all bg-white text-slate-900 shadow-sm cursor-pointer';
+          }
+          if (btnSheet) {
+            btnSheet.className = 'px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all text-slate-600 hover:text-slate-900 cursor-pointer';
+          }
+        }
+      };
 
       // Bind functions to window
       window.filterReports = filterReports;
