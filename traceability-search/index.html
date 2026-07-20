@@ -204,7 +204,7 @@
         <div class="flex justify-between items-center mb-2">
           <div class="flex items-center gap-3">
             <h2 class="text-2xl font-black text-[#dc0111] tracking-tight leading-none" id="trace-summary-id">--</h2>
-            <span class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-[#dc0111]/10 text-[#dc0111] border border-[#dc0111]/25 animate-pulse" id="trace-summary-status">RUNNING</span>
+            <span class="text-xs font-extrabold uppercase tracking-wider text-[#dc0111]" id="trace-summary-status">RUNNING</span>
           </div>
           <!-- Barcode Column (Exact replication of PDF top-left) -->
           <div class="flex flex-col items-end">
@@ -677,25 +677,25 @@
               const statusEl = document.getElementById('trace-summary-status');
               if (statusEl) {
                   let displayStatus = activeWO.status;
-                  let statusClass = 'bg-slate-100 text-slate-600 border border-slate-200';
+                  let statusClass = 'text-slate-600 font-extrabold';
                   if (cleanWONum === '22615542') {
                       displayStatus = 'NOT RELEASED';
-                      statusClass = 'bg-slate-100 text-slate-500 border border-slate-200/80';
+                      statusClass = 'text-slate-400 font-extrabold';
                   } else if (cleanWONum === '22615545' || activeWO.status === 'Waiting') {
                       displayStatus = 'PENDING';
-                      statusClass = 'bg-amber-50 text-amber-700 border border-amber-200/50';
+                      statusClass = 'text-amber-600 font-extrabold';
                   } else if (cleanWONum === '22615543' || activeWO.status === 'Held' || activeWO.status === 'hold') {
                       displayStatus = 'HOLD';
-                      statusClass = 'bg-red-50 text-red-600 border border-red-200/50';
+                      statusClass = 'text-rose-600 font-extrabold';
                   } else if (activeWO.status === 'Completed' || activeWO.status === 'completed') {
                       displayStatus = 'COMPLETED';
-                      statusClass = 'bg-emerald-100 text-emerald-700 border border-emerald-200';
+                      statusClass = 'text-emerald-600 font-extrabold';
                   } else if (activeWO.status === 'Running' || activeWO.status === 'in-progress') {
                       displayStatus = 'IN-PROGRESS';
-                      statusClass = 'bg-[#dc0111]/10 text-[#dc0111] border border-[#dc0111]/25 animate-pulse';
+                      statusClass = 'text-[#dc0111] font-extrabold';
                   }
                   statusEl.textContent = displayStatus.toUpperCase();
-                  statusEl.className = `px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider ${statusClass}`;
+                  statusEl.className = `text-xs font-extrabold uppercase tracking-wider ${statusClass}`;
               }
               
               const ctrlCodeEl = document.getElementById('trace-summary-control-code');
@@ -731,7 +731,7 @@
               if (subtitleEl) {
                   subtitleEl.textContent = `Complete end-to-end event trail for Work Order #${activeWO.woNumber}`;
               }
-  
+   
               // 3. Render Timeline List
               const timelineList = document.getElementById('trace-timeline-list');
               if (timelineList) {
@@ -740,35 +740,35 @@
                   activeWO.ccProcesses.forEach((step, idx) => {
                       const metadata = processMetadata[step.name] || { icon: "settings", parameter: "General", limits: "N/A", instruction: "" };
                       let iconName = metadata.icon;
-  
+   
                       let iconBgClass = 'bg-slate-200 text-slate-600';
                       let borderClass = '';
                       let statusColorClass = 'text-slate-500';
-  
+   
                       let operators = step.operator ? step.operator.split('/').map(o => o.trim()) : [];
                       let startedBy = operators[0] || 'Unassigned';
                       let doneBy = operators[1] || operators[0] || 'Unassigned';
-  
+   
                       let displayStart = '--';
                       let displayEnd = '--';
-  
+   
                       if (step.status === 'completed') {
                           iconBgClass = 'bg-[#dc0111] text-white';
                           borderClass = 'border-l-4 border-l-emerald-500';
-                          statusColorClass = 'text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded';
+                          statusColorClass = 'text-emerald-600 font-extrabold';
                           displayStart = stepTimes[idx].start;
                           displayEnd = stepTimes[idx].end;
                       } else if (step.status === 'active' || step.status === 'running') {
                           iconBgClass = 'bg-amber-500 text-white';
                           borderClass = 'border-l-4 border-l-amber-500';
-                          statusColorClass = 'text-amber-600 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded animate-pulse';
+                          statusColorClass = 'text-amber-600 font-extrabold';
                           displayStart = stepTimes[idx].start;
                           displayEnd = 'In Progress';
                           doneBy = 'Pending';
                       } else {
                           iconBgClass = 'bg-slate-100 text-slate-400';
                           borderClass = 'opacity-65';
-                          statusColorClass = 'text-slate-400 bg-slate-50 border border-slate-200 px-2 py-0.5 rounded';
+                          statusColorClass = 'text-slate-400 font-extrabold';
                           startedBy = 'Pending';
                           doneBy = 'Pending';
                       }

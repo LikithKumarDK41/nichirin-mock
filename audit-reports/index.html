@@ -36,13 +36,34 @@
       vertical-align: middle;
     }
 
+    /* Custom Scrollbar Styling for Table & Containers */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
     .custom-scrollbar::-webkit-scrollbar {
       width: 6px;
       height: 6px;
     }
 
     .custom-scrollbar::-webkit-scrollbar-track {
-      background: transparent;
+      background: #f1f5f9;
+      border-radius: 4px;
     }
 
     .custom-scrollbar::-webkit-scrollbar-thumb {
@@ -63,7 +84,8 @@
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-1">
       <div>
         <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Production Reports</h2>
-        <p class="font-body-md text-body-md text-on-surface-variant">Comprehensive audit logs, yield analysis, work order execution metrics, and compliance records across all manufacturing lines.</p>
+        <p class="font-body-md text-body-md text-on-surface-variant">Comprehensive audit logs, yield analysis, work
+          order execution metrics, and compliance records across all manufacturing lines.</p>
       </div>
       <div class="flex gap-3 w-full md:w-auto md:justify-end shrink-0">
         <button onclick="exportOverallReport()"
@@ -131,31 +153,47 @@
     </div>
 
     <!-- Bento Layout: Work Orders List -->
-    <section class="col-span-12 bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm flex flex-col">
+    <section
+      class="col-span-12 bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm flex flex-col">
       <div class="px-6 py-4 border-b border-outline-variant/30 flex flex-col gap-3 bg-slate-50">
         <!-- Row 1: Title -->
         <div class="flex items-center justify-between">
           <h3 class="font-headline-md text-headline-md text-primary">Work Order Audit Records</h3>
         </div>
 
-        <!-- Row 2: Status Chips on right side -->
-        <div class="flex items-center justify-start md:justify-end gap-3 w-full overflow-x-auto py-1">
-          <div id="woStatusChipsContainer" class="flex items-center justify-start md:justify-end gap-2 flex-nowrap sm:flex-wrap"></div>
+        <!-- Row 2: Status Filter (Mobile Select Dropdown / Desktop Chips) -->
+        <div class="flex items-center justify-start md:justify-end gap-3 w-full py-1">
+          <!-- Mobile Status Select Dropdown -->
+          <div class="block sm:hidden w-full">
+            <select id="woStatusMobileSelect"
+              onchange="woFilterStatus = this.value; currentPage = 1; renderStatusChips(); filterReports();"
+              class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:border-[#dc0111] focus:ring-1 focus:ring-[#dc0111] shadow-sm">
+            </select>
+          </div>
+          <!-- Desktop Status Chips -->
+          <div id="woStatusChipsContainer"
+            class="hidden sm:flex items-center justify-start md:justify-end gap-2 flex-wrap"></div>
         </div>
       </div>
 
       <!-- Table View Container -->
-      <div id="woTableViewContainer" class="overflow-x-auto">
+      <div id="woTableViewContainer" class="overflow-x-auto custom-scrollbar">
         <table class="w-full text-left border-collapse whitespace-nowrap">
           <thead>
             <tr class="bg-white border-b border-outline-variant/30">
-              <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">WO Number</th>
-              <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Product Details &amp; Part Code</th>
-              <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-right">Plan / Done</th>
-              <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-right">OK / NG Qty</th>
-              <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Current Step</th>
+              <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">WO Number
+              </th>
+              <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Product
+                Details &amp; Part Code</th>
+              <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-right">
+                Plan / Done</th>
+              <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-right">OK
+                / NG Qty</th>
+              <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Current Step
+              </th>
               <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Status</th>
-              <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-center">Action</th>
+              <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-center">
+                Action</th>
             </tr>
           </thead>
           <tbody id="reports-tbody" class="divide-y divide-outline-variant/30 font-data-tabular">
@@ -165,8 +203,10 @@
       </div>
 
       <!-- Pagination Footer -->
-      <div class="px-6 py-4 border-t border-outline-variant/30 flex flex-col sm:flex-row justify-between items-center gap-3 bg-slate-50 text-xs font-semibold text-on-surface-variant flex-shrink-0 select-none">
-        <div id="reports-pagination-text" class="truncate whitespace-nowrap max-w-full" title="Showing 1 to 5 of 5 entries">Showing 1 to 5 of 5 entries</div>
+      <div
+        class="px-6 py-4 border-t border-outline-variant/30 flex flex-col sm:flex-row justify-between items-center gap-3 bg-slate-50 text-xs font-semibold text-on-surface-variant flex-shrink-0 select-none">
+        <div id="reports-pagination-text" class="truncate whitespace-nowrap max-w-full"
+          title="Showing 1 to 5 of 5 entries">Showing 1 to 5 of 5 entries</div>
         <div class="flex items-center gap-2 flex-shrink-0" id="reports-pagination-controls">
           <!-- Page numbers inserted dynamically -->
         </div>
@@ -183,21 +223,24 @@
       <div id="report-detail-drawer"
         class="relative h-full w-full bg-white shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out translate-x-full">
 
-        <!-- Top Action Bar (Right Side: Export Report & Close Report) -->
-        <div class="px-6 py-4 border-b border-slate-200 bg-slate-50 flex justify-between items-center flex-shrink-0 select-none">
-          <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined text-[#dc0111] text-[20px]">assignment</span>
-            <span class="text-xs font-black uppercase text-slate-800 tracking-wider">Control Card Detailed Report</span>
+        <!-- Top Action Bar (Responsive Mobile Header) -->
+        <div
+          class="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-200 bg-slate-50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 flex-shrink-0 select-none">
+          <div class="flex items-center gap-2 min-w-0">
+            <span class="material-symbols-outlined text-[#dc0111] text-[20px] shrink-0">assignment</span>
+            <span class="text-[11px] sm:text-sm font-black uppercase text-slate-900 tracking-wider">
+              CONTROL CARD DETAILED REPORT <span class="text-[#dc0111] font-mono font-black" id="drawer-header-wo-no">(22615540)</span>
+            </span>
           </div>
-          <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-end shrink-0">
             <button onclick="exportSingleReport()"
-              class="px-4 py-2 bg-[#dc0111] hover:bg-[#a00d24] text-white font-extrabold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5 cursor-pointer uppercase">
-              <span class="material-symbols-outlined text-[16px]">download</span>
+              class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#dc0111] hover:bg-[#a00d24] text-white font-extrabold text-[11px] sm:text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5 cursor-pointer uppercase whitespace-nowrap">
+              <span class="material-symbols-outlined text-[15px] sm:text-[16px]">download</span>
               <span>Export Report</span>
             </button>
             <button onclick="closeReportModal()"
-              class="px-4 py-2 bg-white hover:bg-slate-100 text-slate-700 font-extrabold text-xs rounded-xl border border-slate-300 shadow-sm transition-all flex items-center gap-1.5 cursor-pointer uppercase">
-              <span class="material-symbols-outlined text-[16px]">close</span>
+              class="px-3 sm:px-4 py-1.5 sm:py-2 bg-white hover:bg-slate-100 text-slate-700 font-extrabold text-[11px] sm:text-xs rounded-xl border border-slate-300 shadow-sm transition-all flex items-center gap-1.5 cursor-pointer uppercase whitespace-nowrap">
+              <span class="material-symbols-outlined text-[15px] sm:text-[16px]">close</span>
               <span>Close Report</span>
             </button>
           </div>
@@ -208,28 +251,35 @@
           <div class="w-full p-8 space-y-6 text-xs text-slate-700">
 
             <!-- OFFICIAL CONTROL CARD SHEET VIEW (Matching PDF 4044_001 (1) (1).pdf format) -->
-            <div id="report-official-sheet-view" class="bg-white border-2 border-slate-900 rounded-lg p-6 shadow-md text-slate-900 font-sans space-y-6 select-none">
+            <div id="report-official-sheet-view"
+              class="bg-white border-2 border-slate-900 rounded-lg p-6 shadow-md text-slate-900 font-sans space-y-6 select-none">
 
               <!-- Document Top Header Block -->
               <div class="border-2 border-slate-900 rounded overflow-hidden">
-                <div class="grid grid-cols-12 divide-x-2 divide-slate-900 bg-slate-50 border-b-2 border-slate-900 text-center">
-                  <!-- Left: Logo & Company -->
-                  <div class="col-span-12 md:col-span-3 p-3 flex flex-col justify-center items-center bg-white border-b-2 md:border-b-0 border-slate-900 space-y-2 text-center select-none">
-                    <div class="bg-white border border-slate-200 shadow-sm rounded-xl px-4 py-1.5 flex items-center justify-center shrink-0">
-                      <img src="../assets/logo_full.png" class="h-8 w-auto object-contain select-none" alt="NICHIRIN Logo" />
-                    </div>
-                    <div class="space-y-0.5">
-                      <h3 class="text-[12px] font-black text-slate-800 tracking-tight leading-none">Control Card Digitization System</h3>
-                      <div class="text-[9px] font-black uppercase text-[#dc0111] tracking-wider leading-none">MANAGEMENT PORTAL</div>
-                      <p class="text-[8px] text-slate-500 font-bold leading-tight">Manufacturing Execution &amp; Traceability System</p>
+                <div
+                  class="grid grid-cols-12 divide-x-2 divide-slate-900 bg-slate-50 border-b-2 border-slate-900 text-center">
+                  <!-- Left: Logo & Company (Matching attached image) -->
+                  <div
+                    class="col-span-12 md:col-span-3 p-3 flex flex-col justify-center items-center bg-white border-b-2 md:border-b-0 border-slate-900 space-y-1 text-center select-none">
+                    <img src="../assets/logo_full.png" class="h-10 w-auto object-contain select-none mb-1"
+                      alt="NICHIRIN Logo" />
+                    <div class="flex flex-col items-center">
+                      <span class="text-slate-900 font-extrabold text-base tracking-tight leading-snug">Control Card</span>
+                      <span class="text-[#dc0111] font-black text-lg tracking-tight leading-snug">Digitization System</span>
+                      <span class="text-slate-600 font-extrabold text-[10px] tracking-wider uppercase mt-1">MANAGEMENT PORTAL</span>
+                      <span class="text-slate-500 font-semibold text-[9px] mt-0.5">Manufacturing Execution &amp; Traceability System</span>
                     </div>
                   </div>
 
                   <!-- Center: Title & Document Specs -->
-                  <div class="col-span-12 md:col-span-6 p-3 flex flex-col justify-center items-center bg-slate-50 border-b-2 md:border-b-0 border-slate-900">
-                    <h2 class="text-base font-black text-slate-900 uppercase tracking-wide">PRODUCTION CONTROL CARD &amp; QUALITY RECORD SHEET</h2>
-                    <span class="text-xs font-extrabold text-slate-800 mt-0.5">PART: HOSE COMP D FR BRAKE &nbsp;|&nbsp; CONTROL CARD NO: CC-HMSI-59</span>
-                    <div class="flex flex-wrap justify-center items-center gap-2.5 text-[10px] font-bold text-slate-700 mt-1">
+                  <div
+                    class="col-span-12 md:col-span-6 p-3 flex flex-col justify-center items-center bg-slate-50 border-b-2 md:border-b-0 border-slate-900">
+                    <h2 class="text-base font-black text-slate-900 uppercase tracking-wide">PRODUCTION CONTROL CARD
+                      &amp; QUALITY RECORD SHEET</h2>
+                    <span class="text-xs font-extrabold text-slate-800 mt-0.5">PART: HOSE COMP D FR BRAKE &nbsp;|&nbsp;
+                      CONTROL CARD NO: CC-HMSI-59</span>
+                    <div
+                      class="flex flex-wrap justify-center items-center gap-2.5 text-[10px] font-bold text-slate-700 mt-1">
                       <span>CUSTOMER: HMSI</span>
                       <span>•</span>
                       <span>MODEL: K1L (Front Disc)</span>
@@ -239,36 +289,167 @@
                   </div>
 
                   <!-- Right: Sign-Off Approval Stamps -->
-                  <div class="col-span-12 md:col-span-3 p-2 bg-white">
-                    <div class="text-[9px] font-extrabold text-slate-600 uppercase border-b border-slate-300 pb-1 mb-1">Authorization Stamps</div>
-                    <div class="grid grid-cols-3 gap-1 text-[8px] font-bold text-center">
+                  <div class="col-span-12 md:col-span-3 p-2 bg-white flex flex-col justify-between h-full">
+                    <div class="text-[9px] font-extrabold text-slate-600 uppercase border-b border-slate-300 pb-1 mb-1 text-center">
+                      Authorization Stamps</div>
+                    <div class="grid grid-cols-3 gap-1 text-[8px] font-bold text-center my-auto py-1">
                       <div class="border border-slate-400 rounded p-1 bg-slate-50">
                         <span class="block text-slate-500 font-bold">PREPARED</span>
                         <span class="block text-slate-900 mt-1 font-extrabold">Anish</span>
-                        <span class="block text-emerald-700 text-[7px] font-extrabold">VERIFIED</span>
+                        <span class="block text-slate-800 text-[7px] font-extrabold">VERIFIED</span>
                       </div>
                       <div class="border border-slate-400 rounded p-1 bg-slate-50">
                         <span class="block text-slate-500 font-bold">CHECKED</span>
                         <span class="block text-slate-900 mt-1 font-extrabold">Ramesh</span>
-                        <span class="block text-emerald-700 text-[7px] font-extrabold">PASSED</span>
+                        <span class="block text-slate-800 text-[7px] font-extrabold">PASSED</span>
                       </div>
                       <div class="border border-slate-400 rounded p-1 bg-slate-50">
                         <span class="block text-slate-500 font-bold">APPROVED</span>
                         <span class="block text-slate-900 mt-1 font-extrabold">Ganesh</span>
-                        <span class="block text-emerald-700 text-[7px] font-extrabold">SIGNED</span>
+                        <span class="block text-slate-800 text-[7px] font-extrabold">SIGNED</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <!-- Sub-header metadata grid -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 divide-x divide-y md:divide-y-0 divide-slate-400 border-t border-slate-900 bg-white text-[11px] font-bold">
-                  <div class="p-2 text-center"><span class="block text-[9px] text-slate-500 font-semibold uppercase">WORK ORDER</span><span class="text-slate-900 font-mono" id="sheet-wo-no">22615540</span></div>
-                  <div class="p-2 text-center"><span class="block text-[9px] text-slate-500 font-semibold uppercase">LOT NO</span><span class="text-slate-900 font-mono" id="sheet-lot-no">6701</span></div>
-                  <div class="p-2 text-center"><span class="block text-[9px] text-slate-500 font-semibold uppercase">TARGET QTY</span><span class="text-slate-900 font-data-tabular">800 units</span></div>
-                  <div class="p-2 text-center"><span class="block text-[9px] text-slate-500 font-semibold uppercase">PLAN DATE</span><span class="text-slate-900 font-data-tabular">27-06-2026</span></div>
-                  <div class="p-2 text-center"><span class="block text-[9px] text-slate-500 font-semibold uppercase">ISSUE REV</span><span class="text-slate-900">REV-02 (23.05.2026)</span></div>
-                  <div class="p-2 text-center bg-emerald-50 text-emerald-800"><span class="block text-[9px] text-emerald-600 font-semibold uppercase">AUDIT STATUS</span><span>100% COMPLIANT</span></div>
+                <!-- Sub-header metadata grid: Barcode, QR Code & 4-Column Spec Matrix -->
+                <div class="border-t-2 border-slate-900 bg-white p-3 space-y-3">
+                  <!-- Top Row: WO ID, Status Badge & Barcode -->
+                  <div class="flex justify-between items-center border-b border-slate-300 pb-2">
+                    <div class="flex items-center gap-3">
+                      <span class="text-xl font-black text-slate-900 font-mono" id="sheet-wo-no">22615540</span>
+                      <span class="text-[10px] font-extrabold text-slate-900 border border-slate-400 px-2 py-0.5 rounded font-mono uppercase">COMPLETED</span>
+                    </div>
+                    <!-- Barcode representation -->
+                    <div class="flex flex-col items-end">
+                      <svg class="h-6 w-36 text-slate-900" viewBox="0 0 140 30" fill="currentColor">
+                        <rect x="0" y="0" width="3" height="30"/>
+                        <rect x="5" y="0" width="1" height="30"/>
+                        <rect x="8" y="0" width="4" height="30"/>
+                        <rect x="14" y="0" width="2" height="30"/>
+                        <rect x="18" y="0" width="1" height="30"/>
+                        <rect x="21" y="0" width="3" height="30"/>
+                        <rect x="26" y="0" width="2" height="30"/>
+                        <rect x="30" y="0" width="4" height="30"/>
+                        <rect x="36" y="0" width="1" height="30"/>
+                        <rect x="39" y="0" width="3" height="30"/>
+                        <rect x="44" y="0" width="2" height="30"/>
+                        <rect x="48" y="0" width="1" height="30"/>
+                        <rect x="51" y="0" width="4" height="30"/>
+                        <rect x="57" y="0" width="2" height="30"/>
+                        <rect x="61" y="0" width="3" height="30"/>
+                        <rect x="66" y="0" width="1" height="30"/>
+                        <rect x="69" y="0" width="4" height="30"/>
+                        <rect x="75" y="0" width="2" height="30"/>
+                        <rect x="79" y="0" width="3" height="30"/>
+                        <rect x="84" y="0" width="1" height="30"/>
+                        <rect x="87" y="0" width="4" height="30"/>
+                        <rect x="93" y="0" width="2" height="30"/>
+                        <rect x="97" y="0" width="3" height="30"/>
+                        <rect x="102" y="0" width="1" height="30"/>
+                        <rect x="105" y="0" width="4" height="30"/>
+                        <rect x="111" y="0" width="2" height="30"/>
+                        <rect x="115" y="0" width="3" height="30"/>
+                        <rect x="120" y="0" width="1" height="30"/>
+                        <rect x="123" y="0" width="4" height="30"/>
+                        <rect x="129" y="0" width="2" height="30"/>
+                        <rect x="133" y="0" width="3" height="30"/>
+                        <rect x="138" y="0" width="2" height="30"/>
+                      </svg>
+                      <span class="text-[8px] font-mono font-bold text-slate-600 mt-0.5 tracking-wider">CONTROL CODE: <span id="sheet-barcode-val">22615540</span></span>
+                    </div>
+                  </div>
+
+                  <!-- 4 Spec Columns + QR Code Box -->
+                  <div class="grid grid-cols-12 gap-3 text-[10px]">
+                    <!-- Col 1: CARD SPECIFICATIONS -->
+                    <div class="col-span-12 sm:col-span-3 space-y-1.5 border-r border-slate-200 pr-2">
+                      <div class="text-[9px] font-black uppercase text-slate-400">CARD SPECIFICATIONS</div>
+                      <div>
+                        <span class="block text-[8.5px] text-slate-500 font-bold uppercase">CONTROL CARD NO</span>
+                        <span class="font-extrabold text-slate-900 font-mono">CC-HMSI-59</span>
+                      </div>
+                      <div>
+                        <span class="block text-[8.5px] text-slate-500 font-bold uppercase">CONTROL CARD TYPE</span>
+                        <span class="font-bold text-slate-800">Brake Hose</span>
+                      </div>
+                      <div>
+                        <span class="block text-[8.5px] text-slate-500 font-bold uppercase">CUSTOMER</span>
+                        <span class="font-bold text-slate-800">HMSI</span>
+                      </div>
+                      <div>
+                        <span class="block text-[8.5px] text-slate-500 font-bold uppercase">AUDIT STATUS</span>
+                        <span class="font-extrabold text-slate-900">100% COMPLIANT</span>
+                      </div>
+                    </div>
+
+                    <!-- Col 2: REVISION CONTROL -->
+                    <div class="col-span-12 sm:col-span-3 space-y-1.5 border-r border-slate-200 pr-2">
+                      <div class="text-[9px] font-black uppercase text-slate-400">REVISION CONTROL</div>
+                      <div>
+                        <span class="block text-[8.5px] text-slate-500 font-bold uppercase">DRAWING REVISION</span>
+                        <span class="font-extrabold text-slate-900">M-23-F0674 (23 May-23)</span>
+                      </div>
+                      <div>
+                        <span class="block text-[8.5px] text-slate-500 font-bold uppercase">ISSUE DATE</span>
+                        <span class="font-bold text-slate-800 font-mono">07.04.2026</span>
+                      </div>
+                      <div>
+                        <span class="block text-[8.5px] text-slate-500 font-bold uppercase">REVISIONS SUMMARY</span>
+                        <span class="font-medium text-slate-700 text-[9.5px]">Protector and Grommet locations on Drawing</span>
+                      </div>
+                    </div>
+
+                    <!-- Col 3: QUALITY SIGN-OFFS -->
+                    <div class="col-span-12 sm:col-span-2 space-y-1.5 border-r border-slate-200 pr-2">
+                      <div class="text-[9px] font-black uppercase text-slate-400">QUALITY SIGN-OFFS</div>
+                      <div>
+                        <span class="block text-[8.5px] text-slate-500 font-bold uppercase">ISSUED BY</span>
+                        <span class="font-bold text-slate-800">Garima</span>
+                      </div>
+                      <div>
+                        <span class="block text-[8.5px] text-slate-500 font-bold uppercase">CHECKED BY</span>
+                        <span class="font-extrabold text-slate-900 uppercase">GANESH VATS</span>
+                      </div>
+                      <div>
+                        <span class="block text-[8.5px] text-slate-500 font-bold uppercase">APPROVED BY</span>
+                        <span class="font-extrabold text-slate-900 uppercase">AVRASH-SAN</span>
+                      </div>
+                    </div>
+
+                    <!-- Col 4: PRODUCTION PLAN -->
+                    <div class="col-span-12 sm:col-span-3 space-y-1.5 pr-2">
+                      <div class="text-[9px] font-black uppercase text-slate-400">PRODUCTION PLAN</div>
+                      <div>
+                        <span class="block text-[8.5px] text-slate-500 font-bold uppercase">PART NAME</span>
+                        <span class="font-bold text-slate-900">Rear Brake Hose Tube Assembly</span>
+                      </div>
+                      <div>
+                        <span class="block text-[8.5px] text-slate-500 font-bold uppercase">PART NO</span>
+                        <span class="font-mono font-extrabold text-slate-900">BPD-X221B-00-IYN-R01</span>
+                      </div>
+                      <div>
+                        <span class="block text-[8.5px] text-slate-500 font-bold uppercase">PRODUCT ORDER NO</span>
+                        <span class="font-mono text-slate-800 text-[9px]">22615540/BPD-X221B-00-IYN-R01</span>
+                      </div>
+                      <div>
+                        <span class="block text-[8.5px] text-slate-500 font-bold uppercase">PRODUCTION PLAN DATE</span>
+                        <span class="font-mono font-bold text-slate-800">27-06-2026 / 08-07-2026</span>
+                      </div>
+                      <div>
+                        <span class="block text-[8.5px] text-slate-500 font-bold uppercase">TARGET QUANTITY</span>
+                        <span class="font-extrabold text-slate-900">800 units</span>
+                      </div>
+                    </div>
+
+                    <!-- Col 5: QR CODE BOX -->
+                    <div class="col-span-12 sm:col-span-1 flex flex-col items-center justify-center border-l border-slate-200 pl-2">
+                      <div class="p-1 border border-slate-300 rounded bg-white shadow-sm flex items-center justify-center">
+                        <span class="material-symbols-outlined text-[40px] text-slate-900">qr_code_2</span>
+                      </div>
+                      <span class="text-[8.5px] font-mono font-black text-slate-700 mt-1 uppercase">LOT: <span id="sheet-lot-no">6701</span></span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -278,46 +459,23 @@
                   <span>TECHNICAL ASSEMBLY DRAWING SPECIFICATION (CC-HMSI-59)</span>
                   <span class="text-[9px] text-slate-500 font-bold">DIMENSIONS IN MM &amp; ANGLES IN DEGREES</span>
                 </div>
-                <div class="bg-white border border-slate-300 rounded p-2 flex justify-center items-center h-48 overflow-hidden">
-                  <img src="../assets/drawing_cc_hmsi_59.png" class="max-h-full object-contain cursor-zoom-in" alt="Technical Assembly Drawing" onclick="window.openFullscreenDrawing &amp;&amp; window.openFullscreenDrawing()">
+                <div
+                  class="bg-white border border-slate-300 rounded p-2 flex justify-center items-center h-48 overflow-hidden">
+                  <img src="../assets/drawing_cc_hmsi_59.png" class="max-h-full object-contain cursor-zoom-in"
+                    alt="Technical Assembly Drawing"
+                    onclick="window.openFullscreenDrawing &amp;&amp; window.openFullscreenDrawing()">
                 </div>
               </div>
 
-              <!-- Official 13-Step Process Routing Engineering Table Grid -->
-              <div class="space-y-2">
-                <div class="flex justify-between items-center text-[11px] font-black uppercase text-slate-900 border-b-2 border-slate-900 pb-1">
-                  <span>PROCESS CONTROL &amp; QUALITY INSPECTION ROUTING (13 STEPS)</span>
-                  <span class="text-[9px] text-slate-500 font-bold">AS PER STANDARD OPERATING PROCEDURE SOP-HMSI-09</span>
-                </div>
-
-                <div class="overflow-x-auto border-2 border-slate-900 rounded">
-                  <table class="w-full text-left border-collapse text-[11px]">
-                    <thead class="bg-slate-100 text-slate-900 font-black uppercase text-[10px] border-b-2 border-slate-900 divide-x-2 divide-slate-900">
-                      <tr>
-                        <th class="p-2 text-center w-12">STEP</th>
-                        <th class="p-2 w-48">PROCESS &amp; MACHINE</th>
-                        <th class="p-2">INSPECTION PARAMETER &amp; LIMITS</th>
-                        <th class="p-2 w-32">CHECK METHOD</th>
-                        <th class="p-2 w-32">INSPECTION CHECKS</th>
-                        <th class="p-2 text-center w-16">OK QTY</th>
-                        <th class="p-2 w-36">DATE &amp; OPERATOR</th>
-                      </tr>
-                    </thead>
-                    <tbody id="sheet-official-tbody" class="divide-y-2 divide-slate-900 font-medium text-slate-900 text-[10.5px]">
-                      <!-- Dynamically populated rows matching official sheet format -->
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <!-- BOM Component Traceability Grid -->
+              <!-- BOM Component Traceability Grid (Moved directly after Diagram) -->
               <div class="space-y-2">
                 <div class="text-[11px] font-black uppercase text-slate-900 border-b-2 border-slate-900 pb-1">
                   BILL OF MATERIALS (BOM) &amp; STORE RAW MATERIAL TRACEABILITY MATRIX
                 </div>
                 <div class="overflow-x-auto border-2 border-slate-900 rounded">
                   <table class="w-full text-left border-collapse text-[11px]">
-                    <thead class="bg-slate-100 text-slate-900 font-black uppercase text-[10px] border-b-2 border-slate-900 divide-x-2 divide-slate-900">
+                    <thead
+                      class="bg-slate-100 text-slate-900 font-black uppercase text-[10px] border-b-2 border-slate-900 divide-x-2 divide-slate-900">
                       <tr>
                         <th class="p-2 text-center w-12">NO</th>
                         <th class="p-2">COMPONENT DESCRIPTION</th>
@@ -328,27 +486,64 @@
                         <th class="p-2 text-right">SCAN TIMESTAMP</th>
                       </tr>
                     </thead>
-                    <tbody id="sheet-official-bom-tbody" class="divide-y divide-slate-400 font-medium text-slate-900 text-[10.5px]">
+                    <tbody id="sheet-official-bom-tbody"
+                      class="divide-y divide-slate-400 font-medium text-slate-900 text-[10.5px]">
                       <!-- Dynamically populated BOM rows -->
                     </tbody>
                   </table>
                 </div>
               </div>
 
+              <!-- Official 13-Step Process Routing Engineering Table Grid -->
+              <div class="space-y-2">
+                <div
+                  class="flex justify-between items-center text-[11px] font-black uppercase text-slate-900 border-b-2 border-slate-900 pb-1">
+                  <span>PROCESS CONTROL &amp; QUALITY INSPECTION ROUTING (13 STEPS)</span>
+                  <span class="text-[9px] text-slate-500 font-bold">AS PER STANDARD OPERATING PROCEDURE
+                    SOP-HMSI-09</span>
+                </div>
+
+                <div class="overflow-x-auto border-2 border-slate-900 rounded">
+                  <table class="w-full text-left border-collapse text-[11px]">
+                    <thead
+                      class="bg-slate-100 text-slate-900 font-black uppercase text-[10px] border-b-2 border-slate-900">
+                      <tr>
+                        <th class="p-2 text-center w-12 border-r-2 border-slate-900 align-middle whitespace-nowrap" rowspan="2">STEP</th>
+                        <th class="p-2 w-44 border-r-2 border-slate-900 align-middle whitespace-nowrap" rowspan="2">PROCESS &amp; MACHINE</th>
+                        <th class="p-2 border-r border-slate-400 align-middle" rowspan="2">CONTROL POINTS / STANDARDS</th>
+                        <th class="p-2 border-r-2 border-slate-900 align-middle whitespace-nowrap" rowspan="2">METHOD</th>
+                        <th class="p-1.5 text-center border-b border-slate-400 border-r-2 border-slate-900 align-middle whitespace-nowrap" colspan="3">CHECK / RECORD</th>
+                        <th class="p-2 text-center border-r border-slate-400 align-middle whitespace-nowrap" rowspan="2">TOTAL NG</th>
+                        <th class="p-2 text-center border-r border-slate-400 align-middle whitespace-nowrap" rowspan="2">TOTAL OK</th>
+                        <th class="p-2 text-center align-middle whitespace-nowrap" rowspan="2">DATE/INITIAL</th>
+                      </tr>
+                      <tr class="bg-slate-50">
+                        <th class="p-1 w-12 text-center font-bold border-r border-slate-400 align-middle">1</th>
+                        <th class="p-1 w-12 text-center font-bold border-r border-slate-400 align-middle">2</th>
+                        <th class="p-1 w-12 text-center font-bold border-r-2 border-slate-900 align-middle">3</th>
+                      </tr>
+                    </thead>
+                    <tbody id="sheet-official-tbody"
+                      class="divide-y-2 divide-slate-900 font-medium text-slate-900 text-[10.5px]">
+                      <!-- Dynamically populated rows matching official sheet format -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
               <!-- Sheet Footer Sign-Off Block -->
-              <div class="border-2 border-slate-900 rounded p-4 bg-slate-50 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold">
+              <div
+                class="border-2 border-slate-900 rounded p-4 bg-slate-50 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold">
                 <div class="space-y-1">
                   <span class="block text-[10px] text-slate-500 uppercase">QUALITY CONTROL STATEMENT</span>
-                  <p class="text-slate-800 text-[11px]">Certified that all 13 process steps and BOM materials have been inspected, tested, and approved in accordance with Control Card Spec CC-HMSI-59.</p>
+                  <p class="text-slate-800 text-[11px]">Certified that all 13 process steps and BOM materials have been
+                    inspected, tested, and approved in accordance with Control Card Spec CC-HMSI-59.</p>
                 </div>
                 <div class="flex items-center gap-6 shrink-0">
                   <div class="text-center">
-                    <span class="block text-[9px] text-slate-400 uppercase">CHIEF INSPECTOR</span>
+                    <span class="block text-[9px] text-slate-400 uppercase">SUPERVISOR</span>
                     <span class="block text-slate-900 font-extrabold mt-0.5">Vikram Malhotra</span>
-                    <span class="text-[8px] text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded font-bold mt-0.5 inline-block">APPROVED</span>
-                  </div>
-                  <div class="w-12 h-12 bg-white border border-slate-300 rounded p-1 flex items-center justify-center">
-                    <span class="material-symbols-outlined text-[32px] text-slate-800">qr_code_2</span>
+                    <span class="block text-[9px] text-slate-900 font-black uppercase mt-0.5">APPROVED</span>
                   </div>
                 </div>
               </div>
@@ -398,9 +593,7 @@
         } catch (e) {
           console.error(e);
         }
-      }
-
-      let woFilterStatus = 'ALL';
+      }      let woFilterStatus = 'completed';
 
       function getCurrentProcess(w) {
         if (!w.steps || w.steps.length === 0) return 'N/A';
@@ -445,7 +638,7 @@
 
       function renderStatusChips() {
         const container = document.getElementById('woStatusChipsContainer');
-        if (!container) return;
+        const selectEl = document.getElementById('woStatusMobileSelect');
 
         const statuses = [
           { label: 'All Statuses', value: 'ALL' },
@@ -456,39 +649,98 @@
           { label: 'Completed', value: 'completed' }
         ];
 
-        container.innerHTML = '';
-        statuses.forEach(status => {
-          let count = 0;
-          if (status.value === 'ALL') {
-            count = workOrdersList.length;
-          } else {
-            count = workOrdersList.filter(w => getDisplayStatus(w) === status.value).length;
+        if (selectEl) {
+          selectEl.innerHTML = '';
+          statuses.forEach(status => {
+            let count = 0;
+            if (status.value === 'ALL') {
+              count = workOrdersList.length;
+            } else {
+              count = workOrdersList.filter(w => getDisplayStatus(w) === status.value).length;
+            }
+            const opt = document.createElement('option');
+            opt.value = status.value;
+            opt.textContent = `${status.label} (${count})`;
+            if (woFilterStatus === status.value) {
+              opt.selected = true;
+            }
+            selectEl.appendChild(opt);
+          });
+        }
+
+        if (container) {
+          container.innerHTML = '';
+          statuses.forEach(status => {
+            let count = 0;
+            if (status.value === 'ALL') {
+              count = workOrdersList.length;
+            } else {
+              count = workOrdersList.filter(w => getDisplayStatus(w) === status.value).length;
+            }
+
+            const btn = document.createElement('button');
+            const isActive = woFilterStatus === status.value;
+
+            btn.className = isActive
+              ? 'px-3 py-1 bg-[#dc0111] text-white border border-[#dc0111] rounded-full text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5 whitespace-nowrap'
+              : 'px-3 py-1 bg-white text-slate-600 border border-slate-200 rounded-full text-xs font-semibold hover:bg-slate-50 hover:text-slate-800 transition-all shadow-sm cursor-pointer flex items-center gap-1.5 whitespace-nowrap';
+
+            const countBadge = isActive
+              ? `<span class="px-1.5 py-0.5 bg-white/20 rounded-full text-[10px] font-bold text-white">${count}</span>`
+              : `<span class="px-1.5 py-0.5 bg-slate-100 rounded-full text-[10px] font-bold text-slate-500">${count}</span>`;
+
+            btn.innerHTML = `<span>${status.label}</span>${countBadge}`;
+            btn.onclick = () => {
+              woFilterStatus = status.value;
+              currentPage = 1;
+              renderStatusChips();
+              filterReports();
+            };
+            container.appendChild(btn);
+          });
+        }
+      }
+
+      function formatInspectionChecks(checkStr) {
+        if (!checkStr) return '';
+        let str = checkStr.replace(/\bok\b/gi, 'OK');
+
+        let parts = [];
+        if (str.includes('/')) {
+          parts = str.split('/').map(p => p.trim());
+        } else if (str.includes('|')) {
+          parts = str.split('|').map(p => p.trim());
+        }
+
+        if (parts.length >= 2) {
+          while (parts.length < 3) {
+            parts.push(parts[parts.length - 1] || 'OK');
           }
+          return `
+            <div class="grid grid-cols-3 w-full text-center divide-x divide-slate-300 font-mono text-[10px] font-extrabold text-slate-900 leading-tight">
+              <div class="px-0.5 py-0.5 truncate">${parts[0]}</div>
+              <div class="px-0.5 py-0.5 truncate">${parts[1]}</div>
+              <div class="px-0.5 py-0.5 truncate">${parts[2]}</div>
+            </div>
+          `;
+        }
 
-          const btn = document.createElement('button');
-          const isActive = woFilterStatus === status.value;
+        return `<div class="text-center font-mono text-[10px] font-extrabold text-slate-900 px-1 py-0.5">${str}</div>`;
+      }
 
-          btn.className = isActive
-            ? 'px-3 py-1 bg-[#dc0111] text-white border border-[#dc0111] rounded-full text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5 whitespace-nowrap'
-            : 'px-3 py-1 bg-white text-slate-600 border border-slate-200 rounded-full text-xs font-semibold hover:bg-slate-50 hover:text-slate-800 transition-all shadow-sm cursor-pointer flex items-center gap-1.5 whitespace-nowrap';
-
-          const countBadge = isActive
-            ? `<span class="px-1.5 py-0.5 bg-white/20 rounded-full text-[10px] font-bold text-white">${count}</span>`
-            : `<span class="px-1.5 py-0.5 bg-slate-100 rounded-full text-[10px] font-bold text-slate-500">${count}</span>`;
-
-          btn.innerHTML = `<span>${status.label}</span>${countBadge}`;
-          btn.onclick = () => {
-            woFilterStatus = status.value;
-            currentPage = 1;
-            renderStatusChips();
-            filterReports();
-          };
-          container.appendChild(btn);
+      function sortWorkOrders(list) {
+        return list.slice().sort((a, b) => {
+          const statusA = getDisplayStatus(a);
+          const statusB = getDisplayStatus(b);
+          if (statusA === 'completed' && statusB !== 'completed') return -1;
+          if (statusA !== 'completed' && statusB === 'completed') return 1;
+          return 0;
         });
       }
 
       function filterReports() {
-        const filtered = workOrdersList.filter(w => {
+        const sortedList = sortWorkOrders(workOrdersList);
+        const filtered = sortedList.filter(w => {
           let matchesStatus = true;
           if (woFilterStatus !== 'ALL') matchesStatus = getDisplayStatus(w) === woFilterStatus;
           return matchesStatus;
@@ -503,7 +755,13 @@
         if (!tbody) return;
         tbody.innerHTML = '';
 
-        if (!items || items.length === 0) {
+        const totalItems = items ? items.length : 0;
+        const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
+
+        if (currentPage > totalPages) currentPage = totalPages;
+        if (currentPage < 1) currentPage = 1;
+
+        if (!items || totalItems === 0) {
           tbody.innerHTML = `
             <tr>
               <td colspan="7" class="px-6 py-12 text-center text-on-surface-variant font-medium">No work orders matched filters.</td>
@@ -512,10 +770,15 @@
           if (document.getElementById('reports-pagination-text')) {
             document.getElementById('reports-pagination-text').textContent = 'Showing 0 to 0 of 0 entries';
           }
+          const controlsContainer = document.getElementById('reports-pagination-controls');
+          if (controlsContainer) controlsContainer.innerHTML = '';
           return;
         }
 
-        items.forEach(w => {
+        const startIdx = (currentPage - 1) * itemsPerPage;
+        const pageItems = items.slice(startIdx, startIdx + itemsPerPage);
+
+        pageItems.forEach(w => {
           const tr = document.createElement('tr');
           tr.className = 'hover:bg-slate-50/50 transition-colors group cursor-pointer border-b border-outline-variant/30';
           tr.onclick = (e) => {
@@ -570,13 +833,45 @@
           tbody.appendChild(tr);
         });
 
+        const endIdx = Math.min(startIdx + itemsPerPage, totalItems);
         if (document.getElementById('reports-pagination-text')) {
-          document.getElementById('reports-pagination-text').textContent = `Showing 1 to ${items.length} of ${items.length} entries`;
+          document.getElementById('reports-pagination-text').textContent = `Showing ${startIdx + 1} to ${endIdx} of ${totalItems} entries`;
+        }
+
+        const controlsContainer = document.getElementById('reports-pagination-controls');
+        if (controlsContainer) {
+          controlsContainer.innerHTML = '';
+
+          // Prev Button
+          const prevBtn = document.createElement('button');
+          prevBtn.disabled = currentPage === 1;
+          prevBtn.className = `px-2.5 py-1 rounded-lg border text-xs font-bold transition-all flex items-center justify-center cursor-pointer ${currentPage === 1 ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed' : 'bg-white text-slate-700 hover:bg-slate-100 border-slate-300 shadow-sm'}`;
+          prevBtn.innerHTML = `<span class="material-symbols-outlined text-[16px]">chevron_left</span>`;
+          prevBtn.onclick = () => changePage(currentPage - 1);
+          controlsContainer.appendChild(prevBtn);
+
+          // Page Numbers
+          for (let i = 1; i <= totalPages; i++) {
+            const pageBtn = document.createElement('button');
+            const isCurrent = i === currentPage;
+            pageBtn.className = `px-3 py-1 rounded-lg border text-xs font-extrabold transition-all cursor-pointer ${isCurrent ? 'bg-[#dc0111] text-white border-[#dc0111] shadow-sm' : 'bg-white text-slate-700 hover:bg-slate-100 border-slate-300 shadow-sm'}`;
+            pageBtn.textContent = i;
+            pageBtn.onclick = () => changePage(i);
+            controlsContainer.appendChild(pageBtn);
+          }
+
+          // Next Button
+          const nextBtn = document.createElement('button');
+          nextBtn.disabled = currentPage === totalPages;
+          nextBtn.className = `px-2.5 py-1 rounded-lg border text-xs font-bold transition-all flex items-center justify-center cursor-pointer ${currentPage === totalPages ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed' : 'bg-white text-slate-[#dc0111] hover:bg-slate-100 border-slate-300 shadow-sm'}`;
+          nextBtn.innerHTML = `<span class="material-symbols-outlined text-[16px]">chevron_right</span>`;
+          nextBtn.onclick = () => changePage(currentPage + 1);
+          controlsContainer.appendChild(nextBtn);
         }
       }
 
       function changePage(page) {
-        const totalPages = Math.ceil(filteredList.length / itemsPerPage);
+        const totalPages = Math.ceil(filteredList.length / itemsPerPage) || 1;
         if (page < 1 || page > totalPages) return;
         currentPage = page;
         renderReportsTable(filteredList);
@@ -688,7 +983,7 @@
           }
         }
 
-        window.changeOpTeamPage = function(delta) {
+        window.changeOpTeamPage = function (delta) {
           const maxPages = Math.ceil(opTeamAssignmentData.length / opTeamItemsPerPage);
           const newPage = currentOpTeamPage + delta;
           if (newPage >= 1 && newPage <= maxPages) {
@@ -745,12 +1040,12 @@
             operator: "Pooja / Anil",
             isBOM: true,
             bomRows: [
-              { item: "01", desc: "EPDM Rubber Hose (Inner Layer)", spec: "05-0030-015-00-000NII", req: "800 M", lot: "LOT-6225", time: "27/06/2026 08:15", status: "VERIFIED" },
-              { item: "02", desc: "Protector Sleeve L-160", spec: "PR0157-0160-IND", req: "800 Pcs", lot: "LOT-260613", time: "27/06/2026 08:22", status: "VERIFIED" },
-              { item: "03", desc: "Protector Sleeve L-260", spec: "PR0157-0260-IND", req: "800 Pcs", lot: "LOT-260613", time: "27/06/2026 08:25", status: "VERIFIED" },
-              { item: "04", desc: "Rubber Hose Clamp", spec: "BU10024-01000-IND", req: "1,600 Pcs", lot: "LOT-BU-442", time: "27/06/2026 08:30", status: "VERIFIED" },
-              { item: "05", desc: "Fitting Tube Banjo A", spec: "FA0588-30000", req: "800 Pcs", lot: "LOT-FT-881", time: "27/06/2026 08:34", status: "VERIFIED" },
-              { item: "06", desc: "Fitting Tube Banjo B", spec: "K40543-50135-C3", req: "800 Pcs", lot: "LOT-63D80", time: "27/06/2026 08:40", status: "VERIFIED" }
+              { item: "01", desc: "EPDM Rubber Hose (Inner Layer)", spec: "05-0030-015-00-000NII", req: "800 M", lot: "LOT-6225", time: "27/06/2026 08:15", status: "Completed" },
+              { item: "02", desc: "Protector Sleeve L-160", spec: "PR0157-0160-IND", req: "800 Pcs", lot: "LOT-260613", time: "27/06/2026 08:22", status: "Completed" },
+              { item: "03", desc: "Protector Sleeve L-260", spec: "PR0157-0260-IND", req: "800 Pcs", lot: "LOT-260613", time: "27/06/2026 08:25", status: "Completed" },
+              { item: "04", desc: "Rubber Hose Clamp", spec: "BU10024-01000-IND", req: "1,600 Pcs", lot: "LOT-BU-442", time: "27/06/2026 08:30", status: "Completed" },
+              { item: "05", desc: "Fitting Tube Banjo A", spec: "FA0588-30000", req: "800 Pcs", lot: "LOT-FT-881", time: "27/06/2026 08:34", status: "Completed" },
+              { item: "06", desc: "Fitting Tube Banjo B", spec: "K40543-50135-C3", req: "800 Pcs", lot: "LOT-63D80", time: "27/06/2026 08:40", status: "Completed" }
             ]
           },
           {
@@ -769,7 +1064,8 @@
               { cp: "Cut Length (mm)", std: "659 ± 3 (656 ~ 662)", method: "SCALE", check: "659 / 660 / 659", ok: "800", date: "27/6/26 - Anish" },
               { cp: "Insertion Mark (Both)", std: "16.0 +0/-1.5 (14.5 ~ 16)", method: "INSERTION GAUGE", check: "ok / ok / ok", ok: "800", date: "27/6/26 - Anish" },
               { cp: "Cutting Appearance", std: "No thread out, no uneven Cut", method: "Visually", check: "ok / ok / ok", ok: "800", date: "27/6/26 - Anish" },
-              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Anish / Anish / Anish", ok: "800", date: "27/6/26 - Anish" }
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Anish / Anish / Anish", ok: "800", date: "27/6/26 - Anish" },
+              { cp: "Supervisor", std: "Supervisor Name", method: "Actual", check: "Ramesh / Ramesh / Ramesh", ok: "800", date: "27/6/26 - Ramesh" }
             ]
           },
           {
@@ -788,7 +1084,8 @@
               { cp: "Cut Length", std: "260±4 (256 ~ 264) & 160±3 (157 ~ 163)", method: "Scale", check: "263 / 261 / 263", ok: "800", date: "27/8/26 - Pooja" },
               { cp: "Machine Setting Length", std: "As per PLC input", method: "Manual Setting", check: "258 / 258 / 258", ok: "800", date: "27/8/26 - Pooja" },
               { cp: "Appearance", std: "No Tapper Cut", method: "Visually", check: "ok / ok / ok", ok: "800", date: "27/8/26 - Pooja" },
-              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Pooja / Pooja / Pooja", ok: "800", date: "27/8/26 - Pooja" }
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Pooja / Pooja / Pooja", ok: "800", date: "27/8/26 - Pooja" },
+              { cp: "Supervisor", std: "Supervisor Name", method: "Actual", check: "Ramesh / Ramesh / Ramesh", ok: "800", date: "27/8/26 - Ramesh" }
             ]
           },
           {
@@ -806,7 +1103,8 @@
               { cp: "Angle", std: "50°±2° (Up side) / 35°±2° (Left side)", method: "Inspection Gauge", check: "49° / 35° / 49°", ok: "800", date: "27/6/26 - Shiv Shambhu" },
               { cp: "Bending Jig Setting", std: "Height - 206 / Height - 148", method: "Visually", check: "H-206 / H-148 / H-206", ok: "800", date: "27/6/26 - Shiv Shambhu" },
               { cp: "Appearance", std: "Must be no deformation", method: "Visually", check: "ok / ok / ok", ok: "800", date: "27/6/26 - Shiv Shambhu" },
-              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Shiv Shambhu / Shiv Shambhu / Shiv Shambhu", ok: "800", date: "27/6/26 - Shiv Shambhu" }
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Shiv Shambhu / Shiv Shambhu / Shiv Shambhu", ok: "800", date: "27/6/26 - Shiv Shambhu" },
+              { cp: "Supervisor", std: "Supervisor Name", method: "Actual", check: "Ramesh / Ramesh / Ramesh", ok: "800", date: "27/6/26 - Ramesh" }
             ]
           },
           {
@@ -821,7 +1119,8 @@
               { cp: "Stamp Ident Mark", std: "8-K1L-D411", method: "Visually", check: "8-K1L-D411", ok: "800", date: "29/6/26 - Kiran" },
               { cp: "TAC No. for XP Hose", std: "CN2222", method: "Visually", check: "CN2222", ok: "800", date: "29/6/26 - Kiran" },
               { cp: "Stamping Character and Position", std: "Should be clear and in level", method: "Visually", check: "ok / ok / ok", ok: "800", date: "29/6/26 - Kiran" },
-              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Kiran / Kiran / Kiran", ok: "800", date: "29/6/26 - Kiran" }
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Kiran / Kiran / Kiran", ok: "800", date: "29/6/26 - Kiran" },
+              { cp: "Supervisor", std: "Supervisor Name", method: "Actual", check: "Ramesh / Ramesh / Ramesh", ok: "800", date: "29/6/26 - Ramesh" }
             ]
           },
           {
@@ -840,7 +1139,8 @@
               { cp: "Hose Part No.", std: "05-0030-015-00-000659", method: "As per Bin Tag", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Pooja" },
               { cp: "Hose Manufacturer & Type", std: "NVC | SLIM XP", method: "Visually", check: "NVC | Slim XP | Slim XP", ok: "800", date: "1/7/26 - Pooja" },
               { cp: "Sequence of accessories", std: "1. Rubber Hose Clamp, 2. Protector L-160", method: "AS per WI", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Pooja" },
-              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Pooja / Pooja / Pooja", ok: "800", date: "1/7/26 - Pooja" }
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Pooja / Pooja / Pooja", ok: "800", date: "1/7/26 - Pooja" },
+              { cp: "Supervisor", std: "Supervisor Name", method: "Actual", check: "Ramesh / Ramesh / Ramesh", ok: "800", date: "1/7/26 - Ramesh" }
             ]
           },
           {
@@ -860,7 +1160,8 @@
               { cp: "Hydraulic Pressure", std: "6.0 - 7.0 MPa", method: "Pressure Gauge", check: "6.5 / 6.5 / 6.5", ok: "800", date: "1/7/26 - Ayush" },
               { cp: "Kakotora Check point", std: "No liquid Pool mark on sealing surface allowed", method: "Visually", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Ayush" },
               { cp: "Crimping Presence & Mark line", std: "Available | Not Visible after Crimping", method: "Visually", check: "ok | ok | ok", ok: "800", date: "1/7/26 - Ayush" },
-              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Ayush / Ayush / Ayush", ok: "800", date: "1/7/26 - Ayush" }
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Ayush / Ayush / Ayush", ok: "800", date: "1/7/26 - Ayush" },
+              { cp: "Supervisor", std: "Supervisor Name", method: "Actual", check: "Shy / Shy / Shy", ok: "800", date: "1/7/26 - Shy" }
             ]
           },
           {
@@ -876,7 +1177,8 @@
               { cp: "Rubber Hose Clamp Part No.", std: "BU10024-01000-IND", method: "As per Box Tag", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Sima" },
               { cp: "Rubber Hose Clamp Lot No.", std: "As per box tag", method: "As per Box Tag", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Sima" },
               { cp: "Sequence of accessories", std: "1. Protector L-260, 2. Rubber Hose Clamp", method: "AS per WI", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Sima" },
-              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Sima / Sima / Sima", ok: "800", date: "1/7/26 - Sima" }
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Sima / Sima / Sima", ok: "800", date: "1/7/26 - Sima" },
+              { cp: "Supervisor", std: "Supervisor Name", method: "Actual", check: "Shy / Shy / Shy", ok: "800", date: "1/7/26 - Shy" }
             ]
           },
           {
@@ -896,7 +1198,8 @@
               { cp: "Crimp Diameter (mm)", std: "9.00 ± 0.05", method: "CRIMPING CALIPER", check: "9.00 / 9.01 / 9.00", ok: "800", date: "1/7/26 - Vipin" },
               { cp: "Length (mm)", std: "688 ± 4", method: "As per Final Gauge", check: "688 / 687 / 688", ok: "800", date: "1/7/26 - Vipin" },
               { cp: "Kakotora Check point", std: "Crimping Must be Done & correct Part ID verified", method: "Visually", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Vipin" },
-              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Vipin / Vipin / Vipin", ok: "800", date: "1/7/26 - Vipin" }
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Vipin / Vipin / Vipin", ok: "800", date: "1/7/26 - Vipin" },
+              { cp: "Supervisor", std: "Supervisor Name", method: "Actual", check: "Shy / Shy / Shy", ok: "800", date: "1/7/26 - Shy" }
             ]
           },
           {
@@ -911,7 +1214,8 @@
               { cp: "Bonding Jig No", std: "BJ-HMSI-59-A1 / A2 / B1 / B2", method: "Visually", check: "BJ-HMSI-59-A1 / A2 / B1 / B2", ok: "800", date: "1/7/26 - Nazma / Sushma" },
               { cp: "Kakotora Check point", std: "No extra adhesive allowed on Protector. Must not stick.", method: "Visually", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Nazma / Sushma" },
               { cp: "Adhesive Amount", std: "2-3 Drops", method: "Visually", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Nazma / Sushma" },
-              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Nazma / Sushma / Nazma", ok: "800", date: "1/7/26 - Nazma" }
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Nazma / Sushma / Nazma", ok: "800", date: "1/7/26 - Nazma" },
+              { cp: "Supervisor", std: "Supervisor Name", method: "Actual", check: "Shy / Shy / Shy", ok: "800", date: "1/7/26 - Shy" }
             ]
           },
           {
@@ -927,7 +1231,8 @@
               { cp: "Pressure Set", std: "15.3 +1.0 / -0 MPa", method: "Visually", check: "15.9 / 15.9 / 15.8", ok: "800", date: "1/7/26 - Aniket" },
               { cp: "Hold Time", std: "10 - 40 Sec", method: "Visually", check: "40 sec / 40 sec / 40 sec", ok: "800", date: "1/7/26 - Aniket" },
               { cp: "Leakage & Appearance", std: "No leakage allowed | Bolt hole OK | Mark applied", method: "As per WI", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Aniket" },
-              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Aniket / Aniket / Aniket", ok: "800", date: "1/7/26 - Aniket" }
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Aniket / Aniket / Aniket", ok: "800", date: "1/7/26 - Aniket" },
+              { cp: "Supervisor", std: "Supervisor Name", method: "Actual", check: "Shy / Shy / Shy", ok: "800", date: "1/7/26 - Shy" }
             ]
           },
           {
@@ -943,7 +1248,8 @@
               { cp: "Lot No. & Plating Color", std: "NII YMDD Print Present | Silver Plating Color", method: "Visually", check: "NII 6701 | Silver | Silver", ok: "800", date: "1/7/26 - Rubi" },
               { cp: "Dimension & Angle", std: "As per drawing standards", method: "As per Final Gauge", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Rubi" },
               { cp: "Kakotora check point", std: "No extra adhesive. No scuffs. 100% Visual Pass.", method: "Visually", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Rubi" },
-              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Rubi / Rubi / Rubi", ok: "800", date: "1/7/26 - Rubi" }
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Rubi / Rubi / Rubi", ok: "800", date: "1/7/26 - Rubi" },
+              { cp: "Supervisor", std: "Supervisor Name", method: "Actual", check: "Shy / Shy / Shy", ok: "800", date: "1/7/26 - Shy" }
             ]
           },
           {
@@ -959,7 +1265,8 @@
               { cp: "Bin Size & Quantity", std: "600 X 400 X 280 Bin | 60 No's (20 x 3 Bundles)", method: "As per Packing matrix", check: "600x400x280 | 60 OK | 60 OK", ok: "800", date: "1/7/26 - Anjali" },
               { cp: "Storage & Tag Pasting", std: "Do not bend below R50 | Paste tag on each bin", method: "Visually | Actual check", check: "ok | ok | ok", ok: "800", date: "1/7/26 - Anjali" },
               { cp: "Tag Verification & Stamp", std: "Internal / RF-Gen Tags match Control Card", method: "Verification check", check: "ok / ok / ok", ok: "800", date: "1/7/26 - Shy (Leader)" },
-              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Anjali / Anjali / Anjali", ok: "800", date: "1/7/26 - Anjali" }
+              { cp: "Operator", std: "Operator Name", method: "Actual", check: "Anjali / Anjali / Anjali", ok: "800", date: "1/7/26 - Anjali" },
+              { cp: "Supervisor", std: "Supervisor Name", method: "Actual", check: "Shy / Shy / Shy", ok: "800", date: "1/7/26 - Shy" }
             ]
           }
         ];
@@ -983,7 +1290,7 @@
                   <td class="p-3 font-bold font-data-tabular text-slate-800">${r.req}</td>
                   <td class="p-3 font-mono font-bold text-slate-700">${r.lot}</td>
                   <td class="p-3 font-data-tabular text-slate-600">${r.time}</td>
-                  <td class="p-3 text-center"><span class="text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded text-[9px] font-bold uppercase">${r.status}</span></td>
+                  <td class="p-3 text-center font-extrabold text-slate-900 text-xs uppercase">${r.status || 'Completed'}</td>
                 </tr>
               `).join('');
 
@@ -1036,7 +1343,7 @@
                   <td class="p-3 font-bold text-slate-800">${r.cp}</td>
                   <td class="p-3 font-mono font-semibold text-slate-600">${r.std}</td>
                   <td class="p-3 text-slate-600 font-medium">${r.method}</td>
-                  <td class="p-3 font-mono text-emerald-700 font-bold bg-emerald-50/40">${r.check}</td>
+                  <td class="p-3">${formatInspectionChecks(r.check)}</td>
                   <td class="p-3 text-center font-bold font-data-tabular text-slate-800">${r.ok}</td>
                   <td class="p-3 font-semibold text-slate-600 font-data-tabular">${r.date}</td>
                 </tr>
@@ -1122,7 +1429,7 @@
           logsTbody.innerHTML = '';
           const auditEvents = [
             { time: '08:00 AM', event: 'Control Card Initialization & Barcode Bind', phase: 'Planning & Release', user: 'System (Automated)', result: 'PASS' },
-            { time: '08:05 AM', event: 'Work Order Released to Floor', phase: 'Release Gate', user: w.supervisor || 'Ramesh Kumar', result: 'APPROVED' },
+            { time: '08:05 AM', event: 'Work Order Released to Floor', phase: 'Release Gate', user: 'Vikram Malhotra', result: 'APPROVED' },
             { time: '08:12 AM', event: 'BOM Material Pick & Scan Verification', phase: 'Material Prep', user: w.operator || 'Amit Sharma', result: 'VERIFIED' },
             { time: '08:25 AM', event: 'First Piece Inspection & Dimensional Audit', phase: 'Line Setup', user: w.inspector || 'Vikram Malhotra', result: 'PASSED' },
             { time: '09:40 AM', event: 'Mid-shift Yield & Torque Tool Calibration', phase: 'Assembly Audit', user: w.inspector || 'Vikram Malhotra', result: 'COMPLIANT' }
@@ -1143,29 +1450,78 @@
         }
 
         // Populate Official Control Card Sheet View (Matching PDF 4044_001 (1) (1).pdf format)
+        if (document.getElementById('drawer-header-wo-no')) document.getElementById('drawer-header-wo-no').textContent = `(${cleanWONum || w.woNumber})`;
         if (document.getElementById('sheet-wo-no')) document.getElementById('sheet-wo-no').textContent = cleanWONum || w.woNumber;
+        if (document.getElementById('sheet-barcode-val')) document.getElementById('sheet-barcode-val').textContent = cleanWONum || w.woNumber;
         if (document.getElementById('sheet-lot-no')) document.getElementById('sheet-lot-no').textContent = w.lotNo || '6701';
 
         const officialTbody = document.getElementById('sheet-official-tbody');
         if (officialTbody) {
           officialTbody.innerHTML = '';
+
+          function parse3CheckVals(checkStr) {
+            if (!checkStr) return ['--', '--', '--'];
+            let str = checkStr.replace(/\bok\b/gi, 'OK');
+            let parts = [];
+            if (str.includes('/')) {
+              parts = str.split('/').map(p => p.trim());
+            } else if (str.includes('|')) {
+              parts = str.split('|').map(p => p.trim());
+            } else {
+              parts = [str];
+            }
+            while (parts.length < 3) {
+              parts.push(parts[parts.length - 1] || 'OK');
+            }
+            return [parts[0], parts[1], parts[2]];
+          }
+
           all13Processes.forEach(proc => {
             if (proc.isBOM) {
-              const tr = document.createElement('tr');
-              tr.className = 'bg-white border-b-2 border-slate-900 font-bold';
-              tr.innerHTML = `
-                <td class="p-2 text-center font-mono font-black border-r-2 border-slate-900">01</td>
-                <td class="p-2 font-black border-r-2 border-slate-900 bg-white">
-                  <div class="text-slate-900 font-black text-[11px]">Picking (BOM)</div>
-                  <div class="text-[8.5px] text-slate-500 font-semibold mt-0.5">Store Area • Pooja / Anil</div>
+              const tr1 = document.createElement('tr');
+              tr1.className = 'bg-white border-b border-slate-400 font-bold';
+              tr1.innerHTML = `
+                <td class="p-2 text-center font-mono font-black border-r-2 border-slate-900 align-top" rowspan="3">01</td>
+                <td class="p-2 font-black border-r-2 border-slate-900 align-top bg-white" rowspan="3">
+                  <div class="text-slate-900 font-extrabold text-[11px] leading-tight">Picking (BOM) / Picking</div>
+                  <div class="text-[9.5px] text-slate-700 font-bold mt-0.5">Store Area</div>
+                  <div class="text-[8.5px] text-slate-500 font-semibold mt-0.5">Op: Pooja / Anil</div>
                 </td>
-                <td class="p-2 border-r-2 border-slate-900">Raw component store verification &amp; scanning checklist (6 components verified)</td>
+                <td class="p-2 border-r border-slate-400 font-bold text-slate-900">Raw component store verification &amp; scanning checklist (6 components completed)</td>
                 <td class="p-2 border-r-2 border-slate-900 font-semibold text-slate-700">Store Barcode Scanner</td>
-                <td class="p-2 font-mono text-emerald-800 font-extrabold border-r-2 border-slate-900">6/6 LOTS OK</td>
-                <td class="p-2 text-center font-black border-r-2 border-slate-900">800</td>
-                <td class="p-2 font-mono text-slate-800 font-bold">27/6/26 - Pooja / Anil</td>
+                <td class="p-1.5 text-center font-mono text-slate-900 font-extrabold border-r border-slate-400 text-[10.5px]">OK</td>
+                <td class="p-1.5 text-center font-mono text-slate-900 font-extrabold border-r border-slate-400 text-[10.5px]">OK</td>
+                <td class="p-1.5 text-center font-mono text-slate-900 font-extrabold border-r-2 border-slate-900 text-[10.5px]">OK</td>
+                <td class="p-2 text-center font-mono text-slate-700 border-r border-slate-400 font-bold" rowspan="3">-</td>
+                <td class="p-2 text-center font-extrabold text-slate-900 border-r border-slate-400 font-data-tabular" rowspan="3">-</td>
+                <td class="p-2 text-center font-mono text-slate-800 font-bold text-[10px]" rowspan="3">
+                  <div>27/6/26</div>
+                  <div class="text-[8.5px] text-slate-900 font-extrabold mt-0.5 uppercase">COMPLETED</div>
+                </td>
               `;
-              officialTbody.appendChild(tr);
+              officialTbody.appendChild(tr1);
+
+              const tr2 = document.createElement('tr');
+              tr2.className = 'hover:bg-slate-50 transition-colors border-b border-slate-400';
+              tr2.innerHTML = `
+                <td class="p-2 font-bold text-slate-900 border-r border-slate-400">Operator <span class="font-mono text-slate-600 font-normal">(Operator Name)</span></td>
+                <td class="p-2 text-slate-700 border-r-2 border-slate-900 font-semibold">Actual</td>
+                <td class="p-1.5 text-center font-mono font-extrabold text-slate-900 border-r border-slate-400 text-[10.5px]">Pooja</td>
+                <td class="p-1.5 text-center font-mono font-extrabold text-slate-900 border-r border-slate-400 text-[10.5px]">Anil</td>
+                <td class="p-1.5 text-center font-mono font-extrabold text-slate-900 border-r-2 border-slate-900 text-[10.5px]">Pooja</td>
+              `;
+              officialTbody.appendChild(tr2);
+
+              const tr3 = document.createElement('tr');
+              tr3.className = 'hover:bg-slate-50 transition-colors border-b border-slate-400';
+              tr3.innerHTML = `
+                <td class="p-2 font-bold text-slate-900 border-r border-slate-400">Supervisor <span class="font-mono text-slate-600 font-normal">(Supervisor Name)</span></td>
+                <td class="p-2 text-slate-700 border-r-2 border-slate-900 font-semibold">Actual</td>
+                <td class="p-1.5 text-center font-mono font-extrabold text-slate-900 border-r border-slate-400 text-[10.5px]">Vikram Malhotra</td>
+                <td class="p-1.5 text-center font-mono font-extrabold text-slate-900 border-r border-slate-400 text-[10.5px]">Vikram Malhotra</td>
+                <td class="p-1.5 text-center font-mono font-extrabold text-slate-900 border-r-2 border-slate-900 text-[10.5px]">Vikram Malhotra</td>
+              `;
+              officialTbody.appendChild(tr3);
             } else {
               proc.rows.forEach((r, rIdx) => {
                 const tr = document.createElement('tr');
@@ -1173,31 +1529,145 @@
 
                 let stepCell = '';
                 let procCell = '';
+                let totalNgCell = '';
+                let totalOkCell = '';
+                let dateInitCell = '';
 
                 if (rIdx === 0) {
                   const cleanProcName = proc.name.replace(/^\d+\.\s*/, '');
                   const formattedNum = String(proc.num).padStart(2, '0');
+                  const phaseCap = proc.phase.charAt(0).toUpperCase() + proc.phase.slice(1).toLowerCase();
+
                   stepCell = `<td class="p-2 text-center font-mono font-black border-r-2 border-slate-900 align-top bg-white" rowspan="${proc.rows.length}">${formattedNum}</td>`;
                   procCell = `
                     <td class="p-2 font-black border-r-2 border-slate-900 align-top bg-white" rowspan="${proc.rows.length}">
-                      <div class="font-extrabold text-slate-900 text-[11px]">${cleanProcName}</div>
-                      <div class="text-[9px] text-slate-500 font-bold mt-0.5">${proc.machine}</div>
+                      <div class="text-slate-900 font-extrabold text-[11px] leading-tight">${cleanProcName} / ${phaseCap}</div>
+                      <div class="text-[9.5px] text-slate-700 font-bold mt-0.5">${proc.machine}</div>
                       <div class="text-[8.5px] text-slate-500 font-semibold mt-0.5">Op: ${proc.operator}</div>
                     </td>
                   `;
+
+                  const lastRowDate = proc.rows[proc.rows.length - 1].date || '';
+                  const cleanDate = lastRowDate.split('-')[0].trim();
+
+                  totalNgCell = `<td class="p-2 text-center font-mono text-slate-700 font-bold border-r border-slate-400 align-middle bg-white" rowspan="${proc.rows.length}">0</td>`;
+                  totalOkCell = `<td class="p-2 text-center font-extrabold text-slate-900 border-r border-slate-400 font-data-tabular align-middle bg-white" rowspan="${proc.rows.length}">${r.ok || 800}</td>`;
+                  dateInitCell = `<td class="p-2 text-center font-mono text-slate-800 font-bold text-[10px] align-middle bg-white" rowspan="${proc.rows.length}">${cleanDate || '27/6/26'}</td>`;
+                }
+
+                let [c1, c2, c3] = parse3CheckVals(r.check);
+                if (r.cp && r.cp.toLowerCase().includes('supervisor')) {
+                  c1 = 'Vikram Malhotra';
+                  c2 = 'Vikram Malhotra';
+                  c3 = 'Vikram Malhotra';
                 }
 
                 tr.innerHTML = `
                   ${stepCell}
                   ${procCell}
                   <td class="p-2 font-bold text-slate-900 border-r border-slate-400">${r.cp} <span class="font-mono text-slate-600 font-normal">(${r.std})</span></td>
-                  <td class="p-2 text-slate-700 border-r border-slate-400 font-semibold">${r.method}</td>
-                  <td class="p-2 font-mono text-emerald-800 font-extrabold bg-slate-50/50 border-r border-slate-400">${r.check}</td>
-                  <td class="p-2 text-center font-extrabold border-r border-slate-400 font-data-tabular">${r.ok}</td>
-                  <td class="p-2 font-mono text-slate-800 font-semibold">${r.date}</td>
+                  <td class="p-2 text-slate-700 border-r-2 border-slate-900 font-semibold">${r.method}</td>
+                  <td class="p-1.5 text-center font-mono font-extrabold text-slate-900 border-r border-slate-400 text-[10.5px]">${c1}</td>
+                  <td class="p-1.5 text-center font-mono font-extrabold text-slate-900 border-r border-slate-400 text-[10.5px]">${c2}</td>
+                  <td class="p-1.5 text-center font-mono font-extrabold text-slate-900 border-r-2 border-slate-900 text-[10.5px]">${c3}</td>
+                  ${totalNgCell}
+                  ${totalOkCell}
+                  ${dateInitCell}
                 `;
                 officialTbody.appendChild(tr);
               });
+
+              if (proc.phase === 'OFFLINE' || proc.num === 13) {
+                // If Hose Cutting (Step 2), insert Multi-Roll Table first
+                if (proc.num === 2) {
+                  const trRoll = document.createElement('tr');
+                  trRoll.className = 'bg-white border-t-2 border-b border-slate-900 text-[10px]';
+                  trRoll.innerHTML = `
+                    <td colspan="10" class="p-0">
+                      <div class="p-1.5 bg-slate-100 border-b border-slate-400 font-extrabold text-slate-800 text-[9.5px] uppercase tracking-wide">
+                        IN CASE AGAINST ANY WORK ORDER ROLL USED MORE THAN ONE ROLL NEED TO FILL BELOW TABLE.
+                      </div>
+                      <table class="w-full text-[9.5px] border-collapse text-left">
+                        <thead>
+                          <tr class="bg-slate-50 border-b border-slate-400 font-black text-slate-800 uppercase tracking-tight text-center">
+                            <th class="p-1.5 border-r border-slate-400 w-[10%]">ROLL NO.</th>
+                            <th class="p-1.5 border-r border-slate-400 w-[20%]">HOSE PART NO. (AS PER CONTROL CARD)</th>
+                            <th class="p-1.5 border-r border-slate-400 w-[20%]">HOSE PART NO. (ON ROLL / BOX TAG)</th>
+                            <th class="p-1.5 border-r border-slate-400 w-[10%]">HOSE TYPE</th>
+                            <th class="p-1.5 border-r border-slate-400 w-[24%]">
+                              <div>STAMP ON HOSE</div>
+                              <div class="text-[7.5px] font-normal text-slate-500 lowercase mt-0.5">(Kishor/Anish/Anil /Sanjeev/ Vipin /Aniket/Sima /Nazma /Kiran /Sushma /Pooja)</div>
+                            </th>
+                            <th class="p-1.5 border-r border-slate-400 w-[8%]">CHECKED BY</th>
+                            <th class="p-1.5 w-[8%]">VERIFIED BY</th>
+                          </tr>
+                        </thead>
+                        <tbody class="font-mono text-center font-bold text-slate-900 divide-y divide-slate-300">
+                          <tr>
+                            <td class="p-1.5 border-r border-slate-400 font-sans font-extrabold text-slate-900">Roll No.-1</td>
+                            <td class="p-1.5 border-r border-slate-400 text-slate-800">05-0030-015-00-0030</td>
+                            <td class="p-1.5 border-r border-slate-400 text-slate-800">05-0030-015-00-0030</td>
+                            <td class="p-1.5 border-r border-slate-400 font-sans font-bold">XP NVC</td>
+                            <td class="p-1.5 border-r border-slate-400 text-left font-sans text-[9px] text-slate-800">DOT GB16807 NVC 03 (26/6/26 Anish/Sanjeev)</td>
+                            <td class="p-1.5 border-r border-slate-400 font-sans uppercase font-extrabold">ANISH</td>
+                            <td class="p-1.5 font-sans font-extrabold">Sanjeev</td>
+                          </tr>
+                          <tr>
+                            <td class="p-1.5 border-r border-slate-400 font-sans font-extrabold text-slate-900">Roll No.-2</td>
+                            <td class="p-1.5 border-r border-slate-400 text-slate-800">05-0030-015-00-0030</td>
+                            <td class="p-1.5 border-r border-slate-400 text-slate-800">05-0030-015-00-0030</td>
+                            <td class="p-1.5 border-r border-slate-400 font-sans font-bold">XP NVC</td>
+                            <td class="p-1.5 border-r border-slate-400 text-left font-sans text-[9px] text-slate-800">DOT GB16807 NVC 03 (26/6/26 Anish/Kishor)</td>
+                            <td class="p-1.5 border-r border-slate-400 font-sans uppercase font-extrabold">Anish</td>
+                            <td class="p-1.5 font-sans font-extrabold">Kishor</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  `;
+                  officialTbody.appendChild(trRoll);
+                }
+
+                // QA Inspection Result Block: Pass Stamp (rowspan=3), QA Inspection Result (rowspan=3), QA Inspector (rowspan=3), TOTAL OK, 800, AMAY Sign (rowspan=3)
+                const trQa1 = document.createElement('tr');
+                trQa1.className = 'bg-white border-t-2 border-b border-slate-900 text-[10px]';
+                trQa1.innerHTML = `
+                  <td colspan="2" rowspan="3" class="p-2 text-center align-middle font-extrabold text-slate-900 uppercase border-r-2 border-slate-900 bg-slate-100/70 tracking-wider">
+                    PASS STAMP
+                  </td>
+                  <td colspan="1" rowspan="3" class="p-2 align-top border-r border-slate-400">
+                    <div class="font-extrabold text-slate-900 text-[10.5px]">QA Inspection Result</div>
+                    <div class="font-extrabold text-slate-900 text-[10.5px]">OK/N.G</div>
+                  </td>
+                  <td colspan="1" rowspan="3" class="p-2 align-top border-r-2 border-slate-900">
+                    <div class="font-extrabold text-slate-900 text-[10.5px]">QA Inspector</div>
+                  </td>
+                  <td colspan="3" class="p-1.5 text-center font-mono font-bold text-slate-700 border-r border-slate-400">TOTAL OK</td>
+                  <td colspan="2" class="p-1.5 text-center font-mono font-extrabold text-slate-900 border-r border-slate-400 font-data-tabular">800</td>
+                  <td colspan="1" rowspan="3" class="p-2 text-center align-middle font-mono font-black text-slate-900 text-xs tracking-wider bg-slate-50/50">
+                    AMAY
+                  </td>
+                `;
+                officialTbody.appendChild(trQa1);
+
+                // Row 2: TOTAL NG
+                const trQa2 = document.createElement('tr');
+                trQa2.className = 'bg-white border-b border-slate-300 text-[10px]';
+                trQa2.innerHTML = `
+                  <td colspan="3" class="p-1.5 text-center font-mono font-bold text-slate-700 border-r border-slate-400">TOTAL NG</td>
+                  <td colspan="2" class="p-1.5 text-center font-mono font-extrabold text-slate-900 border-r border-slate-400 font-data-tabular">0</td>
+                `;
+                officialTbody.appendChild(trQa2);
+
+                // Row 3: TOTAL TAKEN
+                const trQa3 = document.createElement('tr');
+                trQa3.className = 'bg-white border-b-2 border-slate-900 text-[10px]';
+                trQa3.innerHTML = `
+                  <td colspan="3" class="p-1.5 text-center font-mono font-bold text-slate-700 border-r border-slate-400">TOTAL TAKEN</td>
+                  <td colspan="2" class="p-1.5 text-center font-mono font-extrabold text-slate-900 border-r border-slate-400 font-data-tabular">800</td>
+                `;
+                officialTbody.appendChild(trQa3);
+              }
             }
           });
         }
@@ -1215,7 +1685,7 @@
               <td class="p-2 font-mono text-slate-700 border-r border-slate-400 font-semibold">${r.spec}</td>
               <td class="p-2 text-right font-extrabold text-slate-900 border-r border-slate-400 font-data-tabular">${r.req}</td>
               <td class="p-2 font-mono font-bold text-slate-800 border-r border-slate-400">${r.lot}</td>
-              <td class="p-2 text-center border-r border-slate-400"><span class="text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded text-[8.5px] font-black uppercase">${r.status}</span></td>
+              <td class="p-2 text-center font-extrabold text-slate-900 border-r border-slate-400 text-[10px] uppercase">${r.status || 'Completed'}</td>
               <td class="p-2 text-right font-mono text-slate-700 font-semibold">${r.time}</td>
             `;
             officialBomTbody.appendChild(tr);
@@ -1274,7 +1744,7 @@
         alert(`Report for ${woNo} generated and downloaded successfully.`);
       }
 
-      window.switchReportView = function(mode) {
+      window.switchReportView = function (mode) {
         const sheetView = document.getElementById('report-official-sheet-view');
         const dashView = document.getElementById('report-dashboard-view');
         const btnSheet = document.getElementById('btn-view-sheet');

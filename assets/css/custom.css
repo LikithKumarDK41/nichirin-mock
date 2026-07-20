@@ -362,6 +362,16 @@ aside.sidebar-collapsed .logo-expanded {
 }
 aside.sidebar-collapsed .logo-collapsed {
   display: block !important;
+  height: 56px !important;
+  width: auto !important;
+  max-height: 56px !important;
+  max-width: 58px !important;
+  object-fit: contain !important;
+}
+
+aside.sidebar-collapsed > div:first-child {
+  padding-left: 0.25rem !important;
+  padding-right: 0.25rem !important;
 }
 
 /* Reset top padding for login main container */

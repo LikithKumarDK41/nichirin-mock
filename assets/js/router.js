@@ -272,7 +272,7 @@
         <div class="h-[64px] px-4 border-b border-outline-variant/30 bg-white flex items-center justify-center relative select-none flex-shrink-0">
           <a class="flex items-center justify-center w-full h-full" href="${relPrefix}work-orders/index.html">
             <img src="${relPrefix}assets/logo_full.png" class="logo-expanded h-12 w-full object-contain select-none" alt="NICHIRIN Logo" />
-            <img src="${relPrefix}assets/logo_icon.png" class="logo-collapsed h-10 w-auto object-contain select-none" alt="NICHIRIN Logo Icon" />
+            <img src="${relPrefix}assets/logo_icon.png" class="logo-collapsed h-14 w-auto max-w-[58px] object-contain select-none transition-all duration-200" alt="NICHIRIN Logo Icon" />
           </a>
           <button class="sidebar-close-btn absolute right-4 top-1/2 -translate-y-1/2 lg:hidden text-on-surface-variant hover:text-primary" aria-label="Close Sidebar">
             <span class="material-symbols-outlined">close</span>
