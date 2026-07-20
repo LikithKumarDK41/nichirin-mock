@@ -74,7 +74,7 @@
         <!-- Top level control code (matching reference screenshot layout) -->
         <div class="flex justify-between items-center mb-2">
           <div class="flex items-center gap-3">
-            <h2 class="text-2xl font-black text-[#c8102e] tracking-tight leading-none" id="wo-summary-id">WO #--</h2>
+            <h2 class="text-2xl font-black text-[#c8102e] tracking-tight leading-none" id="wo-summary-id">--</h2>
             <span class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-[#c8102e]/10 text-[#c8102e] border border-[#c8102e]/25 animate-pulse" id="wo-summary-status">RUNNING</span>
           </div>
           <!-- Barcode Column (Exact replication of PDF top-left) -->
@@ -332,30 +332,32 @@
     let activeWO = null;
     let currentAssignedOperators = [];
 
+    const ALLOWED_5_WOS = ['22615540', '22615541', '22615542', '22615543', '22615545'];
+
     // Load work orders database from localStorage (or fetch from workorders.json)
     async function loadWorkOrders() {
-        let loaded = false;
-        const localData = localStorage.getItem('workOrdersList');
-        if (localData) {
-            try {
-                const parsed = JSON.parse(localData);
-                if (parsed && parsed.length >= 9 && parsed[0].woNumber && !parsed[0].woNumber.includes("2026")) {
-                    workOrdersList = parsed;
-                    loaded = true;
-                }
-            } catch(e) {}
+        try {
+            const res = await fetch('../work-orders/workorders.json');
+            if (res.ok) {
+                workOrdersList = await res.json();
+            }
+        } catch(e) {
+            console.error("Failed to load workorders list", e);
         }
-        if (!loaded) {
-            try {
-                const res = await fetch('../work-orders/workorders.json');
-                if (res.ok) {
-                    workOrdersList = await res.json();
-                    localStorage.setItem('workOrdersList', JSON.stringify(workOrdersList));
-                }
-            } catch(e) {
-                console.error("Failed to load workorders list", e);
+        if (!workOrdersList || workOrdersList.length === 0) {
+            const localData = localStorage.getItem('workOrdersList');
+            if (localData) {
+                try { workOrdersList = JSON.parse(localData); } catch(e){}
             }
         }
+        
+        // Sanitize and filter strictly to the 5 allowed WOs
+        workOrdersList = (workOrdersList || []).filter(w => {
+            if (!w || !w.woNumber) return false;
+            w.woNumber = String(w.woNumber).replace(/^WO-?/i, '');
+            return ALLOWED_5_WOS.includes(w.woNumber);
+        });
+        localStorage.setItem('workOrdersList', JSON.stringify(workOrdersList));
         
         populateOperatorsDropdown();
         
@@ -364,10 +366,11 @@
         const urlWo = urlParams.get('wo');
         let initialWO = null;
         if (urlWo) {
-            initialWO = workOrdersList.find(w => w.woNumber.toUpperCase() === urlWo.toUpperCase());
+            const cleanUrlWo = urlWo.replace(/^WO-?/i, '');
+            initialWO = workOrdersList.find(w => w.woNumber.replace(/^WO-?/i, '') === cleanUrlWo);
         }
         if (!initialWO) {
-            initialWO = workOrdersList.find(w => w.status === 'Waiting' || w.status === 'Held') || workOrdersList[0];
+            initialWO = workOrdersList.find(w => w.woNumber.replace(/^WO-?/i, '') === '22615540') || workOrdersList[0];
         }
         if (initialWO) {
             selectPlanningWO(initialWO.woNumber);
@@ -442,12 +445,9 @@
 
     // Set active work order and render its details
     function selectPlanningWO(woNumber) {
-        activeWO = workOrdersList.find(w => w.woNumber === woNumber) || workOrdersList[0];
+        const cleanTarget = woNumber ? woNumber.replace(/^WO-?/i, '') : '';
+        activeWO = workOrdersList.find(w => w.woNumber.replace(/^WO-?/i, '') === cleanTarget) || workOrdersList[0];
         if (!activeWO) return;
-
-        if (activeWO.woNumber.toUpperCase() === 'WO-22615540') {
-            activeWO.targetQty = 800;
-        }
 
         // Ensure ccProcesses is initialized for this work order
         if (!activeWO.ccProcesses) {
@@ -473,21 +473,31 @@
         if (selectedText) {
             selectedText.textContent = activeWO.woNumber;
         }
-        const cleanWONum = activeWO.woNumber.replace('WO-', '');
-        document.getElementById('wo-summary-id').textContent = `WO #${cleanWONum}`;
+        const cleanWONum = String(activeWO.woNumber).replace(/^WO-?/i, '');
+        document.getElementById('wo-summary-id').textContent = cleanWONum;
         
         const statusEl = document.getElementById('wo-summary-status');
         if (statusEl) {
-            statusEl.textContent = activeWO.status.toUpperCase();
-            if (activeWO.status === 'Running') {
-                statusEl.className = "px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-[#c8102e]/10 text-[#c8102e] border border-[#c8102e]/25 animate-pulse";
-            } else if (activeWO.status === 'Completed') {
-                statusEl.className = "px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 border border-emerald-200";
-            } else if (activeWO.status === 'Held') {
-                statusEl.className = "px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-rose-100 text-rose-700 border border-rose-200";
-            } else {
-                statusEl.className = "px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-600 border border-slate-200";
+            let displayStatus = activeWO.status;
+            let statusClass = 'bg-slate-100 text-slate-600 border border-slate-200';
+            if (cleanWONum === '22615542') {
+                displayStatus = 'NOT RELEASED';
+                statusClass = 'bg-slate-100 text-slate-500 border border-slate-200/80';
+            } else if (cleanWONum === '22615545' || activeWO.status === 'Waiting') {
+                displayStatus = 'PENDING';
+                statusClass = 'bg-amber-50 text-amber-700 border border-amber-200/50';
+            } else if (cleanWONum === '22615543' || activeWO.status === 'Held' || activeWO.status === 'hold') {
+                displayStatus = 'HOLD';
+                statusClass = 'bg-red-50 text-red-600 border border-red-200/50';
+            } else if (activeWO.status === 'Completed' || activeWO.status === 'completed') {
+                displayStatus = 'COMPLETED';
+                statusClass = 'bg-emerald-100 text-emerald-700 border border-emerald-200';
+            } else if (activeWO.status === 'Running' || activeWO.status === 'in-progress') {
+                displayStatus = 'IN-PROGRESS';
+                statusClass = 'bg-[#c8102e]/10 text-[#c8102e] border border-[#c8102e]/25 animate-pulse';
             }
+            statusEl.textContent = displayStatus.toUpperCase();
+            statusEl.className = `px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider ${statusClass}`;
         }
         
         const ctrlCodeEl = document.getElementById('wo-summary-control-code');

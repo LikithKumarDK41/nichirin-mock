@@ -1,6 +1,6 @@
 [
   {
-    "woNumber": "WO-22615540",
+    "woNumber": "22615540",
     "productName": "Brake Hose Assembly - Front Disc",
     "partNumber": "BPD-F584A-00-IYN-R02",
     "line": "Line 1 (Faridabad Brake Hose Assembly)",
@@ -21,27 +21,154 @@
       "Maintain ambient oven temperature within 155°C ± 10°C limits at all times."
     ],
     "steps": [
-      { "name": "Picking", "time": "06:12 AM", "status": "completed", "operator": "Amit Sharma", "machine": "Material Store A", "parameter": "BOM Lot Verification", "limits": "Match SAP Checklist", "instruction": "Scan part QR labels. Verify EPDM Hose lot tags and metal collar batch counts against SAP Work Order details." },
-      { "name": "Hose Cutting 1 & 2", "time": "07:30 AM", "status": "completed", "operator": "Amit Sharma", "machine": "Automatic Hose Cutter (MC-CUT-01)", "parameter": "Hose Cut Length", "limits": "234 ± 2 mm / 94 ± 2 mm", "instruction": "Load inner EPDM tube. Slice lengths to 234±2mm or 94±2mm on scaling deck. Check for smooth edges without distortion." },
-      { "name": "Protector Sleeve Cutting", "time": "08:15 AM", "status": "completed", "operator": "Amit Sharma", "machine": "Sleeve Cutter (MC-PROT-02)", "parameter": "Sleeve Cut Length", "limits": "190 ± 3 mm", "instruction": "Cut EPDM/NBR protector sleeve to 190±3mm length. Check lining thickness and ensure internal sleeves have zero debris." },
-      { "name": "CNC Pipe Bending", "time": "09:00 AM", "status": "completed", "operator": "Amit Sharma", "machine": "CNC Bending Jig (JG-BEND-02)", "parameter": "Tube Bending Angles", "limits": "102.2° ± 10° or 60.3°", "instruction": "Load tube onto BNF-IYM-02 Jig. Auto-bend and verify angles are within 102.2°±10° tolerances. Inspect outer surfaces for crack lines." },
-      { "name": "Fitting Bending", "time": "10:15 AM", "status": "completed", "operator": "Amit Sharma", "machine": "Double Bending Block (JG-EF02-01)", "parameter": "Fitting Alignment Height", "limits": "Height -274, L-R -L80", "instruction": "Double-check height parameter at -274 and L-R settings at -L80. Secure and bend fitting collars on EF02 blocks." },
-      { "name": "Fitting Hose Crimping", "time": "11:00 AM", "status": "active", "operator": "Amit Sharma", "machine": "Hydraulic Crimp Press (MC-CRIMP-03)", "parameter": "Crimp Pressure & Diameter", "limits": "6.0 - 7.0 MPa / 9.00 ± 0.05 mm", "instruction": "Insert metal collar fittings on EPDM hose ends. Crimp on CJ-22 Crimping Jigs. Verify outer diameter stays within 9.00±0.05mm range." },
-      { "name": "Accessories Bonding", "time": "Pending", "status": "pending", "operator": "Amit Sharma", "machine": "Protector Bonding Jig (JG-BOND-12)", "parameter": "Adhesive Compound Weight", "limits": "2.5 ± 0.3 grams", "instruction": "Apply bonding adhesive compounds. Fix protective NBR sleeves in BJ-IYM-22-1A/B Bonding Jigs and inspect bond alignment." },
-      { "name": "HMI Oven Curing", "time": "Pending", "status": "pending", "operator": "Amit Sharma", "machine": "Oven Curing Chamber (OV-SHRNK-01)", "parameter": "Bake Temp & Duration", "limits": "155°C ± 10°C / 5:30 mins", "instruction": "Transfer assembled hoses to HMI curing oven. Bake at 155°C±10°C for exactly 5 minutes and 30 seconds." },
-      { "name": "Double Pipe Torquing", "time": "Pending", "status": "pending", "operator": "Amit Sharma", "machine": "Torque Wrench (TL-TORQ-08)", "parameter": "Tightening Force", "limits": "12.0 - 17.0 Nm", "instruction": "Perform double-end nut tightening using TOJ-IYM-22-A/B torque wrenches. Lock limits at 12-17Nm and record peak torque indicators." },
-      { "name": "Leak / Pressure Testing", "time": "Pending", "status": "pending", "operator": "Amit Sharma", "machine": "Leak Test Rig (MC-LEAK-01)", "parameter": "Hydraulic Test Pressure", "limits": "15.2 +1.0/-0 MPa / 36s", "instruction": "Clamp assembly onto air/water tester. Pump test pressure to 15.2+1.0/-0 MPa for 36 seconds. Watch for bubble discharge or drop logs." },
-      { "name": "Final Inspection & Packing", "time": "Pending", "status": "pending", "operator": "Ramesh Kumar", "machine": "Inspection Jig (JG-INSP-22)", "parameter": "Visual & Dimensional Audit", "limits": "100% OK / No Scuffs", "instruction": "Validate dimensional targets on FI-IYM-22 Final Inspection Jigs. Print SAP traceability labels and pack into plastic bins." }
+      {
+        "name": "Picking",
+        "time": "06:12 AM",
+        "status": "completed",
+        "operator": "Amit Sharma",
+        "machine": "Material Store A",
+        "parameter": "BOM Lot Verification",
+        "limits": "Match SAP Checklist",
+        "instruction": "Scan part QR labels. Verify EPDM Hose lot tags and metal collar batch counts against SAP Work Order details."
+      },
+      {
+        "name": "Hose Cutting 1 & 2",
+        "time": "07:30 AM",
+        "status": "completed",
+        "operator": "Amit Sharma",
+        "machine": "Automatic Hose Cutter (MC-CUT-01)",
+        "parameter": "Hose Cut Length",
+        "limits": "234 ± 2 mm / 94 ± 2 mm",
+        "instruction": "Load inner EPDM tube. Slice lengths to 234±2mm or 94±2mm on scaling deck. Check for smooth edges without distortion."
+      },
+      {
+        "name": "Protector Sleeve Cutting",
+        "time": "08:15 AM",
+        "status": "completed",
+        "operator": "Amit Sharma",
+        "machine": "Sleeve Cutter (MC-PROT-02)",
+        "parameter": "Sleeve Cut Length",
+        "limits": "190 ± 3 mm",
+        "instruction": "Cut EPDM/NBR protector sleeve to 190±3mm length. Check lining thickness and ensure internal sleeves have zero debris."
+      },
+      {
+        "name": "CNC Pipe Bending",
+        "time": "09:00 AM",
+        "status": "completed",
+        "operator": "Amit Sharma",
+        "machine": "CNC Bending Jig (JG-BEND-02)",
+        "parameter": "Tube Bending Angles",
+        "limits": "102.2° ± 10° or 60.3°",
+        "instruction": "Load tube onto BNF-IYM-02 Jig. Auto-bend and verify angles are within 102.2°±10° tolerances. Inspect outer surfaces for crack lines."
+      },
+      {
+        "name": "Fitting Bending",
+        "time": "10:15 AM",
+        "status": "completed",
+        "operator": "Amit Sharma",
+        "machine": "Double Bending Block (JG-EF02-01)",
+        "parameter": "Fitting Alignment Height",
+        "limits": "Height -274, L-R -L80",
+        "instruction": "Double-check height parameter at -274 and L-R settings at -L80. Secure and bend fitting collars on EF02 blocks."
+      },
+      {
+        "name": "Fitting Hose Crimping",
+        "time": "11:00 AM",
+        "status": "active",
+        "operator": "Amit Sharma",
+        "machine": "Hydraulic Crimp Press (MC-CRIMP-03)",
+        "parameter": "Crimp Pressure & Diameter",
+        "limits": "6.0 - 7.0 MPa / 9.00 ± 0.05 mm",
+        "instruction": "Insert metal collar fittings on EPDM hose ends. Crimp on CJ-22 Crimping Jigs. Verify outer diameter stays within 9.00±0.05mm range."
+      },
+      {
+        "name": "Accessories Bonding",
+        "time": "Pending",
+        "status": "pending",
+        "operator": "Amit Sharma",
+        "machine": "Protector Bonding Jig (JG-BOND-12)",
+        "parameter": "Adhesive Compound Weight",
+        "limits": "2.5 ± 0.3 grams",
+        "instruction": "Apply bonding adhesive compounds. Fix protective NBR sleeves in BJ-IYM-22-1A/B Bonding Jigs and inspect bond alignment."
+      },
+      {
+        "name": "HMI Oven Curing",
+        "time": "Pending",
+        "status": "pending",
+        "operator": "Amit Sharma",
+        "machine": "Oven Curing Chamber (OV-SHRNK-01)",
+        "parameter": "Bake Temp & Duration",
+        "limits": "155°C ± 10°C / 5:30 mins",
+        "instruction": "Transfer assembled hoses to HMI curing oven. Bake at 155°C±10°C for exactly 5 minutes and 30 seconds."
+      },
+      {
+        "name": "Double Pipe Torquing",
+        "time": "Pending",
+        "status": "pending",
+        "operator": "Amit Sharma",
+        "machine": "Torque Wrench (TL-TORQ-08)",
+        "parameter": "Tightening Force",
+        "limits": "12.0 - 17.0 Nm",
+        "instruction": "Perform double-end nut tightening using TOJ-IYM-22-A/B torque wrenches. Lock limits at 12-17Nm and record peak torque indicators."
+      },
+      {
+        "name": "Leak / Pressure Testing",
+        "time": "Pending",
+        "status": "pending",
+        "operator": "Amit Sharma",
+        "machine": "Leak Test Rig (MC-LEAK-01)",
+        "parameter": "Hydraulic Test Pressure",
+        "limits": "15.2 +1.0/-0 MPa / 36s",
+        "instruction": "Clamp assembly onto air/water tester. Pump test pressure to 15.2+1.0/-0 MPa for 36 seconds. Watch for bubble discharge or drop logs."
+      },
+      {
+        "name": "Final Inspection & Packing",
+        "time": "Pending",
+        "status": "pending",
+        "operator": "Ramesh Kumar",
+        "machine": "Inspection Jig (JG-INSP-22)",
+        "parameter": "Visual & Dimensional Audit",
+        "limits": "100% OK / No Scuffs",
+        "instruction": "Validate dimensional targets on FI-IYM-22 Final Inspection Jigs. Print SAP traceability labels and pack into plastic bins."
+      }
     ],
     "bom": [
-      { "code": "BH-EPDM-01", "desc": "EPDM Inner Rubber Hose (Inner Layer)", "req": "112.8 meters", "lot": "LOT-231102A", "verification": "VERIFIED", "timestamp": "2026-07-13 06:15 AM" },
-      { "code": "F-COLLAR-12", "desc": "Metal Fitting Collar 12mm", "req": "1200 units", "lot": "LOT-231015C", "verification": "VERIFIED", "timestamp": "2026-07-13 06:17 AM" },
-      { "code": "E-FITTING-B", "desc": "End Fitting Collar Type B", "req": "1200 units", "lot": "LOT-231016D", "verification": "VERIFIED", "timestamp": "2026-07-13 06:18 AM" },
-      { "code": "P-SLEEVE-03", "desc": "NBR Protector Sleeve 190mm", "req": "228.0 meters", "lot": "LOT-231105X", "verification": "VERIFIED", "timestamp": "2026-07-13 06:20 AM" }
+      {
+        "code": "BH-EPDM-01",
+        "desc": "EPDM Inner Rubber Hose (Inner Layer)",
+        "req": "112.8 meters",
+        "lot": "LOT-231102A",
+        "verification": "VERIFIED",
+        "timestamp": "2026-07-13 06:15 AM"
+      },
+      {
+        "code": "F-COLLAR-12",
+        "desc": "Metal Fitting Collar 12mm",
+        "req": "1200 units",
+        "lot": "LOT-231015C",
+        "verification": "VERIFIED",
+        "timestamp": "2026-07-13 06:17 AM"
+      },
+      {
+        "code": "E-FITTING-B",
+        "desc": "End Fitting Collar Type B",
+        "req": "1200 units",
+        "lot": "LOT-231016D",
+        "verification": "VERIFIED",
+        "timestamp": "2026-07-13 06:18 AM"
+      },
+      {
+        "code": "P-SLEEVE-03",
+        "desc": "NBR Protector Sleeve 190mm",
+        "req": "228.0 meters",
+        "lot": "LOT-231105X",
+        "verification": "VERIFIED",
+        "timestamp": "2026-07-13 06:20 AM"
+      }
     ]
   },
   {
-    "woNumber": "WO-22615541",
+    "woNumber": "22615541",
     "productName": "Rear Brake Hose Tube Assembly",
     "partNumber": "BPD-X221B-00-IYN-R01",
     "line": "Line 2 (Faridabad Brake Tube Assembly)",
@@ -61,26 +188,146 @@
       "Ensure all batch tracking QR labels are applied cleanly."
     ],
     "steps": [
-      { "name": "Picking", "time": "06:12 AM", "status": "completed", "operator": "Sandeep Singh", "machine": "Material Store B", "parameter": "BOM Lot Verification", "limits": "Match SAP Checklist", "instruction": "Scan part QR labels. Verify EPDM Hose lot tags and metal collar batch counts against SAP Work Order details." },
-      { "name": "Hose Cutting 1 & 2", "time": "07:30 AM", "status": "completed", "operator": "Sandeep Singh", "machine": "Automatic Hose Cutter (MC-CUT-01)", "parameter": "Hose Cut Length", "limits": "234 ± 2 mm / 94 ± 2 mm", "instruction": "Load inner EPDM tube. Slice lengths to 234±2mm or 94±2mm on scaling deck. Check for smooth edges without distortion." },
-      { "name": "Protector Sleeve Cutting", "time": "08:15 AM", "status": "completed", "operator": "Sandeep Singh", "machine": "Sleeve Cutter (MC-PROT-02)", "parameter": "Sleeve Cut Length", "limits": "190 ± 3 mm", "instruction": "Cut EPDM/NBR protector sleeve to 190±3mm length. Check lining thickness and ensure internal sleeves have zero debris." },
-      { "name": "CNC Pipe Bending", "time": "09:00 AM", "status": "completed", "operator": "Sandeep Singh", "machine": "CNC Bending Jig (JG-BEND-02)", "parameter": "Tube Bending Angles", "limits": "102.2° ± 10° or 60.3°", "instruction": "Load tube onto BNF-IYM-02 Jig. Auto-bend and verify angles are within 102.2°±10° tolerances. Inspect outer surfaces for crack lines." },
-      { "name": "Fitting Bending", "time": "10:15 AM", "status": "completed", "operator": "Sandeep Singh", "machine": "Double Bending Block (JG-EF02-01)", "parameter": "Fitting Alignment Height", "limits": "Height -274, L-R -L80", "instruction": "Double-check height parameter at -274 and L-R settings at -L80. Secure and bend fitting collars on EF02 blocks." },
-      { "name": "Fitting Hose Crimping", "time": "11:00 AM", "status": "completed", "operator": "Sandeep Singh", "machine": "Hydraulic Crimp Press (MC-CRIMP-03)", "parameter": "Crimp Pressure & Diameter", "limits": "6.0 - 7.0 MPa / 9.00 ± 0.05 mm", "instruction": "Insert metal collar fittings on EPDM hose ends. Crimp on CJ-22 Crimping Jigs. Verify outer diameter stays within 9.00±0.05mm range." },
-      { "name": "Accessories Bonding", "time": "12:00 PM", "status": "completed", "operator": "Sandeep Singh", "machine": "Protector Bonding Jig (JG-BOND-12)", "parameter": "Adhesive Compound Weight", "limits": "2.5 ± 0.3 grams", "instruction": "Apply bonding adhesive compounds. Fix protective NBR sleeves in BJ-IYM-22-1A/B Bonding Jigs and inspect bond alignment." },
-      { "name": "HMI Oven Curing", "time": "01:30 PM", "status": "completed", "operator": "Sandeep Singh", "machine": "Oven Curing Chamber (OV-SHRNK-01)", "parameter": "Bake Temp & Duration", "limits": "155°C ± 10°C / 5:30 mins", "instruction": "Transfer assembled hoses to HMI curing oven. Bake at 155°C±10°C for exactly 5 minutes and 30 seconds." },
-      { "name": "Double Pipe Torquing", "time": "02:15 PM", "status": "completed", "operator": "Sandeep Singh", "machine": "Torque Wrench (TL-TORQ-08)", "parameter": "Tightening Force", "limits": "12.0 - 17.0 Nm", "instruction": "Perform double-end nut tightening using TOJ-IYM-22-A/B torque wrenches. Lock limits at 12-17Nm and record peak torque indicators." },
-      { "name": "Leak / Pressure Testing", "time": "03:00 PM", "status": "completed", "operator": "Sandeep Singh", "machine": "Leak Test Rig (MC-LEAK-01)", "parameter": "Hydraulic Test Pressure", "limits": "15.2 +1.0/-0 MPa / 36s", "instruction": "Clamp assembly onto air/water tester. Pump test pressure to 15.2+1.0/-0 MPa for 36 seconds. Watch for bubble discharge or drop logs." },
-      { "name": "Final Inspection & Packing", "time": "03:45 PM", "status": "completed", "operator": "Vikram Malhotra", "machine": "Inspection Jig (JG-INSP-22)", "parameter": "Visual & Dimensional Audit", "limits": "100% OK / No Scuffs", "instruction": "Validate dimensional targets on FI-IYM-22 Final Inspection Jigs. Print SAP traceability labels and pack into plastic bins." }
+      {
+        "name": "Picking",
+        "time": "06:12 AM",
+        "status": "completed",
+        "operator": "Sandeep Singh",
+        "machine": "Material Store B",
+        "parameter": "BOM Lot Verification",
+        "limits": "Match SAP Checklist",
+        "instruction": "Scan part QR labels. Verify EPDM Hose lot tags and metal collar batch counts against SAP Work Order details."
+      },
+      {
+        "name": "Hose Cutting 1 & 2",
+        "time": "07:30 AM",
+        "status": "completed",
+        "operator": "Sandeep Singh",
+        "machine": "Automatic Hose Cutter (MC-CUT-01)",
+        "parameter": "Hose Cut Length",
+        "limits": "234 ± 2 mm / 94 ± 2 mm",
+        "instruction": "Load inner EPDM tube. Slice lengths to 234±2mm or 94±2mm on scaling deck. Check for smooth edges without distortion."
+      },
+      {
+        "name": "Protector Sleeve Cutting",
+        "time": "08:15 AM",
+        "status": "completed",
+        "operator": "Sandeep Singh",
+        "machine": "Sleeve Cutter (MC-PROT-02)",
+        "parameter": "Sleeve Cut Length",
+        "limits": "190 ± 3 mm",
+        "instruction": "Cut EPDM/NBR protector sleeve to 190±3mm length. Check lining thickness and ensure internal sleeves have zero debris."
+      },
+      {
+        "name": "CNC Pipe Bending",
+        "time": "09:00 AM",
+        "status": "completed",
+        "operator": "Sandeep Singh",
+        "machine": "CNC Bending Jig (JG-BEND-02)",
+        "parameter": "Tube Bending Angles",
+        "limits": "102.2° ± 10° or 60.3°",
+        "instruction": "Load tube onto BNF-IYM-02 Jig. Auto-bend and verify angles are within 102.2°±10° tolerances. Inspect outer surfaces for crack lines."
+      },
+      {
+        "name": "Fitting Bending",
+        "time": "10:15 AM",
+        "status": "completed",
+        "operator": "Sandeep Singh",
+        "machine": "Double Bending Block (JG-EF02-01)",
+        "parameter": "Fitting Alignment Height",
+        "limits": "Height -274, L-R -L80",
+        "instruction": "Double-check height parameter at -274 and L-R settings at -L80. Secure and bend fitting collars on EF02 blocks."
+      },
+      {
+        "name": "Fitting Hose Crimping",
+        "time": "11:00 AM",
+        "status": "completed",
+        "operator": "Sandeep Singh",
+        "machine": "Hydraulic Crimp Press (MC-CRIMP-03)",
+        "parameter": "Crimp Pressure & Diameter",
+        "limits": "6.0 - 7.0 MPa / 9.00 ± 0.05 mm",
+        "instruction": "Insert metal collar fittings on EPDM hose ends. Crimp on CJ-22 Crimping Jigs. Verify outer diameter stays within 9.00±0.05mm range."
+      },
+      {
+        "name": "Accessories Bonding",
+        "time": "12:00 PM",
+        "status": "completed",
+        "operator": "Sandeep Singh",
+        "machine": "Protector Bonding Jig (JG-BOND-12)",
+        "parameter": "Adhesive Compound Weight",
+        "limits": "2.5 ± 0.3 grams",
+        "instruction": "Apply bonding adhesive compounds. Fix protective NBR sleeves in BJ-IYM-22-1A/B Bonding Jigs and inspect bond alignment."
+      },
+      {
+        "name": "HMI Oven Curing",
+        "time": "01:30 PM",
+        "status": "completed",
+        "operator": "Sandeep Singh",
+        "machine": "Oven Curing Chamber (OV-SHRNK-01)",
+        "parameter": "Bake Temp & Duration",
+        "limits": "155°C ± 10°C / 5:30 mins",
+        "instruction": "Transfer assembled hoses to HMI curing oven. Bake at 155°C±10°C for exactly 5 minutes and 30 seconds."
+      },
+      {
+        "name": "Double Pipe Torquing",
+        "time": "02:15 PM",
+        "status": "completed",
+        "operator": "Sandeep Singh",
+        "machine": "Torque Wrench (TL-TORQ-08)",
+        "parameter": "Tightening Force",
+        "limits": "12.0 - 17.0 Nm",
+        "instruction": "Perform double-end nut tightening using TOJ-IYM-22-A/B torque wrenches. Lock limits at 12-17Nm and record peak torque indicators."
+      },
+      {
+        "name": "Leak / Pressure Testing",
+        "time": "03:00 PM",
+        "status": "completed",
+        "operator": "Sandeep Singh",
+        "machine": "Leak Test Rig (MC-LEAK-01)",
+        "parameter": "Hydraulic Test Pressure",
+        "limits": "15.2 +1.0/-0 MPa / 36s",
+        "instruction": "Clamp assembly onto air/water tester. Pump test pressure to 15.2+1.0/-0 MPa for 36 seconds. Watch for bubble discharge or drop logs."
+      },
+      {
+        "name": "Final Inspection & Packing",
+        "time": "03:45 PM",
+        "status": "completed",
+        "operator": "Vikram Malhotra",
+        "machine": "Inspection Jig (JG-INSP-22)",
+        "parameter": "Visual & Dimensional Audit",
+        "limits": "100% OK / No Scuffs",
+        "instruction": "Validate dimensional targets on FI-IYM-22 Final Inspection Jigs. Print SAP traceability labels and pack into plastic bins."
+      }
     ],
     "bom": [
-      { "code": "BH-EPDM-01", "desc": "EPDM Inner Rubber Hose (Inner Layer)", "req": "75.2 meters", "lot": "LOT-231102A", "verification": "VERIFIED", "timestamp": "2026-07-13 06:15 AM" },
-      { "code": "F-COLLAR-12", "desc": "Metal Fitting Collar 12mm", "req": "800 units", "lot": "LOT-231015C", "verification": "VERIFIED", "timestamp": "2026-07-13 06:17 AM" },
-      { "code": "E-FITTING-B", "desc": "End Fitting Collar Type B", "req": "800 units", "lot": "LOT-231016D", "verification": "VERIFIED", "timestamp": "2026-07-13 06:18 AM" }
+      {
+        "code": "BH-EPDM-01",
+        "desc": "EPDM Inner Rubber Hose (Inner Layer)",
+        "req": "75.2 meters",
+        "lot": "LOT-231102A",
+        "verification": "VERIFIED",
+        "timestamp": "2026-07-13 06:15 AM"
+      },
+      {
+        "code": "F-COLLAR-12",
+        "desc": "Metal Fitting Collar 12mm",
+        "req": "800 units",
+        "lot": "LOT-231015C",
+        "verification": "VERIFIED",
+        "timestamp": "2026-07-13 06:17 AM"
+      },
+      {
+        "code": "E-FITTING-B",
+        "desc": "End Fitting Collar Type B",
+        "req": "800 units",
+        "lot": "LOT-231016D",
+        "verification": "VERIFIED",
+        "timestamp": "2026-07-13 06:18 AM"
+      }
     ]
   },
   {
-    "woNumber": "WO-22615542",
+    "woNumber": "22615542",
     "productName": "Front Caliper Hose Assembly",
     "partNumber": "BPD-C302F-00-IYN-R03",
     "line": "Line 1 (Faridabad Brake Hose Assembly)",
@@ -99,16 +346,48 @@
       "Check visual scuffs to ensure compliance before starting steps."
     ],
     "steps": [
-      { "name": "Picking", "time": "Pending", "status": "active", "operator": "Amit Sharma", "machine": "Material Store A", "parameter": "BOM Lot Verification", "limits": "Match SAP Checklist", "instruction": "Scan part QR labels. Verify EPDM Hose lot tags and metal collar batch counts against SAP Work Order details." },
-      { "name": "Hose Cutting 1 & 2", "time": "Pending", "status": "pending", "operator": "Amit Sharma", "machine": "Automatic Hose Cutter (MC-CUT-01)", "parameter": "Hose Cut Length", "limits": "234 ± 2 mm / 94 ± 2 mm", "instruction": "Load inner EPDM tube. Slice lengths to 234±2mm or 94±2mm on scaling deck. Check for smooth edges without distortion." }
+      {
+        "name": "Picking",
+        "time": "Pending",
+        "status": "active",
+        "operator": "Amit Sharma",
+        "machine": "Material Store A",
+        "parameter": "BOM Lot Verification",
+        "limits": "Match SAP Checklist",
+        "instruction": "Scan part QR labels. Verify EPDM Hose lot tags and metal collar batch counts against SAP Work Order details."
+      },
+      {
+        "name": "Hose Cutting 1 & 2",
+        "time": "Pending",
+        "status": "pending",
+        "operator": "Amit Sharma",
+        "machine": "Automatic Hose Cutter (MC-CUT-01)",
+        "parameter": "Hose Cut Length",
+        "limits": "234 ± 2 mm / 94 ± 2 mm",
+        "instruction": "Load inner EPDM tube. Slice lengths to 234±2mm or 94±2mm on scaling deck. Check for smooth edges without distortion."
+      }
     ],
     "bom": [
-      { "code": "BH-EPDM-01", "desc": "EPDM Inner Rubber Hose (Inner Layer)", "req": "47.0 meters", "lot": "LOT-231102A", "verification": "PENDING", "timestamp": "--" },
-      { "code": "F-COLLAR-12", "desc": "Metal Fitting Collar 12mm", "req": "500 units", "lot": "LOT-231015C", "verification": "PENDING", "timestamp": "--" }
+      {
+        "code": "BH-EPDM-01",
+        "desc": "EPDM Inner Rubber Hose (Inner Layer)",
+        "req": "47.0 meters",
+        "lot": "LOT-231102A",
+        "verification": "PENDING",
+        "timestamp": "--"
+      },
+      {
+        "code": "F-COLLAR-12",
+        "desc": "Metal Fitting Collar 12mm",
+        "req": "500 units",
+        "lot": "LOT-231015C",
+        "verification": "PENDING",
+        "timestamp": "--"
+      }
     ]
   },
   {
-    "woNumber": "WO-22615543",
+    "woNumber": "22615543",
     "productName": "High Pressure Hose Assembly",
     "partNumber": "BPD-H882A-01-IYN-R04",
     "line": "Line 3 (Specialty Jigs Assembly)",
@@ -127,50 +406,108 @@
       "Check heat alignment parameters carefully inside HMI configuration window."
     ],
     "steps": [
-      { "name": "Picking", "time": "06:12 AM", "status": "completed", "operator": "Ramesh Kumar", "machine": "Material Store A", "parameter": "BOM Lot Verification", "limits": "Match SAP Checklist", "instruction": "Scan part QR labels. Verify EPDM Hose lot tags and metal collar batch counts against SAP Work Order details." },
-      { "name": "Hose Cutting 1 & 2", "time": "07:30 AM", "status": "completed", "operator": "Ramesh Kumar", "machine": "Automatic Hose Cutter (MC-CUT-01)", "parameter": "Hose Cut Length", "limits": "234 ± 2 mm / 94 ± 2 mm", "instruction": "Load inner EPDM tube. Slice lengths to 234±2mm or 94±2mm on scaling deck. Check for smooth edges without distortion." },
-      { "name": "Protector Sleeve Cutting", "time": "08:15 AM", "status": "completed", "operator": "Ramesh Kumar", "machine": "Sleeve Cutter (MC-PROT-02)", "parameter": "Sleeve Cut Length", "limits": "190 ± 3 mm", "instruction": "Cut EPDM/NBR protector sleeve to 190±3mm length. Check lining thickness and ensure internal sleeves have zero debris." },
-      { "name": "CNC Pipe Bending", "time": "09:00 AM", "status": "completed", "operator": "Ramesh Kumar", "machine": "CNC Bending Jig (JG-BEND-02)", "parameter": "Tube Bending Angles", "limits": "102.2° ± 10° or 60.3°", "instruction": "Load tube onto BNF-IYM-02 Jig. Auto-bend and verify angles are within 102.2°±10° tolerances. Inspect outer surfaces for crack lines." },
-      { "name": "Fitting Bending", "time": "10:15 AM", "status": "completed", "operator": "Ramesh Kumar", "machine": "Double Bending Block (JG-EF02-01)", "parameter": "Fitting Alignment Height", "limits": "Height -274, L-R -L80", "instruction": "Double-check height parameter at -274 and L-R settings at -L80. Secure and bend fitting collars on EF02 blocks." },
-      { "name": "Fitting Hose Crimping", "time": "11:00 AM", "status": "completed", "operator": "Ramesh Kumar", "machine": "Hydraulic Crimp Press (MC-CRIMP-03)", "parameter": "Crimp Pressure & Diameter", "limits": "6.0 - 7.0 MPa / 9.00 ± 0.05 mm", "instruction": "Insert metal collar fittings on EPDM hose ends. Crimp on CJ-22 Crimping Jigs. Verify outer diameter stays within 9.00±0.05mm range." },
-      { "name": "Accessories Bonding", "time": "12:00 PM", "status": "completed", "operator": "Ramesh Kumar", "machine": "Protector Bonding Jig (JG-BOND-12)", "parameter": "Adhesive Compound Weight", "limits": "2.5 ± 0.3 grams", "instruction": "Apply bonding adhesive compounds. Fix protective NBR sleeves in BJ-IYM-22-1A/B Bonding Jigs and inspect bond alignment." },
-      { "name": "HMI Oven Curing", "time": "01:30 PM", "status": "active", "operator": "Ramesh Kumar", "machine": "Oven Curing Chamber (OV-SHRNK-01)", "parameter": "Bake Temp & Duration", "limits": "155°C ± 10°C / 5:30 mins", "instruction": "Transfer assembled hoses to HMI curing oven. Bake at 155°C±10°C for exactly 5 minutes and 30 seconds." }
+      {
+        "name": "Picking",
+        "time": "06:12 AM",
+        "status": "completed",
+        "operator": "Ramesh Kumar",
+        "machine": "Material Store A",
+        "parameter": "BOM Lot Verification",
+        "limits": "Match SAP Checklist",
+        "instruction": "Scan part QR labels. Verify EPDM Hose lot tags and metal collar batch counts against SAP Work Order details."
+      },
+      {
+        "name": "Hose Cutting 1 & 2",
+        "time": "07:30 AM",
+        "status": "completed",
+        "operator": "Ramesh Kumar",
+        "machine": "Automatic Hose Cutter (MC-CUT-01)",
+        "parameter": "Hose Cut Length",
+        "limits": "234 ± 2 mm / 94 ± 2 mm",
+        "instruction": "Load inner EPDM tube. Slice lengths to 234±2mm or 94±2mm on scaling deck. Check for smooth edges without distortion."
+      },
+      {
+        "name": "Protector Sleeve Cutting",
+        "time": "08:15 AM",
+        "status": "completed",
+        "operator": "Ramesh Kumar",
+        "machine": "Sleeve Cutter (MC-PROT-02)",
+        "parameter": "Sleeve Cut Length",
+        "limits": "190 ± 3 mm",
+        "instruction": "Cut EPDM/NBR protector sleeve to 190±3mm length. Check lining thickness and ensure internal sleeves have zero debris."
+      },
+      {
+        "name": "CNC Pipe Bending",
+        "time": "09:00 AM",
+        "status": "completed",
+        "operator": "Ramesh Kumar",
+        "machine": "CNC Bending Jig (JG-BEND-02)",
+        "parameter": "Tube Bending Angles",
+        "limits": "102.2° ± 10° or 60.3°",
+        "instruction": "Load tube onto BNF-IYM-02 Jig. Auto-bend and verify angles are within 102.2°±10° tolerances. Inspect outer surfaces for crack lines."
+      },
+      {
+        "name": "Fitting Bending",
+        "time": "10:15 AM",
+        "status": "completed",
+        "operator": "Ramesh Kumar",
+        "machine": "Double Bending Block (JG-EF02-01)",
+        "parameter": "Fitting Alignment Height",
+        "limits": "Height -274, L-R -L80",
+        "instruction": "Double-check height parameter at -274 and L-R settings at -L80. Secure and bend fitting collars on EF02 blocks."
+      },
+      {
+        "name": "Fitting Hose Crimping",
+        "time": "11:00 AM",
+        "status": "completed",
+        "operator": "Ramesh Kumar",
+        "machine": "Hydraulic Crimp Press (MC-CRIMP-03)",
+        "parameter": "Crimp Pressure & Diameter",
+        "limits": "6.0 - 7.0 MPa / 9.00 ± 0.05 mm",
+        "instruction": "Insert metal collar fittings on EPDM hose ends. Crimp on CJ-22 Crimping Jigs. Verify outer diameter stays within 9.00±0.05mm range."
+      },
+      {
+        "name": "Accessories Bonding",
+        "time": "12:00 PM",
+        "status": "completed",
+        "operator": "Ramesh Kumar",
+        "machine": "Protector Bonding Jig (JG-BOND-12)",
+        "parameter": "Adhesive Compound Weight",
+        "limits": "2.5 ± 0.3 grams",
+        "instruction": "Apply bonding adhesive compounds. Fix protective NBR sleeves in BJ-IYM-22-1A/B Bonding Jigs and inspect bond alignment."
+      },
+      {
+        "name": "HMI Oven Curing",
+        "time": "01:30 PM",
+        "status": "active",
+        "operator": "Ramesh Kumar",
+        "machine": "Oven Curing Chamber (OV-SHRNK-01)",
+        "parameter": "Bake Temp & Duration",
+        "limits": "155°C ± 10°C / 5:30 mins",
+        "instruction": "Transfer assembled hoses to HMI curing oven. Bake at 155°C±10°C for exactly 5 minutes and 30 seconds."
+      }
     ],
     "bom": [
-      { "code": "BH-EPDM-02", "desc": "EPDM Braided Rubber Hose (Inner Layer)", "req": "94.0 meters", "lot": "LOT-231102B", "verification": "VERIFIED", "timestamp": "2026-07-13 06:15 AM" },
-      { "code": "F-COLLAR-15", "desc": "Metal Fitting Collar 15mm", "req": "1000 units", "lot": "LOT-231015D", "verification": "VERIFIED", "timestamp": "2026-07-13 06:17 AM" }
+      {
+        "code": "BH-EPDM-02",
+        "desc": "EPDM Braided Rubber Hose (Inner Layer)",
+        "req": "94.0 meters",
+        "lot": "LOT-231102B",
+        "verification": "VERIFIED",
+        "timestamp": "2026-07-13 06:15 AM"
+      },
+      {
+        "code": "F-COLLAR-15",
+        "desc": "Metal Fitting Collar 15mm",
+        "req": "1000 units",
+        "lot": "LOT-231015D",
+        "verification": "VERIFIED",
+        "timestamp": "2026-07-13 06:17 AM"
+      }
     ]
   },
   {
-    "woNumber": "WO-22615544",
-    "productName": "Front Brake Hose Assembly Left",
-    "partNumber": "BPD-F585B-00-IYN-R05",
-    "line": "Line 1 (Faridabad Brake Hose Assembly)",
-    "shift": "Shift B",
-    "targetQty": 1500,
-    "doneQty": 600,
-    "okQty": 598,
-    "ngQty": 2,
-    "status": "Running",
-    "priority": "Normal",
-    "operator": "Sandeep Singh",
-    "inspector": "Vikram Malhotra",
-    "cardHash": "SHA256: d8a98ea4f3c83783930338202d8a98ea",
-    "generalInstructions": [
-      "Ensure EPDM Hose lot tags and metal collar batch counts against SAP.",
-      "Calibrate tools before starting process steps."
-    ],
-    "steps": [
-      { "name": "Picking", "time": "08:00 AM", "status": "completed", "operator": "Sandeep Singh", "machine": "Material Store A", "parameter": "BOM Lot Verification", "limits": "Match SAP Checklist", "instruction": "Scan part QR labels. Verify EPDM Hose lot tags." },
-      { "name": "Hose Cutting 1 & 2", "time": "09:15 AM", "status": "completed", "operator": "Sandeep Singh", "machine": "Automatic Hose Cutter (MC-CUT-01)", "parameter": "Hose Cut Length", "limits": "234 ± 2 mm", "instruction": "Slice lengths to 234±2mm on scaling deck." },
-      { "name": "Protector Sleeve Cutting", "time": "10:30 AM", "status": "active", "operator": "Sandeep Singh", "machine": "Sleeve Cutter (MC-PROT-02)", "parameter": "Sleeve Cut Length", "limits": "190 ± 3 mm", "instruction": "Cut protector sleeve to 190±3mm." }
-    ],
-    "bom": [
-      { "code": "BH-EPDM-01", "desc": "EPDM Inner Rubber Hose", "req": "141.0 meters", "lot": "LOT-231102A", "verification": "VERIFIED", "timestamp": "2026-07-13 08:05 AM" }
-    ]
-  },
-  {
-    "woNumber": "WO-22615545",
+    "woNumber": "22615545",
     "productName": "Front Brake Hose Assembly Right",
     "partNumber": "BPD-F586C-00-IYN-R06",
     "line": "Line 1 (Faridabad Brake Hose Assembly)",
@@ -188,87 +525,26 @@
       "Process instructions mirror Left Assembly routing."
     ],
     "steps": [
-      { "name": "Picking", "time": "Pending", "status": "active", "operator": "Amit Sharma", "machine": "Material Store A", "parameter": "BOM Verification", "limits": "SAP Checklist", "instruction": "Scan part labels and verify." }
+      {
+        "name": "Picking",
+        "time": "Pending",
+        "status": "active",
+        "operator": "Amit Sharma",
+        "machine": "Material Store A",
+        "parameter": "BOM Verification",
+        "limits": "SAP Checklist",
+        "instruction": "Scan part labels and verify."
+      }
     ],
     "bom": [
-      { "code": "BH-EPDM-01", "desc": "EPDM Inner Rubber Hose", "req": "141.0 meters", "lot": "LOT-231102A", "verification": "PENDING", "timestamp": "--" }
-    ]
-  },
-  {
-    "woNumber": "WO-22615546",
-    "productName": "Rear Brake Hose Assembly Left",
-    "partNumber": "BPD-X222C-00-IYN-R02",
-    "line": "Line 2 (Faridabad Brake Tube Assembly)",
-    "shift": "Shift A",
-    "targetQty": 600,
-    "doneQty": 600,
-    "okQty": 599,
-    "ngQty": 1,
-    "status": "Completed",
-    "priority": "Normal",
-    "operator": "Amit Sharma",
-    "inspector": "Ramesh Kumar",
-    "cardHash": "SHA256: a98ea4f3c83783930338202da98ea4f3",
-    "generalInstructions": [
-      "Process verification files logged to network folder."
-    ],
-    "steps": [
-      { "name": "Picking", "time": "06:00 AM", "status": "completed", "operator": "Amit Sharma", "machine": "Material Store B", "parameter": "Lot Check", "limits": "Match SAP", "instruction": "Verified." },
-      { "name": "Final Inspection & Packing", "time": "12:30 PM", "status": "completed", "operator": "Ramesh Kumar", "machine": "Inspection Jig (JG-INSP-22)", "parameter": "Visual Check", "limits": "100% OK", "instruction": "Clean packaging." }
-    ],
-    "bom": [
-      { "code": "BH-EPDM-01", "desc": "EPDM Inner Rubber Hose", "req": "56.4 meters", "lot": "LOT-231102A", "verification": "VERIFIED", "timestamp": "2026-07-13 06:05 AM" }
-    ]
-  },
-  {
-    "woNumber": "WO-22615547",
-    "productName": "Rear Brake Hose Assembly Right",
-    "partNumber": "BPD-X223D-00-IYN-R03",
-    "line": "Line 2 (Faridabad Brake Tube Assembly)",
-    "shift": "Shift B",
-    "targetQty": 600,
-    "doneQty": 120,
-    "okQty": 120,
-    "ngQty": 0,
-    "status": "Running",
-    "priority": "Normal",
-    "operator": "Sandeep Singh",
-    "inspector": "Vikram Malhotra",
-    "cardHash": "SHA256: 30338202d8a98ea4f3c837839303382f",
-    "generalInstructions": [
-      "Verify EPDM rubber hose material lot number matches BOM."
-    ],
-    "steps": [
-      { "name": "Picking", "time": "02:00 PM", "status": "completed", "operator": "Sandeep Singh", "machine": "Material Store B", "parameter": "BOM Check", "limits": "SAP Verify", "instruction": "Verification checked." },
-      { "name": "Hose Cutting 1 & 2", "time": "03:30 PM", "status": "active", "operator": "Sandeep Singh", "machine": "Automatic Hose Cutter (MC-CUT-01)", "parameter": "Cut Length", "limits": "94 ± 2 mm", "instruction": "Check for clean edges." }
-    ],
-    "bom": [
-      { "code": "BH-EPDM-01", "desc": "EPDM Inner Rubber Hose", "req": "56.4 meters", "lot": "LOT-231102A", "verification": "VERIFIED", "timestamp": "2026-07-13 02:05 PM" }
-    ]
-  },
-  {
-    "woNumber": "WO-22615548",
-    "productName": "High Pressure Hose Assembly II",
-    "partNumber": "BPD-H883B-01-IYN-R05",
-    "line": "Line 3 (Specialty Jigs Assembly)",
-    "shift": "Shift A",
-    "targetQty": 1200,
-    "doneQty": 0,
-    "okQty": 0,
-    "ngQty": 0,
-    "status": "Waiting",
-    "priority": "High",
-    "operator": "Ramesh Kumar",
-    "inspector": "Vikram Malhotra",
-    "cardHash": "SHA256: 83783930338202d8a98ea4f3c8378393",
-    "generalInstructions": [
-      "Initial material checks and batch tracking active."
-    ],
-    "steps": [
-      { "name": "Picking", "time": "Pending", "status": "active", "operator": "Ramesh Kumar", "machine": "Material Store A", "parameter": "Check Checklist", "limits": "Verify SAP", "instruction": "Verify lot labels." }
-    ],
-    "bom": [
-      { "code": "BH-EPDM-02", "desc": "EPDM Braided Rubber Hose", "req": "112.8 meters", "lot": "LOT-231102B", "verification": "PENDING", "timestamp": "--" }
+      {
+        "code": "BH-EPDM-01",
+        "desc": "EPDM Inner Rubber Hose",
+        "req": "141.0 meters",
+        "lot": "LOT-231102A",
+        "verification": "PENDING",
+        "timestamp": "--"
+      }
     ]
   }
 ]

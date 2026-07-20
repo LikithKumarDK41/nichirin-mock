@@ -1101,34 +1101,36 @@
 
         async function fetchWODetail() {
           try {
-            // Try reading from localStorage first
-            const localData = localStorage.getItem('workOrdersList');
-            let loaded = false;
-            if (localData) {
-              try {
-                const parsed = JSON.parse(localData);
-                if (parsed && parsed.length >= 9 && parsed[0].woNumber) {
-                  workOrdersList = parsed;
-                  loaded = true;
-                }
-              } catch (e) { }
-            }
-            if (!loaded) {
+            const ALLOWED_5_WOS = ['22615540', '22615541', '22615542', '22615543', '22615545'];
+            try {
               const res = await fetch('../work-orders/workorders.json');
-              if (!res.ok) throw new Error('Could not fetch workorders database');
-              workOrdersList = await res.json();
-              localStorage.setItem('workOrdersList', JSON.stringify(workOrdersList));
+              if (res.ok) {
+                workOrdersList = await res.json();
+              }
+            } catch (e) { }
+            if (!workOrdersList || workOrdersList.length === 0) {
+              const localData = localStorage.getItem('workOrdersList');
+              if (localData) {
+                try { workOrdersList = JSON.parse(localData); } catch (e) {}
+              }
             }
+
+            workOrdersList = (workOrdersList || []).filter(w => {
+              if (!w || !w.woNumber) return false;
+              w.woNumber = String(w.woNumber).replace(/^WO-?/i, '');
+              return ALLOWED_5_WOS.includes(w.woNumber);
+            });
+            localStorage.setItem('workOrdersList', JSON.stringify(workOrdersList));
 
             // Get URL parameter
             const params = new URLSearchParams(window.location.search);
-            const targetNo = params.get('wo') || 'WO-22615545';
+            const rawTarget = params.get('wo') || '22615540';
+            const cleanTarget = rawTarget.replace(/^WO-?/i, '');
 
-            activeWO = workOrdersList.find(w => w.woNumber.toUpperCase() === targetNo.toUpperCase());
+            activeWO = workOrdersList.find(w => w.woNumber.replace(/^WO-?/i, '') === cleanTarget);
             if (!activeWO) {
               activeWO = workOrdersList[0];
             }
-            activeWO.targetQty = 800;
 
             // Pre-fetch master template if not in local storage
             if (!localStorage.getItem('workflow_master')) {
@@ -1156,7 +1158,7 @@
           if (!activeWO) return;
 
           // Breadcrumbs and Headers
-          const cleanWONum = activeWO.woNumber.replace('WO-', '');
+          const cleanWONum = String(activeWO.woNumber).replace(/^WO-?/i, '');
           const breadcrumbEl = document.getElementById('wo-header-breadcrumb');
           if (breadcrumbEl) {
             breadcrumbEl.textContent = `Control Card #${cleanWONum}`;
@@ -1165,7 +1167,7 @@
           if (breadcrumbMainEl) {
             breadcrumbMainEl.textContent = `Control Card #${cleanWONum}`;
           }
-          document.getElementById('wo-detail-id').textContent = `WO #${cleanWONum}`;
+          document.getElementById('wo-detail-id').textContent = cleanWONum;
 
           const ctrlCodeEl = document.getElementById('wo-control-code');
           if (ctrlCodeEl) {
@@ -1198,9 +1200,9 @@
           // Status tag
           const statusEl = document.getElementById('wo-detail-status');
           let displayStatus = activeWO.status;
-          if (activeWO.woNumber === 'WO-22615542') {
+          if (cleanWONum === '22615542') {
             displayStatus = 'Not released';
-          } else if (activeWO.status === 'Waiting' || activeWO.status === 'Not released' || activeWO.woNumber === 'WO-22615545') {
+          } else if (activeWO.status === 'Waiting' || activeWO.status === 'Not released' || cleanWONum === '22615545') {
             displayStatus = 'Pending';
           } else if (activeWO.status === 'Running') {
             displayStatus = 'In-progress';
@@ -1225,7 +1227,7 @@
           // Planning Navigation Button
           const planningNavBtn = document.getElementById('wo-planning-nav-btn');
           if (planningNavBtn) {
-            const isNotReleased = activeWO.status === 'Not released' || activeWO.status === 'Waiting' || activeWO.woNumber === 'WO-22615545' || activeWO.woNumber === 'WO-22615542';
+            const isNotReleased = activeWO.status === 'Not released' || activeWO.status === 'Waiting' || cleanWONum === '22615545' || cleanWONum === '22615542';
             const isCompletedOrHeld = activeWO.status === 'Completed' || activeWO.status === 'completed' || activeWO.status === 'Held' || activeWO.status === 'hold';
             if (isNotReleased || isCompletedOrHeld) {
               planningNavBtn.removeAttribute('href');
@@ -1254,7 +1256,8 @@
 
         function updateProcessSidebarDisabledState() {
           if (!activeWO) return;
-          const isOnly4Allowed = activeWO.woNumber === 'WO-22615543' || activeWO.status === 'Held' || activeWO.status === 'hold';
+          const cleanNum = activeWO.woNumber.replace(/^WO-?/i, '');
+          const isOnly4Allowed = cleanNum === '22615543' || activeWO.status === 'Held' || activeWO.status === 'hold';
           const allowedProcessIds = ['picking', 'hose_cutting', 'protector_cutting', 'fitting_bending'];
           const allProcIds = [
             'picking', 'hose_cutting', 'protector_cutting', 'fitting_bending',
@@ -1567,9 +1570,10 @@
             ];
           }
 
+          const cleanWONum = activeWO.woNumber.replace(/^WO-?/i, '');
           if ((activeWO.status === 'Completed' || activeWO.status === 'completed') && activeWO.ccProcesses) {
             activeWO.ccProcesses.forEach(proc => proc.status = 'completed');
-          } else if ((activeWO.woNumber === 'WO-22615540' || activeWO.woNumber === 'WO-22615543' || activeWO.status === 'Held' || activeWO.status === 'hold') && activeWO.ccProcesses) {
+          } else if ((cleanWONum === '22615540' || cleanWONum === '22615543' || activeWO.status === 'Held' || activeWO.status === 'hold') && activeWO.ccProcesses) {
             activeWO.ccProcesses.forEach((proc, idx) => {
               if (idx < 4) {
                 proc.status = 'completed';
@@ -1590,7 +1594,7 @@
           const endIdx = Math.min(startIdx + teamPageSize, totalItems);
           const pageData = ccProcesses.slice(startIdx, endIdx);
 
-          const isNotReleased = activeWO.status === 'Not released' || activeWO.status === 'Waiting' || activeWO.woNumber === 'WO-22615545' || activeWO.woNumber === 'WO-22615542';
+          const isNotReleased = activeWO.status === 'Not released' || activeWO.status === 'Waiting' || cleanWONum === '22615545' || cleanWONum === '22615542';
 
           pageData.forEach((proc, index) => {
             const tr = document.createElement('tr');
@@ -1833,7 +1837,8 @@
         };
 
         function selectSheetProcess(processId) {
-          const isOnly4Allowed = activeWO && (activeWO.woNumber === 'WO-22615543' || activeWO.status === 'Held' || activeWO.status === 'hold');
+          const cleanNum = activeWO ? activeWO.woNumber.replace(/^WO-?/i, '') : '';
+          const isOnly4Allowed = activeWO && (cleanNum === '22615543' || activeWO.status === 'Held' || activeWO.status === 'hold');
           const allowedProcessIds = ['picking', 'hose_cutting', 'protector_cutting', 'fitting_bending'];
           if (isOnly4Allowed && !allowedProcessIds.includes(processId)) {
             return;
@@ -1873,7 +1878,7 @@
 
           const proc = SHEET_PROCESSES[processId];
                     if (proc.isBOM) {
-            const isNotReleased = activeWO.status === 'Not released' || activeWO.status === 'Waiting' || activeWO.woNumber === 'WO-22615545' || activeWO.woNumber === 'WO-22615542';
+            const isNotReleased = activeWO.status === 'Not released' || activeWO.status === 'Waiting' || cleanNum === '22615545' || cleanNum === '22615542';
             const verifiedBadge = isNotReleased
               ? `<span class="inline-flex items-center text-[11px] font-bold text-amber-500 select-none">PENDING</span>`
               : `<span class="inline-flex items-center text-[11px] font-bold text-emerald-600 select-none">VERIFIED</span>`;
@@ -1919,8 +1924,8 @@
             ];
             renderBOM();
           } else {
-            const isNotReleased = activeWO.status === 'Not released' || activeWO.status === 'Waiting' || activeWO.woNumber === 'WO-22615545' || activeWO.woNumber === 'WO-22615542';
-            const isFourVerifiedWO = activeWO.woNumber === 'WO-22615540' || activeWO.woNumber === 'WO-22615543' || activeWO.status === 'Held' || activeWO.status === 'hold';
+            const isNotReleased = activeWO.status === 'Not released' || activeWO.status === 'Waiting' || cleanNum === '22615545' || cleanNum === '22615542';
+            const isFourVerifiedWO = cleanNum === '22615540' || cleanNum === '22615543' || activeWO.status === 'Held' || activeWO.status === 'hold';
             const isPendingForFourVerified = isFourVerifiedWO && !['picking', 'hose_cutting', 'protector_cutting', 'fitting_bending'].includes(processId);
             const isOnlineProcess = [
               'insertion1', 'crimping1', 'insertion2', 'crimping2',

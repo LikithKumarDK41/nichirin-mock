@@ -63,8 +63,7 @@
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-1">
       <div>
         <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Production Reports</h2>
-        <p class="font-body-md text-body-md text-on-surface-variant">Comprehensive summary of production run statuses,
-          passed/failed yields, process routings, and compliance logs.</p>
+        <p class="font-body-md text-body-md text-on-surface-variant">Comprehensive audit logs, yield analysis, work order execution metrics, and compliance records across all manufacturing lines.</p>
       </div>
       <div class="flex gap-3 w-full md:w-auto md:justify-end shrink-0">
         <button onclick="exportOverallReport()"
@@ -75,121 +74,104 @@
       </div>
     </div>
 
-    <!-- KPI Cards Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <!-- Card 1: TOTAL RUNS -->
+    <!-- Horizontal Bento Summary Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-4 gap-6 mb-2">
+      <!-- Card 1: TOTAL ACTIVE WO -->
       <div
-        class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all select-none">
-        <div>
-          <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Total Work Orders</p>
-          <p class="text-3xl font-black text-slate-800" id="stat-total-wo">--</p>
+        class="bg-gradient-to-br from-red-50/30 via-white to-white border border-slate-200/80 border-l-4 border-l-[#C8102E] rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-w-0">
+        <div class="min-w-0 flex-1 mr-3">
+          <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1 truncate"
+            title="Total Active WO">Total Active WO</p>
+          <p class="text-3xl font-black text-[#C8102E] tracking-tight leading-none" id="statActiveWO">1</p>
         </div>
         <div
-          class="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 text-slate-500">
-          <span class="material-symbols-outlined text-[28px]">assessment</span>
+          class="bg-red-50/80 p-2.5 rounded-xl flex items-center justify-center border border-red-100/50 flex-shrink-0">
+          <span class="material-symbols-outlined text-[24px] text-[#C8102E]">play_circle</span>
         </div>
       </div>
-      <!-- Card 2: PASSED -->
+      <!-- Card 2: TOTAL PENDING WO -->
       <div
-        class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all select-none">
-        <div>
-          <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Passed (OK)</p>
-          <p class="text-3xl font-black text-emerald-600" id="stat-passed-wo">--</p>
+        class="bg-gradient-to-br from-amber-50/30 via-white to-white border border-slate-200/80 border-l-4 border-l-amber-500 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-w-0">
+        <div class="min-w-0 flex-1 mr-3">
+          <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1 truncate"
+            title="Total Pending WO">Total Pending WO</p>
+          <p class="text-3xl font-black text-amber-500 tracking-tight leading-none" id="statPendingWO">1</p>
         </div>
         <div
-          class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center border border-emerald-100 text-emerald-600">
-          <span class="material-symbols-outlined text-[28px]"
-            style="font-variation-settings: 'FILL' 1;">check_circle</span>
+          class="bg-amber-50/80 p-2.5 rounded-xl flex items-center justify-center border border-amber-100/50 flex-shrink-0">
+          <span class="material-symbols-outlined text-[24px] text-amber-500">pending_actions</span>
         </div>
       </div>
-      <!-- Card 3: FAILED / HELD -->
+      <!-- Card 3: TOTAL NOT RELEASED WO -->
       <div
-        class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all select-none">
-        <div>
-          <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Failed / Held (NG)</p>
-          <p class="text-3xl font-black text-primary" id="stat-failed-wo">--</p>
+        class="bg-gradient-to-br from-slate-50/50 via-white to-white border border-slate-200/80 border-l-4 border-l-slate-400 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-w-0">
+        <div class="min-w-0 flex-1 mr-3">
+          <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1 truncate"
+            title="Total Not Released WO">Total Not Released WO</p>
+          <p class="text-3xl font-black text-slate-500 tracking-tight leading-none" id="statNotReleasedWO">1</p>
         </div>
         <div
-          class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center border border-red-100 text-primary">
-          <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+          class="bg-slate-100/80 p-2.5 rounded-xl flex items-center justify-center border border-slate-200/50 flex-shrink-0">
+          <span class="material-symbols-outlined text-[24px] text-slate-500">do_not_disturb_on</span>
         </div>
       </div>
-      <!-- Card 4: IN-PROGRESS -->
+      <!-- Card 4: TOTAL COMPLETED WO -->
       <div
-        class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all select-none">
-        <div>
-          <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Active / Running</p>
-          <p class="text-3xl font-black text-amber-600 animate-pulse" id="stat-running-wo">--</p>
+        class="bg-gradient-to-br from-emerald-50/30 via-white to-white border border-slate-200/80 border-l-4 border-l-emerald-600 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-w-0">
+        <div class="min-w-0 flex-1 mr-3">
+          <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1 truncate"
+            title="Total Completed WO">Total Completed WO</p>
+          <p class="text-3xl font-black text-emerald-600 tracking-tight leading-none" id="statCompletedWO">1</p>
         </div>
         <div
-          class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center border border-amber-100 text-amber-600">
-          <span class="material-symbols-outlined text-[28px]">autorenew</span>
+          class="bg-emerald-50/80 p-2.5 rounded-xl flex items-center justify-center border border-emerald-100/50 flex-shrink-0">
+          <span class="material-symbols-outlined text-[24px] text-emerald-600">check_circle</span>
         </div>
       </div>
     </div>
 
-    <!-- Reports Console Grid & Table -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl flex-grow overflow-hidden flex flex-col shadow-sm">
-      <!-- Filters Header -->
-      <div class="p-4 border-b border-outline-variant/30 bg-slate-50/50">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div class="flex flex-col">
-            <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Search Reports</label>
-            <div class="relative">
-              <span
-                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
-              <input id="report-search" oninput="filterReports()"
-                class="pl-9 pr-3 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-full h-9 font-semibold placeholder-slate-400 focus:outline-none"
-                placeholder="Search Work Order ID, Product, Line..." type="text" />
-            </div>
-          </div>
-          <div class="flex flex-col">
-            <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Workflow Status</label>
-            <div class="relative">
-              <select id="report-filter-status" onchange="filterReports()"
-                class="pl-3 pr-8 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-full h-9 appearance-none bg-none font-semibold focus:outline-none">
-                <option value="All">All Status</option>
-                <option value="Completed">Passed (Completed)</option>
-                <option value="Held">Failed / Held</option>
-                <option value="Running">Running (Active)</option>
-                <option value="Waiting">Waiting</option>
-              </select>
-              <span
-                class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-on-surface-variant">arrow_drop_down</span>
-            </div>
-          </div>
+    <!-- Bento Layout: Work Orders List -->
+    <section class="col-span-12 bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm flex flex-col">
+      <div class="px-6 py-4 border-b border-outline-variant/30 flex flex-col gap-3 bg-slate-50">
+        <!-- Row 1: Title -->
+        <div class="flex items-center justify-between">
+          <h3 class="font-headline-md text-headline-md text-primary">Work Order Audit Records</h3>
+        </div>
+
+        <!-- Row 2: Status Chips on right side -->
+        <div class="flex items-center justify-start md:justify-end gap-3 w-full overflow-x-auto py-1">
+          <div id="woStatusChipsContainer" class="flex items-center justify-start md:justify-end gap-2 flex-nowrap sm:flex-wrap"></div>
         </div>
       </div>
 
-      <!-- Data Table -->
-      <div class="overflow-y-auto custom-scrollbar flex-grow">
+      <!-- Table View Container -->
+      <div id="woTableViewContainer" class="overflow-x-auto">
         <table class="w-full text-left border-collapse whitespace-nowrap">
-          <thead
-            class="sticky top-0 bg-slate-50 border-b border-outline-variant/30 font-data-tabular text-data-tabular text-on-surface-variant z-10">
-            <tr>
-              <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-12 text-center">#</th>
-              <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-44">Work Order ID</th>
-              <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider">Product Details</th>
-              <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-48">Yield (OK / Target)</th>
-              <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-36 text-center">Status</th>
-              <th class="p-3.5 font-bold uppercase text-[11px] tracking-wider w-20 text-center">Details</th>
+          <thead>
+            <tr class="bg-white border-b border-outline-variant/30">
+              <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">WO Number</th>
+              <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Product Details &amp; Part Code</th>
+              <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-right">Plan / Done</th>
+              <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-right">OK / NG Qty</th>
+              <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Current Step</th>
+              <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider">Status</th>
+              <th class="px-6 py-3 font-bold text-on-surface-variant uppercase text-[11px] tracking-wider text-center">Action</th>
             </tr>
           </thead>
-          <tbody id="reports-tbody" class="divide-y divide-outline-variant/20 font-data-tabular text-data-tabular">
-            <!-- Populated dynamically -->
+          <tbody id="reports-tbody" class="divide-y divide-outline-variant/30 font-data-tabular">
+            <!-- Dynamically populated -->
           </tbody>
         </table>
       </div>
 
-      <!-- Pagination -->
-      <div class="p-4 flex items-center justify-between border-t border-outline-variant/30 bg-slate-50">
-        <span id="reports-pagination-text" class="font-body-sm text-body-sm text-on-surface-variant">Showing -- to -- of
-          -- reports</span>
-        <div class="flex gap-1" id="reports-pagination-controls">
-          <!-- Populated dynamically -->
+      <!-- Pagination Footer -->
+      <div class="px-6 py-4 border-t border-outline-variant/30 flex flex-col sm:flex-row justify-between items-center gap-3 bg-slate-50 text-xs font-semibold text-on-surface-variant flex-shrink-0 select-none">
+        <div id="reports-pagination-text" class="truncate whitespace-nowrap max-w-full" title="Showing 1 to 5 of 5 entries">Showing 1 to 5 of 5 entries</div>
+        <div class="flex items-center gap-2 flex-shrink-0" id="reports-pagination-controls">
+          <!-- Page numbers inserted dynamically -->
         </div>
       </div>
-    </div>
+    </section>
 
     <!-- Detailed Report Drawer Modal (Slides from Right Side - Full Screen) -->
     <div id="report-detail-modal" class="fixed inset-0 z-[100] hidden flex justify-end">
@@ -365,7 +347,7 @@
           if (localData) {
             try {
               const parsed = JSON.parse(localData);
-              if (parsed && parsed.length >= 5 && parsed[0].woNumber) {
+              if (parsed && parsed.length >= 1 && parsed[0].woNumber) {
                 workOrdersList = parsed;
                 loaded = true;
               }
@@ -375,9 +357,13 @@
             const res = await fetch('../work-orders/workorders.json');
             if (!res.ok) throw new Error('Could not fetch workorders database');
             workOrdersList = await res.json();
+            workOrdersList.forEach(w => {
+              w.woNumber = String(w.woNumber).replace(/^WO-?/i, '');
+            });
             localStorage.setItem('workOrdersList', JSON.stringify(workOrdersList));
           }
 
+          renderStatusChips();
           calculateKPIs();
           filterReports();
         } catch (e) {
@@ -385,133 +371,178 @@
         }
       }
 
+      let woFilterStatus = 'ALL';
+
+      function getCurrentProcess(w) {
+        if (!w.steps || w.steps.length === 0) return 'N/A';
+        const activeStep = w.steps.find(s => s.status === 'active');
+        if (activeStep) return activeStep.name;
+
+        if (w.status === 'Completed' || w.status === 'completed') {
+          return w.steps[w.steps.length - 1].name;
+        }
+
+        const firstPending = w.steps.find(s => s.status === 'pending');
+        if (firstPending) return firstPending.name;
+
+        return w.steps[0].name;
+      }
+
+      function getDisplayStatus(w) {
+        const cleanNum = String(w.woNumber).replace(/^WO-?/i, '');
+        if (w.status === 'Running' || w.status === 'in-progress') return 'in-progress';
+        if (w.status === 'Completed' || w.status === 'completed') return 'completed';
+        if (w.status === 'Held' || w.status === 'hold') return 'hold';
+        if (cleanNum === '22615542') return 'Not released';
+        if (w.status === 'Waiting' || w.status === 'pending' || w.status === 'Not released' || cleanNum === '22615545') {
+          return 'pending';
+        }
+        return w.status;
+      }
+
       function calculateKPIs() {
         if (!workOrdersList || workOrdersList.length === 0) return;
 
-        const total = workOrdersList.length;
-        const passed = workOrdersList.filter(w => w.status === 'Completed').length;
-        const failed = workOrdersList.filter(w => w.status === 'Held').length;
-        const running = workOrdersList.filter(w => w.status === 'Running' || w.status === 'Waiting').length;
+        const runningCount = workOrdersList.filter(w => getDisplayStatus(w) === 'in-progress').length;
+        const pendingCount = workOrdersList.filter(w => getDisplayStatus(w) === 'pending').length;
+        const notReleasedCount = workOrdersList.filter(w => getDisplayStatus(w) === 'Not released').length;
+        const completedCount = workOrdersList.filter(w => getDisplayStatus(w) === 'completed').length;
 
-        document.getElementById('stat-total-wo').textContent = total;
-        document.getElementById('stat-passed-wo').textContent = `${passed} (${(passed / total * 100).toFixed(0)}%)`;
-        document.getElementById('stat-failed-wo').textContent = `${failed} (${(failed / total * 100).toFixed(0)}%)`;
-        document.getElementById('stat-running-wo').textContent = `${running} (${(running / total * 100).toFixed(0)}%)`;
+        if (document.getElementById('statActiveWO')) document.getElementById('statActiveWO').textContent = runningCount;
+        if (document.getElementById('statPendingWO')) document.getElementById('statPendingWO').textContent = pendingCount;
+        if (document.getElementById('statNotReleasedWO')) document.getElementById('statNotReleasedWO').textContent = notReleasedCount;
+        if (document.getElementById('statCompletedWO')) document.getElementById('statCompletedWO').textContent = completedCount;
+      }
+
+      function renderStatusChips() {
+        const container = document.getElementById('woStatusChipsContainer');
+        if (!container) return;
+
+        const statuses = [
+          { label: 'All Statuses', value: 'ALL' },
+          { label: 'Not released', value: 'Not released' },
+          { label: 'Pending', value: 'pending' },
+          { label: 'In-progress', value: 'in-progress' },
+          { label: 'Hold', value: 'hold' },
+          { label: 'Completed', value: 'completed' }
+        ];
+
+        container.innerHTML = '';
+        statuses.forEach(status => {
+          let count = 0;
+          if (status.value === 'ALL') {
+            count = workOrdersList.length;
+          } else {
+            count = workOrdersList.filter(w => getDisplayStatus(w) === status.value).length;
+          }
+
+          const btn = document.createElement('button');
+          const isActive = woFilterStatus === status.value;
+
+          btn.className = isActive
+            ? 'px-3 py-1 bg-[#C8102E] text-white border border-[#C8102E] rounded-full text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5 whitespace-nowrap'
+            : 'px-3 py-1 bg-white text-slate-600 border border-slate-200 rounded-full text-xs font-semibold hover:bg-slate-50 hover:text-slate-800 transition-all shadow-sm cursor-pointer flex items-center gap-1.5 whitespace-nowrap';
+
+          const countBadge = isActive
+            ? `<span class="px-1.5 py-0.5 bg-white/20 rounded-full text-[10px] font-bold text-white">${count}</span>`
+            : `<span class="px-1.5 py-0.5 bg-slate-100 rounded-full text-[10px] font-bold text-slate-500">${count}</span>`;
+
+          btn.innerHTML = `<span>${status.label}</span>${countBadge}`;
+          btn.onclick = () => {
+            woFilterStatus = status.value;
+            currentPage = 1;
+            renderStatusChips();
+            filterReports();
+          };
+          container.appendChild(btn);
+        });
       }
 
       function filterReports() {
-        const q = document.getElementById('report-search').value.toLowerCase().trim();
-        const statusVal = document.getElementById('report-filter-status').value;
-
         const filtered = workOrdersList.filter(w => {
-          // Search text
-          if (q) {
-            const match = w.woNumber.toLowerCase().includes(q) ||
-              w.productName.toLowerCase().includes(q) ||
-              w.partNumber.toLowerCase().includes(q) ||
-              w.line.toLowerCase().includes(q);
-            if (!match) return false;
-          }
-
-          // Status Filter
-          if (statusVal !== 'All' && w.status !== statusVal) {
-            return false;
-          }
-
-          return true;
+          let matchesStatus = true;
+          if (woFilterStatus !== 'ALL') matchesStatus = getDisplayStatus(w) === woFilterStatus;
+          return matchesStatus;
         });
 
         filteredList = filtered;
-        currentPage = 1;
         renderReportsTable(filteredList);
       }
 
-      function renderReportsTable(list) {
+      function renderReportsTable(items) {
         const tbody = document.getElementById('reports-tbody');
         if (!tbody) return;
         tbody.innerHTML = '';
 
-        if (list.length === 0) {
+        if (!items || items.length === 0) {
           tbody.innerHTML = `
-                  <tr>
-                      <td colspan="6" class="p-6 text-center text-slate-400 font-semibold">No work order reports match your search criteria</td>
-                  </tr>
-              `;
-          document.getElementById('reports-pagination-text').textContent = 'Showing 0 to 0 of 0 reports';
-          const pagControls = document.getElementById('reports-pagination-controls');
-          if (pagControls) pagControls.innerHTML = '';
+            <tr>
+              <td colspan="7" class="px-6 py-12 text-center text-on-surface-variant font-medium">No work orders matched filters.</td>
+            </tr>
+          `;
+          if (document.getElementById('reports-pagination-text')) {
+            document.getElementById('reports-pagination-text').textContent = 'Showing 0 to 0 of 0 entries';
+          }
           return;
         }
 
-        const startIdx = (currentPage - 1) * itemsPerPage;
-        const endIdx = startIdx + itemsPerPage;
-        const pagedList = list.slice(startIdx, endIdx);
-
-        pagedList.forEach((w, index) => {
-          const row = document.createElement('tr');
-          row.className = 'hover:bg-slate-50/50 border-b border-outline-variant/15 transition-colors cursor-pointer font-medium';
-          row.onclick = (e) => {
+        items.forEach(w => {
+          const tr = document.createElement('tr');
+          tr.className = 'hover:bg-slate-50/50 transition-colors group cursor-pointer border-b border-outline-variant/30';
+          tr.onclick = (e) => {
             if (e.target.closest('button') || e.target.closest('a')) return;
             openReportModal(w);
           };
 
-          // Status Badge
-          let statusBadge = '';
-          if (w.status === 'Completed') {
-            statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Passed</span>';
-          } else if (w.status === 'Running') {
-            statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200 animate-pulse">Running</span>';
-          } else if (w.status === 'Held') {
-            statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200">Held / Failed</span>';
-          } else {
-            statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-650 border border-slate-200">Waiting</span>';
-          }
+          const displayStatus = getDisplayStatus(w);
+          let statusClass = 'text-slate-600 font-extrabold';
+          if (displayStatus === 'in-progress') statusClass = 'text-[#c8102e] font-extrabold';
+          else if (displayStatus === 'completed') statusClass = 'text-emerald-600 font-extrabold';
+          else if (displayStatus === 'hold') statusClass = 'text-red-600 font-extrabold';
+          else if (displayStatus === 'Not released') statusClass = 'text-slate-400 font-extrabold';
+          else if (displayStatus === 'pending') statusClass = 'text-amber-500 font-extrabold';
 
-          row.innerHTML = `
-                  <td class="p-3 text-center text-on-surface-variant">${startIdx + index + 1}</td>
-                  <td class="p-3 text-primary font-bold font-data-tabular">${w.woNumber}</td>
-                  <td class="p-3 text-slate-800">
-                    <div class="font-bold text-slate-900">${w.productName}</div>
-                    <div class="text-[10px] text-slate-400 font-semibold mt-0.5">${w.partNumber}</div>
-                  </td>
-                  <td class="p-3 text-slate-800 font-bold font-data-tabular">
-                    <span class="text-emerald-600">${w.okQty} OK</span> / <span class="text-slate-500 text-[10px] font-semibold">${w.targetQty} units</span>
-                  </td>
-                  <td class="p-3 text-center">${statusBadge}</td>
-                  <td class="p-3 text-center">
-                    <button onclick="event.stopPropagation(); openReportModalByNo('${w.woNumber}')" class="p-1.5 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-primary transition-colors cursor-pointer flex items-center justify-center w-8 h-8 mx-auto" title="Inspect Full Report">
-                      <span class="material-symbols-outlined text-[18px]">visibility</span>
-                    </button>
-                  </td>
-              `;
-          tbody.appendChild(row);
+          const doneClass = displayStatus === 'completed' ? 'text-emerald-600 font-bold' : 'text-slate-800 font-bold';
+          const displayWO = String(w.woNumber).replace(/^WO-?/i, '');
+
+          tr.innerHTML = `
+            <td class="px-6 py-4 font-bold">
+              <a href="../work-order-detail/index.html?wo=${displayWO}" class="text-primary hover:underline font-extrabold">${displayWO}</a>
+            </td>
+            <td class="px-6 py-4">
+              <div class="flex flex-col">
+                <span class="font-bold text-slate-900 text-sm leading-tight">${w.productName}</span>
+                <span class="text-[11px] text-slate-500 font-bold mt-1 font-data-tabular">${w.partNumber}</span>
+              </div>
+            </td>
+            <td class="px-6 py-4 text-right font-medium">
+              ${w.targetQty} <span class="text-slate-400">/</span> <span class="${doneClass}">${w.doneQty}</span>
+            </td>
+            <td class="px-6 py-4 text-right">
+              <span class="text-emerald-600 font-bold">${w.okQty || 0}</span> <span class="text-slate-400">/</span> <span class="text-rose-600 font-bold">${w.ngQty || 0}</span>
+            </td>
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-2 font-semibold text-slate-700">
+                <span class="w-2 h-2 rounded-full bg-primary ${displayStatus === 'in-progress' ? 'animate-pulse' : ''}"></span>
+                ${getCurrentProcess(w)}
+              </div>
+            </td>
+            <td class="px-6 py-4">
+              <span class="text-[11px] uppercase font-bold tracking-wider ${statusClass}">${displayStatus}</span>
+            </td>
+            <td class="px-6 py-4 text-center">
+              <div class="flex items-center justify-center gap-2">
+                <button onclick="event.stopPropagation(); openReportModalByNo('${displayWO}')" class="w-8 h-8 rounded-lg border border-outline-variant/30 bg-white flex items-center justify-center text-slate-500 hover:text-primary hover:bg-slate-50 transition-colors shadow-sm cursor-pointer" title="Inspect Full Report">
+                  <span class="material-symbols-outlined text-[18px]">visibility</span>
+                </button>
+              </div>
+            </td>
+          `;
+          tbody.appendChild(tr);
         });
 
-        // Update Pagination details
-        const totalPages = Math.ceil(list.length / itemsPerPage);
-        document.getElementById('reports-pagination-text').textContent = `Showing ${startIdx + 1} to ${Math.min(endIdx, list.length)} of ${list.length} reports`;
-
-        const pagControls = document.getElementById('reports-pagination-controls');
-        if (pagControls) {
-          let buttonsHTML = `
-            <button class="p-1 border border-outline-variant/30 rounded bg-white text-on-surface-variant hover:bg-slate-50 disabled:opacity-50 flex items-center justify-center w-7 h-7 cursor-pointer" onclick="changePage(currentPage - 1)" ${currentPage === 1 ? 'disabled' : ''}>
-              <span class="material-symbols-outlined text-[18px]">chevron_left</span>
-            </button>
-          `;
-
-          for (let i = 1; i <= totalPages; i++) {
-            buttonsHTML += `
-              <button class="w-7 h-7 rounded text-xs font-semibold flex items-center justify-center cursor-pointer ${i === currentPage ? 'bg-primary text-white' : 'bg-white border border-outline-variant/30 text-slate-700 hover:bg-slate-50'}" onclick="changePage(${i})">${i}</button>
-            `;
-          }
-
-          buttonsHTML += `
-            <button class="p-1 border border-outline-variant/30 rounded bg-white text-on-surface-variant hover:bg-slate-50 disabled:opacity-50 flex items-center justify-center w-7 h-7 cursor-pointer" onclick="changePage(currentPage + 1)" ${currentPage === totalPages ? 'disabled' : ''}>
-              <span class="material-symbols-outlined text-[18px]">chevron_right</span>
-            </button>
-          `;
-
-          pagControls.innerHTML = buttonsHTML;
+        if (document.getElementById('reports-pagination-text')) {
+          document.getElementById('reports-pagination-text').textContent = `Showing 1 to ${items.length} of ${items.length} entries`;
         }
       }
 
