@@ -36,9 +36,13 @@
   // Dynamically update link pathways and assets on layout when traversing directories
   function updateLayoutRelativePaths(relPrefix) {
     // Update Sidebar Logo
-    const logoImg = document.querySelector('aside img');
-    if (logoImg) {
-      logoImg.src = relPrefix + 'assets/logo.png';
+    const logoImgExpanded = document.querySelector('aside img.logo-expanded');
+    if (logoImgExpanded) {
+      logoImgExpanded.src = relPrefix + 'assets/logo_full.png';
+    }
+    const logoImgCollapsed = document.querySelector('aside img.logo-collapsed');
+    if (logoImgCollapsed) {
+      logoImgCollapsed.src = relPrefix + 'assets/logo_icon.png';
     }
     const logoLink = document.querySelector('aside a');
     if (logoLink) {
@@ -265,9 +269,10 @@
 
     const SIDEBAR_HTML = `
       <aside class="fixed top-0 left-0 h-full w-[260px] bg-white text-on-surface border-r border-outline-variant/30 flex flex-col z-50 -translate-x-full lg:translate-x-0 transition-transform duration-300 select-none">
-        <div class="h-[64px] px-6 border-b border-outline-variant/30 bg-white flex items-center justify-start lg:justify-center relative select-none flex-shrink-0">
-          <a class="flex items-center gap-2 justify-start lg:justify-center w-full" href="${relPrefix}work-orders/index.html">
-            <img src="${relPrefix}assets/logo.png" class="h-10 w-auto object-contain select-none" alt="NICHIRIN Logo" />
+        <div class="h-[64px] px-4 border-b border-outline-variant/30 bg-white flex items-center justify-center relative select-none flex-shrink-0">
+          <a class="flex items-center justify-center w-full h-full" href="${relPrefix}work-orders/index.html">
+            <img src="${relPrefix}assets/logo_full.png" class="logo-expanded h-12 w-full object-contain select-none" alt="NICHIRIN Logo" />
+            <img src="${relPrefix}assets/logo_icon.png" class="logo-collapsed h-10 w-auto object-contain select-none" alt="NICHIRIN Logo Icon" />
           </a>
           <button class="sidebar-close-btn absolute right-4 top-1/2 -translate-y-1/2 lg:hidden text-on-surface-variant hover:text-primary" aria-label="Close Sidebar">
             <span class="material-symbols-outlined">close</span>
@@ -732,10 +737,10 @@
     // Viewport containers
     const root = document.getElementById('app-root');
 
-    // Case 1: Render Login view directly into root (without sidebar and header)
+    // Case 1: Render Login view directly into root (with header, main card aligned right, and footer)
     if (route === 'login-old' || !isUserLoggedIn) {
       root.innerHTML = '';
-      root.className = "min-h-screen w-screen overflow-hidden flex items-center justify-center lg:justify-end pr-0 sm:pr-8 md:pr-16 lg:pr-24 relative bg-cover bg-left-bottom bg-no-repeat";
+      root.className = "h-screen w-screen overflow-hidden flex flex-col relative bg-cover bg-left-bottom bg-no-repeat";
       root.style.backgroundImage = `url('${relPrefix}assets/login_bg.jpg')`;
 
       // Ambient overlay for premium integrated look
@@ -752,13 +757,27 @@
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
 
-        // Extract the login card and inject it
-        const loginCard = doc.querySelector('main > div') || doc.body.firstElementChild;
-        if (loginCard) {
-          loginCard.className = "w-full max-w-[420px] bg-white/90 backdrop-blur-xl border-2 border-[#C8102E] rounded-3xl relative overflow-hidden shadow-2xl transition-all duration-300 m-4 sm:m-0 z-10 hover:shadow-red-500/5 hover:border-[#A60D25]";
-          root.appendChild(loginCard);
-        } else {
-          root.innerHTML = html;
+        // Extract and style main container
+        const mainEl = doc.querySelector('main');
+        if (mainEl) {
+          mainEl.className = "login-main flex-grow flex items-center justify-center lg:justify-between p-4 sm:p-8 lg:p-12 z-10 w-full max-w-7xl mx-auto gap-8 relative overflow-hidden";
+          
+          // Style the login card inside main
+          const loginCard = mainEl.querySelector('.login-card') || mainEl.querySelector('div:last-child');
+          if (loginCard) {
+            loginCard.className = "login-card w-full max-w-[460px] mx-4 sm:mx-0 bg-white/90 backdrop-blur-xl border-2 border-[#C8102E] rounded-3xl relative overflow-hidden shadow-2xl transition-all duration-300 hover:shadow-red-500/5 hover:border-[#A60D25] shrink-0";
+            
+            // Adjust card inner padding and logo height dynamically if necessary
+            const cardFormContainer = loginCard.querySelector('div');
+            if (cardFormContainer) {
+              cardFormContainer.className = "p-6 sm:p-10";
+            }
+            const cardLogo = loginCard.querySelector('img');
+            if (cardLogo) {
+              cardLogo.className = "h-16 w-auto object-contain select-none";
+            }
+          }
+          root.appendChild(mainEl);
         }
 
         // Apply page-specific dynamic stylesheet config (login layout adjustments)
@@ -879,7 +898,7 @@
             sysName = config.sysName;
           }
         } catch (e) { }
-        
+
         defaultTitle.textContent = sysName;
         defaultTitle.setAttribute('title', sysName);
         mainHeaderLeft.appendChild(defaultTitle);

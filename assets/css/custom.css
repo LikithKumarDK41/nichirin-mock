@@ -349,3 +349,22 @@ input[type="checkbox"] {
 input[type="checkbox"]:focus {
   --tw-ring-color: var(--color-primary, #c8102e) !important;
 }
+
+/* Sidebar collapsed / expanded logo toggling */
+aside .logo-expanded {
+  display: block !important;
+}
+aside .logo-collapsed {
+  display: none !important;
+}
+aside.sidebar-collapsed .logo-expanded {
+  display: none !important;
+}
+aside.sidebar-collapsed .logo-collapsed {
+  display: block !important;
+}
+
+/* Reset top padding for login main container */
+main.login-main {
+  padding-top: 0 !important;
+}
