@@ -165,10 +165,17 @@
                         <h3 class="font-headline-md text-headline-md text-primary">Production Schedule Tracking</h3>
                     </div>
 
-                    <!-- Row 2: Status Chips on right side -->
-                    <div class="flex items-center justify-start md:justify-end gap-3 w-full overflow-x-auto py-1">
+                    <!-- Row 2: Status Filter (Mobile Select Dropdown / Desktop Chips) -->
+                    <div class="flex items-center justify-start md:justify-end gap-3 w-full py-1">
+                        <!-- Mobile Status Select Dropdown -->
+                        <div class="block sm:hidden w-full">
+                            <select id="woStatusMobileSelect" onchange="woFilterStatus = this.value; currentWOPage = 1; renderStatusChips(); renderWorkOrders();"
+                                class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:border-[#dc0111] focus:ring-1 focus:ring-[#dc0111] shadow-sm">
+                            </select>
+                        </div>
+                        <!-- Desktop Status Chips -->
                         <div id="woStatusChipsContainer"
-                            class="flex items-center justify-start md:justify-end gap-2 flex-nowrap sm:flex-wrap"></div>
+                            class="hidden sm:flex items-center justify-start md:justify-end gap-2 flex-wrap"></div>
                     </div>
                 </div>
 
@@ -491,7 +498,7 @@
 
                 function renderStatusChips() {
                     const container = document.getElementById('woStatusChipsContainer');
-                    if (!container) return;
+                    const selectEl = document.getElementById('woStatusMobileSelect');
 
                     const statuses = [
                         { label: 'All Statuses', value: 'ALL' },
@@ -502,40 +509,61 @@
                         { label: 'Completed', value: 'completed' }
                     ];
 
-                    container.innerHTML = '';
-                    statuses.forEach(status => {
-                        let count = 0;
-                        if (status.value === 'ALL') {
-                            count = workOrdersList.length;
-                        } else {
-                            count = workOrdersList.filter(w => getDisplayStatus(w) === status.value).length;
-                        }
+                    if (selectEl) {
+                        selectEl.innerHTML = '';
+                        statuses.forEach(status => {
+                            let count = 0;
+                            if (status.value === 'ALL') {
+                                count = workOrdersList.length;
+                            } else {
+                                count = workOrdersList.filter(w => getDisplayStatus(w) === status.value).length;
+                            }
+                            const opt = document.createElement('option');
+                            opt.value = status.value;
+                            opt.textContent = `${status.label} (${count})`;
+                            if (woFilterStatus === status.value) {
+                                opt.selected = true;
+                            }
+                            selectEl.appendChild(opt);
+                        });
+                    }
 
-                        const btn = document.createElement('button');
-                        const isActive = woFilterStatus === status.value;
+                    if (container) {
+                        container.innerHTML = '';
+                        statuses.forEach(status => {
+                            let count = 0;
+                            if (status.value === 'ALL') {
+                                count = workOrdersList.length;
+                            } else {
+                                count = workOrdersList.filter(w => getDisplayStatus(w) === status.value).length;
+                            }
 
-                        btn.className = isActive
-                            ? 'px-3 py-1 bg-[#dc0111] text-white border border-[#dc0111] rounded-full text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5 whitespace-nowrap'
-                            : 'px-3 py-1 bg-white text-slate-600 border border-slate-200 rounded-full text-xs font-semibold hover:bg-slate-50 hover:text-slate-800 transition-all shadow-sm cursor-pointer flex items-center gap-1.5 whitespace-nowrap';
+                            const btn = document.createElement('button');
+                            const isActive = woFilterStatus === status.value;
 
-                        const countBadge = isActive
-                            ? `<span class="px-1.5 py-0.5 bg-white/20 rounded-full text-[10px] font-bold text-white">${count}</span>`
-                            : `<span class="px-1.5 py-0.5 bg-slate-100 rounded-full text-[10px] font-bold text-slate-500">${count}</span>`;
+                            btn.className = isActive
+                                ? 'px-3 py-1 bg-[#dc0111] text-white border border-[#dc0111] rounded-full text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5 whitespace-nowrap'
+                                : 'px-3 py-1 bg-white text-slate-600 border border-slate-200 rounded-full text-xs font-semibold hover:bg-slate-50 hover:text-slate-800 transition-all shadow-sm cursor-pointer flex items-center gap-1.5 whitespace-nowrap';
 
-                        btn.innerHTML = `
-                            <span>${status.label}</span>
-                            ${countBadge}
-                        `;
+                            const countBadge = isActive
+                                ? `<span class="px-1.5 py-0.5 bg-white/20 rounded-full text-[10px] font-bold text-white">${count}</span>`
+                                : `<span class="px-1.5 py-0.5 bg-slate-100 rounded-full text-[10px] font-bold text-slate-500">${count}</span>`;
 
-                        btn.onclick = () => {
-                            woFilterStatus = status.value;
-                            currentWOPage = 1;
-                            renderStatusChips();
-                            renderWorkOrders();
-                        };
+                            btn.innerHTML = `
+                                <span>${status.label}</span>
+                                ${countBadge}
+                            `;
 
-                        container.appendChild(btn);
-                    });
+                            btn.onclick = () => {
+                                woFilterStatus = status.value;
+                                currentWOPage = 1;
+                                renderStatusChips();
+                                renderWorkOrders();
+                            };
+
+                            container.appendChild(btn);
+                        });
+                    }
                 }
 
                 function renderWorkOrders() {
@@ -786,7 +814,7 @@
                         steps,
                         specs,
                         bom: [
-                            { "code": "BH-EPDM-01", "desc": "EPDM Inner Rubber Hose", "req": "100 meters", "lot": "LOT-231102A", "verification": "VERIFIED" }
+                            { "code": "BH-EPDM-01", "desc": "EPDM Inner Rubber Hose", "req": "100 meters", "lot": "LOT-231102A", "verification": "COMPLETED" }
                         ]
                     };
 

@@ -19,7 +19,10 @@
         "Validation": "Lot verification"
       },
       "prerequisite": "",
-      "dependencies": [],
+      "dependencies": [
+        { "name": "BOM Specifications Audit", "code": "PRC-BOM-00" },
+        { "name": "Production Order Verification", "code": "PRC-WO-00" }
+      ],
       "parameters": [],
       "startConditions": {
         "operatorScan": true,

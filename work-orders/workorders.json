@@ -138,7 +138,7 @@
         "desc": "EPDM Inner Rubber Hose (Inner Layer)",
         "req": "112.8 meters",
         "lot": "LOT-231102A",
-        "verification": "VERIFIED",
+        "verification": "COMPLETED",
         "timestamp": "2026-07-13 06:15 AM"
       },
       {
@@ -146,7 +146,7 @@
         "desc": "Metal Fitting Collar 12mm",
         "req": "1200 units",
         "lot": "LOT-231015C",
-        "verification": "VERIFIED",
+        "verification": "COMPLETED",
         "timestamp": "2026-07-13 06:17 AM"
       },
       {
@@ -154,7 +154,7 @@
         "desc": "End Fitting Collar Type B",
         "req": "1200 units",
         "lot": "LOT-231016D",
-        "verification": "VERIFIED",
+        "verification": "COMPLETED",
         "timestamp": "2026-07-13 06:18 AM"
       },
       {
@@ -162,7 +162,7 @@
         "desc": "NBR Protector Sleeve 190mm",
         "req": "228.0 meters",
         "lot": "LOT-231105X",
-        "verification": "VERIFIED",
+        "verification": "COMPLETED",
         "timestamp": "2026-07-13 06:20 AM"
       }
     ]
@@ -305,7 +305,7 @@
         "desc": "EPDM Inner Rubber Hose (Inner Layer)",
         "req": "75.2 meters",
         "lot": "LOT-231102A",
-        "verification": "VERIFIED",
+        "verification": "COMPLETED",
         "timestamp": "2026-07-13 06:15 AM"
       },
       {
@@ -313,7 +313,7 @@
         "desc": "Metal Fitting Collar 12mm",
         "req": "800 units",
         "lot": "LOT-231015C",
-        "verification": "VERIFIED",
+        "verification": "COMPLETED",
         "timestamp": "2026-07-13 06:17 AM"
       },
       {
@@ -321,7 +321,7 @@
         "desc": "End Fitting Collar Type B",
         "req": "800 units",
         "lot": "LOT-231016D",
-        "verification": "VERIFIED",
+        "verification": "COMPLETED",
         "timestamp": "2026-07-13 06:18 AM"
       }
     ]
@@ -493,7 +493,7 @@
         "desc": "EPDM Braided Rubber Hose (Inner Layer)",
         "req": "94.0 meters",
         "lot": "LOT-231102B",
-        "verification": "VERIFIED",
+        "verification": "COMPLETED",
         "timestamp": "2026-07-13 06:15 AM"
       },
       {
@@ -501,7 +501,7 @@
         "desc": "Metal Fitting Collar 15mm",
         "req": "1000 units",
         "lot": "LOT-231015D",
-        "verification": "VERIFIED",
+        "verification": "COMPLETED",
         "timestamp": "2026-07-13 06:17 AM"
       }
     ]

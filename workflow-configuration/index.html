@@ -249,19 +249,7 @@
                   <div>
                     <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Process Description</label>
                     <textarea id="cfg-step-desc" rows="2" class="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary" oninput="updateSelectedStepField('description', this.value)" placeholder="Enter process description..."></textarea>
-                  </div>
-                  <div class="grid grid-cols-2 gap-3">
-                    <div>
-                      <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Process Code</label>
-                      <input type="text" id="cfg-step-code" class="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary" oninput="updateSelectedStepField('code', this.value)">
-                    </div>
-                    <div class="flex items-end pb-0.5">
-                      <label class="flex items-center gap-2 cursor-pointer w-full px-3 py-1.5 border border-slate-300 rounded-lg hover:bg-slate-50 select-none">
-                        <input type="checkbox" id="cfg-step-mandatory" class="w-3.5 h-3.5 rounded border-slate-350 text-secondary focus:ring-0" onchange="updateSelectedStepField('mandatory', this.checked)">
-                        <span class="text-xs font-bold text-slate-700">Mandatory</span>
-                      </label>
-                    </div>
-                  </div>
+                  
                 </div>
               </section>
 
@@ -297,7 +285,7 @@
               </section>
 
               <!-- SECTION 4: Validations -->
-              <section id="cfg-section-validations" class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm space-y-4">
+              <section id="cfg-section-validations" class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm space-y-4 hidden">
                 <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-1.5">Execution Validations</h4>
                 <div class="grid grid-cols-2 gap-4">
                   <div class="space-y-2.5">
@@ -339,6 +327,17 @@
                       </label>
                     </div>
                   </div>
+                </div>
+              </section>
+
+              <!-- SECTION 6: BOM Materials -->
+              <section id="cfg-section-bom" class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm space-y-3">
+                <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-1.5 flex justify-between items-center">
+                  BOM Materials
+                  <span class="material-symbols-outlined text-[14px]">inventory_2</span>
+                </h4>
+                <div id="cfg-step-bom-list" class="space-y-2">
+                  <!-- Dynamically populated BOM materials -->
                 </div>
               </section>
 
@@ -755,13 +754,12 @@
                 
                 card.onclick = () => selectStage(idx);
                 card.innerHTML = `
-                    <div class="flex justify-between items-start mb-1">
+                    <div class="flex justify-between items-start">
                       <span class="font-bold text-xs uppercase ${isSelected ? 'text-secondary' : 'text-slate-800'}">${idx + 1}. ${stage.name}</span>
                       <button onclick="event.stopPropagation(); deleteStage(${idx})" class="text-slate-400 hover:text-rose-600 transition-colors">
                         <span class="material-symbols-outlined text-[15px]">delete</span>
                       </button>
                     </div>
-                    <p class="text-[10px] text-slate-500 font-semibold line-clamp-2 leading-relaxed">${stage.summary}</p>
                 `;
                 listEl.appendChild(card);
             });
@@ -910,20 +908,15 @@
                     gridHtml += '</div>';
                 }
 
-                // Dynamic tags logic
+                let scannerBoxHtml = '';
+
+                // Dynamic tags logic (excluding validations)
                 let tagsHtml = '';
                 const tags = [];
                 if (step.mandatory !== false) tags.push({ text: "Mandatory", style: "bg-slate-100 border-slate-200 text-slate-500" });
                 if (step.parameters && step.parameters.length > 0) {
                     tags.push({ text: "Control Points", style: "bg-blue-50 border-blue-200 text-blue-600" });
                 }
-                if (step.startConditions && step.startConditions.machineReady) {
-                    tags.push({ text: "Machine Check", style: "bg-purple-50 border-purple-200 text-purple-600" });
-                }
-                if (step.completionConditions && step.completionConditions.dualQCSignoff) {
-                    tags.push({ text: "QC Signoff", style: "bg-amber-50 border-amber-200 text-amber-600 font-bold" });
-                }
-                
                 tags.push({ text: step.inputMethod || "Manual", style: "bg-slate-100 border-slate-200 text-slate-500" });
 
                 tags.forEach(tag => {
@@ -941,7 +934,8 @@
                           <h3 class="font-bold text-xs uppercase truncate ${titleStyle}">${step.name}</h3>
                           <span class="text-[9px] font-mono font-bold text-slate-400 border border-slate-200 px-1 rounded">${step.code || 'NO-CODE'}</span>
                         </div>
-                        ${gridHtml ? `<div class="mt-1 pb-1">${gridHtml}</div>` : ''}
+                        ${gridHtml}
+                        ${scannerBoxHtml}
                         <div class="flex flex-wrap gap-1 mt-2">
                           ${tagsHtml}
                         </div>
@@ -1036,10 +1030,14 @@
             badgeEl.textContent = step.stepNumber;
 
             // Identification
-            document.getElementById('cfg-step-name').value = step.name;
-            document.getElementById('cfg-step-desc').value = step.description || "";
-            document.getElementById('cfg-step-code').value = step.code || "";
-            document.getElementById('cfg-step-mandatory').checked = step.mandatory !== false;
+            const nameEl = document.getElementById('cfg-step-name');
+            if (nameEl) nameEl.value = step.name;
+            const descEl = document.getElementById('cfg-step-desc');
+            if (descEl) descEl.value = step.description || "";
+            const codeEl = document.getElementById('cfg-step-code');
+            if (codeEl) codeEl.value = step.code || "";
+            const mandatoryEl = document.getElementById('cfg-step-mandatory');
+            if (mandatoryEl) mandatoryEl.checked = step.mandatory !== false;
 
             // Dependencies
             const depListEl = document.getElementById('cfg-step-dependencies-list');
@@ -1105,13 +1103,19 @@
             const sc = step.startConditions || { operatorScan: false, machineReady: false, toolCalibration: false };
             const cc = step.completionConditions || { allParameters: false, dualQCSignoff: false, autoPrintLabel: false };
 
-            document.getElementById('cfg-step-operator-scan').checked = !!sc.operatorScan;
-            document.getElementById('cfg-step-machine-ready').checked = !!sc.machineReady;
-            document.getElementById('cfg-step-tool-calibration').checked = !!sc.toolCalibration;
+            const opScan = document.getElementById('cfg-step-operator-scan');
+            if (opScan) opScan.checked = !!sc.operatorScan;
+            const machReady = document.getElementById('cfg-step-machine-ready');
+            if (machReady) machReady.checked = !!sc.machineReady;
+            const toolCal = document.getElementById('cfg-step-tool-calibration');
+            if (toolCal) toolCal.checked = !!sc.toolCalibration;
 
-            document.getElementById('cfg-step-all-params').checked = !!cc.allParameters;
-            document.getElementById('cfg-step-dual-qc').checked = !!cc.dualQCSignoff;
-            document.getElementById('cfg-step-print-label').checked = !!cc.autoPrintLabel;
+            const allParams = document.getElementById('cfg-step-all-params');
+            if (allParams) allParams.checked = !!cc.allParameters;
+            const dualQc = document.getElementById('cfg-step-dual-qc');
+            if (dualQc) dualQc.checked = !!cc.dualQCSignoff;
+            const printLbl = document.getElementById('cfg-step-print-label');
+            if (printLbl) printLbl.checked = !!cc.autoPrintLabel;
 
             // Operator link button
             const operatorLinkContainer = document.getElementById('cfg-operator-link-container');
@@ -1147,21 +1151,102 @@
                 `;
             }
 
+            // Populate BOM Materials section
+            const bomListEl = document.getElementById('cfg-step-bom-list');
+            if (bomListEl) {
+                bomListEl.innerHTML = '';
+                const boms = getStepBOMMaterials(step);
+                if (boms.length === 0) {
+                    bomListEl.innerHTML = '<p class="text-[10px] text-slate-400 font-semibold italic">No BOM materials assigned to this step.</p>';
+                } else {
+                    boms.forEach((bom) => {
+                        bomListEl.innerHTML += `
+                            <div class="flex items-center justify-between p-2.5 bg-white border border-slate-200 border-l-4 border-l-[#dc0111] rounded-lg shadow-sm">
+                              <div class="flex flex-col min-w-0">
+                                <span class="text-xs font-bold text-slate-800 truncate">${bom.name}</span>
+                                <span class="text-[9px] font-mono text-slate-400 mt-0.5">${bom.partNo}</span>
+                              </div>
+                              <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-200 shrink-0">${bom.quantity}</span>
+                            </div>
+                        `;
+                    });
+                }
+            }
+
             // Dynamic visibility constraints for PICKING stage steps
             const isPicking = step.stageId === 'stage-picking';
             const paramSec = document.getElementById('cfg-section-parameters');
-            const validationSec = document.getElementById('cfg-section-validations');
             const operatorSec = document.getElementById('cfg-operator-link-section');
+            const bomSec = document.getElementById('cfg-section-bom');
             
             if (isPicking) {
                 if (paramSec) paramSec.classList.add('hidden');
-                if (validationSec) validationSec.classList.add('hidden');
                 if (operatorSec) operatorSec.classList.add('hidden');
+                if (bomSec) bomSec.classList.remove('hidden');
             } else {
                 if (paramSec) paramSec.classList.remove('hidden');
-                if (validationSec) validationSec.classList.remove('hidden');
                 if (operatorSec) operatorSec.classList.remove('hidden');
+                if (bomSec) bomSec.classList.add('hidden');
             }
+        }
+
+        function getStepBOMMaterials(step) {
+          if (step.bomMaterials) return step.bomMaterials;
+          
+          if (step.id.includes('step-1') || step.code.includes('MAT-01')) {
+            return [
+              { partNo: "45128-K1L-D410-M1", name: "EPDM Brake Hose Pipe", quantity: "1 pc" },
+              { partNo: "BU10024-MS-11", name: "Rubber Clamp BU10024", quantity: "2 pcs" },
+              { partNo: "L-260-PROT", name: "Protector Sleeve L-260", quantity: "1 pc" }
+            ];
+          } else if (step.id.includes('step-2') || step.code.includes('MAT-02')) {
+            return [
+              { partNo: "45128-K1L-D410-M1", name: "EPDM Brake Hose Pipe", quantity: "1 pc" }
+            ];
+          } else if (step.id.includes('step-3') || step.code.includes('MAT-03')) {
+            return [
+              { partNo: "TAG-QR-01", name: "QR Tag Barcode Label", quantity: "1 pc" }
+            ];
+          } else if (step.code.includes('OFF-01')) {
+            return [
+              { partNo: "EPDM-RAW-59", name: "EPDM Raw Hose Reel", quantity: "0.65 m" }
+            ];
+          } else if (step.code.includes('OFF-02')) {
+            return [
+              { partNo: "PROT-SLV-260", name: "Protector Hose L260", quantity: "1 pc" },
+              { partNo: "PROT-SLV-160", name: "Protector Hose L160", quantity: "1 pc" }
+            ];
+          } else if (step.code.includes('OFF-03')) {
+            return [
+              { partNo: "SLV-MS-11", name: "Metal Sleeve Fitting", quantity: "2 pcs" }
+            ];
+          } else if (step.code.includes('OFF-04')) {
+            return [
+              { partNo: "INK-BLK-04", name: "Industrial Engraving Ink", quantity: "1 ml" }
+            ];
+          } else if (step.code.includes('ONL-01') || step.code.includes('ONL-03')) {
+            return [
+              { partNo: "BU10024-MS-11", name: "Rubber Clamp BU10024", quantity: "1 pc" },
+              { partNo: "L-260-PROT", name: "Protector Sleeve L-260", quantity: "1 pc" }
+            ];
+          } else if (step.code.includes('ONL-02') || step.code.includes('ONL-04')) {
+            return [
+              { partNo: "CRM-SLV-90", name: "Crimp Ring Sleeve 9.0mm", quantity: "1 pc" }
+            ];
+          } else if (step.code.includes('ONL-05')) {
+            return [
+              { partNo: "GLU-ADH-59", name: "Industrial Cyanoacrylate Glue", quantity: "2 drops" }
+            ];
+          } else if (step.code.includes('QC-03')) {
+            return [
+              { partNo: "BOX-600-400", name: "Corrugated Storage Bin", quantity: "0.016 pc" },
+              { partNo: "TAG-SHP-01", name: "Shipping Routing Label", quantity: "1 pc" }
+            ];
+          }
+          
+          return [
+            { partNo: "45128-K1L-D410-M1", name: "EPDM Brake Hose Assembly", quantity: "1 pc" }
+          ];
         }
 
         function updateSelectedStepField(key, val) {
