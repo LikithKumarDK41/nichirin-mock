@@ -14,6 +14,9 @@
     'system-settings', 'login-old', 'admin-prototype', 'profile'
   ];
 
+  // Keep track of the current active load task ID to prevent duplicate concurrent route loadings
+  let currentLoadId = 0;
+
   // Helper to determine relative path depth prefix ('./' or '../')
   function getRelativePrefix() {
     const path = window.location.pathname;
@@ -258,6 +261,7 @@
   function setupAppLayout(relPrefix) {
     const root = document.getElementById('app-root');
     root.className = "bg-background text-on-background selection:bg-secondary-container selection:text-on-secondary-container";
+    root.style.backgroundImage = '';
 
     const SIDEBAR_HTML = `
       <aside class="fixed top-0 left-0 h-full w-[260px] bg-white text-on-surface border-r border-outline-variant/30 flex flex-col z-50 -translate-x-full lg:translate-x-0 transition-transform duration-300 select-none">
@@ -490,6 +494,7 @@
     if (logoutBtn) {
       logoutBtn.addEventListener('click', (e) => {
         e.preventDefault();
+        e.stopPropagation();
         localStorage.removeItem('loggedIn');
         window.history.pushState(null, '', relPrefix + 'login-old/index.html');
         loadRoute();
@@ -694,6 +699,7 @@
 
   // Load a route's content dynamically
   async function loadRoute() {
+    const loadId = ++currentLoadId;
     // Hide notifications dropdown on navigation transitions
     const notificationDropdown = document.getElementById('notification-dropdown');
     if (notificationDropdown) {
@@ -729,19 +735,27 @@
     // Case 1: Render Login view directly into root (without sidebar and header)
     if (route === 'login-old' || !isUserLoggedIn) {
       root.innerHTML = '';
-      root.className = "bg-background text-on-surface h-screen overflow-hidden flex flex-col justify-center items-center p-4 sm:p-6 industrial-pattern";
+      root.className = "min-h-screen w-screen overflow-hidden flex items-center justify-center lg:justify-end pr-0 sm:pr-8 md:pr-16 lg:pr-24 relative bg-cover bg-left-bottom bg-no-repeat";
+      root.style.backgroundImage = `url('${relPrefix}assets/login_bg.jpg')`;
+
+      // Ambient overlay for premium integrated look
+      const ambientOverlay = document.createElement('div');
+      ambientOverlay.className = "absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-black/5 pointer-events-none z-0";
+      root.appendChild(ambientOverlay);
 
       try {
         const loginUrl = relPrefix + 'login-old/index.html';
         const response = await fetch(loginUrl);
         if (!response.ok) throw new Error('Failed to load login card.');
         const html = await response.text();
+        if (loadId !== currentLoadId) return;
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
 
         // Extract the login card and inject it
         const loginCard = doc.querySelector('main > div') || doc.body.firstElementChild;
         if (loginCard) {
+          loginCard.className = "w-full max-w-[420px] bg-white/90 backdrop-blur-xl border-2 border-[#C8102E] rounded-3xl relative overflow-hidden shadow-2xl transition-all duration-300 m-4 sm:m-0 z-10 hover:shadow-red-500/5 hover:border-[#A60D25]";
           root.appendChild(loginCard);
         } else {
           root.innerHTML = html;
@@ -793,6 +807,7 @@
       ]);
       if (!response.ok) throw new Error(`Could not access module: ${route}`);
       const html = await response.text();
+      if (loadId !== currentLoadId) return;
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
 

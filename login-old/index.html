@@ -122,73 +122,76 @@
         }
     </style>
 </head>
-<body class="bg-background text-on-surface min-h-screen flex flex-col industrial-pattern">
-<!-- Top Branding Header (Suppressed Nav as per Shell Visibility Rule) -->
-<header class="h-[64px] flex items-center px-container-padding bg-surface border-b border-outline-variant z-50">
+<body class="text-on-surface min-h-screen flex flex-col bg-cover bg-left-bottom bg-no-repeat relative" style="background-image: url('../assets/login_bg.jpg');">
+<!-- Ambient overlay for premium integrated look -->
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-black/5 pointer-events-none z-0"></div>
+
+<!-- Top Branding Header -->
+<header class="h-[64px] flex items-center px-container-padding bg-white/80 backdrop-blur-md border-b border-slate-200/50 z-50">
 <div class="flex items-center gap-4">
-<div class="bg-primary px-3 py-1.5 flex items-center justify-center">
-<span class="text-on-primary font-headline-md text-headline-md tracking-tighter font-black">NICHIRIN</span>
+<div class="bg-[#C8102E] px-3 py-1.5 flex items-center justify-center rounded-lg shadow-sm">
+<span class="text-white font-headline-md text-headline-md tracking-tighter font-black">NICHIRIN</span>
 </div>
-<div class="h-6 w-px bg-outline-variant"></div>
-<span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">Control Card Digitization</span>
+<div class="h-6 w-px bg-slate-200"></div>
+<span class="font-headline-sm text-headline-sm text-slate-700 tracking-tight font-semibold">Control Card Digitization System</span>
 </div>
 <div class="ml-auto">
-<span class="px-3 py-1 bg-surface-container-high border border-outline-variant text-on-surface-variant font-label-bold text-label-bold rounded uppercase tracking-widest">
+<span class="px-3 py-1 bg-white border border-slate-200 text-slate-600 font-label-bold text-label-bold rounded-lg uppercase tracking-widest text-[10px]">
                 Production
             </span>
 </div>
 </header>
+
 <!-- Main Content Area -->
-<main class="flex-grow flex items-center justify-center p-6">
-  <div class="w-full max-w-[420px] bg-white border border-outline-variant/30 rounded-2xl relative overflow-hidden shadow-lg">
-    <!-- Security Stripe -->
-    <div class="h-1.5 w-full bg-primary absolute top-0 left-0"></div>
+<main class="flex-grow flex items-center justify-center lg:justify-end p-4 sm:p-8 lg:p-20 z-10 w-full max-w-7xl mx-auto">
+  <div class="w-full max-w-[420px] bg-white/90 backdrop-blur-xl border-2 border-[#C8102E] rounded-3xl relative overflow-hidden shadow-2xl transition-all duration-300 hover:shadow-red-500/5 hover:border-[#A60D25]">
     <!-- Login Form Container -->
-    <div class="p-8 pt-10">
+    <div class="p-8 pt-8">
       <!-- Logo Section -->
       <div class="flex justify-center mb-6">
-        <div class="bg-white border border-outline-variant/30 rounded-xl px-6 py-3.5 shadow-sm flex items-center justify-center">
+        <div class="bg-white border border-slate-100 rounded-2xl px-6 py-3 shadow-sm flex items-center justify-center">
           <img class="h-8 w-auto object-contain" src="../assets/logo.png" onerror="this.src='./assets/logo.png'" alt="NICHIRIN Logo" />
         </div>
       </div>
       <!-- Title Header -->
       <div class="text-center mb-6">
-        <h1 class="font-bold text-primary text-xl tracking-tight mb-2 leading-snug">Control Card Digitization<br>System</h1>
-        <p class="text-xs text-on-surface-variant font-medium">Manufacturing Execution &amp; Control Card Management Portal</p>
+        <h1 class="font-bold text-slate-800 text-xl tracking-tight mb-1 leading-snug">Control Card Digitization System</h1>
+        <p class="text-xs text-[#C8102E] font-bold tracking-wider uppercase mb-1">Management Portal</p>
+        <p class="text-[11px] text-slate-500 font-medium">Manufacturing Execution &amp; Traceability System</p>
       </div>
       <form action="#" class="space-y-4" method="POST" onsubmit="return false;">
         <!-- Email Address Field -->
         <div class="space-y-1.5">
-          <label class="block text-sm font-semibold text-slate-800" for="user-id">
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600" for="user-id">
             Email Address
           </label>
           <div class="relative group">
-            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[18px] group-focus-within:text-[#C8102E] transition-colors">
               mail
             </span>
-            <input class="w-full pl-9 pr-3 py-2 bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all h-10 font-medium placeholder-slate-400" id="user-id" name="user-id" placeholder="Enter email address" required="" type="text">
+            <input class="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E] outline-none transition-all h-10 font-medium focus-ring" id="user-id" name="user-id" placeholder="Enter email address" required="" type="text">
           </div>
         </div>
         <!-- Password Field -->
         <div class="space-y-1.5">
           <div class="flex justify-between items-center">
-            <label class="block text-sm font-semibold text-slate-800" for="password">
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600" for="password">
               Password
             </label>
-            <a class="text-xs font-bold text-primary hover:text-primary/80 transition-colors" href="#">
+            <a class="text-xs font-bold text-[#C8102E] hover:text-[#A60D25] transition-colors" href="#">
               Forgot password?
             </a>
           </div>
           <div class="relative group">
-            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[18px] group-focus-within:text-[#C8102E] transition-colors">
               lock
             </span>
-            <input class="w-full pl-9 pr-3 py-2 bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all h-10 font-medium placeholder-slate-400" id="password" name="password" placeholder="••••••••" required="" type="password">
+            <input class="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E] outline-none transition-all h-10 font-medium focus-ring" id="password" name="password" placeholder="••••••••" required="" type="password">
           </div>
         </div>
         <!-- Login Button -->
         <div class="pt-2">
-          <button type="submit" class="w-full bg-primary text-white h-11 px-6 rounded-lg font-bold text-sm tracking-wider hover:bg-primary/95 transition-all active:scale-[0.98] flex items-center justify-center gap-1.5 shadow-sm group">
+          <button type="submit" class="w-full bg-[#C8102E] text-white h-11 px-6 rounded-xl font-bold text-sm tracking-wider hover:bg-[#A60D25] hover:shadow-lg hover:shadow-red-500/10 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-md shadow-red-900/10 group">
             <span class="">SIGN IN</span>
             <span class="material-symbols-outlined text-[16px] group-hover:translate-x-0.5 transition-transform">
               chevron_right
@@ -196,22 +199,22 @@
           </button>
         </div>
         <!-- Security Notice -->
-        <p class="text-[10px] text-center text-on-surface-variant/70 leading-relaxed pt-2">
-          Authorized personnel only. All access attempts are logged for traceability and auditing purposes in compliance with Monozukuri standards.
+        <p class="text-[10px] text-center text-slate-500 leading-relaxed pt-2">
+          Authorized personnel only. Access attempts are logged in compliance with <span class="text-[#C8102E] font-semibold">Monozukuri</span> standards.
         </p>
       </form>
     </div>
   </div>
 </main>
 <!-- Visual Side Graphic Placeholder for Industrial Aesthetic -->
-<div class="fixed right-0 bottom-0 w-1/4 h-1/2 pointer-events-none opacity-5">
+<div class="fixed right-0 bottom-0 w-1/4 h-1/2 pointer-events-none opacity-[0.02] z-0">
 <span class="material-symbols-outlined text-[400px]" style="font-variation-settings: 'wght' 100;">
             precision_manufacturing
         </span>
 </div>
 <!-- Footer -->
-<footer class="h-16 flex items-center justify-center px-container-padding border-t border-outline-variant bg-surface">
-<p class="font-body-sm text-body-sm text-outline flex items-center gap-2">
+<footer class="h-16 flex items-center justify-center px-container-padding border-t border-slate-200/50 bg-white/80 backdrop-blur-md z-50">
+<p class="font-body-sm text-body-sm text-slate-500 flex items-center gap-2">
 <span class="material-symbols-outlined text-[14px]">copyright</span>
 <span class="">Nichi-In Software Solutions Pvt. Ltd.</span>
 <span class="mx-2">•</span>

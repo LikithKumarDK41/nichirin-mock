@@ -55,6 +55,15 @@
       -ms-overflow-style: none !important;
       scrollbar-width: none !important;
     }
+    #confirm-release-check {
+      accent-color: #10b981 !important;
+      color: #10b981 !important;
+      border-color: #10b981 !important;
+    }
+    #confirm-release-check:focus {
+      --tw-ring-color: #10b981 !important;
+      border-color: #10b981 !important;
+    }
   </style>
 </head>
 
@@ -401,143 +410,143 @@
             style="max-height: 440px;">
 
             <div id="sheet-card-picking" onclick="window.selectSheetProcess('picking')"
-              class="sheet-process-card p-3 border border-primary bg-primary/5 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
+              class="sheet-process-card p-3 border border-amber-500 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
               <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
                 <span>1. Picking (BOM)</span>
                 <span
-                  class="px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-wider bg-blue-50 text-blue-700 border border-blue-200/50 shrink-0">Picking</span>
+                  class="text-[9px] font-black uppercase tracking-wider text-amber-600 shrink-0">Picking</span>
               </h4>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Raw component verification &amp; store picking
                 checklist</p>
             </div>
-
+ 
             <div id="sheet-card-hose_cutting" onclick="window.selectSheetProcess('hose_cutting')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
               <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
                 <span>2. Hose Cutting</span>
                 <span
-                  class="px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-wider bg-orange-50 text-orange-700 border border-orange-200/50 shrink-0">Offline</span>
+                  class="text-[9px] font-black uppercase tracking-wider text-rose-600 shrink-0">Offline</span>
               </h4>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Slice inner EPDM tubes to length &amp; mark
                 alignment</p>
             </div>
-
+ 
             <div id="sheet-card-protector_cutting" onclick="window.selectSheetProcess('protector_cutting')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
               <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
                 <span>3. Protector Cutting</span>
                 <span
-                  class="px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-wider bg-orange-50 text-orange-700 border border-orange-200/50 shrink-0">Offline</span>
+                  class="text-[9px] font-black uppercase tracking-wider text-rose-600 shrink-0">Offline</span>
               </h4>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Cut protector sleeve sleeves to standard lengths
               </p>
             </div>
-
+ 
             <div id="sheet-card-fitting_bending" onclick="window.selectSheetProcess('fitting_bending')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
               <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
                 <span>4. Fitting Bending</span>
                 <span
-                  class="px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-wider bg-orange-50 text-orange-700 border border-orange-200/50 shrink-0">Offline</span>
+                  class="text-[9px] font-black uppercase tracking-wider text-rose-600 shrink-0">Offline</span>
               </h4>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Bend fitting tubes to specified drawing angles</p>
             </div>
-
+ 
             <div id="sheet-card-lot_stamping" onclick="window.selectSheetProcess('lot_stamping')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
               <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
                 <span>5. Manufacturing Lot Stamping</span>
                 <span
-                  class="px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-wider bg-orange-50 text-orange-700 border border-orange-200/50 shrink-0">Offline</span>
+                  class="text-[9px] font-black uppercase tracking-wider text-rose-600 shrink-0">Offline</span>
               </h4>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Stamp unique lot code markings on components</p>
             </div>
-
+ 
             <div id="sheet-card-insertion1" onclick="window.selectSheetProcess('insertion1')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
               <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
                 <span>6. Accessories Insertion-1</span>
                 <span
-                  class="px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-wider bg-indigo-50 text-indigo-700 border border-indigo-200/50 shrink-0">Online</span>
+                  class="text-[9px] font-black uppercase tracking-wider text-emerald-600 shrink-0">Online</span>
               </h4>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Install rubber clamps and protective sleeves L-160
               </p>
             </div>
-
+ 
             <div id="sheet-card-crimping1" onclick="window.selectSheetProcess('crimping1')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
               <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
                 <span>7. First Crimping</span>
                 <span
-                  class="px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-wider bg-indigo-50 text-indigo-700 border border-indigo-200/50 shrink-0">Online</span>
+                  class="text-[9px] font-black uppercase tracking-wider text-emerald-600 shrink-0">Online</span>
               </h4>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Crimp first fitting collar to EPDM hose assembly
               </p>
             </div>
-
+ 
             <div id="sheet-card-insertion2" onclick="window.selectSheetProcess('insertion2')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
               <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
                 <span>8. Accessories Insertion-2</span>
                 <span
-                  class="px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-wider bg-indigo-50 text-indigo-700 border border-indigo-200/50 shrink-0">Online</span>
+                  class="text-[9px] font-black uppercase tracking-wider text-emerald-600 shrink-0">Online</span>
               </h4>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Install protector sleeves L-260 &amp; primary
                 clamps</p>
             </div>
-
+ 
             <div id="sheet-card-crimping2" onclick="window.selectSheetProcess('crimping2')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
               <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
                 <span>9. Second Crimping</span>
                 <span
-                  class="px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-wider bg-indigo-50 text-indigo-700 border border-indigo-200/50 shrink-0">Online</span>
+                  class="text-[9px] font-black uppercase tracking-wider text-emerald-600 shrink-0">Online</span>
               </h4>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Crimp second fitting collar to secure assembly</p>
             </div>
-
+ 
             <div id="sheet-card-bonding" onclick="window.selectSheetProcess('bonding')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
               <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
                 <span>10. Accessories Bonding</span>
                 <span
-                  class="px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-wider bg-indigo-50 text-indigo-700 border border-indigo-200/50 shrink-0">Online</span>
+                  class="text-[9px] font-black uppercase tracking-wider text-emerald-600 shrink-0">Online</span>
               </h4>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Apply bonding adhesive compound Kakotora check</p>
             </div>
-
+ 
             <div id="sheet-card-pressure_test" onclick="window.selectSheetProcess('pressure_test')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
               <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
                 <span>11. Pressure Test</span>
                 <span
-                  class="px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-wider bg-indigo-50 text-indigo-700 border border-indigo-200/50 shrink-0">Online</span>
+                  class="text-[9px] font-black uppercase tracking-wider text-emerald-600 shrink-0">Online</span>
               </h4>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Leakage testing under high hydraulic pressure</p>
             </div>
-
+ 
             <div id="sheet-card-final_inspection" onclick="window.selectSheetProcess('final_inspection')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
               <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
                 <span>12. Final Inspection</span>
                 <span
-                  class="px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-wider bg-indigo-50 text-indigo-700 border border-indigo-200/50 shrink-0">Online</span>
+                  class="text-[9px] font-black uppercase tracking-wider text-emerald-600 shrink-0">Online</span>
               </h4>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Dimensional check, plating colors, and visual
                 audits</p>
             </div>
-
+ 
             <div id="sheet-card-packing" onclick="window.selectSheetProcess('packing')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
               <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
                 <span>13. Packing</span>
                 <span
-                  class="px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-wider bg-indigo-50 text-indigo-700 border border-indigo-200/50 shrink-0">Online</span>
+                  class="text-[9px] font-black uppercase tracking-wider text-emerald-600 shrink-0">Online</span>
               </h4>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Verification of internal tags, storage, and bin
                 sizing</p>
             </div>
-
+ 
           </div>
         </div>
       </div>
@@ -883,23 +892,14 @@
               Details</span>
             <span id="confirm-wo-name" class="text-slate-800 font-bold">--</span>
           </div>
-          <div>
-            <span class="block text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-0.5">Allocated
-              Line</span>
-            <span id="confirm-wo-line" class="text-slate-800 font-bold">--</span>
-          </div>
-          <div>
-            <span class="block text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-0.5">Shift &amp;
-              Target</span>
-            <span id="confirm-wo-shift-target" class="text-slate-800 font-bold">--</span>
-          </div>
         </div>
 
         <!-- Terms / Confirmation -->
         <label
           class="flex items-center justify-center gap-2.5 cursor-pointer max-w-md mx-auto py-2.5 px-4 border border-slate-200 rounded-lg hover:bg-slate-50 bg-white select-none">
           <input type="checkbox" id="confirm-release-check"
-            class="w-4 h-4 rounded border-slate-350 text-emerald-600 focus:ring-emerald-500"
+            class="w-4 h-4 rounded border-emerald-500 text-emerald-600 focus:ring-emerald-500 accent-emerald-600 focus:border-emerald-500"
+            style="color: #10b981 !important; accent-color: #10b981 !important;"
             onchange="toggleReleaseButton(this.checked)">
           <span class="text-xs font-bold text-slate-700 text-left leading-tight">I confirm that I have verified the
             workflow stages and parameters.</span>
@@ -1122,7 +1122,7 @@
 
             // Get URL parameter
             const params = new URLSearchParams(window.location.search);
-            const targetNo = params.get('wo') || 'WO-22615540';
+            const targetNo = params.get('wo') || 'WO-22615545';
 
             activeWO = workOrdersList.find(w => w.woNumber.toUpperCase() === targetNo.toUpperCase());
             if (!activeWO) {
@@ -1197,12 +1197,24 @@
 
           // Status tag
           const statusEl = document.getElementById('wo-detail-status');
-          statusEl.textContent = activeWO.status;
+          let displayStatus = activeWO.status;
+          if (activeWO.woNumber === 'WO-22615542') {
+            displayStatus = 'Not released';
+          } else if (activeWO.status === 'Waiting' || activeWO.status === 'Not released' || activeWO.woNumber === 'WO-22615545') {
+            displayStatus = 'Pending';
+          } else if (activeWO.status === 'Running') {
+            displayStatus = 'In-progress';
+          } else if (activeWO.status === 'Held' || activeWO.status === 'hold') {
+            displayStatus = 'Hold';
+          }
+          statusEl.textContent = displayStatus;
           let statusClass = 'bg-slate-100 text-slate-600 border border-slate-200';
-          if (activeWO.status === 'Running') statusClass = 'bg-[#c8102e]/10 text-[#c8102e] border border-[#c8102e]/25';
-          else if (activeWO.status === 'Completed') statusClass = 'bg-emerald-100 text-emerald-700 border border-emerald-200';
-          else if (activeWO.status === 'Held') statusClass = 'bg-rose-100 text-rose-700 border border-rose-200';
-          statusEl.className = `px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider ${statusClass}`;
+          if (displayStatus === 'In-progress') statusClass = 'bg-[#c8102e]/10 text-[#c8102e] border border-[#c8102e]/25';
+          else if (displayStatus === 'Completed') statusClass = 'bg-emerald-100 text-emerald-700 border border-emerald-200';
+          else if (displayStatus === 'Held' || displayStatus === 'Hold') statusClass = 'bg-red-50 text-red-600 border border-red-200/50';
+          else if (displayStatus === 'Pending') statusClass = 'bg-amber-50 text-amber-700 border border-amber-200/50';
+          else if (displayStatus === 'Not released') statusClass = 'bg-slate-100 text-slate-500 border border-slate-200/80';
+          statusEl.className = `inline-flex items-center px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-wider leading-none ${statusClass}`;
 
           // Hash
           const cardHashEl = document.getElementById('wo-card-hash');
@@ -1213,7 +1225,17 @@
           // Planning Navigation Button
           const planningNavBtn = document.getElementById('wo-planning-nav-btn');
           if (planningNavBtn) {
-            planningNavBtn.setAttribute('href', `../supervisor-planning/index.html?wo=${activeWO.woNumber}`);
+            const isNotReleased = activeWO.status === 'Not released' || activeWO.status === 'Waiting' || activeWO.woNumber === 'WO-22615545' || activeWO.woNumber === 'WO-22615542';
+            const isCompletedOrHeld = activeWO.status === 'Completed' || activeWO.status === 'completed' || activeWO.status === 'Held' || activeWO.status === 'hold';
+            if (isNotReleased || isCompletedOrHeld) {
+              planningNavBtn.removeAttribute('href');
+              planningNavBtn.className = "flex items-center justify-center gap-2 px-4 bg-slate-200 text-slate-450 font-bold text-xs uppercase tracking-wider h-9 rounded-lg cursor-not-allowed shadow-sm select-none";
+              planningNavBtn.onclick = (e) => { e.preventDefault(); };
+            } else {
+              planningNavBtn.setAttribute('href', `../supervisor-planning/index.html?wo=${activeWO.woNumber}`);
+              planningNavBtn.className = "flex items-center justify-center gap-2 px-4 bg-primary text-white hover:bg-primary/95 transition-all font-bold text-xs uppercase tracking-wider h-9 rounded-lg cursor-pointer shadow-sm";
+              planningNavBtn.onclick = null;
+            }
           }
 
           // Actions buttons removed (handled by Wizard)
@@ -1225,7 +1247,31 @@
           renderStepper();
           renderSpecs();
           renderTeam();
+          updateProcessSidebarDisabledState();
           selectSheetProcess('picking');
+          goToStep(1);
+        }
+
+        function updateProcessSidebarDisabledState() {
+          if (!activeWO) return;
+          const isOnly4Allowed = activeWO.woNumber === 'WO-22615543' || activeWO.status === 'Held' || activeWO.status === 'hold';
+          const allowedProcessIds = ['picking', 'hose_cutting', 'protector_cutting', 'fitting_bending'];
+          const allProcIds = [
+            'picking', 'hose_cutting', 'protector_cutting', 'fitting_bending',
+            'lot_stamping', 'insertion1', 'crimping1', 'insertion2', 'crimping2',
+            'bonding', 'pressure_test', 'final_inspection', 'packing'
+          ];
+
+          allProcIds.forEach(pId => {
+            const card = document.getElementById('sheet-card-' + pId);
+            if (!card) return;
+            if (isOnly4Allowed && !allowedProcessIds.includes(pId)) {
+              card.classList.add('opacity-40', 'pointer-events-none', 'cursor-not-allowed', 'bg-slate-50/50', 'select-none');
+              card.onclick = (e) => { e.preventDefault(); e.stopPropagation(); return false; };
+            } else {
+              card.classList.remove('opacity-40', 'pointer-events-none', 'cursor-not-allowed', 'bg-slate-50/50', 'select-none');
+            }
+          });
         }
 
         function renderStepper() {
@@ -1483,8 +1529,8 @@
             tr.className = 'hover:bg-slate-50/50 transition-colors';
 
             const statusBadge = item.verification === 'VERIFIED'
-              ? `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/50"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>Picked</span>`
-              : `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200/50"><span class="w-1.5 h-1.5 rounded-full bg-amber-550 mr-1.5"></span>Yet to Pick</span>`;
+              ? `<span class="inline-flex items-center text-[10px] font-bold text-emerald-600"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>Picked</span>`
+              : `<span class="inline-flex items-center text-[10px] font-bold text-amber-500"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5"></span>Yet to Pick</span>`;
 
             tr.innerHTML = `
                     <td class="px-4 py-3 border-r border-outline-variant/20 font-bold text-slate-800">${item.code}</td>
@@ -1520,6 +1566,18 @@
               { name: "Packing", machine: "Packing Line PL-03", operator: "Anjali / Shy", status: "completed" }
             ];
           }
+
+          if ((activeWO.status === 'Completed' || activeWO.status === 'completed') && activeWO.ccProcesses) {
+            activeWO.ccProcesses.forEach(proc => proc.status = 'completed');
+          } else if ((activeWO.woNumber === 'WO-22615540' || activeWO.woNumber === 'WO-22615543' || activeWO.status === 'Held' || activeWO.status === 'hold') && activeWO.ccProcesses) {
+            activeWO.ccProcesses.forEach((proc, idx) => {
+              if (idx < 4) {
+                proc.status = 'completed';
+              } else {
+                proc.status = 'pending';
+              }
+            });
+          }
           const ccProcesses = activeWO.ccProcesses;
 
           const totalItems = ccProcesses.length;
@@ -1532,6 +1590,8 @@
           const endIdx = Math.min(startIdx + teamPageSize, totalItems);
           const pageData = ccProcesses.slice(startIdx, endIdx);
 
+          const isNotReleased = activeWO.status === 'Not released' || activeWO.status === 'Waiting' || activeWO.woNumber === 'WO-22615545' || activeWO.woNumber === 'WO-22615542';
+
           pageData.forEach((proc, index) => {
             const tr = document.createElement('tr');
             tr.className = 'hover:bg-slate-50/50 transition-colors';
@@ -1539,7 +1599,9 @@
             const globalIdx = startIdx + index;
 
             let statusBadge = '';
-            if (proc.status === 'completed') {
+            if (isNotReleased) {
+              statusBadge = `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-400 border border-slate-200/50">Pending</span>`;
+            } else if (proc.status === 'completed') {
               statusBadge = `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/50">Completed</span>`;
             } else if (proc.status === 'active') {
               statusBadge = `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200/50 animate-pulse">Active</span>`;
@@ -1547,22 +1609,33 @@
               statusBadge = `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-400 border border-slate-200/50">Pending</span>`;
             }
 
-            const ops = proc.operator.split(' / ');
             let operatorsHTML = '';
-            ops.forEach(op => {
-              operatorsHTML += `
-                        <div class="flex items-center gap-1.5">
-                            <div class="w-5 h-5 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center font-bold text-[8.5px] border border-slate-200 shrink-0 select-none">
-                                ${op.substring(0, 2).toUpperCase()}
-                            </div>
-                            <span class="text-slate-800 font-semibold">${op}</span>
+            if (isNotReleased || proc.operator === 'Not Assigned' || proc.operator === 'Unassigned') {
+              operatorsHTML = `
+                        <div class="flex items-center gap-1.5 text-slate-400 font-semibold italic">
+                            <span class="material-symbols-outlined text-[16px]">person_off</span>
+                            <span>Not Assigned</span>
                         </div>
                     `;
-            });
+            } else {
+              const ops = proc.operator.split(' / ');
+              ops.forEach(op => {
+                operatorsHTML += `
+                          <div class="flex items-center gap-1.5">
+                              <div class="w-5 h-5 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center font-bold text-[8.5px] border border-slate-200 shrink-0 select-none">
+                                  ${op.substring(0, 2).toUpperCase()}
+                              </div>
+                              <span class="text-slate-800 font-semibold">${op}</span>
+                          </div>
+                      `;
+              });
+            }
+
+            const displayMachine = isNotReleased ? `<span class="text-slate-400 font-semibold italic">Not Assigned</span>` : proc.machine;
 
             tr.innerHTML = `
                     <td class="px-4 py-2.5 font-bold text-slate-800">${globalIdx + 1}. ${proc.name}</td>
-                    <td class="px-4 py-2.5 font-semibold text-slate-600">${proc.machine}</td>
+                    <td class="px-4 py-2.5 font-semibold text-slate-600">${displayMachine}</td>
                     <td class="px-4 py-2.5 font-semibold text-slate-850">
                         <div class="flex flex-wrap gap-x-4 gap-y-1 items-center">
                             ${operatorsHTML}
@@ -1760,25 +1833,51 @@
         };
 
         function selectSheetProcess(processId) {
+          const isOnly4Allowed = activeWO && (activeWO.woNumber === 'WO-22615543' || activeWO.status === 'Held' || activeWO.status === 'hold');
+          const allowedProcessIds = ['picking', 'hose_cutting', 'protector_cutting', 'fitting_bending'];
+          if (isOnly4Allowed && !allowedProcessIds.includes(processId)) {
+            return;
+          }
+
           // Update active state in list
           const allCards = document.querySelectorAll('.sheet-process-card');
           allCards.forEach(c => {
-            c.classList.remove('border-primary', 'bg-primary/5');
+            c.classList.remove(
+              'border-primary', 'bg-primary/5',
+              'border-amber-500', 'bg-amber-50',
+              'border-rose-500', 'bg-rose-50',
+              'border-emerald-500', 'bg-emerald-50'
+            );
             c.classList.add('border-slate-100');
           });
           const activeCard = document.getElementById('sheet-card-' + processId);
           if (activeCard) {
             activeCard.classList.remove('border-slate-100');
-            activeCard.classList.add('border-primary', 'bg-primary/5');
+            // Find status element text (Picking, Offline, Online)
+            const statusSpan = activeCard.querySelector('h4 span:last-child');
+            const statusText = statusSpan ? statusSpan.textContent.trim().toUpperCase() : '';
+            
+            if (statusText === 'PICKING') {
+              activeCard.classList.add('border-amber-500');
+            } else if (statusText === 'OFFLINE') {
+              activeCard.classList.add('border-rose-500');
+            } else if (statusText === 'ONLINE') {
+              activeCard.classList.add('border-emerald-500');
+            } else {
+              activeCard.classList.add('border-primary');
+            }
           }
 
           const container = document.getElementById('sheet-details-pane');
           if (!container) return;
 
           const proc = SHEET_PROCESSES[processId];
-          if (!proc) return;
+                    if (proc.isBOM) {
+            const isNotReleased = activeWO.status === 'Not released' || activeWO.status === 'Waiting' || activeWO.woNumber === 'WO-22615545' || activeWO.woNumber === 'WO-22615542';
+            const verifiedBadge = isNotReleased
+              ? `<span class="inline-flex items-center text-[11px] font-bold text-amber-500 select-none">PENDING</span>`
+              : `<span class="inline-flex items-center text-[11px] font-bold text-emerald-600 select-none">VERIFIED</span>`;
 
-          if (proc.isBOM) {
             container.innerHTML = `
                     <div class="space-y-4">
                         <div class="flex justify-between items-center pb-4 border-b border-slate-100">
@@ -1786,7 +1885,7 @@
                                 <h3 class="text-base font-black text-slate-900 uppercase">${proc.name}</h3>
                                 <p class="text-xs text-slate-500 mt-1">${proc.desc}</p>
                             </div>
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/50">VERIFIED</span>
+                            ${verifiedBadge}
                         </div>
                         
                         <div class="overflow-x-auto border border-outline-variant/20 rounded-lg">
@@ -1810,18 +1909,78 @@
                 `;
 
             activeWO.bom = [
-              { code: "05-0030-015-00-000659", desc: "Rubber EPDM Brake Hose (NVC SLIM XP)", req: "800 meters", lot: "LOT-6225", verification: "VERIFIED", timestamp: "2026-07-17 08:30 AM" },
-              { code: "BU10024-01000-IND", desc: "Rubber Hose Clamp (Tirupati Rubber)", req: "800 units", lot: "LOT-BH12A", verification: "VERIFIED", timestamp: "2026-07-17 08:32 AM" },
-              { code: "PR0157-0160-IND", desc: "Protector Sleeve L-160 (Acme Plastics)", req: "800 units", lot: "LOT-260617", verification: "VERIFIED", timestamp: "2026-07-17 08:35 AM" },
-              { code: "PR0157-0260-IND", desc: "Protector Sleeve L-260 (Acme Plastics)", req: "800 units", lot: "LOT-260613", verification: "VERIFIED", timestamp: "2026-07-17 08:38 AM" },
-              { code: "FA0588-30000", desc: "Fitting Nut - Front disc end", req: "800 units", lot: "LOT-64049", verification: "VERIFIED", timestamp: "2026-07-17 08:40 AM" },
-              { code: "K40543-00000-C3", desc: "Fitting Tube - Bend end (K40543)", req: "800 units", lot: "LOT-63D80", verification: "VERIFIED", timestamp: "2026-07-17 08:42 AM" },
-              { code: "K40543-50135-C3", desc: "Fitting Collar Assembly", req: "800 units", lot: "LOT-MI6701", verification: "PENDING", timestamp: "--" }
+              { code: "05-0030-015-00-000659", desc: "Rubber EPDM Brake Hose (NVC SLIM XP)", req: "800 meters", lot: isNotReleased ? "--" : "LOT-6225", verification: isNotReleased ? "PENDING" : "VERIFIED", timestamp: isNotReleased ? "--" : "2026-07-17 08:30 AM" },
+              { code: "BU10024-01000-IND", desc: "Rubber Hose Clamp (Tirupati Rubber)", req: "800 units", lot: isNotReleased ? "--" : "LOT-BH12A", verification: isNotReleased ? "PENDING" : "VERIFIED", timestamp: isNotReleased ? "--" : "2026-07-17 08:32 AM" },
+              { code: "PR0157-0160-IND", desc: "Protector Sleeve L-160 (Acme Plastics)", req: "800 units", lot: isNotReleased ? "--" : "LOT-260617", verification: isNotReleased ? "PENDING" : "VERIFIED", timestamp: isNotReleased ? "--" : "2026-07-17 08:35 AM" },
+              { code: "PR0157-0260-IND", desc: "Protector Sleeve L-260 (Acme Plastics)", req: "800 units", lot: isNotReleased ? "--" : "LOT-260613", verification: isNotReleased ? "PENDING" : "VERIFIED", timestamp: isNotReleased ? "--" : "2026-07-17 08:38 AM" },
+              { code: "FA0588-30000", desc: "Fitting Nut - Front disc end", req: "800 units", lot: isNotReleased ? "--" : "LOT-64049", verification: isNotReleased ? "PENDING" : "VERIFIED", timestamp: isNotReleased ? "--" : "2026-07-17 08:40 AM" },
+              { code: "K40543-00000-C3", desc: "Fitting Tube - Bend end (K40543)", req: "800 units", lot: isNotReleased ? "--" : "LOT-63D80", verification: isNotReleased ? "PENDING" : "VERIFIED", timestamp: isNotReleased ? "--" : "2026-07-17 08:42 AM" },
+              { code: "K40543-50135-C3", desc: "Fitting Collar Assembly", req: "800 units", lot: isNotReleased ? "--" : "LOT-MI6701", verification: isNotReleased ? "PENDING" : "VERIFIED", timestamp: isNotReleased ? "--" : "2026-07-17 08:45 AM" }
             ];
             renderBOM();
           } else {
+            const isNotReleased = activeWO.status === 'Not released' || activeWO.status === 'Waiting' || activeWO.woNumber === 'WO-22615545' || activeWO.woNumber === 'WO-22615542';
+            const isFourVerifiedWO = activeWO.woNumber === 'WO-22615540' || activeWO.woNumber === 'WO-22615543' || activeWO.status === 'Held' || activeWO.status === 'hold';
+            const isPendingForFourVerified = isFourVerifiedWO && !['picking', 'hose_cutting', 'protector_cutting', 'fitting_bending'].includes(processId);
+            const isOnlineProcess = [
+              'insertion1', 'crimping1', 'insertion2', 'crimping2',
+              'accessories_1', 'accessories_2', 'crimping_1', 'crimping_2',
+              'bonding', 'pressure_test', 'final_inspection', 'packing'
+            ].includes(processId);
+            const isPendingProcess = isNotReleased || isPendingForFourVerified || (isOnlineProcess && activeWO.status !== 'Completed' && activeWO.status !== 'completed');
             let extraTableHtml = '';
             if (processId === 'hose_cutting') {
+              let tbodyContent = '';
+              if (isNotReleased) {
+                for (let r = 1; r <= 10; r++) {
+                  tbodyContent += `
+                                        <tr class="hover:bg-slate-50/50 transition-colors h-9">
+                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center font-bold text-slate-400">Roll No.-${r}</td>
+                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center"></td>
+                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center"></td>
+                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center"></td>
+                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-left"></td>
+                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center"></td>
+                                            <td class="px-3 py-2.5 text-center"></td>
+                                        </tr>
+                                    `;
+                }
+              } else {
+                tbodyContent += `
+                                        <tr class="hover:bg-slate-50/50 transition-colors">
+                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center font-bold text-slate-800">Roll No.-1</td>
+                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center">05-0030-015-00-0000</td>
+                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center">05-0030-015-00-0000</td>
+                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center">XP NVC</td>
+                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-left whitespace-normal max-w-[200px]">DOT GB16897 NVC 02/24/26 ANISH-SAMJEEV</td>
+                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center text-slate-800 font-bold">ANISH</td>
+                                            <td class="px-3 py-2.5 text-center text-slate-800 font-bold">Sanjeev</td>
+                                        </tr>
+                                        <tr class="hover:bg-slate-50/50 transition-colors">
+                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center font-bold text-slate-800">Roll No.-2</td>
+                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center">05-0030-015-00-0000</td>
+                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center">05-0030-015-00-0000</td>
+                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center">XP NVC</td>
+                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-left whitespace-normal max-w-[200px]">DOT GB16897 NVC 02/24/26 Anish-Kishor</td>
+                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center text-slate-800 font-bold">Anish</td>
+                                            <td class="px-3 py-2.5 text-center text-slate-800 font-bold">Kishor</td>
+                                        </tr>
+                `;
+                for (let r = 3; r <= 10; r++) {
+                  tbodyContent += `
+                                                    <tr class="hover:bg-slate-50/50 transition-colors h-9">
+                                                        <td class="px-3 py-2 border-r border-outline-variant/20 text-center font-bold text-slate-400">Roll No.-${r}</td>
+                                                        <td class="px-3 py-2 border-r border-outline-variant/20"></td>
+                                                        <td class="px-3 py-2 border-r border-outline-variant/20"></td>
+                                                        <td class="px-3 py-2 border-r border-outline-variant/20"></td>
+                                                        <td class="px-3 py-2 border-r border-outline-variant/20"></td>
+                                                        <td class="px-3 py-2 border-r border-outline-variant/20"></td>
+                                                        <td class="px-3 py-2"></td>
+                                                    </tr>
+                                                `;
+                }
+              }
+ 
               extraTableHtml = `
                         <div class="space-y-2 mt-4">
                             <div class="bg-slate-100 border border-outline-variant/20 px-3 py-2 text-[10px] font-black text-slate-700 tracking-wide uppercase rounded-t-lg">
@@ -1841,48 +2000,13 @@
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-outline-variant/25 text-slate-700 font-semibold font-data-tabular">
-                                        <tr class="hover:bg-slate-50/50 transition-colors">
-                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center font-bold text-slate-800">Roll No.-1</td>
-                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center">05-0030-015-00-0000</td>
-                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center">05-0030-015-00-0000</td>
-                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center">XP NVC</td>
-                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-left whitespace-normal max-w-[200px]">DOT GB16897 NVC 02/24/26 ANISH-SAMJEEV</td>
-                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center text-slate-800 font-bold">ANISH</td>
-                                            <td class="px-3 py-2.5 text-center text-slate-800 font-bold">Sanjeev</td>
-                                        </tr>
-                                        <tr class="hover:bg-slate-50/50 transition-colors">
-                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center font-bold text-slate-800">Roll No.-2</td>
-                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center">05-0030-015-00-0000</td>
-                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center">05-0030-015-00-0000</td>
-                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center">XP NVC</td>
-                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-left whitespace-normal max-w-[200px]">DOT GB16897 NVC 02/24/26 Anish-Kishor</td>
-                                            <td class="px-3 py-2.5 border-r border-outline-variant/20 text-center text-slate-800 font-bold">Anish</td>
-                                            <td class="px-3 py-2.5 text-center text-slate-800 font-bold">Kishor</td>
-                                        </tr>
-                                        ${(function () {
-                  let rows = '';
-                  for (let r = 3; r <= 10; r++) {
-                    rows += `
-                                                    <tr class="hover:bg-slate-50/50 transition-colors h-9">
-                                                        <td class="px-3 py-2 border-r border-outline-variant/20 text-center font-bold text-slate-400">Roll No.-${r}</td>
-                                                        <td class="px-3 py-2 border-r border-outline-variant/20"></td>
-                                                        <td class="px-3 py-2 border-r border-outline-variant/20"></td>
-                                                        <td class="px-3 py-2 border-r border-outline-variant/20"></td>
-                                                        <td class="px-3 py-2 border-r border-outline-variant/20"></td>
-                                                        <td class="px-3 py-2 border-r border-outline-variant/20"></td>
-                                                        <td class="px-3 py-2"></td>
-                                                    </tr>
-                                                `;
-                  }
-                  return rows;
-                })()}
+                                        ${tbodyContent}
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     `;
             }
-
             let rowsHtml = '';
             proc.rows.forEach((r, idx) => {
               let processCell = '';
@@ -1891,25 +2015,37 @@
                 const processNameOnly = proc.name.replace(/^\d+\.\s*/, '');
                 processCell = `<td rowspan="${proc.rows.length}" class="px-3 py-3 border-r border-outline-variant/20 font-black text-slate-800 bg-slate-50/20 text-center text-xs whitespace-nowrap align-middle">${processNameOnly}</td>`;
 
-                let dateVal = r.date || "1/7/26";
-                if (dateVal.includes(" - ")) {
+                let dateVal = isPendingProcess ? "" : (r.date || "1/7/26");
+                if (!isPendingProcess && dateVal.includes(" - ")) {
                   dateVal = dateVal.split(" - ")[0];
                 }
 
+                const totalNG = isPendingProcess ? "" : "0";
+                const totalOK = isPendingProcess ? "" : (proc.okQty || r.ok || '800');
+
                 summaryCells = `
-                            <td rowspan="${proc.rows.length}" class="px-3 py-3 border-r border-outline-variant/20 text-center font-bold text-slate-800 text-xs align-middle bg-slate-50/10 font-data-tabular">0</td>
-                            <td rowspan="${proc.rows.length}" class="px-3 py-3 border-r border-outline-variant/20 text-center font-bold text-slate-800 text-xs align-middle bg-slate-50/10 font-data-tabular">${proc.okQty || r.ok || '800'}</td>
+                            <td rowspan="${proc.rows.length}" class="px-3 py-3 border-r border-outline-variant/20 text-center font-bold text-slate-800 text-xs align-middle bg-slate-50/10 font-data-tabular">${totalNG}</td>
+                            <td rowspan="${proc.rows.length}" class="px-3 py-3 border-r border-outline-variant/20 text-center font-bold text-slate-800 text-xs align-middle bg-slate-50/10 font-data-tabular">${totalOK}</td>
                             <td rowspan="${proc.rows.length}" class="px-3 py-3 text-center font-semibold text-slate-700 text-xs align-middle bg-slate-50/10 font-data-tabular whitespace-nowrap">${dateVal}</td>
                         `;
               }
 
-              let checks = (r.check || "ok / ok / ok").split(' / ');
-              while (checks.length < 3) {
-                checks.push("ok");
+              let checks = [];
+              if (isPendingProcess) {
+                checks = ["", "", ""];
+              } else {
+                checks = (r.check || "OK / OK / OK").split(' / ');
+                while (checks.length < 3) {
+                  checks.push("OK");
+                }
               }
               let checkTds = '';
               checks.forEach(c => {
-                checkTds += `<td class="px-2 py-3 border-r border-outline-variant/20 text-center font-semibold text-slate-750 text-xs font-data-tabular whitespace-nowrap">${c}</td>`;
+                let displayVal = c;
+                if (c && c.trim().toLowerCase() === 'ok') {
+                  displayVal = 'OK';
+                }
+                checkTds += `<td class="px-2 py-3 border-r border-outline-variant/20 text-center font-semibold text-slate-750 text-xs font-data-tabular whitespace-nowrap">${displayVal}</td>`;
               });
 
               rowsHtml += `
@@ -1963,6 +2099,10 @@
                     `;
             }
 
+            const statusLabel = isPendingProcess
+              ? `<span class="inline-flex items-center text-[11px] font-bold text-amber-500 select-none">PENDING</span>`
+              : `<span class="inline-flex items-center text-[11px] font-bold text-emerald-600 select-none">VERIFIED</span>`;
+
             container.innerHTML = `
                     <div class="space-y-4">
                         <div class="flex justify-between items-center pb-4 border-b border-slate-100">
@@ -1970,7 +2110,7 @@
                                 <h3 class="text-base font-black text-slate-900 uppercase">${proc.name}</h3>
                                 <p class="text-xs text-slate-500 mt-1">${proc.desc}</p>
                             </div>
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/50">COMPLETED</span>
+                            ${statusLabel}
                         </div>
                         
                         ${drawingCardHtml}
@@ -2259,55 +2399,6 @@
                     `;
             }
 
-            let tagsHtml = '';
-            const tags = [];
-            if (step.mandatory !== false) tags.push({ text: "Mandatory", style: "bg-slate-100 border-slate-200 text-slate-500" });
-
-            if (step.code === "PRC-ONL-01") {
-              tags.push({ text: "System Check", style: "bg-slate-100 border-slate-200 text-slate-500" });
-              tags.push({ text: "Unlock", style: "bg-slate-100 border-slate-200 text-slate-500" });
-            }
-
-            if (step.inputMethod === "QR/Barcode Scan (Strict)") {
-              tags.push({ text: "QR", style: "bg-slate-100 border-slate-200 text-slate-500" });
-            }
-            if (step.parameters && step.parameters.length > 0) {
-              tags.push({ text: "Control Points", style: "bg-blue-50 border-blue-200 text-blue-600" });
-            }
-            if (step.startConditions && step.startConditions.machineReady) {
-              tags.push({ text: "Machine", style: "bg-purple-50 border-purple-200 text-purple-600" });
-            }
-            if (step.startConditions && step.startConditions.toolCalibration) {
-              tags.push({ text: "Jig", style: "bg-slate-100 border-slate-200 text-slate-500" });
-            }
-            if (step.completionConditions && step.completionConditions.dualQCSignoff) {
-              tags.push({ text: "QC REQUIRED", style: "bg-amber-50 border-amber-200 text-amber-600 font-bold" });
-            }
-            if (step.name && step.name.toLowerCase().includes("pressure")) {
-              tags.push({ text: "Critical", style: "bg-rose-50 border-rose-200 text-rose-600 font-black" });
-            }
-
-            if (step.code === "PRC-QC-01") {
-              tags.push({ text: "Supervisor Sign-off", style: "bg-amber-50 border-amber-200 text-amber-600 font-bold" });
-            }
-            if (step.code === "PRC-QC-02") {
-              tags.push({ text: "Visual", style: "bg-slate-100 border-slate-200 text-slate-500" });
-              tags.push({ text: "Dimensions", style: "bg-slate-100 border-slate-200 text-slate-500" });
-            }
-            if (step.code === "PRC-QC-03") {
-              tags.push({ text: "Auto-Pass Rule", style: "bg-emerald-50 border-emerald-200 text-emerald-600 font-bold" });
-              tags.push({ text: "Evidence Req", style: "bg-slate-100 border-slate-200 text-slate-500" });
-            }
-            if (step.code === "PRC-QC-05") {
-              tags.push({ text: "Branching Logic", style: "bg-rose-50 border-rose-200 text-rose-600 font-black" });
-            }
-
-            tags.push({ text: "First-Off", style: "bg-slate-100 border-slate-200 text-slate-500" });
-
-            tags.forEach(tag => {
-              tagsHtml += `<span class="px-1.5 py-0.5 border rounded text-[9px] font-bold uppercase tracking-wider ${tag.style}">${tag.text}</span>`;
-            });
-
             card.innerHTML = `
                     ${isSelected ? '<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>' : ''}
                     <div class="p-3.5 flex items-start gap-4">
@@ -2321,9 +2412,6 @@
                         </div>
                         ${gridHtml ? `<div class="mt-1 pb-1">${gridHtml}</div>` : ''}
                         ${scannerBoxHtml}
-                        <div class="flex flex-wrap gap-1 mt-2">
-                          ${tagsHtml}
-                        </div>
                       </div>
                     </div>
                 `;
@@ -3479,6 +3567,11 @@
 
         let currentStep = 1;
         function goToStep(stepNum) {
+          const isLocked = activeWO && (activeWO.status === 'Completed' || activeWO.status === 'completed' || activeWO.status === 'Held' || activeWO.status === 'hold');
+          if (isLocked && stepNum > 1) {
+            return;
+          }
+
           if (currentStep === 2 && stepNum !== 2) {
             saveWorkflowConfigState();
           }
@@ -3511,6 +3604,19 @@
               btn.className = "flex items-center gap-2 cursor-pointer font-bold text-slate-400";
               if (numSpan) numSpan.className = "w-8 h-8 rounded-full bg-slate-100 text-slate-400 border border-slate-200 flex items-center justify-center text-sm font-black transition-all";
               if (textSpan) textSpan.className = "text-sm font-bold hidden sm:inline text-slate-500 transition-all";
+            }
+          }
+
+          if (isLocked) {
+            const nav2 = document.getElementById('step-nav-2');
+            const nav3 = document.getElementById('step-nav-3');
+            if (nav2) nav2.className = "flex items-center gap-2 font-bold text-slate-300 pointer-events-none opacity-40 select-none cursor-not-allowed";
+            if (nav3) nav3.className = "flex items-center gap-2 font-bold text-slate-300 pointer-events-none opacity-40 select-none cursor-not-allowed";
+
+            const nextBtn = document.getElementById('wizard-next-btn');
+            if (nextBtn) {
+              nextBtn.className = "px-5 h-9 bg-slate-200 text-slate-450 font-semibold text-xs rounded-lg shadow-none pointer-events-none opacity-50 cursor-not-allowed select-none border border-slate-200";
+              nextBtn.onclick = (e) => { e.preventDefault(); };
             }
           }
 
@@ -3551,15 +3657,10 @@
           if (!activeWO) return;
           const woId = document.getElementById('confirm-wo-id');
           const woName = document.getElementById('confirm-wo-name');
-          const woLine = document.getElementById('confirm-wo-line');
-          const woShiftTarget = document.getElementById('confirm-wo-shift-target');
 
           const detailIdEl = document.getElementById('wo-detail-id');
           const partNameEl = document.getElementById('cc-part-name');
           const partNoEl = document.getElementById('cc-part-no');
-          const lineField = document.getElementById('wo-detail-line');
-          const shiftField = document.getElementById('wo-detail-shift');
-          const targetField = document.getElementById('wo-detail-target');
 
           if (woId) {
             woId.textContent = detailIdEl ? detailIdEl.textContent : `WO #${activeWO.woNumber}`;
@@ -3568,14 +3669,6 @@
             const partName = partNameEl ? partNameEl.textContent : activeWO.productName;
             const partNo = partNoEl ? partNoEl.textContent : activeWO.partNumber;
             woName.textContent = `${partName} / ${partNo}`;
-          }
-          if (woLine) {
-            woLine.textContent = lineField ? lineField.textContent : activeWO.line.split('(')[0];
-          }
-          if (woShiftTarget) {
-            const shiftVal = shiftField ? shiftField.textContent : activeWO.shift;
-            const targetVal = targetField ? targetField.textContent : `${activeWO.targetQty} units`;
-            woShiftTarget.textContent = `${shiftVal} | ${targetVal}`;
           }
 
           const check = document.getElementById('confirm-release-check');

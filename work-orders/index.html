@@ -92,12 +92,6 @@
                         <span class="material-symbols-outlined text-[18px]" id="sapSyncIcon">sync</span>
                         Sync with SAP
                     </button>
-                    <button
-                        class="flex-1 flex items-center justify-center gap-2 border border-outline-variant/50 bg-white text-slate-700 h-9 px-4 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-all shadow-sm cursor-pointer whitespace-nowrap sm:flex-initial sm:w-auto"
-                        onclick="exportWorkOrders()">
-                        <span class="material-symbols-outlined text-[18px]">download</span>
-                        Export Report
-                    </button>
                 </div>
             </div>
 
@@ -105,68 +99,64 @@
             <div class="col-span-12 grid grid-cols-1 sm:grid-cols-4 gap-6 mb-2">
                 <!-- Card 1: TOTAL ACTIVE WO -->
                 <div
-                    class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
-                    <div>
-                        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Total Active WO
-                        </p>
-                        <p class="text-3xl font-bold text-primary" id="statActiveWO">--</p>
+                    class="bg-gradient-to-br from-red-50/30 via-white to-white border border-slate-200/80 border-l-4 border-l-[#C8102E] rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-w-0">
+                    <div class="min-w-0 flex-1 mr-3">
+                        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1 truncate" title="Total Active WO">Total Active WO</p>
+                        <p class="text-3xl font-black text-[#C8102E] tracking-tight leading-none" id="statActiveWO">--</p>
                     </div>
-                    <span class="material-symbols-outlined text-[32px] text-primary">analytics</span>
+                    <div class="bg-red-50/80 p-2.5 rounded-xl flex items-center justify-center border border-red-100/50 flex-shrink-0">
+                        <span class="material-symbols-outlined text-[24px] text-[#C8102E]">play_circle</span>
+                    </div>
                 </div>
-                <!-- Card 2: TOTAL COMPLETED -->
+                <!-- Card 2: TOTAL PENDING WO -->
                 <div
-                    class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
-                    <div>
-                        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">Total Completed
-                        </p>
-                        <p class="text-3xl font-bold text-slate-800" id="statCompletedWO">--</p>
+                    class="bg-gradient-to-br from-amber-50/30 via-white to-white border border-slate-200/80 border-l-4 border-l-amber-500 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-w-0">
+                    <div class="min-w-0 flex-1 mr-3">
+                        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1 truncate" title="Total Pending WO">Total Pending WO</p>
+                        <p class="text-3xl font-black text-amber-500 tracking-tight leading-none" id="statPendingWO">--</p>
                     </div>
-                    <span class="material-symbols-outlined text-[32px] text-slate-600"
-                        style="font-variation-settings: 'FILL' 0;">verified_user</span>
+                    <div class="bg-amber-50/80 p-2.5 rounded-xl flex items-center justify-center border border-amber-100/50 flex-shrink-0">
+                        <span class="material-symbols-outlined text-[24px] text-amber-500">pending_actions</span>
+                    </div>
                 </div>
-                <!-- Card 3: NG QUOTA (DEFECTS) -->
+                <!-- Card 3: TOTAL NOT RELEASED WO -->
                 <div
-                    class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
-                    <div>
-                        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">NG Quota (Defects)
-                        </p>
-                        <p class="text-3xl font-bold text-primary" id="statTotalNG">--</p>
+                    class="bg-gradient-to-br from-slate-50/50 via-white to-white border border-slate-200/80 border-l-4 border-l-slate-400 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-w-0">
+                    <div class="min-w-0 flex-1 mr-3">
+                        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1 truncate" title="Total Not Released WO">Total Not Released WO</p>
+                        <p class="text-3xl font-black text-slate-500 tracking-tight leading-none" id="statNotReleasedWO">--</p>
                     </div>
-                    <span class="material-symbols-outlined text-[32px] text-primary">warning</span>
+                    <div class="bg-slate-100/80 p-2.5 rounded-xl flex items-center justify-center border border-slate-200/50 flex-shrink-0">
+                        <span class="material-symbols-outlined text-[24px] text-slate-500">do_not_disturb_on</span>
+                    </div>
                 </div>
-                <!-- Card 4: SAP SYNC STATUS -->
+                <!-- Card 4: TOTAL COMPLETED WO -->
                 <div
-                    class="bg-white border border-outline-variant/30 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
-                    <div>
-                        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1">SAP Sync Success
-                        </p>
-                        <p class="text-3xl font-bold text-slate-800" id="statSyncRate">100%</p>
+                    class="bg-gradient-to-br from-emerald-50/30 via-white to-white border border-slate-200/80 border-l-4 border-l-emerald-600 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-w-0">
+                    <div class="min-w-0 flex-1 mr-3">
+                        <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1 truncate" title="Total Completed WO">Total Completed WO</p>
+                        <p class="text-3xl font-black text-emerald-600 tracking-tight leading-none" id="statCompletedWO">--</p>
                     </div>
-                    <span class="material-symbols-outlined text-[32px] text-slate-600"
-                        style="font-variation-settings: 'FILL' 0;">cloud_sync</span>
+                    <div class="bg-emerald-50/80 p-2.5 rounded-xl flex items-center justify-center border border-emerald-100/50 flex-shrink-0">
+                        <span class="material-symbols-outlined text-[24px] text-emerald-600">check_circle</span>
+                    </div>
                 </div>
             </div>
+
 
             <!-- Bento Layout: Work Orders List -->
             <section
                 class="col-span-12 bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm flex flex-col">
                 <div
-                    class="px-6 py-4 border-b border-outline-variant/30 flex justify-between items-center bg-slate-50 flex-wrap gap-4">
-                    <h3 class="font-headline-md text-headline-md text-primary">Production Schedule Tracking</h3>
+                    class="px-6 py-4 border-b border-outline-variant/30 flex flex-col gap-3 bg-slate-50">
+                    <!-- Row 1: Title -->
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-headline-md text-headline-md text-primary">Production Schedule Tracking</h3>
+                    </div>
 
-                    <!-- Filters Layout sequential -->
-                    <div class="flex items-center gap-3 w-full sm:w-auto">
-
-                        <!-- Status Filter -->
-                        <select id="woStatusFilter"
-                            class="bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-3 pr-8 py-1 font-semibold w-full sm:min-w-[130px]"
-                            onchange="handleWODirtyFilter()">
-                            <option value="ALL">All Statuses</option>
-                            <option value="Running">Running</option>
-                            <option value="Waiting">Waiting</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Held">Held</option>
-                        </select>
+                    <!-- Row 2: Status Chips on right side -->
+                    <div class="flex items-center justify-start md:justify-end gap-3 w-full overflow-x-auto py-1">
+                        <div id="woStatusChipsContainer" class="flex items-center justify-start md:justify-end gap-2 flex-nowrap sm:flex-wrap"></div>
                     </div>
                 </div>
 
@@ -452,6 +442,18 @@
                             workOrdersList = await res.json();
                             localStorage.setItem('workOrdersList', JSON.stringify(workOrdersList));
                         }
+                        
+                        // Keep only one record for each status
+                        const seen = new Set();
+                        const uniqueByStatus = [];
+                        workOrdersList.forEach(w => {
+                            const status = getDisplayStatus(w);
+                            if (!seen.has(status)) {
+                                seen.add(status);
+                                uniqueByStatus.push(w);
+                            }
+                        });
+                        workOrdersList = uniqueByStatus;
                         renderWorkOrders();
                     } catch (e) {
                         console.error(e);
@@ -474,15 +476,80 @@
                     return w.steps[0].name;
                 }
 
+                function getDisplayStatus(w) {
+                    if (w.status === 'Running' || w.status === 'in-progress') return 'in-progress';
+                    if (w.status === 'Completed' || w.status === 'completed') return 'completed';
+                    if (w.status === 'Held' || w.status === 'hold') return 'hold';
+                    if (w.woNumber === 'WO-22615542') return 'Not released';
+                    if (w.status === 'Waiting' || w.status === 'pending' || w.status === 'Not released' || w.woNumber === 'WO-22615545') {
+                        return 'pending';
+                    }
+                    return w.status;
+                }
+
+                function renderStatusChips() {
+                    const container = document.getElementById('woStatusChipsContainer');
+                    if (!container) return;
+
+                    const statuses = [
+                        { label: 'All Statuses', value: 'ALL' },
+                        { label: 'Not released', value: 'Not released' },
+                        { label: 'Pending', value: 'pending' },
+                        { label: 'In-progress', value: 'in-progress' },
+                        { label: 'Hold', value: 'hold' },
+                        { label: 'Completed', value: 'completed' }
+                    ];
+
+                    container.innerHTML = '';
+                    statuses.forEach(status => {
+                        let count = 0;
+                        if (status.value === 'ALL') {
+                            count = workOrdersList.length;
+                        } else {
+                            count = workOrdersList.filter(w => getDisplayStatus(w) === status.value).length;
+                        }
+
+                        const btn = document.createElement('button');
+                        const isActive = woFilterStatus === status.value;
+
+                        btn.className = isActive
+                            ? 'px-3 py-1 bg-[#C8102E] text-white border border-[#C8102E] rounded-full text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5 whitespace-nowrap'
+                            : 'px-3 py-1 bg-white text-slate-600 border border-slate-200 rounded-full text-xs font-semibold hover:bg-slate-50 hover:text-slate-800 transition-all shadow-sm cursor-pointer flex items-center gap-1.5 whitespace-nowrap';
+
+                        const countBadge = isActive
+                            ? `<span class="px-1.5 py-0.5 bg-white/20 rounded-full text-[10px] font-bold text-white">${count}</span>`
+                            : `<span class="px-1.5 py-0.5 bg-slate-100 rounded-full text-[10px] font-bold text-slate-500">${count}</span>`;
+
+                        btn.innerHTML = `
+                            <span>${status.label}</span>
+                            ${countBadge}
+                        `;
+
+                        btn.onclick = () => {
+                            woFilterStatus = status.value;
+                            currentWOPage = 1;
+                            renderStatusChips();
+                            renderWorkOrders();
+                        };
+
+                        container.appendChild(btn);
+                    });
+                }
+
                 function renderWorkOrders() {
                     // Stats Calculations
-                    const runningCount = workOrdersList.filter(w => w.status === 'Running').length;
-                    const completedCount = workOrdersList.filter(w => w.status === 'Completed').length;
-                    const totalNG = workOrdersList.reduce((acc, curr) => acc + (parseInt(curr.ngQty) || 0), 0);
+                    const runningCount = workOrdersList.filter(w => getDisplayStatus(w) === 'in-progress').length;
+                    const pendingCount = workOrdersList.filter(w => getDisplayStatus(w) === 'pending').length;
+                    const notReleasedCount = workOrdersList.filter(w => getDisplayStatus(w) === 'Not released').length;
+                    const completedCount = workOrdersList.filter(w => getDisplayStatus(w) === 'completed').length;
 
                     document.getElementById('statActiveWO').textContent = runningCount;
+                    document.getElementById('statPendingWO').textContent = pendingCount;
+                    document.getElementById('statNotReleasedWO').textContent = notReleasedCount;
                     document.getElementById('statCompletedWO').textContent = completedCount;
-                    document.getElementById('statTotalNG').textContent = totalNG;
+
+                    // Sync Status Chips
+                    renderStatusChips();
 
                     // Filter logic
                     const q = woFilterQuery.toLowerCase().trim();
@@ -494,7 +561,7 @@
                             currentProc.includes(q);
 
                         let matchesStatus = true;
-                        if (woFilterStatus !== 'ALL') matchesStatus = w.status === woFilterStatus;
+                        if (woFilterStatus !== 'ALL') matchesStatus = getDisplayStatus(w) === woFilterStatus;
 
                         let matchesLine = true;
                         if (woFilterLine !== 'ALL') matchesLine = w.line.includes(woFilterLine);
@@ -548,18 +615,16 @@
                         tr.className = 'hover:bg-slate-50/50 transition-colors group';
 
                         // Status tag styling
-                        let statusClass = 'bg-slate-100 text-slate-600 border border-slate-200';
-                        if (w.status === 'Running') statusClass = 'bg-[#c8102e]/10 text-[#c8102e] border border-[#c8102e]/25 font-bold';
-                        else if (w.status === 'Completed') statusClass = 'bg-emerald-100 text-emerald-700 border border-emerald-200';
-                        else if (w.status === 'Held') statusClass = 'bg-rose-100 text-rose-700 border border-rose-200';
-
-                        // Priority Badge
-                        const priorityBadge = w.priority === 'High'
-                            ? `<span class="inline-flex items-center text-[10px] text-amber-600 font-bold uppercase gap-1 mt-1 animate-pulse"><span class="material-symbols-outlined text-[12px]">priority_high</span>High Priority</span>`
-                            : '';
+                        const displayStatus = getDisplayStatus(w);
+                        let statusClass = 'text-slate-600 font-extrabold';
+                        if (displayStatus === 'in-progress') statusClass = 'text-[#c8102e] font-extrabold';
+                        else if (displayStatus === 'completed') statusClass = 'text-emerald-600 font-extrabold';
+                        else if (displayStatus === 'hold') statusClass = 'text-red-600 font-extrabold';
+                        else if (displayStatus === 'Not released') statusClass = 'text-slate-400 font-extrabold';
+                        else if (displayStatus === 'pending') statusClass = 'text-amber-500 font-extrabold';
 
                         // Done count color
-                        const doneClass = w.status === 'Completed' ? 'text-emerald-600 font-bold' : 'text-slate-800 font-bold';
+                        const doneClass = displayStatus === 'completed' ? 'text-emerald-600 font-bold' : 'text-slate-800 font-bold';
 
                         tr.innerHTML = `
                     <td class="px-6 py-4 font-bold">
@@ -579,15 +644,12 @@
                     </td>
                     <td class="px-6 py-4">
                         <div class="flex items-center gap-2 font-semibold text-slate-700">
-                            <span class="w-2 h-2 rounded-full bg-primary ${w.status === 'Running' ? 'animate-pulse' : ''}"></span>
+                            <span class="w-2 h-2 rounded-full bg-primary ${displayStatus === 'in-progress' ? 'animate-pulse' : ''}"></span>
                             ${getCurrentProcess(w)}
                         </div>
                     </td>
                     <td class="px-6 py-4">
-                        <div class="flex flex-col">
-                            <span class="px-2.5 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider w-fit ${statusClass}">${w.status}</span>
-                            ${priorityBadge}
-                        </div>
+                        <span class="text-[11px] uppercase font-bold tracking-wider ${statusClass}">${displayStatus}</span>
                     </td>
                     <td class="px-6 py-4 text-center">
                         <div class="flex items-center justify-center gap-2">
@@ -635,7 +697,10 @@
                 }
 
                 function handleWODirtyFilter() {
-                    woFilterStatus = document.getElementById('woStatusFilter').value;
+                    const selectEl = document.getElementById('woStatusFilter');
+                    if (selectEl) {
+                        woFilterStatus = selectEl.value;
+                    }
                     currentWOPage = 1;
                     renderWorkOrders();
                 }
