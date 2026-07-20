@@ -200,7 +200,7 @@
               <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">Current Authorization
                 Password</label>
               <div class="relative">
-                <input type="password" id="old-pass"
+                <input type="text" id="old-pass" style="-webkit-text-security: disc; text-security: disc;"
                   class="w-full pl-3 pr-10 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   required />
                 <button type="button"
@@ -214,7 +214,7 @@
               <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">New Security
                 Password</label>
               <div class="relative">
-                <input type="password" id="new-pass"
+                <input type="text" id="new-pass" style="-webkit-text-security: disc; text-security: disc;"
                   class="w-full pl-3 pr-10 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   required />
                 <button type="button"
@@ -227,7 +227,7 @@
             <div>
               <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">Confirm New Password</label>
               <div class="relative">
-                <input type="password" id="confirm-pass"
+                <input type="text" id="confirm-pass" style="-webkit-text-security: disc; text-security: disc;"
                   class="w-full pl-3 pr-10 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   required />
                 <button type="button"
@@ -451,15 +451,16 @@
             const targetId = btn.getAttribute('data-target');
             const input = document.getElementById(targetId);
             const icon = btn.querySelector('span');
-            if (input && icon) {
-              if (input.type === 'password') {
-                input.type = 'text';
+              const isMasked = input.style.webkitTextSecurity !== 'none' && input.style.textSecurity !== 'none';
+              if (isMasked) {
+                input.style.webkitTextSecurity = 'none';
+                input.style.textSecurity = 'none';
                 icon.textContent = 'visibility_off';
               } else {
-                input.type = 'password';
+                input.style.webkitTextSecurity = 'disc';
+                input.style.textSecurity = 'disc';
                 icon.textContent = 'visibility';
               }
-            }
           });
         });
 
