@@ -766,12 +766,12 @@
 
                         // Status tag styling
                         const displayStatus = getDisplayStatus(w);
-                        let statusClass = 'text-slate-600 font-extrabold';
-                        if (displayStatus === 'in-progress') statusClass = 'text-[#2563eb] font-extrabold';
-                        else if (displayStatus === 'completed') statusClass = 'text-emerald-600 font-extrabold';
-                        else if (displayStatus === 'hold') statusClass = 'text-red-600 font-extrabold';
-                        else if (displayStatus === 'Not released') statusClass = 'text-slate-400 font-extrabold';
-                        else if (displayStatus === 'pending') statusClass = 'text-amber-500 font-extrabold';
+                        let statusClass = 'h-[22px] w-[84px] rounded-md border border-slate-300 text-slate-500 font-bold uppercase tracking-wider text-[9px] leading-none inline-flex items-center justify-center text-center shrink-0 px-1.5';
+                        if (displayStatus === 'in-progress') statusClass = 'h-[22px] w-[84px] rounded-md border border-blue-500 text-blue-600 font-bold uppercase tracking-wider text-[9px] leading-none inline-flex items-center justify-center text-center shrink-0 px-1.5';
+                        else if (displayStatus === 'completed') statusClass = 'h-[22px] w-[84px] rounded-md border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none inline-flex items-center justify-center text-center shrink-0 px-1.5';
+                        else if (displayStatus === 'hold') statusClass = 'h-[22px] w-[84px] rounded-md border border-rose-500 text-rose-600 font-bold uppercase tracking-wider text-[9px] leading-none inline-flex items-center justify-center text-center shrink-0 px-1.5';
+                        else if (displayStatus === 'Not released') statusClass = 'h-[22px] w-[84px] rounded-md border border-slate-300 text-slate-500 font-bold uppercase tracking-wider text-[9px] leading-none inline-flex items-center justify-center text-center shrink-0 px-1.5';
+                        else if (displayStatus === 'pending') statusClass = 'h-[22px] w-[84px] rounded-md border border-amber-500 text-amber-500 font-bold uppercase tracking-wider text-[9px] leading-none inline-flex items-center justify-center text-center shrink-0 px-1.5';
 
                         // Done count color
                         const doneClass = displayStatus === 'completed' ? 'text-emerald-600 font-bold' : 'text-slate-800 font-bold';
@@ -799,7 +799,7 @@
                         </div>
                     </td>
                     <td class="px-6 py-4">
-                        <span class="text-[11px] uppercase font-bold tracking-wider ${statusClass}">${displayStatus}</span>
+                        <span class="${statusClass}">${displayStatus.toUpperCase()}</span>
                     </td>
                     <td class="px-6 py-4 text-center">
                         <div class="flex items-center justify-center gap-2">
