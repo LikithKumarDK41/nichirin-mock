@@ -91,14 +91,50 @@
             <h2 class="text-2xl font-black text-[#dc0111] tracking-tight leading-none" id="wo-summary-id">--</h2>
             <span class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-blue-50 text-[#2563eb] border border-blue-200/60" id="wo-summary-status">RUNNING</span>
           </div>
-          <!-- Barcode Column (Exact replication of PDF top-left) -->
+          <!-- Barcode Column (Clean SVG Linear Barcode) -->
           <div class="flex flex-col items-end">
-            <div class="h-9 bg-slate-950 w-48 flex flex-col justify-center items-center text-white font-mono select-none px-1 py-0.5 rounded shadow-sm">
-              <!-- Simulated Barcode Lines -->
-              <div class="text-[9px] tracking-[4px] leading-none font-bold">||| | || |||| | | |||| || || | ||| |</div>
-              <div class="text-[9px] tracking-[2px] leading-none font-bold mt-0.5">||||| | ||| |||| | || ||| || ||||</div>
+            <div id="wo-summary-barcode-container" class="h-9 w-48 flex items-center justify-end select-none">
+              <svg viewBox="0 0 160 34" class="h-9 w-full max-w-[190px]" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- High-density clean vertical barcode lines -->
+                <rect x="0" y="0" width="3" height="34" fill="#0f172a"/>
+                <rect x="5" y="0" width="1.5" height="34" fill="#0f172a"/>
+                <rect x="9" y="0" width="4" height="34" fill="#0f172a"/>
+                <rect x="15" y="0" width="1.5" height="34" fill="#0f172a"/>
+                <rect x="18" y="0" width="1.5" height="34" fill="#0f172a"/>
+                <rect x="22" y="0" width="3" height="34" fill="#0f172a"/>
+                <rect x="27" y="0" width="5" height="34" fill="#0f172a"/>
+                <rect x="34" y="0" width="1.5" height="34" fill="#0f172a"/>
+                <rect x="37" y="0" width="3" height="34" fill="#0f172a"/>
+                <rect x="42" y="0" width="1.5" height="34" fill="#0f172a"/>
+                <rect x="45" y="0" width="4" height="34" fill="#0f172a"/>
+                <rect x="51" y="0" width="3" height="34" fill="#0f172a"/>
+                <rect x="56" y="0" width="1.5" height="34" fill="#0f172a"/>
+                <rect x="59" y="0" width="1.5" height="34" fill="#0f172a"/>
+                <rect x="63" y="0" width="3" height="34" fill="#0f172a"/>
+                <rect x="68" y="0" width="5" height="34" fill="#0f172a"/>
+                <rect x="75" y="0" width="1.5" height="34" fill="#0f172a"/>
+                <rect x="78" y="0" width="3" height="34" fill="#0f172a"/>
+                <rect x="83" y="0" width="1.5" height="34" fill="#0f172a"/>
+                <rect x="86" y="0" width="1.5" height="34" fill="#0f172a"/>
+                <rect x="89" y="0" width="4" height="34" fill="#0f172a"/>
+                <rect x="95" y="0" width="1.5" height="34" fill="#0f172a"/>
+                <rect x="98" y="0" width="3" height="34" fill="#0f172a"/>
+                <rect x="103" y="0" width="3" height="34" fill="#0f172a"/>
+                <rect x="108" y="0" width="1.5" height="34" fill="#0f172a"/>
+                <rect x="111" y="0" width="5" height="34" fill="#0f172a"/>
+                <rect x="118" y="0" width="1.5" height="34" fill="#0f172a"/>
+                <rect x="121" y="0" width="3" height="34" fill="#0f172a"/>
+                <rect x="126" y="0" width="1.5" height="34" fill="#0f172a"/>
+                <rect x="129" y="0" width="1.5" height="34" fill="#0f172a"/>
+                <rect x="132" y="0" width="4" height="34" fill="#0f172a"/>
+                <rect x="138" y="0" width="3" height="34" fill="#0f172a"/>
+                <rect x="143" y="0" width="1.5" height="34" fill="#0f172a"/>
+                <rect x="146" y="0" width="1.5" height="34" fill="#0f172a"/>
+                <rect x="150" y="0" width="5" height="34" fill="#0f172a"/>
+                <rect x="157" y="0" width="3" height="34" fill="#0f172a"/>
+              </svg>
             </div>
-            <span id="wo-summary-control-code" class="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-1">Control Code: --</span>
+            <span id="wo-summary-control-code" class="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-1.5 font-mono whitespace-nowrap">CONTROL CODE: <span id="wo-summary-control-code-num">--</span></span>
           </div>
         </div>
 
@@ -165,7 +201,7 @@
           </div>
 
           <!-- Col 4: Production Plan -->
-          <div class="md:col-span-4 space-y-3 border-l border-slate-100/50 pl-4">
+          <div class="md:col-span-3 space-y-3 border-l border-slate-100/50 pl-4">
             <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider">PRODUCTION PLAN</h4>
             <div class="space-y-2 text-xs">
               <div>
@@ -191,43 +227,53 @@
             </div>
           </div>
 
-          <!-- Col 5: QR Code -->
-          <div class="md:col-span-1 flex flex-col items-center justify-start shrink-0 border-l border-slate-100/50 pl-4">
-            <div class="w-[72px] h-[72px] border border-slate-200 bg-white p-1 rounded flex items-center justify-center relative select-none">
-              <!-- Simulated QR Grid Pattern -->
-              <div class="grid grid-cols-5 gap-[2px] w-full h-full opacity-90">
-                <div class="bg-slate-900 rounded-[0.5px]"></div>
-                <div class="bg-transparent"></div>
-                <div class="bg-slate-900 rounded-[0.5px]"></div>
-                <div class="bg-slate-900 rounded-[0.5px]"></div>
-                <div class="bg-slate-900 rounded-[0.5px]"></div>
-                
-                <div class="bg-slate-900 rounded-[0.5px]"></div>
-                <div class="bg-transparent"></div>
-                <div class="bg-slate-900 rounded-[0.5px]"></div>
-                <div class="bg-transparent"></div>
-                <div class="bg-slate-900 rounded-[0.5px]"></div>
-                
-                <div class="bg-slate-900 rounded-[0.5px]"></div>
-                <div class="bg-slate-900 rounded-[0.5px]"></div>
-                <div class="bg-transparent"></div>
-                <div class="bg-slate-900 rounded-[0.5px]"></div>
-                <div class="bg-slate-900 rounded-[0.5px]"></div>
-                
-                <div class="bg-transparent"></div>
-                <div class="bg-slate-900 rounded-[0.5px]"></div>
-                <div class="bg-slate-900 rounded-[0.5px]"></div>
-                <div class="bg-slate-900 rounded-[0.5px]"></div>
-                <div class="bg-transparent"></div>
-                
-                <div class="bg-slate-900 rounded-[0.5px]"></div>
-                <div class="bg-transparent"></div>
-                <div class="bg-slate-900 rounded-[0.5px]"></div>
-                <div class="bg-transparent"></div>
-                <div class="bg-slate-900 rounded-[0.5px]"></div>
+          <!-- Col 5: Standard QR Code (Matching reference image) -->
+          <div class="md:col-span-2 flex flex-col items-center justify-start shrink-0 border-l border-slate-100/50 pl-4 pr-2">
+            <div class="w-[88px] h-[88px] border border-slate-200/90 bg-white p-2 rounded-xl flex items-center justify-center relative select-none shadow-sm">
+              <div id="wo-summary-qrcode-container" class="w-full h-full flex items-center justify-center">
+                <svg viewBox="0 0 100 100" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Top-Left Finder Square -->
+                  <rect x="5" y="5" width="28" height="28" rx="2" fill="#0f172a"/>
+                  <rect x="10" y="10" width="18" height="18" rx="1" fill="#ffffff"/>
+                  <rect x="15" y="15" width="8" height="8" rx="1" fill="#0f172a"/>
+
+                  <!-- Top-Right Finder Square -->
+                  <rect x="67" y="5" width="28" height="28" rx="2" fill="#0f172a"/>
+                  <rect x="72" y="10" width="18" height="18" rx="1" fill="#ffffff"/>
+                  <rect x="77" y="15" width="8" height="8" rx="1" fill="#0f172a"/>
+
+                  <!-- Bottom-Left Finder Square -->
+                  <rect x="5" y="67" width="28" height="28" rx="2" fill="#0f172a"/>
+                  <rect x="10" y="72" width="18" height="18" rx="1" fill="#ffffff"/>
+                  <rect x="15" y="77" width="8" height="8" rx="1" fill="#0f172a"/>
+
+                  <!-- Middle & Center Data Modules -->
+                  <rect x="38" y="7" width="7" height="7" rx="1" fill="#0f172a"/>
+                  <rect x="50" y="7" width="12" height="7" rx="1" fill="#0f172a"/>
+                  <rect x="38" y="19" width="12" height="7" rx="1" fill="#0f172a"/>
+                  <rect x="55" y="19" width="7" height="7" rx="1" fill="#0f172a"/>
+
+                  <rect x="7" y="38" width="7" height="7" rx="1" fill="#0f172a"/>
+                  <rect x="19" y="38" width="7" height="14" rx="1" fill="#0f172a"/>
+                  <rect x="31" y="38" width="20" height="7" rx="1" fill="#0f172a"/>
+                  <rect x="56" y="38" width="13" height="7" rx="1" fill="#0f172a"/>
+                  <rect x="74" y="38" width="19" height="7" rx="1" fill="#0f172a"/>
+
+                  <rect x="7" y="50" width="14" height="7" rx="1" fill="#0f172a"/>
+                  <rect x="26" y="50" width="7" height="7" rx="1" fill="#0f172a"/>
+                  <rect x="38" y="50" width="7" height="14" rx="1" fill="#0f172a"/>
+                  <rect x="50" y="50" width="19" height="7" rx="1" fill="#0f172a"/>
+                  <rect x="74" y="50" width="7" height="19" rx="1" fill="#0f172a"/>
+
+                  <rect x="38" y="67" width="14" height="7" rx="1" fill="#0f172a"/>
+                  <rect x="57" y="67" width="19" height="7" rx="1" fill="#0f172a"/>
+                  <rect x="50" y="79" width="13" height="13" rx="1" fill="#0f172a"/>
+                  <rect x="68" y="79" width="7" height="18" rx="1" fill="#0f172a"/>
+                  <rect x="80" y="79" width="13" height="13" rx="1" fill="#0f172a"/>
+                </svg>
               </div>
             </div>
-            <span class="text-[8px] text-slate-400 font-bold uppercase tracking-wider mt-1.5 font-mono text-center whitespace-nowrap">LOT: 6701</span>
+            <span id="wo-summary-lot-code" class="text-[8.5px] text-slate-400 font-bold uppercase tracking-wider mt-2 font-mono whitespace-nowrap">LOT: 6701</span>
           </div>
         </div>
 
@@ -553,10 +599,10 @@
             statusEl.className = `px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider ${statusClass}`;
         }
         
-        const ctrlCodeEl = document.getElementById('wo-summary-control-code');
-        if (ctrlCodeEl) {
-            ctrlCodeEl.textContent = `CONTROL CODE: ${cleanWONum}`;
-        }
+        const ctrlCodeNumEl = document.getElementById('wo-summary-control-code-num');
+        if (ctrlCodeNumEl) ctrlCodeNumEl.textContent = cleanWONum;
+        const lotCodeEl = document.getElementById('wo-summary-lot-code');
+        if (lotCodeEl) lotCodeEl.textContent = `LOT: ${cleanWONum.slice(-4)}`;
         
         const prodOrderEl = document.getElementById('wo-summary-prod-order-no');
         if (prodOrderEl) {
