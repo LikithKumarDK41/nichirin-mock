@@ -12,7 +12,7 @@
   </script>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>Production Reports - Control Card Digitization</title>
+  <title>Completed Reports - Control Card Digitization</title>
 
   <!-- Tailwind CSS Engine -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -83,96 +83,49 @@
     <!-- Header Section -->
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-1">
       <div>
-        <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Production Reports</h2>
+        <h2 class="font-headline-lg text-headline-lg text-primary mb-1 font-bold">Completed Reports</h2>
         <p class="font-body-md text-body-md text-on-surface-variant">Comprehensive audit logs, yield analysis, work
           order execution metrics, and compliance records across all manufacturing lines.</p>
-      </div>
-      <div class="flex gap-3 w-full md:w-auto md:justify-end shrink-0">
-        <button onclick="exportOverallReport()"
-          class="px-4 py-2 border border-outline-variant/50 text-slate-700 hover:bg-slate-50 font-label-bold text-label-bold rounded-lg transition-colors flex items-center justify-center gap-2 text-sm font-semibold shadow-sm bg-white cursor-pointer h-9 w-full md:w-auto whitespace-nowrap">
-          <span class="material-symbols-outlined text-[18px]">download</span>
-          <span>Export Report</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Horizontal Bento Summary Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-4 gap-6 mb-2">
-      <!-- Card 1: TOTAL ACTIVE WO -->
-      <div
-        class="bg-gradient-to-br from-red-50/30 via-white to-white border border-slate-200/80 border-l-4 border-l-[#dc0111] rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-w-0">
-        <div class="min-w-0 flex-1 mr-3">
-          <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1 truncate"
-            title="Total Active WO">Total Active WO</p>
-          <p class="text-3xl font-black text-[#dc0111] tracking-tight leading-none" id="statActiveWO">1</p>
-        </div>
-        <div
-          class="bg-red-50/80 p-2.5 rounded-xl flex items-center justify-center border border-red-100/50 flex-shrink-0">
-          <span class="material-symbols-outlined text-[24px] text-[#dc0111]">play_circle</span>
-        </div>
-      </div>
-      <!-- Card 2: TOTAL PENDING WO -->
-      <div
-        class="bg-gradient-to-br from-amber-50/30 via-white to-white border border-slate-200/80 border-l-4 border-l-amber-500 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-w-0">
-        <div class="min-w-0 flex-1 mr-3">
-          <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1 truncate"
-            title="Total Pending WO">Total Pending WO</p>
-          <p class="text-3xl font-black text-amber-500 tracking-tight leading-none" id="statPendingWO">1</p>
-        </div>
-        <div
-          class="bg-amber-50/80 p-2.5 rounded-xl flex items-center justify-center border border-amber-100/50 flex-shrink-0">
-          <span class="material-symbols-outlined text-[24px] text-amber-500">pending_actions</span>
-        </div>
-      </div>
-      <!-- Card 3: TOTAL NOT RELEASED WO -->
-      <div
-        class="bg-gradient-to-br from-slate-50/50 via-white to-white border border-slate-200/80 border-l-4 border-l-slate-400 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-w-0">
-        <div class="min-w-0 flex-1 mr-3">
-          <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1 truncate"
-            title="Total Not Released WO">Total Not Released WO</p>
-          <p class="text-3xl font-black text-slate-500 tracking-tight leading-none" id="statNotReleasedWO">1</p>
-        </div>
-        <div
-          class="bg-slate-100/80 p-2.5 rounded-xl flex items-center justify-center border border-slate-200/50 flex-shrink-0">
-          <span class="material-symbols-outlined text-[24px] text-slate-500">do_not_disturb_on</span>
-        </div>
-      </div>
-      <!-- Card 4: TOTAL COMPLETED WO -->
-      <div
-        class="bg-gradient-to-br from-emerald-50/30 via-white to-white border border-slate-200/80 border-l-4 border-l-emerald-600 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-w-0">
-        <div class="min-w-0 flex-1 mr-3">
-          <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1 truncate"
-            title="Total Completed WO">Total Completed WO</p>
-          <p class="text-3xl font-black text-emerald-600 tracking-tight leading-none" id="statCompletedWO">1</p>
-        </div>
-        <div
-          class="bg-emerald-50/80 p-2.5 rounded-xl flex items-center justify-center border border-emerald-100/50 flex-shrink-0">
-          <span class="material-symbols-outlined text-[24px] text-emerald-600">check_circle</span>
-        </div>
       </div>
     </div>
 
     <!-- Bento Layout: Work Orders List -->
     <section
       class="col-span-12 bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm flex flex-col">
-      <div class="px-6 py-4 border-b border-outline-variant/30 flex flex-col gap-3 bg-slate-50">
-        <!-- Row 1: Title -->
-        <div class="flex items-center justify-between">
-          <h3 class="font-headline-md text-headline-md text-primary">Work Order Audit Records</h3>
-        </div>
-
-        <!-- Row 2: Status Filter (Mobile Select Dropdown / Desktop Chips) -->
-        <div class="flex items-center justify-start md:justify-end gap-3 w-full py-1">
-          <!-- Mobile Status Select Dropdown -->
-          <div class="block sm:hidden w-full">
-            <select id="woStatusMobileSelect"
-              onchange="woFilterStatus = this.value; currentPage = 1; renderStatusChips(); filterReports();"
-              class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:border-[#dc0111] focus:ring-1 focus:ring-[#dc0111] shadow-sm">
-            </select>
+      <div class="px-6 py-3.5 border-b border-outline-variant/30 flex items-center justify-end bg-slate-50 gap-4">
+        <!-- Right Side Filter Controls: Date Range Picker & Work Order ID Searchable Dropdown -->
+        <div class="flex items-center gap-4 flex-wrap w-full md:w-auto justify-end">
+          <!-- 1. Date Range Picker -->
+          <div class="relative flex flex-col">
+            <label class="block font-label-bold text-slate-500 uppercase tracking-wider mb-1 text-[10px] font-bold">Date Range</label>
+            <div class="flex items-center bg-white border border-outline-variant/30 rounded-lg px-3 h-9 text-xs text-slate-700 font-normal gap-2 shadow-xs cursor-pointer">
+              <span class="material-symbols-outlined text-[18px] text-slate-500 cursor-pointer" onclick="try{document.getElementById('reportStartDate').showPicker();}catch(e){}">calendar_today</span>
+              <input type="date" id="reportStartDate" class="border-0 p-0 text-xs text-slate-700 font-normal focus:ring-0 cursor-pointer bg-transparent" onchange="window.filterReportsByDateAndWO()" onclick="try{this.showPicker();}catch(e){}" />
+              <span class="text-slate-400 font-medium select-none">to</span>
+              <input type="date" id="reportEndDate" class="border-0 p-0 text-xs text-slate-700 font-normal focus:ring-0 cursor-pointer bg-transparent" onchange="window.filterReportsByDateAndWO()" onclick="try{this.showPicker();}catch(e){}" />
+            </div>
           </div>
-          <!-- Desktop Status Chips -->
-          <div id="woStatusChipsContainer"
-            class="hidden sm:flex items-center justify-start md:justify-end gap-2 flex-wrap"></div>
+
+          <!-- 2. Searchable Work Order ID Dropdown -->
+          <div class="relative w-full sm:w-64 flex flex-col">
+            <label class="block font-label-bold text-slate-500 uppercase tracking-wider mb-1 text-[10px] font-bold">Work Order ID</label>
+            <div class="relative">
+              <button id="reports-wo-dropdown-trigger" type="button" class="w-full bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-9 px-3 font-normal flex items-center justify-between cursor-pointer shadow-xs" onclick="window.toggleReportsWODropdown()">
+                <span id="reports-wo-selected-text" class="font-normal text-slate-700 truncate">All Work Orders</span>
+                <span class="material-symbols-outlined text-[20px] text-slate-500 shrink-0 ml-1">expand_more</span>
+              </button>
+
+              <div id="reports-wo-dropdown-container" class="absolute right-0 left-0 mt-1 bg-white border border-outline-variant/30 rounded-lg shadow-xl z-[100] hidden p-2 flex flex-col gap-2 min-w-[260px]">
+                <div class="relative">
+                  <input type="text" id="reports-wo-dropdown-search" class="w-full bg-slate-50 border border-outline-variant/30 rounded-lg text-xs text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-8 pr-3 font-normal" placeholder="Search WO ID..." oninput="window.filterReportsWODropdown(this.value)" autocomplete="off" />
+                  <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[16px] text-slate-400">search</span>
+                </div>
+                <div id="reports-wo-dropdown-list" class="max-h-56 overflow-y-auto custom-scrollbar flex flex-col divide-y divide-slate-100">
+                  <!-- Dropdown items populated dynamically -->
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -738,12 +691,122 @@
         });
       }
 
+      let selectedWOFilter = 'ALL';
+
+      window.toggleReportsWODropdown = function() {
+        const container = document.getElementById('reports-wo-dropdown-container');
+        if (container) {
+          container.classList.toggle('hidden');
+          if (!container.classList.contains('hidden')) {
+            const searchInput = document.getElementById('reports-wo-dropdown-search');
+            if (searchInput) {
+              searchInput.value = '';
+              searchInput.focus();
+            }
+            renderReportsWODropdown('');
+          }
+        }
+      };
+
+      document.addEventListener('click', function(event) {
+        const container = document.getElementById('reports-wo-dropdown-container');
+        const trigger = document.getElementById('reports-wo-dropdown-trigger');
+        if (container && trigger && !container.classList.contains('hidden')) {
+          if (!trigger.contains(event.target) && !container.contains(event.target)) {
+            container.classList.add('hidden');
+          }
+        }
+      });
+
+      window.filterReportsWODropdown = function(val) {
+        renderReportsWODropdown(val);
+      };
+
+      function renderReportsWODropdown(filterText) {
+        const list = document.getElementById('reports-wo-dropdown-list');
+        if (!list) return;
+        list.innerHTML = '';
+
+        const q = filterText.toLowerCase().trim();
+        const completedWOs = workOrdersList.filter(w => getDisplayStatus(w) === 'completed');
+
+        // All Work Orders option
+        const allOption = document.createElement('div');
+        allOption.className = `px-3 py-2 text-xs font-normal cursor-pointer hover:bg-slate-50 transition-colors ${selectedWOFilter === 'ALL' ? 'bg-red-50/60 text-primary font-medium' : 'text-slate-700'}`;
+        allOption.innerHTML = `
+          <div class="font-medium text-slate-800">All Work Orders</div>
+          <div class="text-[10px] text-slate-500">Display all completed audit records</div>
+        `;
+        allOption.onclick = () => window.selectReportWO('ALL');
+        list.appendChild(allOption);
+
+        const filtered = completedWOs.filter(w => {
+          const num = String(w.woNumber).toLowerCase();
+          const prod = (w.productName || '').toLowerCase();
+          const part = (w.partNumber || '').toLowerCase();
+          return num.includes(q) || prod.includes(q) || part.includes(q);
+        });
+
+        if (filtered.length === 0 && q !== '') {
+          const emptyItem = document.createElement('div');
+          emptyItem.className = 'px-3 py-2 text-xs text-slate-400 font-normal';
+          emptyItem.textContent = 'No matching work orders found';
+          list.appendChild(emptyItem);
+          return;
+        }
+
+        filtered.forEach(w => {
+          const displayWO = String(w.woNumber).replace(/^WO-?/i, '');
+          const isSelected = selectedWOFilter === displayWO;
+          const item = document.createElement('div');
+          item.className = `px-3 py-2 text-xs font-normal cursor-pointer hover:bg-slate-50 transition-colors ${isSelected ? 'bg-red-50/60 text-primary font-medium' : 'text-slate-700'}`;
+          item.innerHTML = `
+            <div class="font-semibold text-slate-800 font-mono">${displayWO}</div>
+            <div class="text-[10px] text-slate-500 truncate">${w.productName}</div>
+          `;
+          item.onclick = () => window.selectReportWO(displayWO);
+          list.appendChild(item);
+        });
+      }
+
+      window.selectReportWO = function(woNum) {
+        selectedWOFilter = woNum;
+        const triggerText = document.getElementById('reports-wo-selected-text');
+        if (triggerText) {
+          triggerText.textContent = woNum === 'ALL' ? 'All Work Orders' : woNum;
+        }
+        const container = document.getElementById('reports-wo-dropdown-container');
+        if (container) container.classList.add('hidden');
+        currentPage = 1;
+        filterReports();
+      };
+
+      window.filterReportsByDateAndWO = function() {
+        currentPage = 1;
+        filterReports();
+      };
+
       function filterReports() {
         const sortedList = sortWorkOrders(workOrdersList);
+        const startDate = document.getElementById('reportStartDate')?.value;
+        const endDate = document.getElementById('reportEndDate')?.value;
+
         const filtered = sortedList.filter(w => {
-          let matchesStatus = true;
-          if (woFilterStatus !== 'ALL') matchesStatus = getDisplayStatus(w) === woFilterStatus;
-          return matchesStatus;
+          const displayStatus = getDisplayStatus(w);
+          if (displayStatus !== 'completed') return false;
+
+          const displayWO = String(w.woNumber).replace(/^WO-?/i, '');
+          if (selectedWOFilter !== 'ALL' && displayWO !== selectedWOFilter) return false;
+
+          // Optional Date Range filtering
+          if (startDate || endDate) {
+            const woDateStr = w.issueDate || w.planDate || '2026-06-27';
+            const woDate = new Date(woDateStr);
+            if (startDate && woDate < new Date(startDate)) return false;
+            if (endDate && woDate > new Date(endDate + 'T23:59:59')) return false;
+          }
+
+          return true;
         });
 
         filteredList = filtered;

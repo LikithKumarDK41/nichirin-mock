@@ -299,14 +299,9 @@
           <div class="space-y-1 pt-2">
             <p class="text-[11px] font-bold text-slate-500 uppercase tracking-widest px-4 pt-5 pb-2 select-none">Traceability &amp; Reports</p>
             
-            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}traceability-search/index.html" data-route="traceability-search">
-              <span class="material-symbols-outlined text-[20px]">manage_search</span>
-              <span>Traceability Search</span>
-            </a>
-  
             <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}audit-reports/index.html" data-route="audit-reports">
               <span class="material-symbols-outlined text-[20px]">analytics</span>
-              <span>Production Reports</span>
+              <span>Completed Reports</span>
             </a>
           </div>
   
@@ -337,6 +332,11 @@
             <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}shift-management/index.html" data-route="shift-management">
               <span class="material-symbols-outlined text-[20px]">schedule</span>
               <span>Shift Management</span>
+            </a>
+
+            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}notification-configuration/index.html" data-route="notification-configuration">
+              <span class="material-symbols-outlined text-[20px]">notifications_active</span>
+              <span>Notification / Alarm</span>
             </a>
 
             <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}system-settings/index.html" data-route="system-settings">

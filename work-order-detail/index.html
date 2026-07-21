@@ -159,8 +159,8 @@
               <h2 class="text-2xl font-black text-primary tracking-tight leading-none" id="wo-detail-id">WO #22615539
               </h2>
               <span
-                class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-[#dc0111]/10 text-[#dc0111] border border-[#dc0111]/25"
-                id="wo-detail-status">Running</span>
+                class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-blue-50 text-[#2563eb] border border-blue-200/60"
+                id="wo-detail-status">IN-PROGRESS</span>
             </div>
           </div>
           <!-- Barcode Column (Exact replication of PDF top-left) -->
@@ -401,150 +401,201 @@
       <!-- Left Column: Scrollable Process List -->
       <div class="col-span-12 lg:col-span-4 flex flex-col">
         <div class="bg-white border border-outline-variant/30 rounded-xl p-4 shadow-sm flex flex-col h-[520px]">
-          <h3 class="text-xs font-black text-slate-800 uppercase tracking-wider mb-3 flex items-center gap-2">
-            <span class="material-symbols-outlined text-primary text-[18px]">format_list_bulleted</span>
-            Control Card Processes
-          </h3>
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-[18px]">format_list_bulleted</span>
+              <span>Control Card Processes</span>
+            </h3>
+            <button id="sidebar-traceability-btn" onclick="window.openTraceabilityDrawer()"
+              class="hidden items-center justify-center text-primary hover:opacity-80 transition-opacity cursor-pointer active:scale-95"
+              title="Traceability">
+              <span class="material-symbols-outlined text-[18px]">account_tree</span>
+            </button>
+          </div>
           <!-- Scrollable list wrapper -->
           <div class="overflow-y-auto pr-2 space-y-2 flex-grow no-scrollbar" id="sheet-processes-list-container"
             style="max-height: 440px;">
 
             <div id="sheet-card-picking" onclick="window.selectSheetProcess('picking')"
-              class="sheet-process-card p-3 border border-amber-500 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
-              <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
-                <span>1. Picking (BOM)</span>
-                <span
-                  class="text-[9px] font-black uppercase tracking-wider text-amber-600 shrink-0">Picking</span>
-              </h4>
-              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Raw component verification &amp; store picking
-                checklist</p>
+              class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
+              <div class="flex items-center justify-between gap-1.5">
+                <h4 class="font-bold text-slate-900 text-xs">
+                  1. Picking (BOM)
+                </h4>
+                <span id="sheet-status-badge-picking" class="text-emerald-600 font-bold uppercase tracking-wider text-[10px] shrink-0">COMPLETED</span>
+              </div>
+              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Raw component verification &amp; store picking checklist</p>
+              <div class="mt-1.5 flex items-center">
+                <span class="px-1.5 py-0.5 rounded text-white font-bold uppercase tracking-wider text-[8.5px] bg-[#A855F7]">Picking</span>
+              </div>
             </div>
- 
+
             <div id="sheet-card-hose_cutting" onclick="window.selectSheetProcess('hose_cutting')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
-              <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
-                <span>2. Hose Cutting</span>
-                <span
-                  class="text-[9px] font-black uppercase tracking-wider text-rose-600 shrink-0">Offline</span>
-              </h4>
-              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Slice inner EPDM tubes to length &amp; mark
-                alignment</p>
+              <div class="flex items-center justify-between gap-1.5">
+                <h4 class="font-bold text-slate-900 text-xs">
+                  2. Hose Cutting
+                </h4>
+                <span id="sheet-status-badge-hose_cutting" class="text-emerald-600 font-bold uppercase tracking-wider text-[10px] shrink-0">COMPLETED</span>
+              </div>
+              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Slice inner EPDM tubes to length &amp; mark alignment</p>
+              <div class="mt-1.5 flex items-center">
+                <span class="px-1.5 py-0.5 rounded text-white font-bold uppercase tracking-wider text-[8.5px] bg-[#0891B2]">Offline</span>
+              </div>
             </div>
- 
+
             <div id="sheet-card-protector_cutting" onclick="window.selectSheetProcess('protector_cutting')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
-              <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
-                <span>3. Protector Cutting</span>
-                <span
-                  class="text-[9px] font-black uppercase tracking-wider text-rose-600 shrink-0">Offline</span>
-              </h4>
-              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Cut protector sleeve sleeves to standard lengths
-              </p>
+              <div class="flex items-center justify-between gap-1.5">
+                <h4 class="font-bold text-slate-900 text-xs">
+                  3. Protector Cutting
+                </h4>
+                <span id="sheet-status-badge-protector_cutting" class="text-emerald-600 font-bold uppercase tracking-wider text-[10px] shrink-0">COMPLETED</span>
+              </div>
+              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Cut protector sleeve sleeves to standard lengths</p>
+              <div class="mt-1.5 flex items-center">
+                <span class="px-1.5 py-0.5 rounded text-white font-bold uppercase tracking-wider text-[8.5px] bg-[#0891B2]">Offline</span>
+              </div>
             </div>
- 
+
             <div id="sheet-card-fitting_bending" onclick="window.selectSheetProcess('fitting_bending')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
-              <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
-                <span>4. Fitting Bending</span>
-                <span
-                  class="text-[9px] font-black uppercase tracking-wider text-rose-600 shrink-0">Offline</span>
-              </h4>
+              <div class="flex items-center justify-between gap-1.5">
+                <h4 class="font-bold text-slate-900 text-xs">
+                  4. Fitting Bending
+                </h4>
+                <span id="sheet-status-badge-fitting_bending" class="text-emerald-600 font-bold uppercase tracking-wider text-[10px] shrink-0">COMPLETED</span>
+              </div>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Bend fitting tubes to specified drawing angles</p>
+              <div class="mt-1.5 flex items-center">
+                <span class="px-1.5 py-0.5 rounded text-white font-bold uppercase tracking-wider text-[8.5px] bg-[#0891B2]">Offline</span>
+              </div>
             </div>
- 
+
             <div id="sheet-card-lot_stamping" onclick="window.selectSheetProcess('lot_stamping')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
-              <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
-                <span>5. Manufacturing Lot Stamping</span>
-                <span
-                  class="text-[9px] font-black uppercase tracking-wider text-rose-600 shrink-0">Offline</span>
-              </h4>
+              <div class="flex items-center justify-between gap-1.5">
+                <h4 class="font-bold text-slate-900 text-xs">
+                  5. Manufacturing Lot Stamping
+                </h4>
+                <span id="sheet-status-badge-lot_stamping" class="text-emerald-600 font-bold uppercase tracking-wider text-[10px] shrink-0">COMPLETED</span>
+              </div>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Stamp unique lot code markings on components</p>
+              <div class="mt-1.5 flex items-center">
+                <span class="px-1.5 py-0.5 rounded text-white font-bold uppercase tracking-wider text-[8.5px] bg-[#0891B2]">Offline</span>
+              </div>
             </div>
- 
+
             <div id="sheet-card-insertion1" onclick="window.selectSheetProcess('insertion1')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
-              <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
-                <span>6. Accessories Insertion-1</span>
-                <span
-                  class="text-[9px] font-black uppercase tracking-wider text-emerald-600 shrink-0">Online</span>
-              </h4>
-              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Install rubber clamps and protective sleeves L-160
-              </p>
+              <div class="flex items-center justify-between gap-1.5">
+                <h4 class="font-bold text-slate-900 text-xs">
+                  6. Accessories Insertion-1
+                </h4>
+                <span id="sheet-status-badge-insertion1" class="text-emerald-600 font-bold uppercase tracking-wider text-[10px] shrink-0">COMPLETED</span>
+              </div>
+              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Install rubber clamps and protective sleeves L-160</p>
+              <div class="mt-1.5 flex items-center">
+                <span class="px-1.5 py-0.5 rounded text-white font-bold uppercase tracking-wider text-[8.5px] bg-[#EC4899]">Online</span>
+              </div>
             </div>
- 
+
             <div id="sheet-card-crimping1" onclick="window.selectSheetProcess('crimping1')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
-              <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
-                <span>7. First Crimping</span>
-                <span
-                  class="text-[9px] font-black uppercase tracking-wider text-emerald-600 shrink-0">Online</span>
-              </h4>
-              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Crimp first fitting collar to EPDM hose assembly
-              </p>
+              <div class="flex items-center justify-between gap-1.5">
+                <h4 class="font-bold text-slate-900 text-xs">
+                  7. First Crimping
+                </h4>
+                <span id="sheet-status-badge-crimping1" class="text-emerald-600 font-bold uppercase tracking-wider text-[10px] shrink-0">COMPLETED</span>
+              </div>
+              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Crimp first fitting collar to EPDM hose assembly</p>
+              <div class="mt-1.5 flex items-center">
+                <span class="px-1.5 py-0.5 rounded text-white font-bold uppercase tracking-wider text-[8.5px] bg-[#EC4899]">Online</span>
+              </div>
             </div>
- 
+
             <div id="sheet-card-insertion2" onclick="window.selectSheetProcess('insertion2')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
-              <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
-                <span>8. Accessories Insertion-2</span>
-                <span
-                  class="text-[9px] font-black uppercase tracking-wider text-emerald-600 shrink-0">Online</span>
-              </h4>
-              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Install protector sleeves L-260 &amp; primary
-                clamps</p>
+              <div class="flex items-center justify-between gap-1.5">
+                <h4 class="font-bold text-slate-900 text-xs">
+                  8. Accessories Insertion-2
+                </h4>
+                <span id="sheet-status-badge-insertion2" class="text-emerald-600 font-bold uppercase tracking-wider text-[10px] shrink-0">COMPLETED</span>
+              </div>
+              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Install protector sleeves L-260 &amp; primary clamps</p>
+              <div class="mt-1.5 flex items-center">
+                <span class="px-1.5 py-0.5 rounded text-white font-bold uppercase tracking-wider text-[8.5px] bg-[#EC4899]">Online</span>
+              </div>
             </div>
- 
+
             <div id="sheet-card-crimping2" onclick="window.selectSheetProcess('crimping2')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
-              <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
-                <span>9. Second Crimping</span>
-                <span
-                  class="text-[9px] font-black uppercase tracking-wider text-emerald-600 shrink-0">Online</span>
-              </h4>
+              <div class="flex items-center justify-between gap-1.5">
+                <h4 class="font-bold text-slate-900 text-xs">
+                  9. Second Crimping
+                </h4>
+                <span id="sheet-status-badge-crimping2" class="text-emerald-600 font-bold uppercase tracking-wider text-[10px] shrink-0">COMPLETED</span>
+              </div>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Crimp second fitting collar to secure assembly</p>
+              <div class="mt-1.5 flex items-center">
+                <span class="px-1.5 py-0.5 rounded text-white font-bold uppercase tracking-wider text-[8.5px] bg-[#EC4899]">Online</span>
+              </div>
             </div>
- 
+
             <div id="sheet-card-bonding" onclick="window.selectSheetProcess('bonding')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
-              <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
-                <span>10. Accessories Bonding</span>
-                <span
-                  class="text-[9px] font-black uppercase tracking-wider text-emerald-600 shrink-0">Online</span>
-              </h4>
+              <div class="flex items-center justify-between gap-1.5">
+                <h4 class="font-bold text-slate-900 text-xs">
+                  10. Accessories Bonding
+                </h4>
+                <span id="sheet-status-badge-bonding" class="text-emerald-600 font-bold uppercase tracking-wider text-[10px] shrink-0">COMPLETED</span>
+              </div>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Apply bonding adhesive compound Kakotora check</p>
+              <div class="mt-1.5 flex items-center">
+                <span class="px-1.5 py-0.5 rounded text-white font-bold uppercase tracking-wider text-[8.5px] bg-[#EC4899]">Online</span>
+              </div>
             </div>
- 
+
             <div id="sheet-card-pressure_test" onclick="window.selectSheetProcess('pressure_test')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
-              <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
-                <span>11. Pressure Test</span>
-                <span
-                  class="text-[9px] font-black uppercase tracking-wider text-emerald-600 shrink-0">Online</span>
-              </h4>
+              <div class="flex items-center justify-between gap-1.5">
+                <h4 class="font-bold text-slate-900 text-xs">
+                  11. Pressure Test
+                </h4>
+                <span id="sheet-status-badge-pressure_test" class="text-emerald-600 font-bold uppercase tracking-wider text-[10px] shrink-0">COMPLETED</span>
+              </div>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Leakage testing under high hydraulic pressure</p>
+              <div class="mt-1.5 flex items-center">
+                <span class="px-1.5 py-0.5 rounded text-white font-bold uppercase tracking-wider text-[8.5px] bg-[#EC4899]">Online</span>
+              </div>
             </div>
- 
+
             <div id="sheet-card-final_inspection" onclick="window.selectSheetProcess('final_inspection')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
-              <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
-                <span>12. Final Inspection</span>
-                <span
-                  class="text-[9px] font-black uppercase tracking-wider text-emerald-600 shrink-0">Online</span>
-              </h4>
-              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Dimensional check, plating colors, and visual
-                audits</p>
+              <div class="flex items-center justify-between gap-1.5">
+                <h4 class="font-bold text-slate-900 text-xs">
+                  12. Final Inspection
+                </h4>
+                <span id="sheet-status-badge-final_inspection" class="text-emerald-600 font-bold uppercase tracking-wider text-[10px] shrink-0">COMPLETED</span>
+              </div>
+              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Dimensional check, plating colors, and visual audits</p>
+              <div class="mt-1.5 flex items-center">
+                <span class="px-1.5 py-0.5 rounded text-white font-bold uppercase tracking-wider text-[8.5px] bg-[#EC4899]">Online</span>
+              </div>
             </div>
- 
+
             <div id="sheet-card-packing" onclick="window.selectSheetProcess('packing')"
               class="sheet-process-card p-3 border border-slate-100 rounded-lg cursor-pointer transition-all hover:bg-slate-50">
-              <h4 class="font-bold text-slate-900 text-xs flex items-center justify-between gap-1.5">
-                <span>13. Packing</span>
-                <span
-                  class="text-[9px] font-black uppercase tracking-wider text-emerald-600 shrink-0">Online</span>
-              </h4>
-              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Verification of internal tags, storage, and bin
-                sizing</p>
+              <div class="flex items-center justify-between gap-1.5">
+                <h4 class="font-bold text-slate-900 text-xs">
+                  13. Packing
+                </h4>
+                <span id="sheet-status-badge-packing" class="text-emerald-600 font-bold uppercase tracking-wider text-[10px] shrink-0">COMPLETED</span>
+              </div>
+              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Verification of internal tags, storage, and bin sizing</p>
+              <div class="mt-1.5 flex items-center">
+                <span class="px-1.5 py-0.5 rounded text-white font-bold uppercase tracking-wider text-[8.5px] bg-[#EC4899]">Online</span>
+              </div>
             </div>
  
           </div>
@@ -1207,12 +1258,23 @@
           }
           statusEl.textContent = displayStatus;
           let statusClass = 'bg-slate-100 text-slate-600 border border-slate-200';
-          if (displayStatus === 'In-progress') statusClass = 'bg-[#dc0111]/10 text-[#dc0111] border border-[#dc0111]/25';
+          if (displayStatus === 'In-progress') statusClass = 'bg-blue-50 text-[#2563eb] border border-blue-200/60';
           else if (displayStatus === 'Completed') statusClass = 'bg-emerald-100 text-emerald-700 border border-emerald-200';
           else if (displayStatus === 'Held' || displayStatus === 'Hold') statusClass = 'bg-red-50 text-red-600 border border-red-200/50';
           else if (displayStatus === 'Pending') statusClass = 'bg-amber-50 text-amber-700 border border-amber-200/50';
           else if (displayStatus === 'Not released') statusClass = 'bg-slate-100 text-slate-500 border border-slate-200/80';
           statusEl.className = `inline-flex items-center px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-wider leading-none ${statusClass}`;
+
+          // Traceability Button visibility for In-progress and Completed work orders
+          const isTraceable = displayStatus === 'In-progress' || displayStatus === 'Completed' || activeWO.status === 'Running' || activeWO.status === 'completed' || cleanWONum === '22615540';
+          const sidebarTraceBtn = document.getElementById('sidebar-traceability-btn');
+          if (sidebarTraceBtn) {
+            if (isTraceable) {
+              sidebarTraceBtn.className = "inline-flex items-center justify-center text-primary hover:opacity-80 transition-opacity cursor-pointer active:scale-95";
+            } else {
+              sidebarTraceBtn.className = "hidden";
+            }
+          }
 
           // Hash
           const cardHashEl = document.getElementById('wo-card-hash');
@@ -1223,14 +1285,14 @@
           // Planning Navigation Button
           const planningNavBtn = document.getElementById('wo-planning-nav-btn');
           if (planningNavBtn) {
-            const isNotReleased = activeWO.status === 'Not released' || activeWO.status === 'Waiting' || cleanWONum === '22615545' || cleanWONum === '22615542';
+            const isNotReleased = activeWO.status === 'Not released' || cleanWONum === '22615542';
             const isCompletedOrHeld = activeWO.status === 'Completed' || activeWO.status === 'completed' || activeWO.status === 'Held' || activeWO.status === 'hold';
             if (isNotReleased || isCompletedOrHeld) {
               planningNavBtn.removeAttribute('href');
               planningNavBtn.className = "flex items-center justify-center gap-2 px-4 bg-slate-200 text-slate-450 font-bold text-xs uppercase tracking-wider h-9 rounded-lg cursor-not-allowed shadow-sm select-none";
               planningNavBtn.onclick = (e) => { e.preventDefault(); };
             } else {
-              planningNavBtn.setAttribute('href', `../supervisor-planning/index.html?wo=${activeWO.woNumber}`);
+              planningNavBtn.setAttribute('href', `../supervisor-planning/index.html?wo=${cleanWONum}`);
               planningNavBtn.className = "flex items-center justify-center gap-2 px-4 bg-primary text-white hover:bg-primary/95 transition-all font-bold text-xs uppercase tracking-wider h-9 rounded-lg cursor-pointer shadow-sm";
               planningNavBtn.onclick = null;
             }
@@ -1246,8 +1308,49 @@
           renderSpecs();
           renderTeam();
           updateProcessSidebarDisabledState();
+          updateProcessSidebarBadges();
           selectSheetProcess('picking');
           goToStep(1);
+        }
+
+        function updateProcessSidebarBadges() {
+          if (!activeWO) return;
+          const cleanNum = activeWO.woNumber.replace(/^WO-?/i, '');
+          const isNotReleased = activeWO.status === 'Not released' || activeWO.status === 'Waiting' || cleanNum === '22615545' || cleanNum === '22615542';
+          const isFourVerifiedWO = cleanNum === '22615540' || cleanNum === '22615543' || activeWO.status === 'Held' || activeWO.status === 'hold';
+
+          const allProcIds = [
+            'picking', 'hose_cutting', 'protector_cutting', 'fitting_bending',
+            'lot_stamping', 'insertion1', 'crimping1', 'insertion2', 'crimping2',
+            'bonding', 'pressure_test', 'final_inspection', 'packing'
+          ];
+
+          allProcIds.forEach(pId => {
+            const badgeEl = document.getElementById('sheet-status-badge-' + pId);
+            if (!badgeEl) return;
+
+            let isPending = false;
+            if (isNotReleased) {
+              isPending = true;
+            } else if (isFourVerifiedWO) {
+              isPending = !['picking', 'hose_cutting', 'protector_cutting', 'fitting_bending'].includes(pId);
+            } else if (activeWO.status !== 'Completed' && activeWO.status !== 'completed') {
+              const isOnlineProcess = [
+                'insertion1', 'crimping1', 'insertion2', 'crimping2',
+                'accessories_1', 'accessories_2', 'crimping_1', 'crimping_2',
+                'bonding', 'pressure_test', 'final_inspection', 'packing'
+              ].includes(pId);
+              if (isOnlineProcess) isPending = true;
+            }
+
+            if (isPending) {
+              badgeEl.textContent = 'PENDING';
+              badgeEl.className = 'text-amber-500 font-bold uppercase tracking-wider text-[10px] shrink-0';
+            } else {
+              badgeEl.textContent = 'COMPLETED';
+              badgeEl.className = 'text-emerald-600 font-bold uppercase tracking-wider text-[10px] shrink-0';
+            }
+          });
         }
 
         function updateProcessSidebarDisabledState() {
@@ -1527,7 +1630,7 @@
             const tr = document.createElement('tr');
             tr.className = 'hover:bg-slate-50/50 transition-colors';
 
-            const statusBadge = item.verification === 'VERIFIED'
+            const statusBadge = (item.verification === 'VERIFIED' || item.verification === 'COMPLETED' || item.verification === 'PICKED')
               ? `<span class="inline-flex items-center text-[10px] font-bold text-emerald-600"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>Picked</span>`
               : `<span class="inline-flex items-center text-[10px] font-bold text-amber-500"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5"></span>Yet to Pick</span>`;
 
@@ -1866,30 +1969,30 @@
           const activeCard = document.getElementById('sheet-card-' + processId);
           if (activeCard) {
             activeCard.classList.remove('border-slate-100');
-            // Find status element text (Picking, Offline, Online)
-            const statusSpan = activeCard.querySelector('h4 span:last-child');
-            const statusText = statusSpan ? statusSpan.textContent.trim().toUpperCase() : '';
-            
-            if (statusText === 'PICKING') {
-              activeCard.classList.add('border-amber-500');
-            } else if (statusText === 'OFFLINE') {
-              activeCard.classList.add('border-rose-500');
-            } else if (statusText === 'ONLINE') {
+            // Match active card border color with status badge (COMPLETED = green, PENDING = amber)
+            const statusBadge = document.getElementById('sheet-status-badge-' + processId);
+            const isCompleted = statusBadge && statusBadge.textContent.trim().toUpperCase() === 'COMPLETED';
+
+            if (isCompleted) {
               activeCard.classList.add('border-emerald-500');
             } else {
-              activeCard.classList.add('border-primary');
+              activeCard.classList.add('border-amber-500');
             }
           }
 
           const container = document.getElementById('sheet-details-pane');
           if (!container) return;
+          const isTraceable = activeWO.status === 'Running' || activeWO.status === 'in-progress' || activeWO.status === 'Completed' || activeWO.status === 'completed' || cleanNum === '22615540';
+          const traceBtnHtml = isTraceable
+            ? `<button onclick="window.openTraceabilityDrawer()" class="flex items-center justify-center w-7 h-7 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-lg transition-all shadow-2xs cursor-pointer shrink-0 ml-2" title="Traceability"><span class="material-symbols-outlined text-[16px]">account_tree</span></button>`
+            : '';
 
           const proc = SHEET_PROCESSES[processId];
-                    if (proc.isBOM) {
+          if (proc.isBOM) {
             const isNotReleased = activeWO.status === 'Not released' || activeWO.status === 'Waiting' || cleanNum === '22615545' || cleanNum === '22615542';
             const verifiedBadge = isNotReleased
-              ? `<span class="inline-flex items-center text-[11px] font-bold text-amber-500 select-none">PENDING</span>`
-              : `<span class="inline-flex items-center text-[11px] font-bold text-emerald-600 select-none">COMPLETED</span>`;
+              ? `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500 text-white uppercase tracking-wider select-none">PENDING</span>`
+              : `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-600 text-white uppercase tracking-wider select-none">COMPLETED</span>`;
 
             container.innerHTML = `
                     <div class="space-y-4">
@@ -1898,7 +2001,6 @@
                                 <h3 class="text-base font-black text-slate-900 uppercase">${proc.name}</h3>
                                 <p class="text-xs text-slate-500 mt-1">${proc.desc}</p>
                             </div>
-                            ${verifiedBadge}
                         </div>
                         
                         <div class="overflow-x-auto border border-outline-variant/20 rounded-lg">
@@ -2113,8 +2215,8 @@
             }
 
             const statusLabel = isPendingProcess
-              ? `<span class="inline-flex items-center text-[11px] font-bold text-amber-500 select-none">PENDING</span>`
-              : `<span class="inline-flex items-center text-[11px] font-bold text-emerald-600 select-none">COMPLETED</span>`;
+              ? `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500 text-white uppercase tracking-wider select-none">PENDING</span>`
+              : `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-600 text-white uppercase tracking-wider select-none">COMPLETED</span>`;
 
             container.innerHTML = `
                     <div class="space-y-4">
@@ -2123,7 +2225,6 @@
                                 <h3 class="text-base font-black text-slate-900 uppercase">${proc.name}</h3>
                                 <p class="text-xs text-slate-500 mt-1">${proc.desc}</p>
                             </div>
-                            ${statusLabel}
                         </div>
                         
                         ${drawingCardHtml}
@@ -4006,10 +4107,201 @@
         window.previewProcessDrawing = previewProcessDrawing;
         window.openFullscreenProcessDrawing = openFullscreenProcessDrawing;
 
+        window.openTraceabilityDrawer = function() {
+          if (!activeWO) return;
+          const backdrop = document.getElementById('traceabilityDrawerBackdrop');
+          const drawer = document.getElementById('traceabilityDrawer');
+          if (!backdrop || !drawer) return;
+
+          renderTraceabilityTimeline();
+
+          backdrop.classList.remove('hidden');
+          setTimeout(() => backdrop.classList.remove('opacity-0'), 10);
+          drawer.classList.remove('translate-x-full');
+        };
+
+        window.closeTraceabilityDrawer = function() {
+          const backdrop = document.getElementById('traceabilityDrawerBackdrop');
+          const drawer = document.getElementById('traceabilityDrawer');
+          if (!backdrop || !drawer) return;
+
+          drawer.classList.add('translate-x-full');
+          backdrop.classList.add('opacity-0');
+          setTimeout(() => backdrop.classList.add('hidden'), 300);
+        };
+
+        function renderTraceabilityTimeline() {
+          if (!activeWO) return;
+
+          const isWOCompleted = activeWO.status === 'Completed' || activeWO.status === 'completed';
+
+          const statusBadgeEl = document.getElementById('trace-drawer-status-badge');
+          if (statusBadgeEl) {
+            statusBadgeEl.textContent = isWOCompleted ? 'COMPLETED' : 'IN-PROGRESS';
+            if (isWOCompleted) {
+              statusBadgeEl.className = 'px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 border border-emerald-200';
+            } else {
+              statusBadgeEl.className = 'px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-blue-50 text-[#2563eb] border border-blue-200/60';
+            }
+          }
+
+          const timelineList = document.getElementById('trace-drawer-timeline-list');
+          if (!timelineList) return;
+          timelineList.innerHTML = '';
+
+          const stepTimes = [
+            { start: "06:00 AM", end: "06:12 AM" },
+            { start: "06:12 AM", end: "07:30 AM" },
+            { start: "07:30 AM", end: "08:15 AM" },
+            { start: "08:15 AM", end: "09:00 AM" },
+            { start: "09:00 AM", end: "10:15 AM" },
+            { start: "10:15 AM", end: "11:00 AM" },
+            { start: "11:00 AM", end: "11:45 AM" },
+            { start: "11:45 AM", end: "12:30 PM" },
+            { start: "12:30 PM", end: "01:15 PM" },
+            { start: "01:15 PM", end: "02:00 PM" },
+            { start: "02:00 PM", end: "02:45 PM" },
+            { start: "02:45 PM", end: "03:30 PM" },
+            { start: "03:30 PM", end: "03:45 PM" }
+          ];
+
+          const defaultProcesses = [
+            { name: "Picking (BOM)", machine: "Store Area", operator: "Pooja / Anil" },
+            { name: "Hose Cutting", machine: "Hose Cutter HC-04", operator: "Anish / Sunil" },
+            { name: "Protector Cutting", machine: "Sleeve Cutter SC-01", operator: "Amit" },
+            { name: "Fitting Bending", machine: "CNC Pipe Bender PB-12", operator: "Raju" },
+            { name: "Manufacturing Lot Stamping", machine: "Lot Stamper LS-09", operator: "Shiv Shambhu / Manoj" },
+            { name: "Accessories Insertion-1", machine: "Assembly Station-1", operator: "Vipin" },
+            { name: "Crimping-1", machine: "Crimper CR-02", operator: "Vipin / Kiran" },
+            { name: "Accessories Insertion-2", machine: "Assembly Station-2", operator: "Vipin" },
+            { name: "Crimping-2", machine: "Crimper CR-05", operator: "Vipin / Kiran" },
+            { name: "Accessories Bonding", machine: "Bonding Jig BJ-59", operator: "Nazma / Sushma" },
+            { name: "Pressure Test", machine: "LTM-07 Rig", operator: "Aniket" },
+            { name: "Final Inspection", machine: "FI-HMSI-59 Jig", operator: "Rubi / Garima" },
+            { name: "Packing", machine: "Packing Line PL-03", operator: "Anjali / Shy" }
+          ];
+
+          const rawProcesses = activeWO.ccProcesses || defaultProcesses;
+
+          rawProcesses.forEach((step, idx) => {
+            let stepStatus = step.status || 'completed';
+            if (isWOCompleted) {
+              stepStatus = 'completed';
+            }
+
+            let borderClass = 'border-l-4 border-l-emerald-500 bg-white';
+            let statusColorClass = 'text-emerald-600 font-extrabold';
+            let displayStart = stepTimes[idx]?.start || '08:00 AM';
+            let displayEnd = stepTimes[idx]?.end || '08:45 AM';
+
+            let operators = step.operator ? step.operator.split('/').map(o => o.trim()) : [];
+            let startedBy = operators[0] || 'Anish';
+            let doneBy = operators[1] || operators[0] || 'Sunil';
+
+            if (stepStatus === 'completed') {
+              borderClass = 'border-l-4 border-l-emerald-500 bg-white';
+              statusColorClass = 'text-emerald-600 font-extrabold';
+            } else if (stepStatus === 'active' || stepStatus === 'running') {
+              borderClass = 'border-l-4 border-l-amber-500 bg-white';
+              statusColorClass = 'text-amber-600 font-extrabold';
+              displayEnd = 'In Progress';
+              doneBy = 'Pending';
+            } else {
+              borderClass = 'opacity-60 bg-slate-50/50';
+              statusColorClass = 'text-slate-400 font-bold';
+              startedBy = 'Pending';
+              doneBy = 'Pending';
+              displayStart = '--';
+              displayEnd = '--';
+            }
+
+            const card = document.createElement('div');
+            card.className = `border border-slate-200/80 rounded-xl p-3.5 shadow-2xs ${borderClass}`;
+            card.innerHTML = `
+              <div class="flex justify-between items-start mb-1.5">
+                <div>
+                  <h4 class="font-bold text-slate-900 text-xs">${idx + 1}. ${step.name}</h4>
+                  <p class="text-[10px] text-slate-500 font-semibold uppercase mt-0.5">${step.machine || 'Station-01'}</p>
+                </div>
+                <span class="text-[10px] font-bold ${statusColorClass} uppercase">${stepStatus}</span>
+              </div>
+              <div class="grid grid-cols-3 gap-2 mt-2 pt-2 border-t border-slate-100 text-[10px]">
+                <div>
+                  <span class="text-slate-400 font-bold block text-[9px] uppercase">STARTED BY</span>
+                  <span class="font-semibold text-slate-800">${startedBy}</span>
+                  <span class="text-[9px] text-slate-400 block font-mono">${displayStart}</span>
+                </div>
+                <div>
+                  <span class="text-slate-400 font-bold block text-[9px] uppercase">COMPLETED BY</span>
+                  <span class="font-semibold text-slate-800">${doneBy}</span>
+                  <span class="text-[9px] text-slate-400 block font-mono">${displayEnd}</span>
+                </div>
+                <div class="text-right">
+                  <span class="text-slate-400 font-bold block text-[9px] uppercase">TIME WINDOW</span>
+                  <span class="font-mono text-slate-700 font-semibold">${displayStart} - ${displayEnd}</span>
+                </div>
+              </div>
+            `;
+            timelineList.appendChild(card);
+          });
+        }
+
         fetchWODetail();
         initFullscreenViewer();
       })();
     </script>
+
+    <!-- Traceability Slide-Over Drawer Backdrop -->
+    <div id="traceabilityDrawerBackdrop"
+      class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[200] transition-opacity duration-300 opacity-0"
+      onclick="window.closeTraceabilityDrawer()"></div>
+
+    <!-- Traceability Slide-Over Drawer Panel (Slide from Right) -->
+    <div id="traceabilityDrawer"
+      class="fixed inset-y-0 right-0 z-[210] w-full max-w-2xl bg-white shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col font-body-md select-none overflow-hidden">
+      <!-- Drawer Header -->
+      <div class="px-6 py-4 bg-white text-slate-900 flex justify-between items-center shrink-0 border-b border-slate-200">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+            <span class="material-symbols-outlined text-[20px]">account_tree</span>
+          </div>
+          <h3 class="font-black text-sm text-slate-900 uppercase tracking-wider">TRACEABILITY</h3>
+        </div>
+        <div class="flex items-center gap-3">
+          <span id="trace-drawer-status-badge" class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-blue-50 text-[#2563eb]">IN-PROGRESS</span>
+          <button onclick="window.closeTraceabilityDrawer()" class="w-8 h-8 rounded-full flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-colors cursor-pointer">
+            <span class="material-symbols-outlined text-[18px]">close</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Drawer Scrollable Content -->
+      <div class="flex-grow overflow-y-auto p-6 space-y-6 custom-scrollbar bg-slate-50/50" id="trace-drawer-body">
+        <!-- QC Metrics -->
+        <div class="bg-white border border-slate-200/60 rounded-xl p-4 shadow-sm flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-black text-[#dc0111] uppercase tracking-wider">QC Compliance Metrics</span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/50 uppercase">Live Audit</span>
+          </div>
+          <div class="flex gap-3">
+            <div class="bg-slate-50 border border-slate-200 px-3.5 py-1.5 rounded-lg text-center shadow-2xs">
+              <span class="block text-[8px] font-bold text-slate-400 uppercase tracking-wider">Pass Rate</span>
+              <span class="text-xs font-black text-emerald-600 font-data-tabular" id="trace-drawer-qc-pass">100.0%</span>
+            </div>
+            <div class="bg-slate-50 border border-slate-200 px-3.5 py-1.5 rounded-lg text-center shadow-2xs">
+              <span class="block text-[8px] font-bold text-slate-400 uppercase tracking-wider">Defect Rate</span>
+              <span class="text-xs font-black text-rose-600 font-data-tabular" id="trace-drawer-qc-fail">0.0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Timeline List -->
+        <div id="trace-drawer-timeline-list" class="space-y-3 relative">
+          <!-- Populated dynamically with process steps -->
+        </div>
+      </div>
+    </div>
+
     <!-- Fullscreen Drawing Modal (Absolute full screen, only image) -->
     <div id="modalFullscreenDrawing"
       class="fixed inset-0 bg-slate-950/95 backdrop-blur-sm z-[9999] hidden flex items-center justify-center select-none overflow-hidden"

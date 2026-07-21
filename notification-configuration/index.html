@@ -1,39 +1,1147 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<!-- SPA Layout Redirect Wrapper -->
-<script>
-  if (!document.getElementById('app-root')) {
-    const p = window.location.pathname;
-    const rel = '../';
-    window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
-  }
-</script>
-  <meta charset="UTF-8">
-  <title>Notification / Alarm Config - Nichirin Control Card Digitization</title>
-</head>
-<body class="bg-surface-container-low">
-  
+<html class="light" lang="en">
 
-  <main class="flex-grow pt-[88px] px-container-padding pb-container-padding bg-surface-container-low min-h-screen">
-    <div class="flex justify-between items-end mb-5">
+<head>
+  <!-- SPA Layout Redirect Wrapper -->
+  <script>
+    if (!document.getElementById('app-root')) {
+      const p = window.location.pathname;
+      const rel = '../';
+      window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
+    }
+  </script>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Notification / Alarm - Control Card Digitization System</title>
+
+  <!-- Tailwind CSS Engine -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="../assets/js/tailwind-config.js"></script>
+  <link href="../assets/css/custom.css" rel="stylesheet" />
+
+  <!-- Google Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+
+<body class="bg-surface text-on-surface min-h-screen flex flex-col font-body-md">
+
+  <main class="flex-grow pt-1 px-6 pb-6 flex flex-col gap-6 max-w-[1600px] mx-auto w-full">
+
+    <!-- Header Section -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-1">
       <div>
-        <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Notification / Alarm Config</h2>
-        <p class="font-body-md text-body-md text-on-surface-variant">Configure alert triggers, operator alarm limits, and dispatcher boundaries.</p>
+        <h2 class="font-headline-lg text-headline-lg text-primary mb-1 font-bold">Notification / Alarm</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant">View incoming alerts, send team broadcasts, and configure factory alarm triggers.</p>
+      </div>
+
+      <div class="flex items-center gap-3 w-full md:w-auto shrink-0">
+        <button id="main-action-btn" onclick="window.handleMainAction()"
+          class="px-5 py-2.5 bg-primary text-white font-label-bold rounded-lg hover:bg-primary/95 transition-colors flex items-center justify-center gap-2 text-sm font-semibold shadow-sm cursor-pointer w-full md:w-auto whitespace-nowrap">
+          <span id="main-action-btn-icon" class="material-symbols-outlined text-[18px]">campaign</span>
+          <span id="main-action-btn-text">Broadcast Alert</span>
+        </button>
       </div>
     </div>
 
-    <!-- Main Content Card -->
-    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 shadow-sm min-h-[400px] flex flex-col items-center justify-center text-center">
-      <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-        <span class="material-symbols-outlined text-[36px] text-primary">notifications_active</span>
+    <!-- Center-Aligned Simple Segmented Tabs -->
+    <div class="flex justify-center border-b border-slate-200/80 w-full pb-1">
+      <div class="flex items-center gap-8">
+        <!-- Tab 1: Notifications (DEFAULT FIRST TAB) -->
+        <button id="tab-btn-notifications" onclick="window.switchTab('notifications')"
+          class="py-2.5 px-4 font-bold text-sm border-b-2 border-primary text-primary flex items-center gap-2 transition-all cursor-pointer">
+          <span class="material-symbols-outlined text-[20px]">notifications</span>
+          <span>Work Order Notifications</span>
+          <span id="badge-notif-count" class="px-2 py-0.5 text-[10px] font-extrabold rounded-full bg-red-100 text-primary">8</span>
+        </button>
+
+        <!-- Tab 2: Alarm Settings -->
+        <button id="tab-btn-alarms" onclick="window.switchTab('alarms')"
+          class="py-2.5 px-4 font-semibold text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-900 flex items-center gap-2 transition-all cursor-pointer">
+          <span class="material-symbols-outlined text-[20px]">alarm</span>
+          <span>Alarm Settings</span>
+          <span id="badge-alarm-count" class="px-2 py-0.5 text-[10px] font-extrabold rounded-full bg-red-100 text-primary">5</span>
+        </button>
       </div>
-      <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Notification &amp; Alarm Console</h3>
-      <p class="font-body-md text-body-md text-on-surface-variant max-w-md mb-6">This section is currently under active master configuration. The data sync links and layout definitions are active in the sidebar navigation.</p>
-      <button class="bg-primary text-on-primary px-6 py-2.5 rounded-lg font-headline-sm text-headline-sm hover:opacity-90 transition-opacity">
-        Configure Alerts
+    </div>
+
+    <!-- TAB 1: WORK ORDER NOTIFICATIONS (FIRST TAB) -->
+    <div id="tab-pane-notifications" class="flex-grow flex flex-col gap-4">
+      
+      <!-- Sub-Filter Bar (Received vs. Sent) & Toolbar -->
+      <div class="bg-white border border-outline-variant/30 rounded-xl p-4 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        
+        <!-- Received vs Sent Sub-Filter Pills -->
+        <div class="flex items-center gap-2 bg-slate-100 p-1 rounded-xl border border-slate-200/80 shrink-0">
+          <button id="subtab-received" onclick="window.switchNotifSubTab('received')"
+            class="px-3.5 py-1.5 rounded-lg text-xs font-extrabold flex items-center gap-2 transition-all bg-white text-slate-900 shadow-xs cursor-pointer">
+            <span class="material-symbols-outlined text-[16px] text-primary">inbox</span>
+            <span>Received Notifications</span>
+            <span id="badge-received-count" class="px-1.5 py-0.2 text-[10px] font-extrabold rounded-full bg-red-100 text-primary">5</span>
+          </button>
+
+          <button id="subtab-sent" onclick="window.switchNotifSubTab('sent')"
+            class="px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition-all text-slate-600 hover:text-slate-900 cursor-pointer">
+            <span class="material-symbols-outlined text-[16px]">send</span>
+            <span>Sent Broadcasts</span>
+            <span id="badge-sent-count" class="px-1.5 py-0.2 text-[10px] font-extrabold rounded-full bg-red-100 text-primary">3</span>
+          </button>
+        </div>
+
+        <!-- Search & Filter Controls -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
+          <!-- Search -->
+          <div class="relative min-w-[260px]">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
+            <input id="notif-search" oninput="window.filterNotifications()"
+              class="pl-9 pr-3 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-full h-9"
+              placeholder="Search" type="text" />
+          </div>
+
+          <!-- Severity Filter -->
+          <div class="relative">
+            <select id="notif-filter-severity" onchange="window.filterNotifications()"
+              class="appearance-none pl-3 pr-8 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary h-9 font-semibold cursor-pointer w-full">
+              <option value="All">All Severities</option>
+              <option value="Critical">Critical</option>
+              <option value="High">High / Warning</option>
+              <option value="Info">Info</option>
+            </select>
+            <span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-slate-500">expand_more</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notification Cards Container List -->
+      <div id="notifications-cards-list" class="flex flex-col gap-3">
+        <!-- Dynamically rendered notification cards -->
+      </div>
+    </div>
+
+    <!-- TAB 2: ALARM SETTINGS (SECOND TAB) -->
+    <div id="tab-pane-alarms" class="bg-white border border-outline-variant/30 rounded-xl flex-grow overflow-hidden flex-col shadow-sm hidden">
+      
+      <!-- Search & Filters Header -->
+      <div class="p-4 border-b border-outline-variant/30 bg-slate-50/50">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+          <!-- Search -->
+          <div class="flex flex-col">
+            <label class="font-label-bold text-xs text-on-surface-variant mb-1 font-semibold">Search Alarm Rules</label>
+            <div class="relative">
+              <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
+              <input id="alarm-search" oninput="window.filterAlarms()"
+                class="pl-9 pr-3 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-full h-9"
+                placeholder="Search" type="text" />
+            </div>
+          </div>
+
+          <!-- Severity Filter -->
+          <div class="flex flex-col">
+            <label class="font-label-bold text-xs text-on-surface-variant mb-1 font-semibold">Severity Filter</label>
+            <div class="relative">
+              <select id="alarm-filter-severity" onchange="window.filterAlarms()"
+                class="appearance-none pl-3 pr-8 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary w-full h-9 font-semibold cursor-pointer">
+                <option value="All">All Severities</option>
+                <option value="Critical">Critical (Line Stop)</option>
+                <option value="High">High / Warning</option>
+                <option value="Info">Informational</option>
+              </select>
+              <span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-slate-500">expand_more</span>
+            </div>
+          </div>
+
+          <!-- Status Filter -->
+          <div class="flex flex-col">
+            <label class="font-label-bold text-xs text-on-surface-variant mb-1 font-semibold">Status Filter</label>
+            <div class="relative">
+              <select id="alarm-filter-status" onchange="window.filterAlarms()"
+                class="appearance-none pl-3 pr-8 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary w-full h-9 font-semibold cursor-pointer">
+                <option value="All">All Status</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+              <span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-slate-500">expand_more</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alarms Table -->
+      <div class="overflow-x-auto custom-scrollbar flex-grow">
+        <table class="w-full text-left border-collapse whitespace-nowrap min-w-[900px]">
+          <thead class="sticky top-0 bg-slate-50 border-b border-outline-variant/30 text-on-surface-variant text-xs font-bold uppercase tracking-wider z-10">
+            <tr>
+              <th class="p-4">Alarm Name &amp; Event</th>
+              <th class="p-4">Target Station / Process</th>
+              <th class="p-4 w-32">Severity</th>
+              <th class="p-4 w-28 text-center">Status</th>
+              <th class="p-4 w-36 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="alarms-tbody" class="divide-y divide-outline-variant/20 text-sm font-medium text-slate-800">
+            <!-- Populated via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- MODALS & DRAWERS -->
+
+    <!-- 1. SLIDE-OVER DRAWER: ADD / EDIT ALARM RULE -->
+    <div id="alarm-modal-container" class="fixed inset-0 z-[100] flex justify-end hidden">
+      <!-- Backdrop -->
+      <div id="alarm-modal-backdrop" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity duration-300 opacity-0 cursor-pointer" onclick="window.closeAlarmModal()"></div>
+      
+      <!-- Drawer Panel -->
+      <div id="alarm-modal-drawer" class="relative w-full max-w-[500px] bg-white h-full shadow-2xl border-l border-slate-200 flex flex-col transform translate-x-full transition-transform duration-300 ease-out z-10 overflow-hidden">
+        <!-- Drawer Header -->
+        <div class="px-6 py-5 bg-slate-50 border-b border-slate-200 flex items-center justify-between shrink-0">
+          <h3 class="font-bold text-slate-900 text-base" id="modal-title-text">
+            Add New Alarm Rule
+          </h3>
+          <button onclick="window.closeAlarmModal()" class="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors cursor-pointer">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+
+        <!-- Drawer Form -->
+        <form id="alarm-form" onsubmit="window.saveAlarmRule(event)" class="p-6 space-y-4 overflow-y-auto custom-scrollbar flex-grow">
+          <input type="hidden" id="alarm-edit-id" value="" />
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block font-bold text-slate-500 uppercase tracking-wider text-xs mb-1.5">Rule Code ID</label>
+              <input type="text" id="form-code" placeholder="e.g. ALM-001" class="w-full h-10 px-3 border border-outline-variant/30 rounded-lg text-sm font-semibold text-slate-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-slate-400 bg-white" required />
+            </div>
+            <div>
+              <label class="block font-bold text-slate-500 uppercase tracking-wider text-xs mb-1.5">Severity Level</label>
+              <div class="relative">
+                <select id="form-severity" class="w-full h-10 appearance-none pl-3 pr-8 border border-outline-variant/30 rounded-lg text-sm font-semibold text-slate-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-white cursor-pointer">
+                  <option value="Critical">Critical (Line Stop)</option>
+                  <option value="High" selected>High / Warning</option>
+                  <option value="Info">Informational</option>
+                </select>
+                <span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-slate-500">expand_more</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-500 uppercase tracking-wider text-xs mb-1.5">Alarm Name / Event</label>
+            <input type="text" id="form-name" placeholder="e.g. Hose Outer Diameter Tolerance Breach" class="w-full h-10 px-3 border border-outline-variant/30 rounded-lg text-sm font-semibold text-slate-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-slate-400 bg-white" required />
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block font-bold text-slate-500 uppercase tracking-wider text-xs mb-1.5">Target Station / Line</label>
+              <input type="text" id="form-station" placeholder="e.g. Hose Crimping - Station 02" class="w-full h-10 px-3 border border-outline-variant/30 rounded-lg text-sm font-semibold text-slate-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-slate-400 bg-white" required />
+            </div>
+            <div>
+              <label class="block font-bold text-slate-500 uppercase tracking-wider text-xs mb-1.5">Trigger Limit / Boundary</label>
+              <input type="text" id="form-condition" placeholder="e.g. Tol > ±0.45 mm" class="w-full h-10 px-3 border border-outline-variant/30 rounded-lg font-mono text-sm font-semibold text-slate-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-slate-400 bg-white" required />
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-500 uppercase tracking-wider text-xs mb-1.5">Recipients / Assigned Role</label>
+            <input type="text" id="form-recipients" placeholder="e.g. Shift Supervisor, QA Lead" class="w-full h-10 px-3 border border-outline-variant/30 rounded-lg text-sm font-semibold text-slate-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-slate-400 bg-white" required />
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-500 uppercase tracking-wider text-xs mb-2">Notification Channels</label>
+            <div class="grid grid-cols-3 gap-2">
+              <label class="flex items-center gap-2 p-2.5 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50">
+                <input type="checkbox" id="chk-email" checked class="accent-primary w-4 h-4" />
+                <span class="font-semibold text-slate-800 text-xs">Email</span>
+              </label>
+              <label class="flex items-center gap-2 p-2.5 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50">
+                <input type="checkbox" id="chk-sms" checked class="accent-primary w-4 h-4" />
+                <span class="font-semibold text-slate-800 text-xs">SMS</span>
+              </label>
+              <label class="flex items-center gap-2 p-2.5 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50">
+                <input type="checkbox" id="chk-teams" checked class="accent-primary w-4 h-4" />
+                <span class="font-semibold text-slate-800 text-xs">Teams</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="pt-1">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" id="form-active" checked class="accent-primary w-4 h-4" />
+              <span class="font-semibold text-slate-800 text-xs">Enable Alarm Rule Immediately</span>
+            </label>
+          </div>
+        </form>
+
+        <!-- Drawer Footer -->
+        <div class="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-end gap-3 shrink-0">
+          <button type="button" onclick="window.closeAlarmModal()" class="h-10 px-5 border border-slate-200 text-slate-700 hover:bg-slate-100 rounded-lg text-sm font-semibold transition-colors cursor-pointer">
+            Cancel
+          </button>
+          <button type="submit" form="alarm-form" class="h-10 px-6 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm cursor-pointer">
+            Save Alarm Rule
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. SLIDE-OVER DRAWER: BROADCAST WORK ORDER ALERT -->
+    <div id="broadcast-modal-container" class="fixed inset-0 z-[100] flex justify-end hidden">
+      <!-- Backdrop -->
+      <div id="broadcast-modal-backdrop" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity duration-300 opacity-0 cursor-pointer" onclick="window.closeBroadcastNotifModal()"></div>
+      
+      <!-- Drawer Panel -->
+      <div id="broadcast-modal-drawer" class="relative w-full max-w-[500px] bg-white h-full shadow-2xl border-l border-slate-200 flex flex-col transform translate-x-full transition-transform duration-300 ease-out z-10 overflow-hidden">
+        <!-- Drawer Header -->
+        <div class="px-6 py-5 bg-slate-50 border-b border-slate-200 flex items-center justify-between shrink-0">
+          <h3 class="font-bold text-slate-900 text-base">
+            Broadcast Work Order Alert
+          </h3>
+          <button onclick="window.closeBroadcastNotifModal()" class="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors cursor-pointer">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+
+        <!-- Drawer Form -->
+        <form id="broadcast-form" onsubmit="window.saveBroadcastNotification(event)" class="p-6 space-y-4 overflow-y-auto custom-scrollbar flex-grow">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block font-bold text-slate-500 uppercase tracking-wider text-xs mb-1.5">Work Order #</label>
+              <input type="text" id="notif-form-wo" placeholder="e.g. WO-2026-0847" class="w-full h-10 px-3 border border-outline-variant/30 rounded-lg font-mono text-sm font-semibold text-slate-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-slate-400 bg-white" required />
+            </div>
+            <div>
+              <label class="block font-bold text-slate-500 uppercase tracking-wider text-xs mb-1.5">Part / Product</label>
+              <input type="text" id="notif-form-part" placeholder="e.g. Brake Hose BH-204" class="w-full h-10 px-3 border border-outline-variant/30 rounded-lg text-sm font-semibold text-slate-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-slate-400 bg-white" required />
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-500 uppercase tracking-wider text-xs mb-1.5">Target Station / Area</label>
+            <input type="text" id="notif-form-station" placeholder="e.g. Hose Crimping - Station 02" class="w-full h-10 px-3 border border-outline-variant/30 rounded-lg text-sm font-semibold text-slate-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-slate-400 bg-white" required />
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-500 uppercase tracking-wider text-xs mb-1.5">Alert Details / Message</label>
+            <textarea id="notif-form-msg" rows="3" placeholder="Enter alert details..." class="w-full p-3 border border-outline-variant/30 rounded-lg text-sm font-semibold text-slate-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-slate-400 bg-white" required></textarea>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-500 uppercase tracking-wider text-xs mb-1.5">Severity</label>
+            <div class="relative">
+              <select id="notif-form-severity" class="w-full h-10 appearance-none pl-3 pr-8 border border-outline-variant/30 rounded-lg text-sm font-semibold text-slate-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-white cursor-pointer">
+                <option value="Critical">Critical</option>
+                <option value="High" selected>High / Warning</option>
+                <option value="Info">Info</option>
+              </select>
+              <span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-slate-500">expand_more</span>
+            </div>
+          </div>
+        </form>
+
+        <!-- Drawer Footer -->
+        <div class="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-end gap-3 shrink-0">
+          <button type="button" onclick="window.closeBroadcastNotifModal()" class="h-10 px-5 border border-slate-200 text-slate-700 hover:bg-slate-100 rounded-lg text-sm font-semibold cursor-pointer">
+            Cancel
+          </button>
+          <button type="submit" form="broadcast-form" class="h-10 px-6 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm cursor-pointer">
+            Send Broadcast
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. CENTERED MODAL: DELETE ALARM RULE CONFIRMATION -->
+    <div id="delete-alarm-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+      <div class="bg-white rounded-xl border border-slate-200 shadow-xl w-full max-w-md p-6 space-y-4">
+        <div class="flex items-center gap-3 text-rose-600">
+          <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-[24px]">delete</span>
+          </div>
+          <div>
+            <h4 class="font-bold text-slate-900 text-base">Delete Alarm Rule</h4>
+            <p class="text-xs text-slate-500">This action cannot be undone.</p>
+          </div>
+        </div>
+        <p class="text-xs text-slate-700 font-medium">Are you sure you want to delete <span id="delete-rule-code" class="font-bold text-slate-900"></span>?</p>
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button onclick="window.closeDeleteAlarmModal()" class="px-4 py-2 border border-slate-200 text-slate-600 rounded-lg font-semibold text-xs hover:bg-slate-100 transition-colors cursor-pointer">
+            Cancel
+          </button>
+          <button onclick="window.confirmDeleteAlarm()" class="px-4 py-2 bg-primary text-white rounded-lg font-semibold text-xs hover:bg-primary/90 transition-colors shadow-sm cursor-pointer">
+            Delete Rule
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. CENTERED MODAL: DELETE NOTIFICATION CONFIRMATION -->
+    <div id="delete-notif-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+      <div class="bg-white rounded-xl border border-slate-200 shadow-xl w-full max-w-md p-6 space-y-4">
+        <div class="flex items-center gap-3 text-rose-600">
+          <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-[24px]">delete</span>
+          </div>
+          <div>
+            <h4 class="font-bold text-slate-900 text-base">Delete Notification Card</h4>
+            <p class="text-xs text-slate-500">This action will remove the log.</p>
+          </div>
+        </div>
+        <p class="text-xs text-slate-700 font-medium">Are you sure you want to delete <span id="delete-notif-code" class="font-bold text-slate-900"></span>?</p>
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button onclick="window.closeDeleteNotifModal()" class="px-4 py-2 border border-slate-200 text-slate-600 rounded-lg font-semibold text-xs hover:bg-slate-100 transition-colors cursor-pointer">
+            Cancel
+          </button>
+          <button onclick="window.confirmDeleteNotification()" class="px-4 py-2 bg-primary text-white rounded-lg font-semibold text-xs hover:bg-primary/90 transition-colors shadow-sm cursor-pointer">
+            Delete Notification
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIMULATION TOAST -->
+    <div id="alarm-toast" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-white p-4 rounded-xl shadow-xl border border-slate-700 flex items-start gap-3 max-w-sm transform translate-y-32 opacity-0 transition-all duration-300">
+      <span class="material-symbols-outlined text-amber-400 text-[20px] shrink-0">notifications_active</span>
+      <div class="flex-grow text-xs space-y-1">
+        <h5 class="font-bold text-white" id="toast-title">Notification Fired</h5>
+        <p class="text-slate-300" id="toast-msg"></p>
+      </div>
+      <button onclick="window.hideToast()" class="text-slate-400 hover:text-white cursor-pointer">
+        <span class="material-symbols-outlined text-[16px]">close</span>
       </button>
     </div>
+
   </main>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    // Global Scope Variables
+    window.activeNotifTab = 'notifications';
+    window.activeNotifSubTab = 'received';
+    window.deleteTargetAlarmId = null;
+    window.deleteTargetNotifId = null;
+
+    // Datasets
+    window.receivedNotificationsList = [
+      {
+        id: "NOT-2026-001",
+        wo: "WO-2026-0841",
+        part: "Power Steering Hose AC-402",
+        time: "Today, 11:24 AM",
+        details: "Hose Outer Diameter Breach (+0.52mm out-of-spec)",
+        station: "Hose Crimping - Station 02",
+        severity: "Critical",
+        channels: ["Email", "SMS", "Teams"],
+        recipients: "Shift Supervisor, QA Lead",
+        read: false
+      },
+      {
+        id: "NOT-2026-002",
+        wo: "WO-2026-0842",
+        part: "Brake Fluid Line BF-109",
+        time: "Today, 10:45 AM",
+        details: "Stage 03 QC Approval pending for over 15 mins",
+        station: "Online Assembly - Stage 03",
+        severity: "High",
+        channels: ["Email", "Teams"],
+        recipients: "QC Supervisor",
+        read: false
+      },
+      {
+        id: "NOT-2026-003",
+        wo: "WO-2026-0839",
+        part: "High Pressure Hose HP-770",
+        time: "Today, 09:15 AM",
+        details: "Pressure Test Spike detected (189 bar vs 185 bar limit)",
+        station: "Pressure Test Rig #01",
+        severity: "Critical",
+        channels: ["SMS", "Teams"],
+        recipients: "Maintenance Lead",
+        read: true
+      },
+      {
+        id: "NOT-2026-004",
+        wo: "WO-2026-0844",
+        part: "Engine Cooler Hose EC-220",
+        time: "Today, 08:30 AM",
+        details: "SAP Order BOM Material Quantity Mismatch (3 errs)",
+        station: "SAP Master Gateway",
+        severity: "High",
+        channels: ["Email"],
+        recipients: "System Admin",
+        read: true
+      },
+      {
+        id: "NOT-2026-005",
+        wo: "WO-2026-0835",
+        part: "Fuel Line Return Assembly FL-08",
+        time: "Yesterday, 04:20 PM",
+        details: "Operator skill level notice (Level 2 vs Level 3 required)",
+        station: "Offline Prep - Line B",
+        severity: "Info",
+        channels: ["Email"],
+        recipients: "Line Foreman",
+        read: true
+      }
+    ];
+
+    window.sentNotificationsList = [
+      {
+        id: "SNT-2026-001",
+        wo: "WO-2026-0847",
+        part: "Air Hose Line AH-300",
+        time: "Today, 11:00 AM",
+        details: "Shift Handover Warning: Verify Hose Wall Thickness Before Crimping Step 04",
+        station: "Hose Assembly Line A",
+        severity: "High",
+        channels: ["Email", "Teams", "System"],
+        recipients: "All Shift Supervisors",
+        deliveryStatus: "Delivered (14/14)",
+        read: true
+      },
+      {
+        id: "SNT-2026-002",
+        wo: "WO-2026-0840",
+        part: "Crimped Tube CT-102",
+        time: "Today, 09:40 AM",
+        details: "Urgent Maintenance Notice: Calibration required on Crimping Rig #02",
+        station: "Crimping Rig #02",
+        severity: "Critical",
+        channels: ["SMS", "Teams"],
+        recipients: "Maintenance Team",
+        deliveryStatus: "Acknowledged by Lead",
+        read: true
+      },
+      {
+        id: "SNT-2026-003",
+        wo: "WO-2026-0831",
+        part: "Coolant Hose CH-500",
+        time: "Yesterday, 03:15 PM",
+        details: "Quality Protocol Advisory: Updated Inspection Checksheet Released",
+        station: "Quality Control Gate",
+        severity: "Info",
+        channels: ["Email"],
+        recipients: "QC Inspectors",
+        deliveryStatus: "Delivered (8/8)",
+        read: true
+      }
+    ];
+
+    window.alarmRules = [
+      {
+        id: "ALM-001",
+        code: "ALM-001",
+        name: "Hose Outer Diameter Breach",
+        station: "Hose Crimping - Station 02",
+        condition: "Tol > ±0.45 mm",
+        severity: "Critical",
+        recipients: "Shift Supervisor, QA Lead",
+        channels: ["Email", "SMS", "Teams"],
+        active: true
+      },
+      {
+        id: "ALM-002",
+        code: "ALM-002",
+        name: "QC Approval Pending Timeout",
+        station: "Online Assembly - Stage 03",
+        condition: "Pending > 15 mins",
+        severity: "High",
+        recipients: "QC Supervisor",
+        channels: ["Email", "Teams"],
+        active: true
+      },
+      {
+        id: "ALM-003",
+        code: "ALM-003",
+        name: "Hydraulic Test Pressure Spike",
+        station: "Pressure Test Rig #01",
+        condition: "Pressure > 185 bar",
+        severity: "Critical",
+        recipients: "Maintenance Lead, Supervisor",
+        channels: ["SMS", "Teams"],
+        active: true
+      },
+      {
+        id: "ALM-004",
+        code: "ALM-004",
+        name: "SAP Work Order Sync Discrepancy",
+        station: "SAP Master Gateway",
+        condition: "Error Count >= 3",
+        severity: "High",
+        recipients: "System Admin",
+        channels: ["Email"],
+        active: true
+      },
+      {
+        id: "ALM-005",
+        code: "ALM-005",
+        name: "Operator Skill Matrix Notice",
+        station: "Offline Prep - Line B",
+        condition: "Level < Required",
+        severity: "Info",
+        recipients: "Line Foreman",
+        channels: ["Email"],
+        active: false
+      }
+    ];
+
+    // Functions Bound directly to window Scope
+    window.switchTab = function(tab) {
+      window.activeNotifTab = tab;
+      const btnNotifs = document.getElementById('tab-btn-notifications');
+      const btnAlarms = document.getElementById('tab-btn-alarms');
+      const paneNotifs = document.getElementById('tab-pane-notifications');
+      const paneAlarms = document.getElementById('tab-pane-alarms');
+      const mainBtnText = document.getElementById('main-action-btn-text');
+      const mainBtnIcon = document.getElementById('main-action-btn-icon');
+
+      if (tab === 'notifications') {
+        if (btnNotifs) btnNotifs.className = "py-2.5 px-4 font-bold text-sm border-b-2 border-primary text-primary flex items-center gap-2 transition-all cursor-pointer";
+        if (btnAlarms) btnAlarms.className = "py-2.5 px-4 font-semibold text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-900 flex items-center gap-2 transition-all cursor-pointer";
+        if (paneNotifs) { paneNotifs.classList.remove('hidden'); paneNotifs.classList.add('flex'); }
+        if (paneAlarms) { paneAlarms.classList.add('hidden'); paneAlarms.classList.remove('flex'); }
+        if (mainBtnIcon) mainBtnIcon.textContent = "campaign";
+        if (mainBtnText) mainBtnText.textContent = "Broadcast Alert";
+      } else {
+        if (btnAlarms) btnAlarms.className = "py-2.5 px-4 font-bold text-sm border-b-2 border-primary text-primary flex items-center gap-2 transition-all cursor-pointer";
+        if (btnNotifs) btnNotifs.className = "py-2.5 px-4 font-semibold text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-900 flex items-center gap-2 transition-all cursor-pointer";
+        if (paneAlarms) { paneAlarms.classList.remove('hidden'); paneAlarms.classList.add('flex'); }
+        if (paneNotifs) { paneNotifs.classList.add('hidden'); paneNotifs.classList.remove('flex'); }
+        if (mainBtnIcon) mainBtnIcon.textContent = "add";
+        if (mainBtnText) mainBtnText.textContent = "Add New Alarm Rule";
+      }
+    };
+
+    window.switchNotifSubTab = function(subTab) {
+      window.activeNotifSubTab = subTab;
+      const btnReceived = document.getElementById('subtab-received');
+      const btnSent = document.getElementById('subtab-sent');
+
+      if (subTab === 'received') {
+        if (btnReceived) btnReceived.className = "px-3.5 py-1.5 rounded-lg text-xs font-extrabold flex items-center gap-2 transition-all bg-white text-slate-900 shadow-xs cursor-pointer";
+        if (btnSent) btnSent.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition-all text-slate-600 hover:text-slate-900 cursor-pointer";
+      } else {
+        if (btnSent) btnSent.className = "px-3.5 py-1.5 rounded-lg text-xs font-extrabold flex items-center gap-2 transition-all bg-white text-slate-900 shadow-xs cursor-pointer";
+        if (btnReceived) btnReceived.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition-all text-slate-600 hover:text-slate-900 cursor-pointer";
+      }
+
+      window.filterNotifications();
+    };
+
+    window.handleMainAction = function() {
+      if (window.activeNotifTab === 'notifications') {
+        window.openBroadcastNotifModal();
+      } else {
+        window.openAlarmModal();
+      }
+    };
+
+    // Render Notification Cards
+    window.renderNotificationCards = function(notifsToRender) {
+      const isReceived = window.activeNotifSubTab === 'received';
+      const sourceList = isReceived ? window.receivedNotificationsList : window.sentNotificationsList;
+      const currentList = notifsToRender || sourceList;
+
+      const container = document.getElementById('notifications-cards-list');
+      const countBadge = document.getElementById('badge-notif-count');
+      const recBadge = document.getElementById('badge-received-count');
+      const sentBadge = document.getElementById('badge-sent-count');
+
+      if (countBadge) countBadge.textContent = window.receivedNotificationsList.length + window.sentNotificationsList.length;
+      if (recBadge) recBadge.textContent = window.receivedNotificationsList.length;
+      if (sentBadge) sentBadge.textContent = window.sentNotificationsList.length;
+
+      if (!container) return;
+
+      if (currentList.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white p-8 rounded-xl border border-slate-200 text-center text-slate-500 font-medium">
+            No ${isReceived ? 'received' : 'sent'} work order notifications found.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = currentList.map(notif => {
+        const severityTextClass = notif.severity === 'Critical'
+          ? 'text-rose-600'
+          : notif.severity === 'High'
+            ? 'text-amber-600'
+            : 'text-blue-600';
+
+        const borderLeftClass = isReceived
+          ? (!notif.read ? 'border-l-4 border-l-primary' : 'border-l-4 border-l-slate-300')
+          : 'border-l-4 border-l-emerald-500';
+
+        const channelBadges = notif.channels.map(ch => 
+          `<span class="px-2 py-0.5 text-[10px] font-semibold bg-slate-100 text-slate-700 rounded border border-slate-200">${ch}</span>`
+        ).join(' ');
+
+        const woNumberOnly = notif.wo.replace(/^WO-/, '');
+
+        return `
+          <div class="bg-white border border-slate-200/80 rounded-xl shadow-xs p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 ${borderLeftClass}" id="notif-card-${notif.id}">
+            
+            <div class="flex items-center gap-3.5 min-w-0">
+              <div class="space-y-1 min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="font-extrabold text-sm text-slate-900 truncate">${notif.part}</span>
+                  <span class="text-slate-300 font-bold text-xs">/</span>
+                  <span class="font-extrabold text-xs tracking-wider uppercase ${severityTextClass}">${notif.severity}</span>
+                </div>
+                <p class="text-xs font-semibold text-slate-700 truncate">${notif.details}</p>
+                <div class="flex items-center gap-3 text-[11px] text-slate-500 font-medium pt-0.5">
+                  <span><span class="font-semibold text-slate-700">${isReceived ? 'Station:' : 'Target:'}</span> ${notif.station}</span>
+                  <span>•</span>
+                  <span class="font-mono text-slate-400">${notif.time}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Controls: Delete Trash Button -->
+            <div class="flex items-center gap-3 self-end sm:self-center shrink-0">
+              <button onclick="window.openDeleteNotifModal('${notif.id}')" class="w-8 h-8 rounded-xl border border-slate-200 bg-white flex items-center justify-center text-primary hover:bg-red-50 shadow-xs transition-all cursor-pointer" title="Delete Notification">
+                <span class="material-symbols-outlined text-[18px]">delete</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    };
+
+    window.toggleNotifCardExpand = function(id) {
+      const detailsEl = document.getElementById(`details-${id}`);
+      const chevronEl = document.getElementById(`chevron-${id}`);
+
+      if (detailsEl) {
+        if (detailsEl.classList.contains('hidden')) {
+          detailsEl.classList.remove('hidden');
+          if (chevronEl) chevronEl.style.transform = 'rotate(180deg)';
+          if (window.activeNotifSubTab === 'received') {
+            const notif = window.receivedNotificationsList.find(n => n.id === id);
+            if (notif && !notif.read) {
+              notif.read = true;
+              window.filterNotifications();
+              const newDetails = document.getElementById(`details-${id}`);
+              const newChevron = document.getElementById(`chevron-${id}`);
+              if (newDetails) newDetails.classList.remove('hidden');
+              if (newChevron) newChevron.style.transform = 'rotate(180deg)';
+            }
+          }
+        } else {
+          detailsEl.classList.add('hidden');
+          if (chevronEl) chevronEl.style.transform = 'rotate(0deg)';
+        }
+      }
+    };
+
+    // Render Alarms Table
+    window.renderAlarmsTable = function(rulesToRender = window.alarmRules) {
+      const tbody = document.getElementById('alarms-tbody');
+      const countBadge = document.getElementById('badge-alarm-count');
+      if (countBadge) countBadge.textContent = window.alarmRules.length;
+
+      if (!tbody) return;
+
+      if (rulesToRender.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="p-8 text-center text-slate-500 font-medium">
+              No alarm rules found matching criteria.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = rulesToRender.map(rule => {
+        const severityBadge = rule.severity === 'Critical'
+          ? `<span class="font-extrabold text-xs uppercase tracking-wider text-rose-600">Critical</span>`
+          : rule.severity === 'High'
+            ? `<span class="font-extrabold text-xs uppercase tracking-wider text-amber-600">High</span>`
+            : `<span class="font-extrabold text-xs uppercase tracking-wider text-blue-600">Info</span>`;
+
+        return `
+          <tr class="hover:bg-slate-50/80 transition-colors">
+            <td class="p-4 font-bold text-slate-900">${rule.name}</td>
+            <td class="p-4 text-slate-700">${rule.station}</td>
+            <td class="p-4">${severityBadge}</td>
+            <td class="p-4 text-center">
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" ${rule.active ? 'checked' : ''} onchange="window.toggleAlarmStatus('${rule.id}')" class="sr-only peer">
+                <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </td>
+            <td class="p-4 text-right">
+              <div class="flex items-center justify-end gap-2">
+                <button onclick="window.testNotifyRule('${rule.id}')" class="w-8 h-8 rounded-xl border border-slate-200 hover:border-slate-300 bg-white flex items-center justify-center text-slate-600 hover:text-slate-900 shadow-sm transition-all cursor-pointer" title="View / Test Notify">
+                  <span class="material-symbols-outlined text-[18px]">visibility</span>
+                </button>
+                <button onclick="window.openAlarmModal('${rule.id}')" class="w-8 h-8 rounded-xl border border-slate-200 hover:border-slate-300 bg-white flex items-center justify-center text-primary hover:bg-red-50/50 shadow-sm transition-all cursor-pointer" title="Edit Rule">
+                  <span class="material-symbols-outlined text-[18px]">edit</span>
+                </button>
+                <button onclick="window.openDeleteAlarmModal('${rule.id}')" class="w-8 h-8 rounded-xl border border-slate-200 hover:border-slate-300 bg-white flex items-center justify-center text-primary hover:bg-red-50/50 shadow-sm transition-all cursor-pointer" title="Delete Rule">
+                  <span class="material-symbols-outlined text-[18px]">delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    };
+
+    // Filters
+    window.filterNotifications = function() {
+      const query = (document.getElementById('notif-search')?.value || '').toLowerCase().trim();
+      const sevFilter = document.getElementById('notif-filter-severity')?.value || 'All';
+      const targetList = window.activeNotifSubTab === 'received' ? window.receivedNotificationsList : window.sentNotificationsList;
+
+      const filtered = targetList.filter(notif => {
+        const matchesQuery = !query || 
+          notif.id.toLowerCase().includes(query) ||
+          notif.wo.toLowerCase().includes(query) ||
+          notif.part.toLowerCase().includes(query) ||
+          notif.details.toLowerCase().includes(query) ||
+          notif.station.toLowerCase().includes(query);
+
+        const matchesSev = (sevFilter === 'All') || (notif.severity === sevFilter);
+        return matchesQuery && matchesSev;
+      });
+
+      window.renderNotificationCards(filtered);
+    };
+
+    window.filterAlarms = function() {
+      const query = (document.getElementById('alarm-search')?.value || '').toLowerCase().trim();
+      const sevFilter = document.getElementById('alarm-filter-severity')?.value || 'All';
+      const statusFilter = document.getElementById('alarm-filter-status')?.value || 'All';
+
+      const filtered = window.alarmRules.filter(rule => {
+        const matchesQuery = !query || 
+          rule.code.toLowerCase().includes(query) ||
+          rule.name.toLowerCase().includes(query) ||
+          rule.station.toLowerCase().includes(query) ||
+          rule.condition.toLowerCase().includes(query);
+
+        const matchesSev = (sevFilter === 'All') || (rule.severity === sevFilter);
+        const matchesStatus = (statusFilter === 'All') || 
+          (statusFilter === 'Active' && rule.active) || 
+          (statusFilter === 'Inactive' && !rule.active);
+
+        return matchesQuery && matchesSev && matchesStatus;
+      });
+
+      window.renderAlarmsTable(filtered);
+    };
+
+    // Actions & Modals
+    window.toggleNotifRead = function(id) {
+      const notif = window.receivedNotificationsList.find(n => n.id === id);
+      if (notif) {
+        notif.read = !notif.read;
+        window.filterNotifications();
+      }
+    };
+
+    window.openDeleteNotifModal = function(id) {
+      const targetList = window.activeNotifSubTab === 'received' ? window.receivedNotificationsList : window.sentNotificationsList;
+      const notif = targetList.find(n => n.id === id);
+      if (!notif) return;
+      window.deleteTargetNotifId = id;
+      const codeEl = document.getElementById('delete-notif-code');
+      if (codeEl) codeEl.textContent = `${notif.wo} (${notif.details})`;
+      const modal = document.getElementById('delete-notif-modal');
+      if (modal) modal.classList.remove('hidden');
+    };
+
+    window.closeDeleteNotifModal = function() {
+      window.deleteTargetNotifId = null;
+      const modal = document.getElementById('delete-notif-modal');
+      if (modal) modal.classList.add('hidden');
+    };
+
+    window.confirmDeleteNotification = function() {
+      if (window.deleteTargetNotifId) {
+        if (window.activeNotifSubTab === 'received') {
+          const deleted = window.receivedNotificationsList.find(n => n.id === window.deleteTargetNotifId);
+          window.receivedNotificationsList = window.receivedNotificationsList.filter(n => n.id !== window.deleteTargetNotifId);
+          window.showToast('Notification Removed', `Received notification ${deleted ? deleted.wo : ''} deleted.`);
+        } else {
+          const deleted = window.sentNotificationsList.find(n => n.id === window.deleteTargetNotifId);
+          window.sentNotificationsList = window.sentNotificationsList.filter(n => n.id !== window.deleteTargetNotifId);
+          window.showToast('Broadcast Removed', `Sent notification ${deleted ? deleted.wo : ''} deleted.`);
+        }
+        window.closeDeleteNotifModal();
+        window.filterNotifications();
+      }
+    };
+
+    // Add / Edit Alarm Drawer
+    window.openAlarmModal = function(editId = null) {
+      const container = document.getElementById('alarm-modal-container');
+      const backdrop = document.getElementById('alarm-modal-backdrop');
+      const drawer = document.getElementById('alarm-modal-drawer');
+      const titleText = document.getElementById('modal-title-text');
+      const editInput = document.getElementById('alarm-edit-id');
+
+      if (!container || !backdrop || !drawer) return;
+
+      if (editId) {
+        const rule = window.alarmRules.find(r => r.id === editId);
+        if (rule) {
+          editInput.value = rule.id;
+          titleText.textContent = `Edit Alarm Rule (${rule.code})`;
+          document.getElementById('form-code').value = rule.code;
+          document.getElementById('form-name').value = rule.name;
+          document.getElementById('form-station').value = rule.station;
+          document.getElementById('form-condition').value = rule.condition;
+          document.getElementById('form-severity').value = rule.severity;
+          document.getElementById('form-recipients').value = rule.recipients;
+          document.getElementById('chk-email').checked = rule.channels.includes('Email');
+          document.getElementById('chk-sms').checked = rule.channels.includes('SMS');
+          document.getElementById('chk-teams').checked = rule.channels.includes('Teams');
+          document.getElementById('form-active').checked = rule.active;
+        }
+      } else {
+        editInput.value = '';
+        titleText.textContent = `Add New Alarm Rule`;
+        document.getElementById('alarm-form').reset();
+        document.getElementById('form-code').value = `ALM-00${window.alarmRules.length + 1}`;
+        document.getElementById('form-active').checked = true;
+      }
+
+      container.classList.remove('hidden');
+      drawer.offsetHeight; // force reflow for smooth animation
+      backdrop.classList.remove('opacity-0');
+      backdrop.classList.add('opacity-100');
+      drawer.classList.remove('translate-x-full');
+      drawer.classList.add('translate-x-0');
+    };
+
+    window.closeAlarmModal = function() {
+      const container = document.getElementById('alarm-modal-container');
+      const backdrop = document.getElementById('alarm-modal-backdrop');
+      const drawer = document.getElementById('alarm-modal-drawer');
+
+      if (!container || !backdrop || !drawer) return;
+
+      backdrop.classList.remove('opacity-100');
+      backdrop.classList.add('opacity-0');
+      drawer.classList.remove('translate-x-0');
+      drawer.classList.add('translate-x-full');
+      setTimeout(() => {
+        container.classList.add('hidden');
+      }, 300);
+    };
+
+    window.saveAlarmRule = function(e) {
+      e.preventDefault();
+      const editId = document.getElementById('alarm-edit-id').value;
+
+      const channels = [];
+      if (document.getElementById('chk-email').checked) channels.push('Email');
+      if (document.getElementById('chk-sms').checked) channels.push('SMS');
+      if (document.getElementById('chk-teams').checked) channels.push('Teams');
+
+      const ruleData = {
+        code: document.getElementById('form-code').value.trim(),
+        name: document.getElementById('form-name').value.trim(),
+        station: document.getElementById('form-station').value.trim(),
+        condition: document.getElementById('form-condition').value.trim(),
+        severity: document.getElementById('form-severity').value,
+        recipients: document.getElementById('form-recipients')?.value?.trim() || 'Shift Supervisors, QA Lead',
+        channels: channels.length > 0 ? channels : ['Email'],
+        active: document.getElementById('form-active').checked
+      };
+
+      if (editId) {
+        const index = window.alarmRules.findIndex(r => r.id === editId);
+        if (index !== -1) {
+          window.alarmRules[index] = { ...window.alarmRules[index], ...ruleData };
+          window.showToast('Rule Updated', `Alarm rule ${ruleData.code} updated successfully.`);
+        }
+      } else {
+        const newId = ruleData.code;
+        window.alarmRules.push({ id: newId, ...ruleData });
+        window.showToast('Rule Created', `New alarm rule ${ruleData.code} created successfully.`);
+      }
+
+      window.closeAlarmModal();
+      window.renderAlarmsTable();
+    };
+
+    window.toggleAlarmStatus = function(id) {
+      const rule = window.alarmRules.find(r => r.id === id);
+      if (rule) {
+        rule.active = !rule.active;
+        window.showToast('Rule Status Updated', `Rule ${rule.code} is now ${rule.active ? 'Active' : 'Inactive'}.`);
+      }
+    };
+
+    window.openDeleteAlarmModal = function(id) {
+      const rule = window.alarmRules.find(r => r.id === id);
+      if (!rule) return;
+      window.deleteTargetAlarmId = id;
+      const codeEl = document.getElementById('delete-rule-code');
+      if (codeEl) codeEl.textContent = `${rule.code} - ${rule.name}`;
+      const modal = document.getElementById('delete-alarm-modal');
+      if (modal) modal.classList.remove('hidden');
+    };
+
+    window.closeDeleteAlarmModal = function() {
+      window.deleteTargetAlarmId = null;
+      const modal = document.getElementById('delete-alarm-modal');
+      if (modal) modal.classList.add('hidden');
+    };
+
+    window.confirmDeleteAlarm = function() {
+      if (window.deleteTargetAlarmId) {
+        const deletedRule = window.alarmRules.find(r => r.id === window.deleteTargetAlarmId);
+        window.alarmRules = window.alarmRules.filter(r => r.id !== window.deleteTargetAlarmId);
+        window.closeDeleteAlarmModal();
+        window.renderAlarmsTable();
+        window.showToast('Rule Deleted', `Alarm rule ${deletedRule ? deletedRule.code : ''} deleted.`);
+      }
+    };
+
+    window.testNotifyRule = function(id) {
+      const rule = window.alarmRules.find(r => r.id === id);
+      if (rule) {
+        const newNotif = {
+          id: `NOT-2026-0${window.receivedNotificationsList.length + 1}`,
+          wo: "WO-2026-0847",
+          part: "Power Steering Hose AC-402",
+          time: "Just now",
+          details: `Test Trigger: ${rule.name} (${rule.condition})`,
+          station: rule.station,
+          severity: rule.severity,
+          channels: rule.channels,
+          recipients: rule.recipients,
+          read: false
+        };
+        window.receivedNotificationsList.unshift(newNotif);
+        window.switchNotifSubTab('received');
+        window.showToast(`TEST NOTIFICATION FIRED (${rule.code})`, `Dispatched alert for "${rule.name}" via ${rule.channels.join(', ')} to ${rule.recipients}.`);
+      }
+    };
+
+    // Broadcast Drawer
+    window.openBroadcastNotifModal = function() {
+      const container = document.getElementById('broadcast-modal-container');
+      const backdrop = document.getElementById('broadcast-modal-backdrop');
+      const drawer = document.getElementById('broadcast-modal-drawer');
+
+      if (!container || !backdrop || !drawer) return;
+
+      container.classList.remove('hidden');
+      drawer.offsetHeight; // force reflow for smooth animation
+      backdrop.classList.remove('opacity-0');
+      backdrop.classList.add('opacity-100');
+      drawer.classList.remove('translate-x-full');
+      drawer.classList.add('translate-x-0');
+    };
+
+    window.closeBroadcastNotifModal = function() {
+      const container = document.getElementById('broadcast-modal-container');
+      const backdrop = document.getElementById('broadcast-modal-backdrop');
+      const drawer = document.getElementById('broadcast-modal-drawer');
+
+      if (!container || !backdrop || !drawer) return;
+
+      backdrop.classList.remove('opacity-100');
+      backdrop.classList.add('opacity-0');
+      drawer.classList.remove('translate-x-0');
+      drawer.classList.add('translate-x-full');
+      setTimeout(() => {
+        container.classList.add('hidden');
+      }, 300);
+    };
+
+    window.saveBroadcastNotification = function(e) {
+      e.preventDefault();
+      const wo = document.getElementById('notif-form-wo').value.trim();
+      const part = document.getElementById('notif-form-part').value.trim();
+      const station = document.getElementById('notif-form-station').value.trim();
+      const details = document.getElementById('notif-form-msg').value.trim();
+      const severity = document.getElementById('notif-form-severity').value;
+      const recipients = document.getElementById('notif-form-recipients')?.value?.trim() || 'Shift Supervisors, QA Lead';
+
+      const newBroadcast = {
+        id: `SNT-2026-0${window.sentNotificationsList.length + 1}`,
+        wo: wo,
+        part: part,
+        time: "Just now",
+        details: details,
+        station: station,
+        severity: severity,
+        channels: ["System", "Email", "Teams"],
+        recipients: recipients,
+        deliveryStatus: "Delivered",
+        read: true
+      };
+
+      window.sentNotificationsList.unshift(newBroadcast);
+      window.receivedNotificationsList.unshift({
+        id: `NOT-2026-0${window.receivedNotificationsList.length + 1}`,
+        wo: wo,
+        part: part,
+        time: "Just now",
+        details: `Broadcast: ${details}`,
+        station: station,
+        severity: severity,
+        channels: ["System", "Email"],
+        recipients: recipients,
+        read: false
+      });
+
+      window.closeBroadcastNotifModal();
+      window.switchNotifSubTab('sent');
+      window.showToast('Notification Dispatched', `Broadcast alert for ${wo} sent to ${recipients}.`);
+    };
+
+    // Toast Alert
+    window.showToast = function(title, msg) {
+      const toast = document.getElementById('alarm-toast');
+      if (!toast) return;
+      document.getElementById('toast-title').textContent = title;
+      document.getElementById('toast-msg').textContent = msg;
+      toast.classList.remove('translate-y-32', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(window.hideToast, 4000);
+    };
+
+    window.hideToast = function() {
+      const toast = document.getElementById('alarm-toast');
+      if (!toast) return;
+      toast.classList.remove('translate-y-0', 'opacity-100');
+      toast.classList.add('translate-y-32', 'opacity-0');
+    };
+
+    // Initial Execution
+    window.renderNotificationCards();
+    window.renderAlarmsTable();
+  </script>
 </body>
+
 </html>

@@ -99,16 +99,16 @@
             <div class="col-span-12 grid grid-cols-1 sm:grid-cols-4 gap-6 mb-2">
                 <!-- Card 1: TOTAL ACTIVE WO -->
                 <div
-                    class="bg-gradient-to-br from-red-50/30 via-white to-white border border-slate-200/80 border-l-4 border-l-[#dc0111] rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-w-0">
+                    class="bg-gradient-to-br from-blue-50/40 via-white to-white border border-slate-200/80 border-l-4 border-l-[#2563eb] rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-w-0">
                     <div class="min-w-0 flex-1 mr-3">
                         <p class="font-bold text-[11px] uppercase text-slate-500 tracking-wider mb-1 truncate"
                             title="Total Active WO">Total Active WO</p>
-                        <p class="text-3xl font-black text-[#dc0111] tracking-tight leading-none" id="statActiveWO">--
+                        <p class="text-3xl font-black text-[#2563eb] tracking-tight leading-none" id="statActiveWO">--
                         </p>
                     </div>
                     <div
-                        class="bg-red-50/80 p-2.5 rounded-xl flex items-center justify-center border border-red-100/50 flex-shrink-0">
-                        <span class="material-symbols-outlined text-[24px] text-[#dc0111]">play_circle</span>
+                        class="bg-blue-50/80 p-2.5 rounded-xl flex items-center justify-center border border-blue-100/50 flex-shrink-0">
+                        <span class="material-symbols-outlined text-[24px] text-[#2563eb]">play_circle</span>
                     </div>
                 </div>
                 <!-- Card 2: TOTAL PENDING WO -->
@@ -159,23 +159,36 @@
             <!-- Bento Layout: Work Orders List -->
             <section
                 class="col-span-12 bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm flex flex-col">
-                <div class="px-6 py-4 border-b border-outline-variant/30 flex flex-col gap-3 bg-slate-50">
-                    <!-- Row 1: Title -->
-                    <div class="flex items-center justify-between">
-                        <h3 class="font-headline-md text-headline-md text-primary">Production Schedule Tracking</h3>
+                <div class="px-6 py-3.5 border-b border-outline-variant/30 flex flex-col sm:flex-row items-center justify-between bg-slate-50 gap-4">
+                    <!-- Left Side: Searchable Work Order ID Dropdown -->
+                    <div class="relative w-full sm:w-64 shrink-0">
+                        <button id="monitoring-wo-dropdown-trigger" type="button" class="w-full bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-9 px-3 font-normal flex items-center justify-between cursor-pointer shadow-xs" onclick="window.toggleMonitoringWODropdown()">
+                            <span id="monitoring-wo-selected-text" class="font-normal text-slate-700 truncate">All Work Orders</span>
+                            <span class="material-symbols-outlined text-[20px] text-slate-500 shrink-0 ml-1">expand_more</span>
+                        </button>
+
+                        <div id="monitoring-wo-dropdown-container" class="absolute left-0 mt-1 bg-white border border-outline-variant/30 rounded-lg shadow-xl z-[100] hidden p-2 flex flex-col gap-2 min-w-[260px]">
+                            <div class="relative">
+                                <input type="text" id="monitoring-wo-dropdown-search" class="w-full bg-slate-50 border border-outline-variant/30 rounded-lg text-xs text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-8 pr-3 font-normal" placeholder="Search WO ID..." oninput="window.filterMonitoringWODropdown(this.value)" autocomplete="off" />
+                                <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[16px] text-slate-400">search</span>
+                            </div>
+                            <div id="monitoring-wo-dropdown-list" class="max-h-56 overflow-y-auto custom-scrollbar flex flex-col divide-y divide-slate-100">
+                                <!-- Dropdown items populated dynamically -->
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Row 2: Status Filter (Mobile Select Dropdown / Desktop Chips) -->
-                    <div class="flex items-center justify-start md:justify-end gap-3 w-full py-1">
+                    <!-- Right Side: Status Filter (Mobile Select Dropdown / Desktop Chips) -->
+                    <div class="flex items-center justify-end gap-3 w-full sm:w-auto">
                         <!-- Mobile Status Select Dropdown -->
                         <div class="block sm:hidden w-full">
-                            <select id="woStatusMobileSelect" onchange="woFilterStatus = this.value; currentWOPage = 1; renderStatusChips(); renderWorkOrders();"
+                            <select id="woStatusMobileSelect" onchange="woFilterStatus = this.value; monitoringSelectedWOFilter = 'ALL'; document.getElementById('monitoring-wo-selected-text').textContent = 'All Work Orders'; currentWOPage = 1; renderStatusChips(); renderWorkOrders();"
                                 class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:border-[#dc0111] focus:ring-1 focus:ring-[#dc0111] shadow-sm">
                             </select>
                         </div>
                         <!-- Desktop Status Chips -->
                         <div id="woStatusChipsContainer"
-                            class="hidden sm:flex items-center justify-start md:justify-end gap-2 flex-wrap"></div>
+                            class="hidden sm:flex items-center justify-end gap-2 flex-wrap"></div>
                     </div>
                 </div>
 
@@ -505,8 +518,7 @@
                         { label: 'Not released', value: 'Not released' },
                         { label: 'Pending', value: 'pending' },
                         { label: 'In-progress', value: 'in-progress' },
-                        { label: 'Hold', value: 'hold' },
-                        { label: 'Completed', value: 'completed' }
+                        { label: 'Hold', value: 'hold' }
                     ];
 
                     if (selectEl) {
@@ -556,6 +568,9 @@
 
                             btn.onclick = () => {
                                 woFilterStatus = status.value;
+                                monitoringSelectedWOFilter = 'ALL';
+                                const triggerText = document.getElementById('monitoring-wo-selected-text');
+                                if (triggerText) triggerText.textContent = 'All Work Orders';
                                 currentWOPage = 1;
                                 renderStatusChips();
                                 renderWorkOrders();
@@ -565,6 +580,103 @@
                         });
                     }
                 }
+
+                let monitoringSelectedWOFilter = 'ALL';
+
+                window.toggleMonitoringWODropdown = function() {
+                    const container = document.getElementById('monitoring-wo-dropdown-container');
+                    if (container) {
+                        container.classList.toggle('hidden');
+                        if (!container.classList.contains('hidden')) {
+                            const searchInput = document.getElementById('monitoring-wo-dropdown-search');
+                            if (searchInput) {
+                                searchInput.value = '';
+                                searchInput.focus();
+                            }
+                            renderMonitoringWODropdown('');
+                        }
+                    }
+                };
+
+                document.addEventListener('click', function(event) {
+                    const container = document.getElementById('monitoring-wo-dropdown-container');
+                    const trigger = document.getElementById('monitoring-wo-dropdown-trigger');
+                    if (container && trigger && !container.classList.contains('hidden')) {
+                        if (!trigger.contains(event.target) && !container.contains(event.target)) {
+                            container.classList.add('hidden');
+                        }
+                    }
+                });
+
+                window.filterMonitoringWODropdown = function(val) {
+                    renderMonitoringWODropdown(val);
+                };
+
+                function renderMonitoringWODropdown(filterText) {
+                    const list = document.getElementById('monitoring-wo-dropdown-list');
+                    if (!list) return;
+                    list.innerHTML = '';
+
+                    const q = filterText.toLowerCase().trim();
+
+                    // Display only Work Orders matching selected status! (Exclude completed WOs)
+                    const statusFilteredWOs = workOrdersList.filter(w => {
+                        const st = getDisplayStatus(w);
+                        if (st === 'completed') return false;
+                        if (woFilterStatus === 'ALL') return true;
+                        return st === woFilterStatus;
+                    });
+
+                    // All Work Orders option
+                    const allOption = document.createElement('div');
+                    allOption.className = `px-3 py-2 text-xs font-normal cursor-pointer hover:bg-slate-50 transition-colors ${monitoringSelectedWOFilter === 'ALL' ? 'bg-red-50/60 text-primary font-medium' : 'text-slate-700'}`;
+                    allOption.innerHTML = `
+                        <div class="font-medium text-slate-800">All Work Orders</div>
+                        <div class="text-[10px] text-slate-500">Display active work orders in selected status</div>
+                    `;
+                    allOption.onclick = () => window.selectMonitoringWO('ALL');
+                    list.appendChild(allOption);
+
+                    const filtered = statusFilteredWOs.filter(w => {
+                        const num = String(w.woNumber).toLowerCase();
+                        const prod = (w.productName || '').toLowerCase();
+                        const part = (w.partNumber || '').toLowerCase();
+                        return num.includes(q) || prod.includes(q) || part.includes(q);
+                    });
+
+                    if (filtered.length === 0 && q !== '') {
+                        const emptyItem = document.createElement('div');
+                        emptyItem.className = 'px-3 py-2 text-xs text-slate-400 font-normal';
+                        emptyItem.textContent = 'No matching work orders found';
+                        list.appendChild(emptyItem);
+                        return;
+                    }
+
+                    filtered.forEach(w => {
+                        const displayWO = String(w.woNumber).replace(/^WO-?/i, '');
+                        const isSelected = monitoringSelectedWOFilter === displayWO;
+                        const item = document.createElement('div');
+                        item.className = `px-3 py-2 text-xs font-normal cursor-pointer hover:bg-slate-50 transition-colors ${isSelected ? 'bg-red-50/60 text-primary font-medium' : 'text-slate-700'}`;
+                        item.innerHTML = `
+                            <div class="font-semibold text-slate-800 font-mono">${displayWO}</div>
+                            <div class="text-[10px] text-slate-500 truncate">${w.productName}</div>
+                        `;
+                        item.onclick = () => window.selectMonitoringWO(displayWO);
+                        list.appendChild(item);
+                    });
+                }
+
+                window.selectMonitoringWO = function(woNum) {
+                    monitoringSelectedWOFilter = woNum;
+                    const triggerText = document.getElementById('monitoring-wo-selected-text');
+                    if (triggerText) {
+                        triggerText.textContent = woNum === 'ALL' ? 'All Work Orders' : woNum;
+                    }
+                    const container = document.getElementById('monitoring-wo-dropdown-container');
+                    if (container) container.classList.add('hidden');
+                    currentWOPage = 1;
+                    renderWorkOrders();
+                };
 
                 function renderWorkOrders() {
                     // Stats Calculations
@@ -584,14 +696,22 @@
                     // Filter logic
                     const q = woFilterQuery.toLowerCase().trim();
                     const filtered = workOrdersList.filter(w => {
+                        const displayStatus = getDisplayStatus(w);
+                        // Exclude completed work orders from Work Order Monitoring table
+                        if (displayStatus === 'completed') return false;
+
                         const currentProc = getCurrentProcess(w).toLowerCase();
+                        const displayWO = String(w.woNumber).replace(/^WO-?/i, '');
                         const matchesSearch = w.woNumber.toLowerCase().includes(q) ||
                             w.productName.toLowerCase().includes(q) ||
                             w.partNumber.toLowerCase().includes(q) ||
                             currentProc.includes(q);
 
                         let matchesStatus = true;
-                        if (woFilterStatus !== 'ALL') matchesStatus = getDisplayStatus(w) === woFilterStatus;
+                        if (woFilterStatus !== 'ALL') matchesStatus = displayStatus === woFilterStatus;
+
+                        let matchesSelectedWO = true;
+                        if (monitoringSelectedWOFilter !== 'ALL') matchesSelectedWO = (displayWO === monitoringSelectedWOFilter);
 
                         let matchesLine = true;
                         if (woFilterLine !== 'ALL') matchesLine = w.line.includes(woFilterLine);
@@ -599,7 +719,7 @@
                         let matchesShift = true;
                         if (woFilterShift !== 'ALL') matchesShift = w.shift === woFilterShift;
 
-                        return matchesSearch && matchesStatus && matchesLine && matchesShift;
+                        return matchesSearch && matchesStatus && matchesSelectedWO && matchesLine && matchesShift;
                     });
 
                     // Pagination
@@ -647,7 +767,7 @@
                         // Status tag styling
                         const displayStatus = getDisplayStatus(w);
                         let statusClass = 'text-slate-600 font-extrabold';
-                        if (displayStatus === 'in-progress') statusClass = 'text-[#dc0111] font-extrabold';
+                        if (displayStatus === 'in-progress') statusClass = 'text-[#2563eb] font-extrabold';
                         else if (displayStatus === 'completed') statusClass = 'text-emerald-600 font-extrabold';
                         else if (displayStatus === 'hold') statusClass = 'text-red-600 font-extrabold';
                         else if (displayStatus === 'Not released') statusClass = 'text-slate-400 font-extrabold';
@@ -674,8 +794,7 @@
                         <span class="text-emerald-600 font-bold">${w.okQty || 0}</span> <span class="text-slate-400">/</span> <span class="text-rose-600 font-bold">${w.ngQty || 0}</span>
                     </td>
                     <td class="px-6 py-4">
-                        <div class="flex items-center gap-2 font-semibold text-slate-700">
-                            <span class="w-2 h-2 rounded-full bg-primary ${displayStatus === 'in-progress' ? 'animate-pulse' : ''}"></span>
+                        <div class="font-semibold text-slate-700">
                             ${getCurrentProcess(w)}
                         </div>
                     </td>
