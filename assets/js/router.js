@@ -789,7 +789,7 @@
     // Case 1: Render Login view directly into root (with header, main card aligned right, and footer)
     if (route === 'login-old' || !isUserLoggedIn) {
       root.innerHTML = '';
-      root.className = "h-dvh w-screen overflow-hidden flex flex-col relative bg-cover bg-left-bottom bg-no-repeat";
+      root.className = "min-h-screen w-screen overflow-x-hidden flex flex-col relative bg-cover bg-left-bottom bg-no-repeat";
       root.style.backgroundImage = `url('${relPrefix}assets/login_bg.jpg')`;
 
       // Ambient overlay for premium integrated look
@@ -809,7 +809,7 @@
         // Extract and style main container
         const mainEl = doc.querySelector('main');
         if (mainEl) {
-          mainEl.className = "login-main flex-grow flex items-center justify-center lg:justify-between p-4 sm:p-8 lg:p-12 z-10 w-full max-w-7xl mx-auto gap-8 relative overflow-hidden";
+          mainEl.className = "login-main flex-grow flex items-center justify-center lg:justify-between p-4 sm:p-8 lg:p-12 pb-20 z-10 w-full max-w-7xl mx-auto gap-8 lg:gap-12 relative";
           
           // Style the login card inside main
           const loginCard = mainEl.querySelector('.login-card') || mainEl.querySelector('div:last-child');
@@ -827,6 +827,27 @@
             }
           }
           root.appendChild(mainEl);
+        }
+
+        // Extract and style footer
+        const footerEl = doc.querySelector('footer');
+        if (footerEl) {
+          footerEl.className = "fixed bottom-3 left-0 right-0 z-20 text-center select-none pointer-events-none";
+          root.appendChild(footerEl);
+        } else {
+          const newFooter = document.createElement('footer');
+          newFooter.className = "fixed bottom-3 left-0 right-0 z-20 text-center select-none pointer-events-none";
+          newFooter.innerHTML = `
+            <div class="flex flex-col items-center justify-center space-y-0.5 px-4 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
+              <p class="text-xs font-black text-white tracking-wider uppercase">
+                © NICHIRIN IMPERIAL AUTOPARTS INDIA PVT. LTD.
+              </p>
+              <p class="text-[11px] font-bold text-slate-100 tracking-wide">
+                Developed &amp; Maintained by Nichi-In Software Solutions Pvt. Ltd. INDIA
+              </p>
+            </div>
+          `;
+          root.appendChild(newFooter);
         }
 
         // Apply page-specific dynamic stylesheet config (login layout adjustments)
