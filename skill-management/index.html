@@ -136,13 +136,13 @@
   </style>
 </head>
 
-<body class="flex min-h-screen overflow-x-hidden">
+<body class="flex min-h-dvh overflow-x-hidden">
   <!-- SideNavBar (Fallback) -->
   <aside
     class="fixed left-0 top-0 h-full w-[260px] bg-primary text-on-primary flex flex-col py-4 border-r border-outline-variant z-50">
   </aside>
   <!-- Main Content Area -->
-  <main class="flex-1 ml-[260px] pt-[64px] min-h-screen">
+  <main class="flex-1 ml-[260px] pt-[64px] min-h-dvh">
     <!-- TopNavBar (Fallback) -->
     <header
       class="fixed top-0 right-0 h-[64px] w-[calc(100%-260px)] bg-surface flex justify-between items-center px-container-padding border-b border-outline-variant z-40">
@@ -290,7 +290,7 @@
             <div>
               <h4 id="viewSkillName" class="font-bold text-xl text-slate-900 leading-tight">--</h4>
               <span id="viewSkillCodeBadge"
-                class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-[10px] font-bold mt-2 bg-slate-50 text-slate-700 border border-slate-200">--</span>
+                class="inline-flex items-center px-2.5 py-0.5 rounded text-[10px] font-bold mt-2 bg-transparent text-slate-700 border border-slate-300">--</span>
             </div>
           </div>
 
@@ -365,9 +365,10 @@
               <!-- Process Step -->
               <div class="col-span-2 sm:col-span-1 space-y-1.5">
                 <label class="block text-xs font-bold uppercase text-slate-500">Process Step Reference</label>
-                <input id="drawerSkillStep"
-                  class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white"
-                  placeholder="e.g. Crimping First" type="text" required />
+                <select id="drawerSkillStep"
+                  class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white" required>
+                  <option value="">Select Process Step...</option>
+                </select>
               </div>
 
               <!-- Status -->
@@ -555,12 +556,12 @@
 
                 // status badge style
                 const statusBadge = s.status === 'Active'
-                  ? `<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/50"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>Active</span>`
-                  : `<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-500 border border-slate-200"><span class="w-1.5 h-1.5 rounded-full bg-slate-400 mr-1.5"></span>Inactive</span>`;
+                  ? `<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-transparent text-emerald-700 border border-emerald-500"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>Active</span>`
+                  : `<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-transparent text-slate-500 border border-slate-350"><span class="w-1.5 h-1.5 rounded-full bg-slate-400 mr-1.5"></span>Inactive</span>`;
 
                 tr.innerHTML = `
                   <td class="px-6 py-4 font-bold text-slate-900 font-data-tabular text-data-tabular">
-                      <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold border bg-slate-50 border-slate-200 text-slate-700">${s.skillCode}</span>
+                      <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold border bg-transparent border-slate-300 text-slate-700">${s.skillCode}</span>
                   </td>
                   <td class="px-6 py-4 font-semibold text-slate-900">${s.skillName}</td>
                   <td class="px-6 py-4 text-xs font-medium text-slate-700 max-w-xs truncate" title="${s.processStep}">${s.processStep}</td>
@@ -670,13 +671,46 @@
               const statusBadge = document.getElementById('viewSkillStatusBadge');
               statusBadge.textContent = s.status;
               statusBadge.className = s.status === 'Active'
-                ? 'inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200'
-                : 'inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-500 border border-slate-200';
+                ? 'inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold bg-transparent text-emerald-700 border border-emerald-500'
+                : 'inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold bg-transparent text-slate-500 border border-slate-350';
 
               toggleViewSkillModal(true);
             }
 
+            function populateProcessStepOptions() {
+              const dropdown = document.getElementById('drawerSkillStep');
+              if (!dropdown) return;
+              dropdown.innerHTML = '<option value="">Select Process Step...</option>';
+              
+              const steps = [
+                "Hose Cutting 1 & 2",
+                "Protector Cutting 1 (PR0157-0190)",
+                "Pipe Shrinkable Tube",
+                "Pipe Bending (FA0554-03000)",
+                "Fitting Bending (K41358L90180)",
+                "Crimping First & Second",
+                "Accessories Bonding",
+                "Pipe Torquing 1 & 2",
+                "Pressure & Leakage Test",
+                "Final Inspection & Packing"
+              ];
+              
+              skillsList.forEach(s => {
+                if (s.processStep && !steps.includes(s.processStep)) {
+                  steps.push(s.processStep);
+                }
+              });
+
+              steps.sort().forEach(step => {
+                const opt = document.createElement('option');
+                opt.value = step;
+                opt.textContent = step;
+                dropdown.appendChild(opt);
+              });
+            }
+
             function openAddSkillDrawer() {
+              populateProcessStepOptions();
               document.getElementById('skillDrawerTitle').textContent = 'Create Custom Skill';
               document.getElementById('skillSubmitBtnText').textContent = 'Save Skill';
 
@@ -696,6 +730,8 @@
             function openEditSkillDrawer(skillCode) {
               const s = skillsList.find(x => x.skillCode.toUpperCase() === skillCode.toUpperCase());
               if (!s) return;
+
+              populateProcessStepOptions();
 
               document.getElementById('skillDrawerTitle').textContent = 'Edit Skill Details';
               document.getElementById('skillSubmitBtnText').textContent = 'Save Changes';

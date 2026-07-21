@@ -55,11 +55,13 @@
       -ms-overflow-style: none !important;
       scrollbar-width: none !important;
     }
+
     #confirm-release-check {
       accent-color: #10b981 !important;
       color: #10b981 !important;
       border-color: #10b981 !important;
     }
+
     #confirm-release-check:focus {
       --tw-ring-color: #10b981 !important;
       border-color: #10b981 !important;
@@ -67,13 +69,13 @@
   </style>
 </head>
 
-<body class="flex min-h-screen overflow-x-hidden">
+<body class="flex min-h-dvh overflow-x-hidden">
   <!-- SideNavBar (Fallback) -->
   <aside
     class="fixed left-0 top-0 h-full w-[260px] bg-primary text-on-primary flex flex-col py-4 border-r border-outline-variant z-50">
   </aside>
   <!-- Main Content Area -->
-  <main class="flex-1 ml-[260px] pt-[64px] min-h-screen">
+  <main class="flex-1 ml-[260px] pt-[64px] min-h-dvh">
     <!-- TopNavBar (Fallback) -->
     <header
       class="fixed top-0 right-0 h-[64px] w-[calc(100%-260px)] bg-surface flex justify-between items-center px-container-padding border-b border-outline-variant z-40">
@@ -150,7 +152,7 @@
     </div>
 
     <div id="step-content-1" class="grid grid-cols-12 gap-6 w-full">
-      <div class="col-span-12 bg-white border border-outline-variant/30 rounded-xl p-6 shadow-sm">
+      <div class="col-span-12 bg-white border border-outline-variant/30 rounded-xl p-4 sm:p-6 shadow-sm">
         <!-- Top level branding / status -->
         <div
           class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-4 border-b border-slate-100 mb-6">
@@ -166,47 +168,50 @@
           <!-- Barcode Column (Clean SVG Linear Barcode matching reference) -->
           <div class="flex flex-col items-end">
             <div id="wo-barcode-container" class="h-9 w-48 flex items-center justify-end select-none">
-              <svg viewBox="0 0 160 34" class="h-9 w-full max-w-[190px]" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <svg viewBox="0 0 160 34" class="h-9 w-full max-w-[190px]" preserveAspectRatio="none"
+                xmlns="http://www.w3.org/2000/svg">
                 <!-- High-density clean vertical barcode lines -->
-                <rect x="0" y="0" width="3" height="34" fill="#0f172a"/>
-                <rect x="5" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="9" y="0" width="4" height="34" fill="#0f172a"/>
-                <rect x="15" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="18" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="22" y="0" width="3" height="34" fill="#0f172a"/>
-                <rect x="27" y="0" width="5" height="34" fill="#0f172a"/>
-                <rect x="34" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="37" y="0" width="3" height="34" fill="#0f172a"/>
-                <rect x="42" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="45" y="0" width="4" height="34" fill="#0f172a"/>
-                <rect x="51" y="0" width="3" height="34" fill="#0f172a"/>
-                <rect x="56" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="59" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="63" y="0" width="3" height="34" fill="#0f172a"/>
-                <rect x="68" y="0" width="5" height="34" fill="#0f172a"/>
-                <rect x="75" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="78" y="0" width="3" height="34" fill="#0f172a"/>
-                <rect x="83" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="86" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="89" y="0" width="4" height="34" fill="#0f172a"/>
-                <rect x="95" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="98" y="0" width="3" height="34" fill="#0f172a"/>
-                <rect x="103" y="0" width="3" height="34" fill="#0f172a"/>
-                <rect x="108" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="111" y="0" width="5" height="34" fill="#0f172a"/>
-                <rect x="118" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="121" y="0" width="3" height="34" fill="#0f172a"/>
-                <rect x="126" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="129" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="132" y="0" width="4" height="34" fill="#0f172a"/>
-                <rect x="138" y="0" width="3" height="34" fill="#0f172a"/>
-                <rect x="143" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="146" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="150" y="0" width="5" height="34" fill="#0f172a"/>
-                <rect x="157" y="0" width="3" height="34" fill="#0f172a"/>
+                <rect x="0" y="0" width="3" height="34" fill="#0f172a" />
+                <rect x="5" y="0" width="1.5" height="34" fill="#0f172a" />
+                <rect x="9" y="0" width="4" height="34" fill="#0f172a" />
+                <rect x="15" y="0" width="1.5" height="34" fill="#0f172a" />
+                <rect x="18" y="0" width="1.5" height="34" fill="#0f172a" />
+                <rect x="22" y="0" width="3" height="34" fill="#0f172a" />
+                <rect x="27" y="0" width="5" height="34" fill="#0f172a" />
+                <rect x="34" y="0" width="1.5" height="34" fill="#0f172a" />
+                <rect x="37" y="0" width="3" height="34" fill="#0f172a" />
+                <rect x="42" y="0" width="1.5" height="34" fill="#0f172a" />
+                <rect x="45" y="0" width="4" height="34" fill="#0f172a" />
+                <rect x="51" y="0" width="3" height="34" fill="#0f172a" />
+                <rect x="56" y="0" width="1.5" height="34" fill="#0f172a" />
+                <rect x="59" y="0" width="1.5" height="34" fill="#0f172a" />
+                <rect x="63" y="0" width="3" height="34" fill="#0f172a" />
+                <rect x="68" y="0" width="5" height="34" fill="#0f172a" />
+                <rect x="75" y="0" width="1.5" height="34" fill="#0f172a" />
+                <rect x="78" y="0" width="3" height="34" fill="#0f172a" />
+                <rect x="83" y="0" width="1.5" height="34" fill="#0f172a" />
+                <rect x="86" y="0" width="1.5" height="34" fill="#0f172a" />
+                <rect x="89" y="0" width="4" height="34" fill="#0f172a" />
+                <rect x="95" y="0" width="1.5" height="34" fill="#0f172a" />
+                <rect x="98" y="0" width="3" height="34" fill="#0f172a" />
+                <rect x="103" y="0" width="3" height="34" fill="#0f172a" />
+                <rect x="108" y="0" width="1.5" height="34" fill="#0f172a" />
+                <rect x="111" y="0" width="5" height="34" fill="#0f172a" />
+                <rect x="118" y="0" width="1.5" height="34" fill="#0f172a" />
+                <rect x="121" y="0" width="3" height="34" fill="#0f172a" />
+                <rect x="126" y="0" width="1.5" height="34" fill="#0f172a" />
+                <rect x="129" y="0" width="1.5" height="34" fill="#0f172a" />
+                <rect x="132" y="0" width="4" height="34" fill="#0f172a" />
+                <rect x="138" y="0" width="3" height="34" fill="#0f172a" />
+                <rect x="143" y="0" width="1.5" height="34" fill="#0f172a" />
+                <rect x="146" y="0" width="1.5" height="34" fill="#0f172a" />
+                <rect x="150" y="0" width="5" height="34" fill="#0f172a" />
+                <rect x="157" y="0" width="3" height="34" fill="#0f172a" />
               </svg>
             </div>
-            <span id="wo-control-code" class="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-1 font-mono whitespace-nowrap">CONTROL CODE: <span id="wo-control-code-num">22615540</span></span>
+            <span id="wo-control-code"
+              class="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-1 font-mono whitespace-nowrap">CONTROL
+              CODE: <span id="wo-control-code-num">22615540</span></span>
           </div>
         </div>
 
@@ -273,9 +278,9 @@
           </div>
 
           <!-- Right Side: Production/SAP Details + QR Code (col-span-12 lg:col-span-4) -->
-          <div class="col-span-12 lg:col-span-4 flex justify-between gap-4 text-xs">
+          <div class="col-span-12 lg:col-span-4 flex flex-col sm:flex-row justify-between gap-6 text-xs">
             <!-- Production Info Fields -->
-            <div class="space-y-3 flex-grow">
+            <div class="space-y-3 flex-grow min-w-0">
               <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-50 pb-1.5">
                 Production Plan</h4>
               <div>
@@ -285,7 +290,7 @@
               </div>
               <div>
                 <span class="text-slate-400 font-bold block text-[10px] uppercase">Part No</span>
-                <p class="text-primary font-bold font-mono" id="cc-part-no">45128-K1L-D410-M1-1FC-R02</p>
+                <p class="text-primary font-bold font-mono break-all" id="cc-part-no">45128-K1L-D410-M1-1FC-R02</p>
               </div>
               <div>
                 <span class="text-slate-400 font-bold block text-[10px] uppercase">Product Order No</span>
@@ -302,64 +307,70 @@
               </div>
             </div>
 
-            <!-- Standard QR Code Column (Matching reference image) -->
-            <div class="flex flex-col items-center shrink-0 pl-4 border-l border-slate-100/50">
-              <div class="w-[88px] h-[88px] border border-slate-200/90 bg-white p-2 rounded-xl flex items-center justify-center relative select-none shadow-sm">
-                <div id="wo-qrcode-container" class="w-full h-full flex items-center justify-center">
-                  <svg viewBox="0 0 100 100" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Top-Left Finder Square -->
-                    <rect x="5" y="5" width="28" height="28" rx="2" fill="#0f172a"/>
-                    <rect x="10" y="10" width="18" height="18" rx="1" fill="#ffffff"/>
-                    <rect x="15" y="15" width="8" height="8" rx="1" fill="#0f172a"/>
+            <!-- QR Code Column -->
+            <div
+              class="flex flex-col items-center shrink-0 pt-4 sm:pt-0 pl-0 sm:pl-4 border-t sm:border-t-0 sm:border-l border-slate-100/50">
+              <!-- Simulated premium QR Code block -->
+              <div
+                class="w-[88px] h-[88px] border border-slate-200 bg-white p-1 rounded-lg flex items-center justify-center relative select-none">
+                <!-- Mock QR grid pattern using small blocks -->
+                <div class="grid grid-cols-5 gap-[2px] w-full h-full opacity-85">
+                  <div class="bg-slate-900 rounded-[1px]"></div>
+                  <div class="bg-slate-900 rounded-[1px]"></div>
+                  <div class="bg-slate-900 rounded-[1px]"></div>
+                  <div class="bg-transparent"></div>
+                  <div class="bg-slate-900 rounded-[1px]"></div>
 
-                    <!-- Top-Right Finder Square -->
-                    <rect x="67" y="5" width="28" height="28" rx="2" fill="#0f172a"/>
-                    <rect x="72" y="10" width="18" height="18" rx="1" fill="#ffffff"/>
-                    <rect x="77" y="15" width="8" height="8" rx="1" fill="#0f172a"/>
+                  <!-- Top-Right Finder Square -->
+                  <rect x="67" y="5" width="28" height="28" rx="2" fill="#0f172a" />
+                  <rect x="72" y="10" width="18" height="18" rx="1" fill="#ffffff" />
+                  <rect x="77" y="15" width="8" height="8" rx="1" fill="#0f172a" />
 
-                    <!-- Bottom-Left Finder Square -->
-                    <rect x="5" y="67" width="28" height="28" rx="2" fill="#0f172a"/>
-                    <rect x="10" y="72" width="18" height="18" rx="1" fill="#ffffff"/>
-                    <rect x="15" y="77" width="8" height="8" rx="1" fill="#0f172a"/>
+                  <!-- Bottom-Left Finder Square -->
+                  <rect x="5" y="67" width="28" height="28" rx="2" fill="#0f172a" />
+                  <rect x="10" y="72" width="18" height="18" rx="1" fill="#ffffff" />
+                  <rect x="15" y="77" width="8" height="8" rx="1" fill="#0f172a" />
 
-                    <!-- Middle & Center Data Modules -->
-                    <rect x="38" y="7" width="7" height="7" rx="1" fill="#0f172a"/>
-                    <rect x="50" y="7" width="12" height="7" rx="1" fill="#0f172a"/>
-                    <rect x="38" y="19" width="12" height="7" rx="1" fill="#0f172a"/>
-                    <rect x="55" y="19" width="7" height="7" rx="1" fill="#0f172a"/>
+                  <!-- Middle & Center Data Modules -->
+                  <rect x="38" y="7" width="7" height="7" rx="1" fill="#0f172a" />
+                  <rect x="50" y="7" width="12" height="7" rx="1" fill="#0f172a" />
+                  <rect x="38" y="19" width="12" height="7" rx="1" fill="#0f172a" />
+                  <rect x="55" y="19" width="7" height="7" rx="1" fill="#0f172a" />
 
-                    <rect x="7" y="38" width="7" height="7" rx="1" fill="#0f172a"/>
-                    <rect x="19" y="38" width="7" height="14" rx="1" fill="#0f172a"/>
-                    <rect x="31" y="38" width="20" height="7" rx="1" fill="#0f172a"/>
-                    <rect x="56" y="38" width="13" height="7" rx="1" fill="#0f172a"/>
-                    <rect x="74" y="38" width="19" height="7" rx="1" fill="#0f172a"/>
+                  <rect x="7" y="38" width="7" height="7" rx="1" fill="#0f172a" />
+                  <rect x="19" y="38" width="7" height="14" rx="1" fill="#0f172a" />
+                  <rect x="31" y="38" width="20" height="7" rx="1" fill="#0f172a" />
+                  <rect x="56" y="38" width="13" height="7" rx="1" fill="#0f172a" />
+                  <rect x="74" y="38" width="19" height="7" rx="1" fill="#0f172a" />
 
-                    <rect x="7" y="50" width="14" height="7" rx="1" fill="#0f172a"/>
-                    <rect x="26" y="50" width="7" height="7" rx="1" fill="#0f172a"/>
-                    <rect x="38" y="50" width="7" height="14" rx="1" fill="#0f172a"/>
-                    <rect x="50" y="50" width="19" height="7" rx="1" fill="#0f172a"/>
-                    <rect x="74" y="50" width="7" height="19" rx="1" fill="#0f172a"/>
+                  <rect x="7" y="50" width="14" height="7" rx="1" fill="#0f172a" />
+                  <rect x="26" y="50" width="7" height="7" rx="1" fill="#0f172a" />
+                  <rect x="38" y="50" width="7" height="14" rx="1" fill="#0f172a" />
+                  <rect x="50" y="50" width="19" height="7" rx="1" fill="#0f172a" />
+                  <rect x="74" y="50" width="7" height="19" rx="1" fill="#0f172a" />
 
-                    <rect x="38" y="67" width="14" height="7" rx="1" fill="#0f172a"/>
-                    <rect x="57" y="67" width="19" height="7" rx="1" fill="#0f172a"/>
-                    <rect x="50" y="79" width="13" height="13" rx="1" fill="#0f172a"/>
-                    <rect x="68" y="79" width="7" height="18" rx="1" fill="#0f172a"/>
-                    <rect x="80" y="79" width="13" height="13" rx="1" fill="#0f172a"/>
+                  <rect x="38" y="67" width="14" height="7" rx="1" fill="#0f172a" />
+                  <rect x="57" y="67" width="19" height="7" rx="1" fill="#0f172a" />
+                  <rect x="50" y="79" width="13" height="13" rx="1" fill="#0f172a" />
+                  <rect x="68" y="79" width="7" height="18" rx="1" fill="#0f172a" />
+                  <rect x="80" y="79" width="13" height="13" rx="1" fill="#0f172a" />
                   </svg>
                 </div>
               </div>
-              <span id="wo-lot-code" class="text-[8.5px] text-slate-400 font-bold uppercase tracking-wider mt-2 font-mono whitespace-nowrap">LOT: 6701</span>
+              <span id="wo-lot-code"
+                class="text-[8.5px] text-slate-400 font-bold uppercase tracking-wider mt-2 font-mono whitespace-nowrap">LOT:
+                6701</span>
             </div>
           </div>
         </div>
 
         <!-- Technical Drawing Section: Total process drawing schematic (Exact matching drawing layout) -->
         <div class="border border-slate-100 rounded-xl bg-slate-50/50 p-4 mb-6">
-          <div class="flex justify-between items-center mb-3">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3">
             <span class="text-[8px] font-bold text-slate-500 uppercase bg-slate-200/50 px-1.5 py-0.5 rounded">Drawing
               No: CC-HMSI-59</span>
             <label
-              class="flex items-center gap-1.5 px-3 py-1 bg-primary text-white text-[9px] font-bold uppercase tracking-wider rounded-lg cursor-pointer hover:bg-primary/95 transition-all shadow-sm">
+              class="flex items-center gap-1.5 px-3 py-1.5 bg-primary text-white text-[9px] font-bold uppercase tracking-wider rounded-lg cursor-pointer hover:bg-primary/95 transition-all shadow-sm">
               <span class="material-symbols-outlined text-[14px] leading-none">cloud_upload</span>
               Upload Drawing
               <input type="file" id="drawing-uploader" accept="image/*" class="hidden"
@@ -392,7 +403,7 @@
 
       <!-- Top Row: Operations Team & Supervisor Planning Single Table Card -->
       <div class="col-span-12">
-        <div class="bg-white border border-outline-variant/30 rounded-xl p-6 shadow-sm">
+        <div class="bg-white border border-outline-variant/30 rounded-xl p-4 sm:p-6 shadow-sm">
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
             <div>
               <h3 class="font-headline-md text-sm font-black text-primary uppercase tracking-wider">Operations Team
@@ -412,7 +423,8 @@
               <thead>
                 <tr
                   class="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px] font-bold border-b border-slate-100">
-                  <th class="px-4 py-3 font-semibold">Process Step</th>
+                  <th class="px-4 py-3 font-semibold sticky left-0 bg-slate-50 border-r border-slate-200/60 z-10">
+                    Process Step</th>
                   <th class="px-4 py-3 font-semibold">Equipment / Workstation</th>
                   <th class="px-4 py-3 font-semibold">Assigned Operator</th>
                   <th class="px-4 py-3 font-semibold text-center">Status</th>
@@ -462,10 +474,13 @@
               <h4 class="font-bold text-slate-900 text-xs">
                 1. Picking (BOM)
               </h4>
-              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Raw component verification &amp; store picking checklist</p>
+              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Raw component verification &amp; store picking
+                checklist</p>
               <div class="mt-2 flex items-center justify-between gap-1.5">
-                <span class="text-[#D97706] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Picking</span>
-                <span id="sheet-status-badge-picking" class="h-[22px] w-[84px] rounded-md border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
+                <span
+                  class="text-[#D97706] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Picking</span>
+                <span id="sheet-status-badge-picking"
+                  class="h-[22px] w-[84px] rounded border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
               </div>
             </div>
 
@@ -474,10 +489,13 @@
               <h4 class="font-bold text-slate-900 text-xs">
                 2. Hose Cutting
               </h4>
-              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Slice inner EPDM tubes to length &amp; mark alignment</p>
+              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Slice inner EPDM tubes to length &amp; mark
+                alignment</p>
               <div class="mt-2 flex items-center justify-between gap-1.5">
-                <span class="text-[#EC4899] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Offline</span>
-                <span id="sheet-status-badge-hose_cutting" class="h-[22px] w-[84px] rounded-md border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
+                <span
+                  class="text-[#EC4899] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Offline</span>
+                <span id="sheet-status-badge-hose_cutting"
+                  class="h-[22px] w-[84px] rounded border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
               </div>
             </div>
 
@@ -486,10 +504,13 @@
               <h4 class="font-bold text-slate-900 text-xs">
                 3. Protector Cutting
               </h4>
-              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Cut protector sleeve sleeves to standard lengths</p>
+              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Cut protector sleeve sleeves to standard lengths
+              </p>
               <div class="mt-2 flex items-center justify-between gap-1.5">
-                <span class="text-[#EC4899] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Offline</span>
-                <span id="sheet-status-badge-protector_cutting" class="h-[22px] w-[84px] rounded-md border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
+                <span
+                  class="text-[#EC4899] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Offline</span>
+                <span id="sheet-status-badge-protector_cutting"
+                  class="h-[22px] w-[84px] rounded border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
               </div>
             </div>
 
@@ -500,8 +521,10 @@
               </h4>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Bend fitting tubes to specified drawing angles</p>
               <div class="mt-2 flex items-center justify-between gap-1.5">
-                <span class="text-[#EC4899] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Offline</span>
-                <span id="sheet-status-badge-fitting_bending" class="h-[22px] w-[84px] rounded-md border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
+                <span
+                  class="text-[#EC4899] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Offline</span>
+                <span id="sheet-status-badge-fitting_bending"
+                  class="h-[22px] w-[84px] rounded border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
               </div>
             </div>
 
@@ -512,8 +535,10 @@
               </h4>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Stamp unique lot code markings on components</p>
               <div class="mt-2 flex items-center justify-between gap-1.5">
-                <span class="text-[#EC4899] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Offline</span>
-                <span id="sheet-status-badge-lot_stamping" class="h-[22px] w-[84px] rounded-md border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
+                <span
+                  class="text-[#EC4899] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Offline</span>
+                <span id="sheet-status-badge-lot_stamping"
+                  class="h-[22px] w-[84px] rounded border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
               </div>
             </div>
 
@@ -522,10 +547,13 @@
               <h4 class="font-bold text-slate-900 text-xs">
                 6. Accessories Insertion-1
               </h4>
-              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Install rubber clamps and protective sleeves L-160</p>
+              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Install rubber clamps and protective sleeves L-160
+              </p>
               <div class="mt-2 flex items-center justify-between gap-1.5">
-                <span class="text-[#0891B2] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Online</span>
-                <span id="sheet-status-badge-insertion1" class="h-[22px] w-[84px] rounded-md border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
+                <span
+                  class="text-[#0891B2] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Online</span>
+                <span id="sheet-status-badge-insertion1"
+                  class="h-[22px] w-[84px] rounded border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
               </div>
             </div>
 
@@ -534,10 +562,13 @@
               <h4 class="font-bold text-slate-900 text-xs">
                 7. First Crimping
               </h4>
-              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Crimp first fitting collar to EPDM hose assembly</p>
+              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Crimp first fitting collar to EPDM hose assembly
+              </p>
               <div class="mt-2 flex items-center justify-between gap-1.5">
-                <span class="text-[#0891B2] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Online</span>
-                <span id="sheet-status-badge-crimping1" class="h-[22px] w-[84px] rounded-md border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
+                <span
+                  class="text-[#0891B2] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Online</span>
+                <span id="sheet-status-badge-crimping1"
+                  class="h-[22px] w-[84px] rounded border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
               </div>
             </div>
 
@@ -546,10 +577,13 @@
               <h4 class="font-bold text-slate-900 text-xs">
                 8. Accessories Insertion-2
               </h4>
-              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Install protector sleeves L-260 &amp; primary clamps</p>
+              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Install protector sleeves L-260 &amp; primary
+                clamps</p>
               <div class="mt-2 flex items-center justify-between gap-1.5">
-                <span class="text-[#0891B2] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Online</span>
-                <span id="sheet-status-badge-insertion2" class="h-[22px] w-[84px] rounded-md border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
+                <span
+                  class="text-[#0891B2] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Online</span>
+                <span id="sheet-status-badge-insertion2"
+                  class="h-[22px] w-[84px] rounded border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
               </div>
             </div>
 
@@ -560,8 +594,10 @@
               </h4>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Crimp second fitting collar to secure assembly</p>
               <div class="mt-2 flex items-center justify-between gap-1.5">
-                <span class="text-[#0891B2] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Online</span>
-                <span id="sheet-status-badge-crimping2" class="h-[22px] w-[84px] rounded-md border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
+                <span
+                  class="text-[#0891B2] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Online</span>
+                <span id="sheet-status-badge-crimping2"
+                  class="h-[22px] w-[84px] rounded border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
               </div>
             </div>
 
@@ -572,8 +608,10 @@
               </h4>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Apply bonding adhesive compound Kakotora check</p>
               <div class="mt-2 flex items-center justify-between gap-1.5">
-                <span class="text-[#0891B2] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Online</span>
-                <span id="sheet-status-badge-bonding" class="h-[22px] w-[84px] rounded-md border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
+                <span
+                  class="text-[#0891B2] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Online</span>
+                <span id="sheet-status-badge-bonding"
+                  class="h-[22px] w-[84px] rounded border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
               </div>
             </div>
 
@@ -584,8 +622,10 @@
               </h4>
               <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Leakage testing under high hydraulic pressure</p>
               <div class="mt-2 flex items-center justify-between gap-1.5">
-                <span class="text-[#0891B2] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Online</span>
-                <span id="sheet-status-badge-pressure_test" class="h-[22px] w-[84px] rounded-md border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
+                <span
+                  class="text-[#0891B2] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Online</span>
+                <span id="sheet-status-badge-pressure_test"
+                  class="h-[22px] w-[84px] rounded border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
               </div>
             </div>
 
@@ -594,10 +634,13 @@
               <h4 class="font-bold text-slate-900 text-xs">
                 12. Final Inspection
               </h4>
-              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Dimensional check, plating colors, and visual audits</p>
+              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Dimensional check, plating colors, and visual
+                audits</p>
               <div class="mt-2 flex items-center justify-between gap-1.5">
-                <span class="text-[#0891B2] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Online</span>
-                <span id="sheet-status-badge-final_inspection" class="h-[22px] w-[84px] rounded-md border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
+                <span
+                  class="text-[#0891B2] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Online</span>
+                <span id="sheet-status-badge-final_inspection"
+                  class="h-[22px] w-[84px] rounded border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
               </div>
             </div>
 
@@ -606,13 +649,16 @@
               <h4 class="font-bold text-slate-900 text-xs">
                 13. Packing
               </h4>
-              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Verification of internal tags, storage, and bin sizing</p>
+              <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">Verification of internal tags, storage, and bin
+                sizing</p>
               <div class="mt-2 flex items-center justify-between gap-1.5">
-                <span class="text-[#0891B2] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Online</span>
-                <span id="sheet-status-badge-packing" class="h-[22px] w-[84px] rounded-md border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
+                <span
+                  class="text-[#0891B2] font-bold uppercase tracking-wider text-[8.5px] inline-flex items-center w-[54px]">Online</span>
+                <span id="sheet-status-badge-packing"
+                  class="h-[22px] w-[84px] rounded border border-emerald-500 text-emerald-600 font-bold uppercase tracking-wider text-[9px] leading-none shrink-0 inline-flex items-center justify-center text-center px-1.5">COMPLETED</span>
               </div>
             </div>
- 
+
           </div>
         </div>
       </div>
@@ -620,7 +666,7 @@
       <!-- Right Column: Dynamic Sheet Table Details -->
       <div class="col-span-12 lg:col-span-8">
         <div
-          class="bg-white border border-outline-variant/30 rounded-xl p-6 shadow-sm min-h-[520px] flex flex-col justify-between"
+          class="bg-white border border-outline-variant/30 rounded-xl p-4 sm:p-6 shadow-sm min-h-[520px] flex flex-col justify-between"
           id="sheet-details-pane">
           <!-- Loaded dynamically via javascript -->
         </div>
@@ -666,26 +712,30 @@
         <div
           class="h-16 border-b border-slate-200 px-4 sm:px-6 flex items-center justify-between bg-slate-50 flex-shrink-0 select-none">
           <!-- Header Title -->
-          <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined text-primary text-[22px]">schema</span>
-            <h1 class="text-xs sm:text-sm font-black text-slate-900 tracking-wide uppercase flex items-center gap-1.5" id="wf-modal-title">
-              Workflow Configuration <span class="text-[#dc0111] font-extrabold" id="wf-modal-wo-id">(22615540)</span>
+          <div class="flex items-center gap-2 min-w-0">
+            <span class="material-symbols-outlined text-primary text-[22px] shrink-0">schema</span>
+            <h1
+              class="text-xs sm:text-sm font-black text-slate-900 tracking-wide uppercase flex items-center gap-1.5 min-w-0"
+              id="wf-modal-title">
+              <span class="hidden sm:inline truncate">Workflow Configuration</span>
+              <span class="sm:hidden truncate">Workflow Config</span>
+              <span class="text-[#dc0111] font-extrabold shrink-0" id="wf-modal-wo-id">(22615540)</span>
             </h1>
           </div>
 
           <!-- Actions & Closing -->
-          <div class="flex items-center gap-2 sm:gap-3">
+          <div class="flex items-center gap-2 sm:gap-3 shrink-0">
             <button
-              class="px-3 sm:px-4 py-1.5 bg-[#dc0111] hover:bg-[#b8010e] text-white font-bold text-xs rounded hover:opacity-95 transition-opacity flex items-center gap-1 sm:gap-1.5 cursor-pointer uppercase tracking-wider"
+              class="px-3 sm:px-4 py-1.5 bg-[#dc0111] hover:bg-[#b8010e] text-white font-bold text-xs rounded hover:opacity-95 transition-opacity flex items-center justify-center gap-1 sm:gap-1.5 cursor-pointer uppercase tracking-wider"
               onclick="saveWorkflowConfig()">
               <span class="material-symbols-outlined text-[16px]">save</span>
-              <span>Save</span>
+              <span class="hidden sm:inline">Save</span>
             </button>
             <button
-              class="px-2.5 sm:px-3 py-1.5 text-slate-700 font-bold text-xs border border-slate-300 rounded hover:bg-slate-100 transition-colors flex items-center gap-1 sm:gap-1.5 cursor-pointer uppercase tracking-wider"
+              class="px-2.5 sm:px-3 py-1.5 text-slate-700 font-bold text-xs border border-slate-300 rounded hover:bg-slate-100 transition-colors flex items-center justify-center gap-1 sm:gap-1.5 cursor-pointer uppercase tracking-wider"
               onclick="closeWorkflowConfigModal()">
               <span class="material-symbols-outlined text-[16px]">close</span>
-              <span>Close</span>
+              <span class="hidden sm:inline">Close</span>
             </button>
           </div>
         </div>
@@ -794,8 +844,8 @@
                       class="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                       oninput="updateSelectedStepField('description', this.value)"
                       placeholder="Enter process description..."></textarea>
-                  
-                </div>
+
+                  </div>
               </section>
 
               <!-- SECTION 2: Dependencies -->
@@ -1173,7 +1223,7 @@
             if (!workOrdersList || workOrdersList.length === 0) {
               const localData = localStorage.getItem('workOrdersList');
               if (localData) {
-                try { workOrdersList = JSON.parse(localData); } catch (e) {}
+                try { workOrdersList = JSON.parse(localData); } catch (e) { }
               }
             }
 
@@ -1718,7 +1768,7 @@
 
           pageData.forEach((proc, index) => {
             const tr = document.createElement('tr');
-            tr.className = 'hover:bg-slate-50/50 transition-colors';
+            tr.className = 'group bg-white hover:bg-slate-50/50 transition-colors';
 
             const globalIdx = startIdx + index;
 
@@ -1758,7 +1808,7 @@
             const displayMachine = isNotReleased ? `<span class="text-slate-400 font-semibold italic">Not Assigned</span>` : proc.machine;
 
             tr.innerHTML = `
-                    <td class="px-4 py-2.5 font-bold text-slate-800">${globalIdx + 1}. ${proc.name}</td>
+                    <td class="px-4 py-2.5 font-bold text-slate-800 sticky left-0 bg-white group-hover:bg-slate-50/50 border-r border-slate-200/60 z-10">${globalIdx + 1}. ${proc.name}</td>
                     <td class="px-4 py-2.5 font-semibold text-slate-600">${displayMachine}</td>
                     <td class="px-4 py-2.5 font-semibold text-slate-850">
                         <div class="flex flex-wrap gap-x-4 gap-y-1 items-center">
@@ -2116,7 +2166,7 @@
                                                 `;
                 }
               }
- 
+
               extraTableHtml = `
                         <div class="space-y-2 mt-4">
                             <div class="bg-slate-100 border border-outline-variant/20 px-3 py-2 text-[10px] font-black text-slate-700 tracking-wide uppercase rounded-t-lg">
@@ -2827,7 +2877,7 @@
 
         function getStepBOMMaterials(step) {
           if (step.bomMaterials) return step.bomMaterials;
-          
+
           if (step.id.includes('step-1') || step.code.includes('MAT-01')) {
             return [
               { partNo: "45128-K1L-D410-M1", name: "EPDM Brake Hose Pipe", quantity: "1 pc" },
@@ -2878,7 +2928,7 @@
               { partNo: "TAG-SHP-01", name: "Shipping Routing Label", quantity: "1 pc" }
             ];
           }
-          
+
           return [
             { partNo: "45128-K1L-D410-M1", name: "EPDM Brake Hose Assembly", quantity: "1 pc" }
           ];
@@ -3074,7 +3124,7 @@
 
           if (activeWO && activeWO.workflow_stages && activeWO.workflow_steps) {
             const hasStale = activeWO.workflow_steps.some(s => s.stageId === 'stage-picking' && s.name.includes("Load Material Checklist")) ||
-                             !activeWO.workflow_steps.some(s => s.bomMaterials);
+              !activeWO.workflow_steps.some(s => s.bomMaterials);
             if (hasStale) {
               delete activeWO.workflow_stages;
               delete activeWO.workflow_steps;
@@ -4128,7 +4178,7 @@
         window.previewProcessDrawing = previewProcessDrawing;
         window.openFullscreenProcessDrawing = openFullscreenProcessDrawing;
 
-        window.openTraceabilityDrawer = function() {
+        window.openTraceabilityDrawer = function () {
           if (!activeWO) return;
           const backdrop = document.getElementById('traceabilityDrawerBackdrop');
           const drawer = document.getElementById('traceabilityDrawer');
@@ -4141,7 +4191,7 @@
           drawer.classList.remove('translate-x-full');
         };
 
-        window.closeTraceabilityDrawer = function() {
+        window.closeTraceabilityDrawer = function () {
           const backdrop = document.getElementById('traceabilityDrawerBackdrop');
           const drawer = document.getElementById('traceabilityDrawer');
           if (!backdrop || !drawer) return;
@@ -4281,7 +4331,8 @@
     <div id="traceabilityDrawer"
       class="fixed inset-y-0 right-0 z-[210] w-full max-w-2xl bg-white shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col font-body-md select-none overflow-hidden">
       <!-- Drawer Header -->
-      <div class="px-6 py-4 bg-white text-slate-900 flex justify-between items-center shrink-0 border-b border-slate-200">
+      <div
+        class="px-6 py-4 bg-white text-slate-900 flex justify-between items-center shrink-0 border-b border-slate-200">
         <div class="flex items-center gap-3">
           <div class="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
             <span class="material-symbols-outlined text-[20px]">account_tree</span>
@@ -4289,8 +4340,10 @@
           <h3 class="font-black text-sm text-slate-900 uppercase tracking-wider">TRACEABILITY</h3>
         </div>
         <div class="flex items-center gap-3">
-          <span id="trace-drawer-status-badge" class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-blue-50 text-[#2563eb]">IN-PROGRESS</span>
-          <button onclick="window.closeTraceabilityDrawer()" class="w-8 h-8 rounded-full flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-colors cursor-pointer">
+          <span id="trace-drawer-status-badge"
+            class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-blue-50 text-[#2563eb]">IN-PROGRESS</span>
+          <button onclick="window.closeTraceabilityDrawer()"
+            class="w-8 h-8 rounded-full flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-colors cursor-pointer">
             <span class="material-symbols-outlined text-[18px]">close</span>
           </button>
         </div>
@@ -4302,12 +4355,15 @@
         <div class="bg-white border border-slate-200/60 rounded-xl p-4 shadow-sm flex items-center justify-between">
           <div class="flex items-center gap-2">
             <span class="text-xs font-black text-[#dc0111] uppercase tracking-wider">QC Compliance Metrics</span>
-            <span class="inline-flex items-center px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/50 uppercase">Live Audit</span>
+            <span
+              class="inline-flex items-center px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/50 uppercase">Live
+              Audit</span>
           </div>
           <div class="flex gap-3">
             <div class="bg-slate-50 border border-slate-200 px-3.5 py-1.5 rounded-lg text-center shadow-2xs">
               <span class="block text-[8px] font-bold text-slate-400 uppercase tracking-wider">Pass Rate</span>
-              <span class="text-xs font-black text-emerald-600 font-data-tabular" id="trace-drawer-qc-pass">100.0%</span>
+              <span class="text-xs font-black text-emerald-600 font-data-tabular"
+                id="trace-drawer-qc-pass">100.0%</span>
             </div>
             <div class="bg-slate-50 border border-slate-200 px-3.5 py-1.5 rounded-lg text-center shadow-2xs">
               <span class="block text-[8px] font-bold text-slate-400 uppercase tracking-wider">Defect Rate</span>

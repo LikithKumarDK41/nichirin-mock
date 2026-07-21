@@ -323,8 +323,8 @@
           row.className = 'border-b border-outline-variant/30 hover:bg-slate-50/50 transition-colors';
 
           const statusBadge = s.status === 'Active' ?
-            '<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">Active</span>' :
-            '<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold bg-slate-50 text-slate-700 border border-slate-200">Inactive</span>';
+            '<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-transparent text-emerald-700 border border-emerald-500">Active</span>' :
+            '<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-transparent text-slate-500 border border-slate-350">Inactive</span>';
 
           row.innerHTML = `
                   <td class="p-4 text-center text-on-surface-variant font-medium">${index + 1}</td>

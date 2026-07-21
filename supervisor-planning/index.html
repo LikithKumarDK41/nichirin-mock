@@ -1,875 +1,942 @@
 <!DOCTYPE html>
 
-<html lang="en"><head>
-<!-- SPA Layout Redirect Wrapper -->
-<script>
-  if (!document.getElementById('app-root')) {
-    const p = window.location.pathname + window.location.search;
-    const rel = '../';
-    window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
-  }
-</script>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Supervisor Planning - Nichirin Admin</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<style>
-        body { font-family: 'Inter', sans-serif; background-color: #faf9fc; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-    </style>
+<html lang="en">
+
+<head>
+  <!-- SPA Layout Redirect Wrapper -->
+  <script>
+    if (!document.getElementById('app-root')) {
+      const p = window.location.pathname + window.location.search;
+      const rel = '../';
+      window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
+    }
+  </script>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Supervisor Planning - Nichirin Admin</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #faf9fc;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
 </head>
-<body class="flex min-h-screen overflow-x-hidden">
-<!-- SideNavBar (Fallback) -->
-<aside class="fixed left-0 top-0 h-full w-[260px] bg-primary text-on-primary flex flex-col py-4 border-r border-outline-variant z-50">
-</aside>
-<!-- Main Content Area -->
-<main class="flex-grow ml-[260px] pt-[64px] min-h-screen">
-<!-- TopNavBar (Fallback) -->
-<header class="fixed top-0 right-0 h-[64px] w-full md:w-[calc(100%-260px)] bg-surface flex justify-between items-center px-container-padding border-b border-outline-variant z-40">
-<div class="flex items-center gap-4">
-<nav class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
-<span class="">Plant</span>
-<span class="material-symbols-outlined text-[14px]">chevron_right</span>
-<a class="hover:text-primary transition-colors" href="../work-orders/index.html">Monitoring</a>
-<span class="material-symbols-outlined text-[14px]">chevron_right</span>
-<span class="text-primary font-bold border-b-2 border-primary pb-1">Supervisor Planning</span>
-</nav>
-</div>
-</header>
-<!-- Page Canvas -->
-<div class="p-container-padding grid grid-cols-12 gap-6 bg-background animate-fade-in">
-  <div class="col-span-12 flex justify-between items-start mb-5 flex-wrap gap-4 select-none">
-    <div>
-      <h2 class="font-headline-lg text-headline-lg text-primary">Supervisor Planning</h2>
-      <p class="font-body-md text-body-md text-on-surface-variant mt-2">Configure process, machine, operator, shift allocation, and target start times for production work orders.</p>
-    </div>
-    <div class="relative w-full sm:w-auto sm:min-w-[260px]">
-      <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Work Order ID</label>
-      <div class="relative">
-        <button id="planning-wo-dropdown-trigger" class="w-full bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-9 px-3 font-semibold flex items-center justify-between cursor-pointer" onclick="togglePlanningDropdown()">
-          <span id="planning-wo-selected-text">Select Work Order</span>
-          <span class="material-symbols-outlined text-[20px] text-slate-500">expand_more</span>
-        </button>
-        <div id="planning-wo-dropdown-container" class="absolute right-0 left-0 mt-1 bg-white border border-outline-variant/30 rounded-lg shadow-lg z-[100] hidden p-2 flex flex-col gap-2">
+
+<body class="flex min-h-dvh overflow-x-hidden">
+  <!-- SideNavBar (Fallback) -->
+  <aside
+    class="fixed left-0 top-0 h-full w-[260px] bg-primary text-on-primary flex flex-col py-4 border-r border-outline-variant z-50">
+  </aside>
+  <!-- Main Content Area -->
+  <main class="flex-grow ml-[260px] pt-[64px] min-h-dvh">
+    <!-- TopNavBar (Fallback) -->
+    <header
+      class="fixed top-0 right-0 h-[64px] w-full md:w-[calc(100%-260px)] bg-surface flex justify-between items-center px-container-padding border-b border-outline-variant z-40">
+      <div class="flex items-center gap-4">
+        <nav class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+          <span class="">Plant</span>
+          <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+          <a class="hover:text-primary transition-colors" href="../work-orders/index.html">Monitoring</a>
+          <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+          <span class="text-primary font-bold border-b-2 border-primary pb-1">Supervisor Planning</span>
+        </nav>
+      </div>
+    </header>
+    <!-- Page Canvas -->
+    <div class="p-container-padding grid grid-cols-12 gap-6 bg-background animate-fade-in">
+      <div class="col-span-12 flex justify-between items-start mb-5 flex-wrap gap-4 select-none">
+        <div>
+          <h2 class="font-headline-lg text-headline-lg text-primary">Supervisor Planning</h2>
+          <p class="font-body-md text-body-md text-on-surface-variant mt-2">Configure process, machine, operator, shift
+            allocation, and target start times for production work orders.</p>
+        </div>
+        <div class="relative w-full sm:w-auto sm:min-w-[260px]">
+          <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Work Order
+            ID</label>
           <div class="relative">
-            <input type="text" id="planning-wo-dropdown-search" class="w-full bg-slate-50 border border-outline-variant/30 rounded-lg text-xs text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-8 pr-3 font-semibold" placeholder="Search WO ID..." oninput="filterPlanningDropdown(this.value)" autocomplete="off" />
-            <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[16px] text-slate-400">search</span>
-          </div>
-          <div id="planning-wo-dropdown-list" class="max-h-48 overflow-y-auto custom-scrollbar flex flex-col">
-            <!-- Dropdown items populated dynamically -->
+            <button id="planning-wo-dropdown-trigger"
+              class="w-full bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-9 px-3 font-semibold flex items-center justify-between cursor-pointer"
+              onclick="togglePlanningDropdown()">
+              <span id="planning-wo-selected-text">Select Work Order</span>
+              <span class="material-symbols-outlined text-[20px] text-slate-500">expand_more</span>
+            </button>
+            <div id="planning-wo-dropdown-container"
+              class="absolute right-0 left-0 mt-1 bg-white border border-outline-variant/30 rounded-lg shadow-lg z-[100] hidden p-2 flex flex-col gap-2">
+              <div class="relative">
+                <input type="text" id="planning-wo-dropdown-search"
+                  class="w-full bg-slate-50 border border-outline-variant/30 rounded-lg text-xs text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-8 pr-3 font-semibold"
+                  placeholder="Search WO ID..." oninput="filterPlanningDropdown(this.value)" autocomplete="off" />
+                <span
+                  class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[16px] text-slate-400">search</span>
+              </div>
+              <div id="planning-wo-dropdown-list" class="max-h-48 overflow-y-auto custom-scrollbar flex flex-col">
+                <!-- Dropdown items populated dynamically -->
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- Empty State Container (Displayed by default when no WO is selected) -->
-  <div id="planning-empty-state" class="col-span-12 bg-white border border-outline-variant/30 rounded-xl p-12 shadow-sm text-center flex flex-col items-center justify-center min-h-[420px]">
-    <div class="w-20 h-20 rounded-full bg-red-50 text-[#dc0111] flex items-center justify-center mb-4 border border-red-100 shadow-sm">
-      <span class="material-symbols-outlined text-[42px]">assignment_add</span>
-    </div>
-    <h3 class="text-xl font-black text-slate-900 mb-2">No Work Order Selected</h3>
-    <p class="text-sm font-semibold text-slate-500 max-w-md mb-6 leading-relaxed">
-      Please select a Work Order from the dropdown above to configure process, machine, operator, shift allocation, and save the production plan.
-    </p>
-    <div class="inline-flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-700">
-      <span class="material-symbols-outlined text-[18px] text-[#dc0111]">arrow_upward</span>
-      <span>Select a Work Order from top-right dropdown to begin planning</span>
-    </div>
-  </div>
-
-  <!-- Bento grid content (Hidden by default until WO is selected) -->
-  <div id="planning-content-grid" class="col-span-12 grid grid-cols-1 gap-6 hidden">
-    <!-- Top Row: Work Order Summary (Referred layout style) -->
-    <div class="col-span-12">
-      <div class="bg-white border border-outline-variant/30 rounded-xl p-6 shadow-sm overflow-hidden flex flex-col">
-        <!-- Top level control code (matching reference screenshot layout) -->
-        <div class="flex justify-between items-center mb-2">
-          <div class="flex items-center gap-3">
-            <h2 class="text-2xl font-black text-[#dc0111] tracking-tight leading-none" id="wo-summary-id">--</h2>
-            <span class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-blue-50 text-[#2563eb] border border-blue-200/60" id="wo-summary-status">RUNNING</span>
-          </div>
-          <!-- Barcode Column (Clean SVG Linear Barcode) -->
-          <div class="flex flex-col items-end">
-            <div id="wo-summary-barcode-container" class="h-9 w-48 flex items-center justify-end select-none">
-              <svg viewBox="0 0 160 34" class="h-9 w-full max-w-[190px]" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- High-density clean vertical barcode lines -->
-                <rect x="0" y="0" width="3" height="34" fill="#0f172a"/>
-                <rect x="5" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="9" y="0" width="4" height="34" fill="#0f172a"/>
-                <rect x="15" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="18" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="22" y="0" width="3" height="34" fill="#0f172a"/>
-                <rect x="27" y="0" width="5" height="34" fill="#0f172a"/>
-                <rect x="34" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="37" y="0" width="3" height="34" fill="#0f172a"/>
-                <rect x="42" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="45" y="0" width="4" height="34" fill="#0f172a"/>
-                <rect x="51" y="0" width="3" height="34" fill="#0f172a"/>
-                <rect x="56" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="59" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="63" y="0" width="3" height="34" fill="#0f172a"/>
-                <rect x="68" y="0" width="5" height="34" fill="#0f172a"/>
-                <rect x="75" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="78" y="0" width="3" height="34" fill="#0f172a"/>
-                <rect x="83" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="86" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="89" y="0" width="4" height="34" fill="#0f172a"/>
-                <rect x="95" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="98" y="0" width="3" height="34" fill="#0f172a"/>
-                <rect x="103" y="0" width="3" height="34" fill="#0f172a"/>
-                <rect x="108" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="111" y="0" width="5" height="34" fill="#0f172a"/>
-                <rect x="118" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="121" y="0" width="3" height="34" fill="#0f172a"/>
-                <rect x="126" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="129" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="132" y="0" width="4" height="34" fill="#0f172a"/>
-                <rect x="138" y="0" width="3" height="34" fill="#0f172a"/>
-                <rect x="143" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="146" y="0" width="1.5" height="34" fill="#0f172a"/>
-                <rect x="150" y="0" width="5" height="34" fill="#0f172a"/>
-                <rect x="157" y="0" width="3" height="34" fill="#0f172a"/>
-              </svg>
-            </div>
-            <span id="wo-summary-control-code" class="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-1.5 font-mono whitespace-nowrap">CONTROL CODE: <span id="wo-summary-control-code-num">--</span></span>
-          </div>
+      <!-- Empty State Container (Displayed by default when no WO is selected) -->
+      <div id="planning-empty-state"
+        class="col-span-12 bg-white border border-outline-variant/30 rounded-xl p-12 shadow-sm text-center flex flex-col items-center justify-center min-h-[420px]">
+        <div
+          class="w-20 h-20 rounded-full bg-red-50 text-[#dc0111] flex items-center justify-center mb-4 border border-red-100 shadow-sm">
+          <span class="material-symbols-outlined text-[42px]">assignment_add</span>
         </div>
-
-        <!-- Divider line -->
-        <div class="border-t border-slate-200/80 my-3"></div>
-
-        <!-- Grid of details (Exact matching of reference image columns) -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 pb-2">
-          <!-- Col 1: Card Specifications -->
-          <div class="md:col-span-2 space-y-3">
-            <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider">CARD SPECIFICATIONS</h4>
-            <div class="space-y-2 text-xs">
-              <div>
-                <span class="text-slate-400 font-semibold block text-[10px] uppercase">CONTROL CARD NO</span>
-                <p class="text-slate-800 font-bold">CC-HMSI-59</p>
-              </div>
-              <div>
-                <span class="text-slate-400 font-semibold block text-[10px] uppercase">CONTROL CARD TYPE</span>
-                <p class="text-slate-800 font-bold">Brake Hose</p>
-              </div>
-              <div>
-                <span class="text-slate-400 font-semibold block text-[10px] uppercase">CUSTOMER</span>
-                <p class="text-slate-800 font-bold">HMSI</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Col 2: Revision Control -->
-          <div class="md:col-span-3 space-y-3 border-l border-slate-100/50 pl-4">
-            <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider">REVISION CONTROL</h4>
-            <div class="space-y-2 text-xs">
-              <div>
-                <span class="text-slate-400 font-semibold block text-[10px] uppercase">DRAWING REVISION</span>
-                <p class="text-slate-800 font-bold">M-23-F0674 (23 May-23)</p>
-              </div>
-              <div>
-                <span class="text-slate-400 font-semibold block text-[10px] uppercase">ISSUE DATE</span>
-                <p class="text-slate-800 font-bold">07.04.2026</p>
-              </div>
-              <div>
-                <span class="text-slate-400 font-semibold block text-[10px] uppercase">REVISIONS SUMMARY</span>
-                <p class="text-slate-800 font-semibold text-[11px] leading-snug">Protector and Grommet locations on Drawing</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Col 3: Quality Sign-offs -->
-          <div class="md:col-span-2 space-y-3 border-l border-slate-100/50 pl-4">
-            <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider">QUALITY SIGN-OFFS</h4>
-            <div class="space-y-2 text-xs">
-              <div>
-                <span class="text-slate-400 font-semibold block text-[10px] uppercase">ISSUED BY</span>
-                <p class="text-slate-800 font-bold">Garima</p>
-              </div>
-              <div>
-                <span class="text-slate-400 font-semibold block text-[10px] uppercase">CHECKED BY</span>
-                <p class="text-slate-800 font-bold">GANESH VATS</p>
-              </div>
-              <div>
-                <span class="text-slate-400 font-semibold block text-[10px] uppercase">APPROVED BY</span>
-                <p class="text-slate-800 font-bold">AVRASH-SAN</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Col 4: Production Plan -->
-          <div class="md:col-span-3 space-y-3 border-l border-slate-100/50 pl-4">
-            <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider">PRODUCTION PLAN</h4>
-            <div class="space-y-2 text-xs">
-              <div>
-                <span class="text-slate-400 font-semibold block text-[10px] uppercase">PART NAME</span>
-                <p class="text-slate-800 font-bold truncate text-[11px]" id="wo-summary-name" title="--">--</p>
-              </div>
-              <div>
-                <span class="text-slate-400 font-semibold block text-[10px] uppercase">PART NO</span>
-                <p class="text-[#dc0111] font-bold font-mono text-[13px]" id="wo-summary-part">--</p>
-              </div>
-              <div>
-                <span class="text-slate-400 font-semibold block text-[10px] uppercase">PRODUCT ORDER NO</span>
-                <p class="text-slate-800 font-mono font-bold truncate text-[11px]" id="wo-summary-prod-order-no" title="--">--</p>
-              </div>
-              <div>
-                <span class="text-slate-400 font-semibold block text-[10px] uppercase">PRODUCTION PLAN DATE</span>
-                <p class="text-slate-800 font-bold font-data-tabular text-[11px]">27-06-2026 / 08-07-2026</p>
-              </div>
-              <div>
-                <span class="text-slate-400 font-semibold block text-[10px] uppercase">TARGET QUANTITY</span>
-                <p class="text-slate-800 font-bold font-data-tabular text-[11px]" id="wo-summary-qty">--</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Col 5: Standard QR Code (Matching reference image) -->
-          <div class="md:col-span-2 flex flex-col items-center justify-start shrink-0 border-l border-slate-100/50 pl-4 pr-2">
-            <div class="w-[88px] h-[88px] border border-slate-200/90 bg-white p-2 rounded-xl flex items-center justify-center relative select-none shadow-sm">
-              <div id="wo-summary-qrcode-container" class="w-full h-full flex items-center justify-center">
-                <svg viewBox="0 0 100 100" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                  <!-- Top-Left Finder Square -->
-                  <rect x="5" y="5" width="28" height="28" rx="2" fill="#0f172a"/>
-                  <rect x="10" y="10" width="18" height="18" rx="1" fill="#ffffff"/>
-                  <rect x="15" y="15" width="8" height="8" rx="1" fill="#0f172a"/>
-
-                  <!-- Top-Right Finder Square -->
-                  <rect x="67" y="5" width="28" height="28" rx="2" fill="#0f172a"/>
-                  <rect x="72" y="10" width="18" height="18" rx="1" fill="#ffffff"/>
-                  <rect x="77" y="15" width="8" height="8" rx="1" fill="#0f172a"/>
-
-                  <!-- Bottom-Left Finder Square -->
-                  <rect x="5" y="67" width="28" height="28" rx="2" fill="#0f172a"/>
-                  <rect x="10" y="72" width="18" height="18" rx="1" fill="#ffffff"/>
-                  <rect x="15" y="77" width="8" height="8" rx="1" fill="#0f172a"/>
-
-                  <!-- Middle & Center Data Modules -->
-                  <rect x="38" y="7" width="7" height="7" rx="1" fill="#0f172a"/>
-                  <rect x="50" y="7" width="12" height="7" rx="1" fill="#0f172a"/>
-                  <rect x="38" y="19" width="12" height="7" rx="1" fill="#0f172a"/>
-                  <rect x="55" y="19" width="7" height="7" rx="1" fill="#0f172a"/>
-
-                  <rect x="7" y="38" width="7" height="7" rx="1" fill="#0f172a"/>
-                  <rect x="19" y="38" width="7" height="14" rx="1" fill="#0f172a"/>
-                  <rect x="31" y="38" width="20" height="7" rx="1" fill="#0f172a"/>
-                  <rect x="56" y="38" width="13" height="7" rx="1" fill="#0f172a"/>
-                  <rect x="74" y="38" width="19" height="7" rx="1" fill="#0f172a"/>
-
-                  <rect x="7" y="50" width="14" height="7" rx="1" fill="#0f172a"/>
-                  <rect x="26" y="50" width="7" height="7" rx="1" fill="#0f172a"/>
-                  <rect x="38" y="50" width="7" height="14" rx="1" fill="#0f172a"/>
-                  <rect x="50" y="50" width="19" height="7" rx="1" fill="#0f172a"/>
-                  <rect x="74" y="50" width="7" height="19" rx="1" fill="#0f172a"/>
-
-                  <rect x="38" y="67" width="14" height="7" rx="1" fill="#0f172a"/>
-                  <rect x="57" y="67" width="19" height="7" rx="1" fill="#0f172a"/>
-                  <rect x="50" y="79" width="13" height="13" rx="1" fill="#0f172a"/>
-                  <rect x="68" y="79" width="7" height="18" rx="1" fill="#0f172a"/>
-                  <rect x="80" y="79" width="13" height="13" rx="1" fill="#0f172a"/>
-                </svg>
-              </div>
-            </div>
-            <span id="wo-summary-lot-code" class="text-[8.5px] text-slate-400 font-bold uppercase tracking-wider mt-2 font-mono whitespace-nowrap">LOT: 6701</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Bottom Row: Planning Form -->
-    <div class="col-span-12">
-      <div class="bg-white border border-outline-variant/30 rounded-xl h-full shadow-sm overflow-hidden flex flex-col">
-        <div class="p-4 border-b border-outline-variant/30 bg-slate-50">
-          <h3 class="font-headline-sm text-headline-sm text-primary flex items-center gap-2">
-            <span class="material-symbols-outlined text-[20px] text-primary">edit_document</span>
-            Planning Form
-          </h3>
-        </div>
-        <div class="p-6 space-y-6 flex-1 text-sm">
-          <!-- Production Line & Priority (hidden but preserved in DOM for compatibility) -->
-          <div class="grid grid-cols-2 gap-4 hidden">
-            <div>
-              <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Production Line <span class="text-error">*</span></label>
-              <select id="planning-line-select">
-                <option value="Line 1 (Faridabad Brake Hose Assembly)">Line 1 (Hose)</option>
-              </select>
-            </div>
-            <div>
-              <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Priority</label>
-              <select id="planning-priority-select">
-                <option value="Normal">Normal</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Select Process -->
-          <div>
-            <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Select Process <span class="text-error">*</span></label>
-            <select id="planning-process-select" class="w-full border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold" onchange="onProcessChange()">
-              <option value="Picking (BOM)">Picking (BOM)</option>
-              <option value="Hose Cutting">Hose Cutting</option>
-              <option value="Protector Cutting">Protector Cutting</option>
-              <option value="Fitting Bending">Fitting Bending</option>
-              <option value="Manufacturing Lot Stamping">Manufacturing Lot Stamping</option>
-              <option value="Accessories Insertion-1">Accessories Insertion-1</option>
-              <option value="Crimping-1">Crimping-1</option>
-              <option value="Accessories Insertion-2">Accessories Insertion-2</option>
-              <option value="Crimping-2">Crimping-2</option>
-              <option value="Accessories Bonding">Accessories Bonding</option>
-              <option value="Pressure Test">Pressure Test</option>
-              <option value="Final Inspection">Final Inspection</option>
-              <option value="Packing">Packing</option>
-            </select>
-          </div>
-
-          <!-- Machine Allocation -->
-          <div>
-            <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Machine Allocation</label>
-            <select id="planning-machine-select" class="w-full border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold">
-              <option value="Store Area">Store Area</option>
-              <option value="Hose Cutter HC-04">Hose Cutter HC-04</option>
-              <option value="Sleeve Cutter SC-01">Sleeve Cutter SC-01</option>
-              <option value="CNC Pipe Bender PB-12">CNC Pipe Bender PB-12</option>
-              <option value="Lot Stamper LS-09">Lot Stamper LS-09</option>
-              <option value="Assembly Station-1">Assembly Station-1</option>
-              <option value="Assembly Station-2">Assembly Station-2</option>
-              <option value="Crimper CR-02">Crimper CR-02</option>
-              <option value="Crimper CR-05">Crimper CR-05</option>
-              <option value="Bonding Jig BJ-59">Bonding Jig BJ-59</option>
-              <option value="LTM-07 Rig">LTM-07 Rig</option>
-              <option value="FI-HMSI-59 Jig">FI-HMSI-59 Jig</option>
-              <option value="Packing Line PL-03">Packing Line PL-03</option>
-              <option value="Manual Station">Manual Station</option>
-            </select>
-          </div>
-
-          <!-- Operator Allocation -->
-          <div>
-            <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Operator Allocation</label>
-            <div class="flex gap-2">
-              <select id="planning-operator-select" class="flex-1 border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold">
-                <!-- populated dynamically with operators -->
-              </select>
-              <button class="bg-primary text-white px-4 py-2 rounded-lg font-semibold text-sm hover:opacity-95 transition-colors cursor-pointer shadow-sm" type="button" onclick="assignOperator()">Assign</button>
-            </div>
-            <div class="mt-3 flex flex-wrap gap-2" id="planning-operator-badges">
-              <!-- Badge populated dynamically -->
-            </div>
-          </div>
-
-          <!-- Shift Allocation & Target Time -->
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Shift Allocation <span class="text-error">*</span></label>
-              <select id="planning-shift-select" class="w-full border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold" onchange="validatePlanningForm();">
-                <option disabled="" value="">Select Shift...</option>
-                <option value="Shift A">Shift A (06:00 - 14:00)</option>
-                <option value="Shift B">Shift B (14:00 - 22:00)</option>
-              </select>
-            </div>
-            <div>
-              <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Target Start Time</label>
-              <input id="planning-start-time" class="w-full border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold" type="datetime-local" value="2026-07-13T06:00"/>
-            </div>
-          </div>
-          
-          <div class="pt-4 border-t border-outline-variant/30 flex justify-end">
-            <button class="bg-primary text-white px-6 py-2 rounded-lg text-sm font-semibold hover:opacity-95 transition-all shadow-sm cursor-pointer" type="button" onclick="saveActiveWO()">Save Plan</button>
-          </div>
+        <h3 class="text-xl font-black text-slate-900 mb-2">No Work Order Selected</h3>
+        <p class="text-sm font-semibold text-slate-500 max-w-md mb-6 leading-relaxed">
+          Please select a Work Order from the dropdown above to configure process, machine, operator, shift allocation,
+          and save the production plan.
+        </p>
+        <div
+          class="inline-flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-700">
+          <span class="material-symbols-outlined text-[18px] text-[#dc0111]">arrow_upward</span>
+          <span>Select a Work Order from top-right dropdown to begin planning</span>
         </div>
       </div>
-    </div>
-  </div>
-</div>
 
-<script>
-(function() {
-    let workOrdersList = [];
-    let activeWO = null;
-    let currentAssignedOperators = [];
+      <!-- Bento grid content (Hidden by default until WO is selected) -->
+      <div id="planning-content-grid" class="col-span-12 grid grid-cols-1 gap-6 hidden">
+        <!-- Top Row: Work Order Summary (Referred layout style) -->
+        <div class="col-span-12">
+          <div
+            class="bg-white border border-outline-variant/30 rounded-xl p-4 sm:p-6 shadow-sm overflow-hidden flex flex-col">
+            <!-- Top level control code (matching reference screenshot layout) -->
+            <div
+              class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4 pb-2 border-b border-slate-100 md:border-b-0 md:pb-0">
+              <div class="flex items-center gap-3">
+                <h2 class="text-2xl font-black text-[#dc0111] tracking-tight leading-none" id="wo-summary-id">--</h2>
+                <span
+                  class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-blue-50 text-[#2563eb] border border-blue-200/60"
+                  id="wo-summary-status">RUNNING</span>
+              </div>
+                            <!-- Barcode Column (Clean SVG Linear Barcode) -->
+              <div class="flex flex-col items-end">
+                <div id="wo-summary-barcode-container" class="h-9 w-48 flex items-center justify-end select-none">
+                  <svg viewBox="0 0 160 34" class="h-9 w-full max-w-[190px]" preserveAspectRatio="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <!-- High-density clean vertical barcode lines -->
+                    <rect x="0" y="0" width="3" height="34" fill="#0f172a" />
+                    <rect x="5" y="0" width="1.5" height="34" fill="#0f172a" />
+                    <rect x="9" y="0" width="4" height="34" fill="#0f172a" />
+                    <rect x="15" y="0" width="1.5" height="34" fill="#0f172a" />
+                    <rect x="18" y="0" width="1.5" height="34" fill="#0f172a" />
+                    <rect x="22" y="0" width="3" height="34" fill="#0f172a" />
+                    <rect x="27" y="0" width="5" height="34" fill="#0f172a" />
+                    <rect x="34" y="0" width="1.5" height="34" fill="#0f172a" />
+                    <rect x="37" y="0" width="3" height="34" fill="#0f172a" />
+                    <rect x="42" y="0" width="1.5" height="34" fill="#0f172a" />
+                    <rect x="45" y="0" width="4" height="34" fill="#0f172a" />
+                    <rect x="51" y="0" width="3" height="34" fill="#0f172a" />
+                    <rect x="56" y="0" width="1.5" height="34" fill="#0f172a" />
+                    <rect x="59" y="0" width="1.5" height="34" fill="#0f172a" />
+                    <rect x="63" y="0" width="3" height="34" fill="#0f172a" />
+                    <rect x="68" y="0" width="5" height="34" fill="#0f172a" />
+                    <rect x="75" y="0" width="1.5" height="34" fill="#0f172a" />
+                    <rect x="78" y="0" width="3" height="34" fill="#0f172a" />
+                    <rect x="83" y="0" width="1.5" height="34" fill="#0f172a" />
+                    <rect x="86" y="0" width="1.5" height="34" fill="#0f172a" />
+                    <rect x="89" y="0" width="4" height="34" fill="#0f172a" />
+                    <rect x="95" y="0" width="1.5" height="34" fill="#0f172a" />
+                    <rect x="98" y="0" width="3" height="34" fill="#0f172a" />
+                    <rect x="103" y="0" width="3" height="34" fill="#0f172a" />
+                    <rect x="108" y="0" width="1.5" height="34" fill="#0f172a" />
+                    <rect x="111" y="0" width="5" height="34" fill="#0f172a" />
+                    <rect x="118" y="0" width="1.5" height="34" fill="#0f172a" />
+                    <rect x="121" y="0" width="3" height="34" fill="#0f172a" />
+                    <rect x="126" y="0" width="1.5" height="34" fill="#0f172a" />
+                    <rect x="129" y="0" width="1.5" height="34" fill="#0f172a" />
+                    <rect x="132" y="0" width="4" height="34" fill="#0f172a" />
+                    <rect x="138" y="0" width="3" height="34" fill="#0f172a" />
+                    <rect x="143" y="0" width="1.5" height="34" fill="#0f172a" />
+                    <rect x="146" y="0" width="1.5" height="34" fill="#0f172a" />
+                    <rect x="150" y="0" width="5" height="34" fill="#0f172a" />
+                    <rect x="157" y="0" width="3" height="34" fill="#0f172a" />
+                  </svg>
+                </div>
+                <span id="wo-summary-control-code"
+                  class="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-1.5 font-mono whitespace-nowrap">CONTROL
+                  CODE: <span id="wo-summary-control-code-num">--</span></span>
+              </div>
 
-    const ALLOWED_5_WOS = ['22615540', '22615541', '22615542', '22615543', '22615545'];
+                  <!-- Divider line -->
+                  <div class="border-t border-slate-200/80 my-3"></div>
 
-    // Load work orders database from localStorage (or fetch from workorders.json)
-    async function loadWorkOrders() {
-        try {
-            const res = await fetch('../work-orders/workorders.json');
-            if (res.ok) {
-                workOrdersList = await res.json();
+                  <!-- Grid of details (Exact matching of reference image columns) -->
+                  <div class="grid grid-cols-1 md:grid-cols-12 gap-6 pb-2">
+                    <!-- Col 1: Card Specifications -->
+                    <div class="md:col-span-2 space-y-3">
+                      <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider">CARD SPECIFICATIONS</h4>
+                      <div class="space-y-2 text-xs">
+                        <div>
+                          <span class="text-slate-400 font-semibold block text-[10px] uppercase">CONTROL CARD NO</span>
+                          <p class="text-slate-800 font-bold">CC-HMSI-59</p>
+                        </div>
+                        <div>
+                          <span class="text-slate-400 font-semibold block text-[10px] uppercase">CONTROL CARD
+                            TYPE</span>
+                          <p class="text-slate-800 font-bold">Brake Hose</p>
+                        </div>
+                        <div>
+                          <span class="text-slate-400 font-semibold block text-[10px] uppercase">CUSTOMER</span>
+                          <p class="text-slate-800 font-bold">HMSI</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Col 2: Revision Control -->
+                    <div
+                      class="md:col-span-3 space-y-3 border-t md:border-t-0 md:border-l border-slate-100/50 pt-4 md:pt-0 pl-0 md:pl-4">
+                      <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider">REVISION CONTROL</h4>
+                      <div class="space-y-2 text-xs">
+                        <div>
+                          <span class="text-slate-400 font-semibold block text-[10px] uppercase">DRAWING REVISION</span>
+                          <p class="text-slate-800 font-bold">M-23-F0674 (23 May-23)</p>
+                        </div>
+                        <div>
+                          <span class="text-slate-400 font-semibold block text-[10px] uppercase">ISSUE DATE</span>
+                          <p class="text-slate-800 font-bold">07.04.2026</p>
+                        </div>
+                        <div>
+                          <span class="text-slate-400 font-semibold block text-[10px] uppercase">REVISIONS
+                            SUMMARY</span>
+                          <p class="text-slate-800 font-semibold text-[11px] leading-snug">Protector and Grommet
+                            locations on Drawing</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Col 3: Quality Sign-offs -->
+                    <div
+                      class="md:col-span-2 space-y-3 border-t md:border-t-0 md:border-l border-slate-100/50 pt-4 md:pt-0 pl-0 md:pl-4">
+                      <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider">QUALITY SIGN-OFFS</h4>
+                      <div class="space-y-2 text-xs">
+                        <div>
+                          <span class="text-slate-400 font-semibold block text-[10px] uppercase">ISSUED BY</span>
+                          <p class="text-slate-800 font-bold">Garima</p>
+                        </div>
+                        <div>
+                          <span class="text-slate-400 font-semibold block text-[10px] uppercase">CHECKED BY</span>
+                          <p class="text-slate-800 font-bold">GANESH VATS</p>
+                        </div>
+                        <div>
+                          <span class="text-slate-400 font-semibold block text-[10px] uppercase">APPROVED BY</span>
+                          <p class="text-slate-800 font-bold">AVRASH-SAN</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Col 4: Production Plan -->
+                    <div
+                      class="md:col-span-4 space-y-3 border-t md:border-t-0 md:border-l border-slate-100/50 pt-4 md:pt-0 pl-0 md:pl-4">
+                        <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider">PRODUCTION PLAN</h4>
+                        <div class="space-y-2 text-xs">
+                          <div>
+                            <span class="text-slate-400 font-semibold block text-[10px] uppercase">PART NAME</span>
+                            <p class="text-slate-800 font-bold truncate text-[11px]" id="wo-summary-name" title="--">--
+                            </p>
+                          </div>
+                          <div>
+                            <span class="text-slate-400 font-semibold block text-[10px] uppercase">PART NO</span>
+                            <p class="text-[#dc0111] font-bold font-mono text-[13px]" id="wo-summary-part">--</p>
+                          </div>
+                          <div>
+                            <span class="text-slate-400 font-semibold block text-[10px] uppercase">PRODUCT ORDER
+                              NO</span>
+                            <p class="text-slate-800 font-mono font-bold truncate text-[11px]"
+                              id="wo-summary-prod-order-no" title="--">--</p>
+                          </div>
+                          <div>
+                            <span class="text-slate-400 font-semibold block text-[10px] uppercase">PRODUCTION PLAN
+                              DATE</span>
+                            <p class="text-slate-800 font-bold font-data-tabular text-[11px]">27-06-2026 / 08-07-2026
+                            </p>
+                          </div>
+                          <div>
+                            <span class="text-slate-400 font-semibold block text-[10px] uppercase">TARGET
+                              QUANTITY</span>
+                            <p class="text-slate-800 font-bold font-data-tabular text-[11px]" id="wo-summary-qty">--</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Col 5: QR Code -->
+                      <div
+                        class="md:col-span-1 flex flex-col items-center justify-start shrink-0 border-t md:border-t-0 md:border-l border-slate-100/50 pt-4 md:pt-0 pl-0 md:pl-4">
+                        <div
+                          class="w-[72px] h-[72px] border border-slate-200 bg-white p-1 rounded flex items-center justify-center relative select-none">
+                          <!-- Simulated QR Grid Pattern -->
+                          <div class="grid grid-cols-5 gap-[2px] w-full h-full opacity-90">
+                            <div class="bg-slate-900 rounded-[0.5px]"></div>
+                            <div class="bg-transparent"></div>
+                            <div class="bg-slate-900 rounded-[0.5px]"></div>
+                            <div class="bg-slate-900 rounded-[0.5px]"></div>
+                            <div class="bg-slate-900 rounded-[0.5px]"></div>
+
+                            <div class="bg-slate-900 rounded-[0.5px]"></div>
+                            <div class="bg-transparent"></div>
+                            <div class="bg-slate-900 rounded-[0.5px]"></div>
+                            <div class="bg-transparent"></div>
+                            <div class="bg-slate-900 rounded-[0.5px]"></div>
+
+                            <div class="bg-slate-900 rounded-[0.5px]"></div>
+                            <div class="bg-slate-900 rounded-[0.5px]"></div>
+                            <div class="bg-transparent"></div>
+                            <div class="bg-slate-900 rounded-[0.5px]"></div>
+                            <div class="bg-slate-900 rounded-[0.5px]"></div>
+
+                            <div class="bg-transparent"></div>
+                            <div class="bg-slate-900 rounded-[0.5px]"></div>
+                            <div class="bg-slate-900 rounded-[0.5px]"></div>
+                            <div class="bg-slate-900 rounded-[0.5px]"></div>
+                            <div class="bg-transparent"></div>
+
+                            <div class="bg-slate-900 rounded-[0.5px]"></div>
+                            <div class="bg-transparent"></div>
+                            <div class="bg-slate-900 rounded-[0.5px]"></div>
+                            <div class="bg-transparent"></div>
+                            <div class="bg-slate-900 rounded-[0.5px]"></div>
+                          </div>
+                        </div>
+                        <span id="wo-summary-lot-code"
+                          class="text-[8.5px] text-slate-400 font-bold uppercase tracking-wider mt-2 font-mono whitespace-nowrap">LOT:
+                          6701</span>
+                      </div>
+                  </div>
+
+                </div>
+            </div>
+
+            <!-- Bottom Row: Planning Form -->
+            <div class="col-span-12">
+              <div
+                class="bg-white border border-outline-variant/30 rounded-xl h-full shadow-sm overflow-hidden flex flex-col">
+                <div class="p-4 border-b border-outline-variant/30 bg-slate-50">
+                  <h3 class="font-headline-sm text-headline-sm text-primary flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[20px] text-primary">edit_document</span>
+                    Planning Form
+                  </h3>
+                </div>
+                <div class="p-4 sm:p-6 space-y-6 flex-1 text-sm">
+                  <!-- Production Line & Priority (hidden but preserved in DOM for compatibility) -->
+                  <div class="grid grid-cols-2 gap-4 hidden">
+                    <div>
+                      <label
+                        class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Production
+                        Line <span class="text-error">*</span></label>
+                      <select id="planning-line-select">
+                        <option value="Line 1 (Faridabad Brake Hose Assembly)">Line 1 (Hose)</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label
+                        class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Priority</label>
+                      <select id="planning-priority-select">
+                        <option value="Normal">Normal</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Select Process -->
+                  <div>
+                    <label
+                      class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Select
+                      Process <span class="text-error">*</span></label>
+                    <select id="planning-process-select"
+                      class="w-full border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold"
+                      onchange="onProcessChange()">
+                      <option value="Picking (BOM)">Picking (BOM)</option>
+                      <option value="Hose Cutting">Hose Cutting</option>
+                      <option value="Protector Cutting">Protector Cutting</option>
+                      <option value="Fitting Bending">Fitting Bending</option>
+                      <option value="Manufacturing Lot Stamping">Manufacturing Lot Stamping</option>
+                      <option value="Accessories Insertion-1">Accessories Insertion-1</option>
+                      <option value="Crimping-1">Crimping-1</option>
+                      <option value="Accessories Insertion-2">Accessories Insertion-2</option>
+                      <option value="Crimping-2">Crimping-2</option>
+                      <option value="Accessories Bonding">Accessories Bonding</option>
+                      <option value="Pressure Test">Pressure Test</option>
+                      <option value="Final Inspection">Final Inspection</option>
+                      <option value="Packing">Packing</option>
+                    </select>
+                  </div>
+
+                  <!-- Machine Allocation -->
+                  <div>
+                    <label
+                      class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Machine
+                      Allocation</label>
+                    <select id="planning-machine-select"
+                      class="w-full border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold">
+                      <option value="Store Area">Store Area</option>
+                      <option value="Hose Cutter HC-04">Hose Cutter HC-04</option>
+                      <option value="Sleeve Cutter SC-01">Sleeve Cutter SC-01</option>
+                      <option value="CNC Pipe Bender PB-12">CNC Pipe Bender PB-12</option>
+                      <option value="Lot Stamper LS-09">Lot Stamper LS-09</option>
+                      <option value="Assembly Station-1">Assembly Station-1</option>
+                      <option value="Assembly Station-2">Assembly Station-2</option>
+                      <option value="Crimper CR-02">Crimper CR-02</option>
+                      <option value="Crimper CR-05">Crimper CR-05</option>
+                      <option value="Bonding Jig BJ-59">Bonding Jig BJ-59</option>
+                      <option value="LTM-07 Rig">LTM-07 Rig</option>
+                      <option value="FI-HMSI-59 Jig">FI-HMSI-59 Jig</option>
+                      <option value="Packing Line PL-03">Packing Line PL-03</option>
+                      <option value="Manual Station">Manual Station</option>
+                    </select>
+                  </div>
+
+                  <!-- Operator Allocation -->
+                  <div>
+                    <label
+                      class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Operator
+                      Allocation</label>
+                    <div class="flex gap-2">
+                      <select id="planning-operator-select"
+                        class="flex-1 border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold">
+                        <!-- populated dynamically with operators -->
+                      </select>
+                      <button
+                        class="bg-primary text-white px-4 py-2 rounded-lg font-semibold text-sm hover:opacity-95 transition-colors cursor-pointer shadow-sm"
+                        type="button" onclick="assignOperator()">Assign</button>
+                    </div>
+                    <div class="mt-3 flex flex-wrap gap-2" id="planning-operator-badges">
+                      <!-- Badge populated dynamically -->
+                    </div>
+                  </div>
+
+                  <!-- Shift Allocation & Target Time -->
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label
+                        class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Shift
+                        Allocation <span class="text-error">*</span></label>
+                      <select id="planning-shift-select"
+                        class="w-full border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold"
+                        onchange="validatePlanningForm();">
+                        <option disabled="" value="">Select Shift...</option>
+                        <option value="Shift A">Shift A (06:00 - 14:00)</option>
+                        <option value="Shift B">Shift B (14:00 - 22:00)</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label
+                        class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Target
+                        Start Time</label>
+                      <input id="planning-start-time"
+                        class="w-full border border-outline-variant/30 rounded-lg px-3 py-2 font-body-md text-body-md text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white font-semibold"
+                        type="datetime-local" value="2026-07-13T06:00" />
+                    </div>
+                  </div>
+
+                  <div class="pt-4 border-t border-outline-variant/30 flex justify-end">
+                    <button
+                      class="bg-primary text-white px-6 py-2 rounded-lg text-sm font-semibold hover:opacity-95 transition-all shadow-sm cursor-pointer"
+                      type="button" onclick="saveActiveWO()">Save Plan</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <script>
+          (function () {
+            let workOrdersList = [];
+            let activeWO = null;
+            let currentAssignedOperators = [];
+
+            const ALLOWED_5_WOS = ['22615540', '22615541', '22615542', '22615543', '22615545'];
+
+            // Load work orders database from localStorage (or fetch from workorders.json)
+            async function loadWorkOrders() {
+              try {
+                const res = await fetch('../work-orders/workorders.json');
+                if (res.ok) {
+                  workOrdersList = await res.json();
+                }
+              } catch (e) {
+                console.error("Failed to load workorders list", e);
+              }
+              if (!workOrdersList || workOrdersList.length === 0) {
+                const localData = localStorage.getItem('workOrdersList');
+                if (localData) {
+                  try { workOrdersList = JSON.parse(localData); } catch (e) { }
+                }
+              }
+
+              // Sanitize and filter strictly to the 5 allowed WOs
+              workOrdersList = (workOrdersList || []).filter(w => {
+                if (!w || !w.woNumber) return false;
+                w.woNumber = String(w.woNumber).replace(/^WO-?/i, '');
+                return ALLOWED_5_WOS.includes(w.woNumber);
+              });
+              localStorage.setItem('workOrdersList', JSON.stringify(workOrdersList));
+
+              populateOperatorsDropdown();
+
+              // Select initial WO from URL or default to empty state
+              const urlParams = new URLSearchParams(window.location.search);
+              const urlWo = urlParams.get('wo');
+              let initialWO = null;
+              if (urlWo) {
+                const cleanUrlWo = urlWo.replace(/^WO-?/i, '');
+                initialWO = workOrdersList.find(w => w.woNumber.replace(/^WO-?/i, '') === cleanUrlWo);
+              }
+
+              if (initialWO) {
+                selectPlanningWO(initialWO.woNumber);
+              } else {
+                showEmptyState();
+              }
             }
-        } catch(e) {
-            console.error("Failed to load workorders list", e);
-        }
-        if (!workOrdersList || workOrdersList.length === 0) {
-            const localData = localStorage.getItem('workOrdersList');
-            if (localData) {
-                try { workOrdersList = JSON.parse(localData); } catch(e){}
+
+            function showEmptyState() {
+              activeWO = null;
+              const selectedText = document.getElementById('planning-wo-selected-text');
+              if (selectedText) selectedText.textContent = 'Select Work Order';
+
+              const emptyState = document.getElementById('planning-empty-state');
+              const contentGrid = document.getElementById('planning-content-grid');
+              if (emptyState) emptyState.classList.remove('hidden');
+              if (contentGrid) contentGrid.classList.add('hidden');
             }
-        }
-        
-        // Sanitize and filter strictly to the 5 allowed WOs
-        workOrdersList = (workOrdersList || []).filter(w => {
-            if (!w || !w.woNumber) return false;
-            w.woNumber = String(w.woNumber).replace(/^WO-?/i, '');
-            return ALLOWED_5_WOS.includes(w.woNumber);
-        });
-        localStorage.setItem('workOrdersList', JSON.stringify(workOrdersList));
-        
-        populateOperatorsDropdown();
-        
-        // Select initial WO from URL or default to empty state
-        const urlParams = new URLSearchParams(window.location.search);
-        const urlWo = urlParams.get('wo');
-        let initialWO = null;
-        if (urlWo) {
-            const cleanUrlWo = urlWo.replace(/^WO-?/i, '');
-            initialWO = workOrdersList.find(w => w.woNumber.replace(/^WO-?/i, '') === cleanUrlWo);
-        }
-        
-        if (initialWO) {
-            selectPlanningWO(initialWO.woNumber);
-        } else {
-            showEmptyState();
-        }
-    }
 
-    function showEmptyState() {
-        activeWO = null;
-        const selectedText = document.getElementById('planning-wo-selected-text');
-        if (selectedText) selectedText.textContent = 'Select Work Order';
-
-        const emptyState = document.getElementById('planning-empty-state');
-        const contentGrid = document.getElementById('planning-content-grid');
-        if (emptyState) emptyState.classList.remove('hidden');
-        if (contentGrid) contentGrid.classList.add('hidden');
-    }
-
-    function togglePlanningDropdown() {
-        const container = document.getElementById('planning-wo-dropdown-container');
-        if (container) {
-            container.classList.toggle('hidden');
-            if (!container.classList.contains('hidden')) {
-                const searchInput = document.getElementById('planning-wo-dropdown-search');
-                if (searchInput) {
+            function togglePlanningDropdown() {
+              const container = document.getElementById('planning-wo-dropdown-container');
+              if (container) {
+                container.classList.toggle('hidden');
+                if (!container.classList.contains('hidden')) {
+                  const searchInput = document.getElementById('planning-wo-dropdown-search');
+                  if (searchInput) {
                     searchInput.value = '';
                     searchInput.focus();
+                  }
+                  renderPlanningDropdown('');
                 }
-                renderPlanningDropdown('');
+              }
             }
-        }
-    }
 
-    // Close dropdown on click outside
-    document.addEventListener('click', function(event) {
-        const container = document.getElementById('planning-wo-dropdown-container');
-        const trigger = document.getElementById('planning-wo-dropdown-trigger');
-        if (container && trigger && !container.classList.contains('hidden')) {
-            if (!trigger.contains(event.target) && !container.contains(event.target)) {
-                container.classList.add('hidden');
+            // Close dropdown on click outside
+            document.addEventListener('click', function (event) {
+              const container = document.getElementById('planning-wo-dropdown-container');
+              const trigger = document.getElementById('planning-wo-dropdown-trigger');
+              if (container && trigger && !container.classList.contains('hidden')) {
+                if (!trigger.contains(event.target) && !container.contains(event.target)) {
+                  container.classList.add('hidden');
+                }
+              }
+            });
+
+            function getDisplayStatus(w) {
+              if (!w) return 'pending';
+              const cleanNum = String(w.woNumber).replace(/^WO-?/i, '');
+              if (w.status === 'Running' || w.status === 'in-progress') return 'in-progress';
+              if (w.status === 'Completed' || w.status === 'completed') return 'completed';
+              if (w.status === 'Held' || w.status === 'hold' || cleanNum === '22615543') return 'hold';
+              if (cleanNum === '22615542') return 'Not released';
+              if (cleanNum === '22615545' || w.status === 'Waiting' || w.status === 'pending') return 'pending';
+              return w.status || 'pending';
             }
-        }
-    });
 
-    function getDisplayStatus(w) {
-        if (!w) return 'pending';
-        const cleanNum = String(w.woNumber).replace(/^WO-?/i, '');
-        if (w.status === 'Running' || w.status === 'in-progress') return 'in-progress';
-        if (w.status === 'Completed' || w.status === 'completed') return 'completed';
-        if (w.status === 'Held' || w.status === 'hold' || cleanNum === '22615543') return 'hold';
-        if (cleanNum === '22615542') return 'Not released';
-        if (cleanNum === '22615545' || w.status === 'Waiting' || w.status === 'pending') return 'pending';
-        return w.status || 'pending';
-    }
+            function filterPlanningDropdown(val) {
+              renderPlanningDropdown(val);
+            }
 
-    function filterPlanningDropdown(val) {
-        renderPlanningDropdown(val);
-    }
+            function renderPlanningDropdown(filterText) {
+              const list = document.getElementById('planning-wo-dropdown-list');
+              if (!list) return;
+              list.innerHTML = '';
 
-    function renderPlanningDropdown(filterText) {
-        const list = document.getElementById('planning-wo-dropdown-list');
-        if (!list) return;
-        list.innerHTML = '';
+              const q = filterText.toLowerCase().trim();
 
-        const q = filterText.toLowerCase().trim();
+              // ONLY WORK ORDERS 22615540 and 22615545 IN DROPDOWN!
+              const TARGET_PLANNING_WOS = ['22615540', '22615545'];
+              const targetWOs = workOrdersList.filter(w => {
+                const cleanNum = String(w.woNumber).replace(/^WO-?/i, '');
+                return TARGET_PLANNING_WOS.includes(cleanNum);
+              });
 
-        // ONLY WORK ORDERS 22615540 and 22615545 IN DROPDOWN!
-        const TARGET_PLANNING_WOS = ['22615540', '22615545'];
-        const targetWOs = workOrdersList.filter(w => {
-            const cleanNum = String(w.woNumber).replace(/^WO-?/i, '');
-            return TARGET_PLANNING_WOS.includes(cleanNum);
-        });
+              const filtered = targetWOs.filter(w => {
+                return String(w.woNumber).toLowerCase().includes(q) ||
+                  (w.productName && w.productName.toLowerCase().includes(q)) ||
+                  (w.partNumber && w.partNumber.toLowerCase().includes(q));
+              });
 
-        const filtered = targetWOs.filter(w => {
-            return String(w.woNumber).toLowerCase().includes(q) || 
-                   (w.productName && w.productName.toLowerCase().includes(q)) ||
-                   (w.partNumber && w.partNumber.toLowerCase().includes(q));
-        });
+              if (filtered.length === 0) {
+                const emptyItem = document.createElement('div');
+                emptyItem.className = 'px-3 py-2 text-xs text-slate-400 font-semibold';
+                emptyItem.textContent = q !== '' ? 'No matching pending work orders' : 'No pending work orders available';
+                list.appendChild(emptyItem);
+                return;
+              }
 
-        if (filtered.length === 0) {
-            const emptyItem = document.createElement('div');
-            emptyItem.className = 'px-3 py-2 text-xs text-slate-400 font-semibold';
-            emptyItem.textContent = q !== '' ? 'No matching pending work orders' : 'No pending work orders available';
-            list.appendChild(emptyItem);
-            return;
-        }
-
-        filtered.forEach(w => {
-            const displayWO = String(w.woNumber).replace(/^WO-?/i, '');
-            const item = document.createElement('div');
-            item.className = 'px-3 py-2 text-xs text-slate-700 hover:bg-slate-50 font-semibold cursor-pointer border-b border-slate-100 last:border-0 transition-colors';
-            item.innerHTML = `
+              filtered.forEach(w => {
+                const displayWO = String(w.woNumber).replace(/^WO-?/i, '');
+                const item = document.createElement('div');
+                item.className = 'px-3 py-2 text-xs text-slate-700 hover:bg-slate-50 font-semibold cursor-pointer border-b border-slate-100 last:border-0 transition-colors';
+                item.innerHTML = `
                 <div class="font-bold text-slate-800">${displayWO}</div>
                 <div class="text-[10px] text-slate-500 truncate">${w.productName || 'Brake Hose Assembly'}</div>
             `;
-            item.onclick = () => {
-                selectPlanningWO(displayWO);
-                const container = document.getElementById('planning-wo-dropdown-container');
-                if (container) container.classList.add('hidden');
-            };
-            list.appendChild(item);
-        });
-    }
-
-    // Set active work order and render its details
-    function selectPlanningWO(woNumber) {
-        const cleanTarget = woNumber ? woNumber.replace(/^WO-?/i, '') : '';
-        activeWO = workOrdersList.find(w => w.woNumber.replace(/^WO-?/i, '') === cleanTarget);
-        if (!activeWO) {
-            showEmptyState();
-            return;
-        }
-
-        const emptyState = document.getElementById('planning-empty-state');
-        const contentGrid = document.getElementById('planning-content-grid');
-        if (emptyState) emptyState.classList.add('hidden');
-        if (contentGrid) contentGrid.classList.remove('hidden');
-
-        // Ensure ccProcesses is initialized for this work order
-        if (!activeWO.ccProcesses) {
-            activeWO.ccProcesses = [
-                { name: "Picking (BOM)", machine: "Store Area", operator: "Pooja / Anil", status: "completed" },
-                { name: "Hose Cutting", machine: "Hose Cutter HC-04", operator: "Anish / Sunil", status: "completed" },
-                { name: "Protector Cutting", machine: "Sleeve Cutter SC-01", operator: "Amit", status: "completed" },
-                { name: "Fitting Bending", machine: "CNC Pipe Bender PB-12", operator: "Raju", status: "completed" },
-                { name: "Manufacturing Lot Stamping", machine: "Lot Stamper LS-09", operator: "Shiv Shambhu / Manoj", status: "completed" },
-                { name: "Accessories Insertion-1", machine: "Assembly Station-1", operator: "Vipin", status: "completed" },
-                { name: "Accessories Insertion-2", machine: "Assembly Station-2", operator: "Vipin", status: "completed" },
-                { name: "Crimping-1", machine: "Crimper CR-02", operator: "Vipin / Kiran", status: "completed" },
-                { name: "Crimping-2", machine: "Crimper CR-05", operator: "Vipin / Kiran", status: "completed" },
-                { name: "Accessories Bonding", machine: "Bonding Jig BJ-59", operator: "Nazma / Sushma", status: "completed" },
-                { name: "Pressure Test", machine: "LTM-07 Rig", operator: "Aniket", status: "completed" },
-                { name: "Final Inspection", machine: "FI-HMSI-59 Jig", operator: "Rubi / Garima", status: "completed" },
-                { name: "Packing", machine: "Packing Line PL-03", operator: "Anjali / Shy", status: "completed" }
-            ];
-        }
-
-        // Update Summary details
-        const selectedText = document.getElementById('planning-wo-selected-text');
-        if (selectedText) {
-            selectedText.textContent = activeWO.woNumber;
-        }
-        const cleanWONum = String(activeWO.woNumber).replace(/^WO-?/i, '');
-        document.getElementById('wo-summary-id').textContent = cleanWONum;
-        
-        const statusEl = document.getElementById('wo-summary-status');
-        if (statusEl) {
-            let displayStatus = activeWO.status;
-            let statusClass = 'bg-slate-100 text-slate-600 border border-slate-200';
-            if (cleanWONum === '22615542') {
-                displayStatus = 'NOT RELEASED';
-                statusClass = 'bg-slate-100 text-slate-500 border border-slate-200/80';
-            } else if (cleanWONum === '22615545' || activeWO.status === 'Waiting') {
-                displayStatus = 'PENDING';
-                statusClass = 'bg-amber-50 text-amber-700 border border-amber-200/50';
-            } else if (cleanWONum === '22615543' || activeWO.status === 'Held' || activeWO.status === 'hold') {
-                displayStatus = 'HOLD';
-                statusClass = 'bg-red-50 text-red-600 border border-red-200/50';
-            } else if (activeWO.status === 'Completed' || activeWO.status === 'completed') {
-                displayStatus = 'COMPLETED';
-                statusClass = 'bg-emerald-100 text-emerald-700 border border-emerald-200';
-            } else if (activeWO.status === 'Running' || activeWO.status === 'in-progress') {
-                displayStatus = 'IN-PROGRESS';
-                statusClass = 'bg-blue-50 text-[#2563eb] border border-blue-200/60';
+                item.onclick = () => {
+                  selectPlanningWO(displayWO);
+                  const container = document.getElementById('planning-wo-dropdown-container');
+                  if (container) container.classList.add('hidden');
+                };
+                list.appendChild(item);
+              });
             }
-            statusEl.textContent = displayStatus.toUpperCase();
-            statusEl.className = `px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider ${statusClass}`;
-        }
-        
-        const ctrlCodeNumEl = document.getElementById('wo-summary-control-code-num');
-        if (ctrlCodeNumEl) ctrlCodeNumEl.textContent = cleanWONum;
-        const lotCodeEl = document.getElementById('wo-summary-lot-code');
-        if (lotCodeEl) lotCodeEl.textContent = `LOT: ${cleanWONum.slice(-4)}`;
-        
-        const prodOrderEl = document.getElementById('wo-summary-prod-order-no');
-        if (prodOrderEl) {
-            const orderVal = `${cleanWONum}/${activeWO.partNumber}`;
-            prodOrderEl.textContent = orderVal;
-            prodOrderEl.title = orderVal;
-        }
 
-        document.getElementById('wo-summary-name').textContent = activeWO.productName;
-        document.getElementById('wo-summary-part').textContent = activeWO.partNumber;
-        document.getElementById('wo-summary-qty').textContent = `${activeWO.targetQty.toLocaleString()} units`;
+            // Set active work order and render its details
+            function selectPlanningWO(woNumber) {
+              const cleanTarget = woNumber ? woNumber.replace(/^WO-?/i, '') : '';
+              activeWO = workOrdersList.find(w => w.woNumber.replace(/^WO-?/i, '') === cleanTarget);
+              if (!activeWO) {
+                showEmptyState();
+                return;
+              }
 
-        // Update Form fields
-        document.getElementById('planning-shift-select').value = activeWO.shift || 'Shift A';
+              const emptyState = document.getElementById('planning-empty-state');
+              const contentGrid = document.getElementById('planning-content-grid');
+              if (emptyState) emptyState.classList.add('hidden');
+              if (contentGrid) contentGrid.classList.remove('hidden');
 
-        // Select the first process by default
-        document.getElementById('planning-process-select').value = "Picking (BOM)";
-        onProcessChange();
-    }
+              // Ensure ccProcesses is initialized for this work order
+              if (!activeWO.ccProcesses) {
+                activeWO.ccProcesses = [
+                  { name: "Picking (BOM)", machine: "Store Area", operator: "Pooja / Anil", status: "completed" },
+                  { name: "Hose Cutting", machine: "Hose Cutter HC-04", operator: "Anish / Sunil", status: "completed" },
+                  { name: "Protector Cutting", machine: "Sleeve Cutter SC-01", operator: "Amit", status: "completed" },
+                  { name: "Fitting Bending", machine: "CNC Pipe Bender PB-12", operator: "Raju", status: "completed" },
+                  { name: "Manufacturing Lot Stamping", machine: "Lot Stamper LS-09", operator: "Shiv Shambhu / Manoj", status: "completed" },
+                  { name: "Accessories Insertion-1", machine: "Assembly Station-1", operator: "Vipin", status: "completed" },
+                  { name: "Accessories Insertion-2", machine: "Assembly Station-2", operator: "Vipin", status: "completed" },
+                  { name: "Crimping-1", machine: "Crimper CR-02", operator: "Vipin / Kiran", status: "completed" },
+                  { name: "Crimping-2", machine: "Crimper CR-05", operator: "Vipin / Kiran", status: "completed" },
+                  { name: "Accessories Bonding", machine: "Bonding Jig BJ-59", operator: "Nazma / Sushma", status: "completed" },
+                  { name: "Pressure Test", machine: "LTM-07 Rig", operator: "Aniket", status: "completed" },
+                  { name: "Final Inspection", machine: "FI-HMSI-59 Jig", operator: "Rubi / Garima", status: "completed" },
+                  { name: "Packing", machine: "Packing Line PL-03", operator: "Anjali / Shy", status: "completed" }
+                ];
+              }
 
-    function onProcessChange() {
-        if (!activeWO) return;
-        const selectedProcName = document.getElementById('planning-process-select').value;
-        const proc = activeWO.ccProcesses.find(p => p.name === selectedProcName);
-        if (!proc) return;
+              // Update Summary details
+              const selectedText = document.getElementById('planning-wo-selected-text');
+              if (selectedText) {
+                selectedText.textContent = activeWO.woNumber;
+              }
+              const cleanWONum = String(activeWO.woNumber).replace(/^WO-?/i, '');
+              document.getElementById('wo-summary-id').textContent = cleanWONum;
 
-        // Sync machine dropdown
-        const machineSelect = document.getElementById('planning-machine-select');
-        if (machineSelect) {
-            // Find option matching proc.machine, otherwise fallback
-            let found = false;
-            for (let i = 0; i < machineSelect.options.length; i++) {
-                if (machineSelect.options[i].value === proc.machine) {
+              const statusEl = document.getElementById('wo-summary-status');
+              if (statusEl) {
+                let displayStatus = activeWO.status;
+                let statusClass = 'bg-slate-100 text-slate-600 border border-slate-200';
+                if (cleanWONum === '22615542') {
+                  displayStatus = 'NOT RELEASED';
+                  statusClass = 'bg-slate-100 text-slate-500 border border-slate-200/80';
+                } else if (cleanWONum === '22615545' || activeWO.status === 'Waiting') {
+                  displayStatus = 'PENDING';
+                  statusClass = 'bg-amber-50 text-amber-700 border border-amber-200/50';
+                } else if (cleanWONum === '22615543' || activeWO.status === 'Held' || activeWO.status === 'hold') {
+                  displayStatus = 'HOLD';
+                  statusClass = 'bg-red-50 text-red-600 border border-red-200/50';
+                } else if (activeWO.status === 'Completed' || activeWO.status === 'completed') {
+                  displayStatus = 'COMPLETED';
+                  statusClass = 'bg-emerald-100 text-emerald-700 border border-emerald-200';
+                } else if (activeWO.status === 'Running' || activeWO.status === 'in-progress') {
+                  displayStatus = 'IN-PROGRESS';
+                  statusClass = 'bg-blue-50 text-[#2563eb] border border-blue-200/60';
+                }
+                statusEl.textContent = displayStatus.toUpperCase();
+                statusEl.className = `px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider ${statusClass}`;
+              }
+
+              const ctrlCodeNumEl = document.getElementById('wo-summary-control-code-num');
+              if (ctrlCodeNumEl) ctrlCodeNumEl.textContent = cleanWONum;
+              const lotCodeEl = document.getElementById('wo-summary-lot-code');
+              if (lotCodeEl) lotCodeEl.textContent = `LOT: ${cleanWONum.slice(-4)}`;
+
+              const prodOrderEl = document.getElementById('wo-summary-prod-order-no');
+              if (prodOrderEl) {
+                const orderVal = `${cleanWONum}/${activeWO.partNumber}`;
+                prodOrderEl.textContent = orderVal;
+                prodOrderEl.title = orderVal;
+              }
+
+              document.getElementById('wo-summary-name').textContent = activeWO.productName;
+              document.getElementById('wo-summary-part').textContent = activeWO.partNumber;
+              document.getElementById('wo-summary-qty').textContent = `${activeWO.targetQty.toLocaleString()} units`;
+
+              // Update Form fields
+              document.getElementById('planning-shift-select').value = activeWO.shift || 'Shift A';
+
+              // Select the first process by default
+              document.getElementById('planning-process-select').value = "Picking (BOM)";
+              onProcessChange();
+            }
+
+            function onProcessChange() {
+              if (!activeWO) return;
+              const selectedProcName = document.getElementById('planning-process-select').value;
+              const proc = activeWO.ccProcesses.find(p => p.name === selectedProcName);
+              if (!proc) return;
+
+              // Sync machine dropdown
+              const machineSelect = document.getElementById('planning-machine-select');
+              if (machineSelect) {
+                // Find option matching proc.machine, otherwise fallback
+                let found = false;
+                for (let i = 0; i < machineSelect.options.length; i++) {
+                  if (machineSelect.options[i].value === proc.machine) {
                     machineSelect.selectedIndex = i;
                     found = true;
                     break;
+                  }
                 }
+                if (!found) {
+                  machineSelect.value = "Manual Station";
+                }
+              }
+
+              // Sync operators array
+              if (!proc.operator || proc.operator === 'Unassigned') {
+                currentAssignedOperators = [];
+              } else {
+                currentAssignedOperators = proc.operator.split('/').map(s => s.trim()).filter(Boolean);
+              }
+
+              renderOperatorBadges();
+              validatePlanningForm();
             }
-            if (!found) {
-                machineSelect.value = "Manual Station";
-            }
-        }
 
-        // Sync operators array
-        if (!proc.operator || proc.operator === 'Unassigned') {
-            currentAssignedOperators = [];
-        } else {
-            currentAssignedOperators = proc.operator.split('/').map(s => s.trim()).filter(Boolean);
-        }
+            function renderOperatorBadges() {
+              const badgesContainer = document.getElementById('planning-operator-badges');
+              if (!badgesContainer) return;
+              badgesContainer.innerHTML = '';
 
-        renderOperatorBadges();
-        validatePlanningForm();
-    }
+              if (currentAssignedOperators.length === 0) {
+                badgesContainer.innerHTML = '<span class="text-xs text-slate-400 font-semibold italic">No operators assigned</span>';
+                return;
+              }
 
-    function renderOperatorBadges() {
-        const badgesContainer = document.getElementById('planning-operator-badges');
-        if (!badgesContainer) return;
-        badgesContainer.innerHTML = '';
-
-        if (currentAssignedOperators.length === 0) {
-            badgesContainer.innerHTML = '<span class="text-xs text-slate-400 font-semibold italic">No operators assigned</span>';
-            return;
-        }
-
-        currentAssignedOperators.forEach(op => {
-            const badge = document.createElement('span');
-            badge.className = 'bg-slate-100 text-slate-800 px-3 py-1 rounded-full font-body-sm text-body-sm flex items-center gap-1 border border-slate-200 font-semibold select-none';
-            badge.innerHTML = `
+              currentAssignedOperators.forEach(op => {
+                const badge = document.createElement('span');
+                badge.className = 'bg-slate-100 text-slate-800 px-3 py-1 rounded-full font-body-sm text-body-sm flex items-center gap-1 border border-slate-200 font-semibold select-none';
+                badge.innerHTML = `
                 ${op}
                 <span class="material-symbols-outlined text-[14px] cursor-pointer hover:text-rose-600 ml-1 font-bold" onclick="removeOperator('${op}')">close</span>
             `;
-            badgesContainer.appendChild(badge);
-        });
-    }
+                badgesContainer.appendChild(badge);
+              });
+            }
 
-    function populateOperatorsDropdown() {
-        const select = document.getElementById('planning-operator-select');
-        if (!select) return;
-        select.innerHTML = '';
-        
-        // realistic operator names from work order details
-        const operators = [
-            "Pooja",
-            "Anil",
-            "Anish",
-            "Sunil",
-            "Amit",
-            "Raju",
-            "Shiv Shambhu",
-            "Manoj",
-            "Vipin",
-            "Kiran",
-            "Nazma",
-            "Sushma",
-            "Aniket",
-            "Rubi",
-            "Garima",
-            "Anjali",
-            "Shy",
-            "Sandeep Singh",
-            "Ramesh Kumar",
-            "Vijay Yadav",
-            "Rahul Sen"
-        ];
-        
-        operators.forEach(op => {
-            const opt = document.createElement('option');
-            opt.value = op;
-            opt.textContent = op;
-            select.appendChild(opt);
-        });
-    }
+            function populateOperatorsDropdown() {
+              const select = document.getElementById('planning-operator-select');
+              if (!select) return;
+              select.innerHTML = '';
 
-    function assignOperator() {
-        const select = document.getElementById('planning-operator-select');
-        if (!select || !activeWO) return;
-        const newOp = select.value;
-        if (!currentAssignedOperators.includes(newOp)) {
-            currentAssignedOperators.push(newOp);
-        }
-        renderOperatorBadges();
-        validatePlanningForm();
-    }
+              // realistic operator names from work order details
+              const operators = [
+                "Pooja",
+                "Anil",
+                "Anish",
+                "Sunil",
+                "Amit",
+                "Raju",
+                "Shiv Shambhu",
+                "Manoj",
+                "Vipin",
+                "Kiran",
+                "Nazma",
+                "Sushma",
+                "Aniket",
+                "Rubi",
+                "Garima",
+                "Anjali",
+                "Shy",
+                "Sandeep Singh",
+                "Ramesh Kumar",
+                "Vijay Yadav",
+                "Rahul Sen"
+              ];
 
-    function removeOperator(opName) {
-        if (!activeWO) return;
-        currentAssignedOperators = currentAssignedOperators.filter(o => o !== opName);
-        renderOperatorBadges();
-        validatePlanningForm();
-    }
+              operators.forEach(op => {
+                const opt = document.createElement('option');
+                opt.value = op;
+                opt.textContent = op;
+                select.appendChild(opt);
+              });
+            }
 
-    function validatePlanningForm() {
-        if (!activeWO) return;
+            function assignOperator() {
+              const select = document.getElementById('planning-operator-select');
+              if (!select || !activeWO) return;
+              const newOp = select.value;
+              if (!currentAssignedOperators.includes(newOp)) {
+                currentAssignedOperators.push(newOp);
+              }
+              renderOperatorBadges();
+              validatePlanningForm();
+            }
 
-        const shiftVal = document.getElementById('planning-shift-select').value;
-        const hasOperator = currentAssignedOperators.length > 0;
+            function removeOperator(opName) {
+              if (!activeWO) return;
+              currentAssignedOperators = currentAssignedOperators.filter(o => o !== opName);
+              renderOperatorBadges();
+              validatePlanningForm();
+            }
 
-        const checks = {
-            template: { ok: true, label: "Template mapped", desc: `Card #${activeWO.woNumber} structure confirmed.` },
-            bom: { ok: true, label: "BOM available", desc: "Materials verified in SAP ERP." },
-            shift: { ok: !!shiftVal, label: "Shift selected", desc: shiftVal ? `Assigned: ${shiftVal}` : "Shift selection pending." },
-            operator: { ok: hasOperator, label: "Operator assigned", desc: hasOperator ? `Assigned: ${currentAssignedOperators.join(', ')}` : "No operator assigned." },
-            stages: { ok: true, label: "Stages configured", desc: `${activeWO.steps.length} checklist stages verified.` },
-            control: { ok: true, label: "Control points mapping", desc: "Quality inspection points bound." }
-        };
+            function validatePlanningForm() {
+              if (!activeWO) return;
 
-        let okCount = 0;
-        const listContainer = document.getElementById('validation-list-items');
-        if (listContainer) {
-            listContainer.innerHTML = '';
-            Object.keys(checks).forEach(k => {
-                const c = checks[k];
-                if (c.ok) okCount++;
+              const shiftVal = document.getElementById('planning-shift-select').value;
+              const hasOperator = currentAssignedOperators.length > 0;
 
-                const li = document.createElement('li');
-                li.className = 'flex items-start gap-3 select-none';
-                if (!c.ok) {
+              const checks = {
+                template: { ok: true, label: "Template mapped", desc: `Card #${activeWO.woNumber} structure confirmed.` },
+                bom: { ok: true, label: "BOM available", desc: "Materials verified in SAP ERP." },
+                shift: { ok: !!shiftVal, label: "Shift selected", desc: shiftVal ? `Assigned: ${shiftVal}` : "Shift selection pending." },
+                operator: { ok: hasOperator, label: "Operator assigned", desc: hasOperator ? `Assigned: ${currentAssignedOperators.join(', ')}` : "No operator assigned." },
+                stages: { ok: true, label: "Stages configured", desc: `${activeWO.steps.length} checklist stages verified.` },
+                control: { ok: true, label: "Control points mapping", desc: "Quality inspection points bound." }
+              };
+
+              let okCount = 0;
+              const listContainer = document.getElementById('validation-list-items');
+              if (listContainer) {
+                listContainer.innerHTML = '';
+                Object.keys(checks).forEach(k => {
+                  const c = checks[k];
+                  if (c.ok) okCount++;
+
+                  const li = document.createElement('li');
+                  li.className = 'flex items-start gap-3 select-none';
+                  if (!c.ok) {
                     li.className += ' border-l-2 border-slate-200 pl-2 ml-[9px]';
-                }
+                  }
 
-                const icon = c.ok ? 'check_circle' : 'radio_button_unchecked';
-                const iconColor = c.ok ? 'text-emerald-600' : 'text-slate-400';
-                const titleClass = c.ok ? 'text-slate-800 font-bold text-sm' : 'text-slate-500 font-bold text-sm';
-                const descHtml = c.desc ? `<span class="block font-body-sm text-body-sm text-slate-400 font-semibold mt-0.5">${c.desc}</span>` : '';
+                  const icon = c.ok ? 'check_circle' : 'radio_button_unchecked';
+                  const iconColor = c.ok ? 'text-emerald-600' : 'text-slate-400';
+                  const titleClass = c.ok ? 'text-slate-800 font-bold text-sm' : 'text-slate-500 font-bold text-sm';
+                  const descHtml = c.desc ? `<span class="block font-body-sm text-body-sm text-slate-400 font-semibold mt-0.5">${c.desc}</span>` : '';
 
-                li.innerHTML = `
+                  li.innerHTML = `
                     <span class="material-symbols-outlined text-[20px] ${iconColor} mt-0.5" ${c.ok ? 'style="font-variation-settings: \'FILL\' 1;"' : ''}>${icon}</span>
                     <div>
                         <span class="block font-body-md text-body-md ${titleClass}">${c.label}</span>
                         ${descHtml}
                     </div>
                 `;
-                listContainer.appendChild(li);
-            });
-        }
+                  listContainer.appendChild(li);
+                });
+              }
 
-        // Update score badge
-        const scoreBadge = document.getElementById('validation-score-badge');
-        if (scoreBadge) {
-            scoreBadge.textContent = `${okCount}/6 OK`;
-        }
+              // Update score badge
+              const scoreBadge = document.getElementById('validation-score-badge');
+              if (scoreBadge) {
+                scoreBadge.textContent = `${okCount}/6 OK`;
+              }
 
-        // Enable / Disable button and show warning
-        const releaseBtn = document.getElementById('planningReleaseBtn');
-        const warningBox = document.getElementById('validation-warning-box');
+              // Enable / Disable button and show warning
+              const releaseBtn = document.getElementById('planningReleaseBtn');
+              const warningBox = document.getElementById('validation-warning-box');
 
-        if (okCount === 6) {
-            if (releaseBtn) releaseBtn.disabled = false;
-            if (warningBox) {
-                warningBox.innerHTML = `
+              if (okCount === 6) {
+                if (releaseBtn) releaseBtn.disabled = false;
+                if (warningBox) {
+                  warningBox.innerHTML = `
                     <div class="bg-emerald-50 text-emerald-700 px-3 py-2 rounded-lg font-body-sm text-body-sm border border-emerald-200 flex items-center gap-2 font-semibold">
                         <span class="material-symbols-outlined text-[16px]">check_circle</span> Ready to dispatch.
                     </div>
                 `;
-            }
-        } else {
-            if (releaseBtn) releaseBtn.disabled = true;
-            if (warningBox) {
-                warningBox.innerHTML = `
+                }
+              } else {
+                if (releaseBtn) releaseBtn.disabled = true;
+                if (warningBox) {
+                  warningBox.innerHTML = `
                     <div class="bg-error-container/30 text-error px-3 py-2 rounded-lg font-body-sm text-body-sm border border-error-container flex items-center gap-2 font-semibold">
                         <span class="material-symbols-outlined text-[16px]">warning</span> Resolve pending validations to release.
                     </div>
                 `;
+                }
+              }
             }
-        }
-    }
 
-    function showPlanningToast(msg) {
-        const toast = document.getElementById('planningToast');
-        const msgEl = document.getElementById('planningToastMessage');
-        if (toast && msgEl) {
-            msgEl.textContent = msg;
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            toast.classList.add('translate-y-0', 'opacity-100');
-            setTimeout(() => {
-                toast.classList.remove('translate-y-0', 'opacity-100');
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 3000);
-        }
-    }
+            function showPlanningToast(msg) {
+              const toast = document.getElementById('planningToast');
+              const msgEl = document.getElementById('planningToastMessage');
+              if (toast && msgEl) {
+                msgEl.textContent = msg;
+                toast.classList.remove('translate-y-20', 'opacity-0');
+                toast.classList.add('translate-y-0', 'opacity-100');
+                setTimeout(() => {
+                  toast.classList.remove('translate-y-0', 'opacity-100');
+                  toast.classList.add('translate-y-20', 'opacity-0');
+                }, 3000);
+              }
+            }
 
-    function saveActiveWO() {
-        if (!activeWO) return;
-        
-        // Read form values and update activeWO
-        const selectedProcName = document.getElementById('planning-process-select').value;
-        const machineVal = document.getElementById('planning-machine-select').value;
-        const shiftVal = document.getElementById('planning-shift-select').value;
+            function saveActiveWO() {
+              if (!activeWO) return;
 
-        // Save process-specific settings
-        const proc = activeWO.ccProcesses.find(p => p.name === selectedProcName);
-        if (proc) {
-            proc.machine = machineVal;
-            proc.operator = currentAssignedOperators.length > 0 ? currentAssignedOperators.join(' / ') : 'Unassigned';
-        }
+              // Read form values and update activeWO
+              const selectedProcName = document.getElementById('planning-process-select').value;
+              const machineVal = document.getElementById('planning-machine-select').value;
+              const shiftVal = document.getElementById('planning-shift-select').value;
 
-        // Save general work order shift
-        activeWO.shift = shiftVal;
+              // Save process-specific settings
+              const proc = activeWO.ccProcesses.find(p => p.name === selectedProcName);
+              if (proc) {
+                proc.machine = machineVal;
+                proc.operator = currentAssignedOperators.length > 0 ? currentAssignedOperators.join(' / ') : 'Unassigned';
+              }
 
-        // Save back to list and localStorage
-        const idx = workOrdersList.findIndex(w => w.woNumber === activeWO.woNumber);
-        if (idx > -1) {
-            workOrdersList[idx] = activeWO;
-            localStorage.setItem('workOrdersList', JSON.stringify(workOrdersList));
-        }
+              // Save general work order shift
+              activeWO.shift = shiftVal;
 
-        showPlanningToast(`Plan for process "${selectedProcName}" saved successfully.`);
-        validatePlanningForm();
-    }
+              // Save back to list and localStorage
+              const idx = workOrdersList.findIndex(w => w.woNumber === activeWO.woNumber);
+              if (idx > -1) {
+                workOrdersList[idx] = activeWO;
+                localStorage.setItem('workOrdersList', JSON.stringify(workOrdersList));
+              }
 
-    // Bind window functions
-    window.selectPlanningWO = selectPlanningWO;
-    window.assignOperator = assignOperator;
-    window.removeOperator = removeOperator;
-    window.saveActiveWO = saveActiveWO;
-    window.validatePlanningForm = validatePlanningForm;
-    window.togglePlanningDropdown = togglePlanningDropdown;
-    window.filterPlanningDropdown = filterPlanningDropdown;
-    window.onProcessChange = onProcessChange;
+              showPlanningToast(`Plan for process "${selectedProcName}" saved successfully.`);
+              validatePlanningForm();
+            }
 
-    // Run on startup
-    loadWorkOrders();
-})();
-</script>
-<div id="planningToast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 z-50 font-semibold text-sm">
-  <span class="material-symbols-outlined text-emerald-400">check_circle</span>
-  <span id="planningToastMessage">Plan saved successfully.</span>
-</div>
-</main>
-</body></html>
+            // Bind window functions
+            window.selectPlanningWO = selectPlanningWO;
+            window.assignOperator = assignOperator;
+            window.removeOperator = removeOperator;
+            window.saveActiveWO = saveActiveWO;
+            window.validatePlanningForm = validatePlanningForm;
+            window.togglePlanningDropdown = togglePlanningDropdown;
+            window.filterPlanningDropdown = filterPlanningDropdown;
+            window.onProcessChange = onProcessChange;
+
+            // Run on startup
+            loadWorkOrders();
+          })();
+        </script>
+        <div id="planningToast"
+          class="fixed bottom-6 right-6 bg-slate-900 text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 z-50 font-semibold text-sm">
+          <span class="material-symbols-outlined text-emerald-400">check_circle</span>
+          <span id="planningToastMessage">Plan saved successfully.</span>
+        </div>
+  </main>
+</body>
+
+</html>
