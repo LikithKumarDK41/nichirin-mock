@@ -5,19 +5,16 @@
     "description": "System administrator. Full access to user security settings, workflow structures, quality standards, and system integrations.",
     "assignedCount": 1,
     "permissions": {
-      "dashboard": ["view", "operate"],
       "work_orders": ["view", "operate"],
       "supervisor_planning": ["view", "operate"],
-      "qc_pending_approvals": ["view", "operate"],
-      "traceability_search": ["view", "operate"],
-      "qc_reports": ["view", "operate"],
-      "audit_reports": ["view", "operate"],
-      "workflow_configuration": ["view", "operate"],
+      "completed_reports": ["view", "operate"],
       "user_management": ["view", "operate"],
       "role_management": ["view", "operate"],
       "skill_management": ["view", "operate"],
       "machine_management": ["view", "operate"],
-      "device_management": ["view", "operate"]
+      "shift_management": ["view", "operate"],
+      "notification_configuration": ["view", "operate"],
+      "system_settings": ["view", "operate"]
     },
     "features": [
       "release_work_order_view",
@@ -50,19 +47,16 @@
     "description": "Line supervisor. Manages shift plans, releases work orders, monitors traceability, and certifies operator skills.",
     "assignedCount": 3,
     "permissions": {
-      "dashboard": ["view"],
       "work_orders": ["view", "operate"],
       "supervisor_planning": ["view", "operate"],
-      "qc_pending_approvals": ["view"],
-      "traceability_search": ["view", "operate"],
-      "qc_reports": ["view", "operate"],
-      "audit_reports": ["view"],
-      "workflow_configuration": ["view"],
+      "completed_reports": ["view", "operate"],
       "user_management": ["view"],
       "role_management": ["view"],
       "skill_management": ["view", "operate"],
       "machine_management": ["view"],
-      "device_management": ["view"]
+      "shift_management": ["view", "operate"],
+      "notification_configuration": ["view", "operate"],
+      "system_settings": ["view"]
     },
     "features": [
       "verify_synchronized_work_order_view",
@@ -105,19 +99,16 @@
     "description": "Tablet floor technician. Executes barcode scanning, step verification, and reports line outcomes.",
     "assignedCount": 6,
     "permissions": {
-      "dashboard": ["view"],
       "work_orders": ["view"],
       "supervisor_planning": ["view", "operate"],
-      "qc_pending_approvals": [],
-      "traceability_search": [],
-      "qc_reports": [],
-      "audit_reports": [],
-      "workflow_configuration": [],
+      "completed_reports": [],
       "user_management": [],
       "role_management": [],
       "skill_management": [],
       "machine_management": [],
-      "device_management": []
+      "shift_management": ["view"],
+      "notification_configuration": [],
+      "system_settings": []
     },
     "features": [
       "pick_material_view",
@@ -150,16 +141,16 @@
     "description": "Quality Control inspector. Approves inspection checks on production lines, reviews logs, and manages quality gates.",
     "assignedCount": 4,
     "permissions": {
-      "dashboard": ["view"],
       "work_orders": ["view"],
       "supervisor_planning": ["view"],
-      "qc_pending_approvals": ["view", "operate"],
-      "traceability_search": ["view", "operate"],
-      "qc_reports": ["view", "operate"],
-      "audit_reports": ["view", "operate"],
-      "workflow_configuration": ["view", "operate"],
+      "completed_reports": ["view", "operate"],
+      "user_management": [],
+      "role_management": [],
+      "skill_management": [],
       "machine_management": ["view"],
-      "device_management": ["view"]
+      "shift_management": ["view"],
+      "notification_configuration": ["view"],
+      "system_settings": []
     },
     "features": [
       "offline_inspection_quantity_view",
@@ -190,12 +181,16 @@
     "description": "Product and workflows manager. Configures lines, manages workflows, and sets machine routing.",
     "assignedCount": 1,
     "permissions": {
-      "dashboard": ["view"],
       "work_orders": ["view", "operate"],
       "supervisor_planning": ["view", "operate"],
-      "workflow_configuration": ["view", "operate"],
+      "completed_reports": [],
+      "user_management": [],
+      "role_management": [],
+      "skill_management": [],
       "machine_management": ["view", "operate"],
-      "device_management": ["view", "operate"]
+      "shift_management": [],
+      "notification_configuration": [],
+      "system_settings": []
     },
     "features": [
       "verify_synchronized_work_order_view",
@@ -214,10 +209,16 @@
     "description": "Floor production leader. Assists supervisor with shifts schedules and monitors barcode scan logs.",
     "assignedCount": 2,
     "permissions": {
-      "dashboard": ["view"],
       "work_orders": ["view", "operate"],
       "supervisor_planning": ["view"],
-      "qc_pending_approvals": []
+      "completed_reports": [],
+      "user_management": [],
+      "role_management": [],
+      "skill_management": [],
+      "machine_management": [],
+      "shift_management": [],
+      "notification_configuration": [],
+      "system_settings": []
     },
     "features": [
       "pick_material_view",
@@ -250,9 +251,16 @@
     "description": "Tooling and network calibration technician. Manages PLC settings and torque tools calibrations.",
     "assignedCount": 1,
     "permissions": {
-      "dashboard": ["view"],
+      "work_orders": [],
+      "supervisor_planning": [],
+      "completed_reports": [],
+      "user_management": [],
+      "role_management": [],
+      "skill_management": [],
       "machine_management": ["view", "operate"],
-      "device_management": ["view", "operate"]
+      "shift_management": [],
+      "notification_configuration": [],
+      "system_settings": []
     },
     "features": [
       "offline_machine_jig_setup_view",

@@ -136,13 +136,13 @@
   </style>
 </head>
 
-<body class="flex min-h-screen overflow-x-hidden">
+<body class="flex min-h-dvh overflow-x-hidden">
   <!-- SideNavBar (Fallback) -->
   <aside
     class="fixed left-0 top-0 h-full w-[260px] bg-primary text-on-primary flex flex-col py-4 border-r border-outline-variant z-50">
   </aside>
   <!-- Main Content Area -->
-  <main class="flex-1 ml-[260px] pt-[64px] min-h-screen">
+  <main class="flex-1 ml-[260px] pt-[64px] min-h-dvh">
     <!-- TopNavBar -->
     <header
       class="fixed top-0 right-0 h-[64px] w-[calc(100%-260px)] bg-surface flex justify-between items-center px-container-padding border-b border-outline-variant z-40">
@@ -317,7 +317,7 @@
             <div>
               <h4 id="viewUserName" class="font-bold text-xl text-slate-900 leading-tight">--</h4>
               <span id="viewUserRole"
-                class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-[10px] font-bold mt-2">--</span>
+                class="inline-flex items-center px-2.5 py-0.5 rounded text-[10px] font-bold mt-2">--</span>
             </div>
           </div>
 
@@ -352,7 +352,7 @@
               <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Access Status</span>
               <div class="mt-1">
                 <span id="viewUserStatus"
-                  class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold">--</span>
+                  class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold">--</span>
               </div>
             </div>
           </div>
@@ -613,7 +613,7 @@
                 const skill = skillsMasterList.find(s => s.skillCode === code);
                 const name = skill ? skill.skillName : code;
                 const tag = document.createElement('span');
-                tag.className = 'inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200 select-none';
+                tag.className = 'inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[10px] font-bold bg-transparent text-slate-700 border border-slate-300 select-none';
                 tag.innerHTML = `
                   <span>${name}</span>
                   <span class="material-symbols-outlined text-[12px] cursor-pointer text-slate-450 hover:text-slate-650" onclick="event.stopPropagation(); removeSkillTag('${code}')">close</span>
@@ -749,21 +749,21 @@
                 tr.className = 'hover:bg-slate-50/50 transition-colors group';
 
                 // Role Badge styling
-                let roleBadgeClass = 'bg-slate-50 text-slate-700 border-slate-200';
-                if (u.role === 'ADMIN') roleBadgeClass = 'bg-emerald-50 text-emerald-700 border-emerald-200';
-                else if (u.role === 'SUPERVISOR') roleBadgeClass = 'bg-blue-50 text-blue-700 border-blue-200';
-                else if (u.role === 'QC') roleBadgeClass = 'bg-purple-50 text-purple-700 border-purple-200';
-                else if (u.role === 'OPERATOR') roleBadgeClass = 'bg-amber-50 text-amber-700 border-amber-200';
-                else if (u.role === 'PRODUCT_MANAGER') roleBadgeClass = 'bg-rose-50 text-rose-700 border-rose-200';
+                let roleBadgeClass = 'border-slate-300 text-slate-700 bg-transparent';
+                if (u.role === 'ADMIN') roleBadgeClass = 'border-emerald-500 text-emerald-700 bg-transparent';
+                else if (u.role === 'SUPERVISOR') roleBadgeClass = 'border-blue-500 text-blue-700 bg-transparent';
+                else if (u.role === 'QC') roleBadgeClass = 'border-purple-500 text-purple-700 bg-transparent';
+                else if (u.role === 'OPERATOR') roleBadgeClass = 'border-amber-500 text-amber-700 bg-transparent';
+                else if (u.role === 'PRODUCT_MANAGER') roleBadgeClass = 'border-rose-500 text-rose-700 bg-transparent';
 
                 // Status Badge styling
-                let statusBadgeClass = 'bg-slate-50 text-slate-700 border-slate-200/50';
+                let statusBadgeClass = 'border-slate-300 text-slate-700 bg-transparent';
                 let statusDotColor = 'bg-slate-500';
                 if (u.status === 'Active') {
-                  statusBadgeClass = 'bg-emerald-50 text-emerald-700 border-emerald-200/50';
+                  statusBadgeClass = 'border-emerald-500 text-emerald-700 bg-transparent';
                   statusDotColor = 'bg-emerald-500';
                 } else if (u.status === 'Suspended') {
-                  statusBadgeClass = 'bg-rose-50 text-rose-700 border-rose-200/50';
+                  statusBadgeClass = 'border-rose-500 text-rose-700 bg-transparent';
                   statusDotColor = 'bg-rose-500';
                 }
 
@@ -773,10 +773,10 @@
                   u.skills.slice(0, 2).forEach(code => {
                     const skill = skillsMasterList.find(s => s.skillCode === code);
                     const name = skill ? skill.skillName.split(' ')[0] : code;
-                    skillsHTML += `<span class="inline-flex items-center px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold mr-1">${name.trim()}</span>`;
+                    skillsHTML += `<span class="inline-flex items-center px-2 py-0.5 rounded bg-transparent text-slate-700 border border-slate-300 text-[10px] font-bold mr-1">${name.trim()}</span>`;
                   });
                   if (u.skills.length > 2) {
-                    skillsHTML += `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-primary/5 text-primary border border-primary/10 text-[10px] font-extrabold">+${u.skills.length - 2}</span>`;
+                    skillsHTML += `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-transparent text-primary border border-primary/30 text-[10px] font-extrabold">+${u.skills.length - 2}</span>`;
                   }
                 } else {
                   skillsHTML = `<span class="text-slate-400 font-semibold">-</span>`;
@@ -793,11 +793,11 @@
                     </div>
                   </td>
                   <td class="px-6 py-4">
-                      <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold border ${roleBadgeClass}">${u.role}</span>
+                      <span class="inline-flex items-center px-2.5 py-0.5 rounded text-[10px] font-bold border ${roleBadgeClass}">${u.role}</span>
                   </td>
                   <td class="px-6 py-4 font-medium text-on-surface-variant">${skillsHTML}</td>
                   <td class="px-6 py-4">
-                      <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold border ${statusBadgeClass}">
+                      <span class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold border ${statusBadgeClass}">
                           <span class="w-1.5 h-1.5 rounded-full ${statusDotColor} mr-1.5"></span>
                           ${u.status}
                       </span>
@@ -835,12 +835,12 @@
                 card.className = 'bg-white border border-outline-variant/30 rounded-xl p-5 flex flex-col justify-between shadow-sm hover:border-primary/30 transition-all group relative';
 
                 // Role Badge styling
-                let roleBadgeClass = 'bg-slate-50 text-slate-700 border-slate-200';
-                if (u.role === 'ADMIN') roleBadgeClass = 'bg-emerald-50 text-emerald-700 border-emerald-200';
-                else if (u.role === 'SUPERVISOR') roleBadgeClass = 'bg-blue-50 text-blue-700 border-blue-200';
-                else if (u.role === 'QC') roleBadgeClass = 'bg-purple-50 text-purple-700 border-purple-200';
-                else if (u.role === 'OPERATOR') roleBadgeClass = 'bg-amber-50 text-amber-700 border-amber-200';
-                else if (u.role === 'PRODUCT_MANAGER') roleBadgeClass = 'bg-rose-50 text-rose-700 border-rose-200';
+                let roleBadgeClass = 'border-slate-300 text-slate-700 bg-transparent';
+                if (u.role === 'ADMIN') roleBadgeClass = 'border-emerald-500 text-emerald-700 bg-transparent';
+                else if (u.role === 'SUPERVISOR') roleBadgeClass = 'border-blue-500 text-blue-700 bg-transparent';
+                else if (u.role === 'QC') roleBadgeClass = 'border-purple-500 text-purple-700 bg-transparent';
+                else if (u.role === 'OPERATOR') roleBadgeClass = 'border-amber-500 text-amber-700 bg-transparent';
+                else if (u.role === 'PRODUCT_MANAGER') roleBadgeClass = 'border-rose-500 text-rose-700 bg-transparent';
 
                 // Status badge styling
                 let statusTextClass = 'text-slate-700';
@@ -862,7 +862,7 @@
                   u.skills.forEach(code => {
                     const skill = skillsMasterList.find(s => s.skillCode === code);
                     const name = skill ? skill.skillName : code;
-                    skillsHTMLGrid += `<span class="inline-flex items-center px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold mr-1 mt-1">${name}</span>`;
+                    skillsHTMLGrid += `<span class="inline-flex items-center px-2 py-0.5 rounded bg-transparent text-slate-700 border border-slate-300 text-[10px] font-bold mr-1 mt-1">${name}</span>`;
                   });
                 } else {
                   skillsHTMLGrid = `<span class="text-slate-400 font-semibold block mt-1">-</span>`;
@@ -879,7 +879,7 @@
                               <p class="text-xs text-slate-800 font-bold font-data-tabular">${u.empCode}</p>
                           </div>
                       </div>
-                      <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[9px] font-bold border ${roleBadgeClass}">${u.role}</span>
+                      <span class="inline-flex items-center px-2.5 py-0.5 rounded text-[9px] font-bold border ${roleBadgeClass}">${u.role}</span>
                   </div>
                   <div class="space-y-1.5 text-xs text-on-surface-variant mb-3">
                       <p class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px]">mail</span>${u.email}</p>
@@ -976,7 +976,7 @@
                   const skill = skillsMasterList.find(s => s.skillCode === code);
                   const name = skill ? skill.skillName : code;
                   const span = document.createElement('span');
-                  span.className = 'inline-flex items-center px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold';
+                  span.className = 'inline-flex items-center px-2 py-0.5 rounded bg-transparent text-slate-700 border border-slate-300 text-[10px] font-bold';
                   span.textContent = `${name} (${code})`;
                   skillsContainer.appendChild(span);
                 });
@@ -984,23 +984,25 @@
                 skillsContainer.innerHTML = `<span class="text-slate-400 font-semibold">-</span>`;
               }
 
-              const roleEl = document.getElementById('viewUserRole');
+               const roleEl = document.getElementById('viewUserRole');
               roleEl.textContent = user.role;
-              roleEl.className = 'inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold mt-1.5 border';
-              if (user.role === 'ADMIN') roleEl.classList.add('bg-emerald-50', 'text-emerald-700', 'border-emerald-200');
-              else if (user.role === 'SUPERVISOR') roleEl.classList.add('bg-blue-50', 'text-blue-700', 'border-blue-200');
-              else if (user.role === 'QC') roleEl.classList.add('bg-purple-50', 'text-purple-700', 'border-purple-200');
-              else if (user.role === 'OPERATOR') roleEl.classList.add('bg-amber-50', 'text-amber-700', 'border-amber-200');
+              roleEl.className = 'inline-flex items-center px-2.5 py-0.5 rounded text-[10px] font-bold mt-1.5 border bg-transparent';
+              if (user.role === 'ADMIN') roleEl.classList.add('border-emerald-500', 'text-emerald-700');
+              else if (user.role === 'SUPERVISOR') roleEl.classList.add('border-blue-500', 'text-blue-700');
+              else if (user.role === 'QC') roleEl.classList.add('border-purple-500', 'text-purple-700');
+              else if (user.role === 'OPERATOR') roleEl.classList.add('border-amber-500', 'text-amber-700');
+              else if (user.role === 'PRODUCT_MANAGER') roleEl.classList.add('border-rose-500', 'text-rose-700');
+              else roleEl.classList.add('border-slate-300', 'text-slate-700');
 
               const statusEl = document.getElementById('viewUserStatus');
               statusEl.textContent = user.status;
-              statusEl.className = 'inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold border';
+              statusEl.className = 'inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold border bg-transparent';
               if (user.status === 'Active') {
-                statusEl.className += ' bg-emerald-50 text-emerald-700 border-emerald-200/50';
+                statusEl.className += ' border-emerald-500 text-emerald-700';
               } else if (user.status === 'Suspended') {
-                statusEl.className += ' bg-rose-50 text-rose-700 border-rose-200/50';
+                statusEl.className += ' border-rose-500 text-rose-700';
               } else {
-                statusEl.className += ' bg-slate-50 text-slate-700 border-slate-200/50';
+                statusEl.className += ' border-slate-300 text-slate-700';
               }
 
               toggleViewUserModal(true);

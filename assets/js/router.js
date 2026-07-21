@@ -405,13 +405,13 @@
     `;
 
     root.innerHTML = `
-      <div class="flex h-screen overflow-hidden">
+      <div class="flex h-dvh overflow-hidden">
         <!-- Sidebar Backdrop overlay for mobile -->
         <div id="sidebar-backdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[45] transition-opacity duration-300 opacity-0 pointer-events-none lg:hidden"></div>
         ${SIDEBAR_HTML}
         <div class="flex-1 flex flex-col h-full overflow-hidden bg-surface relative">
           ${HEADER_HTML}
-          <main id="main-wrapper" class="flex-grow ml-0 lg:ml-[260px] pt-[64px] h-screen overflow-y-auto bg-background transition-all duration-300 relative">
+          <main id="main-wrapper" class="flex-grow ml-0 lg:ml-[260px] pt-[64px] h-dvh overflow-y-auto bg-background transition-all duration-300 relative">
             <div id="app-content" class="pt-1 px-6 pb-6 flex flex-col gap-6">
               <!-- Content loaded via AJAX goes here -->
             </div>
@@ -740,7 +740,7 @@
     // Case 1: Render Login view directly into root (with header, main card aligned right, and footer)
     if (route === 'login-old' || !isUserLoggedIn) {
       root.innerHTML = '';
-      root.className = "h-screen w-screen overflow-hidden flex flex-col relative bg-cover bg-left-bottom bg-no-repeat";
+      root.className = "h-dvh w-screen overflow-hidden flex flex-col relative bg-cover bg-left-bottom bg-no-repeat";
       root.style.backgroundImage = `url('${relPrefix}assets/login_bg.jpg')`;
 
       // Ambient overlay for premium integrated look

@@ -299,7 +299,7 @@
             <div>
               <h4 id="viewRoleName" class="font-bold text-xl text-slate-900 leading-tight">--</h4>
               <span id="viewRoleCodeBadge"
-                class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-[10px] font-bold mt-2 bg-slate-50 text-slate-700 border border-slate-200">--</span>
+                class="inline-flex items-center px-2.5 py-0.5 rounded text-[10px] font-bold mt-2 bg-transparent text-slate-700 border border-slate-300">--</span>
             </div>
           </div>
 
@@ -408,34 +408,12 @@
               <div
                 class="space-y-3 bg-slate-50 p-4 rounded-xl border border-outline-variant/30 max-h-[300px] overflow-y-auto custom-scrollbar">
 
-                <!-- Dashboard -->
+                <!-- Work Order -->
                 <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
                   <div class="flex items-center gap-3 max-w-[70%] select-none">
                     <div>
-                      <span class="block text-xs font-bold text-slate-800">Dashboard</span>
-                      <span class="block text-[9px] text-slate-400">KPI charts and shift statistics</span>
-                    </div>
-                  </div>
-                  <div class="flex gap-3 select-none shrink-0">
-                    <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_dashboard_view" onchange="updateMainCheckbox('dashboard')"
-                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
-                      <span class="text-xs font-semibold text-slate-600">View</span>
-                    </label>
-                    <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_dashboard_operate" onchange="updateMainCheckbox('dashboard')"
-                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
-                      <span class="text-xs font-semibold text-slate-600">Operate</span>
-                    </label>
-                  </div>
-                </div>
-
-                <!-- Work Orders -->
-                <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-                  <div class="flex items-center gap-3 max-w-[70%] select-none">
-                    <div>
-                      <span class="block text-xs font-bold text-slate-800">Work Orders</span>
-                      <span class="block text-[9px] text-slate-400">View and dispatch work cards</span>
+                      <span class="block text-xs font-bold text-slate-800">Work Order</span>
+                      <span class="block text-[9px] text-slate-400">Main production work orders database and monitoring</span>
                     </div>
                   </div>
                   <div class="flex gap-3 select-none shrink-0">
@@ -457,7 +435,7 @@
                   <div class="flex items-center gap-3 max-w-[70%] select-none">
                     <div>
                       <span class="block text-xs font-bold text-slate-800">Supervisor Planning</span>
-                      <span class="block text-[9px] text-slate-400">Shift plans and lines allocations</span>
+                      <span class="block text-[9px] text-slate-400">Configure line allocation and validate dependencies</span>
                     </div>
                   </div>
                   <div class="flex gap-3 select-none shrink-0">
@@ -476,117 +454,24 @@
                   </div>
                 </div>
 
-                <!-- QC Pending Approvals -->
+                <!-- Completed Reports -->
                 <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
                   <div class="flex items-center gap-3 max-w-[70%] select-none">
                     <div>
-                      <span class="block text-xs font-bold text-slate-800">QC Pending Approvals</span>
-                      <span class="block text-[9px] text-slate-400">Review alerts, approve checklists</span>
+                      <span class="block text-xs font-bold text-slate-800">Completed Reports</span>
+                      <span class="block text-[9px] text-slate-400">Perform batch lot investigations and event log checks</span>
                     </div>
                   </div>
                   <div class="flex gap-3 select-none shrink-0">
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_qc_pending_approvals_view"
-                        onchange="updateMainCheckbox('qc_pending_approvals')"
+                      <input type="checkbox" id="perm_completed_reports_view"
+                        onchange="updateMainCheckbox('completed_reports')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">View</span>
                     </label>
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_qc_pending_approvals_operate"
-                        onchange="updateMainCheckbox('qc_pending_approvals')"
-                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
-                      <span class="text-xs font-semibold text-slate-600">Operate</span>
-                    </label>
-                  </div>
-                </div>
-
-                <!-- Traceability Search -->
-                <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-                  <div class="flex items-center gap-3 max-w-[70%] select-none">
-                    <div>
-                      <span class="block text-xs font-bold text-slate-800">Traceability Search</span>
-                      <span class="block text-[9px] text-slate-400">Perform lot investigations</span>
-                    </div>
-                  </div>
-                  <div class="flex gap-3 select-none shrink-0">
-                    <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_traceability_search_view"
-                        onchange="updateMainCheckbox('traceability_search')"
-                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
-                      <span class="text-xs font-semibold text-slate-600">View</span>
-                    </label>
-                    <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_traceability_search_operate"
-                        onchange="updateMainCheckbox('traceability_search')"
-                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
-                      <span class="text-xs font-semibold text-slate-600">Operate</span>
-                    </label>
-                  </div>
-                </div>
-
-                <!-- QC Reports -->
-                <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-                  <div class="flex items-center gap-3 max-w-[70%] select-none">
-                    <div>
-                      <span class="block text-xs font-bold text-slate-800">QC Reports</span>
-                      <span class="block text-[9px] text-slate-400">Quality stats, export CSV logs</span>
-                    </div>
-                  </div>
-                  <div class="flex gap-3 select-none shrink-0">
-                    <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_qc_reports_view" onchange="updateMainCheckbox('qc_reports')"
-                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
-                      <span class="text-xs font-semibold text-slate-600">View</span>
-                    </label>
-                    <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_qc_reports_operate" onchange="updateMainCheckbox('qc_reports')"
-                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
-                      <span class="text-xs font-semibold text-slate-600">Operate</span>
-                    </label>
-                  </div>
-                </div>
-
-                <!-- Audit Reports -->
-                <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-                  <div class="flex items-center gap-3 max-w-[70%] select-none">
-                    <div>
-                      <span class="block text-xs font-bold text-slate-800">Audit Reports</span>
-                      <span class="block text-[9px] text-slate-400">System actions and event logs</span>
-                    </div>
-                  </div>
-                  <div class="flex gap-3 select-none shrink-0">
-                    <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_audit_reports_view" onchange="updateMainCheckbox('audit_reports')"
-                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
-                      <span class="text-xs font-semibold text-slate-600">View</span>
-                    </label>
-                    <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_audit_reports_operate"
-                        onchange="updateMainCheckbox('audit_reports')"
-                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
-                      <span class="text-xs font-semibold text-slate-600">Operate</span>
-                    </label>
-                  </div>
-                </div>
-
-                <!-- Workflow Configuration -->
-                <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
-                  <div class="flex items-center gap-3 max-w-[70%] select-none">
-                    <div>
-                      <span class="block text-xs font-bold text-slate-800">Workflow Configuration</span>
-                      <span class="block text-[9px] text-slate-400">Edit flowchart canvas templates</span>
-                    </div>
-                  </div>
-                  <div class="flex gap-3 select-none shrink-0">
-                    <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_workflow_configuration_view"
-                        onchange="updateMainCheckbox('workflow_configuration')"
-                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
-                      <span class="text-xs font-semibold text-slate-600">View</span>
-                    </label>
-                    <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_workflow_configuration_operate"
-                        onchange="updateMainCheckbox('workflow_configuration')"
+                      <input type="checkbox" id="perm_completed_reports_operate"
+                        onchange="updateMainCheckbox('completed_reports')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">Operate</span>
                     </label>
@@ -622,7 +507,7 @@
                   <div class="flex items-center gap-3 max-w-[70%] select-none">
                     <div>
                       <span class="block text-xs font-bold text-slate-800">Role Management</span>
-                      <span class="block text-[9px] text-slate-400">Update security roles, matrices</span>
+                      <span class="block text-[9px] text-slate-400">Update security roles and matrices</span>
                     </div>
                   </div>
                   <div class="flex gap-3 select-none shrink-0">
@@ -670,7 +555,7 @@
                   <div class="flex items-center gap-3 max-w-[70%] select-none">
                     <div>
                       <span class="block text-xs font-bold text-slate-800">Machine Management</span>
-                      <span class="block text-[9px] text-slate-400">Toolings network IPs, calibrations</span>
+                      <span class="block text-[9px] text-slate-400">Toolings network IPs and status</span>
                     </div>
                   </div>
                   <div class="flex gap-3 select-none shrink-0">
@@ -689,24 +574,72 @@
                   </div>
                 </div>
 
-                <!-- Device Management -->
-                <div class="flex items-center justify-between py-2 font-medium">
+                <!-- Shift Management -->
+                <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
                   <div class="flex items-center gap-3 max-w-[70%] select-none">
                     <div>
-                      <span class="block text-xs font-bold text-slate-800">Device Management</span>
-                      <span class="block text-[9px] text-slate-400">Tablet connections sync log</span>
+                      <span class="block text-xs font-bold text-slate-800">Shift Management</span>
+                      <span class="block text-[9px] text-slate-400">Configure production shifts and rosters</span>
                     </div>
                   </div>
                   <div class="flex gap-3 select-none shrink-0">
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_device_management_view"
-                        onchange="updateMainCheckbox('device_management')"
+                      <input type="checkbox" id="perm_shift_management_view"
+                        onchange="updateMainCheckbox('shift_management')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">View</span>
                     </label>
                     <label class="flex items-center gap-1 cursor-pointer">
-                      <input type="checkbox" id="perm_device_management_operate"
-                        onchange="updateMainCheckbox('device_management')"
+                      <input type="checkbox" id="perm_shift_management_operate"
+                        onchange="updateMainCheckbox('shift_management')"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">Operate</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Notification / Alarm -->
+                <div class="flex items-center justify-between py-2 border-b border-slate-200/50">
+                  <div class="flex items-center gap-3 max-w-[70%] select-none">
+                    <div>
+                      <span class="block text-xs font-bold text-slate-800">Notification / Alarm</span>
+                      <span class="block text-[9px] text-slate-400">Manage alert rules and target alarms</span>
+                    </div>
+                  </div>
+                  <div class="flex gap-3 select-none shrink-0">
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_notification_configuration_view"
+                        onchange="updateMainCheckbox('notification_configuration')"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">View</span>
+                    </label>
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_notification_configuration_operate"
+                        onchange="updateMainCheckbox('notification_configuration')"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">Operate</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- System Settings -->
+                <div class="flex items-center justify-between py-2 font-medium">
+                  <div class="flex items-center gap-3 max-w-[70%] select-none">
+                    <div>
+                      <span class="block text-xs font-bold text-slate-800">System Settings</span>
+                      <span class="block text-[9px] text-slate-400">Global plant parameters configuration</span>
+                    </div>
+                  </div>
+                  <div class="flex gap-3 select-none shrink-0">
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_system_settings_view"
+                        onchange="updateMainCheckbox('system_settings')"
+                        class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
+                      <span class="text-xs font-semibold text-slate-600">View</span>
+                    </label>
+                    <label class="flex items-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="perm_system_settings_operate"
+                        onchange="updateMainCheckbox('system_settings')"
                         class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" />
                       <span class="text-xs font-semibold text-slate-600">Operate</span>
                     </label>
@@ -1692,7 +1625,7 @@
             let roleSelectedClassification = 'ALL';
             let roleToDeleteCode = null;
 
-            const featureKeys = ['dashboard', 'work_orders', 'supervisor_planning', 'qc_pending_approvals', 'traceability_search', 'qc_reports', 'audit_reports', 'workflow_configuration', 'user_management', 'role_management', 'skill_management', 'machine_management', 'device_management'];
+            const featureKeys = ['work_orders', 'supervisor_planning', 'completed_reports', 'user_management', 'role_management', 'skill_management', 'machine_management', 'shift_management', 'notification_configuration', 'system_settings'];
 
             const granularBaseKeys = [
               'release_work_order', 'verify_synchronized_work_order', 'assign_production_date_shift', 'approve_work_order_readiness',
@@ -1739,7 +1672,7 @@
                     if (hasOldFeatures || hasOldRoles) {
                       throw new Error("Outdated role structure or deprecated roles found. Forcing upgrade.");
                     }
-                    if (parsed && parsed.length > 0 && parsed[0].permissions && typeof parsed[0].permissions.dashboard !== 'undefined') {
+                    if (parsed && parsed.length > 0 && parsed[0].permissions && typeof parsed[0].permissions.completed_reports !== 'undefined') {
                       rolesList = parsed;
 
                       let mergedCount = 0;
@@ -1854,9 +1787,9 @@
                 const isSystem = systemDefaults.includes(r.roleCode.toUpperCase());
 
                 // classification badge
-                const classBadge = isSystem
-                  ? `<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold bg-slate-100 text-slate-500 border border-slate-200"><span class="w-1.5 h-1.5 rounded-full bg-slate-400 mr-1.5"></span>System</span>`
-                  : `<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200"><span class="w-1.5 h-1.5 rounded-full bg-indigo-500 mr-1.5"></span>Custom</span>`;
+                 const classBadge = isSystem
+                   ? `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-transparent text-slate-500 border border-slate-350"><span class="w-1.5 h-1.5 rounded-full bg-slate-400 mr-1.5"></span>System</span>`
+                   : `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-transparent text-indigo-700 border border-indigo-550"><span class="w-1.5 h-1.5 rounded-full bg-indigo-500 mr-1.5"></span>Custom</span>`;
 
                 // Render action controls: Lock indicator instead of delete for system defaults
                 const actionControls = isSystem
@@ -1979,19 +1912,16 @@
               const screensContainer = document.getElementById('viewRoleScreensList');
               screensContainer.innerHTML = '';
               const screens = [
-                { key: 'dashboard', name: 'Dashboard', desc: 'System dashboard graphs and shift stats' },
-                { key: 'work_orders', name: 'Work Orders', desc: 'Main production work orders database' },
-                { key: 'supervisor_planning', name: 'Supervisor Planning', desc: 'Shift allocation and line loading' },
-                { key: 'qc_pending_approvals', name: 'QC Pending Approvals', desc: 'Quality inspection validations queue' },
-                { key: 'traceability_search', name: 'Traceability Search', desc: 'Batch traceability timeline checks' },
-                { key: 'qc_reports', name: 'QC Reports', desc: 'Shift reports and measurements exports' },
-                { key: 'audit_reports', name: 'Audit Reports', desc: 'System event log auditing reports' },
-                { key: 'workflow_configuration', name: 'Workflow Configuration', desc: 'Canvas editor, stage sequence planner' },
+                { key: 'work_orders', name: 'Work Order', desc: 'Main production work orders database and monitoring' },
+                { key: 'supervisor_planning', name: 'Supervisor Planning', desc: 'Configure line allocation and validate dependencies' },
+                { key: 'completed_reports', name: 'Completed Reports', desc: 'Perform batch lot investigations and event log checks' },
                 { key: 'user_management', name: 'User Management', desc: 'Personnel directory and access configurations' },
-                { key: 'role_management', name: 'Role Management', desc: 'System role permissions and checklists' },
-                { key: 'skill_management', name: 'Skill Management', desc: 'Employee certification levels logs' },
-                { key: 'machine_management', name: 'Machine Management', desc: 'Calibrators tracking and IP networking controls' },
-                { key: 'device_management', name: 'Device Management', desc: 'Active tablet terminal connection log' }
+                { key: 'role_management', name: 'Role Management', desc: 'Update security roles and matrices' },
+                { key: 'skill_management', name: 'Skill Management', desc: 'Certified steps tracking lists' },
+                { key: 'machine_management', name: 'Machine Management', desc: 'Toolings network IPs and status' },
+                { key: 'shift_management', name: 'Shift Management', desc: 'Configure production shifts and rosters' },
+                { key: 'notification_configuration', name: 'Notification / Alarm', desc: 'Manage alert rules and target alarms' },
+                { key: 'system_settings', name: 'System Settings', desc: 'Global plant parameters configuration' }
               ];
 
               const perms = r.permissions || {};
@@ -2005,12 +1935,12 @@
                   (hasView || hasOperate ? 'bg-white border-slate-200 hover:border-slate-300' : 'bg-slate-50/70 border-slate-100 opacity-60');
 
                 const viewBadge = hasView
-                  ? `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-[9px] uppercase"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>View</span>`
-                  : `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-slate-100 text-slate-400 border border-slate-200 font-bold text-[9px] uppercase">No View</span>`;
+                  ? `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-transparent text-emerald-700 border border-emerald-500 font-bold text-[9px] uppercase"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>View</span>`
+                  : `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-transparent text-slate-400 border border-slate-300 font-bold text-[9px] uppercase">No View</span>`;
 
                 const operateBadge = hasOperate
-                  ? `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-[9px] uppercase"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>Operate</span>`
-                  : `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-slate-100 text-slate-400 border border-slate-200 font-bold text-[9px] uppercase">No Operate</span>`;
+                  ? `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-transparent text-emerald-700 border border-emerald-500 font-bold text-[9px] uppercase"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>Operate</span>`
+                  : `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-transparent text-slate-400 border border-slate-300 font-bold text-[9px] uppercase">No Operate</span>`;
 
                 row.innerHTML = `
                   <div class="space-y-0.5 flex-1 min-w-[150px]">
@@ -2149,12 +2079,12 @@
                     (hasView || hasOperate ? 'bg-white border-slate-200 hover:border-slate-300' : 'bg-slate-50/70 border-slate-100 opacity-60');
 
                   const viewBadge = hasView
-                    ? `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-[9px] uppercase"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>View</span>`
-                    : `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-slate-100 text-slate-400 border border-slate-200 font-bold text-[9px] uppercase">No View</span>`;
+                   ? `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-transparent text-emerald-700 border border-emerald-500 font-bold text-[9px] uppercase"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>View</span>`
+                   : `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-transparent text-slate-400 border border-slate-300 font-bold text-[9px] uppercase">No View</span>`;
 
-                  const operateBadge = hasOperate
-                    ? `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-[9px] uppercase"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>Operate</span>`
-                    : `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-slate-100 text-slate-400 border border-slate-200 font-bold text-[9px] uppercase">No Operate</span>`;
+                 const operateBadge = hasOperate
+                   ? `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-transparent text-emerald-700 border border-emerald-500 font-bold text-[9px] uppercase"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>Operate</span>`
+                   : `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-transparent text-slate-400 border border-slate-300 font-bold text-[9px] uppercase">No Operate</span>`;
 
                   row.innerHTML = `
                     <div class="space-y-0.5 flex-1 min-w-[150px]">
