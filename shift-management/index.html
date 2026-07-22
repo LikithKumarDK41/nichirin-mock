@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+  <!-- SPA Layout Redirect Wrapper -->
+  <script>
+    if (!document.getElementById('app-root')) {
+      const p = window.location.pathname;
+      const rel = '../';
+      window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
+    }
+  </script>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Shift Management - Control Card Digitization</title>
+
+  <!-- Tailwind CSS Engine -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Extended Theme Configuration -->
+  <script src="../assets/js/tailwind-config.js"></script>
+  <!-- Shared Stylesheets -->
+  <link href="../assets/css/custom.css" rel="stylesheet" />
+
+  <!-- Google Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+
+<body class="bg-surface text-on-surface h-screen overflow-hidden flex font-body-md">
+  <!-- Main Content Area -->
+  <main class="flex-grow pt-1 px-6 pb-6 flex flex-col gap-6">
+    <!-- Header Section -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-5">
+      <div>
+        <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Shift Management</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant">Configure factory operation shifts, timing
+          profiles, lunch breaks, and supervisor assignments.</p>
+      </div>
+      <div class="flex gap-2 w-full md:w-auto md:justify-end shrink-0">
+        <button onclick="openShiftDrawerForCreate()"
+          class="px-4 py-2 bg-primary text-white font-label-bold text-label-bold rounded-lg hover:bg-primary/95 transition-colors flex items-center justify-center gap-2 text-sm font-semibold shadow-sm cursor-pointer w-full md:w-auto whitespace-nowrap">
+          <span class="material-symbols-outlined text-[18px]">add</span>
+          <span>Add Shift Profile</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Filters & Table Unified Container -->
+    <div class="bg-white border border-outline-variant/30 rounded-xl flex-grow overflow-hidden flex flex-col shadow-sm">
+      <!-- Filters Header -->
+      <div class="p-4 border-b border-outline-variant/30 bg-slate-50/50">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-grid-gutter w-full">
+          <div class="flex flex-col">
+            <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Search Shifts</label>
+            <div class="relative">
+              <span
+                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
+              <input id="shift-search" oninput="filterShifts()"
+                class="pl-9 pr-3 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-full h-9"
+                placeholder="Search code, name, supervisor..." type="text" />
+            </div>
+          </div>
+          <div class="flex flex-col">
+            <label class="font-label-bold text-label-bold text-on-surface-variant mb-1">Status Filter</label>
+            <div class="relative">
+              <select id="shift-filter-status" onchange="filterShifts()"
+                class="pl-3 pr-8 py-1.5 border border-outline-variant/30 rounded-lg bg-white text-sm text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary w-full h-9 appearance-none bg-none font-semibold">
+                <option value="All">All Status</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+              <span
+                class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data Table -->
+      <div class="overflow-y-auto custom-scrollbar flex-grow">
+        <table class="w-full text-left border-collapse whitespace-nowrap">
+          <thead
+            class="sticky top-0 bg-slate-50 border-b border-outline-variant/30 font-data-tabular text-data-tabular text-on-surface-variant z-10">
+            <tr>
+              <th class="p-4 font-semibold uppercase text-[11px] tracking-wider w-16 text-center">#</th>
+              <th class="p-4 font-semibold uppercase text-[11px] tracking-wider w-36">Shift Code</th>
+              <th class="p-4 font-semibold uppercase text-[11px] tracking-wider w-48">Shift Name</th>
+              <th class="p-4 font-semibold uppercase text-[11px] tracking-wider w-48">Duration (Start - End)</th>
+              <th class="p-4 font-semibold uppercase text-[11px] tracking-wider w-48">Break Window</th>
+              <th class="p-4 font-semibold uppercase text-[11px] tracking-wider w-32 text-center">Status</th>
+              <th class="p-4 font-semibold uppercase text-[11px] tracking-wider w-28 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="shifts-tbody" class="divide-y divide-outline-variant/20 font-data-tabular text-data-tabular">
+            <!-- Populated dynamically -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination / Footer -->
+      <div
+        class="p-4 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-outline-variant/30 bg-slate-50">
+        <span id="shift-pagination-text"
+          class="font-body-sm text-body-sm text-on-surface-variant truncate whitespace-nowrap max-w-full"
+          title="Showing -- to -- of -- shifts">Showing -- to -- of -- shifts</span>
+        <div class="flex gap-1 flex-shrink-0">
+          <button
+            class="p-1 border border-outline-variant/30 rounded bg-white text-on-surface-variant hover:bg-slate-50 disabled:opacity-50"
+            disabled>
+            <span class="material-symbols-outlined text-[18px]">chevron_left</span>
+          </button>
+          <button
+            class="w-7 h-7 rounded bg-primary text-white text-xs font-semibold flex items-center justify-center">1</button>
+          <button
+            class="p-1 border border-outline-variant/30 rounded bg-white text-on-surface-variant hover:bg-slate-50 disabled:opacity-50"
+            disabled>
+            <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shift Form Drawer Panel (Slides from Right Side) -->
+    <div id="shift-drawer-modal" class="fixed inset-0 z-[100] hidden flex justify-end">
+      <!-- Backdrop -->
+      <div id="shift-drawer-backdrop" onclick="closeShiftDrawer()"
+        class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300 opacity-0"></div>
+
+      <!-- Drawer Form Panel -->
+      <form id="shift-drawer-form" onsubmit="saveShiftProfile(event)"
+        class="relative h-full w-[460px] max-w-full bg-white border-l border-outline-variant/30 shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out translate-x-full">
+        <div class="flex justify-between items-start border-b border-outline-variant/20 p-6 flex-shrink-0">
+          <div>
+            <h3 id="drawer-title" class="font-headline-sm text-headline-sm text-primary font-semibold">Add Shift Profile
+            </h3>
+            <p class="text-[10px] text-slate-500 font-mono mt-0.5">NICHIRIN MASTER WORKSHIFT REGISTRY</p>
+          </div>
+          <button type="button" onclick="closeShiftDrawer()"
+            class="p-1 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-600 transition-colors">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+
+        <div class="flex-grow p-6 overflow-y-auto space-y-5 custom-scrollbar text-xs text-slate-700">
+          <!-- Shift Code -->
+          <div class="flex flex-col gap-1">
+            <label class="font-label-bold text-label-bold text-slate-400 uppercase tracking-wider text-[12px]">Shift
+              Code *</label>
+            <input id="form-shift-code" required
+              class="py-2 px-3 border border-outline-variant/30 rounded-lg text-slate-900 font-semibold focus:border-primary focus:ring-1 focus:ring-primary text-xs"
+              placeholder="e.g. SHIFT-A" />
+          </div>
+
+          <!-- Shift Name -->
+          <div class="flex flex-col gap-1">
+            <label class="font-label-bold text-label-bold text-slate-400 uppercase tracking-wider text-[12px]">Shift
+              Name *</label>
+            <input id="form-shift-name" required
+              class="py-2 px-3 border border-outline-variant/30 rounded-lg text-slate-900 font-semibold focus:border-primary focus:ring-1 focus:ring-primary text-xs"
+              placeholder="e.g. First Morning Shift" />
+          </div>
+
+          <!-- Times: Start & End -->
+          <div class="grid grid-cols-2 gap-4">
+            <div class="flex flex-col gap-1">
+              <label class="font-label-bold text-label-bold text-slate-400 uppercase tracking-wider text-[12px]">Start
+                Time *</label>
+              <input id="form-shift-start" type="time" required
+                class="py-2 px-3 border border-outline-variant/30 rounded-lg text-slate-900 font-semibold focus:border-primary focus:ring-1 focus:ring-primary text-xs" />
+            </div>
+            <div class="flex flex-col gap-1">
+              <label class="font-label-bold text-label-bold text-slate-400 uppercase tracking-wider text-[12px]">End
+                Time *</label>
+              <input id="form-shift-end" type="time" required
+                class="py-2 px-3 border border-outline-variant/30 rounded-lg text-slate-900 font-semibold focus:border-primary focus:ring-1 focus:ring-primary text-xs" />
+            </div>
+          </div>
+
+          <!-- Breaks: Start & End -->
+          <div class="grid grid-cols-2 gap-4">
+            <div class="flex flex-col gap-1">
+              <label class="font-label-bold text-label-bold text-slate-400 uppercase tracking-wider text-[12px]">Break
+                Start *</label>
+              <input id="form-break-start" type="time" required
+                class="py-2 px-3 border border-outline-variant/30 rounded-lg text-slate-900 font-semibold focus:border-primary focus:ring-1 focus:ring-primary text-xs" />
+            </div>
+            <div class="flex flex-col gap-1">
+              <label class="font-label-bold text-label-bold text-slate-400 uppercase tracking-wider text-[12px]">Break
+                End *</label>
+              <input id="form-break-end" type="time" required
+                class="py-2 px-3 border border-outline-variant/30 rounded-lg text-slate-900 font-semibold focus:border-primary focus:ring-1 focus:ring-primary text-xs" />
+            </div>
+          </div>
+
+
+          <!-- Status -->
+          <div class="flex flex-col gap-1">
+            <label class="font-label-bold text-label-bold text-slate-400 uppercase tracking-wider text-[12px]">Shift
+              Status</label>
+            <div class="relative">
+              <select id="form-shift-status"
+                class="w-full pl-3 pr-8 py-2 border border-outline-variant/30 rounded-lg bg-white text-xs text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary appearance-none font-semibold">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+              <span
+                class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 border-t border-outline-variant/20 flex gap-3 bg-slate-50 flex-shrink-0">
+          <button type="button" onclick="closeShiftDrawer()"
+            class="px-5 py-2 border border-slate-200 text-slate-700 hover:bg-slate-100 font-body-sm text-body-sm font-semibold rounded-lg transition-colors cursor-pointer flex-1">
+            Cancel
+          </button>
+          <button type="submit"
+            class="px-5 py-2 bg-primary text-white font-body-sm text-body-sm font-semibold rounded-lg hover:bg-primary/95 shadow-sm transition-colors cursor-pointer flex-1">
+            Save Shift
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- Custom Dynamic Toast Container -->
+  <div id="toast-wrapper" class="fixed bottom-5 right-5 z-[200] space-y-2 pointer-events-none"></div>
+
+  <script>
+    (function () {
+      let shiftList = [];
+      let editMode = false;
+
+      const defaultShiftList = [
+        { code: "SHIFT-A", name: "First Morning Shift", start: "06:00", end: "14:30", breakStart: "11:30", breakEnd: "12:00", supervisor: "Amit Sharma (SUPERVISOR)", status: "Active" },
+        { code: "SHIFT-B", name: "Second Afternoon Shift", start: "14:30", end: "23:00", breakStart: "19:30", breakEnd: "20:00", supervisor: "Sandeep Singh (LINE LEADER)", status: "Active" },
+        { code: "SHIFT-C", name: "Third Night Shift", start: "23:00", end: "06:00", breakStart: "02:00", breakEnd: "02:30", supervisor: "Rajesh Verma (QC INCHARGE)", status: "Active" },
+        { code: "SHIFT-GEN", name: "General Duty Shift", start: "09:00", end: "17:30", breakStart: "13:00", breakEnd: "13:30", supervisor: "Vikram Malhotra (SITE ADMIN)", status: "Active" }
+      ];
+
+      function initShiftManagement() {
+        const localData = localStorage.getItem('shiftMasterList');
+        if (localData) {
+          try {
+            shiftList = JSON.parse(localData);
+          } catch (e) { }
+        }
+        if (!shiftList || shiftList.length === 0) {
+          shiftList = defaultShiftList;
+          localStorage.setItem('shiftMasterList', JSON.stringify(shiftList));
+        }
+        filterShifts();
+      }
+
+      function filterShifts() {
+        const query = document.getElementById('shift-search').value.toLowerCase().trim();
+        const statusFilter = document.getElementById('shift-filter-status').value;
+
+        const filtered = shiftList.filter(s => {
+          if (query) {
+            const match = s.code.toLowerCase().includes(query) ||
+              s.name.toLowerCase().includes(query);
+            if (!match) return false;
+          }
+
+          if (statusFilter !== 'All' && s.status !== statusFilter) {
+            return false;
+          }
+
+          return true;
+        });
+
+        renderShiftTableRows(filtered);
+      }
+
+      function renderShiftTableRows(list) {
+        const tbody = document.getElementById('shifts-tbody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+
+        if (list.length === 0) {
+          tbody.innerHTML = `
+                  <tr>
+                      <td colspan="8" class="p-6 text-center text-slate-400 font-semibold">No shift profiles matching your filters</td>
+                  </tr>
+              `;
+          const pagTextEl = document.getElementById('shift-pagination-text');
+          if (pagTextEl) {
+            pagTextEl.textContent = 'Showing 0 of 0 shift profiles';
+            pagTextEl.setAttribute('title', 'Showing 0 of 0 shift profiles');
+          }
+          return;
+        }
+
+        list.forEach((s, index) => {
+          const row = document.createElement('tr');
+          row.className = 'border-b border-outline-variant/30 hover:bg-slate-50/50 transition-colors';
+
+          const statusBadge = s.status === 'Active' ?
+            '<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-transparent text-emerald-700 border border-emerald-500">Active</span>' :
+            '<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-transparent text-slate-500 border border-slate-350">Inactive</span>';
+
+          row.innerHTML = `
+                  <td class="p-4 text-center text-on-surface-variant font-medium">${index + 1}</td>
+                  <td class="p-4 text-primary font-bold font-mono">${s.code}</td>
+                  <td class="p-4 text-slate-900 font-semibold">${s.name}</td>
+                  <td class="p-4 text-slate-700 font-semibold font-data-tabular">${s.start} - ${s.end}</td>
+                  <td class="p-4 text-slate-500 font-semibold font-data-tabular">${s.breakStart} - ${s.breakEnd}</td>
+                  <td class="p-4 text-center">${statusBadge}</td>
+                  <td class="p-4 text-right flex justify-end gap-1.5">
+                    <button onclick="openShiftDrawerForEdit('${s.code}')" class="p-1 hover:bg-slate-100 rounded text-slate-400 hover:text-primary transition-colors cursor-pointer" title="Edit Shift">
+                      <span class="material-symbols-outlined text-[18px]">edit</span>
+                    </button>
+                    <button onclick="deleteShiftProfile('${s.code}')" class="p-1 hover:bg-slate-100 rounded text-slate-400 hover:text-error transition-colors cursor-pointer" title="Delete Shift">
+                      <span class="material-symbols-outlined text-[18px]">delete</span>
+                    </button>
+                  </td>
+              `;
+          tbody.appendChild(row);
+        });
+
+        const pagTextEl = document.getElementById('shift-pagination-text');
+        if (pagTextEl) {
+          const txt = `Showing 1 to ${list.length} of ${list.length} shift profiles`;
+          pagTextEl.textContent = txt;
+          pagTextEl.setAttribute('title', txt);
+        }
+      }
+
+      function openShiftDrawerForCreate() {
+        editMode = false;
+        document.getElementById('drawer-title').textContent = "Add Shift Profile";
+        document.getElementById('form-shift-code').value = '';
+        document.getElementById('form-shift-code').disabled = false;
+        document.getElementById('form-shift-name').value = '';
+        document.getElementById('form-shift-start').value = '08:00';
+        document.getElementById('form-shift-end').value = '17:00';
+        document.getElementById('form-break-start').value = '12:00';
+        document.getElementById('form-break-end').value = '12:30';
+        document.getElementById('form-shift-status').value = 'Active';
+
+        toggleShiftDrawer(true);
+      }
+
+      function openShiftDrawerForEdit(code) {
+        editMode = true;
+        const s = shiftList.find(item => item.code === code);
+        if (!s) return;
+
+        document.getElementById('drawer-title').textContent = "Edit Shift Profile";
+        document.getElementById('form-shift-code').value = s.code;
+        document.getElementById('form-shift-code').disabled = true; // Lock code in edit
+        document.getElementById('form-shift-name').value = s.name;
+        document.getElementById('form-shift-start').value = s.start;
+        document.getElementById('form-shift-end').value = s.end;
+        document.getElementById('form-break-start').value = s.breakStart;
+        document.getElementById('form-break-end').value = s.breakEnd;
+        document.getElementById('form-shift-status').value = s.status;
+
+        toggleShiftDrawer(true);
+      }
+
+      function toggleShiftDrawer(show) {
+        const container = document.getElementById('shift-drawer-modal');
+        const backdrop = document.getElementById('shift-drawer-backdrop');
+        const drawer = document.getElementById('shift-drawer-form');
+
+        if (show) {
+          container.classList.remove('hidden');
+          drawer.offsetHeight; // Force reflow
+          backdrop.classList.remove('opacity-0');
+          backdrop.classList.add('opacity-100');
+          drawer.classList.remove('translate-x-full');
+          drawer.classList.add('translate-x-0');
+        } else {
+          backdrop.classList.remove('opacity-100');
+          backdrop.classList.add('opacity-0');
+          drawer.classList.remove('translate-x-0');
+          drawer.classList.add('translate-x-full');
+
+          setTimeout(() => {
+            container.classList.add('hidden');
+          }, 300);
+        }
+      }
+
+      function closeShiftDrawer() {
+        toggleShiftDrawer(false);
+      }
+
+      function saveShiftProfile(event) {
+        event.preventDefault();
+
+        const code = document.getElementById('form-shift-code').value.trim().toUpperCase();
+        const name = document.getElementById('form-shift-name').value.trim();
+        const start = document.getElementById('form-shift-start').value;
+        const end = document.getElementById('form-shift-end').value;
+        const breakStart = document.getElementById('form-break-start').value;
+        const breakEnd = document.getElementById('form-break-end').value;
+        const status = document.getElementById('form-shift-status').value;
+
+        if (editMode) {
+          // Edit existing
+          const s = shiftList.find(item => item.code === code);
+          if (s) {
+            s.name = name;
+            s.start = start;
+            s.end = end;
+            s.breakStart = breakStart;
+            s.breakEnd = breakEnd;
+            s.status = status;
+            showToast("Shift profile updated successfully!", "success");
+          }
+        } else {
+          // Check unique code
+          if (shiftList.some(item => item.code === code)) {
+            alert("Shift Code already exists! Please use a unique code.");
+            return;
+          }
+          // Create new
+          shiftList.push({ code, name, start, end, breakStart, breakEnd, supervisor: "", status });
+          showToast("New Shift profile created successfully!", "success");
+        }
+
+        localStorage.setItem('shiftMasterList', JSON.stringify(shiftList));
+        closeShiftDrawer();
+        filterShifts();
+      }
+
+      function deleteShiftProfile(code) {
+        if (confirm(`Are you sure you want to delete shift profile: ${code}?`)) {
+          shiftList = shiftList.filter(item => item.code !== code);
+          localStorage.setItem('shiftMasterList', JSON.stringify(shiftList));
+          showToast(`Shift profile ${code} deleted successfully.`, "success");
+          filterShifts();
+        }
+      }
+
+      function showToast(message, type = "success") {
+        const wrapper = document.getElementById('toast-wrapper');
+        if (!wrapper) return;
+
+        const toast = document.createElement('div');
+        toast.className = "p-4 bg-slate-900 text-white text-xs rounded-xl shadow-lg border border-slate-800 flex items-center gap-2 pointer-events-auto transition-all transform duration-300 opacity-0 translate-y-2";
+
+        let icon = "check_circle";
+        let colorClass = "text-emerald-500";
+        if (type === "error") {
+          icon = "error";
+          colorClass = "text-rose-500";
+        }
+
+        toast.innerHTML = `
+              <span class="material-symbols-outlined ${colorClass}">${icon}</span>
+              <span class="font-semibold">${message}</span>
+          `;
+        wrapper.appendChild(toast);
+
+        // Force reflow and show
+        toast.offsetHeight;
+        toast.classList.remove('opacity-0', 'translate-y-2');
+        toast.classList.add('opacity-100', 'translate-y-0');
+
+        setTimeout(() => {
+          toast.classList.remove('opacity-100', 'translate-y-0');
+          toast.classList.add('opacity-0', 'translate-y-2');
+          setTimeout(() => {
+            toast.remove();
+          }, 300);
+        }, 3000);
+      }
+
+      // Bind dynamic handlers to window
+      window.filterShifts = filterShifts;
+      window.openShiftDrawerForCreate = openShiftDrawerForCreate;
+      window.openShiftDrawerForEdit = openShiftDrawerForEdit;
+      window.closeShiftDrawer = closeShiftDrawer;
+      window.saveShiftProfile = saveShiftProfile;
+      window.deleteShiftProfile = deleteShiftProfile;
+
+      initShiftManagement();
+    })();
+  </script>
+</body>
+
+</html>

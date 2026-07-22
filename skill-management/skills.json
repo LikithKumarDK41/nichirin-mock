@@ -3,90 +3,70 @@
     "skillCode": "SKILL-CUT-01",
     "skillName": "Rubber Hose Cutting & Scaling",
     "processStep": "Hose Cutting 1 & 2",
-    "minCertLevel": "L2 - Semi-Skilled",
     "description": "Operate rubber hose cutting scales, verify material lot tags, and slice hoses to 234±2mm or 94±2mm with clean, thread-free edges.",
-    "status": "Active",
-    "certifiedCount": 8
+    "status": "Active"
   },
   {
     "skillCode": "SKILL-PROT-02",
     "skillName": "Protector Tube Processing",
     "processStep": "Protector Cutting 1 (PR0157-0190)",
-    "minCertLevel": "L1 - Trainee",
     "description": "Handle PVC + NBR protector tubes, perform automated cutter setups, slice sleeves to 190±3mm, and verify lengths using calipers.",
-    "status": "Active",
-    "certifiedCount": 12
+    "status": "Active"
   },
   {
     "skillCode": "SKILL-SHRNK-03",
     "skillName": "Pipe Shrinkable Tubing",
     "processStep": "Pipe Shrinkable Tube",
-    "minCertLevel": "L2 - Semi-Skilled",
     "description": "Align protective shrink-sleeves onto metal pipe assemblies and bake them in HMI-controlled curing ovens at 155°C±10°C for at least 5.5 minutes.",
-    "status": "Active",
-    "certifiedCount": 5
+    "status": "Active"
   },
   {
     "skillCode": "SKILL-BEND-04",
     "skillName": "CNC Pipe Bending",
     "processStep": "Pipe Bending (FA0554-03000)",
-    "minCertLevel": "L3 - Certified Operator",
     "description": "Operate hydraulic bending fixture BNF-IYM-02, execute line bending profiles, and check relative angles using custom inspection gauges.",
-    "status": "Active",
-    "certifiedCount": 6
+    "status": "Active"
   },
   {
     "skillCode": "SKILL-FIT-05",
     "skillName": "Double Fitting Bending",
     "processStep": "Fitting Bending (K41358L90180)",
-    "minCertLevel": "L3 - Certified Operator",
     "description": "Operate EF02 bending blocks, set left-side and up-side bending parameters (L-R Setting -L80, height -274), and inspect pins visually.",
-    "status": "Active",
-    "certifiedCount": 4
+    "status": "Active"
   },
   {
     "skillCode": "SKILL-CRMP-06",
     "skillName": "Fitting Hose Crimping",
     "processStep": "Crimping First & Second",
-    "minCertLevel": "L3 - Certified Operator",
     "description": "Set up CJ-22 crimping machines, verify crimping diameters to 9.00±0.05mm using micrometers, and monitor hydraulic pressure gauges at 6-7 Mpa.",
-    "status": "Active",
-    "certifiedCount": 7
+    "status": "Active"
   },
   {
     "skillCode": "SKILL-BOND-07",
     "skillName": "Accessories Bonding",
     "processStep": "Accessories Bonding",
-    "minCertLevel": "L2 - Semi-Skilled",
     "description": "Apply ACME Plastics protector sleeves onto rubber hose sections and secure them with adhesive bonding jigs BJ-IYM-22-1A/B.",
-    "status": "Active",
-    "certifiedCount": 9
+    "status": "Active"
   },
   {
     "skillCode": "SKILL-TORQ-08",
     "skillName": "Double Pipe Torquing",
     "processStep": "Pipe Torquing 1 & 2",
-    "minCertLevel": "L3 - Certified Operator",
     "description": "Utilize calibrated torque wrenches TOJ-IYM-22-A/B to tighten connections to 12-17Nm and inspect threads for damages.",
-    "status": "Active",
-    "certifiedCount": 11
+    "status": "Active"
   },
   {
     "skillCode": "SKILL-TEST-09",
     "skillName": "Pressure & Leakage Testing",
     "processStep": "Pressure & Leakage Test",
-    "minCertLevel": "L3 - Certified Operator",
     "description": "Mount assemblies onto automated leak test benches, run pressure cycles at 15.2+1.0/-0 MPa for 36 seconds, and inspect for pressure drops.",
-    "status": "Active",
-    "certifiedCount": 6
+    "status": "Active"
   },
   {
     "skillCode": "SKILL-INSP-10",
     "skillName": "Final Inspection & Packing",
     "processStep": "Final Inspection & Packing",
-    "minCertLevel": "L4 - Expert Trainer",
     "description": "Perform final inspection checks on jig FI-IYM-22, sign off QC pass stamps, verify lot numbers, and pack assemblies into blue bins.",
-    "status": "Active",
-    "certifiedCount": 5
+    "status": "Active"
   }
 ]

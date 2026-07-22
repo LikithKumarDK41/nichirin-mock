@@ -162,321 +162,227 @@
 </div>
 </header>
 <!-- Main Content Canvas -->
-<main class="ml-[260px] pt-[64px] min-h-screen p-container-padding space-y-6 bg-background">
+<main class="ml-[260px] pt-[64px] min-h-dvh p-container-padding space-y-6 bg-background">
   <!-- Page Header -->
-  <div class="flex justify-between items-end mb-6">
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
     <div>
       <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Traceability Search</h2>
       <p class="font-body-md text-body-md text-on-surface-variant">Perform deep-dive historical investigations on production steps, quality metrics, and batch identifiers.</p>
     </div>
-  </div>
-
-  <!-- Search & Filters Section -->
-  <section class="bg-white border border-outline-variant/30 p-6 rounded-xl shadow-sm">
-    <div class="flex items-center justify-between mb-6">
-      <h2 class="font-headline-md text-headline-md text-primary flex items-center gap-2">
-        <span class="material-symbols-outlined text-secondary">search</span>
-        Traceability Filter
-      </h2>
-      <button class="bg-primary text-white h-9 px-4 rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all flex items-center gap-2 shadow-sm">
-        <span class="material-symbols-outlined text-sm">filter_alt</span>
-        Execute Search
+    <div class="flex gap-3 w-full md:w-auto md:justify-end shrink-0 items-end">
+      <div class="relative w-64 flex flex-col">
+        <label class="block font-label-bold text-label-bold text-slate-500 uppercase tracking-wider mb-1">Work Order ID</label>
+        <div class="relative">
+          <button id="traceability-wo-dropdown-trigger" class="w-full bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-9 px-3 font-semibold flex items-center justify-between cursor-pointer" onclick="toggleTraceDropdown()">
+            <span id="traceability-wo-selected-text">WO-22615540</span>
+            <span class="material-symbols-outlined text-[20px] text-slate-500">expand_more</span>
+          </button>
+          <div id="traceability-wo-dropdown-container" class="absolute right-0 left-0 mt-1 bg-white border border-outline-variant/30 rounded-lg shadow-lg z-[100] hidden p-2 flex flex-col gap-2">
+            <div class="relative">
+              <input type="text" id="traceability-wo-dropdown-search" class="w-full bg-slate-50 border border-outline-variant/30 rounded-lg text-xs text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-8 pr-3 font-semibold" placeholder="Search WO ID..." oninput="filterTraceDropdown(this.value)" autocomplete="off" />
+              <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[16px] text-slate-400">search</span>
+            </div>
+            <div id="traceability-wo-dropdown-list" class="max-h-48 overflow-y-auto custom-scrollbar flex flex-col">
+              <!-- Dropdown items populated dynamically -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="flex items-center justify-center gap-2 border border-outline-variant/50 bg-white text-slate-700 h-9 px-4 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-all shadow-sm cursor-pointer w-full md:w-auto whitespace-nowrap" onclick="exportTraceabilityReport()">
+        <span class="material-symbols-outlined text-[18px]">download</span>
+        <span>Export Report</span>
       </button>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-5 gap-grid-gutter">
-      <div class="space-y-1.5">
-        <label class="font-label-bold text-label-bold text-on-surface-variant uppercase">Work Order</label>
-        <div class="relative">
-          <input class="w-full bg-white border border-outline-variant/30 rounded-lg px-3 py-1.5 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-9" placeholder="WO-2023-0891" type="text"/>
-        </div>
-      </div>
-      <div class="space-y-1.5">
-        <label class="font-label-bold text-label-bold text-on-surface-variant uppercase">QR Code / Serial</label>
-        <div class="relative">
-          <input class="w-full bg-white border border-outline-variant/30 rounded-lg pl-3 pr-10 py-1.5 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-9" placeholder="Scan or type..." type="text"/>
-          <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">qr_code_scanner</span>
-        </div>
-      </div>
-      <div class="space-y-1.5">
-        <label class="font-label-bold text-label-bold text-on-surface-variant uppercase">Batch Number</label>
-        <input class="w-full bg-white border border-outline-variant/30 rounded-lg px-3 py-1.5 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-9" placeholder="B-882-90" type="text"/>
-      </div>
-      <div class="space-y-1.5">
-        <label class="font-label-bold text-label-bold text-on-surface-variant uppercase">Date Range</label>
-        <div class="relative">
-          <input class="w-full bg-white border border-outline-variant/30 rounded-lg pl-3 pr-10 py-1.5 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-9" type="text" value="2023.10.20 - 2023.10.27"/>
-          <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">calendar_today</span>
-        </div>
-      </div>
-      <div class="space-y-1.5">
-        <label class="font-label-bold text-label-bold text-on-surface-variant uppercase">Manufacturing Line</label>
-        <div class="relative">
-          <select class="w-full pl-3 pr-8 py-1.5 bg-white border border-outline-variant/30 rounded-lg text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors appearance-none bg-none h-9">
-            <option>Line A - Assembly</option>
-            <option>Line B - Casting</option>
-            <option>Line C - Finishing</option>
-          </select>
-          <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-on-surface-variant">arrow_drop_down</span>
-        </div>
-      </div>
-    </div>
-  </section>
+  </div>
 
   <!-- Result Overview Grid -->
   <div class="grid grid-cols-12 gap-grid-gutter">
-    <!-- Left Column: Summary Cards -->
-    <div class="col-span-12 lg:col-span-4 space-y-grid-gutter">
-      <!-- WO Summary Card -->
-      <div class="bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm">
-        <div class="bg-slate-50 px-4 py-3 border-b border-outline-variant/30 flex justify-between items-center">
-          <h3 class="font-headline-sm text-headline-sm text-primary uppercase">WO Summary</h3>
-          <span class="material-symbols-outlined text-secondary">info</span>
-        </div>
-        <div class="p-4 space-y-4">
-          <div class="flex justify-between items-center border-b border-outline-variant/30 pb-2">
-            <span class="text-on-surface-variant text-body-sm">Part Number</span>
-            <span class="text-primary font-bold font-data-tabular text-data-tabular">NH-9920-X1</span>
+    <!-- Top Full-Width Row: WO Summary Card (Referred layout style) -->
+    <div class="col-span-12">
+      <div class="bg-white border border-outline-variant/30 rounded-xl p-4 sm:p-6 shadow-sm overflow-hidden flex flex-col">
+        <!-- Top level control code (matching reference screenshot layout) -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4 pb-2 border-b border-slate-100 md:border-b-0 md:pb-0">
+          <div class="flex items-center gap-3">
+            <h2 class="text-2xl font-black text-[#dc0111] tracking-tight leading-none" id="trace-summary-id">--</h2>
+            <span class="text-xs font-extrabold uppercase tracking-wider text-[#dc0111]" id="trace-summary-status">RUNNING</span>
           </div>
-          <div class="flex justify-between items-center border-b border-outline-variant/30 pb-2">
-            <span class="text-on-surface-variant text-body-sm">Target Qty</span>
-            <span class="text-primary font-bold font-data-tabular text-data-tabular">2,500 units</span>
-          </div>
-          <div class="flex justify-between items-center border-b border-outline-variant/30 pb-2">
-            <span class="text-on-surface-variant text-body-sm">Actual Built</span>
-            <span class="text-primary font-bold font-data-tabular text-data-tabular">2,492 units</span>
-          </div>
-          <div class="flex justify-between items-center">
-            <span class="text-on-surface-variant text-body-sm">Start Time</span>
-            <span class="text-primary font-bold font-data-tabular text-data-tabular">2023.10.25 08:00</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- QC Results Card -->
-      <div class="bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm">
-        <div class="bg-slate-50 px-4 py-3 border-b border-outline-variant/30 flex justify-between items-center">
-          <h3 class="font-headline-sm text-headline-sm text-primary uppercase">QC Metrics</h3>
-          <span class="bg-secondary/15 text-secondary text-[10px] px-2.5 py-0.5 font-bold rounded-lg border border-secondary/20 uppercase">LIVE</span>
-        </div>
-        <div class="p-4 grid grid-cols-2 gap-4">
-          <div class="bg-slate-50/50 border border-outline-variant/30 p-3 text-center rounded-lg">
-            <p class="text-[10px] text-on-surface-variant font-bold uppercase mb-1">Pass (OK)</p>
-            <p class="text-2xl font-black text-secondary font-data-tabular">98.4%</p>
-          </div>
-          <div class="bg-slate-50/50 border border-outline-variant/30 p-3 text-center rounded-lg">
-            <p class="text-[10px] text-on-surface-variant font-bold uppercase mb-1">Fail (NG)</p>
-            <p class="text-2xl font-black text-error font-data-tabular">1.6%</p>
-          </div>
-        </div>
-        <div class="px-4 pb-4">
-          <div class="w-full bg-outline-variant/50 h-2 rounded-full overflow-hidden flex">
-            <div class="bg-secondary h-full" style="width: 98.4%"></div>
-            <div class="bg-error h-full" style="width: 1.6%"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SAP Sync Status -->
-      <div class="bg-white border border-outline-variant/30 rounded-xl p-4 shadow-sm">
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container border border-primary/10">
-            <span class="material-symbols-outlined">sync</span>
-          </div>
-          <div>
-            <p class="text-[10px] font-bold text-on-surface-variant uppercase">Enterprise Integration</p>
-            <p class="font-headline-sm text-headline-sm text-primary">SAP ERP Sync Status</p>
-          </div>
-        </div>
-        <div class="space-y-3">
-          <div class="flex items-center justify-between p-2.5 bg-emerald-50 text-emerald-700 border border-emerald-200/50 rounded-lg">
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-secondary text-[18px]">check_circle</span>
-              <span class="text-sm font-medium">BOM Alignment</span>
+          <!-- Barcode Column (Exact replication of PDF top-left) -->
+          <div class="flex flex-col items-start md:items-end">
+            <div class="h-9 bg-slate-950 w-48 flex flex-col justify-center items-center text-white font-mono select-none px-1 py-0.5 rounded shadow-sm">
+              <!-- Simulated Barcode Lines -->
+              <div class="text-[9px] tracking-[4px] leading-none font-bold">||| | || |||| | | |||| || || | ||| |</div>
+              <div class="text-[9px] tracking-[2px] leading-none font-bold mt-0.5">||||| | ||| |||| | || ||| || ||||</div>
             </div>
-            <span class="text-[10px] font-data-tabular font-bold">SYNCHRONIZED</span>
-          </div>
-          <div class="flex items-center justify-between p-2.5 bg-emerald-50 text-emerald-700 border border-emerald-200/50 rounded-lg">
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-secondary text-[18px]">check_circle</span>
-              <span class="text-sm font-medium">Inventory Release</span>
-            </div>
-            <span class="text-[10px] font-data-tabular font-bold">COMPLETE</span>
+            <span id="trace-summary-control-code" class="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-1">Control Code: --</span>
           </div>
         </div>
-      </div>
 
-      <!-- Rework History Log -->
-      <div class="bg-white border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm">
-        <div class="bg-slate-50 px-4 py-3 border-b border-outline-variant/30">
-          <h3 class="font-headline-sm text-headline-sm text-primary uppercase">Rework Log</h3>
+        <!-- Divider line -->
+        <div class="border-t border-slate-200/80 my-3"></div>
+
+        <!-- Grid of details (Exact matching of reference image columns) -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 pb-2">
+          <!-- Col 1: Card Specifications -->
+          <div class="md:col-span-2 space-y-3">
+            <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider">CARD SPECIFICATIONS</h4>
+            <div class="space-y-2 text-xs">
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">CONTROL CARD NO</span>
+                <p class="text-slate-800 font-bold">CC-HMSI-59</p>
+              </div>
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">CONTROL CARD TYPE</span>
+                <p class="text-slate-800 font-bold">Brake Hose</p>
+              </div>
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">CUSTOMER</span>
+                <p class="text-slate-800 font-bold">HMSI</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Col 2: Revision Control -->
+          <div class="md:col-span-3 space-y-3 border-t md:border-t-0 md:border-l border-slate-100/50 pt-4 md:pt-0 pl-0 md:pl-4">
+            <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider">REVISION CONTROL</h4>
+            <div class="space-y-2 text-xs">
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">DRAWING REVISION</span>
+                <p class="text-slate-800 font-bold">M-23-F0674 (23 May-23)</p>
+              </div>
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">ISSUE DATE</span>
+                <p class="text-slate-800 font-bold">07.04.2026</p>
+              </div>
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">REVISIONS SUMMARY</span>
+                <p class="text-slate-800 font-semibold text-[11px] leading-snug">Protector and Grommet locations on Drawing</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Col 3: Quality Sign-offs -->
+          <div class="md:col-span-2 space-y-3 border-t md:border-t-0 md:border-l border-slate-100/50 pt-4 md:pt-0 pl-0 md:pl-4">
+            <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider">QUALITY SIGN-OFFS</h4>
+            <div class="space-y-2 text-xs">
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">ISSUED BY</span>
+                <p class="text-slate-800 font-bold">Garima</p>
+              </div>
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">CHECKED BY</span>
+                <p class="text-slate-800 font-bold">GANESH VATS</p>
+              </div>
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">APPROVED BY</span>
+                <p class="text-slate-800 font-bold">AVRASH-SAN</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Col 4: Production Plan -->
+          <div class="md:col-span-4 space-y-3 border-t md:border-t-0 md:border-l border-slate-100/50 pt-4 md:pt-0 pl-0 md:pl-4">
+            <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider">PRODUCTION PLAN</h4>
+            <div class="space-y-2 text-xs">
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">PART NAME</span>
+                <p class="text-slate-800 font-bold truncate text-[11px]" id="trace-summary-name" title="--">--</p>
+              </div>
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">PART NO</span>
+                <p class="text-[#dc0111] font-bold font-mono text-[13px]" id="trace-summary-part">--</p>
+              </div>
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">PRODUCT ORDER NO</span>
+                <p class="text-slate-800 font-mono font-bold truncate text-[11px]" id="trace-summary-prod-order-no" title="--">--</p>
+              </div>
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">PRODUCTION PLAN DATE</span>
+                <p class="text-slate-800 font-bold font-data-tabular text-[11px]">27-06-2026 / 08-07-2026</p>
+              </div>
+              <div>
+                <span class="text-slate-400 font-semibold block text-[10px] uppercase">TARGET QUANTITY</span>
+                <p class="text-slate-800 font-bold font-data-tabular text-[11px]" id="trace-summary-qty">--</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Col 5: QR Code -->
+          <div class="md:col-span-1 flex flex-col items-center justify-start shrink-0 border-t md:border-t-0 md:border-l border-slate-100/50 pt-4 md:pt-0 pl-0 md:pl-4">
+            <div class="w-[72px] h-[72px] border border-slate-200 bg-white p-1 rounded flex items-center justify-center relative select-none">
+              <!-- Simulated QR Grid Pattern -->
+              <div class="grid grid-cols-5 gap-[2px] w-full h-full opacity-90">
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-transparent"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-transparent"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-transparent"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-transparent"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                
+                <div class="bg-transparent"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-transparent"></div>
+                
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-transparent"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+                <div class="bg-transparent"></div>
+                <div class="bg-slate-900 rounded-[0.5px]"></div>
+              </div>
+            </div>
+            <span class="text-[8px] text-slate-400 font-bold uppercase tracking-wider mt-1.5 font-mono text-center whitespace-nowrap">LOT: 6701</span>
+          </div>
         </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left whitespace-nowrap">
-            <thead class="bg-slate-50 border-b border-outline-variant/30">
-              <tr>
-                <th class="px-4 py-2 text-[10px] font-bold text-on-surface-variant uppercase">Part ID</th>
-                <th class="px-4 py-2 text-[10px] font-bold text-on-surface-variant uppercase">Issue</th>
-                <th class="px-4 py-2 text-[10px] font-bold text-on-surface-variant uppercase text-right">Result</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-outline-variant/30">
-              <tr class="hover:bg-slate-50/50 transition-colors">
-                <td class="px-4 py-2 font-data-tabular text-data-tabular">SN-4021</td>
-                <td class="px-4 py-2 text-sm">Surface Dent</td>
-                <td class="px-4 py-2 text-right">
-                  <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">OK</span>
-                </td>
-              </tr>
-              <tr class="hover:bg-slate-50/50 transition-colors">
-                <td class="px-4 py-2 font-data-tabular text-data-tabular">SN-4055</td>
-                <td class="px-4 py-2 text-sm">Leak Test Fail</td>
-                <td class="px-4 py-2 text-right">
-                  <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200">SCRAP</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+
       </div>
     </div>
 
-    <!-- Right Column: QR Scan Timeline (Focus) -->
-    <div class="col-span-12 lg:col-span-8 bg-white border border-outline-variant/30 rounded-xl flex flex-col shadow-sm overflow-hidden">
+    <!-- QR Scan Timeline & QC Metrics (Focus) -->
+    <div class="col-span-12 bg-white border border-outline-variant/30 rounded-xl flex flex-col shadow-sm overflow-hidden">
       <div class="p-6 border-b border-outline-variant/30 flex items-center justify-between bg-slate-50">
         <div>
           <h2 class="font-headline-md text-headline-md text-primary">QR Scan Timeline</h2>
-          <p class="text-on-surface-variant text-body-sm">Complete end-to-end event trail for Work Order #2023-0891</p>
-        </div>
-        <div class="flex items-center gap-2">
-          <button class="w-9 h-9 flex items-center justify-center border border-outline-variant/30 rounded-lg hover:bg-slate-100 transition-colors shadow-sm bg-white text-on-surface-variant">
-            <span class="material-symbols-outlined text-[20px]">download</span>
-          </button>
-          <button class="w-9 h-9 flex items-center justify-center border border-outline-variant/30 rounded-lg hover:bg-slate-100 transition-colors shadow-sm bg-white text-on-surface-variant">
-            <span class="material-symbols-outlined text-[20px]">print</span>
-          </button>
+          <p id="trace-timeline-subtitle" class="text-on-surface-variant text-body-sm">Complete end-to-end event trail for Work Order</p>
         </div>
       </div>
+
+      <!-- QC Metrics Section (inside timeline top) -->
+      <div class="px-8 py-4 border-b border-slate-100 bg-slate-50/10">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div class="flex items-center gap-3">
+            <h3 class="text-xs font-black text-[#dc0111] uppercase tracking-wider">QC Metrics</h3>
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-[9px] font-bold bg-slate-100 text-slate-650 border border-slate-200 uppercase tracking-wider">Live</span>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-4 items-center w-full md:w-auto">
+            <div class="flex gap-4">
+              <div class="bg-white border border-slate-200/60 rounded-xl px-4 py-1.5 text-center min-w-[110px] shadow-sm">
+                <span class="block text-[9px] font-bold text-slate-450 uppercase tracking-wider mb-0.5">Pass (OK)</span>
+                <span class="text-sm font-black text-slate-800 font-data-tabular" id="qc-pass-percent">--</span>
+              </div>
+              <div class="bg-white border border-slate-200/60 rounded-xl px-4 py-1.5 text-center min-w-[110px] shadow-sm">
+                <span class="block text-[9px] font-bold text-slate-450 uppercase tracking-wider mb-0.5">Fail (NG)</span>
+                <span class="text-sm font-black text-rose-600 font-data-tabular" id="qc-fail-percent">--</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="flex-grow p-8 relative">
-        <div class="timeline-line"></div>
-        <div class="space-y-8 relative z-10">
-          <!-- Event 1: Intake -->
-          <div class="flex gap-6">
-            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary border-4 border-white flex items-center justify-center text-on-primary shadow-sm">
-              <span class="material-symbols-outlined text-[20px]">input</span>
-            </div>
-            <div class="flex-1 bg-slate-50/50 border border-outline-variant/30 rounded-xl p-4 shadow-sm">
-              <div class="flex justify-between items-start mb-2">
-                <div>
-                  <h4 class="font-bold text-primary font-headline-sm">Material Intake &amp; Validation</h4>
-                  <p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wide">Warehouse Staging</p>
-                </div>
-                <span class="text-data-tabular font-bold text-on-surface-variant bg-slate-100 border border-slate-200/50 px-2 py-0.5 rounded text-xs">10:15:22 AM</span>
-              </div>
-              <div class="grid grid-cols-3 gap-4 mt-4 text-sm border-t border-outline-variant/30 pt-3">
-                <div>
-                  <p class="text-[10px] text-on-surface-variant font-bold">BATCH ID</p>
-                  <p class="font-data-tabular">M-99182-BT</p>
-                </div>
-                <div>
-                  <p class="text-[10px] text-on-surface-variant font-bold">OPERATOR</p>
-                  <p class="">K. Nakamoto</p>
-                </div>
-                <div class="text-right">
-                  <p class="text-[10px] text-on-surface-variant font-bold">STATUS</p>
-                  <span class="text-secondary font-bold">VERIFIED</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Event 2: Stage Execution -->
-          <div class="flex gap-6">
-            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-secondary-container border-4 border-white flex items-center justify-center text-on-secondary-container shadow-sm">
-              <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">precision_manufacturing</span>
-            </div>
-            <div class="flex-1 bg-slate-50/50 border border-outline-variant/30 rounded-xl p-4 shadow-sm border-l-4 border-l-secondary">
-              <div class="flex justify-between items-start mb-2">
-                <div>
-                  <h4 class="font-bold text-primary font-headline-sm">Process Execution: Stage #04</h4>
-                  <p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wide">Auto-Crimp &amp; Weld</p>
-                </div>
-                <span class="text-data-tabular font-bold text-on-surface-variant bg-slate-100 border border-slate-200/50 px-2 py-0.5 rounded text-xs">10:42:05 AM</span>
-              </div>
-              <p class="text-sm text-on-surface-variant mb-4">Machine M-02 parameters validated. Force curve within nominal range (4.2kN - 4.5kN).</p>
-              <div class="flex items-center gap-2">
-                <div class="bg-white border border-outline-variant/30 px-3 py-1.5 rounded-lg flex items-center gap-2 shadow-sm">
-                  <span class="material-symbols-outlined text-[14px] text-secondary">trending_up</span>
-                  <span class="text-[11px] font-data-tabular">Pressure: 220 bar</span>
-                </div>
-                <div class="bg-white border border-outline-variant/30 px-3 py-1.5 rounded-lg flex items-center gap-2 shadow-sm">
-                  <span class="material-symbols-outlined text-[14px] text-secondary">thermostat</span>
-                  <span class="text-[11px] font-data-tabular">Temp: 182°C</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Event 3: QC Check (NG Example) -->
-          <div class="flex gap-6">
-            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-error border-4 border-white flex items-center justify-center text-on-error shadow-sm">
-              <span class="material-symbols-outlined text-[20px]">report</span>
-            </div>
-            <div class="flex-1 bg-slate-50/50 border border-outline-variant/30 rounded-xl p-4 shadow-sm border-l-4 border-l-error">
-              <div class="flex justify-between items-start mb-2">
-                <div>
-                  <h4 class="font-bold text-primary font-headline-sm">Visual Inspection Failed</h4>
-                  <p class="text-[11px] font-bold text-error uppercase tracking-wide">Quality Gate QG-A</p>
-                </div>
-                <span class="text-data-tabular font-bold text-on-surface-variant bg-slate-100 border border-slate-200/50 px-2 py-0.5 rounded text-xs">11:05:12 AM</span>
-              </div>
-              <div class="flex items-start gap-4 mt-2">
-                <div class="w-24 h-16 bg-slate-200 rounded-lg border border-outline-variant/30 overflow-hidden flex-shrink-0">
-                  <img class="w-full h-full object-cover grayscale" data-alt="Macro defect crack finding" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRxRg5mZYFmcYKm0VhZR-WNKJrR1AcLlfjfViYEQiP2ZX-NnYLyW-XKrd4MSahOABUfc6SScjp2xz3qlounZ2AwSHbg0j1kFxFXh2lAD9ImjOP-Ep1gOJTVr2MJ-HOw8TfalJgrxXoX8gZ2OJ2uV2wnJ9Yvrg9JagQi2c89iTeRic93_aKuSwR30IB_msZXVadZbd9TxHrN2ixLNLvf-6qm_GBA54GSbcNdbYEsxpT4CLeyc_xWkcTMA"/>
-                </div>
-                <div class="flex-1">
-                  <p class="text-sm font-medium text-error">Anomalous surface fracture detected at coordinates X:122, Y:092.</p>
-                  <p class="text-[11px] text-on-surface-variant mt-1">Inspection System: Vision-X 2.0</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Event 4: Rework & Resolution -->
-          <div class="flex gap-6">
-            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-secondary border-4 border-white flex items-center justify-center text-on-secondary shadow-sm">
-              <span class="material-symbols-outlined text-[20px]">build</span>
-            </div>
-            <div class="flex-1 bg-slate-50/50 border border-outline-variant/30 rounded-xl p-4 shadow-sm">
-              <div class="flex justify-between items-start mb-2">
-                <div>
-                  <h4 class="font-bold text-primary font-headline-sm">Manual Rework Authorized</h4>
-                  <p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wide">Repair Station RS-01</p>
-                </div>
-                <span class="text-data-tabular font-bold text-on-surface-variant bg-slate-100 border border-slate-200/50 px-2 py-0.5 rounded text-xs">11:15:00 AM</span>
-              </div>
-              <div class="flex items-center gap-3 mt-3">
-                <img class="w-6 h-6 rounded-full border border-outline-variant/30" data-alt="Avatar R. Yamamoto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEEeBkHW73LrrKH12mxnqDvbiBpNTfiLIISmSpOBxZCIK9MGjKgP686oEPADCWAWR6UX5JpR_ftOEd8XyPqfQEf3G7Ojm96DqLk_W7ll4N4qpMS-dbigBZvRGxTAIHB6Ket4LdZlQTQZDu1PEaFc6r4RN9lIxUGtgLIRTGsylILZJs36GzVJfC4lI1Hz3rVxOuNhesBeL4v-O0eUm2bmrrHs-YFejpXCHxuyvj6zmAuTBtHxKzBYSz1g"/>
-                <span class="text-sm font-bold">R. Yamamoto</span>
-                <span class="text-on-surface-variant text-sm">| Correction Applied: Surface Buffing</span>
-              </div>
-            </div>
-          </div>
-          <!-- Event 5: Final Acceptance -->
-          <div class="flex gap-6">
-            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-secondary-container border-4 border-white flex items-center justify-center text-on-secondary-container shadow-sm">
-              <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">verified</span>
-            </div>
-            <div class="flex-1 bg-slate-50/50 border border-outline-variant/30 rounded-xl p-4 shadow-sm">
-              <div class="flex justify-between items-start mb-2">
-                <div>
-                  <h4 class="font-bold text-primary font-headline-sm">Final Acceptance Scan</h4>
-                  <p class="text-[11px] font-bold text-secondary uppercase tracking-wide">Packaging &amp; Shipping</p>
-                </div>
-                <span class="text-data-tabular font-bold text-on-surface-variant bg-slate-100 border border-slate-200/50 px-2 py-0.5 rounded text-xs">11:45:30 AM</span>
-              </div>
-              <div class="flex items-center gap-2 mt-2">
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/50">UNIT PASSED</span>
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-slate-50 text-slate-700 border border-slate-200/50">BOX-ID: 4421</span>
-              </div>
-            </div>
-          </div>
+        <div id="trace-timeline-list" class="space-y-4 relative z-10">
+          <!-- Populated dynamically based on selected work order steps -->
         </div>
       </div>
       <!-- Footer for the timeline section -->
@@ -487,24 +393,533 @@
         </button>
       </div>
     </div>
+  <!-- Step Details Modal -->
+  <div id="stepDetailsModalBackdrop" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[150] transition-opacity duration-300 opacity-0" onclick="closeStepDetailsModal()"></div>
+  <div id="stepDetailsModal" class="hidden fixed inset-0 z-[160] flex items-center justify-center p-4 select-none pointer-events-none">
+    <div class="bg-white border border-outline-variant/30 rounded-2xl w-full max-w-lg max-h-[calc(100dvh-2rem)] shadow-2xl overflow-hidden flex flex-col pointer-events-auto transform scale-95 opacity-0 transition-all duration-300">
+      <div class="px-6 py-4 border-b border-outline-variant/30 flex justify-between items-center bg-slate-50">
+        <h3 class="font-headline-md text-headline-md text-primary flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary">fact_check</span>
+          Process Step Details
+        </h3>
+        <button class="text-on-surface-variant hover:text-primary transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 cursor-pointer" onclick="closeStepDetailsModal()">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+      <div class="p-6 space-y-4 text-sm overflow-y-auto" id="step-modal-content">
+        <!-- populated dynamically -->
+      </div>
+      <div class="bg-slate-50 p-4 border-t border-outline-variant/30 flex justify-end gap-3 z-20">
+        <button class="px-6 h-10 rounded-lg bg-primary text-white font-semibold text-sm shadow-sm hover:opacity-95 transition-all cursor-pointer" onclick="closeStepDetailsModal()">Close Details</button>
+      </div>
+    </div>
   </div>
 </main>
 <!-- Floating Action Button (Suppressed on Details/Search as per mandate, but included here for "Actionable Traceability" if needed in future) -->
 <!-- Determined as suppressed for this context -->
 <script>
-        // Micro-interactions for the timeline items
-        document.querySelectorAll('.timeline-item-card').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.classList.add('translate-x-1');
-            });
-            card.addEventListener('mouseleave', () => {
-                card.classList.remove('translate-x-1');
-            });
-        });
+    (function() {
+        let workOrdersList = [];
 
-        // Simple tab/state switcher logic (conceptual)
-        console.log("Traceability Engine Initialized - Monitoring WO-2023-0891");
-    </script>
+        const stepTimes = [
+            { start: "06:00 AM", end: "06:12 AM" },
+            { start: "06:12 AM", end: "07:30 AM" },
+            { start: "07:30 AM", end: "08:15 AM" },
+            { start: "08:15 AM", end: "09:00 AM" },
+            { start: "09:00 AM", end: "10:15 AM" },
+            { start: "10:15 AM", end: "11:00 AM" },
+            { start: "11:00 AM", end: "11:45 AM" },
+            { start: "11:45 AM", end: "12:30 PM" },
+            { start: "12:30 PM", end: "01:15 PM" },
+            { start: "01:15 PM", end: "02:00 PM" },
+            { start: "02:00 PM", end: "02:45 PM" },
+            { start: "02:45 PM", end: "03:30 PM" },
+            { start: "03:30 PM", end: "03:45 PM" }
+        ];
+
+        const processMetadata = {
+            "Picking (BOM)": {
+                icon: "warehouse",
+                parameter: "BOM Lot Verification",
+                limits: "Match SAP Checklist",
+                instruction: "Scan part QR labels. Verify EPDM Hose lot tags and metal collar batch counts against SAP Work Order details."
+            },
+            "Hose Cutting": {
+                icon: "content_cut",
+                parameter: "Hose Cut Length",
+                limits: "234 ± 2 mm / 94 ± 2 mm",
+                instruction: "Load inner EPDM tube. Slice lengths to 234±2mm or 94±2mm on scaling deck. Check for smooth edges without distortion."
+            },
+            "Protector Cutting": {
+                icon: "content_cut",
+                parameter: "Sleeve Cut Length",
+                limits: "190 ± 3 mm",
+                instruction: "Cut EPDM/NBR protector sleeve to 190±3mm length. Check lining thickness and ensure internal sleeves have zero debris."
+            },
+            "Fitting Bending": {
+                icon: "architecture",
+                parameter: "Fitting Alignment Height",
+                limits: "Height -274, L-R -L80",
+                instruction: "Double-check height parameter at -274 and L-R settings at -L80. Secure and bend fitting collars on EF02 blocks."
+            },
+            "Manufacturing Lot Stamping": {
+                icon: "sell",
+                parameter: "Stamp Depth & Legibility",
+                limits: "0.2 ± 0.05 mm / Clear",
+                instruction: "Engrave manufacturing LOT index onto sleeve surface. Perform visual scan check for depth and letters overlap."
+            },
+            "Accessories Insertion-1": {
+                icon: "login",
+                parameter: "Insertion Depth",
+                limits: "Fully Seated",
+                instruction: "Push end fitting collar inside inner EPDM rubber tube. Verify collar seats completely flat with zero gaps."
+            },
+            "Accessories Insertion-2": {
+                icon: "login",
+                parameter: "Insertion Depth",
+                limits: "Fully Seated",
+                instruction: "Push second end fitting collar inside inner EPDM rubber tube. Verify collar seats completely flat with zero gaps."
+            },
+            "Crimping-1": {
+                icon: "compress",
+                parameter: "Crimp Diameter",
+                limits: "9.00 ± 0.05 mm",
+                instruction: "Crimp first hose end fitting on CJ-22 press. Verify crimped diameter stays within 9.00±0.05mm range."
+            },
+            "Crimping-2": {
+                icon: "compress",
+                parameter: "Crimp Diameter",
+                limits: "9.00 ± 0.05 mm",
+                instruction: "Crimp second hose end fitting on CJ-22 press. Verify crimped diameter stays within 9.00±0.05mm range."
+            },
+            "Accessories Bonding": {
+                icon: "science",
+                parameter: "Bond Placement",
+                limits: "100% Surface Coverage",
+                instruction: "Apply adhesive compound evenly. Fix protector sleeve alignment on bonding jig and cure under pressure."
+            },
+            "Pressure Test": {
+                icon: "water_drop",
+                parameter: "Hydraulic Test Pressure",
+                limits: "15.2 +1.0/-0 MPa / 36s",
+                instruction: "Clamp assembly onto air/water tester. Pump test pressure to 15.2+1.0/-0 MPa for 36 seconds. Watch for bubble discharge."
+            },
+            "Final Inspection": {
+                icon: "fact_check",
+                parameter: "Visual & Dimensional Audit",
+                limits: "100% OK / No Scuffs",
+                instruction: "Validate overall lengths and orientation on final inspection jig. Perform strict cosmetic checks before packaging."
+            },
+            "Packing": {
+                icon: "package",
+                parameter: "Bin Count & Labeling",
+                limits: "50 units/box",
+                instruction: "Pack verified assemblies into plastic bins. Affix traceability QR codes and transfer completed batch to dispatch."
+            }
+        };
+
+        async function initTraceability() {
+            // Load work orders database
+            const ALLOWED_5_WOS = ['22615540', '22615541', '22615542', '22615543', '22615545'];
+            try {
+                const res = await fetch('../work-orders/workorders.json');
+                if (res.ok) {
+                    workOrdersList = await res.json();
+                }
+            } catch(e) {
+                console.error("Failed to load work orders registry", e);
+            }
+            if (!workOrdersList || workOrdersList.length === 0) {
+                const localData = localStorage.getItem('workOrdersList');
+                if (localData) {
+                    try { workOrdersList = JSON.parse(localData); } catch(e){}
+                }
+            }
+            
+            workOrdersList = (workOrdersList || []).filter(w => {
+                if (!w || !w.woNumber) return false;
+                w.woNumber = String(w.woNumber).replace(/^WO-?/i, '');
+                return ALLOWED_5_WOS.includes(w.woNumber);
+            });
+            localStorage.setItem('workOrdersList', JSON.stringify(workOrdersList));
+
+             // Default search the first work order or query parameter
+             const params = new URLSearchParams(window.location.search);
+             const woQuery = params.get('wo');
+             let initialWO = null;
+             if (woQuery) {
+                 initialWO = workOrdersList.find(w => w.woNumber.toUpperCase() === woQuery.toUpperCase());
+             }
+             if (!initialWO && workOrdersList.length > 0) {
+                 initialWO = workOrdersList[0];
+             }
+             if (initialWO) {
+                 selectTraceWO(initialWO.woNumber);
+             }
+         }
+ 
+         function toggleTraceDropdown() {
+             const container = document.getElementById('traceability-wo-dropdown-container');
+             if (container) {
+                 container.classList.toggle('hidden');
+                 if (!container.classList.contains('hidden')) {
+                     const searchInput = document.getElementById('traceability-wo-dropdown-search');
+                     if (searchInput) {
+                         searchInput.value = '';
+                         searchInput.focus();
+                     }
+                     renderTraceDropdown('');
+                 }
+             }
+         }
+
+         // Close dropdown on click outside
+         document.addEventListener('click', function(event) {
+             const container = document.getElementById('traceability-wo-dropdown-container');
+             const trigger = document.getElementById('traceability-wo-dropdown-trigger');
+             if (container && trigger && !container.classList.contains('hidden')) {
+                 if (!trigger.contains(event.target) && !container.contains(event.target)) {
+                     container.classList.add('hidden');
+                 }
+             }
+         });
+
+         window.filterTraceDropdown = function(val) {
+             renderTraceDropdown(val);
+         }
+
+         function renderTraceDropdown(filterText) {
+             const list = document.getElementById('traceability-wo-dropdown-list');
+             if (!list) return;
+             list.innerHTML = '';
+
+             const q = filterText.toLowerCase().trim();
+             const filtered = workOrdersList.filter(w => {
+                 return w.woNumber.toLowerCase().includes(q) || 
+                        w.productName.toLowerCase().includes(q) ||
+                        w.partNumber.toLowerCase().includes(q);
+             });
+
+             if (filtered.length === 0) {
+                 const emptyItem = document.createElement('div');
+                 emptyItem.className = 'px-3 py-2 text-xs text-slate-400 font-semibold';
+                 emptyItem.textContent = 'No work orders found';
+                 list.appendChild(emptyItem);
+                 return;
+             }
+
+             filtered.forEach(w => {
+                 const item = document.createElement('div');
+                 item.className = 'px-3 py-2 text-xs text-slate-700 hover:bg-slate-50 font-semibold cursor-pointer border-b border-slate-100 last:border-0 transition-colors';
+                 item.innerHTML = `
+                     <div class="font-bold text-slate-800">${w.woNumber}</div>
+                     <div class="text-[10px] text-slate-500 truncate">${w.productName}</div>
+                 `;
+                 item.onclick = () => {
+                     selectTraceWO(w.woNumber);
+                     const container = document.getElementById('traceability-wo-dropdown-container');
+                     if (container) container.classList.add('hidden');
+                 };
+                 list.appendChild(item);
+             });
+         }
+
+         function selectTraceWO(woNumber) {
+             const selectedText = document.getElementById('traceability-wo-selected-text');
+             if (selectedText) {
+                 selectedText.textContent = woNumber;
+             }
+             executeTraceabilitySearch(woNumber);
+         }
+
+         window.toggleTraceDropdown = toggleTraceDropdown;
+ 
+         function executeTraceabilitySearch(targetWO) {
+              const cleanTarget = targetWO ? targetWO.replace(/^WO-?/i, '') : '';
+              const activeWO = workOrdersList.find(w => w.woNumber.replace(/^WO-?/i, '') === cleanTarget) || workOrdersList[0];
+              if (!activeWO) return;
+
+              // Ensure ccProcesses is initialized for this work order
+              if (!activeWO.ccProcesses) {
+                  activeWO.ccProcesses = [
+                      { name: "Picking (BOM)", machine: "Store Area", operator: "Pooja / Anil", status: "completed" },
+                      { name: "Hose Cutting", machine: "Hose Cutter HC-04", operator: "Anish / Sunil", status: "completed" },
+                      { name: "Protector Cutting", machine: "Sleeve Cutter SC-01", operator: "Amit", status: "completed" },
+                      { name: "Fitting Bending", machine: "CNC Pipe Bender PB-12", operator: "Raju", status: "completed" },
+                      { name: "Manufacturing Lot Stamping", machine: "Lot Stamper LS-09", operator: "Shiv Shambhu / Manoj", status: "completed" },
+                      { name: "Accessories Insertion-1", machine: "Assembly Station-1", operator: "Vipin", status: "completed" },
+                      { name: "Accessories Insertion-2", machine: "Assembly Station-2", operator: "Vipin", status: "completed" },
+                      { name: "Crimping-1", machine: "Crimper CR-02", operator: "Vipin / Kiran", status: "completed" },
+                      { name: "Crimping-2", machine: "Crimper CR-05", operator: "Vipin / Kiran", status: "completed" },
+                      { name: "Accessories Bonding", machine: "Bonding Jig BJ-59", operator: "Nazma / Sushma", status: "completed" },
+                      { name: "Pressure Test", machine: "LTM-07 Rig", operator: "Aniket", status: "completed" },
+                      { name: "Final Inspection", machine: "FI-HMSI-59 Jig", operator: "Rubi / Garima", status: "completed" },
+                      { name: "Packing", machine: "Packing Line PL-03", operator: "Anjali / Shy", status: "completed" }
+                  ];
+
+                  // Align step statuses to match overall work order state
+                  if (activeWO.status === 'Running') {
+                      activeWO.ccProcesses.forEach((p, idx) => {
+                          if (idx < 5) p.status = 'completed';
+                          else if (idx === 5) p.status = 'active';
+                          else p.status = 'pending';
+                      });
+                  } else if (activeWO.status === 'Waiting' || activeWO.status === 'Held') {
+                      activeWO.ccProcesses.forEach(p => p.status = 'pending');
+                  } else if (activeWO.status === 'Completed') {
+                      activeWO.ccProcesses.forEach(p => p.status = 'completed');
+                  }
+              }
+  
+              const cleanWONum = String(activeWO.woNumber).replace(/^WO-?/i, '');
+              document.getElementById('trace-summary-id').textContent = cleanWONum;
+              
+              const statusEl = document.getElementById('trace-summary-status');
+              if (statusEl) {
+                  let displayStatus = activeWO.status;
+                  let statusClass = 'text-slate-600 font-extrabold';
+                  if (cleanWONum === '22615542') {
+                      displayStatus = 'NOT RELEASED';
+                      statusClass = 'text-slate-400 font-extrabold';
+                  } else if (cleanWONum === '22615545' || activeWO.status === 'Waiting') {
+                      displayStatus = 'PENDING';
+                      statusClass = 'text-amber-600 font-extrabold';
+                  } else if (cleanWONum === '22615543' || activeWO.status === 'Held' || activeWO.status === 'hold') {
+                      displayStatus = 'HOLD';
+                      statusClass = 'text-rose-600 font-extrabold';
+                  } else if (activeWO.status === 'Completed' || activeWO.status === 'completed') {
+                      displayStatus = 'COMPLETED';
+                      statusClass = 'text-emerald-600 font-extrabold';
+                  } else if (activeWO.status === 'Running' || activeWO.status === 'in-progress') {
+                      displayStatus = 'IN-PROGRESS';
+                      statusClass = 'text-[#dc0111] font-extrabold';
+                  }
+                  statusEl.textContent = displayStatus.toUpperCase();
+                  statusEl.className = `text-xs font-extrabold uppercase tracking-wider ${statusClass}`;
+              }
+              
+              const ctrlCodeEl = document.getElementById('trace-summary-control-code');
+              if (ctrlCodeEl) {
+                  ctrlCodeEl.textContent = `CONTROL CODE: ${cleanWONum}`;
+              }
+ 
+              const nameEl = document.getElementById('trace-summary-name');
+              if (nameEl) {
+                  nameEl.textContent = activeWO.productName;
+                  nameEl.title = activeWO.productName;
+              }
+ 
+              const partEl = document.getElementById('trace-summary-part');
+              if (partEl) {
+                  partEl.textContent = activeWO.partNumber;
+              }
+ 
+              const prodOrderEl = document.getElementById('trace-summary-prod-order-no');
+              if (prodOrderEl) {
+                  const orderVal = `${cleanWONum}/${activeWO.partNumber}`;
+                  prodOrderEl.textContent = orderVal;
+                  prodOrderEl.title = orderVal;
+              }
+ 
+              const qtyEl = document.getElementById('trace-summary-qty');
+              if (qtyEl) {
+                  qtyEl.textContent = `${activeWO.targetQty.toLocaleString()} units`;
+              }
+ 
+              // 2. Update Timeline Subtitle
+              const subtitleEl = document.getElementById('trace-timeline-subtitle');
+              if (subtitleEl) {
+                  subtitleEl.textContent = `Complete end-to-end event trail for Work Order #${activeWO.woNumber}`;
+              }
+   
+              // 3. Render Timeline List
+              const timelineList = document.getElementById('trace-timeline-list');
+              if (timelineList) {
+                  timelineList.innerHTML = '';
+                  
+                  activeWO.ccProcesses.forEach((step, idx) => {
+                      const metadata = processMetadata[step.name] || { icon: "settings", parameter: "General", limits: "N/A", instruction: "" };
+                      let iconName = metadata.icon;
+   
+                      let iconBgClass = 'bg-slate-200 text-slate-600';
+                      let borderClass = '';
+                      let statusColorClass = 'text-slate-500';
+   
+                      let operators = step.operator ? step.operator.split('/').map(o => o.trim()) : [];
+                      let startedBy = operators[0] || 'Unassigned';
+                      let doneBy = operators[1] || operators[0] || 'Unassigned';
+   
+                      let displayStart = '--';
+                      let displayEnd = '--';
+   
+                      if (step.status === 'completed') {
+                          iconBgClass = 'bg-[#dc0111] text-white';
+                          borderClass = 'border-l-4 border-l-emerald-500';
+                          statusColorClass = 'text-emerald-600 font-extrabold';
+                          displayStart = stepTimes[idx].start;
+                          displayEnd = stepTimes[idx].end;
+                      } else if (step.status === 'active' || step.status === 'running') {
+                          iconBgClass = 'bg-amber-500 text-white';
+                          borderClass = 'border-l-4 border-l-amber-500';
+                          statusColorClass = 'text-amber-600 font-extrabold';
+                          displayStart = stepTimes[idx].start;
+                          displayEnd = 'In Progress';
+                          doneBy = 'Pending';
+                      } else {
+                          iconBgClass = 'bg-slate-100 text-slate-400';
+                          borderClass = 'opacity-65';
+                          statusColorClass = 'text-slate-400 font-extrabold';
+                          startedBy = 'Pending';
+                          doneBy = 'Pending';
+                      }
+  
+                      let timeBadgeText = 'Pending';
+                      if (step.status === 'completed') {
+                          timeBadgeText = `${displayStart} - ${displayEnd}`;
+                      } else if (step.status === 'active' || step.status === 'running') {
+                          timeBadgeText = `${displayStart} - In Progress`;
+                      }
+
+                      const stepCard = document.createElement('div');
+                      stepCard.className = 'timeline-item-card transition-all duration-200';
+                      stepCard.innerHTML = `
+                          <div class="w-full bg-slate-50/50 border border-outline-variant/30 rounded-xl p-4 shadow-sm ${borderClass}">
+                            <div class="flex justify-between items-start mb-2">
+                              <div>
+                                <h4 class="font-bold text-primary font-headline-sm">${step.name}</h4>
+                                <p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wide">${step.machine || 'Manual Station'}</p>
+                              </div>
+                              <div class="flex items-center gap-3">
+                                <span class="text-data-tabular font-bold text-on-surface-variant bg-slate-100 border border-slate-200/50 px-2 py-0.5 rounded text-xs">${timeBadgeText}</span>
+                                <button class="text-primary hover:bg-slate-200 w-8 h-8 rounded-full flex items-center justify-center transition-colors cursor-pointer" title="View Step Logs" onclick="showStepLogModal('${step.name}', '${startedBy}', '${doneBy}', '${displayStart}', '${displayEnd}', '${step.machine}', '${metadata.parameter}', '${metadata.limits}')">
+                                  <span class="material-symbols-outlined text-[20px]">info</span>
+                                </button>
+                              </div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-4 mt-2 text-xs border-t border-outline-variant/10 pt-2.5">
+                              <div>
+                                <p class="text-[10px] text-on-surface-variant font-bold uppercase">Started By</p>
+                                <p class="font-semibold text-slate-700 mt-0.5">${startedBy}</p>
+                                <p class="text-[9px] text-slate-400 font-mono mt-0.5">${displayStart}</p>
+                              </div>
+                              <div>
+                                <p class="text-[10px] text-on-surface-variant font-bold uppercase">Completed By</p>
+                                <p class="font-semibold text-slate-700 mt-0.5">${doneBy}</p>
+                                <p class="text-[9px] text-slate-400 font-mono mt-0.5">${displayEnd}</p>
+                              </div>
+                              <div class="text-right">
+                                <p class="text-[10px] text-on-surface-variant font-bold uppercase mb-0.5">Status</p>
+                                <span class="font-bold uppercase text-[10px] ${statusColorClass}">${step.status}</span>
+                              </div>
+                            </div>
+                          </div>
+                      `;
+                      timelineList.appendChild(stepCard);
+                  });
+              }
+
+              // Update QC Metrics Card
+              const done = activeWO.doneQty || 0;
+              const ok = activeWO.okQty || 0;
+              const ng = activeWO.ngQty || 0;
+              const passPct = done > 0 ? ((ok / done) * 100).toFixed(1) : "100.0";
+              const failPct = done > 0 ? ((ng / done) * 100).toFixed(1) : "0.0";
+
+              const passPctEl = document.getElementById('qc-pass-percent');
+              if (passPctEl) passPctEl.textContent = `${passPct}%`;
+              const failPctEl = document.getElementById('qc-fail-percent');
+              if (failPctEl) failPctEl.textContent = `${failPct}%`;
+
+          }
+
+         function showStepLogModal(name, startedBy, doneBy, start, end, machine, parameter, limits) {
+             const backdrop = document.getElementById('stepDetailsModalBackdrop');
+             const modal = document.getElementById('stepDetailsModal');
+             const content = document.getElementById('step-modal-content');
+             if (!backdrop || !modal || !content) return;
+
+             const metadata = processMetadata[name] || {};
+
+             content.innerHTML = `
+                 <div class="space-y-4">
+                     <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+                         <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Process Name</span>
+                         <span class="text-sm font-black text-primary">${name}</span>
+                     </div>
+                     <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+                         <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Machine Station</span>
+                         <span class="text-sm font-bold text-slate-700">${machine}</span>
+                     </div>
+                     <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+                         <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Control Parameter</span>
+                         <span class="text-sm font-bold text-slate-700">${parameter}</span>
+                     </div>
+                     <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+                         <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Tolerance Limits</span>
+                         <span class="text-sm font-bold text-emerald-600 font-mono">${limits}</span>
+                     </div>
+                     <div class="p-3 bg-slate-50 rounded-lg border border-slate-100">
+                         <span class="text-[10px] font-bold text-slate-450 uppercase tracking-wider block mb-1">Process Instruction</span>
+                         <p class="text-xs text-slate-600 leading-relaxed font-semibold">${metadata.instruction || 'Follow standard operating procedure.'}</p>
+                     </div>
+                     
+                     <div class="grid grid-cols-2 gap-4 pt-2">
+                         <div class="p-3 bg-slate-50 rounded-lg border border-slate-100">
+                             <span class="text-[10px] font-bold text-slate-450 uppercase tracking-wider block mb-1">Setup & Initiation</span>
+                             <p class="text-xs text-slate-700 font-bold">Started By: ${startedBy}</p>
+                             <p class="text-[10px] text-slate-400 font-mono mt-1">Time: ${start}</p>
+                             <span class="inline-block mt-2 px-1.5 py-0.5 rounded text-[9px] font-bold bg-blue-50 text-blue-700 border border-blue-100">SETUP VERIFIED</span>
+                         </div>
+                         <div class="p-3 bg-slate-50 rounded-lg border border-slate-100">
+                             <span class="text-[10px] font-bold text-slate-450 uppercase tracking-wider block mb-1">Execution & Completion</span>
+                             <p class="text-xs text-slate-700 font-bold">Done By: ${doneBy}</p>
+                             <p class="text-[10px] text-slate-400 font-mono mt-1">Time: ${end}</p>
+                             <span class="inline-block mt-2 px-1.5 py-0.5 rounded text-[9px] font-bold ${end === 'In Progress' || end === '--' ? 'bg-amber-50 text-amber-700 border border-amber-100' : 'bg-emerald-50 text-emerald-700 border border-emerald-100'}">${end === 'In Progress' || end === '--' ? 'PENDING SIGN-OFF' : 'QC PASSED'}</span>
+                         </div>
+                     </div>
+                 </div>
+             `;
+
+             backdrop.classList.remove('hidden');
+             modal.classList.remove('hidden');
+             setTimeout(() => {
+                 backdrop.classList.add('opacity-100');
+                 const child = modal.firstElementChild;
+                 child.classList.remove('scale-95', 'opacity-0');
+                 child.classList.add('scale-100', 'opacity-100');
+             }, 10);
+         }
+
+         function closeStepDetailsModal() {
+             const backdrop = document.getElementById('stepDetailsModalBackdrop');
+             const modal = document.getElementById('stepDetailsModal');
+             if (!backdrop || !modal) return;
+
+             backdrop.classList.remove('opacity-100');
+             const child = modal.firstElementChild;
+             child.classList.remove('scale-100', 'opacity-100');
+             child.classList.add('scale-95', 'opacity-0');
+
+             setTimeout(() => {
+                 backdrop.classList.add('hidden');
+                 modal.classList.add('hidden');
+             }, 300);
+         }
+         
+         window.showStepLogModal = showStepLogModal;
+         window.closeStepDetailsModal = closeStepDetailsModal;
+
+        function exportTraceabilityReport() {
+            alert("Traceability Report exported successfully as PDF/Excel.");
+        }
+
+        window.executeTraceabilitySearch = executeTraceabilitySearch;
+        window.exportTraceabilityReport = exportTraceabilityReport;
+
+        // Run setup
+        initTraceability();
+    })();
+</script>
 
 
 </body></html>

@@ -1,446 +1,1797 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<!-- SPA Layout Redirect Wrapper -->
-<script>
-  if (!document.getElementById('app-root')) {
-    const p = window.location.pathname;
-    const rel = '../';
-    window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
-  }
-</script>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Nichirin Admin - Workflow Configuration</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "on-tertiary": "#ffffff",
-                        "on-surface-variant": "#43474e",
-                        "inverse-on-surface": "#f2f0f3",
-                        "tertiary-container": "#391303",
-                        "background": "#faf9fc",
-                        "on-tertiary-fixed": "#351002",
-                        "on-primary-fixed-variant": "#2f486a",
-                        "on-secondary": "#ffffff",
-                        "surface-bright": "#faf9fc",
-                        "surface-container-low": "#f4f3f6",
-                        "on-error": "#ffffff",
-                        "tertiary": "#110200",
-                        "outline": "#74777f",
-                        "tertiary-fixed-dim": "#fdb69a",
-                        "surface-container-lowest": "#ffffff",
-                        "surface": "#faf9fc",
-                        "on-surface": "#1a1c1e",
-                        "secondary-container": "#7af2f2",
-                        "on-secondary-fixed": "#002020",
-                        "secondary-fixed": "#7df5f5",
-                        "primary-container": "#001f3f",
-                        "on-primary-container": "#6f88ad",
-                        "on-tertiary-container": "#b5785f",
-                        "on-error-container": "#93000a",
-                        "on-background": "#1a1c1e",
-                        "on-primary-fixed": "#001c3a",
-                        "tertiary-fixed": "#ffdbce",
-                        "surface-container-high": "#e9e7eb",
-                        "inverse-surface": "#2f3033",
-                        "on-tertiary-fixed-variant": "#6b3a25",
-                        "inverse-primary": "#afc8f0",
-                        "surface-dim": "#dbd9dd",
-                        "on-secondary-container": "#006e6e",
-                        "surface-container-highest": "#e3e2e5",
-                        "outline-variant": "#c4c6cf",
-                        "secondary": "#006a6a",
-                        "on-primary": "#ffffff",
-                        "primary": "#000613",
-                        "on-secondary-fixed-variant": "#004f4f",
-                        "surface-tint": "#476083",
-                        "surface-variant": "#e3e2e5",
-                        "primary-fixed": "#d4e3ff",
-                        "error": "#ba1a1a",
-                        "primary-fixed-dim": "#afc8f0",
-                        "surface-container": "#efedf0",
-                        "error-container": "#ffdad6",
-                        "secondary-fixed-dim": "#5dd9d8"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                    },
-                    "spacing": {
-                        "stack-gap-md": "16px",
-                        "sidebar-width": "260px",
-                        "header-height": "64px",
-                        "stack-gap-sm": "8px",
-                        "grid-gutter": "20px",
-                        "container-padding": "24px"
-                    },
-                    "fontFamily": {
-                        "headline-sm": ["Inter"],
-                        "label-bold": ["Inter"],
-                        "headline-md": ["Inter"],
-                        "body-md": ["Inter"],
-                        "body-lg": ["Inter"],
-                        "headline-lg": ["Inter"],
-                        "body-sm": ["Inter"],
-                        "data-tabular": ["Inter"]
-                    },
-                    "fontSize": {
-                        "headline-sm": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
-                        "label-bold": ["11px", {"lineHeight": "16px", "fontWeight": "700"}],
-                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                        "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
-                        "data-tabular": ["13px", {"lineHeight": "16px", "fontWeight": "500"}]
-                    }
+<html class="light" lang="en">
+<head>
+  <!-- SPA Layout Redirect Wrapper -->
+  <script>
+    if (!document.getElementById('app-root')) {
+      const p = window.location.pathname;
+      const rel = '../';
+      window.location.replace(rel + 'index.html?route=' + encodeURIComponent(p));
+    }
+  </script>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Nichirin Admin - Workflow Configuration</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                "colors": {
+                    "primary": "#000613",
+                    "on-primary": "#ffffff",
+                    "secondary": "#006a6a",
+                    "on-secondary": "#ffffff",
+                    "secondary-container": "#7af2f2",
+                    "on-secondary-container": "#006e6e",
+                    "primary-container": "#001f3f",
+                    "on-primary-container": "#6f88ad",
+                    "background": "#faf9fc",
+                    "surface": "#faf9fc",
+                    "on-surface": "#1a1c1e",
+                    "surface-variant": "#e3e2e5",
+                    "on-surface-variant": "#43474e",
+                    "outline": "#74777f",
+                    "outline-variant": "#c4c6cf",
+                    "error": "#ba1a1a",
+                    "error-container": "#ffdad6",
+                    "on-error": "#ffffff",
+                    "on-error-container": "#93000a"
                 },
-            },
+                "fontFamily": {
+                    "body-md": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"]
+                }
+            }
         }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .workflow-canvas {
-            background-image: radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
-            background-size: 24px 24px;
-        }
-        .node-active {
-            outline: 2px solid var(--color-primary, #c8102e);
-            outline-offset: 2px;
-        }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #c4c6cf; border-radius: 10px; }
-    </style>
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #c4c6cf; border-radius: 10px; }
+    
+    #woToast.show {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    #app-content {
+        padding: 0px !important;
+        margin: 0px !important;
+    }
+    #main-wrapper {
+        padding-top: 64px !important;
+    }
+  </style>
 </head>
-<body class="bg-background text-on-surface font-body-md overflow-hidden">
-<!-- SideNavBar -->
-<aside class="fixed left-0 top-0 h-screen w-[260px] py-4 bg-primary dark:bg-primary-container border-r border-outline-variant flex flex-col z-50">
-<div class="px-6 mb-8"><div class="flex items-center gap-3 mb-2"><div class="w-8 h-8 bg-secondary-container rounded flex items-center justify-center text-on-secondary-container"><span class="material-symbols-outlined">hub</span></div><h1 class="font-headline-md text-headline-md font-bold text-on-primary">Nichirin</h1></div><p class="font-body-sm text-body-sm text-on-primary-fixed-variant opacity-80">Monozukuri System</p></div>
-<nav class="flex-1 px-3 space-y-1"><div class="space-y-1"><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-on-primary-fixed-variant hover:bg-on-primary-fixed-variant hover:text-on-primary group" href="#"><span class="material-symbols-outlined">precision_manufacturing</span><span class="font-body-md text-body-md">Monitoring</span></a></div><div class="mt-4"><p class="px-3 mb-2 font-label-bold text-label-bold uppercase text-on-primary-fixed-variant opacity-60">Master Configuration</p><div class="space-y-1"><a class="flex items-center gap-3 px-3 py-2.5 transition-all bg-secondary-container text-on-secondary-container font-bold group" href="#"><span class="material-symbols-outlined">settings_applications</span><span class="font-body-md text-body-md">Workflow Configuration</span></a><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-on-primary-fixed-variant hover:bg-on-primary-fixed-variant hover:text-on-primary group" href="#"><span class="material-symbols-outlined">account_tree</span><span class="font-body-md text-body-md">Line Layout</span></a></div></div><div class="mt-4"><div class="space-y-1"><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-on-primary-fixed-variant hover:bg-on-primary-fixed-variant hover:text-on-primary group" href="#"><span class="material-symbols-outlined">analytics</span><span class="font-body-md text-body-md">Traceability &amp; Reports</span></a><a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200 text-on-primary-fixed-variant hover:bg-on-primary-fixed-variant hover:text-on-primary group" href="#"><span class="material-symbols-outlined">admin_panel_settings</span><span class="font-body-md text-body-md">Administration</span></a></div></div></nav>
-<div class="px-6 mb-4">
-<div class="bg-primary-fixed-dim/20 rounded-lg p-3 text-on-primary">
-<p class="font-label-bold text-label-bold uppercase opacity-60">System Status</p>
-<div class="flex items-center gap-2 mt-1">
-<span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span>
-<span class="font-body-sm text-body-sm">Active</span>
-</div>
-</div>
-</div>
-<footer class="px-3 border-t border-on-primary/10 pt-4 space-y-1">
-<a class="flex items-center gap-3 px-3 py-2 text-on-primary-fixed-variant hover:text-on-primary transition-colors" href="#">
-<span class="material-symbols-outlined">help</span>
-<span class="font-body-md text-body-md">Support</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 text-on-primary-fixed-variant hover:text-on-primary transition-colors" href="#">
-<span class="material-symbols-outlined">logout</span>
-<span class="font-body-md text-body-md">Sign Out</span>
-</a>
-</footer>
-</aside>
-<!-- TopNavBar -->
-<header class="fixed top-0 right-0 h-[64px] w-[calc(100%-260px)] ml-[260px] px-container-padding bg-surface dark:bg-surface-dim border-b border-outline-variant flex justify-between items-center z-40">
-<div class="flex items-center gap-4">
-<div class="flex items-center gap-2 font-body-sm text-body-sm text-on-surface-variant">
-<span class="">Plant</span>
-<span class="material-symbols-outlined text-[16px]">chevron_right</span>
-<span class="">Line A</span>
-<span class="material-symbols-outlined text-[16px]">chevron_right</span>
-<span class="text-primary font-bold border-b-2 border-primary pb-1">Workflow Config</span>
-</div>
-</div>
-<div class="flex items-center gap-6">
-<button class="bg-primary text-on-primary px-4 py-1.5 rounded-lg font-headline-sm text-headline-sm hover:opacity-90 active:scale-95 transition-all">
-                Save Changes
-            </button>
-<div class="flex items-center gap-4 text-on-surface-variant">
-<span class="material-symbols-outlined cursor-pointer hover:text-secondary transition-colors">notifications</span>
-<div class="flex items-center gap-2 cursor-pointer hover:text-secondary transition-colors">
-<span class="material-symbols-outlined">account_circle</span>
-<span class="font-body-sm text-body-sm font-medium">H. Tanaka</span>
-</div>
-</div>
-</div>
-</header>
-<!-- Main Content Area -->
-<main class="ml-[260px] mt-[64px] h-[calc(100vh-64px)] flex flex-col bg-surface-container-lowest">
-<div class="flex flex-grow overflow-hidden gap-6 h-full min-h-0">
-<!-- Left Panel: Stage Types -->
-<aside class="w-[280px] bg-white border border-outline-variant/30 rounded-xl shadow-sm flex flex-col p-5 h-full overflow-hidden shrink-0">
-<h3 class="font-headline-sm text-headline-sm text-primary mb-4 font-bold border-b border-outline-variant/30 pb-2">Stage Components</h3>
-<div class="space-y-3 flex-1 overflow-y-auto custom-scrollbar pr-1 mb-4">
-<div class="p-3 border border-outline-variant/30 rounded-lg cursor-move hover:bg-slate-50 transition-colors flex items-center gap-3 group">
-<div class="w-10 h-10 rounded bg-secondary-container flex items-center justify-center text-on-secondary-container">
-<span class="material-symbols-outlined">hail</span>
-</div>
-<div>
-<p class="font-headline-sm text-headline-sm">Picking</p>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Component retrieval</p>
-</div>
-</div>
-<div class="p-3 border border-outline-variant/30 rounded-lg cursor-move hover:bg-slate-50 transition-colors flex items-center gap-3 group">
-<div class="w-10 h-10 rounded bg-surface-container-high flex items-center justify-center text-on-surface">
-<span class="material-symbols-outlined">precision_manufacturing</span>
-</div>
-<div>
-<p class="font-headline-sm text-headline-sm">Offline</p>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Pre-assembly prep</p>
-</div>
-</div>
-<div class="p-3 border border-outline-variant/30 rounded-lg cursor-move hover:bg-slate-50 transition-colors flex items-center gap-3 group">
-<div class="w-10 h-10 rounded bg-primary-container flex items-center justify-center text-on-primary-container">
-<span class="material-symbols-outlined">conveyor_belt</span>
-</div>
-<div>
-<p class="font-headline-sm text-headline-sm">Online</p>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Main production line</p>
-</div>
-</div>
-<div class="p-3 border border-outline-variant/30 rounded-lg cursor-move hover:bg-slate-50 transition-colors flex items-center gap-3 group">
-<div class="w-10 h-10 rounded bg-secondary flex items-center justify-center text-on-secondary">
-<span class="material-symbols-outlined">rule</span>
-</div>
-<div>
-<p class="font-headline-sm text-headline-sm">QC</p>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Quality Control gate</p>
-</div>
-</div>
-<div class="p-3 border border-outline-variant/30 rounded-lg cursor-move hover:bg-slate-50 transition-colors flex items-center gap-3 group">
-<div class="w-10 h-10 rounded bg-error flex items-center justify-center text-on-error">
-<span class="material-symbols-outlined">build</span>
-</div>
-<div>
-<p class="font-headline-sm text-headline-sm">Rework</p>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Fixing non-conformance</p>
-</div>
-</div>
-</div>
-<div class="mt-auto pt-4 border-t border-outline-variant/30 shrink-0">
-<div class="bg-slate-50 p-4 rounded-xl border border-outline-variant/30">
-<p class="font-label-bold text-label-bold text-on-surface-variant uppercase mb-2">Help</p>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Drag stages onto the canvas to build the sequential workflow for Line A.</p>
-</div>
-</div>
-</aside>
+<body class="bg-background text-on-surface font-body-md overflow-hidden flex min-h-screen">
 
-<!-- Center Canvas: Dependency Graph -->
-<section class="flex-grow relative overflow-hidden bg-white border border-outline-variant/30 rounded-xl shadow-sm workflow-canvas p-8 h-full">
-<div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-5">
-<span class="material-symbols-outlined text-[300px]">hub</span>
-</div>
-<!-- Stage Nodes -->
-<div class="relative w-full h-full">
-<!-- SVG for Connectors -->
-<svg class="absolute inset-0 w-full h-full pointer-events-none">
-<defs>
-<marker id="arrowhead" markerheight="7" markerwidth="10" orient="auto" refx="9" refy="3.5">
-<polygon fill="#74777f" points="0 0, 10 3.5, 0 7"></polygon>
-</marker>
-</defs>
-<path d="M 120 100 L 280 100" marker-end="url(#arrowhead)" stroke="#74777f" stroke-width="2"></path>
-<path d="M 460 100 L 620 100" marker-end="url(#arrowhead)" stroke="#74777f" stroke-width="2"></path>
-<path d="M 460 100 Q 540 180 370 240" marker-end="url(#arrowhead)" stroke="#ba1a1a" stroke-dasharray="4" stroke-width="2"></path>
-</svg>
-<!-- Node 1 -->
-<div class="absolute top-10 left-10 w-48 bg-white border border-outline-variant/30 rounded-lg shadow-sm p-3 hover:shadow-md transition-shadow cursor-pointer">
-<div class="flex justify-between items-start mb-2">
-<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-secondary-container text-on-secondary-container">Picking</span>
-<span class="material-symbols-outlined text-[18px] text-outline">drag_indicator</span>
-</div>
-<p class="font-headline-sm text-headline-sm font-semibold">ST01: Part Fetch</p>
-<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Seq: 010</p>
-<div class="mt-2 flex gap-1">
-<div class="h-1.5 flex-1 bg-secondary-container rounded-full"></div>
-<div class="h-1.5 flex-1 bg-surface-container-high rounded-full"></div>
-</div>
-</div>
-<!-- Node 2 -->
-<div class="absolute top-10 left-64 w-48 bg-white border border-outline-variant/30 rounded-lg shadow-sm p-3 node-active cursor-pointer">
-<div class="flex justify-between items-start mb-2">
-<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-primary-container text-on-primary-container">Online</span>
-<span class="material-symbols-outlined text-[18px] text-outline">drag_indicator</span>
-</div>
-<p class="font-headline-sm text-headline-sm font-semibold">ST02: Welding A</p>
-<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Seq: 020</p>
-<div class="mt-2 flex gap-1">
-<div class="h-1.5 flex-1 bg-secondary rounded-full"></div>
-<div class="h-1.5 flex-1 bg-secondary rounded-full"></div>
-</div>
-</div>
-<!-- Node 3 -->
-<div class="absolute top-10 left-[30rem] w-48 bg-white border border-outline-variant/30 rounded-lg shadow-sm p-3 hover:shadow-md transition-shadow cursor-pointer">
-<div class="flex justify-between items-start mb-2">
-<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-secondary text-on-secondary">QC</span>
-<span class="material-symbols-outlined text-[18px] text-outline">drag_indicator</span>
-</div>
-<p class="font-headline-sm text-headline-sm font-semibold">ST03: Leak Test</p>
-<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Seq: 030</p>
-<div class="mt-2 flex gap-1">
-<div class="h-1.5 flex-1 bg-secondary rounded-full"></div>
-<div class="h-1.5 flex-1 bg-secondary rounded-full"></div>
-</div>
-</div>
-<!-- Node 4 (Error Node) -->
-<div class="absolute top-56 left-[18rem] w-48 bg-white border-2 border-error rounded-lg shadow-sm p-3 hover:shadow-md transition-shadow cursor-pointer">
-<div class="flex justify-between items-start mb-2">
-<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-error text-on-error">Rework</span>
-<span class="material-symbols-outlined text-[18px] text-error">warning</span>
-</div>
-<p class="font-headline-sm text-headline-sm text-error font-semibold">ST04: Repair Unit</p>
-<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Seq: 040</p>
-<div class="mt-2 flex gap-1">
-<div class="h-1.5 w-1/3 bg-error rounded-full"></div>
-</div>
-</div>
-</div>
-<!-- Floating Toolbar -->
-<div class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm border border-outline-variant/30 rounded-full shadow-lg px-4 py-2 flex items-center gap-4">
-<button class="p-2 hover:bg-slate-100 rounded-full transition-colors" title="Zoom In">
-<span class="material-symbols-outlined">zoom_in</span>
-</button>
-<button class="p-2 hover:bg-slate-100 rounded-full transition-colors" title="Zoom Out">
-<span class="material-symbols-outlined">zoom_out</span>
-</button>
-<div class="h-6 w-px bg-outline-variant/30"></div>
-<button class="p-2 hover:bg-slate-100 rounded-full transition-colors" title="Fit to Screen">
-<span class="material-symbols-outlined">fullscreen</span>
-</button>
-<button class="p-2 hover:bg-slate-100 rounded-full transition-colors" title="Auto Layout">
-<span class="material-symbols-outlined">auto_fix_high</span>
-</button>
-</div>
-</section>
+  <!-- SideNavBar -->
+  <aside class="fixed left-0 top-0 h-screen w-[260px] py-4 bg-primary border-r border-outline-variant flex flex-col z-50">
+    <div class="px-6 mb-8">
+      <div class="flex items-center gap-3 mb-2">
+        <div class="w-8 h-8 bg-secondary-container rounded flex items-center justify-center text-on-secondary-container">
+          <span class="material-symbols-outlined">hub</span>
+        </div>
+        <h1 class="font-headline-md text-headline-md font-bold text-on-primary">Nichirin</h1>
+      </div>
+      <p class="font-body-sm text-body-sm text-slate-400 opacity-80">Monozukuri System</p>
+    </div>
+    
+    <nav class="flex-grow px-3 space-y-1 overflow-y-auto custom-scrollbar">
+      <div class="space-y-1">
+        <a class="flex items-center gap-3 px-4 py-2.5 transition-all text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group" href="../work-orders/index.html">
+          <span class="material-symbols-outlined font-normal text-[20px]">precision_manufacturing</span>
+          <span class="font-body-md text-body-md">Monitoring</span>
+        </a>
+      </div>
+      
+      <div class="mt-4">
+        <p class="px-3 mb-2 font-bold text-[10px] uppercase text-slate-500 tracking-wider">Master Configuration</p>
+        <div class="space-y-1">
+          <a class="flex items-center gap-3 px-3 py-2.5 transition-all bg-secondary-container text-on-secondary-container font-bold rounded-lg group" href="#">
+            <span class="material-symbols-outlined text-[20px]">settings_applications</span>
+            <span class="font-body-md text-body-md">Workflow Configuration</span>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2.5 transition-all text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group" href="../role-management/index.html">
+            <span class="material-symbols-outlined text-[20px]">admin_panel_settings</span>
+            <span class="font-body-md text-body-md">Role Management</span>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2.5 transition-all text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group" href="../user-management/index.html">
+            <span class="material-symbols-outlined text-[20px]">group</span>
+            <span class="font-body-md text-body-md">User Management</span>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2.5 transition-all text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group" href="../machine-management/index.html">
+            <span class="material-symbols-outlined text-[20px]">sensors</span>
+            <span class="font-body-md text-body-md">Machine Management</span>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2.5 transition-all text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group" href="../skill-management/index.html">
+            <span class="material-symbols-outlined text-[20px]">psychology</span>
+            <span class="font-body-md text-body-md">Skill Management</span>
+          </a>
+        </div>
+      </div>
+    </nav>
 
-<!-- Right Panel: Properties -->
-<aside class="w-[320px] bg-white border border-outline-variant/30 rounded-xl shadow-sm flex flex-col h-full overflow-hidden shrink-0">
-<div class="p-4 border-b border-outline-variant/30 bg-slate-50 shrink-0">
-  <h3 class="font-headline-sm text-headline-sm text-primary font-bold">Stage Properties</h3>
-</div>
-<div class="flex-1 overflow-y-auto p-5 space-y-6 custom-scrollbar">
-<div>
-<label class="font-label-bold text-label-bold text-on-surface-variant uppercase block mb-1.5">Stage Name</label>
-<input class="w-full border-outline-variant/30 focus:ring-primary focus:border-primary rounded-lg text-sm text-body-md" type="text" value="ST02: Welding A"/>
-</div>
-<div class="flex items-center justify-between">
-<div>
-<p class="font-headline-sm text-headline-sm font-semibold">Mandatory Stage</p>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Cannot be skipped on line</p>
-</div>
-<div class="relative inline-flex h-6 w-11 items-center rounded-full bg-primary cursor-pointer">
-<span class="translate-x-6 inline-block h-4 w-4 transform rounded-full bg-white transition"></span>
-</div>
-</div>
-<div class="grid grid-cols-2 gap-4">
-<div>
-<label class="font-label-bold text-label-bold text-on-surface-variant uppercase block mb-1.5">Sequence</label>
-<input class="w-full border-outline-variant/30 focus:ring-primary focus:border-primary rounded-lg text-sm text-data-tabular" type="number" value="20"/>
-</div>
-<div>
-<label class="font-label-bold text-label-bold text-on-surface-variant uppercase block mb-1.5">Cycle Time (s)</label>
-<input class="w-full border-outline-variant/30 focus:ring-primary focus:border-primary rounded-lg text-sm text-data-tabular" type="number" value="45"/>
-</div>
-</div>
-<div>
-<label class="font-label-bold text-label-bold text-on-surface-variant uppercase block mb-1.5">Depends On</label>
-<select class="w-full border-outline-variant/30 focus:ring-primary focus:border-primary rounded-lg text-sm text-body-md">
-<option>ST01: Part Fetch</option>
-<option>None</option>
-</select>
-</div>
-<div class="flex items-center justify-between">
-<div>
-<p class="font-headline-sm text-headline-sm font-semibold">Requires QC</p>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Automated trigger after step</p>
-</div>
-<div class="relative inline-flex h-6 w-11 items-center rounded-full bg-slate-200 cursor-pointer">
-<span class="translate-x-1 inline-block h-4 w-4 transform rounded-full bg-white transition"></span>
-</div>
-</div>
-<div class="pt-4 border-t border-outline-variant/30">
-<button class="w-full py-2 border border-error text-error font-headline-sm text-headline-sm rounded-lg hover:bg-rose-50 transition-colors flex items-center justify-center gap-2">
-<span class="material-symbols-outlined">delete</span>
-                            Remove Stage
-                        </button>
-</div>
-</div>
-</aside>
-</div>
+    <div class="px-6 mb-4">
+      <div class="bg-slate-800 rounded-lg p-3 text-white">
+        <p class="font-bold text-[9px] uppercase tracking-wider text-slate-400">System Status</p>
+        <div class="flex items-center gap-2 mt-1">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="font-body-sm text-body-sm text-slate-200">Active</span>
+        </div>
+      </div>
+    </div>
+  </aside>
 
-<!-- Bottom Panel: Validation Results -->
-<footer class="h-[120px] bg-slate-50 border border-outline-variant/30 rounded-xl p-4 flex gap-6 shrink-0 shadow-sm mt-6">
-<div class="w-[260px] flex items-center gap-3">
-<div class="w-12 h-12 rounded-full bg-error-container flex items-center justify-center text-error">
-<span class="material-symbols-outlined text-[32px]">report_problem</span>
-</div>
-<div>
-<p class="font-headline-sm text-headline-sm text-error font-bold">Invalid Configuration</p>
-<p class="font-body-sm text-body-sm text-on-surface-variant">3 issues found</p>
-</div>
-</div>
-<div class="flex-1 flex gap-4 overflow-x-auto">
-<div class="min-w-[300px] bg-white border border-error rounded-lg p-3 flex items-start gap-3">
-<span class="material-symbols-outlined text-error">error_outline</span>
-<div>
-<p class="font-label-bold text-label-bold text-error">CRITICAL ERROR</p>
-<p class="font-body-sm text-body-sm text-on-surface">Circular Dependency Detected: ST03 depends on ST04, which depends on ST03.</p>
-</div>
-</div>
-<div class="min-w-[300px] bg-white border border-outline-variant/30 rounded-lg p-3 flex items-start gap-3">
-<span class="material-symbols-outlined text-amber-500">info</span>
-<div>
-<p class="font-label-bold text-label-bold text-amber-600">WARNING</p>
-<p class="font-body-sm text-body-sm text-on-surface">ST01 has no inbound connection. It will be treated as the starting node.</p>
-</div>
-</div>
-<div class="min-w-[300px] bg-white border border-outline-variant/30 rounded-lg p-3 flex items-start gap-3 opacity-50">
-<span class="material-symbols-outlined text-on-surface-variant">verified</span>
-<div>
-<p class="font-label-bold text-label-bold text-on-surface-variant">OPTIMIZATION</p>
-<p class="font-body-sm text-body-sm text-on-surface">Cycle times are within defined tolerances for Line A.</p>
-</div>
-</div>
-</div>
-<div class="flex items-center gap-2">
-<button class="bg-primary text-white hover:bg-primary/95 px-4 py-2 rounded-lg font-headline-sm text-headline-sm flex items-center gap-2 transition-colors shadow-sm">
-<span class="material-symbols-outlined">auto_fix_normal</span>
-                    Auto-resolve
+  <!-- TopNavBar (Matches details display style) -->
+  <header class="fixed top-0 right-0 h-[64px] w-[calc(100%-260px)] ml-[260px] px-6 bg-white border-b border-outline-variant flex justify-between items-center z-40">
+    <div class="flex items-center gap-4">
+      <div class="flex items-center gap-2 font-body-sm text-body-sm text-on-surface-variant">
+        <span class="text-slate-500">Plant</span>
+        <span class="material-symbols-outlined text-[16px] text-slate-400">chevron_right</span>
+        <span class="text-slate-500">Line A</span>
+        <span class="material-symbols-outlined text-[16px] text-slate-400">chevron_right</span>
+        <span class="text-primary font-bold border-b-2 border-primary pb-1">Workflow Configuration</span>
+      </div>
+    </div>
+    
+    <!-- Red Save and White Close Action Buttons (Identical to details modal display) -->
+    <div class="flex items-center gap-2 sm:gap-3">
+      <button onclick="saveMasterWorkflow()" class="px-4 py-1.5 bg-[#dc0111] text-white font-bold text-xs rounded hover:opacity-95 transition-opacity flex items-center gap-1 sm:gap-1.5 cursor-pointer uppercase tracking-wider">
+        <span class="material-symbols-outlined text-[16px]">save</span>
+        <span>Save</span>
+      </button>
+      <a href="../work-orders/index.html" class="px-3 py-1.5 text-slate-700 font-bold text-xs border border-slate-300 rounded hover:bg-slate-100 transition-colors flex items-center gap-1 sm:gap-1.5 cursor-pointer uppercase tracking-wider">
+        <span class="material-symbols-outlined text-[16px]">close</span>
+        <span>Close</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="ml-[260px] mt-[64px] h-[calc(100vh-64px)] w-[calc(100%-260px)] flex flex-col bg-white overflow-hidden">
+    
+    <!-- Tab Navigation Bar (Full screen bleed, no padding/margin) -->
+    <div class="flex border-b border-slate-200 bg-white px-6 py-1.5 flex-shrink-0 select-none items-center justify-between z-30">
+      <div class="flex gap-4">
+        <button id="master-tab-sequence" onclick="switchMasterTab('sequence')" class="py-2.5 px-4 text-xs uppercase tracking-wider font-black border-b-2 border-secondary text-secondary cursor-pointer transition-all">
+          Default Pipeline Sequence
+        </button>
+        <button id="master-tab-catalog" onclick="switchMasterTab('catalog')" class="py-2.5 px-4 text-xs uppercase tracking-wider font-black border-b-2 border-transparent text-slate-500 hover:text-slate-800 cursor-pointer transition-all">
+          Step Master Catalog
+        </button>
+      </div>
+      
+      <!-- Catalog Specific Actions -->
+      <div id="catalog-header-actions" class="hidden">
+        <button onclick="openCatalogStepModal()" class="bg-secondary text-white px-3.5 py-1.5 rounded font-bold text-xs uppercase hover:bg-secondary/90 transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer">
+          <span class="material-symbols-outlined text-[16px]">add_circle</span>
+          Add Master Step
+        </button>
+      </div>
+    </div>
+
+    <!-- Tab View Containers (Zero Margins/Borders, Full Bleed layout) -->
+    <div class="flex-grow flex flex-col min-h-0 relative p-0">
+      
+      <!-- VIEW 1: PIPELINE SEQUENCE DESIGNER -->
+      <div id="container-sequence" class="flex-grow flex flex-col overflow-hidden min-h-0">
+        
+        <!-- Three Column Full-Bleed Flex Workspace -->
+        <div class="flex-grow flex overflow-hidden min-h-0">
+          
+          <!-- Column 1: Stage Components -->
+          <aside class="w-[280px] bg-white border-r border-slate-200 flex flex-col p-4 h-full overflow-hidden shrink-0">
+            <h3 class="text-xs font-black text-slate-900 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">Stage Components</h3>
+            <div id="stage-components-list" class="space-y-2 flex-grow overflow-y-auto custom-scrollbar pr-1">
+              <!-- Dynamically populated stages list -->
+            </div>
+          </aside>
+
+          <!-- Column 2: Steps Timeline -->
+          <section class="flex-grow bg-white border-r border-slate-200 flex flex-col overflow-hidden relative h-full">
+            <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(#191c1e 1.2px, transparent 1.2px); background-size: 20px 20px;"></div>
+            
+            <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex-shrink-0 z-10">
+              <h2 id="stage-workflow-title" class="text-sm font-black text-slate-900 flex items-center gap-2 font-headline-sm">
+                <span class="material-symbols-outlined text-secondary text-[18px]">account_tree</span>
+                PICKING Workflow
+              </h2>
+              <p id="stage-workflow-subtitle" class="text-[10px] text-slate-500 font-semibold mt-1">
+                Retrieve rubber pipes, brackets, protect sleeve fittings from warehouse storage racks.
+              </p>
+            </div>
+            
+            <div class="flex-grow overflow-y-auto p-6 z-10 custom-scrollbar">
+              <div id="steps-timeline-container" class="relative pl-8 border-l-2 border-slate-200 space-y-6">
+                <!-- Dynamically populated steps timeline -->
+              </div>
+            </div>
+          </section>
+
+          <!-- Column 3: Inspector -->
+          <aside class="w-[380px] bg-white flex flex-col h-full overflow-hidden shrink-0">
+            <div class="px-5 py-3 border-b border-slate-100 bg-slate-50 flex justify-between items-center shrink-0">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-secondary text-[18px]">tune</span>
+                <h2 class="text-xs font-black text-slate-900 uppercase tracking-wider">Properties Inspector</h2>
+              </div>
+              <span id="cfg-step-badge" class="bg-secondary text-white text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider hidden font-mono">STEP 01</span>
+            </div>
+            
+            <div id="cfg-empty-state" class="flex-grow flex flex-col items-center justify-center p-6 text-center text-slate-400">
+              <div class="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center mb-3">
+                <span class="material-symbols-outlined text-[24px] text-slate-400">touch_app</span>
+              </div>
+              <p class="text-xs font-bold text-slate-500">No Step Selected</p>
+              <p class="text-[10px] text-slate-400 mt-1 leading-normal max-w-[200px]">Click a workflow step card in the center timeline to edit its rules and metadata.</p>
+            </div>
+
+            <div id="cfg-editor-content" class="flex-grow overflow-y-auto p-4 space-y-5 custom-scrollbar hidden">
+              <!-- SECTION 1: Identification -->
+              <section class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm space-y-3">
+                <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-1.5">Identification</h4>
+                <div class="space-y-3">
+                  <div>
+                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Process Name</label>
+                    <input type="text" id="cfg-step-name" class="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary" oninput="updateSelectedStepField('name', this.value)">
+                  </div>
+                  <div>
+                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Process Description</label>
+                    <textarea id="cfg-step-desc" rows="2" class="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary" oninput="updateSelectedStepField('description', this.value)" placeholder="Enter process description..."></textarea>
+                  
+                </div>
+              </section>
+
+              <!-- SECTION 2: Dependencies -->
+              <section class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm space-y-3">
+                <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-1.5 flex justify-between items-center">
+                  Dependencies
+                  <span class="material-symbols-outlined text-[14px]">link</span>
+                </h4>
+                <div class="p-3 border border-slate-200 rounded-lg bg-slate-50">
+                  <p class="text-[10px] text-slate-500 font-semibold mb-2.5">This step cannot start until the following step completes:</p>
+                  <div id="cfg-step-dependencies-list" class="space-y-2">
+                    <!-- Dynamically populated dependencies -->
+                  </div>
+                  <button onclick="promptAddDependency()" class="mt-2.5 text-secondary text-xs font-bold flex items-center hover:underline gap-0.5 cursor-pointer">
+                    <span class="material-symbols-outlined text-[16px]">add</span> Add Dependency
+                  </button>
+                </div>
+              </section>
+
+              <!-- SECTION 3: Control Points (Parameters) -->
+              <section id="cfg-section-parameters" class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm space-y-3">
+                <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-1.5 flex justify-between items-center">
+                  Control Points (Parameters)
+                  <span class="material-symbols-outlined text-[14px]">tune</span>
+                </h4>
+                <div id="cfg-step-parameters-list" class="space-y-2.5">
+                  <!-- Dynamically populated parameters -->
+                </div>
+                <button onclick="promptAddParameter()" class="w-full py-2 border-2 border-dashed border-slate-300 rounded-lg text-slate-500 text-xs font-bold flex items-center justify-center hover:bg-slate-50 hover:text-secondary transition-colors cursor-pointer">
+                  <span class="material-symbols-outlined text-[16px] mr-1">add_circle</span> Add Parameter
                 </button>
-</div>
-</footer>
+              </section>
+
+              <!-- SECTION 4: Validations -->
+              <section id="cfg-section-validations" class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm space-y-4 hidden">
+                <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-1.5">Execution Validations</h4>
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="space-y-2.5">
+                    <h5 class="text-[11px] font-bold flex items-center text-slate-800 gap-1">
+                      <span class="material-symbols-outlined text-secondary text-[15px]">play_circle</span> Start
+                    </h5>
+                    <div class="space-y-2">
+                      <label class="flex items-start cursor-pointer select-none">
+                        <input type="checkbox" id="cfg-step-operator-scan" class="w-3.5 h-3.5 rounded border-slate-350 text-secondary focus:ring-0 mt-0.5 mr-2" onchange="updateStepCondition('start', 'operatorScan', this.checked)">
+                        <span class="text-[10px] font-semibold text-slate-700 leading-tight">Enforce Operator Scan</span>
+                      </label>
+                      <label class="flex items-start cursor-pointer select-none">
+                        <input type="checkbox" id="cfg-step-machine-ready" class="w-3.5 h-3.5 rounded border-slate-350 text-secondary focus:ring-0 mt-0.5 mr-2" onchange="updateStepCondition('start', 'machineReady', this.checked)">
+                        <span class="text-[10px] font-semibold text-slate-700 leading-tight">Verify Machine Ready</span>
+                      </label>
+                      <label class="flex items-start cursor-pointer select-none">
+                        <input type="checkbox" id="cfg-step-tool-calibration" class="w-3.5 h-3.5 rounded border-slate-350 text-secondary focus:ring-0 mt-0.5 mr-2" onchange="updateStepCondition('start', 'toolCalibration', this.checked)">
+                        <span class="text-[10px] font-semibold text-slate-700 leading-tight">Require Calibration Check</span>
+                      </label>
+                    </div>
+                  </div>
+                  
+                  <div class="space-y-2.5">
+                    <h5 class="text-[11px] font-bold flex items-center text-slate-800 gap-1">
+                      <span class="material-symbols-outlined text-emerald-600 text-[15px]">check_circle</span> Completion
+                    </h5>
+                    <div class="space-y-2">
+                      <label class="flex items-start cursor-pointer select-none">
+                        <input type="checkbox" id="cfg-step-all-params" class="w-3.5 h-3.5 rounded border-slate-350 text-secondary focus:ring-0 mt-0.5 mr-2" onchange="updateStepCondition('completion', 'allParameters', this.checked)">
+                        <span class="text-[10px] font-semibold text-slate-700 leading-tight">Require All Params</span>
+                      </label>
+                      <label class="flex items-start cursor-pointer select-none">
+                        <input type="checkbox" id="cfg-step-dual-qc" class="w-3.5 h-3.5 rounded border-slate-350 text-secondary focus:ring-0 mt-0.5 mr-2" onchange="updateStepCondition('completion', 'dualQCSignoff', this.checked)">
+                        <span class="text-[10px] font-semibold text-slate-700 leading-tight">Dual QC Sign-off</span>
+                      </label>
+                      <label class="flex items-start cursor-pointer select-none">
+                        <input type="checkbox" id="cfg-step-print-label" class="w-3.5 h-3.5 rounded border-slate-350 text-secondary focus:ring-0 mt-0.5 mr-2" onchange="updateStepCondition('completion', 'autoPrintLabel', this.checked)">
+                        <span class="text-[10px] font-semibold text-slate-700 leading-tight">Auto Print Label</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- SECTION 6: BOM Materials -->
+              <section id="cfg-section-bom" class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm space-y-3">
+                <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-1.5 flex justify-between items-center">
+                  BOM Materials
+                  <span class="material-symbols-outlined text-[14px]">inventory_2</span>
+                </h4>
+                <div id="cfg-step-bom-list" class="space-y-2">
+                  <!-- Dynamically populated BOM materials -->
+                </div>
+              </section>
+
+              <!-- SECTION 5: Operator Validation View -->
+              <section id="cfg-operator-link-section" class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm space-y-3">
+                <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-1.5">Operator Execution Preview</h4>
+                <div id="cfg-operator-link-container">
+                  <!-- Dynamically populated operator link -->
+                </div>
+              </section>
+
+              <button id="cfg-delete-step-btn" type="button" onclick="deleteSelectedStep()" class="w-full py-2 border border-rose-200 text-rose-600 hover:bg-rose-50 font-bold text-xs rounded shadow-sm transition-colors flex items-center justify-center gap-1.5 cursor-pointer uppercase">
+                <span class="material-symbols-outlined text-[16px]">delete</span>
+                Delete Step
+              </button>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <!-- VIEW 2: STEP MASTER CATALOG (TABLE VIEW) -->
+      <div id="container-catalog" class="hidden flex-grow flex flex-col bg-white overflow-hidden h-full min-h-0 border-t border-slate-200">
+        
+        <!-- Filter Bar -->
+        <div class="px-6 py-3 border-b border-slate-200 flex justify-between items-center bg-slate-50 flex-wrap gap-4 shrink-0 select-none">
+          <div class="flex items-center gap-3 w-full sm:w-auto">
+            <div class="relative w-full sm:w-[300px]">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined text-[18px]">search</span>
+              <input type="text" id="catalog-search" oninput="renderCatalogTable()" class="w-full pl-9 pr-4 py-1.5 bg-white border border-slate-300 rounded text-xs font-semibold placeholder-slate-400 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary" placeholder="Search Master Step catalog...">
+            </div>
+            <select id="catalog-stage-filter" onchange="renderCatalogTable()" class="bg-white border border-slate-300 rounded text-xs font-bold text-slate-700 h-[30px] pl-3 pr-8 py-1 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary w-full sm:w-[150px]">
+              <option value="ALL">All Stages</option>
+              <!-- Dynamically populated options -->
+            </select>
+          </div>
+          <span class="text-[10px] text-slate-400 font-bold" id="catalog-counter">Showing 0 entries</span>
+        </div>
+
+        <!-- Catalog Data Table -->
+        <div class="flex-grow overflow-y-auto custom-scrollbar">
+          <table class="w-full text-left border-collapse whitespace-nowrap text-xs font-medium">
+            <thead>
+              <tr class="bg-white border-b border-slate-200 text-slate-500 uppercase font-black tracking-wider text-[10px] select-none">
+                <th class="px-6 py-3.5">Step Code</th>
+                <th class="px-6 py-3.5">Step Name</th>
+                <th class="px-6 py-3.5">Stage Category</th>
+                <th class="px-6 py-3.5">Input Method</th>
+                <th class="px-6 py-3.5 text-center">Parameters</th>
+                <th class="px-6 py-3.5 text-center">Mandatory</th>
+                <th class="px-6 py-3.5 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="catalog-table-body" class="divide-y divide-slate-100 text-slate-700 font-semibold">
+              <!-- Dynamically populated row items -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+
+  <!-- Master Step Catalog Modal Overlay -->
+  <div id="catalogStepModalBackdrop" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[150] transition-opacity duration-300" onclick="closeCatalogStepModal()"></div>
+  <div id="catalogStepModal" class="hidden fixed top-0 right-0 h-full w-full max-w-[500px] bg-white z-[160] shadow-2xl border-l border-outline-variant/30 transform translate-x-full transition-transform duration-300 ease-out flex flex-col overflow-hidden">
+    <div class="bg-slate-50 px-6 py-5 border-b border-slate-200 flex justify-between items-center flex-shrink-0 select-none">
+      <h3 id="catalog-modal-title" class="text-sm font-black text-slate-900 uppercase tracking-wide font-headline-sm">Add Master Step</h3>
+      <button class="text-slate-500 hover:text-slate-800 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 cursor-pointer" onclick="closeCatalogStepModal()">
+        <span class="material-symbols-outlined text-[20px]">close</span>
+      </button>
+    </div>
+    
+    <form onsubmit="saveCatalogStep(event)" class="flex-grow flex flex-col min-h-0">
+      <input type="hidden" id="modal-step-id">
+      <div class="flex-grow overflow-y-auto p-6 space-y-4 custom-scrollbar">
+        
+        <div>
+          <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Process Stage</label>
+          <select id="modal-step-stage" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs font-semibold text-slate-900 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary" required>
+            <!-- Dynamically populated options -->
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Step Code (Unique)</label>
+          <input type="text" id="modal-step-code" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs font-semibold text-slate-900 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary" placeholder="e.g. PRC-ONL-08" required>
+        </div>
+
+        <div>
+          <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Step Name</label>
+          <input type="text" id="modal-step-name" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs font-semibold text-slate-900 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary" placeholder="e.g. Baking Oven Temp Verification" required>
+        </div>
+
+        <div>
+          <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Input Verification Method</label>
+          <select id="modal-step-method" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs font-semibold text-slate-900 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary">
+            <option value="Manual Entry + Photo">Manual Entry + Photo</option>
+            <option value="QR/Barcode Scan (Strict)">QR/Barcode Scan (Strict)</option>
+            <option value="OCR Text Extraction">OCR Text Extraction</option>
+          </select>
+        </div>
+
+        <div class="py-2 border-y border-slate-100 flex items-center justify-between">
+          <div>
+            <label class="block text-[11px] font-bold text-slate-800">Mandatory Step</label>
+            <p class="text-[9px] text-slate-400">Step cannot be skipped on the operator terminal</p>
+          </div>
+          <input type="checkbox" id="modal-step-mandatory" class="w-4.5 h-4.5 rounded border-slate-300 text-secondary focus:ring-0">
+        </div>
+
+        <!-- Parameter specs section -->
+        <div class="space-y-2">
+          <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">Control Points (Specs)</label>
+          <div id="modal-parameters-list" class="space-y-2">
+            <!-- parameters list -->
+          </div>
+          <button type="button" onclick="addModalParameterField()" class="text-secondary text-[11px] font-bold flex items-center hover:underline gap-0.5 cursor-pointer">
+            <span class="material-symbols-outlined text-[16px]">add</span> Add Parameter Spec
+          </button>
+        </div>
+
+        <!-- Validations -->
+        <div class="pt-2 border-t border-slate-100 grid grid-cols-2 gap-4">
+          <div class="space-y-2">
+            <span class="text-[10px] font-bold text-slate-500 uppercase block">Start Validations</span>
+            <label class="flex items-start text-[11px] font-semibold text-slate-700 cursor-pointer">
+              <input type="checkbox" id="modal-sc-operator" class="w-3.5 h-3.5 text-secondary border-slate-300 rounded mr-2 mt-0.5"> Enforce Operator Scan
+            </label>
+            <label class="flex items-start text-[11px] font-semibold text-slate-700 cursor-pointer">
+              <input type="checkbox" id="modal-sc-machine" class="w-3.5 h-3.5 text-secondary border-slate-300 rounded mr-2 mt-0.5"> Verify Machine Ready
+            </label>
+          </div>
+          <div class="space-y-2">
+            <span class="text-[10px] font-bold text-slate-500 uppercase block">Completion Validations</span>
+            <label class="flex items-start text-[11px] font-semibold text-slate-700 cursor-pointer">
+              <input type="checkbox" id="modal-cc-params" class="w-3.5 h-3.5 text-secondary border-slate-300 rounded mr-2 mt-0.5"> Require All Params
+            </label>
+            <label class="flex items-start text-[11px] font-semibold text-slate-700 cursor-pointer">
+              <input type="checkbox" id="modal-cc-qc" class="w-3.5 h-3.5 text-secondary border-slate-300 rounded mr-2 mt-0.5"> Dual QC Sign-off
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="bg-slate-50 px-6 py-4 border-t border-slate-200 flex justify-end gap-2 flex-shrink-0">
+        <button type="button" onclick="closeCatalogStepModal()" class="px-4 py-2 border border-slate-300 text-slate-700 font-bold text-xs rounded hover:bg-slate-100 transition-colors cursor-pointer uppercase">Cancel</button>
+        <button type="submit" class="px-4 py-2 bg-secondary text-white font-bold text-xs rounded hover:opacity-95 transition-opacity cursor-pointer uppercase">Save Step</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Centered Modal overlays replacing standard prompt inputs -->
+  <div id="customModalBackdrop" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[180] transition-opacity duration-300" onclick="closeCustomModal('all')"></div>
+  
+  <!-- Add Stage Modal -->
+  <div id="modalAddStage" class="hidden fixed inset-0 z-[190] flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-[400px] rounded-xl shadow-2xl border border-slate-200 overflow-hidden text-slate-800">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex justify-between items-center">
+        <h3 class="text-xs font-black uppercase text-slate-900 tracking-wider flex items-center gap-1.5 font-headline-sm">
+          <span class="material-symbols-outlined text-secondary text-[18px]">add_circle</span>
+          Add Stage
+        </h3>
+        <button type="button" onclick="closeCustomModal('modalAddStage')" class="text-slate-500 hover:text-slate-800 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 cursor-pointer">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+      <form onsubmit="submitAddStage(event)" class="p-5 space-y-4">
+        <div>
+          <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Stage Name</label>
+          <input type="text" id="input-stage-name" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary" placeholder="e.g. QUALITY TESTING" required>
+        </div>
+        <div>
+          <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Stage Summary</label>
+          <textarea id="input-stage-summary" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary" rows="2" placeholder="Brief summary of operations..." required>Custom master process stage execution flow template.</textarea>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeCustomModal('modalAddStage')" class="px-4 py-2 border border-slate-300 text-slate-700 font-bold text-xs rounded hover:bg-slate-105 transition-colors cursor-pointer uppercase">Cancel</button>
+          <button type="submit" class="px-4 py-2 bg-secondary text-white font-bold text-xs rounded hover:opacity-95 transition-opacity cursor-pointer uppercase">Add Stage</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Step Modal -->
+  <div id="modalAddStep" class="hidden fixed inset-0 z-[190] flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-[400px] rounded-xl shadow-2xl border border-slate-200 overflow-hidden text-slate-800">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex justify-between items-center">
+        <h3 class="text-xs font-black uppercase text-slate-900 tracking-wider flex items-center gap-1.5 font-headline-sm">
+          <span class="material-symbols-outlined text-secondary text-[18px]">add_circle</span>
+          Add Step
+        </h3>
+        <button type="button" onclick="closeCustomModal('modalAddStep')" class="text-slate-500 hover:text-slate-800 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 cursor-pointer">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+      <form onsubmit="submitAddStep(event)" class="p-5 space-y-4">
+        <div>
+          <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Step Name</label>
+          <input type="text" id="input-step-name" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary" placeholder="e.g. Laser engraving check" required>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeCustomModal('modalAddStep')" class="px-4 py-2 border border-slate-300 text-slate-700 font-bold text-xs rounded hover:bg-slate-105 transition-colors cursor-pointer uppercase">Cancel</button>
+          <button type="submit" class="px-4 py-2 bg-secondary text-white font-bold text-xs rounded hover:opacity-95 transition-opacity cursor-pointer uppercase">Add Step</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Dependency Modal -->
+  <div id="modalAddDependency" class="hidden fixed inset-0 z-[190] flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-[400px] rounded-xl shadow-2xl border border-slate-200 overflow-hidden text-slate-800">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex justify-between items-center">
+        <h3 class="text-xs font-black uppercase text-slate-900 tracking-wider flex items-center gap-1.5 font-headline-sm">
+          <span class="material-symbols-outlined text-secondary text-[18px]">add_circle</span>
+          Add Dependency
+        </h3>
+        <button type="button" onclick="closeCustomModal('modalAddDependency')" class="text-slate-500 hover:text-slate-800 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 cursor-pointer">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+      <form onsubmit="submitAddDependency(event)" class="p-5 space-y-4">
+        <div>
+          <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Dependency Name</label>
+          <input type="text" id="input-dep-name" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:border-secondary" placeholder="e.g. Scan Work Order" required>
+        </div>
+        <div>
+          <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Dependency Code</label>
+          <input type="text" id="input-dep-code" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:border-secondary" placeholder="e.g. PRC-MAT-01" required>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeCustomModal('modalAddDependency')" class="px-4 py-2 border border-slate-300 text-slate-700 font-bold text-xs rounded hover:bg-slate-105 transition-colors cursor-pointer uppercase">Cancel</button>
+          <button type="submit" class="px-4 py-2 bg-secondary text-white font-bold text-xs rounded hover:opacity-95 transition-opacity cursor-pointer uppercase">Add Dependency</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Parameter Modal -->
+  <div id="modalAddParameter" class="hidden fixed inset-0 z-[190] flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-[400px] rounded-xl shadow-2xl border border-slate-200 overflow-hidden text-slate-800">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex justify-between items-center">
+        <h3 class="text-xs font-black uppercase text-slate-900 tracking-wider flex items-center gap-1.5 font-headline-sm">
+          <span class="material-symbols-outlined text-secondary text-[18px]">add_circle</span>
+          Add Parameter
+        </h3>
+        <button type="button" onclick="closeCustomModal('modalAddParameter')" class="text-slate-500 hover:text-slate-800 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 cursor-pointer">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+      <form onsubmit="submitAddParameter(event)" class="p-5 space-y-4">
+        <div>
+          <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Parameter Name</label>
+          <input type="text" id="input-param-name" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:border-secondary" placeholder="e.g. Oven temperature" required>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Standard Value</label>
+            <input type="text" id="input-param-standard" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none" placeholder="e.g. 150 °C" required>
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Tolerance</label>
+            <input type="text" id="input-param-tolerance" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none" placeholder="e.g. ±5 °C" required>
+          </div>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeCustomModal('modalAddParameter')" class="px-4 py-2 border border-slate-300 text-slate-700 font-bold text-xs rounded hover:bg-slate-105 transition-colors cursor-pointer uppercase">Cancel</button>
+          <button type="submit" class="px-4 py-2 bg-secondary text-white font-bold text-xs rounded hover:opacity-95 transition-opacity cursor-pointer uppercase">Add Parameter</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </main>
-<script>
-        // Simple micro-interaction for node selection
-        document.querySelectorAll('.workflow-canvas [class*="absolute"]').forEach(node => {
-            node.addEventListener('click', () => {
-                document.querySelectorAll('.node-active').forEach(n => n.classList.remove('node-active'));
-                node.classList.add('node-active');
+
+  <!-- Toast system notifications -->
+  <div id="woToast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 ease-out z-[200] border border-slate-800 text-sm">
+    <span class="material-symbols-outlined text-emerald-400" id="woToastIcon">check_circle</span>
+    <span id="woToastMessage">Changes saved successfully!</span>
+  </div>
+
+  <script>
+    (async function() {
+        let workflowStages = [];
+        let workflowSteps = [];
+        let currentStageIndex = 0;
+        let currentStepId = null;
+        let activeTab = 'sequence';
+
+        function showToast(msg, isSuccess = true) {
+            const toast = document.getElementById('woToast');
+            const msgEl = document.getElementById('woToastMessage');
+            const iconEl = document.getElementById('woToastIcon');
+            if (toast && msgEl) {
+                msgEl.textContent = msg;
+                if (isSuccess) {
+                    iconEl.textContent = 'check_circle';
+                    iconEl.className = 'material-symbols-outlined text-emerald-400';
+                } else {
+                    iconEl.textContent = 'warning';
+                    iconEl.className = 'material-symbols-outlined text-rose-400';
+                }
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+        }
+
+        async function loadMasterWorkflowConfig() {
+            const stored = localStorage.getItem('workflow_master');
+            let needsLoad = true;
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    const hasRework = parsed.stages && parsed.stages.some(s => s.id === 'stage-rework' || s.name.includes("REWORK"));
+                    const hasStalePicking = parsed.steps && parsed.steps.some(s => s.stageId === 'stage-picking' && (!s.description || s.name.includes("Retrieve Rubber Pipes") || s.name.includes("Load Material Checklist")));
+                    if (parsed.stages && parsed.stages.length === 4 && !hasRework && !hasStalePicking && parsed.steps && parsed.steps.length > 0) {
+                        workflowStages = parsed.stages;
+                        workflowSteps = parsed.steps;
+                        
+                        // Auto-migrate stage summaries to match requested operator specs
+                        const pickingStage = workflowStages.find(s => s.id === 'stage-picking');
+                        if (pickingStage) {
+                            pickingStage.summary = "Retrieve rubber pipes, brackets, protect sleeve fittings from warehouse storage racks.";
+                        }
+                        
+                        needsLoad = false;
+                    }
+                } catch (e) {
+                    console.error("Error parsing stored config, reloading default template JSON.", e);
+                }
+            }
+
+            if (needsLoad) {
+                try {
+                    const res = await fetch('./workflow_master.json');
+                    const defaultData = await res.json();
+                    workflowStages = defaultData.stages || [];
+                    workflowSteps = defaultData.steps || [];
+                    localStorage.setItem('workflow_master', JSON.stringify({ stages: workflowStages, steps: workflowSteps }));
+                } catch (err) {
+                    console.error("Failed to fetch default template JSON, loading fallback...", err);
+                    workflowStages = [
+                        { id: "stage-picking", name: "PICKING", summary: "Retrieve rubber pipes, brackets, protect sleeve fittings from warehouse storage racks." },
+                        { id: "stage-offline", name: "OFFLINE", summary: "Offline raw materials preparation, barcode checks, cutting rubber pipes & metal sleeve sorting." },
+                        { id: "stage-online", name: "ONLINE", summary: "Double pipe assembly bending, metal hose fitting press crimping, baking, adhesive bonding, double pipe torque check." },
+                        { id: "stage-qc", name: "QC APPROVAL", summary: "100% leak test visual check, pressure inspection, stamping barcode tags, packaging release." }
+                    ];
+                    workflowSteps = [];
+                }
+            }
+            populateFilterOptions();
+            selectStage(0);
+        }
+
+        function switchMasterTab(tabName) {
+            activeTab = tabName;
+            
+            const btnSeq = document.getElementById('master-tab-sequence');
+            const btnCat = document.getElementById('master-tab-catalog');
+            const divSeq = document.getElementById('container-sequence');
+            const divCat = document.getElementById('container-catalog');
+            const headActions = document.getElementById('catalog-header-actions');
+
+            if (tabName === 'sequence') {
+                btnSeq.className = 'py-2.5 px-4 text-xs uppercase tracking-wider font-black border-b-2 border-secondary text-secondary cursor-pointer transition-all';
+                btnCat.className = 'py-2.5 px-4 text-xs uppercase tracking-wider font-black border-b-2 border-transparent text-slate-500 hover:text-slate-800 cursor-pointer transition-all';
+                divSeq.classList.remove('hidden');
+                divCat.classList.add('hidden');
+                headActions.classList.add('hidden');
+                renderStages();
+                renderSteps();
+            } else {
+                btnSeq.className = 'py-2.5 px-4 text-xs uppercase tracking-wider font-black border-b-2 border-transparent text-slate-500 hover:text-slate-800 cursor-pointer transition-all';
+                btnCat.className = 'py-2.5 px-4 text-xs uppercase tracking-wider font-black border-b-2 border-secondary text-secondary cursor-pointer transition-all';
+                divSeq.classList.add('hidden');
+                divCat.classList.remove('hidden');
+                headActions.classList.remove('hidden');
+                renderCatalogTable();
+            }
+        }
+
+        function populateFilterOptions() {
+            const filterSelect = document.getElementById('catalog-stage-filter');
+            const modalSelect = document.getElementById('modal-step-stage');
+            if (filterSelect && modalSelect) {
+                filterSelect.innerHTML = '<option value="ALL">All Stages</option>';
+                modalSelect.innerHTML = '';
+                
+                workflowStages.forEach(s => {
+                    filterSelect.innerHTML += `<option value="${s.id}">${s.name}</option>`;
+                    modalSelect.innerHTML += `<option value="${s.id}">${s.name}</option>`;
+                });
+            }
+        }
+
+        // ==========================================
+        // TAB 1: PIPELINE DESIGNER METHODS
+        // ==========================================
+        function renderStages() {
+            const listEl = document.getElementById('stage-components-list');
+            if (!listEl) return;
+            listEl.innerHTML = '';
+
+            workflowStages.forEach((stage, idx) => {
+                const isSelected = idx === currentStageIndex;
+                const card = document.createElement('div');
+                
+                if (isSelected) {
+                    card.className = 'border-l-4 border-secondary bg-slate-100 rounded-r border-y border-r border-slate-200 p-3 cursor-pointer shadow-sm select-none';
+                } else {
+                    card.className = 'border-l-4 border-transparent hover:border-slate-350 bg-white border border-slate-200 rounded p-3 cursor-pointer hover:bg-slate-50 transition-colors select-none';
+                }
+                
+                card.onclick = () => selectStage(idx);
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                      <span class="font-bold text-xs uppercase ${isSelected ? 'text-secondary' : 'text-slate-800'}">${idx + 1}. ${stage.name}</span>
+                      <button onclick="event.stopPropagation(); deleteStage(${idx})" class="text-slate-400 hover:text-rose-600 transition-colors">
+                        <span class="material-symbols-outlined text-[15px]">delete</span>
+                      </button>
+                    </div>
+                `;
+                listEl.appendChild(card);
             });
-        });
 
-        // Draggable stages mockup (visual only)
-        document.querySelectorAll('aside div[cursor-move]').forEach(item => {
-            item.addEventListener('mousedown', (e) => {
-                item.style.opacity = '0.5';
-                const onUp = () => {
-                    item.style.opacity = '1';
-                    window.removeEventListener('mouseup', onUp);
-                };
-                window.addEventListener('mouseup', onUp);
+            // Add Stage Button removed
+        }
+
+        function selectStage(index) {
+            currentStageIndex = index;
+            currentStepId = null;
+            renderStages();
+            renderSteps();
+            updateInspectorConfig();
+            runWorkflowValidation();
+        }
+
+        function openCustomModal(modalId) {
+            const backdrop = document.getElementById('customModalBackdrop');
+            const modal = document.getElementById(modalId);
+            if (backdrop && modal) {
+                backdrop.classList.remove('hidden');
+                modal.classList.remove('hidden');
+                const form = modal.querySelector('form');
+                if (form) form.reset();
+            }
+        }
+
+        function closeCustomModal(modalId) {
+            const backdrop = document.getElementById('customModalBackdrop');
+            if (modalId === 'all') {
+                document.querySelectorAll('#modalAddStage, #modalAddStep, #modalAddDependency, #modalAddParameter').forEach(m => m.classList.add('hidden'));
+                if (backdrop) backdrop.classList.add('hidden');
+                return;
+            }
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+            const anyOpen = Array.from(document.querySelectorAll('#modalAddStage, #modalAddStep, #modalAddDependency, #modalAddParameter')).some(m => !m.classList.contains('hidden'));
+            if (!anyOpen && backdrop) {
+                backdrop.classList.add('hidden');
+            }
+        }
+
+        function addStage() {
+            openCustomModal('modalAddStage');
+        }
+
+        function autoSaveMaster() {
+            localStorage.setItem('workflow_master', JSON.stringify({ stages: workflowStages, steps: workflowSteps }));
+        }
+
+        function submitAddStage(e) {
+            e.preventDefault();
+            const name = document.getElementById('input-stage-name').value.trim();
+            const summary = document.getElementById('input-stage-summary').value.trim();
+            if (!name) return;
+            const id = 'stage-' + Date.now();
+            workflowStages.push({
+                id: id,
+                name: name.toUpperCase(),
+                summary: summary || "Custom master process stage execution flow template."
             });
-        });
-    </script>
+            autoSaveMaster();
+            populateFilterOptions();
+            closeCustomModal('modalAddStage');
+            selectStage(workflowStages.length - 1);
+            showToast("New stage added successfully.");
+        }
 
+        function deleteStage(idx) {
+            if (workflowStages.length <= 1) {
+                showToast("Cannot delete the only stage.", false);
+                return;
+            }
+            if (confirm(`Are you sure you want to delete stage "${workflowStages[idx].name}" and all of its steps?`)) {
+                const targetId = workflowStages[idx].id;
+                workflowSteps = workflowSteps.filter(s => s.stageId !== targetId);
+                workflowStages.splice(idx, 1);
+                autoSaveMaster();
+                currentStageIndex = 0;
+                populateFilterOptions();
+                selectStage(0);
+                showToast("Stage removed.");
+            }
+        }
 
-</body></html>
+        function renderSteps() {
+            const titleEl = document.getElementById('stage-workflow-title');
+            const subtitleEl = document.getElementById('stage-workflow-subtitle');
+            const containerEl = document.getElementById('steps-timeline-container');
+            
+            if (!containerEl) return;
+            containerEl.innerHTML = '';
+
+            const stage = workflowStages[currentStageIndex];
+            if (!stage) return;
+
+            titleEl.innerHTML = `<span class="material-symbols-outlined text-secondary text-[18px]">account_tree</span> ${stage.name} Workflow`;
+            subtitleEl.textContent = stage.summary;
+
+            const stageSteps = workflowSteps.filter(s => s.stageId === stage.id);
+
+            stageSteps.forEach((step, idx) => {
+                const isSelected = step.id === currentStepId;
+
+                const cardWrapper = document.createElement('div');
+                cardWrapper.className = 'relative';
+
+                // Timeline Dot
+                const dot = document.createElement('div');
+                if (isSelected) {
+                    dot.className = 'absolute -left-[43px] top-6 w-6 h-6 rounded-full border-2 border-secondary bg-secondary flex items-center justify-center shadow-[0_0_0_4px_rgba(0,106,106,0.2)] z-10';
+                    dot.innerHTML = '<div class="w-2 h-2 rounded-full bg-white"></div>';
+                } else {
+                    dot.className = 'absolute -left-[43px] top-6 w-6 h-6 rounded-full border-2 border-slate-200 bg-white flex items-center justify-center z-10';
+                    dot.innerHTML = `<div class="w-2 h-2 rounded-full bg-slate-400"></div>`;
+                }
+                cardWrapper.appendChild(dot);
+
+                // Card content
+                const card = document.createElement('div');
+                card.onclick = () => selectStep(step.id);
+
+                let borderStyle = 'border border-slate-200 shadow-sm hover:border-secondary/50';
+                let titleStyle = 'text-slate-800';
+                
+                if (isSelected) {
+                    borderStyle = 'border-2 border-secondary shadow-md relative overflow-hidden';
+                    titleStyle = 'text-secondary';
+                }
+
+                card.className = `bg-white ${borderStyle} rounded-xl cursor-pointer transition-colors`;
+                
+                // Construct Grid key-values
+                let gridHtml = '';
+                if (step.fields && Object.keys(step.fields).length > 0) {
+                    gridHtml = '<div class="grid grid-cols-2 gap-x-6 gap-y-1.5 text-[11px] mt-1.5">';
+                    Object.entries(step.fields).forEach(([key, val]) => {
+                        gridHtml += `
+                            <div class="flex items-center gap-1.5 border-b border-slate-100/50 pb-0.5">
+                                <span class="text-slate-400 font-medium shrink-0">${key}:</span>
+                                <span class="truncate text-slate-800 font-semibold">${val}</span>
+                            </div>`;
+                    });
+                    gridHtml += '</div>';
+                }
+
+                let scannerBoxHtml = '';
+
+                // Dynamic tags logic (excluding validations)
+                let tagsHtml = '';
+                const tags = [];
+                if (step.mandatory !== false) tags.push({ text: "Mandatory", style: "bg-slate-100 border-slate-200 text-slate-500" });
+                if (step.parameters && step.parameters.length > 0) {
+                    tags.push({ text: "Control Points", style: "bg-blue-50 border-blue-200 text-blue-600" });
+                }
+                tags.push({ text: step.inputMethod || "Manual", style: "bg-slate-100 border-slate-200 text-slate-500" });
+
+                tags.forEach(tag => {
+                    tagsHtml += `<span class="px-1.5 py-0.5 border rounded text-[9px] font-bold uppercase tracking-wider ${tag.style}">${tag.text}</span>`;
+                });
+
+                card.innerHTML = `
+                    ${isSelected ? '<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary"></div>' : ''}
+                    <div class="p-3.5 flex items-start gap-4">
+                      <div class="w-9 h-9 rounded bg-slate-100 border border-slate-250 flex items-center justify-center shrink-0 font-bold text-xs text-slate-600 font-mono">
+                        ${idx < 9 ? '0' + (idx + 1) : (idx + 1)}
+                      </div>
+                      <div class="flex-grow min-w-0">
+                        <div class="flex justify-between items-center pb-1">
+                          <h3 class="font-bold text-xs uppercase truncate ${titleStyle}">${step.name}</h3>
+                          <span class="text-[9px] font-mono font-bold text-slate-400 border border-slate-200 px-1 rounded">${step.code || 'NO-CODE'}</span>
+                        </div>
+                        ${gridHtml}
+                        ${scannerBoxHtml}
+                        <div class="flex flex-wrap gap-1 mt-2">
+                          ${tagsHtml}
+                        </div>
+                      </div>
+                    </div>
+                `;
+
+                cardWrapper.appendChild(card);
+                containerEl.appendChild(cardWrapper);
+            });
+
+            // Add Step Button removed
+        }
+
+        function selectStep(stepId) {
+            currentStepId = stepId;
+            renderSteps();
+            updateInspectorConfig();
+        }
+
+        function addStep() {
+            openCustomModal('modalAddStep');
+        }
+
+        function submitAddStep(e) {
+            e.preventDefault();
+            const name = document.getElementById('input-step-name').value.trim();
+            if (!name) return;
+            const stage = workflowStages[currentStageIndex];
+            if (!stage) return;
+
+            const stageSteps = workflowSteps.filter(s => s.stageId === stage.id);
+            const num = stageSteps.length + 1;
+            const stepNumber = "STEP " + (num < 10 ? '0' + num : num);
+            const id = 'step-' + Date.now();
+
+            workflowSteps.push({
+                id: id,
+                stageId: stage.id,
+                stepNumber: stepNumber,
+                name: name,
+                code: "PRC-" + stage.name.substring(0, 3).toUpperCase().replace(/\s/g, "") + "-" + (num < 10 ? '0' + num : num),
+                mandatory: true,
+                fields: {},
+                prerequisite: stageSteps.length > 0 ? stageSteps[stageSteps.length - 1].id : "",
+                dependencies: [],
+                parameters: [],
+                startConditions: {
+                    operatorScan: false,
+                    machineReady: false,
+                    toolCalibration: false
+                },
+                completionConditions: {
+                    allParameters: false,
+                    dualQCSignoff: false,
+                    autoPrintLabel: false
+                },
+                inputMethod: "Manual Entry + Photo"
+            });
+
+            autoSaveMaster();
+            closeCustomModal('modalAddStep');
+            selectStep(id);
+            showToast("New step added to layout.");
+        }
+
+        function updateInspectorConfig() {
+            const emptyEl = document.getElementById('cfg-empty-state');
+            const editorEl = document.getElementById('cfg-editor-content');
+            const badgeEl = document.getElementById('cfg-step-badge');
+
+            if (!emptyEl || !editorEl) return;
+
+            if (!currentStepId) {
+                emptyEl.classList.remove('hidden');
+                editorEl.classList.add('hidden');
+                badgeEl.classList.add('hidden');
+                return;
+            }
+
+            const step = workflowSteps.find(s => s.id === currentStepId);
+            if (!step) {
+                emptyEl.classList.remove('hidden');
+                editorEl.classList.add('hidden');
+                badgeEl.classList.add('hidden');
+                return;
+            }
+
+            emptyEl.classList.add('hidden');
+            editorEl.classList.remove('hidden');
+            badgeEl.classList.remove('hidden');
+            badgeEl.textContent = step.stepNumber;
+
+            // Identification
+            const nameEl = document.getElementById('cfg-step-name');
+            if (nameEl) nameEl.value = step.name;
+            const descEl = document.getElementById('cfg-step-desc');
+            if (descEl) descEl.value = step.description || "";
+            const codeEl = document.getElementById('cfg-step-code');
+            if (codeEl) codeEl.value = step.code || "";
+            const mandatoryEl = document.getElementById('cfg-step-mandatory');
+            if (mandatoryEl) mandatoryEl.checked = step.mandatory !== false;
+
+            // Dependencies
+            const depListEl = document.getElementById('cfg-step-dependencies-list');
+            if (depListEl) {
+                depListEl.innerHTML = '';
+                const deps = step.dependencies || [];
+                if (deps.length === 0) {
+                    depListEl.innerHTML = '<p class="text-[10px] text-slate-400 font-semibold italic">No dependencies configured.</p>';
+                } else {
+                    deps.forEach((dep, idx) => {
+                        depListEl.innerHTML += `
+                            <div class="flex items-center justify-between p-2 bg-white border border-slate-200 rounded-lg shadow-sm">
+                              <div class="flex items-center min-w-0">
+                                <span class="material-symbols-outlined text-sm text-secondary mr-1.5 shrink-0">link</span>
+                                <span class="text-xs font-semibold text-slate-700 truncate">${dep.name}</span>
+                              </div>
+                              <div class="flex items-center gap-2 shrink-0">
+                                <span class="text-[9px] font-mono bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200 text-slate-500">${dep.code}</span>
+                                <button onclick="deleteDependency(${idx})" class="text-rose-500 hover:text-rose-700 flex items-center justify-center cursor-pointer">
+                                  <span class="material-symbols-outlined text-[14px]">delete</span>
+                                </button>
+                              </div>
+                            </div>
+                        `;
+                    });
+                }
+            }
+
+            // Parameters
+            const paramListEl = document.getElementById('cfg-step-parameters-list');
+            if (paramListEl) {
+                paramListEl.innerHTML = '';
+                const params = step.parameters || [];
+                if (params.length === 0) {
+                    paramListEl.innerHTML = '<p class="text-[10px] text-slate-400 font-semibold italic">No parameters configured.</p>';
+                } else {
+                    params.forEach((param, idx) => {
+                        paramListEl.innerHTML += `
+                            <div class="relative p-3 bg-white border border-slate-200 border-l-4 border-l-secondary rounded-lg shadow-sm flex flex-col gap-1.5">
+                              <div class="flex justify-between items-start">
+                                <span class="text-xs font-bold text-slate-800">${param.name}</span>
+                                <button onclick="deleteParameter(${idx})" class="text-rose-500 hover:text-rose-700 flex items-center justify-center cursor-pointer">
+                                  <span class="material-symbols-outlined text-[14px]">delete</span>
+                                </button>
+                              </div>
+                              <div class="grid grid-cols-2 gap-2 text-[10px]">
+                                <div>
+                                  <p class="text-slate-400 uppercase font-bold">Standard</p>
+                                  <p class="text-xs font-bold text-slate-700">${param.standard}</p>
+                                </div>
+                                <div>
+                                  <p class="text-slate-400 uppercase font-bold">Tolerance</p>
+                                  <p class="text-xs font-bold text-slate-700">${param.tolerance}</p>
+                                </div>
+                              </div>
+                            </div>
+                        `;
+                    });
+                }
+            }
+
+            // Start & Completion Checkboxes
+            const sc = step.startConditions || { operatorScan: false, machineReady: false, toolCalibration: false };
+            const cc = step.completionConditions || { allParameters: false, dualQCSignoff: false, autoPrintLabel: false };
+
+            const opScan = document.getElementById('cfg-step-operator-scan');
+            if (opScan) opScan.checked = !!sc.operatorScan;
+            const machReady = document.getElementById('cfg-step-machine-ready');
+            if (machReady) machReady.checked = !!sc.machineReady;
+            const toolCal = document.getElementById('cfg-step-tool-calibration');
+            if (toolCal) toolCal.checked = !!sc.toolCalibration;
+
+            const allParams = document.getElementById('cfg-step-all-params');
+            if (allParams) allParams.checked = !!cc.allParameters;
+            const dualQc = document.getElementById('cfg-step-dual-qc');
+            if (dualQc) dualQc.checked = !!cc.dualQCSignoff;
+            const printLbl = document.getElementById('cfg-step-print-label');
+            if (printLbl) printLbl.checked = !!cc.autoPrintLabel;
+
+            // Operator link button
+            const operatorLinkContainer = document.getElementById('cfg-operator-link-container');
+            if (operatorLinkContainer) {
+                const stepName = step.name.toLowerCase();
+                let link = '';
+                let label = '';
+                let bgClass = '';
+                
+                if (stepName.includes('picking') || stepName.includes('pick')) {
+                    link = `../step-configuration-picking/index.html?wo=WO-2026-9041`;
+                    label = `Launch Material Picking Client`;
+                    bgClass = `bg-rose-600 hover:bg-rose-700`;
+                } else if (stepName.includes('cutting') || stepName.includes('sleeve') || stepName.includes('offline')) {
+                    link = `../offline-prep-validation/index.html?wo=WO-2026-9041`;
+                    label = `Launch Offline Prep Execution`;
+                    bgClass = `bg-slate-800 hover:bg-slate-900`;
+                } else if (stepName.includes('inspection') || stepName.includes('packing') || stepName.includes('qc')) {
+                    link = `../qc-approval-validation/index.html?wo=WO-2026-9041`;
+                    label = `Launch QC Approval Terminal`;
+                    bgClass = `bg-emerald-600 hover:bg-emerald-700`;
+                } else {
+                    link = `../online-assembly-validation/index.html?wo=WO-2026-9041`;
+                    label = `Launch Online Assembly Execution`;
+                    bgClass = `bg-secondary hover:bg-secondary/90`;
+                }
+                
+                operatorLinkContainer.innerHTML = `
+                    <a href="${link}" class="w-full py-2.5 ${bgClass} text-white font-bold text-xs uppercase rounded-lg flex items-center justify-center gap-1.5 transition-colors shadow-sm text-center select-none">
+                        <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+                        ${label}
+                    </a>
+                `;
+            }
+
+            // Populate BOM Materials section
+            const bomListEl = document.getElementById('cfg-step-bom-list');
+            if (bomListEl) {
+                bomListEl.innerHTML = '';
+                const boms = getStepBOMMaterials(step);
+                if (boms.length === 0) {
+                    bomListEl.innerHTML = '<p class="text-[10px] text-slate-400 font-semibold italic">No BOM materials assigned to this step.</p>';
+                } else {
+                    boms.forEach((bom) => {
+                        bomListEl.innerHTML += `
+                            <div class="flex items-center justify-between p-2.5 bg-white border border-slate-200 border-l-4 border-l-[#dc0111] rounded-lg shadow-sm">
+                              <div class="flex flex-col min-w-0">
+                                <span class="text-xs font-bold text-slate-800 truncate">${bom.name}</span>
+                                <span class="text-[9px] font-mono text-slate-400 mt-0.5">${bom.partNo}</span>
+                              </div>
+                              <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-200 shrink-0">${bom.quantity}</span>
+                            </div>
+                        `;
+                    });
+                }
+            }
+
+            // Dynamic visibility constraints for PICKING stage steps
+            const isPicking = step.stageId === 'stage-picking';
+            const paramSec = document.getElementById('cfg-section-parameters');
+            const operatorSec = document.getElementById('cfg-operator-link-section');
+            const bomSec = document.getElementById('cfg-section-bom');
+            
+            if (isPicking) {
+                if (paramSec) paramSec.classList.add('hidden');
+                if (operatorSec) operatorSec.classList.add('hidden');
+                if (bomSec) bomSec.classList.remove('hidden');
+            } else {
+                if (paramSec) paramSec.classList.remove('hidden');
+                if (operatorSec) operatorSec.classList.remove('hidden');
+                if (bomSec) bomSec.classList.add('hidden');
+            }
+        }
+
+        function getStepBOMMaterials(step) {
+          if (step.bomMaterials) return step.bomMaterials;
+          
+          if (step.id.includes('step-1') || step.code.includes('MAT-01')) {
+            return [
+              { partNo: "45128-K1L-D410-M1", name: "EPDM Brake Hose Pipe", quantity: "1 pc" },
+              { partNo: "BU10024-MS-11", name: "Rubber Clamp BU10024", quantity: "2 pcs" },
+              { partNo: "L-260-PROT", name: "Protector Sleeve L-260", quantity: "1 pc" }
+            ];
+          } else if (step.id.includes('step-2') || step.code.includes('MAT-02')) {
+            return [
+              { partNo: "45128-K1L-D410-M1", name: "EPDM Brake Hose Pipe", quantity: "1 pc" }
+            ];
+          } else if (step.id.includes('step-3') || step.code.includes('MAT-03')) {
+            return [
+              { partNo: "TAG-QR-01", name: "QR Tag Barcode Label", quantity: "1 pc" }
+            ];
+          } else if (step.code.includes('OFF-01')) {
+            return [
+              { partNo: "EPDM-RAW-59", name: "EPDM Raw Hose Reel", quantity: "0.65 m" }
+            ];
+          } else if (step.code.includes('OFF-02')) {
+            return [
+              { partNo: "PROT-SLV-260", name: "Protector Hose L260", quantity: "1 pc" },
+              { partNo: "PROT-SLV-160", name: "Protector Hose L160", quantity: "1 pc" }
+            ];
+          } else if (step.code.includes('OFF-03')) {
+            return [
+              { partNo: "SLV-MS-11", name: "Metal Sleeve Fitting", quantity: "2 pcs" }
+            ];
+          } else if (step.code.includes('OFF-04')) {
+            return [
+              { partNo: "INK-BLK-04", name: "Industrial Engraving Ink", quantity: "1 ml" }
+            ];
+          } else if (step.code.includes('ONL-01') || step.code.includes('ONL-03')) {
+            return [
+              { partNo: "BU10024-MS-11", name: "Rubber Clamp BU10024", quantity: "1 pc" },
+              { partNo: "L-260-PROT", name: "Protector Sleeve L-260", quantity: "1 pc" }
+            ];
+          } else if (step.code.includes('ONL-02') || step.code.includes('ONL-04')) {
+            return [
+              { partNo: "CRM-SLV-90", name: "Crimp Ring Sleeve 9.0mm", quantity: "1 pc" }
+            ];
+          } else if (step.code.includes('ONL-05')) {
+            return [
+              { partNo: "GLU-ADH-59", name: "Industrial Cyanoacrylate Glue", quantity: "2 drops" }
+            ];
+          } else if (step.code.includes('QC-03')) {
+            return [
+              { partNo: "BOX-600-400", name: "Corrugated Storage Bin", quantity: "0.016 pc" },
+              { partNo: "TAG-SHP-01", name: "Shipping Routing Label", quantity: "1 pc" }
+            ];
+          }
+          
+          return [
+            { partNo: "45128-K1L-D410-M1", name: "EPDM Brake Hose Assembly", quantity: "1 pc" }
+          ];
+        }
+
+        function updateSelectedStepField(key, val) {
+            if (!currentStepId) return;
+            const step = workflowSteps.find(s => s.id === currentStepId);
+            if (step) {
+                step[key] = val;
+                if (key === 'name') {
+                    renderSteps();
+                }
+                autoSaveMaster();
+                updateInspectorConfig();
+                runWorkflowValidation();
+            }
+        }
+
+        function promptAddDependency() {
+            if (!currentStepId) return;
+            openCustomModal('modalAddDependency');
+        }
+
+        function submitAddDependency(e) {
+            e.preventDefault();
+            if (!currentStepId) return;
+            const step = workflowSteps.find(s => s.id === currentStepId);
+            if (!step) return;
+
+            const name = document.getElementById('input-dep-name').value.trim();
+            const code = document.getElementById('input-dep-code').value.trim();
+            if (!name || !code) return;
+
+            if (!step.dependencies) step.dependencies = [];
+            step.dependencies.push({ name, code });
+            
+            autoSaveMaster();
+            closeCustomModal('modalAddDependency');
+            renderSteps();
+            updateInspectorConfig();
+            showToast("Dependency added.");
+        }
+
+        function deleteDependency(idx) {
+            if (!currentStepId) return;
+            const step = workflowSteps.find(s => s.id === currentStepId);
+            if (!step || !step.dependencies) return;
+
+            step.dependencies.splice(idx, 1);
+            autoSaveMaster();
+            renderSteps();
+            updateInspectorConfig();
+            showToast("Dependency removed.");
+        }
+
+        function promptAddParameter() {
+            if (!currentStepId) return;
+            openCustomModal('modalAddParameter');
+        }
+
+        function submitAddParameter(e) {
+            e.preventDefault();
+            if (!currentStepId) return;
+            const step = workflowSteps.find(s => s.id === currentStepId);
+            if (!step) return;
+
+            const name = document.getElementById('input-param-name').value.trim();
+            const standard = document.getElementById('input-param-standard').value.trim();
+            const tolerance = document.getElementById('input-param-tolerance').value.trim();
+            if (!name || !standard || !tolerance) return;
+
+            if (!step.parameters) step.parameters = [];
+            step.parameters.push({ name, standard, tolerance });
+            
+            autoSaveMaster();
+            closeCustomModal('modalAddParameter');
+            renderSteps();
+            updateInspectorConfig();
+            showToast("Parameter added.");
+        }
+
+        function deleteParameter(idx) {
+            if (!currentStepId) return;
+            const step = workflowSteps.find(s => s.id === currentStepId);
+            if (!step || !step.parameters) return;
+
+            step.parameters.splice(idx, 1);
+            autoSaveMaster();
+            renderSteps();
+            updateInspectorConfig();
+            showToast("Parameter removed.");
+        }
+
+        function updateStepCondition(type, key, checked) {
+            if (!currentStepId) return;
+            const step = workflowSteps.find(s => s.id === currentStepId);
+            if (!step) return;
+
+            if (type === 'start') {
+                if (!step.startConditions) step.startConditions = {};
+                step.startConditions[key] = checked;
+            } else if (type === 'completion') {
+                if (!step.completionConditions) step.completionConditions = {};
+                step.completionConditions[key] = checked;
+            }
+            autoSaveMaster();
+            renderSteps();
+            updateInspectorConfig();
+        }
+
+        function deleteSelectedStep() {
+            if (!currentStepId) return;
+            workflowSteps.forEach(s => {
+                if (s.prerequisite === currentStepId) s.prerequisite = '';
+            });
+            workflowSteps = workflowSteps.filter(s => s.id !== currentStepId);
+            currentStepId = null;
+            autoSaveMaster();
+            renderSteps();
+            updateInspectorConfig();
+            runWorkflowValidation();
+            showToast("Workflow step removed successfully.");
+        }
+
+        function runWorkflowValidation(showSuccessToast = false) {
+            let loopErrorFound = false;
+            let issuesCount = 0;
+
+            const visited = {};
+            const stack = {};
+            function dfsDetect(stepId) {
+                visited[stepId] = true;
+                stack[stepId] = true;
+                const step = workflowSteps.find(s => s.id === stepId);
+                if (step && step.prerequisite) {
+                    const nextId = step.prerequisite;
+                    if (!visited[nextId]) {
+                        if (dfsDetect(nextId)) return true;
+                    } else if (stack[nextId]) {
+                        return true;
+                    }
+                }
+                stack[stepId] = false;
+                return false;
+            }
+
+            workflowSteps.forEach(step => {
+                if (!visited[step.id]) {
+                    if (dfsDetect(step.id)) {
+                        loopErrorFound = true;
+                    }
+                }
+            });
+
+            if (loopErrorFound) {
+                issuesCount++;
+            }
+
+            const hasPhotoOptional = workflowSteps.some(s => s.inputMethod === "Manual Entry + Photo" && !s.operatorVerified);
+            if (hasPhotoOptional) {
+                issuesCount++;
+            }
+
+            const listContainer = document.getElementById('diagnostic-badges-list');
+            const summaryBadge = document.getElementById('diagnostic-summary-badge');
+            const iconBox = document.getElementById('diagnostic-icon-box');
+
+            if (listContainer && summaryBadge && iconBox) {
+                listContainer.innerHTML = '';
+                
+                if (loopErrorFound) {
+                    const card = document.createElement('div');
+                    card.className = 'flex items-center gap-1.5 bg-rose-50 border border-rose-200 px-2.5 py-1.5 rounded text-xs font-semibold text-rose-700 shrink-0';
+                    card.innerHTML = `
+                        <span class="material-symbols-outlined text-[15px] text-rose-600">cancel</span>
+                        <span>Circular loop prerequisite detected</span>
+                    `;
+                    listContainer.appendChild(card);
+                }
+
+                if (hasPhotoOptional) {
+                    const card = document.createElement('div');
+                    card.className = 'flex items-center gap-1.5 bg-amber-50 border border-amber-300 px-2.5 py-1.5 rounded text-xs font-semibold text-amber-700 shrink-0';
+                    card.innerHTML = `
+                        <span class="material-symbols-outlined text-[15px] text-amber-600">warning</span>
+                        <span>Photo evidence warnings active</span>
+                    `;
+                    listContainer.appendChild(card);
+                }
+
+                if (issuesCount === 0) {
+                    const card = document.createElement('div');
+                    card.className = 'flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-2.5 py-1.5 rounded text-xs font-semibold text-emerald-700 shrink-0';
+                    card.innerHTML = `
+                        <span class="material-symbols-outlined text-[15px] text-emerald-600">verified</span>
+                        <span>All sequential validation constraints met</span>
+                    `;
+                    listContainer.appendChild(card);
+                }
+
+                if (loopErrorFound) {
+                    summaryBadge.className = 'text-[9px] font-black text-rose-600 uppercase';
+                    summaryBadge.textContent = 'LOOP ERROR BLOCK';
+                    iconBox.className = 'w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center text-rose-600';
+                    iconBox.innerHTML = '<span class="material-symbols-outlined text-[18px]">cancel</span>';
+                } else if (issuesCount > 0) {
+                    summaryBadge.className = 'text-[9px] font-black text-amber-600 uppercase';
+                    summaryBadge.textContent = 'WARNINGS DETECTED';
+                    iconBox.className = 'w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center text-amber-600';
+                    iconBox.innerHTML = '<span class="material-symbols-outlined text-[18px]">warning</span>';
+                } else {
+                    summaryBadge.className = 'text-[9px] font-black text-emerald-600 uppercase';
+                    summaryBadge.textContent = 'ALL CONSTRAINTS PASSED';
+                    iconBox.className = 'w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600';
+                    iconBox.innerHTML = '<span class="material-symbols-outlined text-[18px]">verified</span>';
+                }
+            }
+
+            if (showSuccessToast) {
+                if (loopErrorFound) {
+                    showToast("Circular prerequisite dependencies detected!", false);
+                } else if (hasPhotoOptional) {
+                    showToast("Sequence checks consistent (with minor warnings).", true);
+                } else {
+                    showToast("All validation rules fully consistent!", true);
+                }
+            }
+        }
+
+        // ==========================================
+        // TAB 2: STEP MASTER CATALOG METHODS (TABLE)
+        // ==========================================
+        function renderCatalogTable() {
+            const tableBody = document.getElementById('catalog-table-body');
+            const searchVal = document.getElementById('catalog-search').value.toLowerCase();
+            const stageFilter = document.getElementById('catalog-stage-filter').value;
+            const counterEl = document.getElementById('catalog-counter');
+
+            if (!tableBody) return;
+            tableBody.innerHTML = '';
+
+            let filteredSteps = workflowSteps.filter(step => {
+                const matchesSearch = step.name.toLowerCase().includes(searchVal) || 
+                                      step.code.toLowerCase().includes(searchVal);
+                const matchesStage = stageFilter === 'ALL' || step.stageId === stageFilter;
+                return matchesSearch && matchesStage;
+            });
+
+            if (counterEl) {
+                counterEl.textContent = `Showing ${filteredSteps.length} of ${workflowSteps.length} entries`;
+            }
+
+            if (filteredSteps.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                      <td colspan="7" class="px-6 py-8 text-center text-slate-400 font-semibold italic">
+                        No master steps found matching current filters.
+                      </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            filteredSteps.forEach(step => {
+                const stage = workflowStages.find(s => s.id === step.stageId);
+                const stageName = stage ? stage.name : 'Unknown';
+                const paramCount = step.parameters ? step.parameters.length : 0;
+                const isMandatory = step.mandatory !== false;
+
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50/50 transition-colors border-b border-slate-100';
+                tr.innerHTML = `
+                    <td class="px-6 py-3 font-mono font-bold text-slate-900">${step.code || 'N/A'}</td>
+                    <td class="px-6 py-3 text-slate-800 font-bold">${step.name}</td>
+                    <td class="px-6 py-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 border border-slate-200 text-slate-600 uppercase">${stageName}</span></td>
+                    <td class="px-6 py-3 text-slate-500 font-semibold">${step.inputMethod || 'Manual'}</td>
+                    <td class="px-6 py-3 text-center"><span class="font-mono bg-blue-50 text-blue-600 px-2 py-0.5 rounded border border-blue-150 font-bold">${paramCount} Parameter(s)</span></td>
+                    <td class="px-6 py-3 text-center">
+                      <span class="material-symbols-outlined text-[18px] ${isMandatory ? 'text-emerald-500' : 'text-slate-350'}">
+                        ${isMandatory ? 'check_circle' : 'cancel'}
+                      </span>
+                    </td>
+                    <td class="px-6 py-3 text-center">
+                      <div class="flex items-center justify-center gap-2">
+                        <button onclick="openCatalogStepModal('${step.id}')" class="text-secondary hover:text-secondary-container transition-colors flex items-center justify-center p-1" title="Edit Master Data">
+                          <span class="material-symbols-outlined text-[16px]">edit</span>
+                        </button>
+                        <button onclick="deleteCatalogStep('${step.id}')" class="text-rose-500 hover:text-rose-700 transition-colors flex items-center justify-center p-1" title="Delete Step">
+                          <span class="material-symbols-outlined text-[16px]">delete</span>
+                        </button>
+                      </div>
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        let modalParameters = [];
+
+        function openCatalogStepModal(stepId = '') {
+            modalParameters = [];
+            const backdrop = document.getElementById('catalogStepModalBackdrop');
+            const drawer = document.getElementById('catalogStepModal');
+            const titleEl = document.getElementById('catalog-modal-title');
+            
+            if (!drawer) return;
+            
+            populateFilterOptions();
+
+            if (stepId) {
+                const step = workflowSteps.find(s => s.id === stepId);
+                if (!step) return;
+
+                titleEl.textContent = 'Edit Master Step';
+                document.getElementById('modal-step-id').value = step.id;
+                document.getElementById('modal-step-stage').value = step.stageId;
+                document.getElementById('modal-step-code').value = step.code || '';
+                document.getElementById('modal-step-name').value = step.name || '';
+                document.getElementById('modal-step-method').value = step.inputMethod || 'Manual Entry + Photo';
+                document.getElementById('modal-step-mandatory').checked = step.mandatory !== false;
+                
+                if (step.parameters) {
+                    modalParameters = JSON.parse(JSON.stringify(step.parameters));
+                }
+                
+                const sc = step.startConditions || {};
+                const cc = step.completionConditions || {};
+                document.getElementById('modal-sc-operator').checked = !!sc.operatorScan;
+                document.getElementById('modal-sc-machine').checked = !!sc.machineReady;
+                document.getElementById('modal-cc-params').checked = !!cc.allParameters;
+                document.getElementById('modal-cc-qc').checked = !!cc.dualQCSignoff;
+
+            } else {
+                titleEl.textContent = 'Add Master Step';
+                document.getElementById('modal-step-id').value = '';
+                document.getElementById('modal-step-code').value = 'PRC-NEW-' + Math.floor(Math.random() * 900 + 100);
+                document.getElementById('modal-step-name').value = '';
+                document.getElementById('modal-step-method').value = 'Manual Entry + Photo';
+                document.getElementById('modal-step-mandatory').checked = true;
+                document.getElementById('modal-sc-operator').checked = false;
+                document.getElementById('modal-sc-machine').checked = false;
+                document.getElementById('modal-cc-params').checked = false;
+                document.getElementById('modal-cc-qc').checked = false;
+            }
+
+            renderModalParametersList();
+
+            backdrop.classList.remove('hidden');
+            drawer.classList.remove('hidden');
+            setTimeout(() => {
+                backdrop.classList.add('opacity-100');
+                drawer.classList.remove('translate-x-full');
+            }, 10);
+        }
+
+        function closeCatalogStepModal() {
+            const backdrop = document.getElementById('catalogStepModalBackdrop');
+            const drawer = document.getElementById('catalogStepModal');
+            if (!drawer) return;
+
+            backdrop.classList.remove('opacity-100');
+            drawer.classList.add('translate-x-full');
+            setTimeout(() => {
+                backdrop.classList.add('hidden');
+                drawer.classList.add('hidden');
+            }, 300);
+        }
+
+        function addModalParameterField() {
+            modalParameters.push({ name: '', standard: '', tolerance: '' });
+            renderModalParametersList();
+        }
+
+        function removeModalParameterField(idx) {
+            modalParameters.splice(idx, 1);
+            renderModalParametersList();
+        }
+
+        function renderModalParametersList() {
+            const container = document.getElementById('modal-parameters-list');
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (modalParameters.length === 0) {
+                container.innerHTML = '<p class="text-[10px] text-slate-400 font-semibold italic">No specs/parameters added yet.</p>';
+                return;
+            }
+
+            modalParameters.forEach((p, idx) => {
+                const div = document.createElement('div');
+                div.className = 'p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col gap-2 relative';
+                div.innerHTML = `
+                    <button type="button" onclick="removeModalParameterField(${idx})" class="absolute right-2 top-2 text-rose-500 hover:text-rose-700 font-bold">
+                      <span class="material-symbols-outlined text-[15px]">delete</span>
+                    </button>
+                    <div>
+                      <label class="block text-[9px] font-black text-slate-400 uppercase tracking-wider mb-0.5">Spec / Parameter Name</label>
+                      <input type="text" value="${p.name || ''}" oninput="modalParameters[${idx}].name = this.value" class="w-full px-2 py-1 bg-white border border-slate-300 rounded text-xs focus:outline-none focus:border-secondary" placeholder="e.g. Bending Angle" required>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                      <div>
+                        <label class="block text-[9px] font-black text-slate-400 uppercase tracking-wider mb-0.5">Standard Value</label>
+                        <input type="text" value="${p.standard || ''}" oninput="modalParameters[${idx}].standard = this.value" class="w-full px-2 py-1 bg-white border border-slate-300 rounded text-xs focus:outline-none" placeholder="e.g. 90.0 deg" required>
+                      </div>
+                      <div>
+                        <label class="block text-[9px] font-black text-slate-400 uppercase tracking-wider mb-0.5">Tolerance</label>
+                        <input type="text" value="${p.tolerance || ''}" oninput="modalParameters[${idx}].tolerance = this.value" class="w-full px-2 py-1 bg-white border border-slate-300 rounded text-xs focus:outline-none" placeholder="e.g. ±2.0" required>
+                      </div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function saveCatalogStep(event) {
+            event.preventDefault();
+            const id = document.getElementById('modal-step-id').value;
+            const stageId = document.getElementById('modal-step-stage').value;
+            const code = document.getElementById('modal-step-code').value.trim();
+            const name = document.getElementById('modal-step-name').value.trim();
+            const method = document.getElementById('modal-step-method').value;
+            const mandatory = document.getElementById('modal-step-mandatory').checked;
+
+            const sc = {
+                operatorScan: document.getElementById('modal-sc-operator').checked,
+                machineReady: document.getElementById('modal-sc-machine').checked,
+                toolCalibration: false
+            };
+            const cc = {
+                allParameters: document.getElementById('modal-cc-params').checked,
+                dualQCSignoff: document.getElementById('modal-cc-qc').checked,
+                autoPrintLabel: false
+            };
+
+            const dup = workflowSteps.find(s => s.code.toUpperCase() === code.toUpperCase() && s.id !== id);
+            if (dup) {
+                showToast(`Process Code "${code}" is already in use!`, false);
+                return;
+            }
+
+            if (id) {
+                const idx = workflowSteps.findIndex(s => s.id === id);
+                if (idx > -1) {
+                    workflowSteps[idx].stageId = stageId;
+                    workflowSteps[idx].code = code;
+                    workflowSteps[idx].name = name;
+                    workflowSteps[idx].inputMethod = method;
+                    workflowSteps[idx].mandatory = mandatory;
+                    workflowSteps[idx].parameters = modalParameters;
+                    workflowSteps[idx].startConditions = sc;
+                    workflowSteps[idx].completionConditions = cc;
+                }
+            } else {
+                const newId = 'step-' + Date.now();
+                workflowSteps.push({
+                    id: newId,
+                    stageId: stageId,
+                    stepNumber: "STEP " + (workflowSteps.filter(s => s.stageId === stageId).length + 1),
+                    name: name,
+                    code: code,
+                    mandatory: mandatory,
+                    fields: {},
+                    prerequisite: '',
+                    dependencies: [],
+                    parameters: modalParameters,
+                    startConditions: sc,
+                    completionConditions: cc,
+                    inputMethod: method
+                });
+            }
+
+            closeCatalogStepModal();
+            autoSaveMaster();
+            renderCatalogTable();
+            showToast("Master Step catalog updated and saved successfully.");
+        }
+
+        function deleteCatalogStep(stepId) {
+            if (confirm("Are you sure you want to delete this master step? It will remove it from default flow sequences.")) {
+                workflowSteps = workflowSteps.filter(s => s.id !== stepId);
+                autoSaveMaster();
+                renderCatalogTable();
+                showToast("Master step deleted from catalog.");
+            }
+        }
+
+        function saveMasterWorkflow() {
+            localStorage.setItem('workflow_master', JSON.stringify({ stages: workflowStages, steps: workflowSteps }));
+            showToast("Master workflow configuration successfully saved to production template databases!");
+            runWorkflowValidation();
+            if (activeTab === 'catalog') {
+                renderCatalogTable();
+            }
+        }
+
+        // Window bindings
+        window.switchMasterTab = switchMasterTab;
+        window.selectStage = selectStage;
+        window.addStage = addStage;
+        window.deleteStage = deleteStage;
+        window.selectStep = selectStep;
+        window.addStep = addStep;
+        window.updateSelectedStepField = updateSelectedStepField;
+        window.promptAddDependency = promptAddDependency;
+        window.deleteDependency = deleteDependency;
+        window.promptAddParameter = promptAddParameter;
+        window.deleteParameter = deleteParameter;
+        window.updateStepCondition = updateStepCondition;
+        window.deleteSelectedStep = deleteSelectedStep;
+        window.runWorkflowValidation = runWorkflowValidation;
+        window.saveMasterWorkflow = saveMasterWorkflow;
+
+        window.renderCatalogTable = renderCatalogTable;
+        window.openCatalogStepModal = openCatalogStepModal;
+        window.closeCatalogStepModal = closeCatalogStepModal;
+        window.addModalParameterField = addModalParameterField;
+        window.removeModalParameterField = removeModalParameterField;
+        window.saveCatalogStep = saveCatalogStep;
+        window.deleteCatalogStep = deleteCatalogStep;
+        
+        window.openCustomModal = openCustomModal;
+        window.closeCustomModal = closeCustomModal;
+        window.submitAddStage = submitAddStage;
+        window.submitAddStep = submitAddStep;
+        window.submitAddDependency = submitAddDependency;
+        window.submitAddParameter = submitAddParameter;
+
+        // Initialize Page
+        loadMasterWorkflowConfig();
+
+        // Self-correcting header attachment to eliminate any layout gap
+        function alignTabsToHeader() {
+            const header = document.querySelector('header');
+            const mainWrapper = document.getElementById('main-wrapper');
+            const appContent = document.getElementById('app-content');
+            if (header && mainWrapper && appContent) {
+                const headerRect = header.getBoundingClientRect();
+                const contentRect = appContent.getBoundingClientRect();
+                const gap = contentRect.top - headerRect.bottom;
+                if (gap !== 0) {
+                    const currentPaddingTop = parseFloat(window.getComputedStyle(mainWrapper).paddingTop) || 0;
+                    mainWrapper.style.paddingTop = (currentPaddingTop - gap) + 'px';
+                }
+            }
+        }
+        [50, 150, 300, 600, 1000].forEach(delay => setTimeout(alignTabsToHeader, delay));
+    })();
+  </script>
+</body>
+</html>

@@ -8,7 +8,8 @@
     "status": "Calibrated",
     "lastCalibrated": "2026-06-15",
     "nextCalibration": "2026-12-15",
-    "lineAllocated": "Line A"
+    "lineAllocated": "Line A",
+    "preventiveMaintenanceDate": "2026-08-10"
   },
   {
     "machineCode": "MC-PROT-02",
@@ -19,7 +20,8 @@
     "status": "Calibrated",
     "lastCalibrated": "2026-05-10",
     "nextCalibration": "2026-11-10",
-    "lineAllocated": "Line A"
+    "lineAllocated": "Line A",
+    "preventiveMaintenanceDate": "2026-08-12"
   },
   {
     "machineCode": "OV-SHRNK-01",
@@ -30,7 +32,8 @@
     "status": "Calibration Due",
     "lastCalibrated": "2026-01-20",
     "nextCalibration": "2026-07-20",
-    "lineAllocated": "Line B"
+    "lineAllocated": "Line B",
+    "preventiveMaintenanceDate": "2026-07-28"
   },
   {
     "machineCode": "JG-BEND-02",
@@ -41,7 +44,8 @@
     "status": "Calibrated",
     "lastCalibrated": "2026-04-05",
     "nextCalibration": "2026-10-05",
-    "lineAllocated": "Line A"
+    "lineAllocated": "Line A",
+    "preventiveMaintenanceDate": "2026-09-05"
   },
   {
     "machineCode": "JG-EF02-01",
@@ -52,7 +56,8 @@
     "status": "Calibrated",
     "lastCalibrated": "2026-03-12",
     "nextCalibration": "2026-09-12",
-    "lineAllocated": "Line A"
+    "lineAllocated": "Line A",
+    "preventiveMaintenanceDate": "2026-09-10"
   },
   {
     "machineCode": "MC-CRIMP-03",
@@ -63,7 +68,8 @@
     "status": "Calibrated",
     "lastCalibrated": "2026-06-01",
     "nextCalibration": "2026-12-01",
-    "lineAllocated": "Line A"
+    "lineAllocated": "Line A",
+    "preventiveMaintenanceDate": "2026-08-25"
   },
   {
     "machineCode": "JG-BOND-12",
@@ -74,7 +80,8 @@
     "status": "Under Maintenance",
     "lastCalibrated": "2026-07-02",
     "nextCalibration": "2027-01-02",
-    "lineAllocated": "Line B"
+    "lineAllocated": "Line B",
+    "preventiveMaintenanceDate": "2026-07-20"
   },
   {
     "machineCode": "TL-TORQ-08",
@@ -85,7 +92,8 @@
     "status": "Calibrated",
     "lastCalibrated": "2026-06-25",
     "nextCalibration": "2026-12-25",
-    "lineAllocated": "Line A"
+    "lineAllocated": "Line A",
+    "preventiveMaintenanceDate": "2026-08-30"
   },
   {
     "machineCode": "MC-LEAK-01",
@@ -96,7 +104,8 @@
     "status": "Calibrated",
     "lastCalibrated": "2026-04-18",
     "nextCalibration": "2026-10-18",
-    "lineAllocated": "Line A"
+    "lineAllocated": "Line A",
+    "preventiveMaintenanceDate": "2026-10-01"
   },
   {
     "machineCode": "JG-INSP-22",
@@ -107,6 +116,7 @@
     "status": "Calibrated",
     "lastCalibrated": "2026-06-10",
     "nextCalibration": "2026-12-10",
-    "lineAllocated": "Line A"
+    "lineAllocated": "Line A",
+    "preventiveMaintenanceDate": "2026-09-15"
   }
 ]

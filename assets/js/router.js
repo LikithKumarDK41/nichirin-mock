@@ -1,6 +1,6 @@
 // Nichirin Control Card Admin Portal Mockups - HTML5 History Routing System
-(function() {
-  
+(function () {
+
   // Known subdirectory modules in the portal
   const SUBFOLDERS = [
     'dashboard', 'work-orders', 'work-order-detail', 'supervisor-planning', 'qc-pending-approvals',
@@ -8,11 +8,14 @@
     'process-master', 'bom-picking-master', 'control-point-master',
     'standard-tolerance-master', 'method-master', 'qc-rules', 'qr-label-management',
     'traceability-search', 'production-reports', 'qc-reports', 'breakdown-reports',
-    'sap-sync-reports', 'audit-reports', 'user-management', 'role-management', 
-    'skill-management', 'machine-management', 'device-management',
+    'sap-sync-reports', 'audit-reports', 'user-management', 'role-management',
+    'skill-management', 'machine-management', 'device-management', 'shift-management',
     'csv-import', 'sap-logs', 'sap-field-mapping', 'notification-configuration',
-    'system-settings', 'login-old', 'admin-prototype'
+    'system-settings', 'login-old', 'admin-prototype', 'profile'
   ];
+
+  // Keep track of the current active load task ID to prevent duplicate concurrent route loadings
+  let currentLoadId = 0;
 
   // Helper to determine relative path depth prefix ('./' or '../')
   function getRelativePrefix() {
@@ -33,9 +36,13 @@
   // Dynamically update link pathways and assets on layout when traversing directories
   function updateLayoutRelativePaths(relPrefix) {
     // Update Sidebar Logo
-    const logoImg = document.querySelector('aside img');
-    if (logoImg) {
-      logoImg.src = relPrefix + 'assets/logo.png';
+    const logoImgExpanded = document.querySelector('aside img.logo-expanded');
+    if (logoImgExpanded) {
+      logoImgExpanded.src = relPrefix + 'assets/logo_full.png';
+    }
+    const logoImgCollapsed = document.querySelector('aside img.logo-collapsed');
+    if (logoImgCollapsed) {
+      logoImgCollapsed.src = relPrefix + 'assets/logo_icon.png';
     }
     const logoLink = document.querySelector('aside a');
     if (logoLink) {
@@ -58,16 +65,263 @@
     }
   }
 
+  // Notification and Profile state management helpers
+  function getNotifications() {
+    const stored = localStorage.getItem('system_notifications');
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        const hasCategories = parsed.length > 0 && parsed.every(n => n.category !== undefined);
+        const hasRealisticData = parsed.some(n => n.message.includes('JG-BOND-12') && n.message.includes('22615540 has been released'));
+        if (hasCategories && hasRealisticData) {
+          return parsed;
+        }
+      } catch(e) {}
+    }
+
+    const defaultNotifications = [
+      {
+        id: 1,
+        title: 'Work Order Pending Release',
+        message: 'Work Order #22615542 requires Supervisor release signature.',
+        time: '5 mins ago',
+        read: false,
+        icon: 'fact_check',
+        color: 'bg-rose-100/70 text-rose-700',
+        link: 'work-orders',
+        category: 'Work Order'
+      },
+      {
+        id: 6,
+        title: 'Calibration Due: OV-SHRNK-01',
+        message: 'HMI Curing Heat Oven (OV-SHRNK-01) calibration interval exceeded (Due: 2026-07-20).',
+        time: '1 hour ago',
+        read: true,
+        icon: 'build',
+        color: 'bg-amber-100/70 text-amber-700',
+        link: 'machine-management',
+        category: 'Breakdown'
+      },
+      {
+        id: 3,
+        title: 'Quality Deviation Alert',
+        message: 'Hydraulic Crimp Press (MC-CRIMP-03) reported tolerance drift (+0.08 mm).',
+        time: '2 hours ago',
+        read: false,
+        icon: 'warning',
+        color: 'bg-amber-100/70 text-amber-700',
+        link: 'traceability-search',
+        category: 'Process'
+      },
+      {
+        id: 5,
+        title: 'Bonding Jig JG-BOND-12 Down',
+        message: 'Sleeve Adhesive Bonding Jig (JG-BOND-12) is under maintenance for adhesive sensor failure.',
+        time: '3 hours ago',
+        read: false,
+        icon: 'error',
+        color: 'bg-rose-100/70 text-rose-700',
+        link: 'machine-management',
+        category: 'Breakdown'
+      },
+      {
+        id: 2,
+        title: 'Work Order Released',
+        message: 'Work Order #22615540 has been released and is running on Line 1.',
+        time: '6 hours ago',
+        read: false,
+        icon: 'campaign',
+        color: 'bg-blue-100/70 text-blue-700',
+        link: 'work-orders',
+        category: 'Work Order'
+      },
+      {
+        id: 4,
+        title: 'New Template Approved',
+        message: 'Control Card Template [T-Hose-V2] has been verified for Part BPD-F584A-00-IYN-R02.',
+        time: '1 day ago',
+        read: true,
+        icon: 'task_alt',
+        color: 'bg-emerald-100/70 text-emerald-700',
+        link: 'work-order-detail',
+        category: 'Process'
+      }
+    ];
+    localStorage.setItem('system_notifications', JSON.stringify(defaultNotifications));
+    return defaultNotifications;
+  }
+
+  function saveNotifications(list) {
+    localStorage.setItem('system_notifications', JSON.stringify(list));
+  }
+
+  let selectedNotificationIds = [];
+
+  function renderNotifications(relPrefix) {
+    const listContainer = document.getElementById('notification-list');
+    const headerActions = document.getElementById('notification-header-actions');
+    const badge = document.getElementById('header-notification-badge');
+    if (!listContainer || !headerActions) return;
+
+    const list = getNotifications();
+    const unreadCount = list.filter(n => !n.read).length;
+
+    if (unreadCount > 0) {
+      if (badge) badge.classList.remove('hidden');
+    } else {
+      if (badge) badge.classList.add('hidden');
+    }
+
+    if (list.length === 0) {
+      selectedNotificationIds = [];
+      headerActions.innerHTML = `
+        <span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Notifications</span>
+      `;
+      listContainer.innerHTML = `
+        <div class="p-6 text-center text-on-surface-variant">
+          <span class="material-symbols-outlined text-[32px] opacity-40 mb-1">notifications_off</span>
+          <p class="text-xs font-semibold">No notifications found.</p>
+        </div>
+      `;
+      return;
+    }
+
+    // Filter out selection IDs that no longer exist in list
+    selectedNotificationIds = selectedNotificationIds.filter(id => list.some(n => n.id === id));
+
+    const allSelected = list.length > 0 && list.every(n => selectedNotificationIds.includes(n.id));
+    const someSelected = list.some(n => selectedNotificationIds.includes(n.id)) && !allSelected;
+
+    // Render header actions
+    if (selectedNotificationIds.length === 0) {
+      headerActions.innerHTML = `
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="select-all-notifications" class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary/20 cursor-pointer">
+          <span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Notifications</span>
+        </div>
+        <button id="mark-all-read-btn" class="text-xs font-semibold text-primary hover:underline">Mark all as read</button>
+      `;
+    } else {
+      headerActions.innerHTML = `
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="select-all-notifications" class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary/20 cursor-pointer" ${allSelected ? 'checked' : ''}>
+          <span class="text-xs font-semibold text-primary font-bold">Selected: ${selectedNotificationIds.length}</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="bulk-mark-read" class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-1" title="Mark as read">
+            <span class="material-symbols-outlined text-[18px]">drafts</span>
+          </button>
+          <button id="bulk-mark-unread" class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-1" title="Mark as unread">
+            <span class="material-symbols-outlined text-[18px]">mail</span>
+          </button>
+          <button id="bulk-delete" class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-1" title="Delete">
+            <span class="material-symbols-outlined text-[18px]">delete</span>
+          </button>
+        </div>
+      `;
+    }
+
+    // Set indeterminate status
+    const selectAllCheckbox = document.getElementById('select-all-notifications');
+    if (selectAllCheckbox) {
+      selectAllCheckbox.indeterminate = someSelected;
+    }
+
+    // Render list
+    listContainer.innerHTML = list.map(n => {
+      const isSelected = selectedNotificationIds.includes(n.id);
+      return `
+        <div data-id="${n.id}" class="notification-item p-3.5 flex gap-3 hover:bg-surface-container-high/50 transition-colors cursor-pointer group ${!n.read ? 'bg-primary-subtle' : ''} ${isSelected ? 'bg-slate-50' : ''}">
+          <!-- Checkbox for item selection -->
+          <div class="flex items-center flex-shrink-0 toggle-select-container">
+            <input type="checkbox" class="item-select-checkbox w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary/20 cursor-pointer" data-id="${n.id}" ${isSelected ? 'checked' : ''}>
+          </div>
+          <!-- Category icon -->
+          <div class="w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center ${n.color || 'bg-surface-container text-on-surface'}">
+            <span class="material-symbols-outlined text-[18px]">${n.icon}</span>
+          </div>
+          <!-- Content text -->
+          <div class="flex-grow min-w-0">
+            <div class="flex justify-between items-start gap-2">
+              <span class="text-xs font-bold text-on-surface truncate ${!n.read ? 'text-primary' : ''}">${n.title}</span>
+              <span class="text-[10px] text-on-surface-variant flex-shrink-0">${n.time}</span>
+            </div>
+            <p class="text-xs text-on-surface-variant mt-1 leading-relaxed truncate">${n.message}</p>
+          </div>
+          <!-- Hover actions on right -->
+          <div class="flex items-center gap-1.5 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+            <button class="toggle-read-btn text-on-surface-variant hover:text-primary transition-colors p-1" title="${n.read ? 'Mark as unread' : 'Mark as read'}">
+              <span class="material-symbols-outlined text-[16px]">${n.read ? 'mail' : 'drafts'}</span>
+            </button>
+            <button class="delete-notification-btn text-on-surface-variant hover:text-primary transition-colors p-1" title="Delete">
+              <span class="material-symbols-outlined text-[16px]">delete</span>
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    window.triggerHeaderNotificationsSync = () => {
+      renderNotifications(getRelativePrefix());
+      const list = getNotifications();
+      const unreadCount = list.filter(n => !n.read).length;
+      const badge = document.getElementById('header-notification-badge');
+      if (badge) {
+        if (unreadCount > 0) {
+          badge.classList.remove('hidden');
+        } else {
+          badge.classList.add('hidden');
+        }
+      }
+    };
+  }
+
+  function syncProfileHeader() {
+    const profileNameEl = document.getElementById('header-profile-name');
+    if (profileNameEl) {
+      profileNameEl.textContent = 'T. Nakagawa';
+    }
+
+    const headerProfileBtn = document.getElementById('header-profile-btn');
+    if (headerProfileBtn) {
+      const avatarData = localStorage.getItem('profileAvatar');
+      let existingIcon = headerProfileBtn.querySelector('.material-symbols-outlined, img');
+      if (avatarData) {
+        if (existingIcon) {
+          if (existingIcon.tagName === 'IMG') {
+            existingIcon.src = avatarData;
+          } else {
+            existingIcon.remove();
+            const img = document.createElement('img');
+            img.src = avatarData;
+            img.className = 'w-8 h-8 rounded-full object-cover border border-outline-variant/30 select-none';
+            headerProfileBtn.appendChild(img);
+          }
+        }
+      } else {
+        if (existingIcon && existingIcon.tagName === 'IMG') {
+          existingIcon.remove();
+          const span = document.createElement('span');
+          span.className = 'material-symbols-outlined text-primary text-[32px] select-none';
+          span.textContent = 'account_circle';
+          headerProfileBtn.appendChild(span);
+        }
+      }
+    }
+  }
+
   // Render the structural layout wrapper
   function setupAppLayout(relPrefix) {
     const root = document.getElementById('app-root');
     root.className = "bg-background text-on-background selection:bg-secondary-container selection:text-on-secondary-container";
-    
+    root.style.backgroundImage = '';
+
     const SIDEBAR_HTML = `
       <aside class="fixed top-0 left-0 h-full w-[260px] bg-white text-on-surface border-r border-outline-variant/30 flex flex-col z-50 -translate-x-full lg:translate-x-0 transition-transform duration-300 select-none">
-        <div class="h-[64px] px-6 border-b border-outline-variant/30 bg-white flex items-center justify-center relative select-none flex-shrink-0">
-          <a class="flex items-center justify-center gap-2" href="${relPrefix}work-orders/index.html">
-            <img src="${relPrefix}assets/logo.png" class="h-10 w-auto object-contain select-none" alt="NICHIRIN Logo" />
+        <div class="h-[64px] px-4 border-b border-outline-variant/30 bg-white flex items-center justify-center relative select-none flex-shrink-0">
+          <a class="flex items-center justify-center w-full h-full" href="${relPrefix}work-orders/index.html">
+            <img src="${relPrefix}assets/logo_full.png" class="logo-expanded h-12 w-full object-contain select-none" alt="NICHIRIN Logo" />
+            <img src="${relPrefix}assets/logo_icon.png" class="logo-collapsed h-14 w-auto max-w-[58px] object-contain select-none transition-all duration-200" alt="NICHIRIN Logo Icon" />
           </a>
           <button class="sidebar-close-btn absolute right-4 top-1/2 -translate-y-1/2 lg:hidden text-on-surface-variant hover:text-primary" aria-label="Close Sidebar">
             <span class="material-symbols-outlined">close</span>
@@ -88,30 +342,15 @@
               <span class="material-symbols-outlined text-[20px]">edit_calendar</span>
               <span>Supervisor Planning</span>
             </a>
-            
-            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}qc-pending-approvals/index.html" data-route="qc-pending-approvals">
-              <span class="material-symbols-outlined text-[20px]">fact_check</span>
-              <span>QC Pending Approvals</span>
-            </a>
           </div>
   
           <!-- TRACEABILITY & REPORTS SECTION -->
           <div class="space-y-1 pt-2">
             <p class="text-[11px] font-bold text-slate-500 uppercase tracking-widest px-4 pt-5 pb-2 select-none">Traceability &amp; Reports</p>
             
-            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}traceability-search/index.html" data-route="traceability-search">
-              <span class="material-symbols-outlined text-[20px]">manage_search</span>
-              <span>Traceability Search</span>
-            </a>
-            
-            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}qc-reports/index.html" data-route="qc-reports">
-              <span class="material-symbols-outlined text-[20px]">assignment</span>
-              <span>QC Reports</span>
-            </a>
-  
             <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}audit-reports/index.html" data-route="audit-reports">
-              <span class="material-symbols-outlined text-[20px]">menu_book</span>
-              <span>Audit Reports</span>
+              <span class="material-symbols-outlined text-[20px]">analytics</span>
+              <span>Completed Reports</span>
             </a>
           </div>
   
@@ -119,7 +358,6 @@
           <div class="space-y-1 pt-2">
             <p class="text-[11px] font-bold text-slate-500 uppercase tracking-widest px-4 pt-5 pb-2 select-none">Master Configuration</p>
             
-
             <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}user-management/index.html" data-route="user-management">
               <span class="material-symbols-outlined text-[20px]">person</span>
               <span>User Management</span>
@@ -139,6 +377,17 @@
               <span class="material-symbols-outlined text-[20px]">factory</span>
               <span>Machine Management</span>
             </a>
+
+            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}shift-management/index.html" data-route="shift-management">
+              <span class="material-symbols-outlined text-[20px]">schedule</span>
+              <span>Shift Management</span>
+            </a>
+
+            <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}notification-configuration/index.html" data-route="notification-configuration">
+              <span class="material-symbols-outlined text-[20px]">notifications_active</span>
+              <span>Notification / Alarm</span>
+            </a>
+
             <a class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 font-body-md text-body-md" href="${relPrefix}system-settings/index.html" data-route="system-settings">
               <span class="material-symbols-outlined text-[20px]">settings</span>
               <span>System Settings</span>
@@ -146,12 +395,8 @@
           </div>
         </nav>
         
-        <div class="px-3 mt-auto border-t border-outline-variant/30 pt-4 pb-4 flex-shrink-0 flex gap-2">
-          <a href="#" class="flex items-center justify-center gap-1.5 px-3 py-2 border border-slate-200 rounded-xl text-slate-700 hover:bg-slate-50 transition-colors font-semibold text-xs flex-1">
-            <span class="material-symbols-outlined text-[16px] text-slate-600">help</span>
-            <span>Support</span>
-          </a>
-          <a id="logout-btn" href="${relPrefix}login-old/index.html" class="flex items-center justify-center gap-1.5 px-3 py-2 border border-primary/20 bg-primary/5 text-primary hover:bg-primary hover:text-white hover:border-transparent rounded-xl transition-colors font-semibold text-xs flex-1">
+        <div class="px-3 mt-auto border-t border-outline-variant/30 pt-4 pb-4 flex-shrink-0 flex justify-end">
+          <a id="logout-btn" href="${relPrefix}login-old/index.html" class="flex items-center justify-center gap-1.5 px-3 py-2 border border-primary/20 bg-primary/5 text-primary hover:bg-primary hover:text-white hover:border-transparent rounded-xl transition-colors font-semibold text-xs">
             <span class="material-symbols-outlined text-[16px]">logout</span>
             <span>Sign Out</span>
           </a>
@@ -160,37 +405,62 @@
     `;
 
     const HEADER_HTML = `
-      <header class="fixed top-0 right-0 h-[64px] w-full lg:w-[calc(100%-260px)] px-6 bg-white dark:bg-surface border-b border-outline-variant/30 flex items-center justify-between z-40 transition-all duration-300 rounded-none shadow-sm select-none">
-        <div class="flex items-center gap-4">
-          <button class="sidebar-toggle-btn flex items-center justify-center w-10 h-10 text-on-surface-variant hover:text-primary rounded-xl transition-colors" aria-label="Toggle Sidebar">
+      <header class="fixed top-0 right-0 h-[64px] w-full lg:w-[calc(100%-260px)] px-6 bg-white border-b border-outline-variant/30 flex items-center justify-between z-40 transition-all duration-300 rounded-none shadow-sm select-none">
+        <div class="flex items-center gap-4 min-w-0">
+          <button class="sidebar-toggle-btn flex items-center justify-center w-10 h-10 text-on-surface-variant hover:text-primary rounded-xl transition-colors flex-shrink-0" aria-label="Toggle Sidebar">
             <span class="material-symbols-outlined">menu</span>
           </button>
-          <span class="text-lg sm:text-xl font-black text-primary select-none tracking-tight leading-none">Control Card Digitization System</span>
+          <span class="text-lg sm:text-xl font-black text-primary select-none tracking-tight leading-none truncate" title="Control Card Digitization System">Control Card Digitization System</span>
         </div>
         
-        <div class="flex items-center gap-4 flex-wrap sm:flex-nowrap" id="main-header-right">
-          <button class="relative text-on-surface-variant hover:text-primary transition-colors p-2 rounded">
-            <span class="material-symbols-outlined">notifications</span>
-            <span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
-          </button>
+        <div class="flex items-center gap-2 flex-shrink-0" id="main-header-right">
+          <!-- Notification Bell and Dropdown Container -->
+          <div class="relative flex items-center justify-center">
+            <button id="header-notification-btn" class="flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors p-2 rounded focus:outline-none h-10 w-10" aria-label="Notifications">
+              <span class="material-symbols-outlined text-[24px] leading-none">notifications</span>
+              <span id="header-notification-badge" class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full animate-pulse hidden"></span>
+            </button>
+            
+            <!-- Notification Dropdown Panel -->
+            <div id="notification-dropdown" class="hidden fixed sm:absolute top-[58px] sm:top-full right-4 sm:right-0 left-4 sm:left-auto w-auto sm:w-[380px] mt-2 bg-white border border-outline-variant/50 rounded-xl shadow-xl z-50 overflow-hidden text-left select-none">
+              <div class="px-4 py-3 border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-low min-h-[48px]" id="notification-header-actions">
+                <!-- Loaded dynamically -->
+              </div>
+              <div class="max-h-[300px] overflow-y-auto custom-scrollbar divide-y divide-outline-variant/20" id="notification-list">
+                <!-- Loaded dynamically -->
+              </div>
+              <div class="px-4 py-2.5 border-t border-outline-variant/30 text-center bg-surface-container-lowest">
+                <a href="${relPrefix}notification-configuration/index.html" class="text-xs font-semibold text-primary hover:underline flex items-center justify-center gap-1 nav-item" data-route="notification-configuration">
+                  <span class="material-symbols-outlined text-[16px]">settings</span>
+                  <span>Notification Configuration</span>
+                </a>
+              </div>
+            </div>
+          </div>
           
-          <div class="flex items-center gap-2 ml-2 pl-4 border-l border-outline-variant/30">
+          <!-- Vertical Separator Line -->
+          <div class="h-6 w-px bg-slate-300 flex-shrink-0"></div>
+          
+          <!-- Clickable Profile Trigger -->
+          <div id="header-profile-btn" class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0">
             <div class="text-right hidden sm:block">
-              <p class="font-label-bold text-label-bold leading-none text-primary dark:text-red-500">Vikram Malhotra</p>
+              <p id="header-profile-name" class="font-label-bold text-label-bold leading-none text-primary">T. Nakagawa</p>
               <p class="text-[10px] text-on-surface-variant uppercase mt-0.5 font-bold">Site Admin</p>
             </div>
-            <span class="material-symbols-outlined text-primary dark:text-red-500 text-[32px] select-none">account_circle</span>
+            <span class="material-symbols-outlined text-primary text-[32px] leading-none select-none">account_circle</span>
           </div>
         </div>
       </header>
     `;
 
     root.innerHTML = `
-      <div class="flex h-screen overflow-hidden">
+      <div class="flex h-dvh overflow-hidden">
+        <!-- Sidebar Backdrop overlay for mobile -->
+        <div id="sidebar-backdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[45] transition-opacity duration-300 opacity-0 pointer-events-none lg:hidden"></div>
         ${SIDEBAR_HTML}
         <div class="flex-1 flex flex-col h-full overflow-hidden bg-surface relative">
           ${HEADER_HTML}
-          <main id="main-wrapper" class="flex-grow ml-0 lg:ml-[260px] pt-[64px] h-screen overflow-y-auto bg-background transition-all duration-300 relative">
+          <main id="main-wrapper" class="flex-grow ml-0 lg:ml-[260px] pt-[64px] h-dvh overflow-y-auto bg-background transition-all duration-300 relative">
             <div id="app-content" class="pt-1 px-6 pb-6 flex flex-col gap-6">
               <!-- Content loaded via AJAX goes here -->
             </div>
@@ -207,19 +477,35 @@
       </div>
     `;
 
-    // Bind event handlers for template sidebar
     const sidebar = root.querySelector('aside');
     const toggleBtn = root.querySelector('.sidebar-toggle-btn');
     const closeBtn = root.querySelector('.sidebar-close-btn');
+    const backdrop = root.querySelector('#sidebar-backdrop');
+
+    function openSidebarMobile() {
+      sidebar.classList.remove('-translate-x-full');
+      if (backdrop) {
+        backdrop.classList.remove('opacity-0', 'pointer-events-none');
+        backdrop.classList.add('opacity-100', 'pointer-events-auto');
+      }
+    }
+
+    function closeSidebarMobile() {
+      sidebar.classList.add('-translate-x-full');
+      if (backdrop) {
+        backdrop.classList.remove('opacity-100', 'pointer-events-auto');
+        backdrop.classList.add('opacity-0', 'pointer-events-none');
+      }
+    }
 
     if (toggleBtn && sidebar) {
       toggleBtn.addEventListener('click', () => {
         if (window.innerWidth < 1024) {
-          sidebar.classList.remove('-translate-x-full');
+          openSidebarMobile();
         } else {
           const mainWrapper = root.querySelector('#main-wrapper');
           const header = root.querySelector('header');
-          
+
           sidebar.classList.toggle('sidebar-collapsed');
           if (mainWrapper) mainWrapper.classList.toggle('main-collapsed');
           if (header) header.classList.toggle('header-collapsed');
@@ -229,7 +515,17 @@
 
     if (closeBtn && sidebar) {
       closeBtn.addEventListener('click', () => {
-        sidebar.classList.add('-translate-x-full');
+        if (window.innerWidth < 1024) {
+          closeSidebarMobile();
+        } else {
+          sidebar.classList.add('-translate-x-full');
+        }
+      });
+    }
+
+    if (backdrop) {
+      backdrop.addEventListener('click', () => {
+        closeSidebarMobile();
       });
     }
 
@@ -252,8 +548,156 @@
     if (logoutBtn) {
       logoutBtn.addEventListener('click', (e) => {
         e.preventDefault();
+        e.stopPropagation();
         localStorage.removeItem('loggedIn');
         window.history.pushState(null, '', relPrefix + 'login-old/index.html');
+        loadRoute();
+      });
+    }
+
+    // Bind notifications dropdown toggle
+    const notificationBtn = root.querySelector('#header-notification-btn');
+    const notificationDropdown = root.querySelector('#notification-dropdown');
+    if (notificationBtn && notificationDropdown) {
+      notificationBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        notificationDropdown.classList.toggle('hidden');
+        renderNotifications(getRelativePrefix());
+      });
+    }
+
+    // Bind document click to close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      const dropdown = document.getElementById('notification-dropdown');
+      const btn = document.getElementById('header-notification-btn');
+      if (e.target.isConnected === false) return;
+      if (dropdown && btn && !dropdown.contains(e.target) && !btn.contains(e.target)) {
+        dropdown.classList.add('hidden');
+      }
+    });
+
+    // Event delegation for notification actions inside notificationDropdown
+    if (notificationDropdown) {
+      notificationDropdown.addEventListener('click', (e) => {
+
+        // 1. Select-All Checkbox click
+        const selectAllCheckbox = e.target.closest('#select-all-notifications');
+        if (selectAllCheckbox) {
+          const list = getNotifications();
+          const allSelected = list.length > 0 && list.every(n => selectedNotificationIds.includes(n.id));
+          if (allSelected) {
+            selectedNotificationIds = [];
+          } else {
+            selectedNotificationIds = list.map(n => n.id);
+          }
+          renderNotifications(getRelativePrefix());
+          return;
+        }
+
+        // 2. Mark All as Read button click (when no selections)
+        const markAllReadBtn = e.target.closest('#mark-all-read-btn');
+        if (markAllReadBtn) {
+          const list = getNotifications();
+          list.forEach(n => n.read = true);
+          saveNotifications(list);
+          renderNotifications(getRelativePrefix());
+          return;
+        }
+
+        // 3. Bulk Actions
+        const bulkMarkRead = e.target.closest('#bulk-mark-read');
+        if (bulkMarkRead) {
+          const list = getNotifications();
+          list.forEach(n => {
+            if (selectedNotificationIds.includes(n.id)) n.read = true;
+          });
+          selectedNotificationIds = [];
+          saveNotifications(list);
+          renderNotifications(getRelativePrefix());
+          return;
+        }
+
+        const bulkMarkUnread = e.target.closest('#bulk-mark-unread');
+        if (bulkMarkUnread) {
+          const list = getNotifications();
+          list.forEach(n => {
+            if (selectedNotificationIds.includes(n.id)) n.read = false;
+          });
+          selectedNotificationIds = [];
+          saveNotifications(list);
+          renderNotifications(getRelativePrefix());
+          return;
+        }
+
+        const bulkDelete = e.target.closest('#bulk-delete');
+        if (bulkDelete) {
+          let list = getNotifications();
+          list = list.filter(n => !selectedNotificationIds.includes(n.id));
+          selectedNotificationIds = [];
+          saveNotifications(list);
+          renderNotifications(getRelativePrefix());
+          return;
+        }
+
+        // 4. Individual item actions
+        const item = e.target.closest('.notification-item');
+        if (!item) return;
+
+        const id = parseInt(item.getAttribute('data-id'));
+        const list = getNotifications();
+        const nIndex = list.findIndex(n => n.id === id);
+        if (nIndex === -1) return;
+
+        // A. Clicking select checkbox or its container
+        const itemSelect = e.target.closest('.toggle-select-container');
+        if (itemSelect || e.target.classList.contains('item-select-checkbox')) {
+          const isSelected = selectedNotificationIds.includes(id);
+          if (isSelected) {
+            selectedNotificationIds = selectedNotificationIds.filter(selectedId => selectedId !== id);
+          } else {
+            selectedNotificationIds.push(id);
+          }
+          renderNotifications(getRelativePrefix());
+          return;
+        }
+
+        // B. Clicking inline Mark Read/Unread envelope
+        const toggleReadBtn = e.target.closest('.toggle-read-btn');
+        if (toggleReadBtn) {
+          list[nIndex].read = !list[nIndex].read;
+          saveNotifications(list);
+          renderNotifications(getRelativePrefix());
+          return;
+        }
+
+        // C. Clicking inline Delete trash icon
+        const deleteNotificationBtn = e.target.closest('.delete-notification-btn');
+        if (deleteNotificationBtn) {
+          const updatedList = list.filter(n => n.id !== id);
+          saveNotifications(updatedList);
+          renderNotifications(getRelativePrefix());
+          return;
+        }
+
+        // D. Clicking notification item itself to navigate
+        const n = list[nIndex];
+        n.read = true;
+        saveNotifications(list);
+        renderNotifications(getRelativePrefix());
+        notificationDropdown.classList.add('hidden');
+        if (n.link) {
+          window.history.pushState(null, '', getRelativePrefix() + n.link + '/index.html');
+          loadRoute();
+        }
+      });
+    }
+
+    // Bind profile click trigger to navigate to profile page
+    const profileBtn = root.querySelector('#header-profile-btn');
+    if (profileBtn) {
+      profileBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.history.pushState(null, '', getRelativePrefix() + 'profile/index.html');
         loadRoute();
       });
     }
@@ -288,7 +732,7 @@
 
     const activeRoute = routeMapping[route] || route;
 
-    const items = document.querySelectorAll('.nav-item');
+    const items = document.querySelectorAll('aside .nav-item');
     items.forEach(item => {
       const dataRoute = item.getAttribute('data-route');
       if (dataRoute && activeRoute === dataRoute) {
@@ -309,6 +753,13 @@
 
   // Load a route's content dynamically
   async function loadRoute() {
+    const loadId = ++currentLoadId;
+    // Hide notifications dropdown on navigation transitions
+    const notificationDropdown = document.getElementById('notification-dropdown');
+    if (notificationDropdown) {
+      notificationDropdown.classList.add('hidden');
+    }
+
     const isUserLoggedIn = localStorage.getItem('loggedIn') === 'true';
     const path = window.location.pathname;
     const relPrefix = getRelativePrefix();
@@ -334,26 +785,69 @@
 
     // Viewport containers
     const root = document.getElementById('app-root');
-    
-    // Case 1: Render Login view directly into root (without sidebar and header)
+
+    // Case 1: Render Login view directly into root (with header, main card aligned right, and footer)
     if (route === 'login-old' || !isUserLoggedIn) {
       root.innerHTML = '';
-      root.className = "bg-background text-on-surface h-screen overflow-hidden flex flex-col justify-center items-center p-4 sm:p-6 industrial-pattern";
-      
+      root.className = "min-h-screen w-screen overflow-x-hidden flex flex-col relative bg-cover bg-left-bottom bg-no-repeat";
+      root.style.backgroundImage = `url('${relPrefix}assets/login_bg.jpg')`;
+
+      // Ambient overlay for premium integrated look
+      const ambientOverlay = document.createElement('div');
+      ambientOverlay.className = "absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-black/5 pointer-events-none z-0";
+      root.appendChild(ambientOverlay);
+
       try {
         const loginUrl = relPrefix + 'login-old/index.html';
         const response = await fetch(loginUrl);
         if (!response.ok) throw new Error('Failed to load login card.');
         const html = await response.text();
+        if (loadId !== currentLoadId) return;
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
-        
-        // Extract the login card and inject it
-        const loginCard = doc.querySelector('main > div') || doc.body.firstElementChild;
-        if (loginCard) {
-          root.appendChild(loginCard);
+
+        // Extract and style main container
+        const mainEl = doc.querySelector('main');
+        if (mainEl) {
+          mainEl.className = "login-main flex-grow flex items-center justify-center lg:justify-between p-4 sm:p-8 lg:p-12 pb-20 z-10 w-full max-w-7xl mx-auto gap-8 lg:gap-12 relative";
+          
+          // Style the login card inside main
+          const loginCard = mainEl.querySelector('.login-card') || mainEl.querySelector('div:last-child');
+          if (loginCard) {
+            loginCard.className = "login-card w-full max-w-[460px] mx-4 sm:mx-0 bg-white/90 backdrop-blur-xl border-2 border-[#dc0111] rounded-3xl relative overflow-hidden shadow-2xl transition-all duration-300 hover:shadow-red-500/5 hover:border-[#b8010e] shrink-0";
+            
+            // Adjust card inner padding and logo height dynamically if necessary
+            const cardFormContainer = loginCard.querySelector('div');
+            if (cardFormContainer) {
+              cardFormContainer.className = "p-6 sm:p-10";
+            }
+            const cardLogo = loginCard.querySelector('img');
+            if (cardLogo) {
+              cardLogo.className = "h-16 w-auto object-contain select-none";
+            }
+          }
+          root.appendChild(mainEl);
+        }
+
+        // Extract and style footer
+        const footerEl = doc.querySelector('footer');
+        if (footerEl) {
+          footerEl.className = "fixed bottom-3 left-0 right-0 z-20 text-center select-none pointer-events-none";
+          root.appendChild(footerEl);
         } else {
-          root.innerHTML = html;
+          const newFooter = document.createElement('footer');
+          newFooter.className = "fixed bottom-3 left-0 right-0 z-20 text-center select-none pointer-events-none";
+          newFooter.innerHTML = `
+            <div class="flex flex-col items-center justify-center space-y-0.5 px-4 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
+              <p class="text-xs font-black text-white tracking-wider uppercase">
+                © NICHIRIN IMPERIAL AUTOPARTS INDIA PVT. LTD.
+              </p>
+              <p class="text-[11px] font-bold text-slate-100 tracking-wide">
+                Developed &amp; Maintained by Nichi-In Software Solutions Pvt. Ltd. INDIA
+              </p>
+            </div>
+          `;
+          root.appendChild(newFooter);
         }
 
         // Apply page-specific dynamic stylesheet config (login layout adjustments)
@@ -383,8 +877,10 @@
     } else {
       updateLayoutRelativePaths(relPrefix);
     }
+    // Update active nav highlights immediately to prevent label/highlight flicker before load completes
+    updateActiveNavItem(route);
 
-    // Show loading spinner overlay inside viewport
+    // Show loading spinner overlay inside viewport immediately
     const loader = document.getElementById('content-loader');
     const content = document.getElementById('app-content');
     if (loader) {
@@ -393,18 +889,38 @@
     }
 
     try {
-      const response = await fetch(window.location.href);
+      // Force a minimum loading time of 400ms so the user always sees the page transition loader clearly
+      const [response] = await Promise.all([
+        fetch(window.location.href),
+        new Promise(resolve => setTimeout(resolve, 400))
+      ]);
       if (!response.ok) throw new Error(`Could not access module: ${route}`);
       const html = await response.text();
+      if (loadId !== currentLoadId) return;
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
+
+      // Sync dark mode configuration dynamically from the loaded view
+      if (doc.documentElement && doc.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('light');
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+      }
 
       // Update sidebar nav active state
       updateActiveNavItem(route);
 
       // Adjust wrapper height and scrolling for canvas-based views dynamically
       const mainWrapper = root.querySelector('#main-wrapper');
-      if (route === 'workflow-configuration' || route === 'workflow-canvas-overview' || route === 'workflow-stage-overview' || route.includes('-canvas')) {
+      if (route === 'workflow-configuration') {
+        content.className = "p-0 h-full overflow-hidden flex flex-col gap-0";
+        if (mainWrapper) {
+          mainWrapper.classList.remove('overflow-y-auto');
+          mainWrapper.classList.add('overflow-hidden');
+        }
+      } else if (route === 'workflow-canvas-overview' || route === 'workflow-stage-overview' || route.includes('-canvas')) {
         content.className = "pt-1 px-6 pb-6 h-full overflow-hidden flex flex-col gap-6";
         if (mainWrapper) {
           mainWrapper.classList.remove('overflow-y-auto');
@@ -430,46 +946,43 @@
         document.head.appendChild(s);
       });
 
-      // Render static header title "Control Card Digitization System" next to hamburger button
+      // Render static header title next to hamburger button from system settings
       const mainHeaderLeft = document.querySelector('header > div:first-child');
       if (mainHeaderLeft) {
+        mainHeaderLeft.classList.add('min-w-0');
         const menuBtn = mainHeaderLeft.querySelector('.sidebar-toggle-btn');
+        if (menuBtn) {
+          menuBtn.classList.add('flex-shrink-0');
+        }
         mainHeaderLeft.innerHTML = '';
         if (menuBtn) {
           mainHeaderLeft.appendChild(menuBtn);
         }
         const defaultTitle = document.createElement('span');
-        defaultTitle.className = 'text-lg sm:text-xl font-black text-primary select-none tracking-tight leading-none';
-        defaultTitle.textContent = 'Control Card Digitization System';
+        defaultTitle.className = 'text-lg sm:text-xl font-black text-primary select-none tracking-tight leading-none truncate';
+
+        let sysName = 'Control Card Digitization System';
+        try {
+          const config = JSON.parse(localStorage.getItem('system_config'));
+          if (config && config.sysName) {
+            sysName = config.sysName;
+          }
+        } catch (e) { }
+
+        defaultTitle.textContent = sysName;
+        defaultTitle.setAttribute('title', sysName);
         mainHeaderLeft.appendChild(defaultTitle);
       }
 
       // Merge custom header contents (badges) into the shell layout header dynamically
       const subHeader = doc.querySelector('header');
       if (subHeader) {
-        // Merge right-side badge content (e.g. status badges like "Production")
-        const rightContent = subHeader.lastElementChild;
         const mainHeaderRight = document.getElementById('main-header-right') || document.querySelector('header > div:last-child');
-        if (rightContent && mainHeaderRight) {
+        if (mainHeaderRight) {
           // Remove any previously injected custom badges to prevent accumulation
           const existingBadge = mainHeaderRight.querySelector('.custom-header-badge');
           if (existingBadge) {
             existingBadge.remove();
-          }
-
-          // Scan subheader right elements for status badges (such as "Production" badge)
-          let badge = null;
-          Array.from(rightContent.children).forEach(child => {
-            const text = child.textContent.trim().toLowerCase();
-            if (text === 'production' && !child.querySelector('img') && !child.querySelector('[data-icon="notifications"]')) {
-              badge = child.cloneNode(true);
-            }
-          });
-
-          if (badge) {
-            badge.classList.add('custom-header-badge');
-            // Insert badge before notifications button
-            mainHeaderRight.insertBefore(badge, mainHeaderRight.firstElementChild);
           }
         }
         subHeader.remove();
@@ -487,12 +1000,12 @@
       const main = doc.querySelector('main');
       let targetHtml = '';
       if (main) {
-        main.classList.remove('ml-[260px]', 'pt-[64px]', 'h-screen');
+        main.classList.remove('ml-[260px]', 'pt-[64px]', 'mt-[64px]', 'mt-16', 'h-screen');
         stripPadding(main);
         if (main.firstElementChild) {
           stripPadding(main.firstElementChild);
         }
-        targetHtml = main.innerHTML;
+        targetHtml = main.innerHTML.trim();
       } else {
         const children = Array.from(doc.body.children);
         const coreEl = children.find(el => el.tagName !== 'HEADER' && el.tagName !== 'ASIDE' && el.tagName !== 'NAV' && el.tagName !== 'SCRIPT' && el.tagName !== 'STYLE');
@@ -501,13 +1014,26 @@
           if (coreEl.firstElementChild) {
             stripPadding(coreEl.firstElementChild);
           }
-          targetHtml = coreEl.innerHTML;
+          targetHtml = coreEl.innerHTML.trim();
         } else {
-          targetHtml = doc.body.innerHTML;
+          targetHtml = doc.body.innerHTML.trim();
         }
       }
 
       content.innerHTML = targetHtml;
+
+      // Sync header profile and notifications
+      syncProfileHeader();
+      const list = getNotifications();
+      const unreadCount = list.filter(n => !n.read).length;
+      const badge = document.getElementById('header-notification-badge');
+      if (badge) {
+        if (unreadCount > 0) {
+          badge.classList.remove('hidden');
+        } else {
+          badge.classList.add('hidden');
+        }
+      }
 
       // Extract and execute page-specific JavaScript code (like charts or modals initialization)
       const scripts = doc.querySelectorAll('script');
@@ -533,6 +1059,11 @@
       if (mobileSidebar && !mobileSidebar.classList.contains('-translate-x-full')) {
         mobileSidebar.classList.add('-translate-x-full');
       }
+      const backdropEl = document.getElementById('sidebar-backdrop');
+      if (backdropEl) {
+        backdropEl.classList.remove('opacity-100', 'pointer-events-auto');
+        backdropEl.classList.add('opacity-0', 'pointer-events-none');
+      }
 
     } catch (err) {
       content.innerHTML = `
@@ -548,12 +1079,10 @@
         </div>
       `;
     } finally {
-      setTimeout(() => {
-        if (loader) {
-          loader.classList.add('pointer-events-none');
-          loader.classList.remove('opacity-100');
-        }
-      }, 300);
+      if (loader) {
+        loader.classList.add('pointer-events-none');
+        loader.classList.remove('opacity-100');
+      }
     }
   }
 
@@ -564,7 +1093,7 @@
 
   // Handle initial page load
   window.addEventListener('DOMContentLoaded', () => {
-    
+
     // Check if redirect query parameter exists from direct folder refresh
     const urlParams = new URLSearchParams(window.location.search);
     const targetRoute = urlParams.get('route');
@@ -578,13 +1107,13 @@
       const link = e.target.closest('a');
       if (!link) return;
       const href = link.getAttribute('href');
-      
+
       // If href is just "#", prevent default
       if (href === '#') {
         e.preventDefault();
         return;
       }
-      
+
       // Intercept local mockup HTML links to handle via History SPA pushState
       if (href && !href.startsWith('http') && !href.startsWith('javascript:')) {
         const urlWithoutQuery = href.split('?')[0];
@@ -599,7 +1128,7 @@
     // Intercept login button click directly for bulletproof SPA transitions
     document.addEventListener('click', (e) => {
       const btn = e.target.closest('button[type="submit"]');
-      if (btn && btn.closest('form') && (btn.textContent.includes('AUTHORIZE ACCESS') || btn.closest('form').querySelector('input[type="password"]'))) {
+      if (btn && btn.closest('form') && (btn.textContent.includes('AUTHORIZE ACCESS') || btn.textContent.includes('SIGN IN') || btn.closest('form').id === 'login-form' || btn.closest('form').querySelector('input[type="password"]'))) {
         if (localStorage.getItem('loggedIn') === 'true') return;
         e.preventDefault();
         const relPrefix = getRelativePrefix();
@@ -623,7 +1152,7 @@
     document.addEventListener('submit', (e) => {
       const form = e.target;
       if (form) {
-        const isSignIn = form.querySelector('input[type="password"]') || form.id === 'login-form';
+        const isSignIn = form.querySelector('input[type="password"]') || form.id === 'login-form' || form.action.includes('login-old');
         if (isSignIn) {
           e.preventDefault();
           const relPrefix = getRelativePrefix();
