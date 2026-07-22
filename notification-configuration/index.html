@@ -42,6 +42,17 @@
       background: #cbd5e1;
       border-radius: 4px;
     }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none !important;
+      scrollbar-width: none !important;
+    }
   </style>
 </head>
 
@@ -64,10 +75,11 @@
       </button>
     </div>
 
-    <!-- Filter Bar: Category Pills + WO Dropdown -->
-    <div class="bg-white border border-outline-variant/30 rounded-xl px-4 py-3 shadow-sm flex items-center justify-between gap-3">
-      <!-- Category Pills -->
-      <div class="flex flex-wrap items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200/80">
+    <!-- Filter Bar: Category Pills (Desktop) / Category Select (Mobile) + WO Dropdown -->
+    <div class="bg-white border border-outline-variant/30 rounded-xl p-3 sm:px-4 sm:py-3 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+      
+      <!-- Desktop Category Tab Pills -->
+      <div class="hidden sm:flex flex-wrap items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200/80">
         <button id="tab-all" onclick="window.switchCategoryTab('All')"
           class="px-3.5 py-1.5 rounded-lg text-xs font-extrabold flex items-center gap-1.5 transition-all bg-white text-slate-900 shadow-xs cursor-pointer border-none">
           <span>All Alerts</span>
@@ -93,13 +105,23 @@
         </button>
       </div>
 
+      <!-- Mobile Category Dropdown Select -->
+      <div class="block sm:hidden w-full">
+        <select id="mobile-category-select" onchange="window.switchCategoryTab(this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-800 px-3 h-9 focus:outline-none focus:border-primary shadow-xs cursor-pointer">
+          <option value="All">All Alerts (6)</option>
+          <option value="Work Order">Work Order (2)</option>
+          <option value="Process">Process (2)</option>
+          <option value="Breakdown">Breakdown (2)</option>
+        </select>
+      </div>
+
       <!-- Work Order ID Dropdown (right side of filter bar) -->
-      <div class="relative w-48 flex-shrink-0">
+      <div class="relative w-full sm:w-48 flex-shrink-0">
         <button id="notif-wo-dropdown-trigger" class="w-full bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 px-3 font-semibold flex items-center justify-between cursor-pointer gap-1" onclick="window.toggleNotifWODropdown()">
           <span id="notif-wo-selected-text" class="truncate text-xs">All Work Orders</span>
           <span class="material-symbols-outlined text-[16px] text-slate-400 shrink-0">expand_more</span>
         </button>
-        <div id="notif-wo-dropdown-container" class="absolute right-0 mt-1 w-56 bg-white border border-outline-variant/30 rounded-lg shadow-lg z-[100] hidden p-2 flex flex-col gap-1.5">
+        <div id="notif-wo-dropdown-container" class="absolute right-0 mt-1 w-full sm:w-56 bg-white border border-outline-variant/30 rounded-lg shadow-lg z-[100] hidden p-2 flex flex-col gap-1.5">
           <div class="relative">
             <input type="text" id="notif-wo-dropdown-search" class="w-full bg-slate-50 border border-outline-variant/30 rounded-lg text-xs text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-8 pr-3 font-semibold" placeholder="Search WO ID..." oninput="window.filterNotifWODropdown(this.value)" autocomplete="off" />
             <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[16px] text-slate-400">search</span>
@@ -122,149 +144,106 @@
       <div id="config-modal-backdrop" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity duration-300 opacity-0 cursor-pointer" onclick="window.closeConfigModal()"></div>
       
       <!-- Drawer Panel -->
-      <div id="config-modal-drawer" class="relative w-full max-w-[500px] bg-white h-full shadow-2xl border-l border-slate-200 flex flex-col transform translate-x-full transition-transform duration-300 ease-out z-10 overflow-hidden">
+      <div id="config-modal-drawer" class="relative w-full max-w-[560px] bg-white h-full shadow-2xl border-l border-slate-200 flex flex-col transform translate-x-full transition-transform duration-300 ease-out z-10 overflow-hidden font-body-md">
         <!-- Drawer Header -->
         <div class="px-6 py-5 bg-slate-50 border-b border-slate-200 flex items-center justify-between shrink-0">
-          <h3 class="font-bold text-slate-900 text-base flex items-center gap-1.5">
+          <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
             <span class="material-symbols-outlined text-primary">settings</span>
             <span>Notification Configuration</span>
           </h3>
-          <button onclick="window.closeConfigModal()" class="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors cursor-pointer">
+          <button onclick="window.closeConfigModal()" class="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors cursor-pointer bg-transparent border-none">
             <span class="material-symbols-outlined text-[20px]">close</span>
           </button>
         </div>
 
-        <!-- Drawer Content: Template Tabs -->
-        <div class="flex-grow overflow-y-auto custom-scrollbar bg-white">
+        <!-- Drawer Content: Minimal Demo Configuration Sections -->
+        <div class="flex-grow overflow-y-auto custom-scrollbar bg-white p-6 space-y-5">
 
-          <!-- Template Tab Pills -->
-          <div class="px-5 pt-4 pb-0 flex gap-2 border-b border-slate-100">
-            <button id="cfg-tab-wo" onclick="window.switchConfigTab('wo')"
-              class="pb-3 px-1 text-xs font-bold text-primary border-b-2 border-primary -mb-px whitespace-nowrap cursor-pointer bg-transparent border-t-0 border-l-0 border-r-0 transition-all">
-              Work Order
-            </button>
-            <button id="cfg-tab-proc" onclick="window.switchConfigTab('proc')"
-              class="pb-3 px-1 text-xs font-semibold text-slate-400 border-b-2 border-transparent -mb-px whitespace-nowrap cursor-pointer bg-transparent border-t-0 border-l-0 border-r-0 hover:text-slate-700 transition-all">
-              Process
-            </button>
-            <button id="cfg-tab-brk" onclick="window.switchConfigTab('brk')"
-              class="pb-3 px-1 text-xs font-semibold text-slate-400 border-b-2 border-transparent -mb-px whitespace-nowrap cursor-pointer bg-transparent border-t-0 border-l-0 border-r-0 hover:text-slate-700 transition-all">
-              Breakdown
-            </button>
-          </div>
-
-          <!-- ===== TAB: WORK ORDER ===== -->
-          <div id="cfg-panel-wo" class="p-5 space-y-4">
-            <div class="flex items-center gap-2.5">
-              <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-                <span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>
-              </div>
-              <div>
-                <p class="font-bold text-slate-900 text-sm">Work Order Template</p>
-                <p class="text-[11px] text-slate-400 font-medium">WO lifecycle event notifications</p>
+          <!-- SECTION 1: WORK ORDER & PROCESS NOTIFICATION -->
+          <div class="space-y-4 pb-5 border-b border-slate-200">
+            <div class="flex items-center justify-between p-3 bg-blue-50/70 border border-blue-100 rounded-xl">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <span class="material-symbols-outlined text-[18px]">assignment_turned_in</span>
+                </div>
+                <div>
+                  <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Work Order &amp; Process Notification</h4>
+                  <p class="text-[11px] text-slate-500 mt-0.5">Alerts for line dispatch &amp; quality checks</p>
+                </div>
               </div>
             </div>
+
             <div class="space-y-2">
-              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Alert On</p>
-              <div class="grid grid-cols-2 gap-2">
-                <label class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 cursor-pointer hover:border-primary/40 transition-all">
-                  <input type="checkbox" id="wo-trig-released" checked class="w-3.5 h-3.5 rounded text-primary border-slate-300 shrink-0" />
-                  <span class="text-xs font-semibold text-slate-700">Released</span>
+              <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Alert On</span>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <label class="flex items-center gap-2.5 bg-slate-50 border border-slate-200 rounded-xl p-3 cursor-pointer hover:border-primary/40 hover:bg-slate-100/50 transition-all select-none">
+                  <input type="checkbox" id="wo-trig-released" checked class="w-4 h-4 rounded text-primary border-slate-300 shrink-0" />
+                  <span class="text-xs font-semibold text-slate-800">Work Order Released</span>
                 </label>
-                <label class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 cursor-pointer hover:border-primary/40 transition-all">
-                  <input type="checkbox" id="wo-trig-held" class="w-3.5 h-3.5 rounded text-primary border-slate-300 shrink-0" />
-                  <span class="text-xs font-semibold text-slate-700">Held</span>
+                <label class="flex items-center gap-2.5 bg-slate-50 border border-slate-200 rounded-xl p-3 cursor-pointer hover:border-primary/40 hover:bg-slate-100/50 transition-all select-none">
+                  <input type="checkbox" id="wo-trig-held" checked class="w-4 h-4 rounded text-primary border-slate-300 shrink-0" />
+                  <span class="text-xs font-semibold text-slate-800">Work Order Held</span>
+                </label>
+                <label class="flex items-center gap-2.5 bg-slate-50 border border-slate-200 rounded-xl p-3 cursor-pointer hover:border-primary/40 hover:bg-slate-100/50 transition-all select-none">
+                  <input type="checkbox" id="proc-trig-tol" checked class="w-4 h-4 rounded text-primary border-slate-300 shrink-0" />
+                  <span class="text-xs font-semibold text-slate-800">QC Tolerance Drift</span>
                 </label>
               </div>
             </div>
-            <div class="space-y-2">
-              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Notify Via</p>
+
+            <div class="space-y-2 pt-2 border-t border-slate-100">
+              <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Notify Via</span>
               <div class="grid grid-cols-2 gap-2">
-                <label class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 cursor-pointer hover:border-primary/40 transition-all">
-                  <input type="checkbox" id="wo-ch-bell" checked class="w-3.5 h-3.5 rounded text-primary border-slate-300 shrink-0" />
-                  <span class="text-xs font-semibold text-slate-700">System Bell</span>
+                <label class="flex items-center gap-2.5 bg-slate-50 border border-slate-200 rounded-xl p-3 cursor-pointer hover:border-primary/40 hover:bg-slate-100/50 transition-all select-none">
+                  <input type="checkbox" id="wo-ch-bell" checked class="w-4 h-4 rounded text-primary border-slate-300 shrink-0" />
+                  <span class="text-xs font-semibold text-slate-800">System Bell</span>
                 </label>
-                <label class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 cursor-pointer hover:border-primary/40 transition-all">
-                  <input type="checkbox" id="wo-ch-email" checked class="w-3.5 h-3.5 rounded text-primary border-slate-300 shrink-0" />
-                  <span class="text-xs font-semibold text-slate-700">Email</span>
+                <label class="flex items-center gap-2.5 bg-slate-50 border border-slate-200 rounded-xl p-3 cursor-pointer hover:border-primary/40 hover:bg-slate-100/50 transition-all select-none">
+                  <input type="checkbox" id="wo-ch-email" checked class="w-4 h-4 rounded text-primary border-slate-300 shrink-0" />
+                  <span class="text-xs font-semibold text-slate-800">Email</span>
                 </label>
               </div>
             </div>
           </div>
 
-          <!-- ===== TAB: PROCESS ===== -->
-          <div id="cfg-panel-proc" class="p-5 space-y-4 hidden">
-            <div class="flex items-center gap-2.5">
-              <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-                <span class="material-symbols-outlined text-[20px]">precision_manufacturing</span>
-              </div>
-              <div>
-                <p class="font-bold text-slate-900 text-sm">Process Template</p>
-                <p class="text-[11px] text-slate-400 font-medium">Deviation alerts for assembly QC steps</p>
-              </div>
-            </div>
-            <div class="space-y-2">
-              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Alert On</p>
-              <div class="space-y-2">
-                <label class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 cursor-pointer hover:border-primary/40 transition-all">
-                  <input type="checkbox" id="proc-trig-tol" checked class="w-3.5 h-3.5 rounded text-primary border-slate-300 shrink-0" />
-                  <span class="text-xs font-semibold text-slate-700">Tolerance Drift (&gt;0.05 mm)</span>
-                </label>
-                <label class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 cursor-pointer hover:border-primary/40 transition-all">
-                  <input type="checkbox" id="proc-trig-ng" class="w-3.5 h-3.5 rounded text-primary border-slate-300 shrink-0" />
-                  <span class="text-xs font-semibold text-slate-700">NG / Rejection Count</span>
-                </label>
+          <!-- SECTION 2: BREAKDOWN NOTIFICATION -->
+          <div class="space-y-4">
+            <div class="flex items-center justify-between p-3 bg-rose-50/70 border border-rose-100 rounded-xl">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-rose-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <span class="material-symbols-outlined text-[18px]">build</span>
+                </div>
+                <div>
+                  <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Breakdown Notification</h4>
+                  <p class="text-[11px] text-slate-500 mt-0.5">Machine stop &amp; maintenance dispatch</p>
+                </div>
               </div>
             </div>
-            <div class="space-y-2">
-              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Notify Via</p>
-              <div class="grid grid-cols-2 gap-2">
-                <label class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 cursor-pointer hover:border-primary/40 transition-all">
-                  <input type="checkbox" id="proc-ch-bell" checked class="w-3.5 h-3.5 rounded text-primary border-slate-300 shrink-0" />
-                  <span class="text-xs font-semibold text-slate-700">System Bell</span>
-                </label>
-                <label class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 cursor-pointer hover:border-primary/40 transition-all">
-                  <input type="checkbox" id="proc-ch-email" checked class="w-3.5 h-3.5 rounded text-primary border-slate-300 shrink-0" />
-                  <span class="text-xs font-semibold text-slate-700">QA Email</span>
-                </label>
-              </div>
-            </div>
-          </div>
 
-          <!-- ===== TAB: BREAKDOWN ===== -->
-          <div id="cfg-panel-brk" class="p-5 space-y-4 hidden">
-            <div class="flex items-center gap-2.5">
-              <div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
-                <span class="material-symbols-outlined text-[20px]">build</span>
-              </div>
-              <div>
-                <p class="font-bold text-slate-900 text-sm">Breakdown Template</p>
-                <p class="text-[11px] text-slate-400 font-medium">Machine stop &amp; calibration dispatch</p>
-              </div>
-            </div>
             <div class="space-y-2">
-              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Alert On</p>
-              <div class="space-y-2">
-                <label class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 cursor-pointer hover:border-primary/40 transition-all">
-                  <input type="checkbox" id="brk-trig-stop" checked class="w-3.5 h-3.5 rounded text-primary border-slate-300 shrink-0" />
-                  <span class="text-xs font-semibold text-slate-700">Critical Line Stop</span>
+              <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Alert On</span>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <label class="flex items-center gap-2.5 bg-slate-50 border border-slate-200 rounded-xl p-3 cursor-pointer hover:border-primary/40 hover:bg-slate-100/50 transition-all select-none">
+                  <input type="checkbox" id="brk-trig-stop" checked class="w-4 h-4 rounded text-primary border-slate-300 shrink-0" />
+                  <span class="text-xs font-semibold text-slate-800">Line Stop / Emergency</span>
                 </label>
-                <label class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 cursor-pointer hover:border-primary/40 transition-all">
-                  <input type="checkbox" id="brk-trig-calib" checked class="w-3.5 h-3.5 rounded text-primary border-slate-300 shrink-0" />
-                  <span class="text-xs font-semibold text-slate-700">Calibration Due</span>
+                <label class="flex items-center gap-2.5 bg-slate-50 border border-slate-200 rounded-xl p-3 cursor-pointer hover:border-primary/40 hover:bg-slate-100/50 transition-all select-none">
+                  <input type="checkbox" id="brk-trig-calib" checked class="w-4 h-4 rounded text-primary border-slate-300 shrink-0" />
+                  <span class="text-xs font-semibold text-slate-800">Maintenance Due</span>
                 </label>
               </div>
             </div>
-            <div class="space-y-2">
-              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Dispatch To</p>
+
+            <div class="space-y-2 pt-2 border-t border-slate-100">
+              <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Dispatch To</span>
               <div class="grid grid-cols-2 gap-2">
-                <label class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 cursor-pointer hover:border-primary/40 transition-all">
-                  <input type="checkbox" id="brk-grp-mech" checked class="w-3.5 h-3.5 rounded text-primary border-slate-300 shrink-0" />
-                  <span class="text-xs font-semibold text-slate-700">Mechanical</span>
+                <label class="flex items-center gap-2.5 bg-slate-50 border border-slate-200 rounded-xl p-3 cursor-pointer hover:border-primary/40 hover:bg-slate-100/50 transition-all select-none">
+                  <input type="checkbox" id="brk-grp-mech" checked class="w-4 h-4 rounded text-primary border-slate-300 shrink-0" />
+                  <span class="text-xs font-semibold text-slate-800">Maintenance Team</span>
                 </label>
-                <label class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 cursor-pointer hover:border-primary/40 transition-all">
-                  <input type="checkbox" id="brk-grp-elec" checked class="w-3.5 h-3.5 rounded text-primary border-slate-300 shrink-0" />
-                  <span class="text-xs font-semibold text-slate-700">Electrical</span>
+                <label class="flex items-center gap-2.5 bg-slate-50 border border-slate-200 rounded-xl p-3 cursor-pointer hover:border-primary/40 hover:bg-slate-100/50 transition-all select-none">
+                  <input type="checkbox" id="brk-grp-elec" checked class="w-4 h-4 rounded text-primary border-slate-300 shrink-0" />
+                  <span class="text-xs font-semibold text-slate-800">Electrical Team</span>
                 </label>
               </div>
             </div>
@@ -273,8 +252,11 @@
 
         <!-- Drawer Footer -->
         <div class="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-end gap-3 shrink-0">
+          <button type="button" onclick="window.closeConfigModal()" class="px-4 py-2 border border-slate-200 text-slate-600 rounded-lg font-semibold text-xs hover:bg-slate-100 transition-colors cursor-pointer">
+            Cancel
+          </button>
           <button type="button" onclick="window.saveConfigTemplate()" class="h-10 px-6 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary/95 transition-all shadow-sm cursor-pointer border-none">
-            Save Template
+            Save Configuration
           </button>
         </div>
       </div>
@@ -445,6 +427,12 @@
     window.switchCategoryTab = function(category) {
       window.activeNotifCategory = category;
 
+      // Sync mobile dropdown
+      const mobSel = document.getElementById('mobile-category-select');
+      if (mobSel && mobSel.value !== category) {
+        mobSel.value = category;
+      }
+
       // Update Pill designs
       const tabs = ['All', 'Work Order', 'Process', 'Breakdown'];
       tabs.forEach(tab => {
@@ -487,6 +475,15 @@
       document.getElementById('badge-wo-count').textContent = countWO;
       document.getElementById('badge-process-count').textContent = countProc;
       document.getElementById('badge-breakdown-count').textContent = countBrk;
+
+      // Update Mobile select option labels
+      const mobSel = document.getElementById('mobile-category-select');
+      if (mobSel) {
+        mobSel.options[0].text = `All Alerts (${countAll})`;
+        mobSel.options[1].text = `Work Order (${countWO})`;
+        mobSel.options[2].text = `Process (${countProc})`;
+        mobSel.options[3].text = `Breakdown (${countBrk})`;
+      }
 
       if (currentList.length === 0) {
         container.innerHTML = `
@@ -680,12 +677,138 @@
       }
     });
 
+    // Preset Profile Application Logic
+    window.applyPresetProfile = function(profileKey) {
+      const presets = {
+        standard: {
+          wo: ['wo-trig-released', 'wo-trig-held', 'wo-trig-target', 'wo-trig-urgent', 'wo-opt-leader-notify', 'wo-opt-digest-email'],
+          proc: ['proc-trig-tol', 'proc-trig-kakotora', 'proc-trig-stamping', 'proc-trig-pressure', 'proc-opt-halt-gate', 'proc-opt-lead-sign'],
+          brk: ['brk-trig-stop', 'brk-trig-temp', 'brk-trig-calib', 'brk-trig-fluid', 'brk-grp-mech', 'brk-grp-elec', 'brk-grp-tooling', 'brk-grp-admin'],
+          channels: ['chn-bell-active', 'chn-email-active', 'chn-sms-active', 'chn-quiet-hours'],
+          tone: 'chime',
+          timeout: '10'
+        },
+        high_alert: {
+          wo: ['wo-trig-released', 'wo-trig-held', 'wo-trig-target', 'wo-trig-urgent', 'wo-opt-leader-notify'],
+          proc: ['proc-trig-tol', 'proc-trig-kakotora', 'proc-trig-stamping', 'proc-trig-pressure', 'proc-opt-halt-gate', 'proc-opt-lead-sign'],
+          brk: ['brk-trig-stop', 'brk-trig-temp', 'brk-trig-calib', 'brk-trig-fluid', 'brk-grp-mech', 'brk-grp-elec', 'brk-grp-tooling', 'brk-grp-admin'],
+          channels: ['chn-bell-active', 'chn-email-active', 'chn-sms-active'],
+          tone: 'siren',
+          timeout: '5'
+        },
+        night_quiet: {
+          wo: ['wo-trig-held', 'wo-trig-urgent'],
+          proc: ['proc-trig-tol', 'proc-trig-pressure', 'proc-opt-halt-gate'],
+          brk: ['brk-trig-stop'],
+          channels: ['chn-bell-active', 'chn-sms-active', 'chn-quiet-hours'],
+          tone: 'beep',
+          timeout: '15'
+        }
+      };
+
+      const sel = presets[profileKey] || presets.standard;
+      const allIds = [
+        'wo-trig-released', 'wo-trig-held', 'wo-trig-target', 'wo-trig-urgent', 'wo-opt-leader-notify', 'wo-opt-digest-email',
+        'proc-trig-tol', 'proc-trig-kakotora', 'proc-trig-stamping', 'proc-trig-pressure', 'proc-opt-halt-gate', 'proc-opt-lead-sign',
+        'brk-trig-stop', 'brk-trig-temp', 'brk-trig-calib', 'brk-trig-fluid', 'brk-grp-mech', 'brk-grp-elec', 'brk-grp-tooling', 'brk-grp-admin',
+        'chn-bell-active', 'chn-email-active', 'chn-sms-active', 'chn-quiet-hours'
+      ];
+
+      const activeSet = new Set([...(sel.wo || []), ...(sel.proc || []), ...(sel.brk || []), ...(sel.channels || [])]);
+      allIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.checked = activeSet.has(id);
+      });
+
+      const toneEl = document.getElementById('cfg-alarm-tone-select');
+      if (toneEl && sel.tone) toneEl.value = sel.tone;
+      const timeoutEl = document.getElementById('cfg-esc-timeout-select');
+      if (timeoutEl && sel.timeout) timeoutEl.value = sel.timeout;
+
+      window.showToast(
+        'Preset Profile Applied',
+        `Switched configuration rules to "${profileKey === 'high_alert' ? 'High Alert / Shift Change' : profileKey === 'night_quiet' ? 'Night Shift Quiet Mode' : 'Standard Plant Profile'}".`
+      );
+    };
+
+    // Test Audio Alarm Tone (Web Audio API Sound Synth)
+    window.testAlarmTone = function() {
+      const toneSelect = document.getElementById('cfg-alarm-tone-select');
+      const tone = toneSelect ? toneSelect.value : 'chime';
+
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtx) {
+          const ctx = new AudioCtx();
+          const now = ctx.currentTime;
+
+          if (tone === 'siren') {
+            // High pitch emergency siren
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(880, now);
+            osc.frequency.exponentialRampToValueAtTime(1760, now + 0.25);
+            osc.frequency.exponentialRampToValueAtTime(880, now + 0.5);
+            gain.gain.setValueAtTime(0.2, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.6);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.6);
+          } else if (tone === 'beep') {
+            // Dual beep sequence
+            [0, 0.2].forEach(delay => {
+              const osc = ctx.createOscillator();
+              const gain = ctx.createGain();
+              osc.type = 'sine';
+              osc.frequency.setValueAtTime(1046.5, now + delay);
+              gain.gain.setValueAtTime(0.25, now + delay);
+              gain.gain.exponentialRampToValueAtTime(0.01, now + delay + 0.12);
+              osc.connect(gain);
+              gain.connect(ctx.destination);
+              osc.start(now + delay);
+              osc.stop(now + delay + 0.12);
+            });
+          } else {
+            // Standard Industrial Chime (pleasant chord)
+            [523.25, 659.25, 783.99].forEach(freq => {
+              const osc = ctx.createOscillator();
+              const gain = ctx.createGain();
+              osc.type = 'sine';
+              osc.frequency.setValueAtTime(freq, now);
+              gain.gain.setValueAtTime(0.15, now);
+              gain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+              osc.connect(gain);
+              gain.connect(ctx.destination);
+              osc.start(now);
+              osc.stop(now + 0.8);
+            });
+          }
+        }
+      } catch(e) {
+        console.error("Audio Context playback error", e);
+      }
+
+      window.showToast(
+        'Audio Alarm Tone Test',
+        `Playing sample tone "${tone.toUpperCase()}" on workstation speakers.`
+      );
+    };
+
+    // Reset Defaults
+    window.resetConfigDefaults = function() {
+      const presetSel = document.getElementById('cfg-preset-profile-select');
+      if (presetSel) presetSel.value = 'standard';
+      window.applyPresetProfile('standard');
+    };
+
     // Save Template preference triggers
     window.saveConfigTemplate = function() {
       window.closeConfigModal();
       window.showToast(
-        'Configuration Template Saved', 
-        'Work order and machine breakdown process notification routing updated successfully.'
+        'Rule Matrix Saved & Deployed', 
+        'Work order, QC process threshold & breakdown routing matrix updated successfully.'
       );
     };
 
@@ -721,26 +844,9 @@
       }, 300);
     };
 
-    // Config drawer tab switcher
+    // Config drawer tab switcher (No-tab stacked layout placeholder)
     window.switchConfigTab = function(tab) {
-      const panels = ['wo', 'proc', 'brk'];
-      const tabBtns = ['cfg-tab-wo', 'cfg-tab-proc', 'cfg-tab-brk'];
-
-      panels.forEach((p, i) => {
-        const panel = document.getElementById('cfg-panel-' + p);
-        const btn = document.getElementById(tabBtns[i]);
-        if (!panel || !btn) return;
-
-        if (p === tab) {
-          panel.classList.remove('hidden');
-          btn.classList.add('text-primary', 'font-bold', 'border-primary');
-          btn.classList.remove('text-slate-400', 'border-transparent');
-        } else {
-          panel.classList.add('hidden');
-          btn.classList.remove('text-primary', 'font-bold', 'border-primary');
-          btn.classList.add('text-slate-400', 'border-transparent');
-        }
-      });
+      // Legacy function kept for safety
     };
 
     window.openDeleteNotifModal = function(id) {
