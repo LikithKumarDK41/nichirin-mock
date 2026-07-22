@@ -68,48 +68,83 @@
   // Notification and Profile state management helpers
   function getNotifications() {
     const stored = localStorage.getItem('system_notifications');
-    if (stored) return JSON.parse(stored);
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        const hasCategories = parsed.length > 0 && parsed.every(n => n.category !== undefined);
+        const hasRealisticData = parsed.some(n => n.message.includes('JG-BOND-12') && n.message.includes('22615540 has been released'));
+        if (hasCategories && hasRealisticData) {
+          return parsed;
+        }
+      } catch(e) {}
+    }
 
     const defaultNotifications = [
       {
         id: 1,
-        title: 'Work Order Pending Approval',
-        message: 'Work Order #4802 requires site manager sign-off.',
+        title: 'Work Order Pending Release',
+        message: 'Work Order #22615542 requires Supervisor release signature.',
         time: '5 mins ago',
         read: false,
         icon: 'fact_check',
-        color: 'bg-primary-container text-on-primary-container',
-        link: 'qc-pending-approvals'
+        color: 'bg-rose-100/70 text-rose-700',
+        link: 'work-orders',
+        category: 'Work Order'
       },
       {
-        id: 2,
-        title: 'Quality Deviation Alert',
-        message: 'Line A reported tolerance drift on Outer Hose Diameter.',
+        id: 6,
+        title: 'Calibration Due: OV-SHRNK-01',
+        message: 'HMI Curing Heat Oven (OV-SHRNK-01) calibration interval exceeded (Due: 2026-07-20).',
         time: '1 hour ago',
-        read: false,
-        icon: 'warning',
-        color: 'bg-error-container text-on-error-container',
-        link: 'traceability-search'
+        read: true,
+        icon: 'build',
+        color: 'bg-amber-100/70 text-amber-700',
+        link: 'machine-management',
+        category: 'Breakdown'
       },
       {
         id: 3,
-        title: 'System Update Successful',
-        message: 'SAP database master sync completed successfully.',
+        title: 'Quality Deviation Alert',
+        message: 'Hydraulic Crimp Press (MC-CRIMP-03) reported tolerance drift (+0.08 mm).',
+        time: '2 hours ago',
+        read: false,
+        icon: 'warning',
+        color: 'bg-amber-100/70 text-amber-700',
+        link: 'traceability-search',
+        category: 'Process'
+      },
+      {
+        id: 5,
+        title: 'Bonding Jig JG-BOND-12 Down',
+        message: 'Sleeve Adhesive Bonding Jig (JG-BOND-12) is under maintenance for adhesive sensor failure.',
         time: '3 hours ago',
-        read: true,
-        icon: 'sync',
-        color: 'bg-secondary-container text-on-secondary-container',
-        link: 'sap-sync-reports'
+        read: false,
+        icon: 'error',
+        color: 'bg-rose-100/70 text-rose-700',
+        link: 'machine-management',
+        category: 'Breakdown'
+      },
+      {
+        id: 2,
+        title: 'Work Order Released',
+        message: 'Work Order #22615540 has been released and is running on Line 1.',
+        time: '6 hours ago',
+        read: false,
+        icon: 'campaign',
+        color: 'bg-blue-100/70 text-blue-700',
+        link: 'work-orders',
+        category: 'Work Order'
       },
       {
         id: 4,
         title: 'New Template Approved',
-        message: 'Control Card Template [T-Hose-V2] has been verified by Lead QC.',
+        message: 'Control Card Template [T-Hose-V2] has been verified for Part BPD-F584A-00-IYN-R02.',
         time: '1 day ago',
         read: true,
         icon: 'task_alt',
-        color: 'bg-tertiary-container text-on-tertiary-container',
-        link: 'workflow-configuration'
+        color: 'bg-emerald-100/70 text-emerald-700',
+        link: 'work-order-detail',
+        category: 'Process'
       }
     ];
     localStorage.setItem('system_notifications', JSON.stringify(defaultNotifications));
@@ -225,6 +260,20 @@
         </div>
       `;
     }).join('');
+
+    window.triggerHeaderNotificationsSync = () => {
+      renderNotifications(getRelativePrefix());
+      const list = getNotifications();
+      const unreadCount = list.filter(n => !n.read).length;
+      const badge = document.getElementById('header-notification-badge');
+      if (badge) {
+        if (unreadCount > 0) {
+          badge.classList.remove('hidden');
+        } else {
+          badge.classList.add('hidden');
+        }
+      }
+    };
   }
 
   function syncProfileHeader() {
