@@ -29,26 +29,32 @@
     <!-- Combined Card Layout -->
     <div class="bg-white border border-outline-variant/30 rounded-xl shadow-sm overflow-hidden w-full">
       <div class="grid grid-cols-12 md:divide-x md:divide-outline-variant/20">
-        
+
         <!-- Left Panel: Avatar & Identity -->
         <div class="col-span-12 md:col-span-4 p-8 flex flex-col items-center justify-center text-center bg-slate-50/50">
           <div class="relative group mb-5">
-            <div class="w-32 h-32 rounded-full overflow-hidden border-2 border-primary/20 bg-slate-100 flex items-center justify-center relative shadow-sm">
-              <span class="material-symbols-outlined text-[72px] text-primary select-none" id="avatar-icon">account_circle</span>
+            <div
+              class="w-32 h-32 rounded-full overflow-hidden border-2 border-primary/20 bg-slate-100 flex items-center justify-center relative shadow-sm">
+              <span class="material-symbols-outlined text-[72px] text-primary select-none"
+                id="avatar-icon">account_circle</span>
               <img id="avatar-preview" class="w-full h-full object-cover hidden" alt="Profile Preview" />
               <!-- Mock Upload Overlay -->
-              <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+              <div
+                class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
                 <span class="material-symbols-outlined text-white">photo_camera</span>
               </div>
             </div>
             <input type="file" id="avatar-upload" class="hidden" accept="image/*" />
           </div>
 
-          <h3 id="card-profile-name" class="font-headline-md text-headline-md text-slate-800 font-extrabold">T. Nakagawa</h3>
-          <p class="text-xs font-bold text-primary bg-primary-container text-on-primary-container px-3 py-1 rounded-full uppercase tracking-wider mt-2 inline-block">
+          <h3 id="card-profile-name" class="font-headline-md text-headline-md text-slate-800 font-extrabold">T. Nakagawa
+          </h3>
+          <p
+            class="text-xs font-bold text-primary bg-primary-container text-on-primary-container px-3 py-1 rounded-full uppercase tracking-wider mt-2 inline-block">
             Site Admin
           </p>
-          <p class="text-xs text-slate-550 mt-3 font-semibold">Employee ID: <span id="card-employee-id" class="font-bold text-slate-800">NICH-2026-99</span></p>
+          <p class="text-xs text-slate-550 mt-3 font-semibold">Employee ID: <span id="card-employee-id"
+              class="font-bold text-slate-800">NICH-2026-99</span></p>
         </div>
 
         <!-- Right Panel: Personal Form Details & Settings -->
@@ -66,7 +72,8 @@
               <div>
                 <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">Full Name</label>
                 <div class="relative">
-                  <span class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">person</span>
+                  <span
+                    class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">person</span>
                   <input type="text" id="profile-name-input"
                     class="w-full pl-10 pr-3 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary font-semibold text-slate-700"
                     placeholder="Enter Full Name" required />
@@ -77,7 +84,8 @@
               <div>
                 <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">Username</label>
                 <div class="relative">
-                  <span class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">badge</span>
+                  <span
+                    class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">badge</span>
                   <input type="text" id="profile-username-input"
                     class="w-full pl-10 pr-3 py-2 text-sm bg-slate-100 border border-outline-variant/30 rounded-lg text-on-surface-variant cursor-not-allowed font-semibold"
                     placeholder="Enter Username" readonly />
@@ -88,7 +96,8 @@
               <div>
                 <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">Email Address</label>
                 <div class="relative">
-                  <span class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">mail</span>
+                  <span
+                    class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">mail</span>
                   <input type="email" id="profile-email-input"
                     class="w-full pl-10 pr-3 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary font-semibold text-slate-700"
                     placeholder="Enter Email" required />
@@ -99,7 +108,8 @@
               <div>
                 <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">Employee ID</label>
                 <div class="relative">
-                  <span class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">id_card</span>
+                  <span
+                    class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">id_card</span>
                   <input type="text" id="profile-empid-input"
                     class="w-full pl-10 pr-3 py-2 text-sm bg-slate-100 border border-outline-variant/30 rounded-lg text-on-surface-variant cursor-not-allowed font-semibold"
                     readonly />
@@ -110,7 +120,8 @@
               <div>
                 <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">Department</label>
                 <div class="relative">
-                  <span class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">domain</span>
+                  <span
+                    class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">domain</span>
                   <select id="profile-dept-select" disabled
                     class="w-full pl-10 pr-3 py-2 text-sm bg-slate-50 border border-outline-variant/40 rounded-lg opacity-70 cursor-not-allowed focus:outline-none font-semibold text-slate-650">
                     <option value="Plant Administration">Plant Administration</option>
@@ -125,9 +136,11 @@
 
               <!-- Active Shift -->
               <div>
-                <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">Active Shift Rotation</label>
+                <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">Active Shift
+                  Rotation</label>
                 <div class="relative">
-                  <span class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">schedule</span>
+                  <span
+                    class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">schedule</span>
                   <select id="profile-shift-select"
                     class="w-full pl-10 pr-3 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary font-semibold text-slate-700">
                     <option value="General Shift (08:00 - 17:00)">General Shift (08:00 - 17:00)</option>
@@ -141,29 +154,17 @@
               <div>
                 <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">Site Location</label>
                 <div class="relative">
-                  <span class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">location_on</span>
+                  <span
+                    class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">location_on</span>
                   <input type="text" id="profile-site-input"
                     class="w-full pl-10 pr-3 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary font-semibold text-slate-700"
                     placeholder="Enter Site Location" />
                 </div>
               </div>
-
-              <!-- Preferred Language -->
-              <div>
-                <label class="block text-xs font-bold uppercase text-on-surface-variant mb-2">Preferred System Language</label>
-                <div class="relative">
-                  <span class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-2.5 select-none">language</span>
-                  <select id="profile-lang-select"
-                    class="w-full pl-10 pr-3 py-2 text-sm bg-white border border-outline-variant/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary font-semibold text-slate-700">
-                    <option value="English">English (US)</option>
-                    <option value="Japanese">日本語 (JA)</option>
-                    <option value="Spanish">Español (ES)</option>
-                  </select>
-                </div>
-              </div>
             </div>
 
-            <div class="pt-6 border-t border-outline-variant/20 flex flex-col md:flex-row justify-between items-stretch md:items-center gap-3">
+            <div
+              class="pt-6 border-t border-outline-variant/20 flex flex-col md:flex-row justify-between items-stretch md:items-center gap-3">
               <button type="button" id="change-pwd-trigger"
                 class="px-4 py-2 border border-outline-variant/50 text-on-surface bg-white font-semibold text-xs rounded-lg hover:bg-slate-50 transition-colors shadow-sm flex items-center justify-center gap-1.5 cursor-pointer w-full md:w-auto h-9">
                 <span class="material-symbols-outlined text-[16px]">lock_reset</span>
@@ -263,7 +264,6 @@
           department: localStorage.getItem('profileDept') || 'Plant Administration',
           shift: localStorage.getItem('profileShift') || 'General Shift (08:00 - 17:00)',
           site: localStorage.getItem('profileSite') || 'Japan - Nagoya Plant B',
-          language: localStorage.getItem('profileLang') || 'English',
           avatar: localStorage.getItem('profileAvatar') || ''
         };
 
@@ -275,7 +275,6 @@
         const deptSelect = document.getElementById('profile-dept-select');
         const shiftSelect = document.getElementById('profile-shift-select');
         const siteInput = document.getElementById('profile-site-input');
-        const langSelect = document.getElementById('profile-lang-select');
 
         const cardName = document.getElementById('card-profile-name');
         const cardEmpid = document.getElementById('card-employee-id');
@@ -294,7 +293,6 @@
         deptSelect.value = profileData.department;
         shiftSelect.value = profileData.shift;
         siteInput.value = profileData.site;
-        langSelect.value = profileData.language;
 
         cardName.textContent = profileData.name;
         cardEmpid.textContent = profileData.employeeId;
@@ -423,7 +421,6 @@
           const newDept = deptSelect.value;
           const newShift = shiftSelect.value;
           const newSite = siteInput.value.trim();
-          const newLang = langSelect.value;
 
           cardName.textContent = newName;
           if (cardSite) {
@@ -451,16 +448,16 @@
             const targetId = btn.getAttribute('data-target');
             const input = document.getElementById(targetId);
             const icon = btn.querySelector('span');
-              const isMasked = input.style.webkitTextSecurity !== 'none' && input.style.textSecurity !== 'none';
-              if (isMasked) {
-                input.style.webkitTextSecurity = 'none';
-                input.style.textSecurity = 'none';
-                icon.textContent = 'visibility_off';
-              } else {
-                input.style.webkitTextSecurity = 'disc';
-                input.style.textSecurity = 'disc';
-                icon.textContent = 'visibility';
-              }
+            const isMasked = input.style.webkitTextSecurity !== 'none' && input.style.textSecurity !== 'none';
+            if (isMasked) {
+              input.style.webkitTextSecurity = 'none';
+              input.style.textSecurity = 'none';
+              icon.textContent = 'visibility_off';
+            } else {
+              input.style.webkitTextSecurity = 'disc';
+              input.style.textSecurity = 'disc';
+              icon.textContent = 'visibility';
+            }
           });
         });
 
