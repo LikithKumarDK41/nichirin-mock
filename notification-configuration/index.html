@@ -148,8 +148,8 @@
         <!-- Drawer Header -->
         <div class="px-6 py-5 bg-slate-50 border-b border-slate-200 flex items-center justify-between shrink-0">
           <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
-            <span class="material-symbols-outlined text-primary">settings</span>
-            <span>Notification Configuration</span>
+            <span class="material-symbols-outlined text-primary">notifications_active</span>
+            <span>Notification / Alarm Configuration</span>
           </h3>
           <button onclick="window.closeConfigModal()" class="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors cursor-pointer bg-transparent border-none">
             <span class="material-symbols-outlined text-[20px]">close</span>
@@ -238,12 +238,12 @@
               <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Dispatch To</span>
               <div class="grid grid-cols-2 gap-2">
                 <label class="flex items-center gap-2.5 bg-slate-50 border border-slate-200 rounded-xl p-3 cursor-pointer hover:border-primary/40 hover:bg-slate-100/50 transition-all select-none">
-                  <input type="checkbox" id="brk-grp-mech" checked class="w-4 h-4 rounded text-primary border-slate-300 shrink-0" />
-                  <span class="text-xs font-semibold text-slate-800">Maintenance Team</span>
+                  <input type="checkbox" id="brk-grp-maint" checked class="w-4 h-4 rounded text-primary border-slate-300 shrink-0" />
+                  <span class="text-xs font-semibold text-slate-800">Maintenance Technician</span>
                 </label>
                 <label class="flex items-center gap-2.5 bg-slate-50 border border-slate-200 rounded-xl p-3 cursor-pointer hover:border-primary/40 hover:bg-slate-100/50 transition-all select-none">
-                  <input type="checkbox" id="brk-grp-elec" checked class="w-4 h-4 rounded text-primary border-slate-300 shrink-0" />
-                  <span class="text-xs font-semibold text-slate-800">Electrical Team</span>
+                  <input type="checkbox" id="brk-grp-super" checked class="w-4 h-4 rounded text-primary border-slate-300 shrink-0" />
+                  <span class="text-xs font-semibold text-slate-800">Supervisor</span>
                 </label>
               </div>
             </div>
