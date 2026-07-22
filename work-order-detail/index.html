@@ -14,6 +14,8 @@
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>Work Order Detail - Nichirin Admin</title>
+  <!-- QR Code Generation Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
     rel="stylesheet" />
@@ -161,7 +163,7 @@
               <h2 class="text-2xl font-black text-primary tracking-tight leading-none" id="wo-detail-id">WO #22615539
               </h2>
               <span
-                class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-blue-50 text-[#2563eb] border border-blue-200/60"
+                class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-transparent text-[#2563eb] border border-[#2563eb]"
                 id="wo-detail-status">IN-PROGRESS</span>
             </div>
           </div>
@@ -310,52 +312,31 @@
             <!-- QR Code Column -->
             <div
               class="flex flex-col items-center shrink-0 pt-4 sm:pt-0 pl-0 sm:pl-4 border-t sm:border-t-0 sm:border-l border-slate-100/50">
-              <!-- Simulated premium QR Code block -->
+              <!-- Premium QR Code block -->
               <div
-                class="w-[88px] h-[88px] border border-slate-200 bg-white p-1 rounded-lg flex items-center justify-center relative select-none">
-                <!-- Mock QR grid pattern using small blocks -->
-                <div class="grid grid-cols-5 gap-[2px] w-full h-full opacity-85">
-                  <div class="bg-slate-900 rounded-[1px]"></div>
-                  <div class="bg-slate-900 rounded-[1px]"></div>
-                  <div class="bg-slate-900 rounded-[1px]"></div>
-                  <div class="bg-transparent"></div>
-                  <div class="bg-slate-900 rounded-[1px]"></div>
-
+                id="wo-qrcode-container"
+                class="w-[88px] h-[88px] border border-slate-200 bg-white p-2 rounded-lg flex items-center justify-center relative select-none">
+                <!-- Fallback premium style QR Code SVG -->
+                <svg viewBox="0 0 29 29" class="w-full h-full" fill="var(--color-on-background, #0f172a)" style="fill-rule: evenodd;">
+                  <!-- Top-Left Finder Square -->
+                  <path d="M0,0 h7 v7 h-7 z M1,1 h5 v5 h-5 z M2,2 h3 v3 h-3 z" />
                   <!-- Top-Right Finder Square -->
-                  <rect x="67" y="5" width="28" height="28" rx="2" fill="#0f172a" />
-                  <rect x="72" y="10" width="18" height="18" rx="1" fill="#ffffff" />
-                  <rect x="77" y="15" width="8" height="8" rx="1" fill="#0f172a" />
-
+                  <path d="M22,0 h7 v7 h-7 z M23,1 h5 v5 h-5 z M24,2 h3 v3 h-3 z" />
                   <!-- Bottom-Left Finder Square -->
-                  <rect x="5" y="67" width="28" height="28" rx="2" fill="#0f172a" />
-                  <rect x="10" y="72" width="18" height="18" rx="1" fill="#ffffff" />
-                  <rect x="15" y="77" width="8" height="8" rx="1" fill="#0f172a" />
-
-                  <!-- Middle & Center Data Modules -->
-                  <rect x="38" y="7" width="7" height="7" rx="1" fill="#0f172a" />
-                  <rect x="50" y="7" width="12" height="7" rx="1" fill="#0f172a" />
-                  <rect x="38" y="19" width="12" height="7" rx="1" fill="#0f172a" />
-                  <rect x="55" y="19" width="7" height="7" rx="1" fill="#0f172a" />
-
-                  <rect x="7" y="38" width="7" height="7" rx="1" fill="#0f172a" />
-                  <rect x="19" y="38" width="7" height="14" rx="1" fill="#0f172a" />
-                  <rect x="31" y="38" width="20" height="7" rx="1" fill="#0f172a" />
-                  <rect x="56" y="38" width="13" height="7" rx="1" fill="#0f172a" />
-                  <rect x="74" y="38" width="19" height="7" rx="1" fill="#0f172a" />
-
-                  <rect x="7" y="50" width="14" height="7" rx="1" fill="#0f172a" />
-                  <rect x="26" y="50" width="7" height="7" rx="1" fill="#0f172a" />
-                  <rect x="38" y="50" width="7" height="14" rx="1" fill="#0f172a" />
-                  <rect x="50" y="50" width="19" height="7" rx="1" fill="#0f172a" />
-                  <rect x="74" y="50" width="7" height="19" rx="1" fill="#0f172a" />
-
-                  <rect x="38" y="67" width="14" height="7" rx="1" fill="#0f172a" />
-                  <rect x="57" y="67" width="19" height="7" rx="1" fill="#0f172a" />
-                  <rect x="50" y="79" width="13" height="13" rx="1" fill="#0f172a" />
-                  <rect x="68" y="79" width="7" height="18" rx="1" fill="#0f172a" />
-                  <rect x="80" y="79" width="13" height="13" rx="1" fill="#0f172a" />
-                  </svg>
-                </div>
+                  <path d="M0,22 h7 v7 h-7 z M1,23 h5 v5 h-5 z M2,24 h3 v3 h-3 z" />
+                  <!-- Static mock patterns -->
+                  <path d="M9,0 h2 v1 h-2 z M13,0 h1 v2 h-1 z M16,0 h3 v1 h-3 z M20,0 h1 v1 h-1 z" />
+                  <path d="M9,2 h1 v3 h-1 z M11,3 h2 v1 h-2 z M14,2 h2 v1 h-2 z M17,3 h1 v2 h-1 z M19,2 h2 v1 h-2 z" />
+                  <path d="M9,6 h1 v1 h-1 z M11,6 h1 v1 h-1 z M14,5 h3 v1 h-3 z M19,6 h2 v1 h-2 z" />
+                  <path d="M0,9 h1 v2 h-1 z M2,10 h2 v1 h-2 z M6,9 h2 v1 h-2 z M9,9 h3 v1 h-3 z M14,9 h2 v2 h-2 z M18,10 h3 v1 h-3 z M22,9 h2 v1 h-2 z M26,9 h3 v1 h-3 z" />
+                  <path d="M1,12 h2 v1 h-2 z M5,13 h1 v1 h-1 z M8,12 h1 v2 h-1 z M11,13 h2 v1 h-2 z M15,12 h1 v1 h-1 z M17,13 h3 v1 h-3 z M22,12 h1 v1 h-1 z M24,13 h2 v1 h-2 z M27,12 h2 v2 h-2 z" />
+                  <path d="M0,15 h3 v1 h-3 z M4,16 h2 v1 h-2 z M8,15 h1 v1 h-1 z M10,16 h3 v1 h-3 z M15,15 h2 v2 h-2 z M19,16 h1 v1 h-1 z M21,15 h2 v1 h-2 z M24,15 h1 v2 h-1 z M26,16 h3 v1 h-3 z" />
+                  <path d="M2,18 h1 v1 h-1 z M4,19 h2 v1 h-2 z M8,18 h2 v1 h-2 z M12,19 h3 v1 h-3 z M16,18 h1 v2 h-1 z M19,18 h1 v1 h-1 z M22,19 h3 v1 h-3 z M27,18 h2 v1 h-2 z" />
+                  <path d="M0,21 h2 v1 h-2 z M3,21 h1 v1 h-1 z M6,21 h1 v1 h-1 z M9,20 h2 v1 h-2 z M12,21 h1 v1 h-1 z M15,21 h2 v1 h-2 z M18,20 h3 v1 h-3 z M23,21 h1 v1 h-1 z M25,20 h3 v1 h-3 z" />
+                  <path d="M9,22 h2 v1 h-2 z M13,23 h1 v2 h-1 z M16,22 h3 v1 h-3 z M20,23 h1 v1 h-1 z" />
+                  <path d="M9,24 h1 v3 h-1 z M11,25 h2 v1 h-2 z M14,24 h2 v1 h-2 z M17,25 h1 v2 h-1 z M19,24 h2 v1 h-2 z" />
+                  <path d="M9,28 h1 v1 h-1 z M11,28 h1 v1 h-1 z M14,27 h3 v1 h-3 z M19,28 h2 v1 h-2 z" />
+                </svg>
               </div>
               <span id="wo-lot-code"
                 class="text-[8.5px] text-slate-400 font-bold uppercase tracking-wider mt-2 font-mono whitespace-nowrap">LOT:
@@ -1303,6 +1284,32 @@
           const lotCodeEl = document.getElementById('wo-lot-code');
           if (lotCodeEl) lotCodeEl.textContent = `LOT: ${cleanWONum.slice(-4)}`;
 
+          // Dynamic QR Code generation matching first image style
+          const qrContainer = document.getElementById('wo-qrcode-container');
+          if (qrContainer) {
+            qrContainer.innerHTML = '';
+            if (typeof QRCode !== 'undefined') {
+              try {
+                new QRCode(qrContainer, {
+                  text: cleanWONum,
+                  width: 72,
+                  height: 72,
+                  colorDark: '#0f172a',
+                  colorLight: '#ffffff',
+                  correctLevel: QRCode.CorrectLevel.M
+                });
+                
+                // Add clean layout styling to generated canvas and img elements
+                const qrImg = qrContainer.querySelector('img');
+                if (qrImg) qrImg.classList.add('w-full', 'h-full', 'object-contain');
+                const qrCanvas = qrContainer.querySelector('canvas');
+                if (qrCanvas) qrCanvas.classList.add('w-full', 'h-full', 'object-contain');
+              } catch (err) {
+                console.error("Error generating QR code:", err);
+              }
+            }
+          }
+
           // Info panels
           const lineField = document.getElementById('wo-detail-line');
           if (lineField && activeWO.line) lineField.textContent = activeWO.line.split('(')[0];
@@ -1328,12 +1335,12 @@
             displayStatus = 'Hold';
           }
           statusEl.textContent = displayStatus;
-          let statusClass = 'bg-slate-100 text-slate-600 border border-slate-200';
-          if (displayStatus === 'In-progress') statusClass = 'bg-blue-50 text-[#2563eb] border border-blue-200/60';
-          else if (displayStatus === 'Completed') statusClass = 'bg-emerald-100 text-emerald-700 border border-emerald-200';
-          else if (displayStatus === 'Held' || displayStatus === 'Hold') statusClass = 'bg-red-50 text-red-600 border border-red-200/50';
-          else if (displayStatus === 'Pending') statusClass = 'bg-amber-50 text-amber-700 border border-amber-200/50';
-          else if (displayStatus === 'Not released') statusClass = 'bg-slate-100 text-slate-500 border border-slate-200/80';
+          let statusClass = 'bg-transparent text-slate-600 border border-slate-400';
+          if (displayStatus === 'In-progress') statusClass = 'bg-transparent text-[#2563eb] border border-[#2563eb]';
+          else if (displayStatus === 'Completed') statusClass = 'bg-transparent text-emerald-600 border border-emerald-600';
+          else if (displayStatus === 'Held' || displayStatus === 'Hold') statusClass = 'bg-transparent text-red-600 border border-red-600';
+          else if (displayStatus === 'Pending') statusClass = 'bg-transparent text-amber-500 border border-amber-500';
+          else if (displayStatus === 'Not released') statusClass = 'bg-transparent text-slate-500 border border-slate-400';
           statusEl.className = `inline-flex items-center px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-wider leading-none ${statusClass}`;
 
           // Traceability Button visibility for In-progress and Completed work orders
