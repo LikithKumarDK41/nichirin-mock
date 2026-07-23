@@ -27,6 +27,10 @@
     rel="stylesheet" />
 
   <style>
+    :root {
+      --color-primary: #dc0111;
+    }
+
     .material-symbols-outlined {
       font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
       vertical-align: middle;
@@ -48,6 +52,33 @@
 
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
       background: #94a3b8;
+    }
+
+    /* Force theme focus border (1px thin red #dc0111) for all inputs, selects, textareas, and dropdown buttons */
+    input:focus, select:focus, textarea:focus, button:focus {
+      border-color: #dc0111 !important;
+      box-shadow: 0 0 0 1px #dc0111 !important;
+      outline: none !important;
+    }
+
+    /* Autofill browser background and red focus border styling */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:focus, 
+    input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 30px white inset !important;
+      -webkit-text-fill-color: #1a1c1e !important;
+      border-color: #dc0111 !important;
+      transition: background-color 5000s ease-in-out 0s;
+    }
+
+    /* Strict checkbox theme coloring overriding Tailwind forms default blue */
+    input[type="checkbox"] {
+      color: #dc0111 !important;
+    }
+    input[type="checkbox"]:focus {
+      --tw-ring-color: #dc0111 !important;
+      border-color: #dc0111 !important;
     }
   </style>
 </head>

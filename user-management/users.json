@@ -5,6 +5,7 @@
     "email": "vikram.malhotra@nichirin.com",
     "phone": "+91 98100 88210",
     "role": "ADMIN",
+    "password": "Password@8821",
     "skills": [],
     "status": "Active"
   },
@@ -14,6 +15,7 @@
     "email": "sanjay.verma@nichirin.com",
     "phone": "+91 98200 90420",
     "role": "SUPERVISOR",
+    "password": "Password@9042",
     "skills": [],
     "status": "Active"
   },
@@ -23,6 +25,7 @@
     "email": "ramesh.kumar@nichirin.com",
     "phone": "+91 95400 77120",
     "role": "QC",
+    "password": "Password@7712",
     "skills": [],
     "status": "Active"
   },
@@ -32,6 +35,7 @@
     "email": "amit.sharma@nichirin.com",
     "phone": "+91 99900 10290",
     "role": "OPERATOR",
+    "password": "Password@1029",
     "skills": ["SKILL-CUT-01", "SKILL-PROT-02", "SKILL-SHRNK-03", "SKILL-BEND-04"],
     "status": "Active"
   },
@@ -41,6 +45,7 @@
     "email": "sandeep.singh@nichirin.com",
     "phone": "+91 98760 45210",
     "role": "OPERATOR",
+    "password": "Password@4521",
     "skills": ["SKILL-FIT-05", "SKILL-CRMP-06", "SKILL-BOND-07"],
     "status": "Active"
   },
@@ -50,6 +55,7 @@
     "email": "anil.kumar@nichirin.com",
     "phone": "+91 98300 55900",
     "role": "SUPERVISOR",
+    "password": "Password@5590",
     "skills": [],
     "status": "Active"
   },
@@ -59,6 +65,7 @@
     "email": "neha.dixit@nichirin.com",
     "phone": "+91 98400 66230",
     "role": "QC",
+    "password": "Password@6623",
     "skills": [],
     "status": "Active"
   },
@@ -68,6 +75,7 @@
     "email": "deepak.gupta@nichirin.com",
     "phone": "+91 98180 33120",
     "role": "OPERATOR",
+    "password": "Password@3312",
     "skills": ["SKILL-TORQ-08", "SKILL-TEST-09"],
     "status": "Active"
   },
@@ -77,6 +85,7 @@
     "email": "sunita.sharma@nichirin.com",
     "phone": "+91 99100 12040",
     "role": "OPERATOR",
+    "password": "Password@1204",
     "skills": ["SKILL-CUT-01", "SKILL-PROT-02"],
     "status": "Active"
   },
@@ -86,6 +95,7 @@
     "email": "rajesh.patel@nichirin.com",
     "phone": "+91 98990 90880",
     "role": "QC",
+    "password": "Password@9088",
     "skills": [],
     "status": "Active"
   },
@@ -95,6 +105,7 @@
     "email": "meera.deshmukh@nichirin.com",
     "phone": "+91 98110 77880",
     "role": "SUPERVISOR",
+    "password": "Password@7788",
     "skills": [],
     "status": "Active"
   },
@@ -104,6 +115,7 @@
     "email": "vijay.yadav@nichirin.com",
     "phone": "+91 98710 88000",
     "role": "OPERATOR",
+    "password": "Password@8800",
     "skills": ["SKILL-CUT-01"],
     "status": "Inactive"
   },
@@ -113,6 +125,7 @@
     "email": "arjun.kapoor@nichirin.com",
     "phone": "+91 99900 22110",
     "role": "OPERATOR",
+    "password": "Password@2211",
     "skills": ["SKILL-FIT-05"],
     "status": "Inactive"
   },
@@ -122,6 +135,7 @@
     "email": "karan.johar@nichirin.com",
     "phone": "+91 98120 11440",
     "role": "QC",
+    "password": "Password@1144",
     "skills": [],
     "status": "Suspended"
   },
@@ -131,6 +145,7 @@
     "email": "rahul.sen@nichirin.com",
     "phone": "+91 95600 34010",
     "role": "OPERATOR",
+    "password": "Password@3401",
     "skills": ["SKILL-CRMP-06"],
     "status": "Suspended"
   }
