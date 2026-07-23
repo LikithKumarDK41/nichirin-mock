@@ -55,7 +55,7 @@
             "outline-variant": "#c4c6cf",
             "secondary": "#006a6a",
             "on-primary": "#ffffff",
-            "primary": "var(--color-primary, #dc0111)",
+            "primary": "#dc0111",
             "surface-tint": "#476083",
             "surface-variant": "#e3e2e5",
             "error": "#ba1a1a",
@@ -101,6 +101,10 @@
     }
   </script>
   <style>
+    :root {
+      --color-primary: #dc0111;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       background-color: #faf9fc;
@@ -122,6 +126,24 @@
     ::-webkit-scrollbar-thumb {
       background: #c4c6cf;
       border-radius: 10px;
+    }
+
+    /* Force theme focus border (1px thin red #dc0111) for all inputs, selects, textareas, and dropdown buttons */
+    input:focus, select:focus, textarea:focus, button:focus {
+      border-color: #dc0111 !important;
+      box-shadow: 0 0 0 1px #dc0111 !important;
+      outline: none !important;
+    }
+
+    /* Autofill browser background and red focus border styling */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:focus, 
+    input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 30px white inset !important;
+      -webkit-text-fill-color: #1a1c1e !important;
+      border-color: #dc0111 !important;
+      transition: background-color 5000s ease-in-out 0s;
     }
 
     /* Strict checkbox theme coloring overriding Tailwind forms default blue */
@@ -208,12 +230,12 @@
               <span
                 class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
               <input id="skillSearchInput"
-                class="w-full bg-white border border-outline-variant/30 rounded-lg pl-8 pr-3 py-1 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-8"
+                class="w-full bg-white border border-slate-200 rounded-lg pl-8 pr-3 py-1 text-sm text-slate-800 focus:outline-none focus:border-[#dc0111] focus:ring-2 focus:ring-[#dc0111]/20 transition-all h-8 font-semibold"
                 placeholder="Filter skills..." type="text" oninput="handleSkillSearch()" />
             </div>
             <!-- Skill Status Filter -->
             <select id="skillStatusFilter"
-              class="bg-white border border-outline-variant/30 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-8 pl-3 pr-8 py-1 font-semibold flex-1 sm:flex-initial sm:min-w-[150px] sm:w-auto"
+              class="bg-white border border-slate-200 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-[#dc0111] focus:ring-2 focus:ring-[#dc0111]/20 h-8 pl-3 pr-8 py-1 font-semibold flex-1 sm:flex-initial sm:min-w-[150px] sm:w-auto transition-all cursor-pointer"
               onchange="handleSkillStatusFilterChange()">
               <option value="ALL">All Status</option>
               <option value="Active">Active</option>
@@ -352,21 +374,21 @@
               <div class="col-span-2 space-y-1.5">
                 <label class="block text-xs font-bold uppercase text-slate-500">Skill Code</label>
                 <input id="drawerSkillCode"
-                  class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white"
+                  class="w-full border border-slate-200 rounded-xl focus:outline-none focus:border-[#dc0111] focus:ring-2 focus:ring-[#dc0111]/20 text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white transition-all"
                   placeholder="e.g. SKILL-CRIMP-01" type="text" required />
               </div>
               <!-- Skill Name -->
               <div class="col-span-2 sm:col-span-1 space-y-1.5">
                 <label class="block text-xs font-bold uppercase text-slate-500">Skill Name</label>
                 <input id="drawerSkillName"
-                  class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white"
+                  class="w-full border border-slate-200 rounded-xl focus:outline-none focus:border-[#dc0111] focus:ring-2 focus:ring-[#dc0111]/20 text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white transition-all"
                   placeholder="e.g. Fitting Hose Crimping" type="text" required />
               </div>
               <!-- Process Step -->
               <div class="col-span-2 sm:col-span-1 space-y-1.5">
                 <label class="block text-xs font-bold uppercase text-slate-500">Process Step Reference</label>
                 <select id="drawerSkillStep"
-                  class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white" required>
+                  class="w-full border border-slate-200 rounded-xl focus:outline-none focus:border-[#dc0111] focus:ring-2 focus:ring-[#dc0111]/20 text-sm h-10 px-3 font-semibold bg-white transition-all cursor-pointer" required>
                   <option value="">Select Process Step...</option>
                 </select>
               </div>
@@ -375,7 +397,7 @@
               <div class="col-span-2 space-y-1.5">
                 <label class="block text-xs font-bold uppercase text-slate-500">Status</label>
                 <select id="drawerSkillStatus"
-                  class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white">
+                  class="w-full border border-slate-200 rounded-xl focus:outline-none focus:border-[#dc0111] focus:ring-2 focus:ring-[#dc0111]/20 text-sm h-10 px-3 font-semibold bg-white transition-all cursor-pointer">
                   <option value="Active">Active</option>
                   <option value="Inactive">Inactive</option>
                 </select>
@@ -384,7 +406,7 @@
               <div class="col-span-2 space-y-1.5">
                 <label class="block text-xs font-bold uppercase text-slate-500">Skill Description</label>
                 <textarea id="drawerSkillDescription" rows="4"
-                  class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm p-3 font-semibold placeholder-slate-400 bg-white"
+                  class="w-full border border-slate-200 rounded-xl focus:outline-none focus:border-[#dc0111] focus:ring-2 focus:ring-[#dc0111]/20 text-sm p-3 font-semibold placeholder-slate-400 bg-white transition-all"
                   placeholder="Describe the step process limits, tolerances checking, and calibration requirements..."
                   required></textarea>
               </div>

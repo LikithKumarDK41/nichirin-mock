@@ -55,7 +55,7 @@
             "outline-variant": "#c4c6cf",
             "secondary": "#006a6a",
             "on-primary": "#ffffff",
-            "primary": "var(--color-primary, #dc0111)",
+            "primary": "#dc0111",
             "surface-tint": "#476083",
             "surface-variant": "#e3e2e5",
             "error": "#ba1a1a",
@@ -101,6 +101,10 @@
     }
   </script>
   <style>
+    :root {
+      --color-primary: #dc0111;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       background-color: #faf9fc;
@@ -122,6 +126,24 @@
     ::-webkit-scrollbar-thumb {
       background: #c4c6cf;
       border-radius: 10px;
+    }
+
+    /* Force theme focus border (1px thin red #dc0111) for all inputs, selects, textareas, and dropdown buttons */
+    input:focus, select:focus, textarea:focus, button:focus {
+      border-color: #dc0111 !important;
+      box-shadow: 0 0 0 1px #dc0111 !important;
+      outline: none !important;
+    }
+
+    /* Autofill browser background and red focus border styling */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:focus, 
+    input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 30px white inset !important;
+      -webkit-text-fill-color: #1a1c1e !important;
+      border-color: #dc0111 !important;
+      transition: background-color 5000s ease-in-out 0s;
     }
 
     /* Strict checkbox theme coloring overriding Tailwind forms default blue */
@@ -226,7 +248,7 @@
               <span
                 class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[18px]">search</span>
               <input id="searchInput"
-                class="w-full bg-white border border-outline-variant/30 rounded-lg pl-8 pr-3 py-1 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors h-8"
+                class="w-full bg-white border border-slate-200 rounded-lg pl-8 pr-3 py-1 text-sm text-slate-800 focus:outline-none focus:border-[#dc0111] focus:ring-2 focus:ring-[#dc0111]/20 transition-all h-8 font-semibold"
                 placeholder="Filter users..." type="text" oninput="handleSearch()" />
             </div>
             <!-- View Toggle Switch -->
@@ -409,35 +431,79 @@
             <div class="col-span-1 space-y-1.5">
               <label class="block text-xs font-bold uppercase text-slate-500">Employee Code</label>
               <input id="drawerEmpCode"
-                class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white"
+                class="w-full border border-slate-200 rounded-xl focus:outline-none focus:border-[#dc0111] focus:ring-2 focus:ring-[#dc0111]/20 text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white transition-all"
                 placeholder="e.g. EMP-0000" type="text" required />
             </div>
             <!-- Full Name -->
             <div class="col-span-1 space-y-1.5">
               <label class="block text-xs font-bold uppercase text-slate-500">Full Name</label>
               <input id="drawerFullName"
-                class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white"
+                class="w-full border border-slate-200 rounded-xl focus:outline-none focus:border-[#dc0111] focus:ring-2 focus:ring-[#dc0111]/20 text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white transition-all"
                 placeholder="First Last" type="text" required />
             </div>
             <!-- Email -->
             <div class="col-span-1 sm:col-span-2 space-y-1.5">
               <label class="block text-xs font-bold uppercase text-slate-500">Email Address</label>
               <input id="drawerEmail"
-                class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white"
+                class="w-full border border-slate-200 rounded-xl focus:outline-none focus:border-[#dc0111] focus:ring-2 focus:ring-[#dc0111]/20 text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white transition-all"
                 placeholder="employee@nichirin.com" type="email" required />
             </div>
             <!-- Phone -->
             <div class="col-span-1 sm:col-span-2 space-y-1.5">
               <label class="block text-xs font-bold uppercase text-slate-500">Phone Number</label>
               <input id="drawerPhone"
-                class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white"
+                class="w-full border border-slate-200 rounded-xl focus:outline-none focus:border-[#dc0111] focus:ring-2 focus:ring-[#dc0111]/20 text-sm h-10 px-3 font-semibold placeholder-slate-400 bg-white transition-all"
                 placeholder="+81 90-0000-0000" type="tel" required />
+            </div>
+            <!-- Change Password Toggle Checkbox (Edit Mode Only) -->
+            <div id="changePasswordCheckboxWrapper" class="col-span-1 sm:col-span-2 hidden pt-1">
+              <label class="inline-flex items-center gap-2 cursor-pointer select-none bg-slate-50 px-3.5 py-2 rounded-lg border border-slate-200/80 hover:bg-slate-100/80 transition-colors w-full">
+                <input type="checkbox" id="changePasswordCheckbox" onchange="togglePasswordFields()" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer" />
+                <span class="text-xs font-bold text-slate-800">Change Password</span>
+                <span class="text-[10px] text-slate-400 font-medium ml-auto">(Check to update user password)</span>
+              </label>
+            </div>
+
+            <!-- Password Fields Section -->
+            <div id="passwordFieldsWrapper" class="col-span-1 sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <!-- Password -->
+              <div class="col-span-1 space-y-1.5">
+                <label class="block text-xs font-bold uppercase text-slate-500" for="drawerPassword">Password</label>
+                <div class="relative group">
+                  <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[18px] group-focus-within:text-primary transition-colors select-none pointer-events-none">
+                    lock
+                  </span>
+                  <input id="drawerPassword"
+                    class="w-full pl-9 pr-10 border border-slate-200 rounded-xl focus:outline-none focus:border-[#dc0111] focus:ring-2 focus:ring-[#dc0111]/20 text-sm h-10 font-semibold placeholder-slate-400 bg-white transition-all"
+                    placeholder="••••••••" type="password" />
+                  <button type="button" onclick="toggleInputPasswordVisibility('drawerPassword', 'drawerPasswordEyeIcon')"
+                    class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 rounded-md transition-colors cursor-pointer flex items-center justify-center" title="Toggle password visibility">
+                    <span class="material-symbols-outlined text-[18px]" id="drawerPasswordEyeIcon">visibility</span>
+                  </button>
+                </div>
+              </div>
+              <!-- Confirm Password -->
+              <div class="col-span-1 space-y-1.5">
+                <label class="block text-xs font-bold uppercase text-slate-500" for="drawerConfirmPassword">Confirm Password</label>
+                <div class="relative group">
+                  <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[18px] group-focus-within:text-primary transition-colors select-none pointer-events-none">
+                    lock_reset
+                  </span>
+                  <input id="drawerConfirmPassword"
+                    class="w-full pl-9 pr-10 border border-slate-200 rounded-xl focus:outline-none focus:border-[#dc0111] focus:ring-2 focus:ring-[#dc0111]/20 text-sm h-10 font-semibold placeholder-slate-400 bg-white transition-all"
+                    placeholder="••••••••" type="password" />
+                  <button type="button" onclick="toggleInputPasswordVisibility('drawerConfirmPassword', 'drawerConfirmPasswordEyeIcon')"
+                    class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 rounded-md transition-colors cursor-pointer flex items-center justify-center" title="Toggle password visibility">
+                    <span class="material-symbols-outlined text-[18px]" id="drawerConfirmPasswordEyeIcon">visibility</span>
+                  </button>
+                </div>
+              </div>
             </div>
             <!-- Primary Role -->
             <div class="col-span-1 space-y-1.5">
               <label class="block text-xs font-bold uppercase text-slate-500">Primary Role</label>
               <select id="drawerRole" onchange="handleRoleChange()"
-                class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white">
+                class="w-full border border-slate-200 rounded-xl focus:outline-none focus:border-[#dc0111] focus:ring-2 focus:ring-[#dc0111]/20 text-sm h-10 px-3 font-semibold bg-white cursor-pointer transition-all">
                 <option value="ADMIN">Admin</option>
                 <option value="SUPERVISOR">Supervisor</option>
                 <option value="QC">QC</option>
@@ -451,7 +517,7 @@
             <div class="col-span-1 space-y-1.5">
               <label class="block text-xs font-bold uppercase text-slate-500">Account Access Status</label>
               <select id="drawerStatus"
-                class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white">
+                class="w-full border border-slate-200 rounded-xl focus:outline-none focus:border-[#dc0111] focus:ring-2 focus:ring-[#dc0111]/20 text-sm h-10 px-3 font-semibold bg-white cursor-pointer transition-all">
                 <option value="Active">Active</option>
                 <option value="Suspended">Suspended</option>
                 <option value="Inactive">Inactive</option>
@@ -461,7 +527,7 @@
             <div id="skillsSelectorWrapper" class="col-span-1 sm:col-span-2 space-y-1.5 relative">
               <label class="block text-xs font-bold uppercase text-slate-500">Certified Process Skills</label>
               <button type="button" id="skillsDropdownBtn" onclick="toggleSkillsDropdown()"
-                class="w-full border border-outline-variant/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm h-10 px-3 font-semibold bg-white flex justify-between items-center text-left text-slate-700 cursor-pointer shadow-sm">
+                class="w-full border border-slate-200 rounded-xl focus:outline-none focus:border-[#dc0111] focus:ring-2 focus:ring-[#dc0111]/20 text-sm h-10 px-3 font-semibold bg-white flex justify-between items-center text-left text-slate-700 cursor-pointer shadow-sm transition-all">
                 <span id="selectedSkillsText" class="text-slate-400 font-medium">Select process skills...</span>
                 <span class="material-symbols-outlined text-[18px]">arrow_drop_down</span>
               </button>
@@ -490,7 +556,7 @@
 
       <div id="toast"
         class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 ease-out z-[100] border border-slate-800 text-sm">
-        <span class="material-symbols-outlined text-emerald-400">check_circle</span>
+        <span class="material-symbols-outlined text-emerald-400" id="toastIcon">check_circle</span>
         <span id="toastMessage">Access levels successfully saved!</span>
       </div>
 
@@ -940,6 +1006,38 @@
               render();
             }
 
+            let isViewPasswordRevealed = false;
+            let currentViewUserPasswordVal = '••••••••••••';
+
+            function toggleInputPasswordVisibility(inputId, iconId) {
+              const input = document.getElementById(inputId);
+              const icon = document.getElementById(iconId);
+              if (!input || !icon) return;
+              if (input.type === 'password') {
+                input.type = 'text';
+                icon.textContent = 'visibility_off';
+              } else {
+                input.type = 'password';
+                icon.textContent = 'visibility';
+              }
+            }
+            window.toggleInputPasswordVisibility = toggleInputPasswordVisibility;
+
+            function toggleViewUserPassword() {
+              const passEl = document.getElementById('viewUserPassword');
+              const iconEl = document.getElementById('viewPasswordIcon');
+              if (!passEl || !iconEl) return;
+              isViewPasswordRevealed = !isViewPasswordRevealed;
+              if (isViewPasswordRevealed) {
+                passEl.textContent = currentViewUserPasswordVal || 'Password@123';
+                iconEl.textContent = 'visibility_off';
+              } else {
+                passEl.textContent = '••••••••••••';
+                iconEl.textContent = 'visibility';
+              }
+            }
+            window.toggleViewUserPassword = toggleViewUserPassword;
+
             function toggleViewUserModal(isOpen) {
               const backdrop = document.getElementById('viewUserModalBackdrop');
               const drawer = document.getElementById('viewUserModal');
@@ -967,6 +1065,14 @@
               document.getElementById('viewUserCode').textContent = user.empCode;
               document.getElementById('viewUserEmail').textContent = user.email;
               document.getElementById('viewUserPhone').textContent = user.phone;
+
+              // Reset Password reveal state
+              isViewPasswordRevealed = false;
+              currentViewUserPasswordVal = user.password || 'Password@123';
+              const passEl = document.getElementById('viewUserPassword');
+              const iconEl = document.getElementById('viewPasswordIcon');
+              if (passEl) passEl.textContent = '••••••••••••';
+              if (iconEl) iconEl.textContent = 'visibility';
 
               // Skills badge container
               const skillsContainer = document.getElementById('viewUserSkills');
@@ -1049,6 +1155,21 @@
               }
             }
 
+            function togglePasswordFields() {
+              const chk = document.getElementById('changePasswordCheckbox');
+              const wrapper = document.getElementById('passwordFieldsWrapper');
+              if (chk && wrapper) {
+                if (chk.checked) {
+                  wrapper.classList.remove('hidden');
+                } else {
+                  wrapper.classList.add('hidden');
+                  document.getElementById('drawerPassword').value = '';
+                  document.getElementById('drawerConfirmPassword').value = '';
+                }
+              }
+            }
+            window.togglePasswordFields = togglePasswordFields;
+
             function openEditUserDrawer(empCode) {
               const user = usersList.find(u => u.empCode === empCode);
               if (!user) return;
@@ -1066,6 +1187,24 @@
               document.getElementById('drawerPhone').value = user.phone;
               document.getElementById('drawerRole').value = user.role;
               document.getElementById('drawerStatus').value = user.status;
+
+              // Hide password fields by default in Edit mode, show Change Password checkbox
+              const chkWrapper = document.getElementById('changePasswordCheckboxWrapper');
+              const chk = document.getElementById('changePasswordCheckbox');
+              const passWrapper = document.getElementById('passwordFieldsWrapper');
+
+              if (chkWrapper) chkWrapper.classList.remove('hidden');
+              if (chk) chk.checked = false;
+              if (passWrapper) passWrapper.classList.add('hidden');
+
+              document.getElementById('drawerPassword').value = '';
+              document.getElementById('drawerConfirmPassword').value = '';
+              document.getElementById('drawerPassword').placeholder = 'Enter new password';
+              document.getElementById('drawerConfirmPassword').placeholder = 'Confirm new password';
+              document.getElementById('drawerPassword').type = 'password';
+              document.getElementById('drawerConfirmPassword').type = 'password';
+              document.getElementById('drawerPasswordEyeIcon').textContent = 'visibility';
+              document.getElementById('drawerConfirmPasswordEyeIcon').textContent = 'visibility';
 
               // Populate avatar preview
               currentDrawerAvatar = user.avatar || '';
@@ -1105,6 +1244,24 @@
               document.getElementById('drawerFullName').value = '';
               document.getElementById('drawerEmail').value = '';
               document.getElementById('drawerPhone').value = '';
+              
+              // Always show password fields for Register New User, hide Change Password checkbox
+              const chkWrapper = document.getElementById('changePasswordCheckboxWrapper');
+              const chk = document.getElementById('changePasswordCheckbox');
+              const passWrapper = document.getElementById('passwordFieldsWrapper');
+
+              if (chkWrapper) chkWrapper.classList.add('hidden');
+              if (chk) chk.checked = false;
+              if (passWrapper) passWrapper.classList.remove('hidden');
+
+              document.getElementById('drawerPassword').value = '';
+              document.getElementById('drawerConfirmPassword').value = '';
+              document.getElementById('drawerPassword').placeholder = '••••••••';
+              document.getElementById('drawerConfirmPassword').placeholder = '••••••••';
+              document.getElementById('drawerPassword').type = 'password';
+              document.getElementById('drawerConfirmPassword').type = 'password';
+              document.getElementById('drawerPasswordEyeIcon').textContent = 'visibility';
+              document.getElementById('drawerConfirmPasswordEyeIcon').textContent = 'visibility';
               document.getElementById('drawerRole').selectedIndex = 0;
               document.getElementById('drawerStatus').selectedIndex = 0;
 
@@ -1144,19 +1301,47 @@
               const name = document.getElementById('drawerFullName').value;
               const email = document.getElementById('drawerEmail').value;
               const phone = document.getElementById('drawerPhone').value;
+              const password = document.getElementById('drawerPassword').value.trim();
+              const confirmPassword = document.getElementById('drawerConfirmPassword').value.trim();
               const role = document.getElementById('drawerRole').value;
               const status = document.getElementById('drawerStatus').value;
 
               const existingIdx = usersList.findIndex(u => u.empCode === empCode);
+
               if (existingIdx > -1) {
+                // Editing user
+                const chk = document.getElementById('changePasswordCheckbox');
+                let finalPassword = usersList[existingIdx].password || 'Password@123';
+
+                if (chk && chk.checked) {
+                  if (!password) {
+                    showToast('Error: Please enter a new password!', true);
+                    return;
+                  }
+                  if (password !== confirmPassword) {
+                    showToast('Error: Password and Confirm Password do not match!', true);
+                    return;
+                  }
+                  finalPassword = password;
+                }
+
                 usersList[existingIdx] = { 
-                  empCode, name, email, phone, role, skills: tempSelectedSkills, status,
+                  empCode, name, email, phone, password: finalPassword, role, skills: tempSelectedSkills, status,
                   avatar: currentDrawerAvatar || usersList[existingIdx].avatar
                 };
                 showToast(`Changes for ${name} successfully synchronized.`);
               } else {
+                // Registering new user: password is required
+                if (!password) {
+                  showToast('Error: Password is required for new user registration!', true);
+                  return;
+                }
+                if (password !== confirmPassword) {
+                  showToast('Error: Password and Confirm Password do not match!', true);
+                  return;
+                }
                 usersList.unshift({ 
-                  empCode, name, email, phone, role, skills: tempSelectedSkills, status,
+                  empCode, name, email, phone, password, role, skills: tempSelectedSkills, status,
                   avatar: currentDrawerAvatar
                 });
                 showToast(`User record for ${name} registered successfully.`);
@@ -1166,10 +1351,20 @@
               render();
             }
 
-            function showToast(message) {
+            function showToast(message, isError = false) {
               const toast = document.getElementById('toast');
               const msg = document.getElementById('toastMessage');
+              const icon = document.getElementById('toastIcon');
+
               msg.textContent = message;
+              if (isError) {
+                icon.textContent = 'cancel';
+                icon.className = 'material-symbols-outlined text-rose-500';
+              } else {
+                icon.textContent = 'check_circle';
+                icon.className = 'material-symbols-outlined text-emerald-400';
+              }
+
               toast.classList.remove('translate-y-20', 'opacity-0');
               toast.classList.add('translate-y-0', 'opacity-100');
 
