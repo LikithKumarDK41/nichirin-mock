@@ -2072,12 +2072,36 @@
               ? `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500 text-white uppercase tracking-wider select-none">PENDING</span>`
               : `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-600 text-white uppercase tracking-wider select-none">COMPLETED</span>`;
 
+            if (!activeWO.bomLoadedThisSession) {
+              activeWO.bom = [
+                { code: "05-0030-015-00-000659", desc: "Rubber EPDM Brake Hose (NVC SLIM XP)", req: "800 meters", lot: isNotReleased ? "--" : "LOT-6225", verification: isNotReleased ? "PENDING" : "COMPLETED", timestamp: isNotReleased ? "--" : "2026-07-17 08:30 AM" },
+                { code: "BU10024-01000-IND", desc: "Rubber Hose Clamp (Tirupati Rubber)", req: "800 units", lot: isNotReleased ? "--" : "LOT-BH12A", verification: isNotReleased ? "PENDING" : "COMPLETED", timestamp: isNotReleased ? "--" : "2026-07-17 08:32 AM" },
+                { code: "PR0157-0160-IND", desc: "Protector Sleeve L-160 (Acme Plastics)", req: "800 units", lot: isNotReleased ? "--" : "LOT-260617", verification: isNotReleased ? "PENDING" : "COMPLETED", timestamp: isNotReleased ? "--" : "2026-07-17 08:35 AM" },
+                { code: "PR0157-0260-IND", desc: "Protector Sleeve L-260 (Acme Plastics)", req: "800 units", lot: isNotReleased ? "--" : "LOT-260613", verification: isNotReleased ? "PENDING" : "COMPLETED", timestamp: isNotReleased ? "--" : "2026-07-17 08:38 AM" },
+                { code: "FA0588-30000", desc: "Fitting Nut - Front disc end", req: "800 units", lot: isNotReleased ? "--" : "LOT-64049", verification: isNotReleased ? "PENDING" : "COMPLETED", timestamp: isNotReleased ? "--" : "2026-07-17 08:40 AM" },
+                { code: "K40543-00000-C3", desc: "Fitting Tube - Bend end (K40543)", req: "800 units", lot: isNotReleased ? "--" : "LOT-63D80", verification: isNotReleased ? "PENDING" : "COMPLETED", timestamp: isNotReleased ? "--" : "2026-07-17 08:42 AM" },
+                { code: "K40543-50135-C3", desc: "Fitting Collar Assembly", req: "800 units", lot: isNotReleased ? "--" : "LOT-MI6701", verification: isNotReleased ? "PENDING" : "COMPLETED", timestamp: isNotReleased ? "--" : "2026-07-17 08:45 AM" }
+              ];
+              activeWO.bomLoadedThisSession = true;
+            }
+
+            const editBtnHtml = isNotReleased
+              ? `<button onclick="window.openEditProcessModal('${processId}')" 
+                  class="flex items-center justify-center gap-1.5 px-3 py-1.5 bg-primary text-white hover:bg-primary/95 text-xs font-bold uppercase tracking-wider rounded-lg transition-all shadow-sm cursor-pointer hover:shadow-md">
+                    <span class="material-symbols-outlined text-[16px]">edit</span>
+                    <span>Edit</span>
+                </button>`
+              : '';
+
             container.innerHTML = `
                     <div class="space-y-4">
                         <div class="flex justify-between items-center pb-4 border-b border-slate-100">
                             <div>
                                 <h3 class="text-base font-black text-slate-900 uppercase">${proc.name}</h3>
                                 <p class="text-xs text-slate-500 mt-1">${proc.desc}</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                ${editBtnHtml}
                             </div>
                         </div>
                         
@@ -2100,16 +2124,6 @@
                         </div>
                     </div>
                 `;
-
-            activeWO.bom = [
-              { code: "05-0030-015-00-000659", desc: "Rubber EPDM Brake Hose (NVC SLIM XP)", req: "800 meters", lot: isNotReleased ? "--" : "LOT-6225", verification: isNotReleased ? "PENDING" : "COMPLETED", timestamp: isNotReleased ? "--" : "2026-07-17 08:30 AM" },
-              { code: "BU10024-01000-IND", desc: "Rubber Hose Clamp (Tirupati Rubber)", req: "800 units", lot: isNotReleased ? "--" : "LOT-BH12A", verification: isNotReleased ? "PENDING" : "COMPLETED", timestamp: isNotReleased ? "--" : "2026-07-17 08:32 AM" },
-              { code: "PR0157-0160-IND", desc: "Protector Sleeve L-160 (Acme Plastics)", req: "800 units", lot: isNotReleased ? "--" : "LOT-260617", verification: isNotReleased ? "PENDING" : "COMPLETED", timestamp: isNotReleased ? "--" : "2026-07-17 08:35 AM" },
-              { code: "PR0157-0260-IND", desc: "Protector Sleeve L-260 (Acme Plastics)", req: "800 units", lot: isNotReleased ? "--" : "LOT-260613", verification: isNotReleased ? "PENDING" : "COMPLETED", timestamp: isNotReleased ? "--" : "2026-07-17 08:38 AM" },
-              { code: "FA0588-30000", desc: "Fitting Nut - Front disc end", req: "800 units", lot: isNotReleased ? "--" : "LOT-64049", verification: isNotReleased ? "PENDING" : "COMPLETED", timestamp: isNotReleased ? "--" : "2026-07-17 08:40 AM" },
-              { code: "K40543-00000-C3", desc: "Fitting Tube - Bend end (K40543)", req: "800 units", lot: isNotReleased ? "--" : "LOT-63D80", verification: isNotReleased ? "PENDING" : "COMPLETED", timestamp: isNotReleased ? "--" : "2026-07-17 08:42 AM" },
-              { code: "K40543-50135-C3", desc: "Fitting Collar Assembly", req: "800 units", lot: isNotReleased ? "--" : "LOT-MI6701", verification: isNotReleased ? "PENDING" : "COMPLETED", timestamp: isNotReleased ? "--" : "2026-07-17 08:45 AM" }
-            ];
             renderBOM();
           } else {
             const isNotReleased = activeWO.status === 'Not released' || activeWO.status === 'Waiting' || cleanNum === '22615545' || cleanNum === '22615542';
@@ -2296,12 +2310,23 @@
               ? `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500 text-white uppercase tracking-wider select-none">PENDING</span>`
               : `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-600 text-white uppercase tracking-wider select-none">COMPLETED</span>`;
 
+            const editBtnHtml = isNotReleased
+              ? `<button onclick="window.openEditProcessModal('${processId}')" 
+                  class="flex items-center justify-center gap-1.5 px-3 py-1.5 bg-primary text-white hover:bg-primary/95 text-xs font-bold uppercase tracking-wider rounded-lg transition-all shadow-sm cursor-pointer hover:shadow-md">
+                    <span class="material-symbols-outlined text-[16px]">edit</span>
+                    <span>Edit</span>
+                </button>`
+              : '';
+
             container.innerHTML = `
                     <div class="space-y-4">
                         <div class="flex justify-between items-center pb-4 border-b border-slate-100">
                             <div>
                                 <h3 class="text-base font-black text-slate-900 uppercase">${proc.name}</h3>
                                 <p class="text-xs text-slate-500 mt-1">${proc.desc}</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                ${editBtnHtml}
                             </div>
                         </div>
                         
@@ -2393,6 +2418,170 @@
               toast.classList.add('translate-y-20', 'opacity-0');
             }, 3000);
           }
+        }
+
+        // --- Process Table Editor Handlers ---
+        let editingProcessId = null;
+
+        function escapeHtml(str) {
+          if (!str) return '';
+          return str
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+        }
+
+        function openEditProcessModal(processId) {
+          editingProcessId = processId;
+          const proc = SHEET_PROCESSES[processId];
+          if (!proc) return;
+
+          // Update title and subtitle
+          const titleEl = document.getElementById('edit-process-modal-title');
+          const subtitleEl = document.getElementById('edit-process-modal-subtitle');
+          if (titleEl) {
+            titleEl.textContent = proc.name;
+          }
+          if (subtitleEl) {
+            subtitleEl.textContent = proc.desc;
+          }
+
+          // Populate table rows and headers
+          const thead = document.getElementById('edit-process-table-header');
+          const tbody = document.getElementById('edit-process-table-body');
+          if (thead && tbody) {
+            tbody.innerHTML = '';
+            if (proc.isBOM) {
+              thead.innerHTML = `
+                <tr class="bg-slate-50 border-b border-outline-variant/30 text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">
+                  <th class="px-3 py-3 border-r border-outline-variant/20 w-1/4">Material Code</th>
+                  <th class="px-3 py-3 border-r border-outline-variant/20 w-1/4">Description</th>
+                  <th class="px-3 py-3 border-r border-outline-variant/20 w-1/4">Required Qty</th>
+                  <th class="px-3 py-3 w-1/4">Lot Number</th>
+                </tr>
+              `;
+              
+              if (activeWO.bom) {
+                activeWO.bom.forEach((item, idx) => {
+                  const tr = document.createElement('tr');
+                  tr.className = 'border-b border-outline-variant/20 hover:bg-slate-50/40 transition-colors';
+                  tr.innerHTML = `
+                    <td class="px-3 py-2.5 border-r border-outline-variant/20">
+                      <input type="text" id="edit-bom-code-${idx}" value="${escapeHtml(item.code)}" 
+                        class="w-full px-3 py-1.5 bg-white border border-slate-355 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:border-[#dc0111] focus:ring-1 focus:ring-[#dc0111] shadow-xs">
+                    </td>
+                    <td class="px-3 py-2.5 border-r border-outline-variant/20">
+                      <input type="text" id="edit-bom-desc-${idx}" value="${escapeHtml(item.desc)}" 
+                        class="w-full px-3 py-1.5 bg-white border border-slate-355 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:border-[#dc0111] focus:ring-1 focus:ring-[#dc0111] shadow-xs">
+                    </td>
+                    <td class="px-3 py-2.5 border-r border-outline-variant/20">
+                      <input type="text" id="edit-bom-req-${idx}" value="${escapeHtml(item.req)}" 
+                        class="w-full px-3 py-1.5 bg-white border border-slate-355 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:border-[#dc0111] focus:ring-1 focus:ring-[#dc0111] shadow-xs">
+                    </td>
+                    <td class="px-3 py-2.5">
+                      <input type="text" id="edit-bom-lot-${idx}" value="${escapeHtml(item.lot)}" 
+                        class="w-full px-3 py-1.5 bg-white border border-slate-355 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:border-[#dc0111] focus:ring-1 focus:ring-[#dc0111] shadow-xs">
+                    </td>
+                  `;
+                  tbody.appendChild(tr);
+                });
+              }
+            } else {
+              thead.innerHTML = `
+                <tr class="bg-slate-50 border-b border-outline-variant/30 text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">
+                  <th class="px-3 py-3 border-r border-outline-variant/20 w-1/3">Control Points</th>
+                  <th class="px-3 py-3 border-r border-outline-variant/20 w-1/3">Standards</th>
+                  <th class="px-3 py-3 w-1/3">Method</th>
+                </tr>
+              `;
+              
+              proc.rows.forEach((r, idx) => {
+                const tr = document.createElement('tr');
+                tr.className = 'border-b border-outline-variant/20 hover:bg-slate-50/40 transition-colors';
+                tr.innerHTML = `
+                  <td class="px-3 py-2.5 border-r border-outline-variant/20">
+                    <input type="text" id="edit-cp-${idx}" value="${escapeHtml(r.cp)}" 
+                      class="w-full px-3 py-1.5 bg-white border border-slate-355 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:border-[#dc0111] focus:ring-1 focus:ring-[#dc0111] shadow-xs">
+                  </td>
+                  <td class="px-3 py-2.5 border-r border-outline-variant/20">
+                    <input type="text" id="edit-std-${idx}" value="${escapeHtml(r.std)}" 
+                      class="w-full px-3 py-1.5 bg-white border border-slate-355 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:border-[#dc0111] focus:ring-1 focus:ring-[#dc0111] shadow-xs">
+                  </td>
+                  <td class="px-3 py-2.5">
+                    <input type="text" id="edit-method-${idx}" value="${escapeHtml(r.method)}" 
+                      class="w-full px-3 py-1.5 bg-white border border-slate-355 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:border-[#dc0111] focus:ring-1 focus:ring-[#dc0111] shadow-xs">
+                  </td>
+                `;
+                tbody.appendChild(tr);
+              });
+            }
+          }
+
+          // Show drawer using slide-in animation
+          const backdrop = document.getElementById('editProcessModalBackdrop');
+          const drawer = document.getElementById('editProcessModal');
+          if (backdrop && drawer) {
+            backdrop.classList.remove('hidden');
+            setTimeout(() => backdrop.classList.remove('opacity-0'), 10);
+            drawer.classList.remove('translate-x-full');
+          }
+        }
+
+        function closeEditProcessModal() {
+          const backdrop = document.getElementById('editProcessModalBackdrop');
+          const drawer = document.getElementById('editProcessModal');
+          if (backdrop && drawer) {
+            drawer.classList.add('translate-x-full');
+            backdrop.classList.add('opacity-0');
+            setTimeout(() => backdrop.classList.add('hidden'), 300);
+          }
+          editingProcessId = null;
+        }
+
+        function saveProcessChanges() {
+          if (!editingProcessId) return;
+          const proc = SHEET_PROCESSES[editingProcessId];
+          if (!proc) return;
+
+          if (proc.isBOM) {
+            if (activeWO.bom) {
+              activeWO.bom.forEach((item, idx) => {
+                const codeInput = document.getElementById(`edit-bom-code-${idx}`);
+                const descInput = document.getElementById(`edit-bom-desc-${idx}`);
+                const reqInput = document.getElementById(`edit-bom-req-${idx}`);
+                const lotInput = document.getElementById(`edit-bom-lot-${idx}`);
+                
+                if (codeInput) item.code = codeInput.value.trim();
+                if (descInput) item.desc = descInput.value.trim();
+                if (reqInput) item.req = reqInput.value.trim();
+                if (lotInput) item.lot = lotInput.value.trim();
+              });
+            }
+          } else {
+            // Retrieve updated values
+            proc.rows.forEach((r, idx) => {
+              const cpInput = document.getElementById(`edit-cp-${idx}`);
+              const stdInput = document.getElementById(`edit-std-${idx}`);
+              const methodInput = document.getElementById(`edit-method-${idx}`);
+              
+              if (cpInput) r.cp = cpInput.value.trim();
+              if (stdInput) r.std = stdInput.value.trim();
+              if (methodInput) r.method = methodInput.value.trim();
+            });
+          }
+
+          // Close modal
+          closeEditProcessModal();
+
+          // Refresh details pane
+          if (window.selectSheetProcess) {
+            window.selectSheetProcess(editingProcessId);
+          }
+
+          // Show toast notification
+          showWOToast("Process parameters successfully updated!");
         }
 
         let workflowStages = [];
@@ -4184,6 +4373,9 @@
         window.changeTeamPage = changeTeamPage;
         window.previewProcessDrawing = previewProcessDrawing;
         window.openFullscreenProcessDrawing = openFullscreenProcessDrawing;
+        window.openEditProcessModal = openEditProcessModal;
+        window.closeEditProcessModal = closeEditProcessModal;
+        window.saveProcessChanges = saveProcessChanges;
 
         window.openTraceabilityDrawer = function () {
           if (!activeWO) return;
@@ -4384,6 +4576,67 @@
           <!-- Populated dynamically with process steps -->
         </div>
       </div>
+    </div>
+
+    <!-- Edit Process Table Drawer -->
+    <div id="editProcessModalBackdrop" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[200] transition-opacity duration-300 opacity-0"
+      onclick="window.closeEditProcessModal()"></div>
+    <div id="editProcessModal" class="fixed inset-y-0 right-0 z-[210] w-full max-w-3xl bg-white shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col font-body-md select-none overflow-hidden">
+        
+        <!-- Header -->
+        <div class="px-6 py-4 bg-white text-slate-900 flex justify-between items-center shrink-0 border-b border-slate-200">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <span class="material-symbols-outlined text-[20px]">edit</span>
+            </div>
+            <div>
+              <h3
+                class="text-sm font-black uppercase text-slate-900 tracking-wide font-headline-sm"
+                id="edit-process-modal-title">
+                Edit Process Parameters
+              </h3>
+              <p class="text-[10px] text-slate-500 font-semibold mt-0.5" id="edit-process-modal-subtitle">
+                Modify control points, standards, and inspection methods.
+              </p>
+            </div>
+          </div>
+          <button onclick="window.closeEditProcessModal()"
+            class="w-8 h-8 rounded-full flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-colors cursor-pointer">
+            <span class="material-symbols-outlined text-[18px]">close</span>
+          </button>
+        </div>
+        
+        <!-- Body (Scrollable Table) -->
+        <div class="p-6 overflow-y-auto flex-grow bg-slate-50/50">
+          <div class="overflow-x-auto border border-outline-variant/20 rounded-lg bg-white shadow-xs">
+            <table class="w-full text-left border-collapse whitespace-nowrap text-xs">
+              <thead id="edit-process-table-header">
+                <tr class="bg-slate-50 border-b border-outline-variant/30 text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">
+                  <th class="px-3 py-3 border-r border-outline-variant/20 w-1/3">Control Points</th>
+                  <th class="px-3 py-3 border-r border-outline-variant/20 w-1/3">Standards</th>
+                  <th class="px-3 py-3 w-1/3">Method</th>
+                </tr>
+              </thead>
+              <tbody id="edit-process-table-body" class="divide-y divide-outline-variant/35 text-slate-700">
+                <!-- Dynamically generated input rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="bg-slate-50 px-6 py-4 border-t border-slate-200 flex justify-end gap-3 flex-shrink-0">
+          <button onclick="window.closeEditProcessModal()"
+            class="px-4 py-2 border border-slate-355 text-slate-700 font-bold text-xs rounded hover:bg-slate-100 transition-colors cursor-pointer uppercase">
+            Close
+          </button>
+          <button onclick="window.saveProcessChanges()"
+            class="px-4 py-2 bg-primary text-white font-bold text-xs rounded hover:opacity-95 transition-opacity cursor-pointer uppercase flex items-center gap-1.5 shadow-sm">
+            <span class="material-symbols-outlined text-[16px]">save</span>
+            Save
+          </button>
+        </div>
+        
     </div>
 
     <!-- Fullscreen Drawing Modal (Absolute full screen, only image) -->
